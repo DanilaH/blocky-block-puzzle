@@ -6,7 +6,7 @@
 
 | Решение kit | Применение |
 |---|---|
-| GameplayActivityCoordinator | Исходник перенесён без изменений в src/vendor/mini-games-kit/activity.ts. Раздельные причины dialog/visibility/blur/native/WebGL; одно событие не отменяет чужую блокировку. |
+| GameplayActivityCoordinator | Исходник перенесён без логических изменений (применено форматирование) в src/vendor/mini-games-kit/activity.ts. Раздельные причины dialog/visibility/blur/native/WebGL; одно событие не отменяет чужую блокировку. |
 | RevisionSnapshotQueue | Не подключена: здесь каждый принятый ход обязан ждать фиксации. Один ProfileStore координирует операции, IndexedDB транзакция пишет current + backup. Нет второго писателя наград. |
 | pickWeighted / RandomSource | Принцип применён, MathRandomSource не используется. Собственный xorshift32 с векторами; веса ориентаций суммируются в вес семейства. |
 | native banner placement | Контракт принят для будущего нативного адаптера. В прототипе только DOM reservation, нативного объявления нет. Не выдавать reservation за интеграцию. |
