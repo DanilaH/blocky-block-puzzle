@@ -158,3 +158,57 @@ test("captures the working visual direction in portrait and landscape", async ({
   await page.waitForTimeout(300);
   await page.screenshot({ path: "docs/qa/preview-landscape.png" });
 });
+
+test("cross clear animates after save and accepts next move during particles", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.locator("#tray button")).toHaveCount(3);
+  await page.evaluate(async () => {
+    const req = indexedDB.open("blocky-classic", 1);
+    await new Promise<void>((r) => (req.onsuccess = () => r()));
+    const db = req.result,
+      tx = db.transaction("save", "readwrite"),
+      store = tx.objectStore("save"),
+      read = store.get("current");
+    read.onsuccess = () => {
+      const p = read.result;
+      p.game.board = Array(64).fill(0);
+      for (let i = 1; i < 8; i++) {
+        p.game.board[i] = (i % 6) + 1;
+        p.game.board[i * 8] = (i % 6) + 1;
+      }
+      p.game.board[63] = 3;
+      p.game.tray = [
+        { shapeId: "S1-0", color: 1, used: false },
+        { shapeId: "S1-0", color: 2, used: false },
+        { shapeId: "S1-0", color: 3, used: false },
+      ];
+      p.game.score = 0;
+      p.game.streak = 0;
+      p.game.status = "playing";
+      p.revision++;
+      store.put(p, "current");
+    };
+    await new Promise<void>((r, j) => {
+      tx.oncomplete = () => r();
+      tx.onerror = () => j(tx.error);
+    });
+    db.close();
+  });
+  await page.reload();
+  await page.locator("#tray button").first().click();
+  await page.locator("#board").click({ position: { x: 4, y: 4 } });
+  await expect(page.locator("#score")).toHaveText("41");
+  await expect(page.locator("#burst")).toContainText("Комбо ×2");
+  await page.screenshot({ path: "docs/qa/preview-combo.png" });
+  await page.locator("#tray button").nth(1).click();
+  await page.locator("#board").click({ position: { x: 4, y: 4 } });
+  await expect(page.locator("#score")).toHaveText("42");
+  await page.reload();
+  await expect(page.locator("#score")).toHaveText("42");
+  expect(errors).toEqual([]);
+});

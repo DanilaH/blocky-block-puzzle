@@ -69,6 +69,7 @@ async function start() {
       cancelDrag();
       cancelHint();
       audio.stop();
+      scene.stopEffects();
     },
   );
   activity.setGameplayDesired(true);
@@ -125,7 +126,7 @@ async function start() {
     const s = store.state.game.tray[slot]!,
       shape = shapeById(s.shapeId),
       color = "#" + COLORS[s.color]!.toString(16).padStart(6, "0");
-    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => `<i class="mini-cell" style="grid-column:${x + 1};grid-row:${y + 1};background:${color}"></i>`).join("")}</span>`;
+    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => `<i class="mini-cell" style="grid-column:${x + 1};grid-row:${y + 1};background-color:${color}"></i>`).join("")}</span>`;
   }
   function render() {
     const p = store.state,
@@ -141,11 +142,13 @@ async function start() {
     tray.innerHTML = g.tray
       .map(
         (s, i) =>
-          `<button class="piece${s.used ? " used" : ""}${selected === i ? " selected" : ""}" data-slot="${i}" aria-label="Фигура ${i + 1}: ${s.shapeId}" ${s.used ? "disabled" : ""}>${s.used ? "" : mini(i, Math.min(15, Math.floor((tray.clientWidth / 3 - 20) / 5)))}</button>`,
+          `<button class="piece${s.used ? " used" : ""}${selected === i ? " selected" : ""}" data-slot="${i}" aria-label="Фигура ${i + 1}: ${s.shapeId}" ${s.used ? "disabled" : ""}>${s.used ? "" : mini(i, Math.floor(Math.min(22, (tray.clientWidth / 3 - 16) / shapeById(s.shapeId).width - 2, (tray.clientHeight - 12) / shapeById(s.shapeId).height - 2)))}</button>`,
       )
       .join("");
     audio.enabled = p.settings.sound;
-    scene.calm = p.settings.calm;
+    scene.calm =
+      p.settings.calm || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.documentElement.classList.toggle("calm", scene.calm);
     scene.setState(g);
     scene.preview(hintMove());
     el("hint").toggleAttribute("disabled", g.status === "over");
@@ -173,6 +176,15 @@ async function start() {
   async function commit(move: Move, revision: number) {
     if (!running || store.busy) return;
     cancelHint();
+    const before = store.state.game;
+    const piece = before.tray[move.slot];
+    const placedCells = piece
+      ? shapeById(piece.shapeId).cells.map(
+          ([x, y]) => (move.y + y) * 8 + move.x + x,
+        )
+      : [];
+    const effectBoard = [...before.board];
+    if (piece) for (const i of placedCells) effectBoard[i] = piece.color;
     const outcome: { result: ReturnType<typeof applyMove> } = { result: null };
     try {
       const changed = await store.update((p) => {
@@ -196,16 +208,38 @@ async function start() {
           event.lines > 1 ? "combo" : event.lines ? "clear" : "place",
           event.state.streak,
         );
-        scene.flash(event.cells, 0xc7f7de);
+        scene.impact(placedCells, event.cells, effectBoard, event.lines);
+        if (!scene.calm) {
+          el("score").animate(
+            [
+              { transform: "scale(1)" },
+              { transform: "scale(1.15)", color: "#fff2b4" },
+              { transform: "scale(1)" },
+            ],
+            { duration: 360 },
+          );
+          if (event.lines > 1)
+            canvasBox.animate(
+              [
+                { transform: "translate(0,0)" },
+                { transform: "translate(2px,1px)" },
+                { transform: "translate(-2px,-1px)" },
+                { transform: "translate(0,0)" },
+              ],
+              { duration: 190 },
+            );
+        }
         if (event.lines) {
           const burst = el("burst");
           clearTimeout(burstTimer);
+          burst.textContent = "";
+          void burst.offsetWidth;
           burst.innerHTML = event.allClear
             ? `Чистое поле<small>+${event.points}</small>`
             : event.lines > 1
               ? `Комбо ×${event.lines}<small>+${event.points}</small>`
-              : `+${event.points}`;
-          burstTimer = window.setTimeout(() => (burst.textContent = ""), 700);
+              : `Линия!<small>+${event.points}${event.state.streak > 1 ? ` · Серия ${event.state.streak}` : ""}</small>`;
+          burstTimer = window.setTimeout(() => (burst.textContent = ""), 1100);
         }
       }
       el("announce").textContent =

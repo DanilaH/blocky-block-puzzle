@@ -7,13 +7,13 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #edf2f9;
-  background: #101722;
+  color: #fff1d0;
+  background: #29180f;
   font-synthesis: none;
-  --muted: #8998ad;
-  --panel: #182230;
-  --line: #29364a;
-  --mint: #a7e6c9;
+  --muted: #c5a280;
+  --panel: #442b1d;
+  --line: #86512d;
+  --mint: #ffd064;
   --ad-height: 52px;
   color-scheme: dark;
 }
@@ -52,7 +52,7 @@ button {
     env(safe-area-inset-bottom) env(safe-area-inset-left);
   display: flex;
   flex-direction: column;
-  background: radial-gradient(ellipse at 50% 0, #1d293a 0, transparent 65%);
+  background: radial-gradient(ellipse at 50% 0, #754527 0, transparent 65%);
 }
 .shell {
   width: min(100%, 1040px);
@@ -102,7 +102,7 @@ button {
 }
 .icon {
   border: 1px solid var(--line);
-  background: #1b2635;
+  background: #57351f;
   width: 48px;
   height: 48px;
   border-radius: 16px;
@@ -136,8 +136,8 @@ button {
   width: min(100%, calc(100dvh - 230px));
   aspect-ratio: 1;
   padding: 10px;
-  background: #121c29;
-  border: 1px solid #344253;
+  background: #352015;
+  border: 1px solid #b77a3b;
   border-radius: 18px;
   box-shadow:
     0 16px 48px #0004,
@@ -163,7 +163,7 @@ button {
   justify-content: center;
   gap: 8px;
   font-size: 11px;
-  color: #8191a6;
+  color: #cba783;
   letter-spacing: 0.2px;
 }
 .dot {
@@ -195,7 +195,7 @@ button {
 }
 .best {
   font-size: 12px;
-  color: #c7a570;
+  color: #ffcc5b;
   display: flex;
   gap: 6px;
   align-items: center;
@@ -221,8 +221,8 @@ button {
   margin-top: 10px;
 }
 .piece {
-  background: #1b2736;
-  border: 1px solid #29374a;
+  background: #412719;
+  border: 1px solid #7d4e2e;
   border-radius: 12px;
   flex: 1;
   min-width: 0;
@@ -234,18 +234,18 @@ button {
   position: relative;
 }
 .piece.used {
-  background: #16202d;
+  background: #352015;
   border-style: dashed;
   opacity: 0.45;
 }
 .piece.used:after {
   content: "·";
   font-size: 24px;
-  color: #567;
+  color: #ad8158;
 }
 .piece.selected {
   border-color: var(--mint);
-  background: #243b3d;
+  background: #67451f;
 }
 .mini-shape {
   display: grid;
@@ -261,10 +261,10 @@ button {
 .hint {
   height: 54px;
   width: 100%;
-  border: 1px solid #436158;
+  border: 1px solid #ffdc7a;
   border-radius: 15px;
-  background: #243c37;
-  color: #d2f8e5;
+  background: #f3ac32;
+  color: #442609;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,7 +280,7 @@ button {
   stroke-width: 1.7;
 }
 .hint-count {
-  background: #172c27;
+  background: #d18a20;
   padding: 3px 7px;
   border-radius: 6px;
   font-size: 12px;
@@ -294,7 +294,7 @@ button {
 .ad-slot {
   height: var(--ad-height);
   flex: none;
-  background: #101722;
+  background: #29180f;
   margin-top: 4px;
 }
 .toast {
@@ -303,9 +303,9 @@ button {
   bottom: calc(var(--ad-height) + 14px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
   padding: 10px 16px;
-  border: 1px solid #40516a;
-  background: #233146;
-  color: #ecf4ff;
+  border: 1px solid #a87543;
+  background: #624022;
+  color: #fff2cf;
   border-radius: 10px;
   font-size: 13px;
   z-index: 15;
@@ -370,16 +370,16 @@ button {
   display: none;
 }
 dialog {
-  background: #1b2635;
-  border: 1px solid #3a4c63;
+  background: #57351f;
+  border: 1px solid #b17c46;
   border-radius: 24px;
-  color: #edf2f9;
+  color: #fff1d0;
   width: min(380px, calc(100vw - 32px));
   padding: 26px;
   box-shadow: 0 25px 100px #0008;
 }
 dialog::backdrop {
-  background: #080e19b8;
+  background: #170c06c9;
   backdrop-filter: blur(7px);
 }
 dialog h2 {
@@ -390,7 +390,7 @@ dialog h2 {
 dialog p {
   font-size: 14px;
   line-height: 1.6;
-  color: #aebdd0;
+  color: #ddbc93;
 }
 dialog .primary,
 dialog .secondary {
@@ -402,13 +402,13 @@ dialog .secondary {
 }
 .primary {
   background: var(--mint);
-  color: #18392a;
+  color: #492907;
   border: none;
   font-weight: 650;
 }
 .secondary {
-  background: #233246;
-  border: 1px solid #40536c;
+  background: #694327;
+  border: 1px solid #a47545;
 }
 .setting {
   display: flex;
@@ -429,7 +429,7 @@ dialog .secondary {
 }
 .footer-note {
   font-size: 10px;
-  color: #6f7f94;
+  color: #ae865f;
   text-align: center;
   letter-spacing: 1px;
 }
@@ -519,7 +519,7 @@ dialog .secondary {
   }
   .piece.used {
     background: transparent;
-    border: 1px dashed #2b3746;
+    border: 1px dashed #765033;
   }
   .hint-area {
     order: 3;
@@ -626,5 +626,219 @@ dialog .secondary {
 @media (prefers-reduced-motion: reduce) {
   .burst:not(:empty) {
     animation: none;
+  }
+}
+
+/* Warm arcade treatment: raised enamel pieces, carved board and gold controls. */
+:root {
+  font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif;
+}
+#app {
+  background: radial-gradient(
+    ellipse at 50% 28%,
+    #805032 0,
+    #492b1a 48%,
+    #27160e 100%
+  );
+}
+.brand {
+  font-size: 27px;
+  font-weight: 950;
+  color: #ffd46d;
+  text-shadow: 0 3px #6e360e;
+  letter-spacing: -1px;
+}
+.mode {
+  color: #d5ad82;
+  letter-spacing: 1px;
+  font-size: 10px;
+  text-shadow: none;
+}
+.brand-mark {
+  grid-template-columns: repeat(2, 10px);
+}
+.brand-mark i {
+  width: 10px;
+  height: 10px;
+  background: #ffa51f;
+  box-shadow:
+    inset 0 2px #ffe6a2,
+    0 2px #9e420b;
+}
+.icon {
+  background: linear-gradient(#996039, #70401f);
+  border: 2px solid #c18a50;
+  box-shadow:
+    0 4px #28160c,
+    inset 0 2px #e6b47460;
+}
+.board-wrap {
+  background: linear-gradient(135deg, #ba7b3c, #805024 45%, #a1682f);
+  padding: 10px;
+  border: 2px solid #dbab68;
+  box-shadow:
+    0 7px 0 #341a0b,
+    0 12px 24px #180b0980,
+    inset 0 2px #ffe2a0;
+}
+#board {
+  background: #342014;
+  box-shadow: inset 0 3px 8px #180b07;
+}
+.score {
+  font-weight: 950;
+  color: #fff4ce;
+  text-shadow:
+    0 4px #6a3618,
+    0 7px 14px #180b0755;
+  transform-origin: left center;
+}
+.score-title {
+  color: #ebc390;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.best {
+  color: #ffcf63;
+}
+.piece {
+  background: #2b170d33;
+  border: 0;
+  border-bottom: 2px solid #bf8b4a44;
+  border-radius: 16px;
+}
+.piece.selected {
+  background: #ffc34f18;
+  box-shadow: inset 0 0 0 2px #ffd06477;
+}
+.piece.selected .mini-shape {
+  transform: translateY(-5px) scale(1.08);
+  filter: brightness(1.12);
+}
+.mini-shape {
+  transition: transform 120ms ease-out;
+}
+.mini-cell {
+  background-image: linear-gradient(
+    155deg,
+    #ffffff55,
+    transparent 48%,
+    #651a0022
+  );
+  border: 1px solid #ffffff40;
+  box-shadow:
+    inset 0 2px 0 #fff9,
+    inset 0 -3px 0 #68240050,
+    0 3px 0 #1b0a0680;
+  border-radius: 4px;
+}
+.hint {
+  background: linear-gradient(#ffdc79, #f5b232 55%, #e69722);
+  border: 2px solid #ffe8a2;
+  box-shadow:
+    0 4px #8b4b10,
+    0 7px 12px #170c0633;
+  font-weight: 850;
+  color: #53300c;
+}
+.hint-count {
+  background: #9e5a17;
+  color: #fff2bf;
+  box-shadow: inset 0 2px #733a16;
+}
+button:active:not(:disabled) {
+  filter: brightness(1.12);
+}
+.primary {
+  background: linear-gradient(#ffdf81, #f7b633);
+  box-shadow: 0 4px #8d4b10;
+  font-weight: 800;
+}
+.burst {
+  color: #fff2a9;
+  font-size: clamp(25px, 6vw, 38px);
+  font-weight: 950;
+  text-shadow:
+    0 3px #994019,
+    2px 0 #753013,
+    -2px 0 #753013,
+    0 5px 14px #1c0c09;
+}
+.burst small {
+  color: #fff4d0;
+  font-size: 23px;
+}
+.burst:not(:empty) {
+  animation: arcade-reward 1.05s ease-out forwards;
+}
+@keyframes arcade-reward {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -35%) scale(0.65) rotate(-5deg);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15) rotate(2deg);
+  }
+  32%,
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(1.02);
+  }
+}
+.floating {
+  opacity: 1;
+  filter: drop-shadow(0 12px 5px #190b0780);
+}
+.ad-slot {
+  background: #24140c;
+}
+dialog {
+  background: linear-gradient(140deg, #684226, #3b2316);
+  border: 2px solid #ba8449;
+  box-shadow:
+    0 7px #241309,
+    0 25px 100px #0008;
+}
+@media (max-width: 699px) and (orientation: portrait) {
+  .shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .board-wrap {
+    padding: 8px;
+    width: min(100%, calc(100dvh - 320px));
+  }
+  .piece {
+    background: transparent;
+  }
+  .score {
+    font-size: 49px;
+  }
+}
+@media (max-height: 650px) and (orientation: portrait) {
+  .board-wrap {
+    width: min(100%, calc(100dvh - 284px));
+  }
+  .score {
+    font-size: 34px;
+  }
+}
+.calm .burst:not(:empty) {
+  animation: none;
+}
+.calm .mini-shape {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .burst:not(:empty) {
+    animation: none;
+  }
+  .mini-shape {
+    transition: none;
   }
 }
