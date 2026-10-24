@@ -1,0 +1,968 @@
+{
+  "errors": [],
+  "sizes": [
+    {
+      "width": 320,
+      "height": 568,
+      "boxes": {
+        "board": {
+          "x": 36,
+          "y": 88,
+          "w": 248,
+          "h": 248,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 12,
+          "y": 362,
+          "w": 296,
+          "h": 94,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 132.5,
+          "y": 460,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 260,
+          "y": 4,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 114.65625,
+          "y": 29,
+          "w": 90.671875,
+          "h": 42,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 45,
+          "y": 13,
+          "w": 53.234375,
+          "h": 20,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 516,
+          "w": 320,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 153,
+          "y": 73,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 167,
+          "y": 73,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 360,
+      "height": 640,
+      "boxes": {
+        "board": {
+          "x": 20,
+          "y": 88,
+          "w": 320,
+          "h": 320,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 12,
+          "y": 434,
+          "w": 336,
+          "h": 94,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 152.5,
+          "y": 532,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 300,
+          "y": 4,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 134.65625,
+          "y": 29,
+          "w": 90.671875,
+          "h": 42,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 45,
+          "y": 13,
+          "w": 53.234375,
+          "h": 20,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 588,
+          "w": 360,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 173,
+          "y": 73,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 187,
+          "y": 73,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "boxes": {
+        "board": {
+          "x": 16,
+          "y": 164,
+          "w": 358,
+          "h": 358,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 16,
+          "y": 560,
+          "w": 358,
+          "h": 150,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 167.5,
+          "y": 722,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 330,
+          "y": 16,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 139.21875,
+          "y": 68,
+          "w": 111.546875,
+          "h": 52,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 49,
+          "y": 33,
+          "w": 62.640625,
+          "h": 24,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 792,
+          "w": 390,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 188,
+          "y": 141,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 202,
+          "y": 141,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 412,
+      "height": 915,
+      "boxes": {
+        "board": {
+          "x": 16,
+          "y": 189.5,
+          "w": 380,
+          "h": 380,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 16,
+          "y": 613.5,
+          "w": 380,
+          "h": 160,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 178.5,
+          "y": 791.5,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 352,
+          "y": 16,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 150.21875,
+          "y": 78.5,
+          "w": 111.546875,
+          "h": 52,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 49,
+          "y": 34.5,
+          "w": 62.640625,
+          "h": 24,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 863,
+          "w": 412,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 199,
+          "y": 160.5,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 213,
+          "y": 160.5,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "boxes": {
+        "board": {
+          "x": 132,
+          "y": 182,
+          "w": 504,
+          "h": 504,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 100,
+          "y": 730,
+          "w": 568,
+          "h": 160,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 356.5,
+          "y": 908,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 624,
+          "y": 16,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 328.21875,
+          "y": 71,
+          "w": 111.546875,
+          "h": 52,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 133,
+          "y": 27,
+          "w": 62.640625,
+          "h": 24,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 972,
+          "w": 768,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 377,
+          "y": 153,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 391,
+          "y": 153,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 568,
+      "height": 320,
+      "boxes": {
+        "board": {
+          "x": 30,
+          "y": 12,
+          "w": 244,
+          "h": 244,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 314,
+          "y": 100,
+          "w": 240,
+          "h": 100,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 406.5,
+          "y": 204,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 508,
+          "y": 8,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 397,
+          "y": 40.5,
+          "w": 73.984375,
+          "h": 34,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 341,
+          "y": 13.5,
+          "w": 46.984375,
+          "h": 18,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 268,
+          "w": 568,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 427,
+          "y": 85,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 441,
+          "y": 85,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "boxes": {
+        "board": {
+          "x": 40.09375,
+          "y": 12,
+          "w": 284,
+          "h": 284,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 354.203125,
+          "y": 120,
+          "w": 251.796875,
+          "h": 100,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 452.59375,
+          "y": 224,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 560,
+          "y": 8,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 443.109375,
+          "y": 60.5,
+          "w": 73.984375,
+          "h": 34,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 381.203125,
+          "y": 33.5,
+          "w": 46.984375,
+          "h": 18,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 308,
+          "w": 640,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 473.09375,
+          "y": 105,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 487.09375,
+          "y": 105,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "boxes": {
+        "board": {
+          "x": 136,
+          "y": 20.890625,
+          "w": 296.203125,
+          "h": 296.203125,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 456.203125,
+          "y": 135,
+          "w": 251.796875,
+          "h": 100,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 554.59375,
+          "y": 239,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 662,
+          "y": 8,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 545.109375,
+          "y": 75.5,
+          "w": 73.984375,
+          "h": 34,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 483.203125,
+          "y": 48.5,
+          "w": 46.984375,
+          "h": 18,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 338,
+          "w": 844,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 575.09375,
+          "y": 120,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 589.09375,
+          "y": 120,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "boxes": {
+        "board": {
+          "x": 230,
+          "y": 201.046875,
+          "w": 291.890625,
+          "h": 291.890625,
+          "visible": true,
+          "text": ""
+        },
+        "tray": {
+          "x": 545.890625,
+          "y": 330,
+          "w": 248.09375,
+          "h": 116,
+          "visible": true,
+          "text": ""
+        },
+        "hint": {
+          "x": 642.4375,
+          "y": 454,
+          "w": 55,
+          "h": 48,
+          "visible": true,
+          "text": "Подсказка3"
+        },
+        "pause": {
+          "x": 752,
+          "y": 8,
+          "w": 48,
+          "h": 48,
+          "visible": true,
+          "text": ""
+        },
+        "score": {
+          "x": 622.5,
+          "y": 250,
+          "w": 94.859375,
+          "h": 44,
+          "visible": true,
+          "text": "480"
+        },
+        "best": {
+          "x": 578.890625,
+          "y": 225,
+          "w": 53.234375,
+          "h": 20,
+          "visible": true,
+          "text": "3 602"
+        },
+        "ad-slot": {
+          "x": 0,
+          "y": 716,
+          "w": 1024,
+          "h": 52,
+          "visible": true,
+          "text": ""
+        },
+        "toast": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "visible": false,
+          "text": ""
+        },
+        "streak": {
+          "x": 662.9375,
+          "y": 311,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        },
+        "burst": {
+          "x": 676.9375,
+          "y": 311,
+          "w": 0,
+          "h": 0,
+          "visible": true,
+          "text": ""
+        }
+      }
+    }
+  ],
+  "states": {
+    "drag": {
+      "floatingVisible": true,
+      "sourceOpacity": "1",
+      "sourceVisible": true
+    },
+    "noHints": {
+      "board": {
+        "x": 30,
+        "y": 12,
+        "w": 244,
+        "h": 244,
+        "visible": true,
+        "text": ""
+      },
+      "tray": {
+        "x": 314,
+        "y": 100,
+        "w": 240,
+        "h": 100,
+        "visible": true,
+        "text": ""
+      },
+      "hint": {
+        "x": 406.5,
+        "y": 204,
+        "w": 55,
+        "h": 48,
+        "visible": true,
+        "text": "Подсказки завтра0"
+      },
+      "pause": {
+        "x": 508,
+        "y": 8,
+        "w": 48,
+        "h": 48,
+        "visible": true,
+        "text": ""
+      },
+      "score": {
+        "x": 397,
+        "y": 40.5,
+        "w": 73.984375,
+        "h": 34,
+        "visible": true,
+        "text": "480"
+      },
+      "best": {
+        "x": 341,
+        "y": 13.5,
+        "w": 46.984375,
+        "h": 18,
+        "visible": true,
+        "text": "3 602"
+      },
+      "ad-slot": {
+        "x": 0,
+        "y": 268,
+        "w": 568,
+        "h": 52,
+        "visible": true,
+        "text": ""
+      },
+      "toast": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": false,
+        "text": "На сегодня подсказки закончились. Завтра будут ещё три."
+      },
+      "streak": {
+        "x": 427,
+        "y": 85,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "text": ""
+      },
+      "burst": {
+        "x": 441,
+        "y": 85,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "text": ""
+      }
+    },
+    "large": {
+      "board": {
+        "x": 36,
+        "y": 88,
+        "w": 248,
+        "h": 248,
+        "visible": true,
+        "text": ""
+      },
+      "tray": {
+        "x": 12,
+        "y": 362,
+        "w": 296,
+        "h": 94,
+        "visible": true,
+        "text": ""
+      },
+      "hint": {
+        "x": 132.5,
+        "y": 460,
+        "w": 55,
+        "h": 48,
+        "visible": true,
+        "text": "Подсказка3"
+      },
+      "pause": {
+        "x": 260,
+        "y": 4,
+        "w": 48,
+        "h": 48,
+        "visible": true,
+        "text": ""
+      },
+      "score": {
+        "x": 71.53221893310547,
+        "y": 34.922935485839844,
+        "w": 176.919921875,
+        "h": 30.154129028320312,
+        "visible": true,
+        "text": "1 234 568"
+      },
+      "best": {
+        "x": 45,
+        "y": 13,
+        "w": 94.640625,
+        "h": 20,
+        "visible": true,
+        "text": "9 876 543"
+      },
+      "ad-slot": {
+        "x": 0,
+        "y": 516,
+        "w": 320,
+        "h": 52,
+        "visible": true,
+        "text": ""
+      },
+      "toast": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": false,
+        "text": ""
+      },
+      "streak": {
+        "x": 142.25,
+        "y": 73,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "text": ""
+      },
+      "burst": {
+        "x": 156.25,
+        "y": 63.55155944824219,
+        "w": 21.484375,
+        "h": 16,
+        "visible": true,
+        "text": "+1"
+      }
+    },
+    "lastClear": {
+      "open": true,
+      "burst": "",
+      "animations": 0,
+      "events": [
+        {
+          "at": 1875.6000000014901,
+          "open": true,
+          "burst": ""
+        }
+      ]
+    },
+    "recordFast": {
+      "firstReward": "Комбо ×2  +42",
+      "secondReward": "+52",
+      "score": "194",
+      "best": "194"
+    }
+  }
+}
