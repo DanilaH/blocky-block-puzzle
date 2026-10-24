@@ -1,6 +1,7 @@
 // Original synthesized arcade SFX: woody transients, body and bell harmonics.
 export class GameAudio {
   enabled = true;
+  private variant = 0;
   private context: AudioContext | null = null;
   private voices = new Set<AudioScheduledSourceNode>();
   private master: GainNode | null = null;
@@ -33,7 +34,7 @@ export class GameAudio {
     volume: number,
     type: OscillatorType = "sine",
   ) {
-    if (this.voices.size >= 24) return;
+    if (this.voices.size >= 6) return;
     const c = this.context!,
       o = c.createOscillator(),
       gain = c.createGain();
@@ -53,34 +54,65 @@ export class GameAudio {
       gain.disconnect();
     };
   }
-  play(kind: "pick" | "place" | "clear" | "combo" | "hint", streak = 0) {
+  play(
+    kind:
+      | "pick"
+      | "place"
+      | "clear"
+      | "combo"
+      | "hint"
+      | "cancel"
+      | "mega"
+      | "record"
+      | "allClear",
+    streak = 0,
+  ) {
     if (!this.enabled || !this.context || this.context.state !== "running")
       return;
     const t = this.context.currentTime;
+    if (kind === "cancel") {
+      this.tone(200, 130, t, 0.07, 0.07);
+      return;
+    }
+    // Deterministic cosmetic alternation; never consumes the game RNG.
+    const variation = [1, 1.06, 0.95][this.variant++ % 3]!;
     if (kind === "pick") {
       this.tone(620, 920, t, 0.055, 0.09);
       this.tone(190, 140, t, 0.07, 0.14);
       return;
     }
     if (kind === "place") {
-      this.tone(230, 72, t, 0.12, 0.32);
+      this.tone(230 * variation, 72, t, 0.12, 0.32);
       this.tone(740, 280, t, 0.045, 0.12, "triangle");
       this.tone(1250, 620, t, 0.025, 0.05);
       return;
     }
+    for (const voice of this.voices) {
+      try {
+        voice.stop();
+      } catch {}
+    }
+    this.voices.clear();
     const notes =
-      kind === "combo"
-        ? [523.25, 659.25, 783.99, 1046.5]
-        : kind === "hint"
-          ? [659.25, 987.77]
-          : [523.25, 783.99, 1046.5];
+      kind === "allClear"
+        ? [523.25, 783.99, 1046.5, 1567.98]
+        : kind === "record"
+          ? [659.25, 783.99, 1046.5]
+          : kind === "mega"
+            ? [523.25, 783.99, 987.77, 1318.5]
+            : kind === "combo"
+              ? [523.25, 659.25, 783.99, 1046.5]
+              : kind === "hint"
+                ? [659.25, 987.77]
+                : [523.25, 783.99, 1046.5];
     if (kind !== "hint") this.tone(160, 48, t, 0.2, 0.25);
     notes.forEach((hz, i) => {
-      const f = hz * Math.pow(2, Math.min(streak, 5) / 24),
+      const f =
+          hz *
+          Math.pow(2, Math.min(streak, 4) / 24) *
+          (kind === "clear" ? variation : 1),
         at = t + i * 0.055;
       this.tone(f, f * 0.995, at, 0.3, 0.13);
-      this.tone(f * 2.01, f * 2, at, 0.12, 0.025);
-      this.tone(f * 3, f * 3, at, 0.065, 0.012);
     });
   }
 }

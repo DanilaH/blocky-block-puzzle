@@ -20,10 +20,12 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
-          name: browser-failures
-          path: test-results/
+          name: browser-review
+          path: |
+            test-results/
+            docs/qa/polish-*.png
   android:
     needs: verify
     runs-on: ubuntu-latest
@@ -44,6 +46,10 @@ jobs:
       - run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
       - run: npm ci
       - run: npm run android:sync
+      - uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: blocky-preview-debug-keystore-v1
       - run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
