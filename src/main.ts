@@ -699,6 +699,7 @@ async function start() {
     for (const key of ["sound", "calm"] as const)
       el<HTMLInputElement>(key).onchange = async (event) => {
         const value = (event.target as HTMLInputElement).checked;
+        dialog.querySelector<HTMLElement>(".dialog-status")!.textContent = "";
         try {
           await store.update((p) => ({
             ...p,
@@ -732,6 +733,8 @@ async function start() {
     el("keep-game").onclick = close;
   }
   async function restart() {
+    const status = dialog.querySelector<HTMLElement>(".dialog-status");
+    if (status) status.textContent = "";
     try {
       const changed = await store.update((p) => ({
         ...p,

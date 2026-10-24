@@ -159,6 +159,9 @@ test("save errors stay inside settings and restart dialogs", async ({
   await page.locator("#pause").click();
   await page.evaluate(() => {
     const original = IDBDatabase.prototype.transaction;
+    Reflect.set(window, "restoreWrites", () => {
+      IDBDatabase.prototype.transaction = original;
+    });
     IDBDatabase.prototype.transaction = function (...args) {
       if (args[1] === "readwrite") throw new Error("Injected save failure");
       return original.apply(this, args);
@@ -176,4 +179,8 @@ test("save errors stay inside settings and restart dialogs", async ({
   );
   await expect(page.locator("#score")).toHaveText("100");
   await page.screenshot({ path: "docs/qa/feel-0.5/save-error.png" });
+  await page.evaluate(() => Reflect.get(window, "restoreWrites")());
+  await page.locator("#new-game").click();
+  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("#score")).toHaveText("0");
 });
