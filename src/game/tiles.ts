@@ -1,16 +1,71 @@
-/** Shared enamel geometry for board, tray and lifted piece (64 logical pixels). */
+/** Own bevelled cube geometry, shared by SVG tray and Phaser board. */
 export const COLORS = [
-  0x302820, 0xffad25, 0xf45b48, 0xa4d844, 0x46c8e0, 0xffda52, 0xee81aa,
+  0x202e64, 0xffb900, 0xf24e43, 0x60ce27, 0x23bee9, 0x477bff, 0xb451e7,
 ];
-export const TILE_RECTS = [
-  { x: 4, y: 7, w: 56, h: 55, r: 9, color: 0x130e09, alpha: 0.55 },
-  { x: 4, y: 3, w: 56, h: 55, r: 9, color: null, alpha: 1 },
-  { x: 7, y: 43, w: 50, h: 12, r: 6, color: 0x622400, alpha: 0.24 },
-  { x: 7, y: 5, w: 50, h: 20, r: 7, color: 0xffffff, alpha: 0.26 },
-  { x: 12, y: 7, w: 25, h: 3, r: 2, color: 0xffffff, alpha: 0.62 },
+export const TILE_FACES = [
+  {
+    points: [
+      [1, 1],
+      [63, 1],
+      [63, 63],
+      [1, 63],
+    ],
+    color: null,
+    alpha: 1,
+  },
+  {
+    points: [
+      [1, 1],
+      [63, 1],
+      [54, 10],
+      [10, 10],
+    ],
+    color: 0xffffff,
+    alpha: 0.48,
+  },
+  {
+    points: [
+      [1, 1],
+      [10, 10],
+      [10, 54],
+      [1, 63],
+    ],
+    color: 0xffffff,
+    alpha: 0.16,
+  },
+  {
+    points: [
+      [63, 1],
+      [63, 63],
+      [54, 54],
+      [54, 10],
+    ],
+    color: 0x11143b,
+    alpha: 0.28,
+  },
+  {
+    points: [
+      [1, 63],
+      [10, 54],
+      [54, 54],
+      [63, 63],
+    ],
+    color: 0x11143b,
+    alpha: 0.4,
+  },
+  {
+    points: [
+      [10, 10],
+      [54, 10],
+      [54, 14],
+      [10, 14],
+    ],
+    color: 0xffffff,
+    alpha: 0.12,
+  },
 ] as const;
 export function tileURL(color: number) {
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_RECTS.map((q) => `<rect x="${q.x}" y="${q.y}" width="${q.w}" height="${q.h}" rx="${q.r}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_FACES.map((q) => `<polygon points="${q.points.map((p) => p.join(",")).join(" ")}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }

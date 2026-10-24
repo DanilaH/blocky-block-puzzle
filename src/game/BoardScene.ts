@@ -6,7 +6,7 @@ import {
   type GameState,
   type Move,
 } from "../core/rules";
-import { COLORS, TILE_RECTS } from "./tiles";
+import { COLORS, TILE_FACES } from "./tiles";
 type Impact = {
   placed: number[];
   cleared: number[];
@@ -70,17 +70,21 @@ export class BoardScene extends Phaser.Scene {
   }
   private tile(x: number, y: number, color: number, alpha = 1, scale = 1) {
     const g = this.ink;
-    for (const q of TILE_RECTS) {
+    for (const q of TILE_FACES) {
       g.fillStyle(q.color ?? color, q.alpha * alpha);
-      g.fillRoundedRect(
-        x + 32 + (q.x - 32) * scale,
-        y + 32 + (q.y - 32) * scale,
-        q.w * scale,
-        q.h * scale,
-        q.r * scale,
+      g.fillPoints(
+        q.points.map(
+          ([px, py]) =>
+            new Phaser.Math.Vector2(
+              x + 32 + (px - 32) * scale,
+              y + 32 + (py - 32) * scale,
+            ),
+        ),
+        true,
       );
     }
   }
+
   private draw() {
     if (!this.ink) return;
     const g = this.ink,
@@ -92,12 +96,10 @@ export class BoardScene extends Phaser.Scene {
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
-      g.fillStyle(0x211c16);
-      g.fillRoundedRect(x + 3, y + 3, 58, 58, 8);
-      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x393229 : 0x3c352b);
-      g.fillRoundedRect(x + 4, y + 6, 56, 54, 7);
-      g.lineStyle(1, 0xba8050, 0.13);
-      g.lineBetween(x + 12, y + 59, x + 53, y + 59);
+      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x233366 : 0x25366b);
+      g.fillRect(x, y, 64, 64);
+      g.lineStyle(1, 0x15214b, 0.4);
+      g.strokeRect(x, y, 64, 64);
       const color = this.state?.board[i];
       if (color) {
         const hit = [...this.impacts]
@@ -119,7 +121,7 @@ export class BoardScene extends Phaser.Scene {
         const ok = this.valid && fits(this.state.board, shape, x, y);
         if (ok)
           for (const i of place(this.state.board, shape, x, y).cells) {
-            g.fillStyle(0xffdb70, 0.45);
+            g.fillStyle(COLORS[s.color]!, 0.5);
             g.fillRoundedRect(
               (i % 8) * 64 + 3,
               Math.floor(i / 8) * 64 + 3,
@@ -135,10 +137,10 @@ export class BoardScene extends Phaser.Scene {
           if (ok) this.tile(px, py, COLORS[s.color]!, 0.5);
           g.lineStyle(
             3,
-            ok ? 0xffedab : 0xff6554,
+            ok ? 0xffffff : 0xff6554,
             this.hint && !this.calm ? 0.75 + 0.25 * Math.sin(now / 180) : 1,
           );
-          g.strokeRoundedRect(px + 4, py + 4, 56, 56, 8);
+          g.strokeRoundedRect(px + 1, py + 1, 62, 62, 1);
           if (!ok) {
             g.lineBetween(px + 20, py + 20, px + 44, py + 44);
             g.lineBetween(px + 44, py + 20, px + 20, py + 44);
@@ -149,9 +151,31 @@ export class BoardScene extends Phaser.Scene {
     let particlesLeft = 120;
     for (const e of this.impacts) {
       const age = now - e.started;
+      // One travelling beam per completed row/column, not a ring on every cell.
+      if (!this.calm && e.lines && age < 300) {
+        const progress = age / 300;
+        const cells = new Set(e.cleared);
+        for (let line = 0; line < 8; line++) {
+          const row = Array.from({ length: 8 }, (_, n) => line * 8 + n).every(
+            (i) => cells.has(i),
+          );
+          const col = Array.from({ length: 8 }, (_, n) => n * 8 + line).every(
+            (i) => cells.has(i),
+          );
+          for (let trail = 0; trail < 8; trail++) {
+            const at = progress * 620 - trail * 12;
+            g.fillStyle(
+              trail ? 0x91deff : 0xffffff,
+              (1 - trail / 8) * (1 - progress) * 0.85,
+            );
+            if (row) g.fillRect(at, line * 64 + 28, 18, 8);
+            if (col) g.fillRect(line * 64 + 28, at, 8, 18);
+          }
+        }
+      }
       if (e.allClear && !this.calm) {
         const t = age / 500;
-        g.lineStyle(7, 0xffe09b, Math.max(0, 1 - t) * 0.55);
+        g.lineStyle(7, 0xffffff, Math.max(0, 1 - t) * 0.55);
         g.strokeRoundedRect(
           4 + t * 10,
           4 + t * 10,
@@ -163,7 +187,7 @@ export class BoardScene extends Phaser.Scene {
       if (!this.calm && !e.lines && age < 140)
         for (const i of e.placed) {
           const t = age / 140;
-          g.lineStyle(3 * (1 - t), 0xffdb87, (1 - t) * 0.65);
+          g.lineStyle(3 * (1 - t), 0xffffff, (1 - t) * 0.65);
           g.strokeRoundedRect(
             (i % 8) * 64 + 4 - t * 7,
             Math.floor(i / 8) * 64 + 4 - t * 7,
@@ -186,13 +210,13 @@ export class BoardScene extends Phaser.Scene {
             1 + (this.calm ? 0 : t * 0.35),
           );
           g.fillStyle(
-            0xfff5cc,
+            0xffffff,
             this.calm
               ? 0
               : Math.max(0, Math.sin((t / 0.45) * Math.PI)) *
                   (e.lines > 1 ? 0.65 : 0.4),
           );
-          g.fillRoundedRect(x + 4, y + 4, 56, 56, 8);
+          g.fillRect(x + 1, y + 1, 62, 62);
         }
         if (this.calm || t <= 0.12 || t >= 1) continue;
         for (
@@ -205,11 +229,9 @@ export class BoardScene extends Phaser.Scene {
           const px = x + 32 + Math.cos(angle) * travel,
             py = y + 32 + Math.sin(angle) * travel + t * t * 45;
           const size = (1 - t) * (p === 0 ? 14 : 9);
-          g.fillStyle(p % 2 ? 0xffefae : COLORS[e.board[i] || 1]!, 1 - t);
+          g.fillStyle(p % 2 ? 0xffffff : COLORS[e.board[i] || 1]!, 1 - t);
           g.fillRoundedRect(px - size / 2, py - size / 2, size, size, 2);
         }
-        g.lineStyle(2, 0xffdf75, (1 - t) * (e.lines > 1 ? 0.35 : 0.15));
-        g.strokeCircle(x + 32, y + 32, 10 + t * 30);
       }
     }
   }

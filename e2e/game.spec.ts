@@ -153,10 +153,10 @@ test("captures the working visual direction in portrait and landscape", async ({
   await page.reload();
   await expect(page.locator("#board canvas")).toBeVisible();
   await page.waitForTimeout(300);
-  await page.screenshot({ path: "docs/qa/preview-portrait.png" });
+  await page.screenshot({ path: "docs/qa/arcade-0.4/preview-portrait.png" });
   await page.setViewportSize({ width: 844, height: 390 });
   await page.waitForTimeout(300);
-  await page.screenshot({ path: "docs/qa/preview-landscape.png" });
+  await page.screenshot({ path: "docs/qa/arcade-0.4/preview-landscape.png" });
 });
 
 test("cross clear animates after save and accepts next move during particles", async ({
@@ -204,7 +204,7 @@ test("cross clear animates after save and accepts next move during particles", a
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("#score")).toHaveText("41");
   await expect(page.locator("#burst")).toContainText("Комбо ×2");
-  await page.screenshot({ path: "docs/qa/preview-combo.png" });
+  await page.screenshot({ path: "docs/qa/arcade-0.4/preview-combo.png" });
   await page.locator("#tray button").nth(1).click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("#score")).toHaveText("42");
