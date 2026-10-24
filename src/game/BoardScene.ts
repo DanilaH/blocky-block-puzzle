@@ -14,6 +14,8 @@ type Impact = {
   started: number;
   lines: number;
   allClear: boolean;
+  rows: number[];
+  columns: number[];
 };
 export class BoardScene extends Phaser.Scene {
   private ink!: Phaser.GameObjects.Graphics;
@@ -55,6 +57,16 @@ export class BoardScene extends Phaser.Scene {
       board,
       lines,
       allClear,
+      rows: Array.from({ length: 8 }, (_, y) => y).filter((y) =>
+        Array.from({ length: 8 }, (_, x) => y * 8 + x).every((i) =>
+          cleared.includes(i),
+        ),
+      ),
+      columns: Array.from({ length: 8 }, (_, x) => x).filter((x) =>
+        Array.from({ length: 8 }, (_, y) => y * 8 + x).every((i) =>
+          cleared.includes(i),
+        ),
+      ),
       started: performance.now(),
     });
     this.impacts = this.impacts.slice(-2);
@@ -91,7 +103,7 @@ export class BoardScene extends Phaser.Scene {
       now = performance.now();
     g.clear();
     this.impacts = this.impacts.filter(
-      (e) => now - e.started < (this.calm ? 180 : 500),
+      (e) => now - e.started < (this.calm ? 180 : 600),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
@@ -123,11 +135,11 @@ export class BoardScene extends Phaser.Scene {
           for (const i of place(this.state.board, shape, x, y).cells) {
             g.fillStyle(COLORS[s.color]!, 0.5);
             g.fillRoundedRect(
-              (i % 8) * 64 + 3,
-              Math.floor(i / 8) * 64 + 3,
-              58,
-              58,
-              8,
+              (i % 8) * 64 + 1,
+              Math.floor(i / 8) * 64 + 1,
+              62,
+              62,
+              1,
             );
           }
         for (const [dx, dy] of shape.cells) {
@@ -151,30 +163,8 @@ export class BoardScene extends Phaser.Scene {
     let particlesLeft = 120;
     for (const e of this.impacts) {
       const age = now - e.started;
-      // One travelling beam per completed row/column, not a ring on every cell.
-      if (!this.calm && e.lines && age < 300) {
-        const progress = age / 300;
-        const cells = new Set(e.cleared);
-        for (let line = 0; line < 8; line++) {
-          const row = Array.from({ length: 8 }, (_, n) => line * 8 + n).every(
-            (i) => cells.has(i),
-          );
-          const col = Array.from({ length: 8 }, (_, n) => n * 8 + line).every(
-            (i) => cells.has(i),
-          );
-          for (let trail = 0; trail < 8; trail++) {
-            const at = progress * 620 - trail * 12;
-            g.fillStyle(
-              trail ? 0x91deff : 0xffffff,
-              (1 - trail / 8) * (1 - progress) * 0.85,
-            );
-            if (row) g.fillRect(at, line * 64 + 28, 18, 8);
-            if (col) g.fillRect(line * 64 + 28, at, 8, 18);
-          }
-        }
-      }
       if (e.allClear && !this.calm) {
-        const t = age / 500;
+        const t = age / 600;
         g.lineStyle(7, 0xffffff, Math.max(0, 1 - t) * 0.55);
         g.strokeRoundedRect(
           4 + t * 10,
@@ -193,12 +183,14 @@ export class BoardScene extends Phaser.Scene {
             Math.floor(i / 8) * 64 + 4 - t * 7,
             56 + t * 14,
             56 + t * 14,
-            9,
+            1,
           );
         }
       for (const i of e.cleared) {
-        const delay = this.calm ? 0 : ((i % 8) + Math.floor(i / 8)) * 5;
-        const t = Math.max(0, (age - delay) / (this.calm ? 180 : 380));
+        const rowHit = e.rows.includes(Math.floor(i / 8)) ? i % 8 : Infinity;
+        const colHit = e.columns.includes(i % 8) ? Math.floor(i / 8) : Infinity;
+        const delay = this.calm ? 0 : (Math.min(rowHit, colHit) + 0.5) * 32;
+        const t = Math.max(0, (age - delay) / (this.calm ? 180 : 300));
         const x = (i % 8) * 64,
           y = Math.floor(i / 8) * 64;
         if (t < (this.calm ? 1 : 0.45) && !this.state?.board[i]) {
@@ -231,6 +223,15 @@ export class BoardScene extends Phaser.Scene {
           const size = (1 - t) * (p === 0 ? 14 : 9);
           g.fillStyle(p % 2 ? 0xffffff : COLORS[e.board[i] || 1]!, 1 - t);
           g.fillRoundedRect(px - size / 2, py - size / 2, size, size, 2);
+        }
+      }
+      if (!this.calm && e.lines && age < 330) {
+        const head = age * 2;
+        for (let trail = 7; trail >= 0; trail--) {
+          const at = head - trail * 10;
+          g.fillStyle(trail ? 0x97e6ff : 0xffffff, (1 - trail / 8) * 0.9);
+          for (const row of e.rows) g.fillRect(at, row * 64 + 28, 14, 8);
+          for (const col of e.columns) g.fillRect(col * 64 + 28, at, 8, 14);
         }
       }
     }

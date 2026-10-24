@@ -25,7 +25,7 @@ jobs:
           name: browser-review
           path: |
             test-results/
-            docs/qa/arcade-0.4/*.png
+            docs/qa/feel-0.5/*.png
   android:
     needs: verify
     runs-on: ubuntu-latest

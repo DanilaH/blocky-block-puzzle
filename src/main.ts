@@ -64,6 +64,8 @@ async function start() {
   let recordCelebrated =
     initial.game.score > 0 && initial.game.score >= initial.best;
   let lastPraise = -Infinity;
+  let resultTimer = 0,
+    resultPending = false;
   const cosmetic = new Set<Animation>();
   function animate(
     target: Element,
@@ -91,9 +93,14 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      if (resultPending)
+        queueMicrotask(() => {
+          if (running && resultPending && !dialog.open) showResult();
+        });
     },
     () => {
       running = false;
+      clearTimeout(resultTimer);
       cancelDrag();
       cancelHint();
       audio.stop();
@@ -141,6 +148,11 @@ async function start() {
   );
   function toast(message: string) {
     clearTimeout(toastTimer);
+    if (dialog.open) {
+      const status = dialog.querySelector<HTMLElement>(".dialog-status");
+      if (status) status.textContent = message;
+      return;
+    }
     el("toast").textContent = message;
     toastTimer = window.setTimeout(() => (el("toast").textContent = ""), 3500);
   }
@@ -181,6 +193,10 @@ async function start() {
       ),
     );
     const hintSlot = hintMove()?.slot;
+    el("hint").classList.toggle(
+      "depleted",
+      Number(el("hint-count").textContent) === 0 && hintSlot === undefined,
+    );
     tray.innerHTML = g.tray
       .map(
         (s, i) =>
@@ -227,6 +243,7 @@ async function start() {
     selected = null;
     floating.getAnimations().forEach((a) => a.cancel());
     floating.hidden = true;
+    el("tray").classList.remove("dragging");
     document
       .querySelectorAll(".piece.selected")
       .forEach((e) => e.classList.remove("selected"));
@@ -334,8 +351,13 @@ async function start() {
         el("burst")
           .getAnimations()
           .forEach((a) => a.cancel());
+        const showPraise =
+          praise &&
+          (newRecord ||
+            event.allClear ||
+            performance.now() - lastPraise > 2000);
         el("burst").textContent =
-          `${praise && performance.now() - lastPraise > 2000 ? praise + "  " : ""}+${event.points}`;
+          `${showPraise ? praise + "  " : ""}+${event.points}`;
         if (praise && performance.now() - lastPraise > 2000)
           lastPraise = performance.now();
         animate(
@@ -355,7 +377,17 @@ async function start() {
       }
       el("announce").textContent =
         `Счёт ${event.state.score}. ${event.lines ? "Очищено линий: " + event.lines : ""}`;
-      if (event.state.status === "over" && !dialog.open) showResult();
+      if (event.state.status === "over" && !dialog.open) {
+        resultPending = true;
+        clearTimeout(resultTimer);
+        if (running)
+          resultTimer = window.setTimeout(
+            () => {
+              if (running && resultPending && !dialog.open) showResult();
+            },
+            scene.calm ? 220 : 700,
+          );
+      }
     } catch {
       toast("Не удалось сохранить ход. Попробуйте ещё раз.");
       render();
@@ -407,6 +439,7 @@ async function start() {
     floating.getAnimations().forEach((a) => a.cancel());
     floating.innerHTML = mini(selected, rect.width / 8);
     floating.hidden = false;
+    el("tray").classList.add("dragging");
     drag = {
       id: event.pointerId,
       slot: selected,
@@ -447,6 +480,7 @@ async function start() {
   );
   window.addEventListener("pointerup", (event) => {
     if (!drag || drag.id !== event.pointerId) return;
+    el("tray").classList.remove("dragging");
     const previous = drag;
     const move = locate(event, previous.slot, previous.touch);
     drag = null;
@@ -523,7 +557,7 @@ async function start() {
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !dialog.open) {
       event.preventDefault();
-      showPause();
+      back();
       return;
     }
     if (!running || selected === null || !currentMove) return;
@@ -613,6 +647,7 @@ async function start() {
   });
   function open(content: string, type: string) {
     modal = type;
+    dialog.dataset.kind = type;
     activity.setBlocked("dialog", true);
     dialog.innerHTML = content;
     structureDialog();
@@ -626,6 +661,10 @@ async function start() {
     body.className = "dialog-body";
     actions.className = "dialog-actions";
     nodes.forEach((n) => (n.tagName === "BUTTON" ? actions : body).append(n));
+    const status = document.createElement("p");
+    status.className = "dialog-status";
+    status.setAttribute("role", "alert");
+    actions.prepend(status);
     dialog.append(body, actions);
     dialog.scrollTop = 0;
   }
@@ -634,10 +673,22 @@ async function start() {
     modal = "";
     activity.setBlocked("dialog", false);
     render();
-    if (store.state.game.status === "over") showResult();
+  }
+  function back() {
+    if (dialog.open) {
+      if (modal === "rules" || modal === "restart") {
+        dialog.close();
+        showPause();
+      } else close();
+    } else if (resultPending) showResult();
+    else showPause();
   }
   function showPause() {
     if (dialog.open) return;
+    if (resultPending) {
+      showResult();
+      return;
+    }
     open(
       `<h2 id="dialog-title">Пауза</h2><p>Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
       "pause",
@@ -663,6 +714,8 @@ async function start() {
       };
   }
   function showRules() {
+    modal = "rules";
+    dialog.dataset.kind = "rules";
     dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button>`;
     structureDialog();
     el("back-pause").onclick = () => {
@@ -671,6 +724,8 @@ async function start() {
     };
   }
   function confirmRestart() {
+    modal = "restart";
+    dialog.dataset.kind = "restart";
     dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     el("new-game").onclick = () => void restart();
@@ -686,6 +741,8 @@ async function start() {
       }));
       if (changed) {
         recordCelebrated = false;
+        resultPending = false;
+        clearTimeout(resultTimer);
         stopCosmetics();
         dialog.close();
         modal = "";
@@ -697,26 +754,23 @@ async function start() {
     }
   }
   function showResult() {
+    clearTimeout(resultTimer);
+    resultPending = false;
+    if (dialog.open) return;
+    const bestFinish =
+      store.state.game.score > 0 && store.state.game.score >= store.state.best;
     open(
-      `<div class="score-title">Партия завершена</div><h2 id="dialog-title">${store.state.game.score.toLocaleString("ru")} очков</h2><div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div><p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div><p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
       "result",
     );
     el("again").onclick = () => void restart();
-    el("look-board").onclick = () => {
-      dialog.close();
-      modal = "";
-      activity.setBlocked("dialog", false);
-    };
+    el("look-board").onclick = close;
   }
   el("pause").onclick = showPause;
   el("play-again").onclick = () => void restart();
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
-    if (modal === "result") {
-      dialog.close();
-      modal = "";
-      activity.setBlocked("dialog", false);
-    } else close();
+    back();
   });
   if (Capacitor.isNativePlatform()) {
     const native = registerPlugin<{
@@ -726,10 +780,7 @@ async function start() {
       ): Promise<{ remove(): Promise<void> }>;
     }>("App");
     void native
-      .addListener("backButton", () => {
-        if (dialog.open) close();
-        else showPause();
-      })
+      .addListener("backButton", back)
       .catch(() => toast("Системная кнопка «Назад» пока недоступна"));
     void native
       .addListener("appStateChange", (data) =>

@@ -109,7 +109,7 @@ test("all shapes stay inside slots through rotation; dialog actions remain visib
     if (height > width) expect(tray.y).toBeGreaterThan(board.y + board.height);
     expect(hint.y + hint.height).toBeLessThanOrEqual(ad.y + 1);
     await page.screenshot({
-      path: `docs/qa/arcade-0.4/polish-${width}x${height}.png`,
+      path: `docs/qa/feel-0.5/polish-${width}x${height}.png`,
     });
   }
   await page.setViewportSize({ width: 640, height: 360 });
@@ -119,11 +119,11 @@ test("all shapes stay inside slots through rotation; dialog actions remain visib
     expect(r.y).toBeGreaterThanOrEqual(0);
     expect(r.y + r.height).toBeLessThanOrEqual(360);
   }
-  await page.screenshot({ path: "docs/qa/arcade-0.4/polish-pause.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.5/polish-pause.png" });
   await page.locator("#rules").click();
   const b = (await page.locator("#back-pause").boundingBox())!;
   expect(b.y + b.height).toBeLessThan(360);
-  await page.screenshot({ path: "docs/qa/arcade-0.4/polish-rules.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.5/polish-rules.png" });
 });
 test("hint identifies source; pause cancels all cosmetic animations", async ({
   page,
@@ -158,22 +158,22 @@ test("recorded showcase: placement, return, clear hierarchy and calm mode", asyn
     await page.locator("#tray button").first().click();
     await page.locator("#board").click({ position: { x: 4, y: 4 } });
     await page.waitForTimeout(70);
-    await page.screenshot({ path: `docs/qa/arcade-0.4/polish-${kind}.png` });
+    await page.screenshot({ path: `docs/qa/feel-0.5/polish-${kind}.png` });
     await page.waitForTimeout(800);
   }
   await fixture(page, "over");
   await expect(page.locator("#again")).toBeVisible();
-  await page.screenshot({ path: "docs/qa/arcade-0.4/polish-result.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.5/polish-result.png" });
   await page.locator("#look-board").click();
   await expect(page.locator("#play-again")).toBeVisible();
-  await page.screenshot({ path: "docs/qa/arcade-0.4/polish-result-board.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.5/polish-result-board.png" });
   await page.locator("#play-again").click();
   await expect(page.locator("#score")).toHaveText("0");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await fixture(page, "cross");
   await page.locator("#tray button").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await page.screenshot({ path: "docs/qa/arcade-0.4/polish-calm.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.5/polish-calm.png" });
   expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
 });
 
