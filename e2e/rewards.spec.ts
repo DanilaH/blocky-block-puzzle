@@ -51,13 +51,26 @@ test("important reward survives rapid moves with immediate score; pause clears i
   await page.setViewportSize({ width: 390, height: 844 });
   for (const kind of ["record", "calm"]) {
     await setup(page, kind);
+    await page.evaluate(() => {
+      const burst = document.querySelector("#burst")!;
+      (window as any).rewardAt700 = null;
+      const observer = new MutationObserver(() => {
+        if (!burst.textContent?.includes("Новый рекорд")) return;
+        observer.disconnect();
+        setTimeout(() => {
+          (window as any).rewardAt700 = burst.textContent;
+        }, 700);
+      });
+      observer.observe(burst, { childList: true });
+    });
     await put(page, 0, 0, 0);
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
     await put(page, 1, 2, 2);
     await expect(page.locator("#score")).toHaveText("12");
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
-    await page.waitForTimeout(650);
-    await expect(page.locator("#burst")).toContainText("Новый рекорд");
+    await expect
+      .poll(() => page.evaluate(() => (window as any).rewardAt700))
+      .toContain("Новый рекорд");
     if (kind === "record")
       await page.screenshot({ path: "docs/qa/feel-0.7/rapid-record.png" });
     await page.locator("#pause").click();
