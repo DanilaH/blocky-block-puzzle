@@ -35,3 +35,5 @@ APK: android/app/build/outputs/apk/debug/app-debug.apk. Workflow `Preview checks
 Проверены первичные справки при подготовке: https://capacitorjs.com/docs/getting-started/environment-setup, https://capacitorjs.com/docs/updating/8-0, https://docs.phaser.io/phaser/concepts/input. Конкретные зависимости проверены через npm registry и закреплены lockfile.
 
 Preview 0.7: сертификат финального APK совпадает с выданной 0.6 (`e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`), applicationId прежний, versionCode 7. Сборка рассчитана на обновление поверх 0.6; установка на физический Android не проверена. [Протокол 0.7](qa/FEEL_0.7_2026-10-25.md).
+
+Preview 0.8: versionCode 8, тот же applicationId и сертификат, что у выданной 0.7. [Проверки, подпись и APK-хеш](qa/FEEL_0.8_2026-10-25.md). Фактическая установка обновления на телефон остаётся непроверенной.
