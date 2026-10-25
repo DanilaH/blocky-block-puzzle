@@ -896,3 +896,84 @@ dialog[data-kind="result"] .result-best {
     padding: 2px 6px;
   }
 }
+
+/* Separate score and reward rows, including their animation bounds. */
+.score-panel {
+  flex-direction: column;
+  gap: 8px;
+  padding: 40px 0 4px;
+}
+.reward-line {
+  position: static;
+  flex: none;
+  height: 38px;
+  width: 100%;
+}
+@media (orientation: portrait) and (max-height: 700px) {
+  .score-panel {
+    min-height: 104px;
+    padding: 28px 0 2px;
+    gap: 5px;
+  }
+  .score {
+    font-size: 34px;
+  }
+  .reward-line {
+    height: 35px;
+  }
+  .play-layout {
+    gap: 2px;
+  }
+  .tray {
+    height: 90px;
+  }
+}
+@media (orientation: landscape) {
+  .score-panel {
+    padding: 30px 0 2px;
+    gap: 6px;
+  }
+}
+@media (orientation: landscape) and (max-height: 450px) {
+  .score-panel {
+    min-height: 86px;
+    padding: 18px 0 0;
+    gap: 4px;
+  }
+  .score {
+    font-size: 28px;
+  }
+  .reward-line {
+    height: 32px;
+  }
+  .side {
+    padding-bottom: 26px;
+    gap: 0;
+  }
+  .hint-area {
+    min-height: 44px;
+    padding-bottom: 0;
+  }
+  .hint {
+    height: 44px;
+  }
+  .learning .hint-area {
+    min-height: 58px;
+  }
+  .learning .side {
+    padding-bottom: 6px;
+  }
+  .lesson-skip {
+    min-height: 40px;
+  }
+}
+@media (orientation: landscape) and (max-height: 450px) {
+  .board-caption,
+  .board-caption .toast:not(:empty) {
+    height: 26px;
+  }
+  .board-caption .toast:not(:empty) {
+    padding: 0 4px;
+    line-height: 12px;
+  }
+}

@@ -145,13 +145,13 @@ test("landscape messages remain visible and tablet uses available width", async 
     ad = (await page.locator("#ad-slot").boundingBox())!;
   expect(toast.y).toBeGreaterThanOrEqual(hint.y + hint.height);
   expect(toast.y + toast.height).toBeLessThanOrEqual(ad.y);
-  await page.screenshot({ path: "docs/qa/feel-0.6/landscape-status.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/landscape-status.png" });
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.waitForTimeout(150);
   expect((await page.locator("#board").boundingBox())!.width).toBeGreaterThan(
     450,
   );
-  await page.screenshot({ path: "docs/qa/feel-0.6/tablet.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/tablet.png" });
 });
 test("save errors stay inside settings and restart dialogs", async ({
   page,
@@ -179,7 +179,7 @@ test("save errors stay inside settings and restart dialogs", async ({
     "Предыдущая сохранена",
   );
   await expect(page.locator("#score")).toHaveText("100");
-  await page.screenshot({ path: "docs/qa/feel-0.6/save-error.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/save-error.png" });
   await page.evaluate(() => Reflect.get(window, "restoreWrites")());
   await page.locator("#new-game").click();
   await expect(page.locator("dialog")).not.toBeVisible();

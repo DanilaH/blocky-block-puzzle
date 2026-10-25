@@ -71,6 +71,9 @@ async function start() {
   let recordCelebrated =
     initial.game.score > 0 && initial.game.score >= initial.best;
   let lastPraise = -Infinity;
+  let rewardHoldUntil = 0;
+  let pendingReward: (() => void) | null = null;
+  let pendingRewardTimer = 0;
   let resultTimer = 0,
     resultPending = false;
   const cosmetic = new Set<Animation>();
@@ -94,12 +97,16 @@ async function start() {
     cosmetic.forEach((a) => a.cancel());
     cosmetic.clear();
     clearTimeout(burstTimer);
+    clearTimeout(pendingRewardTimer);
+    pendingReward = null;
+    rewardHoldUntil = 0;
     el("burst").textContent = "";
     scene.stopEffects();
   }
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      refreshHintLabel();
       if (resultPending)
         queueMicrotask(() => {
           if (running && resultPending && !dialog.open) showResult();
@@ -243,18 +250,28 @@ async function start() {
         : g.moves === 0
           ? "Перенесите фигуру на поле"
           : "";
+    refreshHintLabel();
+  }
+  function refreshHintLabel() {
+    const p = store.state;
+    const count = (p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints;
+    const cached = !inLesson() && hintMove() !== null;
+    el("hint-count").textContent = String(count);
+    el("hint").classList.toggle("depleted", count === 0 && !cached);
     el("hint-label").textContent = worker
       ? "Ищем ход…"
-      : Number(el("hint-count").textContent) === 0
-        ? "Подсказки завтра"
-        : "Подсказка";
+      : cached
+        ? "Показать ход"
+        : count === 0
+          ? "Подсказки завтра"
+          : "Подсказка";
   }
   function cancelHint() {
     hintGeneration++;
     worker?.terminate();
     worker = null;
     el("hint").removeAttribute("aria-busy");
-    el("hint-label").textContent = "Подсказка";
+    refreshHintLabel();
   }
   function cancelDrag() {
     drag = null;
@@ -396,7 +413,6 @@ async function start() {
               : event.lines
                 ? "line"
                 : "place";
-        el("burst").dataset.tier = tier;
         if (event.state.streak > 1)
           animate(
             el("streak"),
@@ -406,49 +422,7 @@ async function start() {
             ],
             260,
           );
-        clearTimeout(burstTimer);
-        el("burst")
-          .getAnimations()
-          .forEach((a) => a.cancel());
-        const showPraise =
-          praise &&
-          (newRecord ||
-            event.allClear ||
-            performance.now() - lastPraise > 2000);
-        el("burst").textContent =
-          `${showPraise ? praise + "  " : ""}+${event.points}`;
-        const rewardDuration =
-          tier === "place" ? 450 : tier === "line" ? 650 : 1050;
-        if (praise && performance.now() - lastPraise > 2000)
-          lastPraise = performance.now();
-        const entrance =
-          tier === "record"
-            ? "translateY(10px) rotate(-5deg) scale(.65)"
-            : tier === "all-clear"
-              ? "scaleX(.4) scaleY(.8)"
-              : tier === "combo"
-                ? "translateY(10px) scale(.65)"
-                : "translateY(4px)";
-        animate(
-          el("burst"),
-          [
-            { opacity: 0, transform: entrance },
-            {
-              opacity: 1,
-              transform:
-                tier === "combo" || tier === "record" ? "scale(1.12)" : "none",
-              offset: 0.18,
-            },
-            { opacity: 1, transform: "none", offset: 0.32 },
-            { opacity: 1, offset: 0.75 },
-            { opacity: 0, transform: "translateY(-4px)" },
-          ],
-          rewardDuration,
-        );
-        burstTimer = window.setTimeout(
-          () => (el("burst").textContent = ""),
-          rewardDuration + 30,
-        );
+        presentReward(tier, praise, event.points);
       }
       el("announce").textContent =
         `Счёт ${event.state.score}. ${event.lines ? "Очищено линий: " + event.lines : ""}`;
@@ -460,13 +434,69 @@ async function start() {
             () => {
               if (running && resultPending && !dialog.open) showResult();
             },
-            scene.calm ? 220 : 700,
+            Math.max(
+              scene.calm ? 220 : 700,
+              rewardHoldUntil - performance.now(),
+            ),
           );
       }
     } catch {
       toast("Не удалось сохранить ход. Попробуйте ещё раз.");
       render();
     }
+  }
+  function presentReward(tier: string, praise: string, points: number) {
+    const important = tier === "record" || tier === "all-clear";
+    const remaining = rewardHoldUntil - performance.now();
+    if (remaining > 0) {
+      if (important) {
+        pendingReward = () => presentReward(tier, praise, points);
+        clearTimeout(pendingRewardTimer);
+        pendingRewardTimer = window.setTimeout(() => {
+          const next = pendingReward;
+          pendingReward = null;
+          if (running) next?.();
+        }, remaining + 1);
+      }
+      return;
+    }
+    el("burst").dataset.tier = tier;
+    clearTimeout(burstTimer);
+    el("burst")
+      .getAnimations()
+      .forEach((a) => a.cancel());
+    const showPraise =
+      praise && (important || performance.now() - lastPraise > 2000);
+    el("burst").textContent = `${showPraise ? praise + "  " : ""}+${points}`;
+    if (showPraise) lastPraise = performance.now();
+    const duration = important
+      ? 1200
+      : tier === "place"
+        ? 450
+        : tier === "line"
+          ? 650
+          : 1050;
+    rewardHoldUntil = important ? performance.now() + 1050 : 0;
+    const entrance =
+      tier === "record"
+        ? "translateY(6px) scale(.8)"
+        : tier === "all-clear"
+          ? "scaleX(.6)"
+          : "translateY(4px)";
+    const rewardAnimation = animate(
+      el("burst"),
+      [
+        { opacity: 0, transform: entrance },
+        { opacity: 1, transform: "none", offset: 0.125 },
+        { opacity: 1, transform: "none", offset: 0.875 },
+        { opacity: 0, transform: "translateY(-3px)" },
+      ],
+      duration,
+    );
+    rewardAnimation?.effect?.updateTiming({ easing: "linear" });
+    burstTimer = window.setTimeout(() => {
+      el("burst").textContent = "";
+    }, duration + 30);
   }
   function locate(event: PointerEvent, slot: number, touch: boolean): Move {
     const rect = canvasBox.getBoundingClientRect(),
@@ -686,6 +716,7 @@ async function start() {
       worker?.terminate();
       worker = null;
       el("hint").removeAttribute("aria-busy");
+      refreshHintLabel();
       if (generation !== hintGeneration || !running) return;
       const r = event.data;
       if (!r.move) {

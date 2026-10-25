@@ -39,7 +39,7 @@ test("tutorial persists steps, rejects wrong targets and never changes real game
   await put(page, 2, 2, 2);
   await expect(page.locator("#lesson-skip")).toHaveText("Начать игру");
   await expect(page.locator(".piece.used")).toHaveCount(0);
-  await page.screenshot({ path: "docs/qa/feel-0.6/tutorial-complete.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/tutorial-complete.png" });
   await page.locator("#lesson-skip").click();
   await page.reload();
   await expect(page.locator("#lesson")).toBeHidden();
@@ -60,10 +60,10 @@ test("short landscape keeps board and lesson controls above banner", async ({
   const ad = (await page.locator("#ad-slot").boundingBox())!;
   expect(board.width).toBeGreaterThanOrEqual(240);
   expect(skip.y + skip.height).toBeLessThanOrEqual(ad.y);
-  await page.screenshot({ path: "docs/qa/feel-0.6/tutorial-landscape.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/tutorial-landscape.png" });
   await page.locator("#lesson-skip").click();
   await expect(page.locator("#lesson")).toBeHidden();
-  await page.screenshot({ path: "docs/qa/feel-0.6/landscape-small.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.7/landscape-small.png" });
 });
 test("availability updates after a clear; streak label is not a multiplier", async ({
   page,
