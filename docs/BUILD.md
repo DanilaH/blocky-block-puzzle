@@ -33,3 +33,5 @@ APK: android/app/build/outputs/apk/debug/app-debug.apk. Workflow `Preview checks
 Основной прототип использует initial-v1. Экспериментальная solvable-v1 и доказательство тройки доступны в модуле core для дальнейшего сравнения; UI выбора алгоритма не нужен обычному игроку. Длительность сессий и релизная выдача не утверждены.
 
 Проверены первичные справки при подготовке: https://capacitorjs.com/docs/getting-started/environment-setup, https://capacitorjs.com/docs/updating/8-0, https://docs.phaser.io/phaser/concepts/input. Конкретные зависимости проверены через npm registry и закреплены lockfile.
+
+Preview 0.7: сертификат финального APK совпадает с выданной 0.6 (`e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`), applicationId прежний, versionCode 7. Сборка рассчитана на обновление поверх 0.6; установка на физический Android не проверена. [Протокол 0.7](qa/FEEL_0.7_2026-10-25.md).
