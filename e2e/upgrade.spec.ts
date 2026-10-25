@@ -41,6 +41,7 @@ test("tutorial persists steps, rejects wrong targets and never changes real game
   await expect(page.locator(".piece.used")).toHaveCount(0);
   await page.screenshot({ path: "docs/qa/feel-0.7/tutorial-complete.png" });
   await page.locator("#lesson-skip").click();
+  await expect(page.locator("#lesson")).toBeHidden();
   await page.reload();
   await expect(page.locator("#lesson")).toBeHidden();
   const final = await profile(page);
