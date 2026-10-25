@@ -50,6 +50,12 @@ jobs:
         with:
           path: ~/.android/debug.keystore
           key: blocky-preview-debug-keystore-v1
+      - name: Ensure cached preview signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Blocky Preview,O=Development,C=RU"
+          fi
       - run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
