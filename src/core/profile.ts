@@ -8,6 +8,7 @@ export interface HintReceipt {
 }
 export interface Profile {
   schemaVersion: 1;
+  tutorialStep?: number;
   revision: number;
   game: GameState;
   best: number;
@@ -22,6 +23,7 @@ export function dayKey(date = new Date()): string {
 }
 export const createProfile = (game: GameState): Profile => ({
   schemaVersion: 1,
+  tutorialStep: 0,
   revision: 0,
   game,
   best: 0,
@@ -76,6 +78,8 @@ export function validProfile(value: unknown): value is Profile {
       g = p.game;
     if (
       p.schemaVersion !== 1 ||
+      (p.tutorialStep !== undefined &&
+        (!integer(p.tutorialStep) || p.tutorialStep > 4)) ||
       !integer(p.revision) ||
       !integer(p.best) ||
       !integer(p.freeHints) ||

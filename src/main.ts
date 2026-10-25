@@ -7,6 +7,7 @@ import { GameAudio } from "./game/audio";
 import {
   applyMove,
   fits,
+  placements,
   newGame,
   shapeById,
   type Move,
@@ -19,6 +20,8 @@ import {
   installDocumentVisibilityBlocker,
 } from "./vendor/mini-games-kit/activity";
 import type { HintResult } from "./core/hints";
+
+import { lessonGame, LESSON_MOVES, LESSON_TEXT } from "./core/tutorial";
 
 const svg = (body: string) =>
   `<svg viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
@@ -38,7 +41,11 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene();
-  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
+  const lessonStep = () => store.state.tutorialStep ?? 4;
+  const inLesson = () => lessonStep() < 4;
+  const currentGame = () =>
+    inLesson() ? lessonGame(lessonStep()) : store.state.game;
+  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
   const dialog = el<HTMLDialogElement>("dialog"),
@@ -157,6 +164,7 @@ async function start() {
     toastTimer = window.setTimeout(() => (el("toast").textContent = ""), 3500);
   }
   function hintMove() {
+    if (inLesson()) return LESSON_MOVES[lessonStep()] ?? null;
     const h = store.state.hint;
     return h?.gameId === store.state.game.gameId &&
       h.revision === store.state.game.revision
@@ -164,13 +172,13 @@ async function start() {
       : null;
   }
   function mini(slot: number, cell: number) {
-    const piece = store.state.game.tray[slot]!,
+    const piece = currentGame().tray[slot]!,
       shape = shapeById(piece.shapeId);
     return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => `<img draggable="false" alt="" class="mini-cell" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[piece.color]!)}">`).join("")}</span>`;
   }
   function render() {
     const p = store.state,
-      g = p.game;
+      g = currentGame();
     el("score").textContent = g.score.toLocaleString("ru");
     el("best").textContent = p.best.toLocaleString("ru");
     el("hint-count").textContent = String(
@@ -192,6 +200,9 @@ async function start() {
         ),
       ),
     );
+    const blocked = g.tray.map(
+      (s) => !s.used && placements(g.board, shapeById(s.shapeId)).length === 0,
+    );
     const hintSlot = hintMove()?.slot;
     el("hint").classList.toggle(
       "depleted",
@@ -200,7 +211,7 @@ async function start() {
     tray.innerHTML = g.tray
       .map(
         (s, i) =>
-          `<button class="piece${s.used ? " used" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}" data-slot="${i}" aria-label="Фигура ${i + 1}: ${s.shapeId}" ${s.used || g.status === "over" ? "disabled" : ""}>${s.used ? "" : mini(i, cell)}</button>`,
+          `<button class="piece${s.used ? " used" : ""}${blocked[i] ? " unavailable" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}" data-slot="${i}" aria-label="Фигура ${i + 1}: ${s.shapeId}${blocked[i] ? ", сейчас нет места" : ""}" ${s.used || g.status === "over" || (inLesson() && i !== hintSlot) ? "disabled" : ""}>${s.used ? "" : mini(i, cell)}</button>`,
       )
       .join("");
     if (focused !== undefined)
@@ -215,11 +226,19 @@ async function start() {
     scene.preview(hintMove(), true, true);
     el("hint").toggleAttribute("disabled", g.status === "over");
     el("play-again").hidden = g.status !== "over";
-    el("hint").hidden = g.status === "over";
-    el("streak").textContent = g.streak > 1 ? `Серия ×${g.streak}` : "";
+    el("hint").hidden = g.status === "over" || inLesson();
+    el("lesson").hidden = !inLesson();
+    el("lesson-text").textContent = LESSON_TEXT[lessonStep()] ?? "";
+    el("lesson-skip").textContent =
+      lessonStep() === 3 ? "Начать игру" : "Пропустить";
+    root.classList.toggle("learning", inLesson());
+    root.classList.toggle("lesson-ready", lessonStep() === 3);
+    el("streak").textContent = g.streak > 1 ? `Серия ${g.streak}` : "";
+    el("streak").dataset.level = String(Math.min(4, g.streak));
     el("score").classList.toggle("compact", g.score >= 100000);
-    el("caption").textContent =
-      g.status === "over"
+    el("caption").textContent = inLesson()
+      ? ""
+      : g.status === "over"
         ? "Для этих фигур нет места"
         : g.moves === 0
           ? "Перенесите фигуру на поле"
@@ -252,7 +271,20 @@ async function start() {
   async function commit(move: Move, revision: number) {
     if (!running || store.busy) return;
     cancelHint();
-    const before = store.state.game;
+    const before = currentGame();
+    const practicing = inLesson();
+    const expected = LESSON_MOVES[lessonStep()];
+    if (
+      practicing &&
+      (!expected ||
+        Object.keys(expected).some(
+          (k) => expected[k as keyof Move] !== move[k as keyof Move],
+        ))
+    ) {
+      render();
+      toast("Поставьте фигуру в светлый контур");
+      return;
+    }
     const previousBest = store.state.best;
     const piece = before.tray[move.slot];
     const placedCells = piece
@@ -265,8 +297,14 @@ async function start() {
     const outcome: { result: ReturnType<typeof applyMove> } = { result: null };
     try {
       const changed = await store.update((p) => {
-        const result = applyMove(p.game, move, revision);
+        const result = applyMove(before, move, revision);
         outcome.result = result;
+        if (result && practicing)
+          return {
+            ...p,
+            revision: p.revision + 1,
+            tutorialStep: lessonStep() + 1,
+          };
         return result
           ? {
               ...p,
@@ -290,6 +328,7 @@ async function start() {
       currentMove = null;
       const event = outcome.result!;
       const newRecord =
+        !practicing &&
         !recordCelebrated &&
         previousBest > 0 &&
         event.state.score > previousBest;
@@ -329,15 +368,16 @@ async function start() {
           event.lines,
           event.allClear,
         );
-        animate(
-          el("score"),
-          [
-            { transform: "scale(1)" },
-            { transform: "scale(1.07)" },
-            { transform: "scale(1)" },
-          ],
-          200,
-        );
+        if (event.lines)
+          animate(
+            el("score"),
+            [
+              { transform: "scale(1)" },
+              { transform: "scale(1.07)" },
+              { transform: "scale(1)" },
+            ],
+            200,
+          );
         const praise = event.allClear
           ? "Чистое поле!"
           : newRecord
@@ -347,6 +387,25 @@ async function start() {
               : event.lines === 2
                 ? "Комбо ×2"
                 : "";
+        const tier = event.allClear
+          ? "all-clear"
+          : newRecord
+            ? "record"
+            : event.lines >= 2
+              ? "combo"
+              : event.lines
+                ? "line"
+                : "place";
+        el("burst").dataset.tier = tier;
+        if (event.state.streak > 1)
+          animate(
+            el("streak"),
+            [
+              { transform: "scale(1.25)", color: "#fff" },
+              { transform: "scale(1)" },
+            ],
+            260,
+          );
         clearTimeout(burstTimer);
         el("burst")
           .getAnimations()
@@ -358,21 +417,37 @@ async function start() {
             performance.now() - lastPraise > 2000);
         el("burst").textContent =
           `${showPraise ? praise + "  " : ""}+${event.points}`;
+        const rewardDuration =
+          tier === "place" ? 450 : tier === "line" ? 650 : 1050;
         if (praise && performance.now() - lastPraise > 2000)
           lastPraise = performance.now();
+        const entrance =
+          tier === "record"
+            ? "translateY(10px) rotate(-5deg) scale(.65)"
+            : tier === "all-clear"
+              ? "scaleX(.4) scaleY(.8)"
+              : tier === "combo"
+                ? "translateY(10px) scale(.65)"
+                : "translateY(4px)";
         animate(
           el("burst"),
           [
-            { opacity: 0, transform: "translateY(6px) scale(.85)" },
-            { opacity: 1, transform: "none", offset: 0.18 },
+            { opacity: 0, transform: entrance },
+            {
+              opacity: 1,
+              transform:
+                tier === "combo" || tier === "record" ? "scale(1.12)" : "none",
+              offset: 0.18,
+            },
+            { opacity: 1, transform: "none", offset: 0.32 },
             { opacity: 1, offset: 0.75 },
             { opacity: 0, transform: "translateY(-4px)" },
           ],
-          900,
+          rewardDuration,
         );
         burstTimer = window.setTimeout(
           () => (el("burst").textContent = ""),
-          950,
+          rewardDuration + 30,
         );
       }
       el("announce").textContent =
@@ -396,7 +471,7 @@ async function start() {
   function locate(event: PointerEvent, slot: number, touch: boolean): Move {
     const rect = canvasBox.getBoundingClientRect(),
       cell = rect.width / 8,
-      shape = shapeById(store.state.game.tray[slot]!.shapeId);
+      shape = shapeById(currentGame().tray[slot]!.shapeId);
     const left = event.clientX - (shape.width * cell) / 2,
       top =
         event.clientY -
@@ -445,7 +520,7 @@ async function start() {
       slot: selected,
       startX: event.clientX,
       startY: event.clientY,
-      revision: store.state.game.revision,
+      revision: currentGame().revision,
       touch: event.pointerType === "touch",
       moved: false,
     };
@@ -488,10 +563,10 @@ async function start() {
     if (previous.moved) {
       selected = null;
       currentMove = null;
-      const slot = store.state.game.tray[move.slot];
+      const slot = currentGame().tray[move.slot];
       if (
         slot &&
-        fits(store.state.game.board, shapeById(slot.shapeId), move.x, move.y)
+        fits(currentGame().board, shapeById(slot.shapeId), move.x, move.y)
       )
         void commit(move, previous.revision);
       else {
@@ -537,7 +612,7 @@ async function start() {
         x: Math.floor((event.clientX - rect.left) / cell),
         y: Math.floor((event.clientY - rect.top) / cell),
       };
-    void commit(move, store.state.game.revision);
+    void commit(move, currentGame().revision);
   });
   el("tray").addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
@@ -579,11 +654,11 @@ async function start() {
     } else if (event.key === "Enter") {
       event.preventDefault();
       const m = currentMove;
-      void commit(m, store.state.game.revision);
+      void commit(m, currentGame().revision);
     }
   });
   el("hint").addEventListener("click", () => {
-    if (!running || store.busy || worker) return;
+    if (!running || store.busy || worker || inLesson()) return;
     cancelDrag();
     const cached = hintMove();
     if (cached) {
@@ -717,8 +792,24 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
+    el("practice").onclick = async () => {
+      if (store.busy) return;
+      try {
+        if (
+          await store.update((p) => ({
+            ...p,
+            revision: p.revision + 1,
+            tutorialStep: 0,
+          }))
+        ) {
+          close();
+        }
+      } catch {
+        toast("Не удалось сохранить обучение. Попробуйте ещё раз.");
+      }
+    };
     el("back-pause").onclick = () => {
       dialog.close();
       showPause();
@@ -740,6 +831,7 @@ async function start() {
         ...p,
         revision: p.revision + 1,
         game: fresh(),
+        tutorialStep: 4,
         hint: null,
       }));
       if (changed) {
@@ -769,6 +861,24 @@ async function start() {
     el("again").onclick = () => void restart();
     el("look-board").onclick = close;
   }
+  el("lesson-skip").onclick = async () => {
+    if (store.busy) return;
+    try {
+      if (
+        await store.update((p) => ({
+          ...p,
+          revision: p.revision + 1,
+          tutorialStep: 4,
+        }))
+      ) {
+        cancelDrag();
+        stopCosmetics();
+        render();
+      }
+    } catch {
+      toast("Не удалось сохранить. Попробуйте ещё раз.");
+    }
+  };
   el("pause").onclick = showPause;
   el("play-again").onclick = () => void restart();
   dialog.addEventListener("cancel", (event) => {
@@ -793,7 +903,7 @@ async function start() {
   }
   render();
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
-  if (initial.game.status === "over") showResult();
+  if (!inLesson() && initial.game.status === "over") showResult();
   window.addEventListener("pagehide", () => {
     cancelDrag();
     cancelHint();
