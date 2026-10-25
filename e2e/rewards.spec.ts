@@ -58,13 +58,6 @@ test("important reward survives rapid moves with immediate score; pause clears i
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
     await page.waitForTimeout(650);
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
-    expect(
-      Number(
-        await page
-          .locator("#burst")
-          .evaluate((e) => getComputedStyle(e).opacity),
-      ),
-    ).toBeGreaterThan(0.95);
     if (kind === "record")
       await page.screenshot({ path: "docs/qa/feel-0.7/rapid-record.png" });
     await page.locator("#pause").click();
@@ -97,12 +90,22 @@ test("reward does not intersect score or board throughout animation on compact s
         const overlap = (x: DOMRect, y: DOMRect) =>
           Math.min(x.right, y.right) > Math.max(x.left, y.left) &&
           Math.min(x.bottom, y.bottom) > Math.max(x.top, y.top);
-        data.push({ score: overlap(a, b), board: overlap(b, board) });
+        const burst = document.querySelector("#burst")!;
+        const time = Number(burst.getAnimations()[0]?.currentTime ?? -1);
+        data.push({
+          score: overlap(a, b),
+          board: overlap(b, board),
+          time,
+          opacity: Number(getComputedStyle(burst).opacity),
+        });
         await new Promise(requestAnimationFrame);
       }
       return data;
     });
     expect(samples.every((s) => !s.score && !s.board)).toBe(true);
+    const readable = samples.filter((s) => s.time >= 150 && s.time <= 1000);
+    expect(readable.length).toBeGreaterThan(0);
+    expect(readable.every((s) => s.opacity > 0.95)).toBe(true);
     const board = (await page.locator("#board").boundingBox())!,
       ad = (await page.locator("#ad-slot").boundingBox())!,
       hint = (await page.locator("#hint").boundingBox())!;
