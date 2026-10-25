@@ -977,3 +977,24 @@ dialog[data-kind="result"] .result-best {
     line-height: 12px;
   }
 }
+
+/* Compact controls keep a full touch target without shrinking the board. */
+@media (orientation: landscape) and (max-height: 450px) {
+  .hint,
+  .lesson-skip {
+    min-height: 48px;
+    height: 48px;
+  }
+  .hint-area {
+    min-height: 48px;
+  }
+  .tray {
+    height: 96px;
+  }
+  .learning .side {
+    padding-bottom: 2px;
+  }
+}
+.setting input:disabled {
+  opacity: 0.5;
+}

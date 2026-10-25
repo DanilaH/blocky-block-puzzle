@@ -3,7 +3,7 @@ export class GameAudio {
   enabled = true;
   private variant = 0;
   private context: AudioContext | null = null;
-  private voices = new Set<AudioScheduledSourceNode>();
+  private voices = new Map<AudioScheduledSourceNode, number>();
   private master: GainNode | null = null;
   async unlock() {
     if (!this.context) {
@@ -18,7 +18,7 @@ export class GameAudio {
     if (this.context.state === "suspended") await this.context.resume();
   }
   stop() {
-    for (const voice of this.voices) {
+    for (const voice of this.voices.keys()) {
       try {
         voice.stop();
       } catch {}
@@ -33,8 +33,16 @@ export class GameAudio {
     duration: number,
     volume: number,
     type: OscillatorType = "sine",
+    priority = 0,
   ) {
-    if (this.voices.size >= 6) return;
+    if (this.voices.size >= 6) {
+      // Keep the latest tactile hit audible; decorative tails yield first.
+      if (priority === 0) return;
+      const victim = [...this.voices].sort((a, b) => a[1] - b[1])[0];
+      if (!victim || victim[1] > priority) return;
+      victim[0].stop();
+      this.voices.delete(victim[0]);
+    }
     const c = this.context!,
       o = c.createOscillator(),
       gain = c.createGain();
@@ -45,7 +53,7 @@ export class GameAudio {
     gain.gain.exponentialRampToValueAtTime(volume, start + 0.004);
     gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
     o.connect(gain).connect(this.master!);
-    this.voices.add(o);
+    this.voices.set(o, priority);
     o.start(start);
     o.stop(start + duration + 0.01);
     o.onended = () => {
@@ -82,12 +90,12 @@ export class GameAudio {
       return;
     }
     if (kind === "place") {
-      this.tone(230 * variation, 72, t, 0.12, 0.32);
-      this.tone(740, 280, t, 0.045, 0.12, "triangle");
-      this.tone(1250, 620, t, 0.025, 0.05);
+      this.tone(230 * variation, 72, t, 0.12, 0.32, "sine", 2);
+      this.tone(740, 280, t, 0.045, 0.12, "triangle", 1);
+      this.tone(1250, 620, t, 0.025, 0.05, "sine", 1);
       return;
     }
-    for (const voice of this.voices) {
+    for (const voice of this.voices.keys()) {
       try {
         voice.stop();
       } catch {}

@@ -72,7 +72,7 @@ test("important reward survives rapid moves with immediate score; pause clears i
       .poll(() => page.evaluate(() => (window as any).rewardAt700))
       .toContain("Новый рекорд");
     if (kind === "record")
-      await page.screenshot({ path: "docs/qa/feel-0.7/rapid-record.png" });
+      await page.screenshot({ path: "docs/qa/feel-0.8/rapid-record.png" });
     await page.locator("#pause").click();
     await expect(page.locator("#burst")).toHaveText("");
     await page.locator("#resume").click();
@@ -126,7 +126,7 @@ test("reward does not intersect score or board throughout animation on compact s
     expect(hint.y + hint.height).toBeLessThanOrEqual(ad.y);
     if (width > height) expect(board.width).toBeGreaterThanOrEqual(244);
     await page.screenshot({
-      path: `docs/qa/feel-0.7/reward-${width}x${height}.png`,
+      path: `docs/qa/feel-0.8/reward-${width}x${height}.png`,
     });
   }
 });

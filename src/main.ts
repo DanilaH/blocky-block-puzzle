@@ -68,6 +68,13 @@ async function start() {
     burstTimer = 0,
     modal = "";
   let running = false;
+  let phaser: Phaser.Game | null = null;
+  let rendererReady = false;
+  function syncRenderer() {
+    if (!phaser || !rendererReady) return;
+    if (running) phaser.loop.wake();
+    else phaser.loop.sleep();
+  }
   let recordCelebrated =
     initial.game.score > 0 && initial.game.score >= initial.best;
   let lastPraise = -Infinity;
@@ -106,6 +113,8 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      scene.preview(hintMove(), true, true);
+      syncRenderer();
       refreshHintLabel();
       if (resultPending)
         queueMicrotask(() => {
@@ -119,11 +128,12 @@ async function start() {
       cancelHint();
       audio.stop();
       stopCosmetics();
+      syncRenderer();
     },
   );
   activity.setGameplayDesired(true);
   installDocumentVisibilityBlocker(activity);
-  const phaser = new Phaser.Game({
+  phaser = new Phaser.Game({
     type: Phaser.AUTO,
     width: 512,
     height: 512,
@@ -135,6 +145,10 @@ async function start() {
     audio: { noAudio: true },
     scale: { mode: Phaser.Scale.NONE },
     fps: { target: 60 },
+  });
+  phaser.events.once("postrender", () => {
+    rendererReady = true;
+    syncRenderer();
   });
   const unsubscribeResize = () => {
     cancelDrag();
@@ -156,6 +170,10 @@ async function start() {
     "webglcontextrestored",
     () => {
       activity.setBlocked("webgl", false);
+      if (el("toast").textContent === "Восстанавливаем изображение…") {
+        clearTimeout(toastTimer);
+        el("toast").textContent = "";
+      }
       render();
     },
     true,
@@ -807,23 +825,34 @@ async function start() {
         const value = (event.target as HTMLInputElement).checked;
         dialog.querySelector<HTMLElement>(".dialog-status")!.textContent = "";
         try {
-          await store.update((p) => ({
+          for (const input of dialog.querySelectorAll<HTMLInputElement>(
+            ".setting input",
+          ))
+            input.disabled = true;
+          const changed = await store.update((p) => ({
             ...p,
             revision: p.revision + 1,
             settings: { ...p.settings, [key]: value },
           }));
+          if (!changed) toast("Дождитесь сохранения и повторите изменение");
           render();
         } catch {
           toast("Настройка не сохранена");
-          (event.target as HTMLInputElement).checked =
-            store.state.settings[key];
+        } finally {
+          for (const setting of ["sound", "calm"] as const) {
+            const input = dialog.querySelector<HTMLInputElement>(`#${setting}`);
+            if (input) {
+              input.checked = store.state.settings[setting];
+              input.disabled = false;
+            }
+          }
         }
       };
   }
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку подряд — ещё 5 очков за каждую линию, за третью — ещё 10. Ход без очистки сбрасывает серию. Полностью пустое поле даёт дополнительно 100 очков.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;
@@ -935,7 +964,11 @@ async function start() {
   render();
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (!inLesson() && initial.game.status === "over") showResult();
+  window.addEventListener("pageshow", () =>
+    activity.setBlocked("pagehide", false),
+  );
   window.addEventListener("pagehide", () => {
+    activity.setBlocked("pagehide", true);
     cancelDrag();
     cancelHint();
     audio.stop();
@@ -943,7 +976,8 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
-      phaser.destroy(true);
+      phaser?.loop.wake();
+      phaser?.destroy(true);
       cancelHint();
       window.removeEventListener("resize", unsubscribeResize);
     });
