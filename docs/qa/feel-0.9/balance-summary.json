@@ -1,0 +1,62 @@
+[
+  {
+    "policy": "solvable-v1",
+    "player": "random",
+    "n": 1000,
+    "p10": 11,
+    "median": 14.0,
+    "p90": 25,
+    "max": 47,
+    "censored": 0,
+    "zeroLines": 311,
+    "early1": 156,
+    "fallbacks": 0,
+    "meanLines": 2.116,
+    "meanStreak": 0.888
+  },
+  {
+    "policy": "solvable-v1",
+    "player": "beam3",
+    "n": 1000,
+    "p10": 150,
+    "median": 150.0,
+    "p90": 150,
+    "max": 150,
+    "censored": 905,
+    "zeroLines": 0,
+    "early1": 0,
+    "fallbacks": 0,
+    "meanLines": 64.422,
+    "meanStreak": 3.707
+  },
+  {
+    "policy": "initial-v1",
+    "player": "random",
+    "n": 1000,
+    "p10": 11,
+    "median": 14.0,
+    "p90": 20,
+    "max": 41,
+    "censored": 0,
+    "zeroLines": 371,
+    "early1": 219,
+    "fallbacks": 0,
+    "meanLines": 1.552,
+    "meanStreak": 0.765
+  },
+  {
+    "policy": "initial-v1",
+    "player": "beam3",
+    "n": 1000,
+    "p10": 77,
+    "median": 150.0,
+    "p90": 150,
+    "max": 150,
+    "censored": 746,
+    "zeroLines": 0,
+    "early1": 31,
+    "fallbacks": 0,
+    "meanLines": 59.439,
+    "meanStreak": 3.589
+  }
+]
