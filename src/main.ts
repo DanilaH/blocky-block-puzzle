@@ -330,6 +330,15 @@ async function start() {
     const effectBoard = [...before.board];
     if (piece) for (const i of placedCells) effectBoard[i] = piece.color;
     const outcome: { result: ReturnType<typeof applyMove> } = { result: null };
+    if (
+      piece &&
+      !piece.used &&
+      revision === before.revision &&
+      fits(before.board, shapeById(piece.shapeId), move.x, move.y)
+    ) {
+      scene.pendingPlacement(placedCells);
+      canvasBox.setAttribute("aria-busy", "true");
+    }
     try {
       const changed = await store.update((p) => {
         const result = applyMove(before, move, revision);
@@ -461,6 +470,9 @@ async function start() {
     } catch {
       toast("Не удалось сохранить ход. Попробуйте ещё раз.");
       render();
+    } finally {
+      scene.pendingPlacement([]);
+      canvasBox.removeAttribute("aria-busy");
     }
   }
   function presentReward(tier: string, praise: string, points: number) {

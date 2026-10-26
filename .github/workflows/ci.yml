@@ -27,6 +27,7 @@ jobs:
             test-results/
             docs/qa/feel-0.8/*.png
             docs/qa/feel-0.9/*.png
+            docs/qa/feel-0.10/*.png
   android:
     needs: verify
     runs-on: ubuntu-24.04

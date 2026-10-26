@@ -1,4 +1,4 @@
-// Original synthesized arcade SFX: woody transients, body and bell harmonics.
+// Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
   enabled = true;
   private variant = 0;
@@ -82,45 +82,77 @@ export class GameAudio {
       this.tone(200, 130, t, 0.07, 0.07);
       return;
     }
-    // Deterministic cosmetic alternation; never consumes the game RNG.
-    const variation = [1, 1.06, 0.95][this.variant++ % 3]!;
     if (kind === "pick") {
       this.tone(620, 920, t, 0.055, 0.09);
       this.tone(190, 140, t, 0.07, 0.14);
       return;
     }
-    if (kind === "place") {
-      this.tone(230 * variation, 72, t, 0.12, 0.32, "sine", 2);
-      this.tone(740, 280, t, 0.045, 0.12, "triangle", 1);
-      this.tone(1250, 620, t, 0.025, 0.05, "sine", 1);
-      return;
+    // A reward replaces old decorative tails, not its own contact.
+    if (kind !== "place") {
+      for (const voice of this.voices.keys()) {
+        try {
+          voice.stop();
+        } catch {}
+      }
+      this.voices.clear();
     }
-    for (const voice of this.voices.keys()) {
-      try {
-        voice.stop();
-      } catch {}
+    if (kind !== "hint") {
+      // Four articulation variants; independent from gameplay RNG and pickup count.
+      const v = [
+        {
+          body: 230,
+          end: 76,
+          length: 0.105,
+          attack: 740,
+          tick: 1250,
+          click: 0.035,
+        },
+        {
+          body: 242,
+          end: 82,
+          length: 0.09,
+          attack: 810,
+          tick: 1370,
+          click: 0.028,
+        },
+        {
+          body: 218,
+          end: 70,
+          length: 0.12,
+          attack: 690,
+          tick: 1160,
+          click: 0.04,
+        },
+        {
+          body: 234,
+          end: 79,
+          length: 0.1,
+          attack: 770,
+          tick: 1300,
+          click: 0.032,
+        },
+      ][this.variant++ % 4]!;
+      this.tone(v.body, v.end, t, v.length, 0.29, "sine", 2);
+      this.tone(v.attack, 310, t, v.click, 0.105, "triangle", 1);
+      this.tone(v.tick, 650, t, 0.018, 0.035, "sine", 1);
     }
-    this.voices.clear();
+    if (kind === "place") return;
     const notes =
       kind === "allClear"
-        ? [523.25, 783.99, 1046.5, 1567.98]
+        ? [523.25, 1046.5, 1567.98]
         : kind === "record"
           ? [659.25, 783.99, 1046.5]
           : kind === "mega"
-            ? [523.25, 783.99, 987.77, 1318.5]
+            ? [523.25, 987.77, 1318.5]
             : kind === "combo"
-              ? [523.25, 659.25, 783.99, 1046.5]
+              ? [523.25, 659.25, 1046.5]
               : kind === "hint"
                 ? [659.25, 987.77]
                 : [523.25, 783.99, 1046.5];
-    if (kind !== "hint") this.tone(160, 48, t, 0.2, 0.25);
     notes.forEach((hz, i) => {
-      const f =
-          hz *
-          Math.pow(2, Math.min(streak, 4) / 24) *
-          (kind === "clear" ? variation : 1),
-        at = t + i * 0.055;
-      this.tone(f, f * 0.995, at, 0.3, 0.13);
+      const f = hz * Math.pow(2, Math.min(streak, 4) / 24),
+        at = t + (kind === "hint" ? 0 : 0.04) + i * 0.055;
+      this.tone(f, f * 0.995, at, kind === "clear" ? 0.22 : 0.3, 0.1);
     });
   }
 }

@@ -77,8 +77,8 @@ it.each(["record", "allClear"] as const)(
     audio.play("pick");
     audio.play("place");
     expect([...active].some((v) => v.hz > 210 && v.hz < 250)).toBe(true);
-    expect([...active].some((v) => v.hz === 740)).toBe(true);
-    expect([...active].some((v) => v.hz === 1250)).toBe(true);
+    expect([...active].some((v) => v.hz >= 690 && v.hz <= 810)).toBe(true);
+    expect([...active].some((v) => v.hz >= 1160 && v.hz <= 1370)).toBe(true);
     for (let i = 0; i < 12; i++) audio.play("place");
     expect(peak).toBeLessThanOrEqual(6);
     audio.stop();
@@ -87,5 +87,19 @@ it.each(["record", "allClear"] as const)(
     audio.enabled = false;
     audio.play("place");
     expect(active.size).toBe(0);
+  },
+);
+
+it.each(["place", "clear", "combo", "mega", "record", "allClear"] as const)(
+  "%s includes one shared contact before reward notes within six voices",
+  async (kind) => {
+    vi.stubGlobal("AudioContext", FakeContext);
+    const audio = new GameAudio();
+    await audio.unlock();
+    audio.play(kind);
+    expect([...active].filter((v) => v.hz === 230)).toHaveLength(1);
+    expect([...active].filter((v) => v.hz === 740)).toHaveLength(1);
+    expect([...active].filter((v) => v.hz === 1250)).toHaveLength(1);
+    expect(peak).toBeLessThanOrEqual(6);
   },
 );
