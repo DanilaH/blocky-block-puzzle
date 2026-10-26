@@ -540,11 +540,38 @@ async function start() {
       y: Math.round((top - rect.top) / cell),
     };
   }
+  // A multi-touch sequence is cancelled until every finger is lifted.
+  // Capture phase runs before either tray or board can start a new action.
+  const touches = new Set<number>();
+  let multiTouch = false;
+  window.addEventListener(
+    "pointerdown",
+    (event) => {
+      if (event.pointerType !== "touch") return;
+      touches.add(event.pointerId);
+      if (touches.size > 1) {
+        multiTouch = true;
+        cancelDrag();
+      }
+    },
+    true,
+  );
+  const endTouch = (event: PointerEvent) => {
+    touches.delete(event.pointerId);
+    if (!touches.size) multiTouch = false;
+  };
+  window.addEventListener("pointerup", endTouch, true);
+  window.addEventListener("pointercancel", endTouch, true);
+  window.addEventListener("blur", () => {
+    touches.clear();
+    multiTouch = false;
+  });
   el("tray").addEventListener("pointerdown", (event) => {
     const button = (event.target as Element).closest<HTMLButtonElement>(
       "[data-slot]",
     );
     if (
+      multiTouch ||
       !button ||
       button.disabled ||
       !running ||
@@ -652,7 +679,14 @@ async function start() {
   });
   window.addEventListener("pointercancel", () => cancelDrag());
   canvasBox.addEventListener("pointerdown", (event) => {
-    if (selected === null || drag || !running || event.button !== 0) return;
+    if (
+      multiTouch ||
+      selected === null ||
+      drag ||
+      !running ||
+      event.button !== 0
+    )
+      return;
     const rect = canvasBox.getBoundingClientRect(),
       cell = rect.width / 8,
       move = {
