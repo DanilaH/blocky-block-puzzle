@@ -112,7 +112,7 @@ export class BoardScene extends Phaser.Scene {
       now = performance.now();
     g.clear();
     this.impacts = this.impacts.filter(
-      (e) => now - e.started < (this.calm ? 180 : 600),
+      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 800 : 600),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
@@ -176,14 +176,20 @@ export class BoardScene extends Phaser.Scene {
     let particlesLeft = 120;
     for (const e of this.impacts) {
       const age = now - e.started;
-      if (e.allClear && !this.calm) {
-        const t = age / 600;
-        g.lineStyle(5, 0xffe2a0, Math.max(0, 1 - t) * 0.65);
+      // Celebrate the empty board after the last clear, never over a new move.
+      if (
+        e.allClear &&
+        !this.calm &&
+        age >= 400 &&
+        !this.state?.board.some(Boolean)
+      ) {
+        const t = (age - 400) / 400;
+        g.lineStyle(3 + 3 * (1 - t), 0xffe2a0, Math.sin(t * Math.PI) * 0.85);
         g.strokeRoundedRect(
-          4 + t * 10,
-          4 + t * 10,
-          504 - t * 20,
-          504 - t * 20,
+          5 + t * 6,
+          5 + t * 6,
+          502 - t * 12,
+          502 - t * 12,
           12,
         );
       }
@@ -206,36 +212,48 @@ export class BoardScene extends Phaser.Scene {
         const t = Math.max(0, (age - delay) / (this.calm ? 180 : 300));
         const x = (i % 8) * 64,
           y = Math.floor(i / 8) * 64;
-        if (t < (this.calm ? 1 : 0.45) && !this.state?.board[i]) {
-          this.tile(
-            x,
-            y,
-            COLORS[e.board[i] || 1]!,
-            Math.max(0, 1 - t / (this.calm ? 1 : 0.45)),
-            this.calm ? 1 : contactScale(age) * (1 + t * 0.2),
-          );
-          g.fillStyle(
-            0xffffff,
-            this.calm
-              ? 0
-              : Math.max(0, Math.sin((t / 0.45) * Math.PI)) *
-                  (e.lines > 1 ? 0.65 : 0.4),
-          );
-          g.fillRect(x + 1, y + 1, 62, 62);
+        // New placements always cover old cosmetic fragments.
+        if (this.state?.board[i]) continue;
+        if (this.calm) {
+          if (t < 1) this.tile(x, y, COLORS[e.board[i] || 1]!, 1 - t);
+          continue;
         }
-        if (this.calm || t <= 0.12 || t >= 1) continue;
-        for (
-          let p = 0;
-          p < (e.lines >= 3 ? 4 : e.lines === 2 ? 3 : 2) && particlesLeft > 0;
-          p++, particlesLeft--
-        ) {
-          const angle = i * 2.4 + (p * Math.PI) / 2,
-            travel = (t - 0.12) * (35 + p * 15 + e.lines * 6);
-          const px = x + 32 + Math.cos(angle) * travel,
-            py = y + 32 + Math.sin(angle) * travel + t * t * 45;
-          const size = (1 - t) * (p === 0 ? 14 : 9);
-          g.fillStyle(p % 2 ? 0xffefd0 : COLORS[e.board[i] || 1]!, 1 - t);
-          g.fillRoundedRect(px - size / 2, py - size / 2, size, size, 2);
+        const collapse = Math.min(1, Math.max(0, (age - delay) / 140));
+        if (collapse < 1) {
+          // Keep the solid face opaque; remove mass through scale, not a dissolve.
+          const scale =
+            collapse < 0.22
+              ? 1 + collapse * 0.18
+              : Math.pow((1 - collapse) / 0.78, 2);
+          this.tile(x, y, COLORS[e.board[i] || 1]!, 1, scale);
+          if (collapse > 0 && collapse < 0.3) {
+            g.lineStyle(
+              3,
+              0xfff5d9,
+              Math.sin((collapse / 0.3) * Math.PI) * 0.8,
+            );
+            g.lineBetween(x + 12, y + 38, x + 50, y + 22);
+          }
+        }
+        if (t <= 0.18 || t >= 1) continue;
+        for (let p = 0; p < 2 && particlesLeft > 0; p++, particlesLeft--) {
+          const flight = (t - 0.18) / 0.82;
+          const direction = p ? 1 : -1;
+          const px = x + 32 + direction * (8 + flight * 22);
+          const py =
+            y + 32 - Math.sin(flight * Math.PI) * 14 + flight * flight * 22;
+          const size = 17 * (1 - flight);
+          g.fillStyle(COLORS[e.board[i] || 1]!, 1 - flight * flight);
+          g.fillTriangle(
+            px - size,
+            py - size * 0.6,
+            px + size,
+            py,
+            px - size * 0.4,
+            py + size,
+          );
+          g.lineStyle(2 * (1 - flight), 0xffefd0, 0.65 * (1 - flight));
+          g.lineBetween(px - size, py - size * 0.6, px + size, py);
         }
       }
       if (!this.calm && e.lines && age >= 40 && age < 300) {

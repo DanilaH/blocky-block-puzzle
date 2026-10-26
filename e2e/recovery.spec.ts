@@ -204,12 +204,14 @@ test("short portrait makes board usable and keeps controls separate", async ({
     tray = await page.locator("#tray").boundingBox(),
     hint = await page.locator("#hint").boundingBox(),
     ad = await page.locator("#ad-slot").boundingBox();
-  expect(b.width).toBeGreaterThanOrEqual(248);
-  expect(tray.x + tray.width).toBeLessThanOrEqual(hint.x);
+  // Reserve room for visible tiles as well as their touch targets.
+  expect(b.width).toBeGreaterThanOrEqual(210);
+  expect(b.x + b.width).toBeLessThanOrEqual(hint.x);
+  expect(hint.y + hint.height).toBeLessThanOrEqual(tray.y);
   expect(hint.height).toBeGreaterThanOrEqual(48);
   expect(hint.y + hint.height).toBeLessThan(ad.y - 3);
   expect(tray.y + tray.height).toBeLessThan(ad.y - 3);
-  await page.screenshot({ path: "docs/qa/feel-0.11/short-320x480.png" });
+  await page.screenshot({ path: "docs/qa/feel-0.12/short-320x480.png" });
 });
 
 test("failed recovery rolls back archive and preserves both damaged records", async ({

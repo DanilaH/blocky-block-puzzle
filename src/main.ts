@@ -1033,9 +1033,19 @@ async function start() {
     const bestFinish =
       store.state.game.score > 0 && store.state.game.score >= store.state.best;
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div><div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div><p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
       "result",
     );
+    dialog.dataset.record = String(bestFinish);
+    if (bestFinish)
+      animate(
+        el("dialog-title"),
+        [
+          { transform: "scale(.9)", opacity: 0.4 },
+          { transform: "scale(1)", opacity: 1 },
+        ],
+        220,
+      );
     el("again").onclick = () => void restart();
     el("look-board").onclick = close;
   }

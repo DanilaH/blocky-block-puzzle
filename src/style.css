@@ -1073,22 +1073,22 @@ dialog[data-kind="result"] .result-best {
   filter: drop-shadow(0 0 3px #fff5ce) drop-shadow(0 0 7px #f7cb7180);
 }
 .hint {
-  background: linear-gradient(#e8bd63, #bf8c3e);
-  border: 1px solid #ffe6a482;
-  color: #243b4c;
+  background: linear-gradient(#355064, #293f51);
+  border: 1px solid #839eaa55;
+  color: #d5e2e8;
   box-shadow:
-    0 4px #76562c,
-    inset 0 2px #fff4c57a;
+    0 3px #132b3c,
+    inset 0 1px #dcebf329;
   border-radius: 14px;
 }
 .hint svg {
-  fill: #fff0b0;
-  stroke: #5f512e;
+  fill: none;
+  stroke: #c3d6df;
 }
 .hint-count {
   color: #233b4d;
   border-color: #294458;
-  background: #f8ecd0;
+  background: #c2d3da;
 }
 .hint.depleted {
   color: #bed0d7;
@@ -1240,7 +1240,7 @@ dialog h2.result-score {
     color: #f7e9ca;
   }
 }
-/* Short portrait uses one bottom row for tray and hint; lesson keeps its own row. */
+/* Short portrait reserves a full-width tray; hint sits beside the board. */
 @media (orientation: portrait) and (max-height: 600px) {
   .shell {
     padding: 4px 12px;
@@ -1248,7 +1248,7 @@ dialog h2.result-score {
   .play-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 52px;
-    grid-template-rows: auto auto 56px;
+    grid-template-rows: auto auto 98px;
     align-content: center;
     gap: 4px 8px;
   }
@@ -1271,37 +1271,40 @@ dialog h2.result-score {
     font-size: 14px;
   }
   .board-column {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 2;
     gap: 4px;
   }
   .board-wrap {
-    width: min(100%, calc(var(--usable-height) - 224px));
+    width: min(100%, calc(var(--usable-height) - 266px));
   }
   .board-caption {
     height: 14px;
     font-size: 10px;
   }
   .tray-area {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 3;
   }
   .tray {
-    height: 56px;
+    height: 98px;
     gap: 6px;
   }
   .hint-area {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 2;
     align-items: center;
     padding: 0;
     min-height: 52px;
   }
   .learning .play-layout {
-    grid-template-rows: auto auto 56px auto;
+    grid-template-rows: auto auto 98px auto;
+  }
+  .learning .board-column {
+    grid-column: 1 / -1;
   }
   .learning .board-wrap {
-    width: min(100%, calc(var(--usable-height) - 300px));
+    width: min(100%, calc(var(--usable-height) - 342px));
   }
   .learning .tray-area {
     grid-column: 1 / -1;
@@ -1344,4 +1347,35 @@ dialog h2.result-score {
   margin-top: 12px;
   font-size: 13px;
   color: #aabec7;
+}
+
+/* Ordinary finishes stay quiet; a record owns the warm accent. */
+dialog[data-kind="result"]:not([data-record="true"]) .result-heading,
+dialog[data-kind="result"]:not([data-record="true"]) .result-score {
+  color: #e3edf0;
+}
+dialog[data-kind="result"][data-record="true"] {
+  border-top: 3px solid #f4ce79;
+}
+dialog[data-kind="result"][data-record="true"] .result-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+dialog[data-kind="result"][data-record="true"] .result-heading svg {
+  width: 54px;
+  height: 42px;
+  filter: drop-shadow(0 4px 0 #152b3c);
+}
+@media (orientation: landscape) and (max-height: 450px) {
+  dialog[data-kind="result"][data-record="true"] .result-heading {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+  dialog[data-kind="result"][data-record="true"] .result-heading svg {
+    width: 28px;
+    height: 22px;
+  }
 }

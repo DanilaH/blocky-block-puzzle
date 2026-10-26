@@ -151,7 +151,10 @@ export class GameAudio {
                 : [523.25, 783.99, 1046.5];
     notes.forEach((hz, i) => {
       const f = hz * Math.pow(2, Math.min(streak, 4) / 24),
-        at = t + (kind === "hint" ? 0 : 0.04) + i * 0.055;
+        at =
+          t +
+          (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
+          i * 0.055;
       this.tone(f, f * 0.995, at, kind === "clear" ? 0.22 : 0.3, 0.1);
     });
   }
