@@ -73,4 +73,12 @@ await p.evaluate(async () => {
 await p.reload();
 await p.locator("#again").waitFor();
 await p.screenshot({ path: root + "result.png" });
+await p.evaluate(async () => {
+  const { IndexedSave } = await import("/src/platform/save.ts");
+  const a = new IndexedSave(), q = (await a.load()).profile;
+  q.revision++; q.best = 2000; await a.write(q);
+});
+await p.reload();
+await p.locator("#again").waitFor();
+await p.screenshot({ path: root + "result-ordinary.png" });
 await b.close();
