@@ -63,7 +63,7 @@ test("safe-area keeps gameplay and lesson above the banner", async ({
             if (
               r.y < top - 0.5 ||
               r.x < left - 0.5 ||
-              r.y + r.height > a.y + 0.5 ||
+              r.y + r.height > a.y - 3.5 ||
               r.x + r.width > width + 0.5
             )
               return JSON.stringify({

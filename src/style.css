@@ -514,7 +514,7 @@ dialog p {
     height: 94px;
   }
   .board-wrap {
-    width: min(100%, calc(var(--usable-height) - 320px));
+    width: min(100%, calc(var(--usable-height) - 328px));
   }
   .board-caption {
     height: 18px;
