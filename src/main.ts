@@ -14,7 +14,12 @@ import {
   type GameState,
 } from "./core/rules";
 import { createProfile, dayKey, withHint, type Profile } from "./core/profile";
-import { IndexedSave, ProfileStore } from "./platform/save";
+import {
+  IndexedSave,
+  ProfileStore,
+  DamagedSaveError,
+  SaveConflictError,
+} from "./platform/save";
 import {
   GameplayActivityCoordinator,
   installDocumentVisibilityBlocker,
@@ -67,6 +72,7 @@ async function start() {
     toastTimer = 0,
     burstTimer = 0,
     modal = "";
+  let hintSaving = false;
   let running = false;
   let phaser: Phaser.Game | null = null;
   let rendererReady = false;
@@ -110,6 +116,7 @@ async function start() {
     el("burst").textContent = "";
     scene.stopEffects();
   }
+  store.onBusyChange = syncSaving;
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
@@ -268,7 +275,47 @@ async function start() {
         : g.moves === 0
           ? "Перенесите фигуру на поле"
           : "";
+    syncSaving();
+  }
+  function syncSaving() {
+    for (const button of document.querySelectorAll<HTMLButtonElement>(
+      "#new-game, #again, #restart, #practice, #lesson-skip, #play-again, .setting input",
+    ))
+      button.disabled = store.busy;
+    const status = document.getElementById("save-status");
+    if (status)
+      status.textContent = store.busy ? "Сохраняем…" : "Партия сохранена";
+    el("hint").toggleAttribute(
+      "disabled",
+      store.busy || currentGame().status === "over",
+    );
     refreshHintLabel();
+  }
+  async function writeFailure(error: unknown, message: string) {
+    if (error instanceof SaveConflictError) {
+      try {
+        const latest = await adapter.load();
+        if (latest.profile) {
+          cancelDrag();
+          cancelHint();
+          stopCosmetics();
+          store.state = latest.profile;
+          recordCelebrated =
+            latest.profile.game.score > 0 &&
+            latest.profile.game.score >= latest.profile.best;
+          resultPending = false;
+          clearTimeout(resultTimer);
+          render();
+          toast(
+            "Партия обновлена в другом окне. Загружено сохранённое состояние.",
+          );
+          return;
+        }
+      } catch {}
+      toast("Сохранение изменилось. Закройте и снова откройте игру.");
+      return;
+    }
+    toast(message);
   }
   function refreshHintLabel() {
     const p = store.state;
@@ -276,13 +323,17 @@ async function start() {
     const cached = !inLesson() && hintMove() !== null;
     el("hint-count").textContent = String(count);
     el("hint").classList.toggle("depleted", count === 0 && !cached);
-    el("hint-label").textContent = worker
-      ? "Ищем ход…"
-      : cached
-        ? "Показать ход"
-        : count === 0
-          ? "Подсказки завтра"
-          : "Подсказка";
+    if (worker || hintSaving) el("hint").setAttribute("aria-busy", "true");
+    else el("hint").removeAttribute("aria-busy");
+    el("hint-label").textContent = hintSaving
+      ? "Сохраняем…"
+      : worker
+        ? "Ищем ход…"
+        : cached
+          ? "Показать ход"
+          : count === 0
+            ? "Подсказки завтра"
+            : "Подсказка";
   }
   function cancelHint() {
     hintGeneration++;
@@ -467,8 +518,11 @@ async function start() {
             ),
           );
       }
-    } catch {
-      toast("Не удалось сохранить ход. Попробуйте ещё раз.");
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить ход. Попробуйте ещё раз.",
+      );
       render();
     } finally {
       scene.pendingPlacement([]);
@@ -779,14 +833,18 @@ async function start() {
     worker.onmessage = async (event: MessageEvent<HintResult>) => {
       worker?.terminate();
       worker = null;
-      el("hint").removeAttribute("aria-busy");
-      refreshHintLabel();
-      if (generation !== hintGeneration || !running) return;
+      if (generation !== hintGeneration || !running) {
+        refreshHintLabel();
+        return;
+      }
       const r = event.data;
       if (!r.move) {
+        refreshHintLabel();
         toast("Для оставшихся фигур нет места");
         return;
       }
+      hintSaving = true;
+      refreshHintLabel();
       try {
         const changed = await store.update((current) =>
           generation === hintGeneration && running
@@ -809,8 +867,14 @@ async function start() {
               .catch(() => {});
           }
         }
-      } catch {
-        toast("Не удалось сохранить подсказку. Кредит не списан.");
+      } catch (error) {
+        await writeFailure(
+          error,
+          "Не удалось сохранить подсказку. Кредит не списан.",
+        );
+      } finally {
+        hintSaving = false;
+        syncSaving();
       }
     };
     worker.postMessage(snapshot);
@@ -822,6 +886,7 @@ async function start() {
     dialog.innerHTML = content;
     structureDialog();
     dialog.showModal();
+    syncSaving();
   }
   function structureDialog() {
     const nodes = [...dialog.children];
@@ -860,7 +925,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p>Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
       "pause",
     );
     el("resume").onclick = close;
@@ -882,8 +947,8 @@ async function start() {
           }));
           if (!changed) toast("Дождитесь сохранения и повторите изменение");
           render();
-        } catch {
-          toast("Настройка не сохранена");
+        } catch (error) {
+          await writeFailure(error, "Настройка не сохранена");
         } finally {
           for (const setting of ["sound", "calm"] as const) {
             const input = dialog.querySelector<HTMLInputElement>(`#${setting}`);
@@ -912,8 +977,11 @@ async function start() {
         ) {
           close();
         }
-      } catch {
-        toast("Не удалось сохранить обучение. Попробуйте ещё раз.");
+      } catch (error) {
+        await writeFailure(
+          error,
+          "Не удалось сохранить обучение. Попробуйте ещё раз.",
+        );
       }
     };
     el("back-pause").onclick = () => {
@@ -926,6 +994,7 @@ async function start() {
     dialog.dataset.kind = "restart";
     dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
+    syncSaving();
     el("new-game").onclick = () => void restart();
     el("keep-game").onclick = close;
   }
@@ -950,8 +1019,11 @@ async function start() {
         activity.setBlocked("dialog", false);
         render();
       }
-    } catch {
-      toast("Не удалось сохранить новую партию. Предыдущая сохранена.");
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить новую партию. Предыдущая сохранена.",
+      );
     }
   }
   function showResult() {
@@ -961,7 +1033,7 @@ async function start() {
     const bestFinish =
       store.state.game.score > 0 && store.state.game.score >= store.state.best;
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div><p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div><div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div><p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
       "result",
     );
     el("again").onclick = () => void restart();
@@ -981,8 +1053,8 @@ async function start() {
         stopCosmetics();
         render();
       }
-    } catch {
-      toast("Не удалось сохранить. Попробуйте ещё раз.");
+    } catch (error) {
+      await writeFailure(error, "Не удалось сохранить. Попробуйте ещё раз.");
     }
   };
   el("pause").onclick = showPause;
@@ -1030,7 +1102,30 @@ async function start() {
 }
 void start().catch((error) => {
   console.error("Boot failed", error);
-  root.innerHTML =
-    '<div class="boot"><h2>Не удалось открыть игру</h2><p>Данные не удалены. Закройте другие вкладки игры и попробуйте снова.</p><button class="primary" id="retry">Повторить</button></div>';
+  const damaged = error instanceof DamagedSaveError;
+  root.innerHTML = `<div class="boot"><span class="boot-mark" aria-hidden="true">▦</span><h2>${damaged ? "Не удалось восстановить партию" : "Не удалось открыть игру"}</h2><p>${damaged ? "Основное сохранение и резервная копия повреждены. Можно повторить загрузку или начать заново. Повреждённые записи останутся в архиве на этом устройстве." : "Не удалось прочитать сохранение. Данные не удалены. Закройте другие окна игры и повторите загрузку."}</p><button class="primary" id="retry">Повторить</button>${damaged ? '<button class="secondary" id="recover">Начать заново</button>' : ""}<p id="recovery-status" role="alert"></p></div>`;
   document.getElementById("retry")!.onclick = () => location.reload();
+  const recovery = document.getElementById("recover");
+  if (recovery)
+    recovery.onclick = () => {
+      const box = root.querySelector(".boot")!;
+      box.innerHTML =
+        '<h2>Начать с чистого поля?</h2><p>Партия, рекорд и настройки будут сброшены. Повреждённые записи сохранятся отдельно, но игра не сможет восстановить их автоматически.</p><button class="primary" id="confirm-recovery">Сбросить и начать</button><button class="secondary" id="cancel-recovery">Назад</button><p id="recovery-status" role="alert"></p>';
+      document.getElementById("cancel-recovery")!.onclick = () =>
+        location.reload();
+      document.getElementById("confirm-recovery")!.onclick = async () => {
+        const buttons = box.querySelectorAll<HTMLButtonElement>("button");
+        buttons.forEach((b) => (b.disabled = true));
+        try {
+          await new IndexedSave().recoverDamaged(createProfile(fresh()));
+          location.reload();
+        } catch (error) {
+          document.getElementById("recovery-status")!.textContent =
+            error instanceof SaveConflictError
+              ? "Сохранение уже изменилось. Нажмите «Назад», чтобы загрузить его."
+              : "Не удалось записать новую партию. Исходные данные сохранены. Попробуйте ещё раз.";
+          buttons.forEach((b) => (b.disabled = false));
+        }
+      };
+    };
 });

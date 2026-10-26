@@ -1,4 +1,14 @@
 import { validProfile, type Profile } from "../core/profile";
+export class DamagedSaveError extends Error {
+  constructor() {
+    super("Damaged save");
+  }
+}
+export class SaveConflictError extends Error {
+  constructor() {
+    super("Save conflict");
+  }
+}
 export interface SaveAdapter {
   load(): Promise<{ profile: Profile | null; recovered: boolean }>;
   write(profile: Profile): Promise<void>;
@@ -29,12 +39,47 @@ export class IndexedSave implements SaveAdapter {
           else if (validProfile(b.result))
             resolve({ profile: b.result, recovered: true });
           else if (a.result !== undefined || b.result !== undefined)
-            reject(new Error("Damaged save"));
+            reject(new DamagedSaveError());
           else resolve({ profile: null, recovered: false });
         };
         tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error ?? new Error("Read aborted"));
       },
     );
+  }
+  // Recovery is explicit and atomic. Keep the original records for diagnosis.
+  async recoverDamaged(profile: Profile) {
+    if (!validProfile(profile)) throw new Error("Invalid recovery profile");
+    const db = await this.db;
+    return new Promise<void>((resolve, reject) => {
+      const tx = db.transaction("save", "readwrite"),
+        s = tx.objectStore("save");
+      const current = s.get("current"),
+        backup = s.get("backup");
+      let failure: unknown = new Error("Recovery transaction failed");
+      backup.onsuccess = () => {
+        try {
+          // Another window may have recovered the game since the error screen.
+          if (validProfile(current.result) || validProfile(backup.result)) {
+            failure = new SaveConflictError();
+            tx.abort();
+            return;
+          }
+          s.put(
+            { current: current.result, backup: backup.result },
+            `damaged:${crypto.randomUUID()}`,
+          );
+          s.put(profile, "current");
+          s.delete("backup");
+        } catch (error) {
+          failure = error;
+          tx.abort();
+        }
+      };
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(failure);
+    });
   }
   async write(profile: Profile) {
     if (!validProfile(profile)) throw new Error("Invalid save");
@@ -43,6 +88,7 @@ export class IndexedSave implements SaveAdapter {
       const tx = db.transaction("save", "readwrite"),
         s = tx.objectStore("save"),
         read = s.get("current");
+      let conflict = false;
       read.onsuccess = () => {
         const current: unknown = read.result;
         if (validProfile(current)) {
@@ -51,6 +97,7 @@ export class IndexedSave implements SaveAdapter {
             (current.revision === profile.revision &&
               JSON.stringify(current) !== JSON.stringify(profile))
           ) {
+            conflict = true;
             tx.abort();
             return;
           }
@@ -61,12 +108,15 @@ export class IndexedSave implements SaveAdapter {
       tx.oncomplete = () => resolve();
       tx.onerror = () => reject(tx.error);
       tx.onabort = () =>
-        reject(new Error("Save conflict or failed transaction"));
+        reject(
+          conflict ? new SaveConflictError() : new Error("Failed transaction"),
+        );
     });
   }
 }
 export class ProfileStore {
   busy = false;
+  onBusyChange: (() => void) | null = null;
   constructor(
     public state: Profile,
     private readonly save: SaveAdapter,
@@ -74,6 +124,7 @@ export class ProfileStore {
   async update(reduce: (current: Profile) => Profile | null): Promise<boolean> {
     if (this.busy) return false;
     this.busy = true;
+    this.onBusyChange?.();
     try {
       const next = reduce(this.state);
       if (!next || next === this.state) return false;
@@ -82,6 +133,7 @@ export class ProfileStore {
       return true;
     } finally {
       this.busy = false;
+      this.onBusyChange?.();
     }
   }
 }

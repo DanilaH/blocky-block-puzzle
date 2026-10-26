@@ -133,8 +133,8 @@ export class GameAudio {
         },
       ][this.variant++ % 4]!;
       this.tone(v.body, v.end, t, v.length, 0.29, "sine", 2);
-      this.tone(v.attack, 310, t, v.click, 0.105, "triangle", 1);
-      this.tone(v.tick, 650, t, 0.018, 0.035, "sine", 1);
+      this.tone(v.attack, 310, t, v.click, 0.095, "triangle", 1);
+      this.tone(v.tick, 650, t, 0.012, 0.027, "sine", 1);
     }
     if (kind === "place") return;
     const notes =

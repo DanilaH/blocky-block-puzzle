@@ -117,9 +117,9 @@ export class BoardScene extends Phaser.Scene {
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
-      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x233366 : 0x25366b);
+      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x142b3e : 0x172f42);
       g.fillRect(x, y, 64, 64);
-      g.lineStyle(1, 0x15214b, 0.4);
+      g.lineStyle(1, 0x081e30, 0.6);
       g.strokeRect(x, y, 64, 64);
       const color = this.state?.board[i];
       if (color) {
@@ -178,7 +178,7 @@ export class BoardScene extends Phaser.Scene {
       const age = now - e.started;
       if (e.allClear && !this.calm) {
         const t = age / 600;
-        g.lineStyle(7, 0xffffff, Math.max(0, 1 - t) * 0.55);
+        g.lineStyle(5, 0xffe2a0, Math.max(0, 1 - t) * 0.65);
         g.strokeRoundedRect(
           4 + t * 10,
           4 + t * 10,
@@ -234,7 +234,7 @@ export class BoardScene extends Phaser.Scene {
           const px = x + 32 + Math.cos(angle) * travel,
             py = y + 32 + Math.sin(angle) * travel + t * t * 45;
           const size = (1 - t) * (p === 0 ? 14 : 9);
-          g.fillStyle(p % 2 ? 0xffffff : COLORS[e.board[i] || 1]!, 1 - t);
+          g.fillStyle(p % 2 ? 0xffefd0 : COLORS[e.board[i] || 1]!, 1 - t);
           g.fillRoundedRect(px - size / 2, py - size / 2, size, size, 2);
         }
       }
@@ -243,7 +243,7 @@ export class BoardScene extends Phaser.Scene {
         for (let trail = 4; trail >= 0; trail--) {
           const d = distance - trail * 8;
           if (d < 0) continue;
-          g.fillStyle(trail ? 0x97e6ff : 0xffffff, (1 - trail / 5) * 0.7);
+          g.fillStyle(trail ? 0xffdc95 : 0xfff5d9, (1 - trail / 5) * 0.7);
           for (const sign of [-1, 1]) {
             for (const row of e.rows) {
               const at = e.origins.rows[row]! * 64 + 32 + sign * d;

@@ -3,7 +3,7 @@ const config: CapacitorConfig = {
   appId: "com.danilah.blocky.dev",
   appName: "Blocky Preview",
   webDir: "dist",
-  backgroundColor: "#101722",
-  android: { backgroundColor: "#101722" },
+  backgroundColor: "#172b3d",
+  android: { backgroundColor: "#172b3d" },
 };
 export default config;
