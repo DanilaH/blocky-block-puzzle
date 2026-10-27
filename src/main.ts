@@ -50,7 +50,7 @@ async function start() {
   const inLesson = () => lessonStep() < 4;
   const currentGame = () =>
     inLesson() ? lessonGame(lessonStep()) : store.state.game;
-  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
+  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
   const dialog = el<HTMLDialogElement>("dialog"),
@@ -73,6 +73,8 @@ async function start() {
     burstTimer = 0,
     modal = "";
   let hintSaving = false;
+  let rejectedDrags = 0;
+  let tapHelpShown = false;
   let running = false;
   let phaser: Phaser.Game | null = null;
   let rendererReady = false;
@@ -185,7 +187,7 @@ async function start() {
     },
     true,
   );
-  function toast(message: string) {
+  function toast(message: string, duration = 3500) {
     clearTimeout(toastTimer);
     if (dialog.open) {
       const status = dialog.querySelector<HTMLElement>(".dialog-status");
@@ -193,7 +195,11 @@ async function start() {
       return;
     }
     el("toast").textContent = message;
-    toastTimer = window.setTimeout(() => (el("toast").textContent = ""), 3500);
+    el("toast").classList.toggle("explanation", message.length > 45);
+    toastTimer = window.setTimeout(
+      () => (el("toast").textContent = ""),
+      duration,
+    );
   }
   function hintMove() {
     if (inLesson()) return LESSON_MOVES[lessonStep()] ?? null;
@@ -264,6 +270,7 @@ async function start() {
     el("lesson-skip").textContent =
       lessonStep() === 3 ? "Начать игру" : "Пропустить";
     root.classList.toggle("learning", inLesson());
+    root.classList.toggle("game-over", g.status === "over");
     root.classList.toggle("lesson-ready", lessonStep() === 3);
     el("streak").textContent = g.streak > 1 ? `Серия ${g.streak}` : "";
     el("streak").dataset.level = String(Math.min(4, g.streak));
@@ -421,6 +428,7 @@ async function start() {
       }
       selected = null;
       currentMove = null;
+      rejectedDrags = 0;
       const event = outcome.result!;
       const newRecord =
         !practicing &&
@@ -651,6 +659,8 @@ async function start() {
     cancelHint();
     selected = Number(button.dataset.slot);
     render();
+    if (button.classList.contains("unavailable"))
+      toast("Сейчас не помещается. Освободите место другой фигурой.", 5000);
     const rect = canvasBox.getBoundingClientRect();
     floating.getAnimations().forEach((a) => a.cancel());
     floating.innerHTML = mini(selected, rect.width / 8);
@@ -737,6 +747,14 @@ async function start() {
         } else floating.hidden = true;
         audio.play("cancel");
         render();
+        rejectedDrags++;
+        if (rejectedDrags >= 3 && !tapHelpShown) {
+          tapHelpShown = true;
+          toast(
+            "Можно без переноса: выберите фигуру и её левый верхний угол на поле.",
+            7000,
+          );
+        }
       }
     } else {
       render();
@@ -774,6 +792,8 @@ async function start() {
       currentMove = { slot: selected, x: 0, y: 0 };
       render();
       scene.preview(currentMove);
+      if (b.classList.contains("unavailable"))
+        toast("Сейчас не помещается. Освободите место другой фигурой.", 5000);
       void audio.unlock();
     }
   });
@@ -963,7 +983,7 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку подряд — ещё 5 очков за каждую линию, за третью — ещё 10. Ход без очистки сбрасывает серию. Полностью пустое поле даёт дополнительно 100 очков.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку подряд — ещё 5 очков за каждую линию, за третью — ещё 10. Ход без очистки сбрасывает серию. Полностью пустое поле даёт дополнительно 100 очков.</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;
@@ -1032,8 +1052,15 @@ async function start() {
     if (dialog.open) return;
     const bestFinish =
       store.state.game.score > 0 && store.state.game.score >= store.state.best;
+    const remaining = store.state.game.tray
+      .map((piece, slot) =>
+        piece.used
+          ? ""
+          : `<div class="result-piece" aria-label="Оставшаяся фигура ${slot + 1}">${mini(slot, 16)}</div>`,
+      )
+      .join("");
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для оставшихся фигур нет места.</p><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
       "result",
     );
     dialog.dataset.record = String(bestFinish);
@@ -1062,6 +1089,7 @@ async function start() {
         cancelDrag();
         stopCosmetics();
         render();
+        toast("Подсказки: 3 в день. Повтор открытого хода бесплатный.", 6500);
       }
     } catch (error) {
       await writeFailure(error, "Не удалось сохранить. Попробуйте ещё раз.");
@@ -1113,6 +1141,7 @@ async function start() {
 void start().catch((error) => {
   console.error("Boot failed", error);
   const damaged = error instanceof DamagedSaveError;
+  root.classList.add("boot-screen");
   root.innerHTML = `<div class="boot"><span class="boot-mark" aria-hidden="true">▦</span><h2>${damaged ? "Не удалось восстановить партию" : "Не удалось открыть игру"}</h2><p>${damaged ? "Основное сохранение и резервная копия повреждены. Можно повторить загрузку или начать заново. Повреждённые записи останутся в архиве на этом устройстве." : "Не удалось прочитать сохранение. Данные не удалены. Закройте другие окна игры и повторите загрузку."}</p><button class="primary" id="retry">Повторить</button>${damaged ? '<button class="secondary" id="recover">Начать заново</button>' : ""}<p id="recovery-status" role="alert"></p></div>`;
   document.getElementById("retry")!.onclick = () => location.reload();
   const recovery = document.getElementById("recover");

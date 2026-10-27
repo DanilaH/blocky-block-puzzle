@@ -30,6 +30,7 @@ jobs:
             docs/qa/feel-0.10/*.png
             docs/qa/feel-0.11/*.png
             docs/qa/feel-0.12/*.png
+            docs/qa/usability-0.13/*.png
   android:
     needs: verify
     runs-on: ubuntu-24.04

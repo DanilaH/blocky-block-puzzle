@@ -1379,3 +1379,192 @@ dialog[data-kind="result"][data-record="true"] .result-heading svg {
     height: 22px;
   }
 }
+
+/* 0.13: recovery owns its scroll area; gameplay remains fixed. */
+#app.boot-screen {
+  overflow-y: auto;
+  display: block;
+  overscroll-behavior: contain;
+}
+.boot-screen .boot {
+  margin: 0 auto;
+  padding: 20px 24px;
+  min-height: 100%;
+  align-content: center;
+}
+@media (max-height: 450px) {
+  .boot-screen .boot {
+    padding: 12px 24px;
+    gap: 8px;
+    align-content: start;
+  }
+  .boot-screen .boot-mark {
+    display: none;
+  }
+  .boot-screen .boot h2 {
+    font-size: 22px;
+  }
+}
+.lesson-heading {
+  display: none;
+}
+.learning .score-panel > div {
+  display: none;
+}
+.learning .lesson-heading {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #dce7e9;
+}
+.game-over .piece:disabled:not(.used) {
+  opacity: 1;
+  filter: none;
+}
+.game-over .piece.unavailable .mini-shape {
+  opacity: 1;
+  filter: none;
+}
+.result-pieces {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 12px 0 4px;
+}
+.result-piece {
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  min-height: 48px;
+}
+.board-caption .toast.explanation:not(:empty) {
+  top: auto;
+  bottom: 0;
+  height: auto;
+  min-height: 36px;
+  padding: 6px 8px;
+  line-height: 1.35;
+  background: #102739f5;
+  border: 1px solid #7898a166;
+  border-radius: 8px;
+  z-index: 3;
+}
+@media (orientation: portrait) and (max-height: 600px) {
+  .play-layout {
+    grid-template-rows: 64px minmax(0, 1fr) 88px;
+    align-content: stretch;
+  }
+  .score-panel {
+    min-height: 0;
+    padding: 0;
+    gap: 0;
+    justify-content: end;
+  }
+  .score {
+    font-size: 24px;
+  }
+  .reward-line {
+    height: 24px;
+  }
+  .best b {
+    font-size: 14px;
+  }
+  .board-column {
+    min-height: 0;
+    height: 100%;
+    container-type: size;
+    justify-content: center;
+  }
+  .board-wrap {
+    width: min(100%, calc(100cqh - 10px));
+  }
+  .tray {
+    height: 88px;
+  }
+  .learning .play-layout {
+    grid-template-rows: 48px minmax(0, 1fr) 56px 48px;
+  }
+  .learning .score-panel {
+    justify-content: center;
+    align-items: start;
+    padding-right: 56px;
+  }
+  .learning .board-wrap {
+    width: min(100%, 100cqh);
+  }
+  .learning .board-caption {
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  .learning .tray {
+    height: 56px;
+  }
+  .learning .hint-area {
+    min-height: 48px;
+  }
+  .learning #lesson {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 90px;
+    gap: 6px;
+    align-items: center;
+  }
+  .learning .lesson-skip {
+    padding: 0 4px;
+  }
+  .learning .board-caption .toast.explanation:not(:empty) {
+    bottom: 0;
+  }
+}
+
+@media (max-height: 600px) {
+  .boot-screen .boot {
+    padding: 12px 24px;
+    gap: 8px;
+    align-content: start;
+  }
+  .boot-screen .boot-mark {
+    display: none;
+  }
+  .boot-screen .boot h2 {
+    font-size: 22px;
+    margin: 0;
+  }
+  .boot-screen .boot p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+.result-pieces {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+@media (orientation: portrait) and (max-height: 600px) {
+  .score-panel {
+    gap: 8px;
+  }
+  .reward-line {
+    height: 28px;
+  }
+  .board-column {
+    gap: 0;
+  }
+  .board-caption {
+    height: 10px;
+    font-size: 10px;
+    line-height: 10px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 450px) {
+  .board-caption .toast.explanation:not(:empty) {
+    height: 26px;
+    min-height: 0;
+    padding: 1px 4px;
+    line-height: 12px;
+    border: 0;
+    background: transparent;
+  }
+}
