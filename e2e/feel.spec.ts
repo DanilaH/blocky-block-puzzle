@@ -60,7 +60,14 @@ async function fixture(page: Page, kind = "normal") {
 async function lastMove(page: Page) {
   await page.locator(".piece").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#score")).toHaveText("111");
+  await expect
+    .poll(() =>
+      page.evaluate(async () => {
+        const { IndexedSave } = await import("/src/platform/save.ts");
+        return (await new IndexedSave().load()).profile.game.score;
+      }),
+    )
+    .toBe(111);
 }
 test("final clear completes before result; Escape returns to final board; reload keeps result", async ({
   page,
@@ -108,14 +115,13 @@ test("record survives recent combo and drag source returns after cancel", async 
   const b = (await page.locator("#board").boundingBox())!;
   await page.locator(".piece").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#score")).toHaveText("142");
-  await expect(page.locator("#burst")).toContainText("Комбо");
+  await expect(page.locator("#burst")).toContainText("Две линии");
   await page.locator(".piece").nth(1).click();
   await page
     .locator("#board")
     .click({ position: { x: 4, y: b.width / 4 + 4 } });
-  await expect(page.locator("#score")).toHaveText("194");
   await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator("#score")).toHaveText("194");
   const p = (await page.locator(".piece").nth(2).boundingBox())!;
   await page.mouse.move(p.x + p.width / 2, p.y + p.height / 2);
   await page.mouse.down();

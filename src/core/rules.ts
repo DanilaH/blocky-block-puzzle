@@ -33,6 +33,8 @@ export interface GameState {
   tray: Slot[];
   score: number;
   streak: number;
+  rulesVersion?: "classic-v1" | "grace-v2";
+  streakMisses?: number;
   moves: number;
   rngState: number;
   dealerVersion: DealerVersion;
@@ -215,6 +217,8 @@ export function newGame(
     tray: d.tray,
     score: 0,
     streak: 0,
+    rulesVersion: "grace-v2",
+    streakMisses: 0,
     moves: 0,
     rngState: d.rngState,
     dealerVersion,
@@ -246,7 +250,12 @@ export function applyMove(
   const shape = shapeById(slot.shapeId);
   if (!fits(state.board, shape, move.x, move.y)) return null;
   const placed = place(state.board, shape, move.x, move.y, slot.color),
-    streak = placed.lines ? state.streak + 1 : 0;
+    misses = placed.lines ? 0 : (state.streakMisses ?? 0) + 1,
+    streak = placed.lines
+      ? state.streak + 1
+      : state.rulesVersion === "grace-v2" && misses <= 2
+        ? state.streak
+        : 0;
   const allClear = placed.board.every((c) => c === 0),
     points =
       shape.cells.length +
@@ -276,6 +285,7 @@ export function applyMove(
       dealerFallbacks,
       score: state.score + points,
       streak,
+      streakMisses: streak ? misses : 0,
       moves: state.moves + 1,
       status: hasMove(placed.board, tray) ? "playing" : "over",
     },

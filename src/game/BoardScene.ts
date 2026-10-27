@@ -6,7 +6,12 @@ import {
   type GameState,
   type Move,
 } from "../core/rules";
-import { clearWaveDelay, contactScale, waveOrigins } from "./feedback";
+import {
+  Celebration,
+  clearWaveDelay,
+  contactScale,
+  waveOrigins,
+} from "./feedback";
 import { COLORS, TILE_FACES } from "./tiles";
 type Impact = {
   placed: number[];
@@ -17,17 +22,24 @@ type Impact = {
   allClear: boolean;
   rows: number[];
   columns: number[];
+  energy: number;
   origins: ReturnType<typeof waveOrigins>;
 };
 export class BoardScene extends Phaser.Scene {
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
+  private previewEcho: { cells: number[]; color: number; at: number } | null =
+    null;
   private valid = true;
   private hint = false;
   private pending: number[] = [];
   private impacts: Impact[] = [];
   calm = false;
+  private celebration = new Celebration();
+  get intensity() {
+    return this.calm ? 0 : this.celebration.level(performance.now());
+  }
   constructor() {
     super("board");
   }
@@ -36,12 +48,48 @@ export class BoardScene extends Phaser.Scene {
     this.draw();
   }
   setState(state: GameState) {
-    if (this.state?.gameId !== state.gameId) this.impacts = [];
+    if (this.state?.gameId !== state.gameId) {
+      this.impacts = [];
+      this.celebration.reset();
+    }
+    this.previewEcho = null;
     this.state = state;
     this.ghost = null;
     this.draw();
   }
   preview(move: Move | null, valid = true, hint = false) {
+    if (
+      this.ghost &&
+      this.state &&
+      !this.calm &&
+      !this.hint &&
+      (!move ||
+        this.ghost.x !== move.x ||
+        this.ghost.y !== move.y ||
+        this.ghost.slot !== move.slot)
+    ) {
+      const slot = this.state.tray[this.ghost.slot];
+      if (
+        slot &&
+        this.valid &&
+        fits(
+          this.state.board,
+          shapeById(slot.shapeId),
+          this.ghost.x,
+          this.ghost.y,
+        )
+      )
+        this.previewEcho = {
+          cells: place(
+            this.state.board,
+            shapeById(slot.shapeId),
+            this.ghost.x,
+            this.ghost.y,
+          ).cells,
+          color: COLORS[slot.color]!,
+          at: performance.now(),
+        };
+    }
     this.ghost = move;
     this.valid = valid;
     this.hint = hint;
@@ -58,7 +106,9 @@ export class BoardScene extends Phaser.Scene {
     lines: number,
     allClear = false,
   ) {
+    if (lines && !this.calm) this.celebration.add(lines, performance.now());
     this.impacts.push({
+      energy: this.intensity,
       placed,
       cleared,
       board,
@@ -77,16 +127,23 @@ export class BoardScene extends Phaser.Scene {
       origins: waveOrigins(placed),
       started: performance.now(),
     });
-    this.impacts = this.impacts.slice(-2);
+    this.impacts = this.impacts.slice(-4);
   }
   stopEffects() {
     this.pending = [];
+    this.previewEcho = null;
+    this.celebration.reset();
     this.hint = false;
     this.impacts = [];
     this.draw();
   }
   update() {
-    if (this.impacts.length || (this.hint && this.ghost && !this.calm))
+    if (
+      this.previewEcho ||
+      this.intensity > 0 ||
+      this.impacts.length ||
+      (this.hint && this.ghost && !this.calm)
+    )
       this.draw();
   }
   private tile(x: number, y: number, color: number, alpha = 1, scale = 1) {
@@ -112,7 +169,7 @@ export class BoardScene extends Phaser.Scene {
       now = performance.now();
     g.clear();
     this.impacts = this.impacts.filter(
-      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 950 : 850),
+      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 1500 : 1250),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
@@ -130,6 +187,15 @@ export class BoardScene extends Phaser.Scene {
         this.tile(x, y, COLORS[color]!, 1, scale);
       }
     }
+    if (this.previewEcho) {
+      const alpha = 1 - (now - this.previewEcho.at) / 140;
+      if (alpha <= 0 || this.calm) this.previewEcho = null;
+      else
+        for (const i of this.previewEcho.cells) {
+          g.fillStyle(this.previewEcho.color, alpha * 0.55);
+          g.fillRect((i % 8) * 64 + 2, Math.floor(i / 8) * 64 + 2, 60, 60);
+        }
+    }
     if (this.state && this.ghost && !this.pending.length) {
       const s = this.state.tray[this.ghost.slot];
       if (s) {
@@ -138,14 +204,15 @@ export class BoardScene extends Phaser.Scene {
         const ok = this.valid && fits(this.state.board, shape, x, y);
         if (ok)
           for (const i of place(this.state.board, shape, x, y).cells) {
-            g.fillStyle(COLORS[s.color]!, 0.5);
-            g.fillRoundedRect(
-              (i % 8) * 64 + 1,
-              Math.floor(i / 8) * 64 + 1,
-              62,
-              62,
-              1,
-            );
+            const px = (i % 8) * 64,
+              py = Math.floor(i / 8) * 64;
+            this.tile(px, py, COLORS[s.color]!, 1);
+            g.lineStyle(12, COLORS[s.color]!, 0.25);
+            g.strokeRect(px + 3, py + 3, 58, 58);
+            g.lineStyle(3, 0xffffff, 0.95);
+            g.strokeRect(px + 3, py + 3, 58, 58);
+            g.fillStyle(0xffffff, 0.18);
+            g.fillRect(px + 5, py + 5, 54, 54);
           }
         for (const [dx, dy] of shape.cells) {
           const px = (x + dx) * 64,
@@ -173,7 +240,14 @@ export class BoardScene extends Phaser.Scene {
       g.lineStyle(2, 0xd4dbea, 0.8);
       g.strokeRect(x + 5, y + 5, 54, 54);
     }
-    let particlesLeft = 120;
+    const energy = this.intensity;
+    if (energy > 0) {
+      for (let ring = 0; ring < 4; ring++) {
+        g.lineStyle(2 + ring * 4, 0xffd67b, energy * (0.24 - ring * 0.05));
+        g.strokeRoundedRect(3, 3, 506, 506, 8);
+      }
+    }
+    let particlesLeft = 160;
     for (const e of this.impacts) {
       const age = now - e.started;
       // Celebrate the empty board after the last clear, never over a new move.
@@ -226,8 +300,8 @@ export class BoardScene extends Phaser.Scene {
           g.fillRoundedRect(x + 2, y + 3, 60, 58, 4);
         }
         // Broad white afterimage belongs to cleared cells, never a new placement.
-        if (elapsed > 90 && elapsed < 600) {
-          const fade = (elapsed - 90) / 510;
+        if (elapsed > 90 && elapsed < 900) {
+          const fade = (elapsed - 90) / 810;
           g.fillStyle(0xffffff, 0.62 * (1 - fade) ** 2);
           if (e.rows.includes(Math.floor(i / 8)))
             g.fillRect(x, y + 4 + fade * 18, 64, 56 - fade * 36);
@@ -237,8 +311,32 @@ export class BoardScene extends Phaser.Scene {
           if (e.rows.includes(Math.floor(i / 8))) g.fillRect(x, y + 29, 64, 6);
           if (e.columns.includes(i % 8)) g.fillRect(x + 29, y, 6, 64);
         }
-        if (elapsed < 100 || elapsed > 550) continue;
-        const flight = (elapsed - 100) / 450;
+        if (
+          elapsed >= 170 &&
+          elapsed < 1100 &&
+          e.energy > 0.5 &&
+          i % 2 === 0 &&
+          particlesLeft-- > 0
+        ) {
+          const f = (elapsed - 170) / 930;
+          const sx = x + 32 + Math.sin(i * 4) * f * 55;
+          const sy = y + 32 - f * (45 + (i % 5) * 12);
+          const r = (4 + e.energy * 6) * Math.sin(Math.PI * f);
+          g.fillStyle(0xffe8a2, (1 - f) * 0.8);
+          g.fillPoints(
+            Array.from(
+              { length: 8 },
+              (_, n) =>
+                new Phaser.Math.Vector2(
+                  sx + Math.cos((n * Math.PI) / 4) * (n % 2 ? r * 0.28 : r),
+                  sy + Math.sin((n * Math.PI) / 4) * (n % 2 ? r * 0.28 : r),
+                ),
+            ),
+            true,
+          );
+        }
+        if (elapsed < 100 || elapsed > 650) continue;
+        const flight = (elapsed - 100) / 550;
         const horizontal = e.rows.includes(Math.floor(i / 8));
         for (let p = 0; p < 2 && particlesLeft > 0; p++, particlesLeft--) {
           const sign = p ? 1 : -1;
@@ -263,17 +361,34 @@ export class BoardScene extends Phaser.Scene {
         for (let trail = 4; trail >= 0; trail--) {
           const d = distance - trail * 8;
           if (d < 0) continue;
-          g.fillStyle(trail ? 0xffdc95 : 0xfff5d9, (1 - trail / 5) * 0.7);
+          g.fillStyle(
+            trail
+              ? e.energy > 0.65
+                ? COLORS[(trail % 6) + 1]!
+                : COLORS[e.board[e.placed[0]!] || 1]!
+              : 0xffffff,
+            (1 - trail / 5) * 0.8,
+          );
           for (const sign of [-1, 1]) {
             for (const row of e.rows) {
               const at = e.origins.rows[row]! * 64 + 32 + sign * d;
               if (at >= 0 && at <= 512)
-                g.fillRect(at - 5, row * 64 + 29, 10, 6);
+                g.fillRect(
+                  at - 8,
+                  row * 64 + 10 + trail * 3,
+                  16,
+                  44 - trail * 6,
+                );
             }
             for (const col of e.columns) {
               const at = e.origins.columns[col]! * 64 + 32 + sign * d;
               if (at >= 0 && at <= 512)
-                g.fillRect(col * 64 + 29, at - 5, 6, 10);
+                g.fillRect(
+                  col * 64 + 10 + trail * 3,
+                  at - 8,
+                  44 - trail * 6,
+                  16,
+                );
             }
           }
         }

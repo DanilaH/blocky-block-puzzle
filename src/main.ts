@@ -70,7 +70,6 @@ async function start() {
     worker: Worker | null = null,
     hintGeneration = 0,
     toastTimer = 0,
-    burstTimer = 0,
     modal = "";
   let hintSaving = false;
   let rejectedDrags = 0;
@@ -85,10 +84,9 @@ async function start() {
   }
   let recordCelebrated =
     initial.game.score > 0 && initial.game.score >= initial.best;
-  let lastPraise = -Infinity;
   let rewardHoldUntil = 0;
-  let pendingReward: (() => void) | null = null;
-  let pendingRewardTimer = 0;
+  let pendingPoints = 0;
+  const rewards = new Map<HTMLElement, () => void>();
   let resultTimer = 0,
     resultPending = false;
   let scoreFrame = 0,
@@ -144,13 +142,14 @@ async function start() {
   function stopCosmetics() {
     cancelAnimationFrame(scoreFrame);
     scoreFrame = 0;
+    pendingPoints = 0;
+    scoreTarget = currentGame().score;
     scoreShown = scoreTarget;
     el("score").textContent = scoreTarget.toLocaleString("ru");
     cosmetic.forEach((a) => a.cancel());
     cosmetic.clear();
-    clearTimeout(burstTimer);
-    clearTimeout(pendingRewardTimer);
-    pendingReward = null;
+    rewards.forEach((finish) => finish());
+    rewards.clear();
     rewardHoldUntil = 0;
     el("burst").textContent = "";
     scene.stopEffects();
@@ -254,7 +253,12 @@ async function start() {
   function render(smoothScore = false) {
     const p = store.state,
       g = currentGame();
-    updateScore(g.score, g.gameId, smoothScore);
+    if (g.gameId !== scoreGame) pendingPoints = 0;
+    updateScore(
+      g.score - pendingPoints,
+      g.gameId,
+      smoothScore || pendingPoints > 0,
+    );
     el("best").textContent = p.best.toLocaleString("ru");
     el("hint-count").textContent = String(
       (p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints,
@@ -296,6 +300,7 @@ async function start() {
     audio.enabled = p.settings.sound;
     scene.calm =
       p.settings.calm || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    audio.calm = scene.calm;
     document.documentElement.classList.toggle("calm", scene.calm);
     scene.setState(g);
     scene.preview(hintMove(), true, true);
@@ -309,7 +314,11 @@ async function start() {
     root.classList.toggle("learning", inLesson());
     root.classList.toggle("game-over", g.status === "over");
     root.classList.toggle("lesson-ready", lessonStep() === 3);
-    el("streak").textContent = g.streak > 1 ? `Серия ${g.streak}` : "";
+    el("streak").textContent = g.streak
+      ? `Серия ${g.streak}${g.rulesVersion === "grace-v2" ? ` · ${2 - (g.streakMisses ?? 0)} запаса` : ""}`
+      : "";
+    el("streak").title =
+      "Можно сделать два хода без очистки. Третий сбросит серию. Время не ограничено.";
     el("streak").dataset.level = String(Math.min(4, g.streak));
     el("score").classList.toggle("compact", g.score >= 100000);
     el("caption").textContent = inLesson()
@@ -473,6 +482,11 @@ async function start() {
         previousBest > 0 &&
         event.state.score > previousBest;
       if (newRecord) recordCelebrated = true;
+      const deferred =
+        running && !scene.calm && event.lines
+          ? event.points - placedCells.length
+          : 0;
+      pendingPoints += deferred;
       render(running);
       if (running) {
         if (before.tray.filter((s) => s.used).length === 2)
@@ -487,6 +501,13 @@ async function start() {
               i * 35,
             ),
           );
+        scene.impact(
+          placedCells,
+          event.cells,
+          effectBoard,
+          event.lines,
+          event.allClear,
+        );
         audio.play(
           event.allClear
             ? "allClear"
@@ -501,24 +522,8 @@ async function start() {
                     : "place",
           event.state.streak,
           event.points,
+          scene.intensity,
         );
-        scene.impact(
-          placedCells,
-          event.cells,
-          effectBoard,
-          event.lines,
-          event.allClear,
-        );
-        if (event.lines)
-          animate(
-            el("score"),
-            [
-              { transform: "scale(1)" },
-              { transform: "scale(1.07)" },
-              { transform: "scale(1)" },
-            ],
-            200,
-          );
         const praise = event.allClear
           ? "Чистое поле!"
           : newRecord
@@ -526,7 +531,7 @@ async function start() {
             : event.lines >= 3
               ? `Отлично! ×${event.lines}`
               : event.lines === 2
-                ? "Комбо ×2"
+                ? "Две линии!"
                 : "";
         const tier = event.allClear
           ? "all-clear"
@@ -541,7 +546,7 @@ async function start() {
           animate(
             el("streak"),
             [
-              { transform: "scale(1.25)", color: "#fff" },
+              { transform: "scale(1.25)", color: "#a66b12" },
               { transform: "scale(1)" },
             ],
             260,
@@ -570,6 +575,9 @@ async function start() {
               : ""),
           event.points,
           anchor,
+          deferred,
+          event.state.streak,
+          event.state.gameId,
         );
       }
       el("announce").textContent =
@@ -583,7 +591,7 @@ async function start() {
               if (running && resultPending && !dialog.open) showResult();
             },
             Math.max(
-              scene.calm ? 220 : 700,
+              scene.calm ? 220 : event.lines ? 1650 : 700,
               rewardHoldUntil - performance.now(),
             ),
           );
@@ -604,60 +612,157 @@ async function start() {
     praise: string,
     points: number,
     anchor: { x: number; y: number } | null = null,
+    deferred = 0,
+    streak = 0,
+    gameId = currentGame().gameId,
   ) {
     const important = tier === "record" || tier === "all-clear";
-    const remaining = rewardHoldUntil - performance.now();
-    if (remaining > 0) {
-      if (important) {
-        pendingReward = () => presentReward(tier, praise, points, anchor);
-        clearTimeout(pendingRewardTimer);
-        pendingRewardTimer = window.setTimeout(() => {
-          const next = pendingReward;
-          pendingReward = null;
-          if (running) next?.();
-        }, remaining + 1);
-      }
-      return;
+    const node = document.createElement("span");
+    node.className = "reward-event";
+    node.dataset.tier = tier;
+    node.style.left = `${Math.max(27, Math.min(73, anchor?.x ?? 50))}%`;
+    node.style.top = `${Math.max(15, Math.min(82, anchor?.y ?? 48))}%`;
+    const label = document.createElement("span");
+    label.className = "reward-praise";
+    label.textContent = important
+      ? praise
+      : tier !== "place" && streak > 1
+        ? "Комбо"
+        : praise;
+    if (!important && tier !== "place" && streak > 1) {
+      const digit = document.createElement("b");
+      digit.textContent = String(streak);
+      label.append(digit);
+      animate(
+        digit,
+        [
+          { transform: "scale(.45)" },
+          { transform: "scale(1.35)", offset: 0.55 },
+          { transform: "scale(1)" },
+        ],
+        360,
+      );
     }
-    rewardAnchor.style.left = `${Math.max(36, Math.min(64, anchor?.x ?? 50))}%`;
-    rewardAnchor.style.top = `${Math.max(18, Math.min(82, anchor?.y ?? 48))}%`;
+    const amount = document.createElement("span");
+    amount.className = "reward-points";
+    amount.textContent = `+${deferred || points}`;
+    node.append(label, amount);
+    el("burst").append(node);
+    const boardBox = rewardAnchor.getBoundingClientRect();
+    label.style.fontSize = `${Math.min(important ? 29 : 32, boardBox.width * (important ? 0.075 : 0.09))}px`;
+    const bounds = node.getBoundingClientRect();
+    const insetX = ((bounds.width * 0.56 + 6) / boardBox.width) * 100;
+    const insetY = ((bounds.height * 0.6 + 16) / boardBox.height) * 100;
+    node.style.left = `${Math.max(insetX, Math.min(100 - insetX, anchor?.x ?? 50))}%`;
+    const candidates = [
+      anchor?.y ?? 48,
+      (anchor?.y ?? 48) + 24,
+      (anchor?.y ?? 48) - 24,
+    ].map((y) => Math.max(insetY, Math.min(100 - insetY, y)));
+    const top =
+      candidates.find((y) =>
+        [...rewards.keys()].every(
+          (other) => Math.abs(parseFloat(other.style.top) - y) > 20,
+        ),
+      ) ?? candidates[0]!;
+    node.style.top = `${top}%`;
     el("burst").dataset.tier = tier;
-    clearTimeout(burstTimer);
-    el("burst")
-      .getAnimations()
-      .forEach((a) => a.cancel());
-    const showPraise =
-      praise && (important || performance.now() - lastPraise > 2000);
-    el("burst").textContent = `${showPraise ? praise + "  " : ""}+${points}`;
-    if (showPraise) lastPraise = performance.now();
-    const duration = important
-      ? 1200
+    const duration = scene.calm
+      ? important
+        ? 1100
+        : 300
       : tier === "place"
-        ? 450
-        : tier === "line"
-          ? 650
-          : 1050;
-    rewardHoldUntil = important ? performance.now() + 1050 : 0;
-    const entrance =
-      tier === "record"
-        ? "translateY(6px) scale(.8)"
-        : tier === "all-clear"
-          ? "scaleX(.6)"
-          : "translateY(4px)";
-    const rewardAnimation = animate(
-      el("burst"),
+        ? 420
+        : important
+          ? 1900
+          : 1150;
+    if (important) rewardHoldUntil = performance.now() + duration;
+    const timerIds: number[] = [];
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      if (gameId !== currentGame().gameId) return;
+      pendingPoints = Math.max(0, pendingPoints - deferred);
+      if (deferred)
+        updateScore(currentGame().score - pendingPoints, gameId, running);
+    };
+    const finish = () => {
+      timerIds.forEach(clearTimeout);
+      settle();
+      node.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      node.remove();
+      rewards.delete(node);
+    };
+    rewards.set(node, finish);
+    if (rewards.size > 6) rewards.values().next().value?.();
+    const labelAnimation = animate(
+      label,
       [
-        { opacity: 0, transform: entrance },
-        { opacity: 1, transform: "none", offset: 0.125 },
-        { opacity: 1, transform: "none", offset: 0.875 },
-        { opacity: 0, transform: "translateY(-3px)" },
+        { opacity: 0, transform: "translateY(12px) scale(.7)" },
+        { opacity: 1, transform: "translateY(0) scale(1.08)", offset: 0.18 },
+        { opacity: 1, transform: "none", offset: 0.7 },
+        { opacity: 0, transform: "translateY(-14px) scale(.96)" },
       ],
       duration,
     );
-    rewardAnimation?.effect?.updateTiming({ easing: "linear" });
-    burstTimer = window.setTimeout(() => {
-      el("burst").textContent = "";
-    }, duration + 30);
+    labelAnimation?.effect?.updateTiming({ easing: "linear" });
+    animate(
+      amount,
+      [
+        { opacity: 0, transform: "scale(.7)" },
+        { opacity: 1, transform: "scale(1.12)", offset: 0.6 },
+        { opacity: 1, transform: "scale(1)" },
+      ],
+      220,
+    );
+    if (deferred)
+      timerIds.push(
+        window.setTimeout(
+          () => {
+            const a = amount.getBoundingClientRect(),
+              target = el("score").getBoundingClientRect();
+            const dx = target.left + target.width / 2 - a.left - a.width / 2;
+            const dy = target.top + target.height / 2 - a.top - a.height / 2;
+            animate(
+              amount,
+              [
+                { opacity: 1, transform: "translate(0,0) scale(1)" },
+                {
+                  opacity: 1,
+                  transform: `translate(${dx * 0.3}px,${dy * 0.55 - 20}px) scale(.9)`,
+                  offset: 0.55,
+                },
+                {
+                  opacity: 0,
+                  transform: `translate(${dx}px,${dy}px) scale(.35)`,
+                },
+              ],
+              380,
+            )?.effect?.updateTiming({ easing: "ease-in" });
+            timerIds.push(
+              window.setTimeout(() => {
+                settle();
+                amount.style.opacity = "0";
+                if (running && gameId === currentGame().gameId) {
+                  audio.play("score", streak, points, scene.intensity);
+                  animate(
+                    el("score"),
+                    [
+                      { transform: "scale(1)" },
+                      { transform: "scale(1.12)", offset: 0.3 },
+                      { transform: "scale(1)" },
+                    ],
+                    260,
+                  );
+                }
+              }, 380),
+            );
+          },
+          important ? 650 : 420,
+        ),
+      );
+    timerIds.push(window.setTimeout(finish, duration));
   }
   function locate(event: PointerEvent, slot: number, touch: boolean): Move {
     const rect = canvasBox.getBoundingClientRect(),
@@ -1060,7 +1165,7 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки подряд увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку подряд — ещё 5 очков за каждую линию, за третью — ещё 10. Ход без очистки сбрасывает серию. Полностью пустое поле даёт дополнительно 100 очков.</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10. ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} Полностью пустое поле даёт дополнительно 100 очков.</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;

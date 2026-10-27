@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 import {
+  Celebration,
   contactScale,
   waveOrigins,
   clearWaveDelay,
@@ -23,4 +24,18 @@ it("contact settles without repeated oscillation", () => {
   expect(contactScale(80)).toBeLessThan(contactScale(35));
   expect(contactScale(120)).toBe(1);
   expect(contactScale(1000)).toBe(1);
+});
+
+it("celebration decays, stacks within its cap and resets", () => {
+  const e = new Celebration();
+  expect(e.level(0)).toBe(0);
+  const first = e.add(1, 100);
+  expect(e.level(1100)).toBeLessThan(first);
+  expect(e.add(1, 1100)).toBeGreaterThan(first);
+  for (let i = 0; i < 20; i++) e.add(3, 1100);
+  expect(e.level(1100)).toBe(1);
+  expect(e.level(3900)).toBe(0);
+  e.add(1, 4000);
+  e.reset();
+  expect(e.level(4000)).toBe(0);
 });

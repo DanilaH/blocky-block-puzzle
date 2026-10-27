@@ -1777,3 +1777,76 @@ dialog h2 {
 .setting input:checked::after {
   background: #fff9e7;
 }
+
+/* 0.15: independent rewards share the board, score flights reach the HUD. */
+.board-reward {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  overflow: visible;
+}
+.board-reward #burst {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  overflow: visible;
+}
+.reward-event {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.reward-praise {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: clamp(19px, 6vw, 32px);
+  font-weight: 950;
+  font-style: italic;
+  color: white;
+  text-shadow:
+    0 2px 0 #333742,
+    2px 0 #333742,
+    -2px 0 #333742,
+    0 -2px #333742,
+    0 4px 10px #2229;
+}
+.reward-praise b {
+  display: inline-block;
+  font-size: 1.65em;
+  color: #ffe06b;
+}
+.reward-points {
+  display: block;
+  font-size: clamp(17px, 5vw, 27px);
+  font-weight: 900;
+  color: #fff4bb;
+  text-shadow:
+    0 2px 0 #383b45,
+    1px 0 #383b45,
+    -1px 0 #383b45;
+}
+.reward-event[data-tier="place"] .reward-points {
+  font-size: 16px;
+}
+.reward-event[data-tier="record"] .reward-praise,
+.reward-event[data-tier="all-clear"] .reward-praise {
+  font-size: clamp(19px, 5.5vw, 29px);
+  color: #ffe06b;
+}
+#streak {
+  font-size: 12px;
+}
+
+#streak[data-level] {
+  color: #79623d;
+  font-weight: 750;
+}

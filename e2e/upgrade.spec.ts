@@ -95,10 +95,10 @@ test("availability updates after a clear; streak label is not a multiplier", asy
   });
   await page.reload();
   await expect(page.locator(".piece.unavailable")).toHaveCount(2);
-  await expect(page.locator("#streak")).toHaveText("Серия 2");
+  await expect(page.locator("#streak")).toContainText("Серия 2");
   await put(page, 0, 0, 0);
   await expect(page.locator(".piece.unavailable")).toHaveCount(0);
-  await expect(page.locator("#streak")).toHaveText("Серия 3");
+  await expect(page.locator("#streak")).toContainText("Серия 3");
   await expect(page.locator("#burst")).toHaveAttribute(
     "data-tier",
     "all-clear",

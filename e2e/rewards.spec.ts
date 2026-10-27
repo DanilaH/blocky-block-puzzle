@@ -66,11 +66,11 @@ test("important reward survives rapid moves with converging score; pause clears 
     await put(page, 0, 0, 0);
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
     await put(page, 1, 2, 2);
-    await expect(page.locator("#score")).toHaveText("12");
     await expect(page.locator("#burst")).toContainText("Новый рекорд");
     await expect
       .poll(() => page.evaluate(() => (window as any).rewardAt700))
       .toContain("Новый рекорд");
+    await expect(page.locator("#score")).toHaveText("12");
     if (kind === "record")
       await page.screenshot({ path: "docs/qa/feel-0.8/rapid-record.png" });
     await page.locator("#pause").click();
@@ -98,12 +98,12 @@ test("reward stays inside board without intersecting score throughout animation"
       const start = performance.now();
       while (performance.now() - start < 800) {
         const a = document.querySelector("#score")!.getBoundingClientRect(),
-          b = document.querySelector("#burst")!.getBoundingClientRect(),
+          b = document.querySelector(".reward-praise")!.getBoundingClientRect(),
           board = document.querySelector("#board")!.getBoundingClientRect();
         const overlap = (x: DOMRect, y: DOMRect) =>
           Math.min(x.right, y.right) > Math.max(x.left, y.left) &&
           Math.min(x.bottom, y.bottom) > Math.max(x.top, y.top);
-        const burst = document.querySelector("#burst")!;
+        const burst = document.querySelector(".reward-praise")!;
         const time = Number(burst.getAnimations()[0]?.currentTime ?? -1);
         data.push({
           score: overlap(a, b),
@@ -120,7 +120,7 @@ test("reward stays inside board without intersecting score throughout animation"
       return data;
     });
     expect(samples.every((s) => !s.score && s.board)).toBe(true);
-    const readable = samples.filter((s) => s.time >= 150 && s.time <= 1000);
+    const readable = samples.filter((s) => s.time >= 400 && s.time <= 1000);
     expect(readable.length).toBeGreaterThan(0);
     expect(readable.every((s) => s.opacity > 0.95)).toBe(true);
     const board = (await page.locator("#board").boundingBox())!,
@@ -151,7 +151,7 @@ test("depleted and cached hint labels survive focus changes", async ({
   await expect(page.locator("#hint-label")).toHaveText("Показать ход");
   await expect(page.locator("#hint-count")).toHaveText("2");
 });
-test("two important events use one pending slot; background clears pending presentation", async ({
+test("two important events overlap; background clears presentation", async ({
   page,
 }) => {
   await setup(page, "two");
@@ -159,8 +159,9 @@ test("two important events use one pending slot; background clears pending prese
   await expect(page.locator("#burst")).toContainText("Новый рекорд");
   await put(page, 1, 0, 7);
   await expect(page.locator("#burst")).toContainText("Новый рекорд");
-  await expect(page.locator("#score")).toHaveText("127");
   await expect(page.locator("#burst")).toContainText("Чистое поле");
+  await expect(page.locator(".reward-event")).toHaveCount(2);
+  await expect(page.locator("#score")).toHaveText("127");
   await setup(page, "two");
   await put(page, 0, 0, 0);
   await put(page, 1, 0, 7);

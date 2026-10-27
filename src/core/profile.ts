@@ -98,6 +98,12 @@ export function validProfile(value: unknown): value is Profile {
       !integer(g.moves) ||
       !integer(g.score) ||
       !integer(g.streak) ||
+      (g.rulesVersion !== undefined &&
+        !["classic-v1", "grace-v2"].includes(g.rulesVersion)) ||
+      (g.streakMisses !== undefined &&
+        (!integer(g.streakMisses) ||
+          g.streakMisses > 2 ||
+          (!g.streak && g.streakMisses !== 0))) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||

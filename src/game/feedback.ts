@@ -37,3 +37,25 @@ export function clearWaveDelay(
       )
   );
 }
+
+// Shared envelope: cosmetic time never changes the logical combo.
+export class Celebration {
+  private value = 0;
+  private at = 0;
+  level(now: number) {
+    return (
+      this.value * Math.max(0, 1 - Math.max(0, now - this.at) / 2800) ** 1.4
+    );
+  }
+  add(lines: number, now: number) {
+    this.value = Math.min(
+      1,
+      this.level(now) + 0.32 + Math.min(3, lines) * 0.13,
+    );
+    this.at = now;
+    return this.value;
+  }
+  reset() {
+    this.value = 0;
+  }
+}

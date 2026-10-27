@@ -195,3 +195,48 @@ describe("activity and deadline safety", () => {
     }
   });
 });
+
+describe("grace combo rules and old saves", () => {
+  function ready() {
+    const g = newGame(3, "grace");
+    g.streak = 3;
+    g.board[63] = 2;
+    g.tray = [0, 1, 2].map(() => ({ shapeId: "S1-0", color: 1, used: false }));
+    return g;
+  }
+  it("allows two preparation moves, resets on the third, survives serialization", () => {
+    let g = ready();
+    for (let i = 0; i < 3; i++) {
+      g = applyMove(g, { slot: i, x: i, y: 0 }, g.revision)!.state;
+      g = JSON.parse(JSON.stringify(g));
+      expect(g.streak).toBe(i < 2 ? 3 : 0);
+      expect(g.streakMisses).toBe(i < 2 ? i + 1 : 0);
+      const p = createProfile(g);
+      p.best = g.score;
+      expect(validProfile(p)).toBe(true);
+    }
+  });
+  it("clearing after two preparation moves increases combo and restores allowance", () => {
+    let g = ready();
+    for (let x = 1; x < 8; x++) g.board[24 + x] = 2;
+    for (let i = 0; i < 2; i++)
+      g = applyMove(g, { slot: i, x: i, y: 0 }, g.revision)!.state;
+    const r = applyMove(g, { slot: 2, x: 0, y: 3 }, g.revision)!;
+    expect(r.state.streak).toBe(4);
+    expect(r.state.streakMisses).toBe(0);
+    expect(r.points).toBe(26);
+    expect(applyMove(r.state, { slot: 2, x: 0, y: 3 }, g.revision)).toBeNull();
+  });
+  it("legacy games keep old rules and malformed combo counters are rejected", () => {
+    const g = ready();
+    delete g.rulesVersion;
+    delete g.streakMisses;
+    expect(applyMove(g, { slot: 0, x: 0, y: 0 }, 0)!.state.streak).toBe(0);
+    const p = createProfile(g);
+    expect(validProfile(p)).toBe(true);
+    for (const v of [-1, 3, 0.5])
+      expect(validProfile({ ...p, game: { ...g, streakMisses: v } })).toBe(
+        false,
+      );
+  });
+});
