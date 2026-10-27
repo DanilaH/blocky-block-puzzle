@@ -103,3 +103,23 @@ it.each(["place", "clear", "combo", "mega", "record", "allClear"] as const)(
     expect(peak).toBeLessThanOrEqual(6);
   },
 );
+
+it("reward pitch rises with combo and points, stays bounded and respects mute", async () => {
+  vi.stubGlobal("AudioContext", FakeContext);
+  const audio = new GameAudio();
+  await audio.unlock();
+  audio.play("clear", 1, 11);
+  const low = [...active]
+    .map((v) => v.hz)
+    .filter((v) => v !== 230 && v !== 740 && v !== 1250);
+  audio.play("clear", 6, 300);
+  const high = [...active]
+    .map((v) => v.hz)
+    .filter((v) => v !== 242 && v !== 810 && v !== 1370);
+  expect(Math.max(...high)).toBeGreaterThan(Math.max(...low));
+  audio.play("clear", 999, 999999);
+  expect(Math.max(...[...active].map((v) => v.hz))).toBeLessThan(2300);
+  expect(peak).toBeLessThanOrEqual(6);
+  audio.stop();
+  expect(active.size).toBe(0);
+});

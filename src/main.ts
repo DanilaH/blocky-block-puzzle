@@ -91,6 +91,39 @@ async function start() {
   let pendingRewardTimer = 0;
   let resultTimer = 0,
     resultPending = false;
+  let scoreFrame = 0,
+    scoreShown = initial.game.score,
+    scoreTarget = initial.game.score;
+  let scoreGame = initial.game.gameId;
+  const rewardAnchor = document.createElement("div");
+  rewardAnchor.className = "board-reward";
+  document.querySelector(".board-wrap")!.append(rewardAnchor);
+  rewardAnchor.append(el("burst"));
+  function updateScore(value: number, gameId: string, smooth: boolean) {
+    if (value === scoreTarget && gameId === scoreGame && scoreFrame) return;
+    cancelAnimationFrame(scoreFrame);
+    scoreFrame = 0;
+    const from = scoreShown;
+    scoreTarget = value;
+    const sameGame = scoreGame === gameId;
+    scoreGame = gameId;
+    const paint = (n: number) => {
+      scoreShown = n;
+      el("score").textContent = Math.round(n).toLocaleString("ru");
+    };
+    if (!smooth || scene.calm || !sameGame || value <= from) {
+      paint(value);
+      return;
+    }
+    const start = performance.now(),
+      duration = Math.min(650, 260 + Math.log2(value - from + 1) * 40);
+    const tick = (now: number) => {
+      const t = Math.max(0, Math.min(1, (now - start) / duration));
+      paint(from + (value - from) * (1 - (1 - t) ** 3));
+      scoreFrame = t < 1 ? requestAnimationFrame(tick) : 0;
+    };
+    scoreFrame = requestAnimationFrame(tick);
+  }
   const cosmetic = new Set<Animation>();
   function animate(
     target: Element,
@@ -109,6 +142,10 @@ async function start() {
     return a;
   }
   function stopCosmetics() {
+    cancelAnimationFrame(scoreFrame);
+    scoreFrame = 0;
+    scoreShown = scoreTarget;
+    el("score").textContent = scoreTarget.toLocaleString("ru");
     cosmetic.forEach((a) => a.cancel());
     cosmetic.clear();
     clearTimeout(burstTimer);
@@ -162,7 +199,7 @@ async function start() {
   const unsubscribeResize = () => {
     cancelDrag();
     cancelHint();
-    requestAnimationFrame(render);
+    requestAnimationFrame(() => render());
   };
   window.addEventListener("resize", unsubscribeResize);
   window.addEventListener("blur", () => activity.setBlocked("blur", true));
@@ -214,10 +251,10 @@ async function start() {
       shape = shapeById(piece.shapeId);
     return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => `<img draggable="false" alt="" class="mini-cell" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[piece.color]!)}">`).join("")}</span>`;
   }
-  function render() {
+  function render(smoothScore = false) {
     const p = store.state,
       g = currentGame();
-    el("score").textContent = g.score.toLocaleString("ru");
+    updateScore(g.score, g.gameId, smoothScore);
     el("best").textContent = p.best.toLocaleString("ru");
     el("hint-count").textContent = String(
       (p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints,
@@ -436,7 +473,7 @@ async function start() {
         previousBest > 0 &&
         event.state.score > previousBest;
       if (newRecord) recordCelebrated = true;
-      render();
+      render(running);
       if (running) {
         if (before.tray.filter((s) => s.used).length === 2)
           document.querySelectorAll(".piece .mini-shape").forEach((e, i) =>
@@ -463,6 +500,7 @@ async function start() {
                     ? "clear"
                     : "place",
           event.state.streak,
+          event.points,
         );
         scene.impact(
           placedCells,
@@ -508,7 +546,31 @@ async function start() {
             ],
             260,
           );
-        presentReward(tier, praise, event.points);
+        const rows = Array.from({ length: 8 }, (_, y) => y).filter((y) =>
+          Array.from({ length: 8 }, (_, x) => y * 8 + x).every((i) =>
+            event.cells.includes(i),
+          ),
+        );
+        const cols = Array.from({ length: 8 }, (_, x) => x).filter((x) =>
+          Array.from({ length: 8 }, (_, y) => y * 8 + x).every((i) =>
+            event.cells.includes(i),
+          ),
+        );
+        const anchor = event.lines
+          ? {
+              x: cols.length ? ((cols[0]! + 0.5) / 8) * 100 : 50,
+              y: rows.length ? ((rows[0]! + 0.5) / 8) * 100 : 50,
+            }
+          : null;
+        presentReward(
+          tier,
+          praise ||
+            (event.state.streak > 1 && event.lines
+              ? `Серия ×${event.state.streak}`
+              : ""),
+          event.points,
+          anchor,
+        );
       }
       el("announce").textContent =
         `Счёт ${event.state.score}. ${event.lines ? "Очищено линий: " + event.lines : ""}`;
@@ -537,12 +599,17 @@ async function start() {
       canvasBox.removeAttribute("aria-busy");
     }
   }
-  function presentReward(tier: string, praise: string, points: number) {
+  function presentReward(
+    tier: string,
+    praise: string,
+    points: number,
+    anchor: { x: number; y: number } | null = null,
+  ) {
     const important = tier === "record" || tier === "all-clear";
     const remaining = rewardHoldUntil - performance.now();
     if (remaining > 0) {
       if (important) {
-        pendingReward = () => presentReward(tier, praise, points);
+        pendingReward = () => presentReward(tier, praise, points, anchor);
         clearTimeout(pendingRewardTimer);
         pendingRewardTimer = window.setTimeout(() => {
           const next = pendingReward;
@@ -552,6 +619,8 @@ async function start() {
       }
       return;
     }
+    rewardAnchor.style.left = `${Math.max(36, Math.min(64, anchor?.x ?? 50))}%`;
+    rewardAnchor.style.top = `${Math.max(18, Math.min(82, anchor?.y ?? 48))}%`;
     el("burst").dataset.tier = tier;
     clearTimeout(burstTimer);
     el("burst")
@@ -906,6 +975,14 @@ async function start() {
     dialog.innerHTML = content;
     structureDialog();
     dialog.showModal();
+    animate(
+      dialog,
+      [
+        { opacity: 0, transform: "translateY(12px) scale(.97)" },
+        { opacity: 1, transform: "none" },
+      ],
+      180,
+    );
     syncSaving();
   }
   function structureDialog() {

@@ -74,6 +74,7 @@ export class GameAudio {
       | "record"
       | "allClear",
     streak = 0,
+    points = 0,
   ) {
     if (!this.enabled || !this.context || this.context.state !== "running")
       return;
@@ -150,11 +151,18 @@ export class GameAudio {
                 ? [659.25, 987.77]
                 : [523.25, 783.99, 1046.5];
     notes.forEach((hz, i) => {
-      const f = hz * Math.pow(2, Math.min(streak, 4) / 24),
+      const f =
+          hz *
+          Math.pow(
+            2,
+            (Math.min(streak, 6) * 1.5 +
+              Math.min(4, Math.log2(Math.max(1, points / 20)))) /
+              12,
+          ),
         at =
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
-          i * 0.055;
+          i * (0.07 + Math.min(points, 300) / 3000);
       this.tone(f, f * 0.995, at, kind === "clear" ? 0.22 : 0.3, 0.1);
     });
   }

@@ -112,14 +112,14 @@ export class BoardScene extends Phaser.Scene {
       now = performance.now();
     g.clear();
     this.impacts = this.impacts.filter(
-      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 800 : 600),
+      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 950 : 850),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
-      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x142b3e : 0x172f42);
+      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x34353a : 0x38393e);
       g.fillRect(x, y, 64, 64);
-      g.lineStyle(1, 0x081e30, 0.6);
+      g.lineStyle(1, 0x28292d, 0.35);
       g.strokeRect(x, y, 64, 64);
       const color = this.state?.board[i];
       if (color) {
@@ -218,42 +218,44 @@ export class BoardScene extends Phaser.Scene {
           if (t < 1) this.tile(x, y, COLORS[e.board[i] || 1]!, 1 - t);
           continue;
         }
-        const collapse = Math.min(1, Math.max(0, (age - delay) / 140));
+        const elapsed = age - delay;
+        const collapse = Math.min(1, Math.max(0, elapsed / 170));
         if (collapse < 1) {
-          // Keep the solid face opaque; remove mass through scale, not a dissolve.
-          const scale =
-            collapse < 0.22
-              ? 1 + collapse * 0.18
-              : Math.pow((1 - collapse) / 0.78, 2);
-          this.tile(x, y, COLORS[e.board[i] || 1]!, 1, scale);
-          if (collapse > 0 && collapse < 0.3) {
-            g.lineStyle(
-              3,
-              0xfff5d9,
-              Math.sin((collapse / 0.3) * Math.PI) * 0.8,
-            );
-            g.lineBetween(x + 12, y + 38, x + 50, y + 22);
-          }
+          this.tile(x, y, COLORS[e.board[i] || 1]!, 1, 1 - collapse ** 3);
+          g.fillStyle(0xffffff, Math.sin(collapse * Math.PI) * 0.85);
+          g.fillRoundedRect(x + 2, y + 3, 60, 58, 4);
         }
-        if (t <= 0.18 || t >= 1) continue;
+        // Broad white afterimage belongs to cleared cells, never a new placement.
+        if (elapsed > 90 && elapsed < 600) {
+          const fade = (elapsed - 90) / 510;
+          g.fillStyle(0xffffff, 0.62 * (1 - fade) ** 2);
+          if (e.rows.includes(Math.floor(i / 8)))
+            g.fillRect(x, y + 4 + fade * 18, 64, 56 - fade * 36);
+          if (e.columns.includes(i % 8))
+            g.fillRect(x + 4 + fade * 18, y, 56 - fade * 36, 64);
+          g.fillStyle(0xffffff, 0.7 * (1 - fade) ** 2);
+          if (e.rows.includes(Math.floor(i / 8))) g.fillRect(x, y + 29, 64, 6);
+          if (e.columns.includes(i % 8)) g.fillRect(x + 29, y, 6, 64);
+        }
+        if (elapsed < 100 || elapsed > 550) continue;
+        const flight = (elapsed - 100) / 450;
+        const horizontal = e.rows.includes(Math.floor(i / 8));
         for (let p = 0; p < 2 && particlesLeft > 0; p++, particlesLeft--) {
-          const flight = (t - 0.18) / 0.82;
-          const direction = p ? 1 : -1;
-          const px = x + 32 + direction * (8 + flight * 22);
-          const py =
-            y + 32 - Math.sin(flight * Math.PI) * 14 + flight * flight * 22;
-          const size = 17 * (1 - flight);
-          g.fillStyle(COLORS[e.board[i] || 1]!, 1 - flight * flight);
-          g.fillTriangle(
-            px - size,
-            py - size * 0.6,
-            px + size,
+          const sign = p ? 1 : -1;
+          const along = sign * (12 + flight * 48);
+          const across = sign * Math.sin(flight * Math.PI) * (9 + (i % 3) * 5);
+          const px = x + 32 + (horizontal ? along : across);
+          const py = y + 32 + (horizontal ? across : along);
+          const size = (p ? 5 : 8) * (1 - flight);
+          g.fillStyle(COLORS[e.board[i] || 1]!, (1 - flight) ** 2);
+          g.fillRect(px - size / 2, py - size / 2, size, size);
+          g.lineStyle(2 * (1 - flight), 0xffffff, 0.8 * (1 - flight));
+          g.lineBetween(
+            px,
             py,
-            px - size * 0.4,
-            py + size,
+            px - (horizontal ? sign * 12 : 0),
+            py - (horizontal ? 0 : sign * 12),
           );
-          g.lineStyle(2 * (1 - flight), 0xffefd0, 0.65 * (1 - flight));
-          g.lineBetween(px - size, py - size * 0.6, px + size, py);
         }
       }
       if (!this.calm && e.lines && age >= 40 && age < 300) {

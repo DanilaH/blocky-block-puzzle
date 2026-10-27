@@ -45,7 +45,7 @@ async function put(page: Page, slot: number, x: number, y: number) {
     position: { x: ((x + 0.3) * b.width) / 8, y: ((y + 0.3) * b.height) / 8 },
   });
 }
-test("important reward survives rapid moves with immediate score; pause clears it", async ({
+test("important reward survives rapid moves with converging score; pause clears it", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -80,7 +80,7 @@ test("important reward survives rapid moves with immediate score; pause clears i
     await expect(page.locator("#burst")).toHaveText("");
   }
 });
-test("reward does not intersect score or board throughout animation on compact screens", async ({
+test("reward stays inside board without intersecting score throughout animation", async ({
   page,
 }) => {
   for (const [width, height] of [
@@ -107,7 +107,11 @@ test("reward does not intersect score or board throughout animation on compact s
         const time = Number(burst.getAnimations()[0]?.currentTime ?? -1);
         data.push({
           score: overlap(a, b),
-          board: overlap(b, board),
+          board:
+            b.left >= board.left &&
+            b.right <= board.right &&
+            b.top >= board.top &&
+            b.bottom <= board.bottom,
           time,
           opacity: Number(getComputedStyle(burst).opacity),
         });
@@ -115,7 +119,7 @@ test("reward does not intersect score or board throughout animation on compact s
       }
       return data;
     });
-    expect(samples.every((s) => !s.score && !s.board)).toBe(true);
+    expect(samples.every((s) => !s.score && s.board)).toBe(true);
     const readable = samples.filter((s) => s.time >= 150 && s.time <= 1000);
     expect(readable.length).toBeGreaterThan(0);
     expect(readable.every((s) => s.opacity > 0.95)).toBe(true);
@@ -154,8 +158,8 @@ test("two important events use one pending slot; background clears pending prese
   await put(page, 0, 0, 0);
   await expect(page.locator("#burst")).toContainText("Новый рекорд");
   await put(page, 1, 0, 7);
-  await expect(page.locator("#score")).toHaveText("127");
   await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator("#score")).toHaveText("127");
   await expect(page.locator("#burst")).toContainText("Чистое поле");
   await setup(page, "two");
   await put(page, 0, 0, 0);

@@ -141,7 +141,18 @@ test("hint identifies source; pause cancels all cosmetic animations", async ({
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await page.locator("#pause").click();
   await expect(page.locator("#burst")).toHaveText("");
-  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+  expect(
+    await page.evaluate(
+      () =>
+        document.getAnimations().filter((a) => {
+          const target = (a.effect as KeyframeEffect)?.target;
+          return target instanceof Element && !target.closest("dialog");
+        }).length,
+    ),
+  ).toBe(0);
+  await expect
+    .poll(() => page.evaluate(() => document.getAnimations().length))
+    .toBe(0);
 });
 test("recorded showcase: placement, return, clear hierarchy and calm mode", async ({
   page,

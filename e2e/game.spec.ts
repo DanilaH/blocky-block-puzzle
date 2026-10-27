@@ -25,7 +25,12 @@ test("play, cancel drag, hint receipt, reload and responsive bounds", async ({
   await first.click();
   await board.click({ position: { x: 3, y: 3 } });
   await expect(page.locator("#score")).not.toHaveText("0");
-  const score = await page.locator("#score").textContent();
+  const score = await page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    return (await new IndexedSave().load()).profile.game.score.toLocaleString(
+      "ru",
+    );
+  });
   await page.locator("#hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   await page.reload();
@@ -73,7 +78,12 @@ test("real pointer drag places once and orientation cancels", async ({
   await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2, { steps: 8 });
   await page.mouse.up();
   await expect(page.locator("#score")).not.toHaveText("0");
-  const score = await page.locator("#score").textContent();
+  const score = await page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    return (await new IndexedSave().load()).profile.game.score.toLocaleString(
+      "ru",
+    );
+  });
   const second = (await page.locator("#tray button").nth(1).boundingBox())!;
   await page.mouse.move(
     second.x + second.width / 2,
