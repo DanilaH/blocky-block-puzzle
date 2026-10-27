@@ -17,7 +17,13 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install headless browser and dependencies
+        timeout-minutes: 5
+        run: npx playwright install --with-deps --only-shell chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: always()
@@ -32,6 +38,7 @@ jobs:
             docs/qa/feel-0.12/*.png
             docs/qa/usability-0.13/*.png
             docs/qa/feel-0.14/*.png
+            docs/qa/feel-0.15/*.png
   android:
     needs: verify
     runs-on: ubuntu-24.04
