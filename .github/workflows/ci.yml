@@ -21,6 +21,13 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Use primary Ubuntu package mirror
+        run: |
+          for source_file in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$source_file" ]; then
+              sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$source_file"
+            fi
+          done
       - name: Install headless browser and dependencies
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
