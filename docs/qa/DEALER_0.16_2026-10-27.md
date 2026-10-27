@@ -52,4 +52,4 @@ npm test
 npm run test:e2e
 npm run build
 ```
-APK versionCode 16 / 0.16.0-preview. Фактические сведения о CI, сертификате и доставленном APK добавляются после сборки. Человеческий A/B и измерения на Android остаются открытыми; default не переключён.
+APK versionCode 16 / 0.16.0-preview. CI [40508350948](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/40508350948) успешно проверил код и собрал Android из commit `7fdcf5a5843208b3f1dc02396b2d3fef795f2899`; artifact `12736077628`. ZIP целый, встроенные web-assets побайтно совпали с локальной проверенной production-сборкой. Package `com.danilah.blocky.dev`, сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` совпадает с выданной 0.15. APK 4 585 692 байта, SHA-256 `990e5a8449bcb780f9a1d9573bf84274db84277b14055597cc42a9ab025094b9`. Физическая установка обновления не проверена. Человеческий A/B и измерения на Android остаются открытыми; default не переключён.
