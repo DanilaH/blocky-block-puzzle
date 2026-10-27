@@ -166,12 +166,37 @@ export function deal(
   // immediate clear and a deterministic 35% gate opens. Never force a reward.
   if (version === "assist-v1") {
     let base = deal(board, rngState, "initial-v1");
+    const rows = Array<number>(8).fill(0),
+      cols = Array<number>(8).fill(0);
+    for (let i = 0; i < 64; i++)
+      if (board[i]) {
+        rows[Math.floor(i / 8)]!++;
+        cols[i % 8]!++;
+      }
+    // Count occupied cells, without allocating/clearing a board for every probe.
+    // Cache each orientation across alternatives; board and geometry stay fixed.
+    const clearByShape = new Map<string, boolean>();
     const offersClear = (tray: Slot[]) =>
-      tray.some((s) =>
-        placements(board, shapeById(s.shapeId)).some(
-          (p) => place(board, shapeById(s.shapeId), p.x, p.y).lines > 0,
-        ),
-      );
+      tray.some((s) => {
+        const cached = clearByShape.get(s.shapeId);
+        if (cached !== undefined) return cached;
+        const shape = shapeById(s.shapeId);
+        const sr = Array<number>(shape.height).fill(0),
+          sc = Array<number>(shape.width).fill(0);
+        for (const [x, y] of shape.cells) {
+          sr[y]!++;
+          sc[x]!++;
+        }
+        const found = placements(board, shape).some(
+          (p) =>
+            rows.includes(8) ||
+            cols.includes(8) ||
+            sr.some((n, y) => rows[p.y + y]! + n === 8) ||
+            sc.some((n, x) => cols[p.x + x]! + n === 8),
+        );
+        clearByShape.set(s.shapeId, found);
+        return found;
+      });
     if (!base.tray.length || offersClear(base.tray)) return base;
     const gate = random(base.rngState);
     base = { ...base, rngState: gate.state };

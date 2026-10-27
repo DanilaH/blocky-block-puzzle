@@ -46,6 +46,7 @@ jobs:
             docs/qa/usability-0.13/*.png
             docs/qa/feel-0.14/*.png
             docs/qa/feel-0.15/*.png
+            docs/qa/dealer-0.16/*.png
   android:
     needs: verify
     runs-on: ubuntu-24.04

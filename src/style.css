@@ -1850,3 +1850,24 @@ dialog h2 {
   color: #79623d;
   font-weight: 750;
 }
+
+.dealer-choice {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  font-weight: 700;
+}
+.dealer-choice select {
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  color: inherit;
+  background: #fff;
+  border: 2px solid #b9c3c9;
+  border-radius: 12px;
+  padding: 8px;
+}
+.dealer-note {
+  font-size: 14px;
+  line-height: 1.4;
+}

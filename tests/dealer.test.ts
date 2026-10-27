@@ -71,3 +71,36 @@ it("keeps default and saved policies, handles no-space and survives serialized p
   }
   expect(g.dealerVersion).toBe("assist-v1");
 });
+it("assisted games preserve exact serialized state through repeated refills and end checks", () => {
+  let refills = 0,
+    endings = 0;
+  for (let seed = 1; seed <= 100; seed++) {
+    let g = newGame(seed, "stress", "assist-v1");
+    while (g.status === "playing" && g.moves < 200) {
+      const options = g.tray.flatMap((s, slot) =>
+        s.used
+          ? []
+          : placements(g.board, shapeById(s.shapeId)).map((p) => ({
+              slot,
+              ...p,
+            })),
+      );
+      const move = options[(seed + g.moves * 17) % options.length]!;
+      const snapshot = JSON.stringify(g);
+      const r = applyMove(g, move, g.revision)!;
+      expect(applyMove(JSON.parse(snapshot), move, g.revision)).toEqual(r);
+      expect(JSON.stringify(g)).toBe(snapshot);
+      expect(r.state.status === "playing").toBe(
+        hasMove(r.state.board, r.state.tray),
+      );
+      const p = createProfile(r.state);
+      p.best = r.state.score;
+      expect(validProfile(p)).toBe(true);
+      refills += Number(g.tray.filter((s) => s.used).length === 2);
+      g = r.state;
+    }
+    endings += Number(g.status === "over");
+  }
+  expect(refills).toBeGreaterThan(300);
+  expect(endings).toBeGreaterThan(0);
+});

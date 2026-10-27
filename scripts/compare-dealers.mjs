@@ -31,12 +31,18 @@ if (
 )
   throw Error("unknown player");
 const out = new URL(
-  `../docs/qa/dealer-0.15/balance-${policy}${process.env.BALANCE_PLAYER ? "-" + process.env.BALANCE_PLAYER : ""}.jsonl`,
+  `../${process.env.BALANCE_OUTPUT_DIR ?? "docs/qa/dealer-0.15"}/balance-${policy}${process.env.BALANCE_PLAYER ? "-" + process.env.BALANCE_PLAYER : ""}.jsonl`,
   import.meta.url,
 );
-fs.mkdirSync(new URL("../docs/qa/dealer-0.15/", import.meta.url), {
-  recursive: true,
-});
+fs.mkdirSync(
+  new URL(
+    `../${process.env.BALANCE_OUTPUT_DIR ?? "docs/qa/dealer-0.15"}/`,
+    import.meta.url,
+  ),
+  {
+    recursive: true,
+  },
+);
 fs.writeFileSync(out, "");
 function quality(board) {
   let empty = 0,

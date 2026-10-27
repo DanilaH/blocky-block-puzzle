@@ -10,6 +10,7 @@ import {
   placements,
   newGame,
   shapeById,
+  type DealerVersion,
   type Move,
   type GameState,
 } from "./core/rules";
@@ -37,7 +38,8 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = () => newGame(seed(), crypto.randomUUID());
+const fresh = (dealer: DealerVersion = "initial-v1") =>
+  newGame(seed(), crypto.randomUUID(), dealer);
 async function start() {
   const adapter = new IndexedSave();
   const loaded = await adapter.load();
@@ -332,7 +334,7 @@ async function start() {
   }
   function syncSaving() {
     for (const button of document.querySelectorAll<HTMLButtonElement>(
-      "#new-game, #again, #restart, #practice, #lesson-skip, #play-again, .setting input",
+      "#new-game, #again, #restart, #practice, #lesson-skip, #play-again, #dealer-choice, .setting input",
     ))
       button.disabled = store.busy;
     const status = document.getElementById("save-status");
@@ -1127,7 +1129,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
       "pause",
     );
     el("resume").onclick = close;
@@ -1194,20 +1196,27 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.</p><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el("new-game").onclick = () => void restart();
+    el<HTMLSelectElement>("dealer-choice").value =
+      currentGame().dealerVersion === "assist-v1" ? "assist-v1" : "initial-v1";
+    el("new-game").onclick = () =>
+      void restart(
+        el<HTMLSelectElement>("dealer-choice").value === "assist-v1"
+          ? "assist-v1"
+          : "initial-v1",
+      );
     el("keep-game").onclick = close;
   }
-  async function restart() {
+  async function restart(dealer: DealerVersion = currentGame().dealerVersion) {
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";
     try {
       const changed = await store.update((p) => ({
         ...p,
         revision: p.revision + 1,
-        game: fresh(),
+        game: fresh(dealer),
         tutorialStep: 4,
         hint: null,
       }));
