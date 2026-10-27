@@ -108,7 +108,7 @@ export function validProfile(value: unknown): value is Profile {
       !integer(g.rngState) ||
       g.rngState < 1 ||
       g.rngState > 0xffffffff ||
-      !["initial-v1", "solvable-v1"].includes(g.dealerVersion) ||
+      !["initial-v1", "solvable-v1", "assist-v1"].includes(g.dealerVersion) ||
       typeof g.reviveUsed !== "boolean" ||
       typeof g.assisted !== "boolean"
     )

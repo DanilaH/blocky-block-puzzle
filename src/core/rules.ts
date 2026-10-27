@@ -25,7 +25,7 @@ export interface Slot {
   used: boolean;
   color: number;
 }
-export type DealerVersion = "initial-v1" | "solvable-v1";
+export type DealerVersion = "initial-v1" | "solvable-v1" | "assist-v1";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -162,6 +162,30 @@ export function deal(
   fallback: boolean;
   witness: Move[] | null;
 } {
+  // Experimental moderate assistance: retain the baseline unless it has no
+  // immediate clear and a deterministic 35% gate opens. Never force a reward.
+  if (version === "assist-v1") {
+    let base = deal(board, rngState, "initial-v1");
+    const offersClear = (tray: Slot[]) =>
+      tray.some((s) =>
+        placements(board, shapeById(s.shapeId)).some(
+          (p) => place(board, shapeById(s.shapeId), p.x, p.y).lines > 0,
+        ),
+      );
+    if (!base.tray.length || offersClear(base.tray)) return base;
+    const gate = random(base.rngState);
+    base = { ...base, rngState: gate.state };
+    if (gate.value >= 0.35) return base;
+    let nextRng = gate.state;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const candidate = deal(board, nextRng, "initial-v1");
+      nextRng = candidate.rngState;
+      if (!offersClear(candidate.tray)) continue;
+      const witness = proveTray(board, candidate.tray, 800);
+      if (witness) return { ...candidate, witness };
+    }
+    return { ...base, rngState: nextRng };
+  }
   const allowed = SHAPES.filter((s) => placements(board, s).length);
   if (!allowed.length)
     return { tray: [], rngState, fallback: false, witness: null };
