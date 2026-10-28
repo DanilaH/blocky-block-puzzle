@@ -190,6 +190,8 @@ async function start() {
     store,
     adBridge,
     (blocked) => {
+      root.inert = blocked;
+      dialog.inert = blocked;
       activity.setBlocked("ad", blocked);
       if (blocked) {
         cancelDrag();

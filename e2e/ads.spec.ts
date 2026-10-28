@@ -12,6 +12,7 @@ async function mock(page: Page, outcome = "rewarded") {
     acknowledge:async({id})=>{pending=pending.filter(r=>r.id!==id);localStorage.setItem('test-native-receipts',JSON.stringify(pending));},
     addListener:async(n,fn)=>{listeners[n]=fn;return{remove:async()=>{}};},
     show:async(p)=>{calls.push(p);window.showStarted=true;
+      if(window.adHold) await new Promise(r=>window.releaseAd=r);
       await new Promise(r=>setTimeout(r,150));
       if(p.kind==='rewarded' && ${JSON.stringify(outcome)}==='rewarded'){
        const receipt={id:'receipt-'+p.intentId,intentId:p.intentId};pending.push(receipt);localStorage.setItem('test-native-receipts',JSON.stringify(pending));
@@ -190,3 +191,21 @@ for (const [width, height] of [
     expect(board.y + board.height).toBeLessThanOrEqual(slot.y);
     expect(slot.height).toBeGreaterThanOrEqual(52);
   });
+test("fullscreen blocks dialog and game navigation until bridge closes", async ({
+  page,
+}) => {
+  await mock(page);
+  await fixture(page);
+  await page.evaluate(() => (window.adHold = true));
+  await page.locator("#hint").click();
+  await page.locator("#watch-reward").click();
+  await expect.poll(() => page.evaluate(() => window.showStarted)).toBe(true);
+  await expect(page.locator("#app")).toHaveJSProperty("inert", true);
+  await expect(page.locator("dialog")).toHaveJSProperty("inert", true);
+  await page.keyboard.press("Escape");
+  await expect(page.locator("dialog")).toBeVisible();
+  await page.evaluate(() => window.releaseAd());
+  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("#app")).toHaveJSProperty("inert", false);
+  expect((await saved(page)).earnedHints).toBe(3);
+});
