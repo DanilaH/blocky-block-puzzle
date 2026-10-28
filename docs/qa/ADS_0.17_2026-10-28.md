@@ -33,4 +33,9 @@ SDK добавляет рекламные зависимости и разреш
 
 Дополнительно проверены немедленная блокировка на явном согласии, повторная попытка того же revive и отсрочка interstitial после поздней подтверждённой награды. Эти случаи не зависят от старого времени создания intent.
 
-CI, сертификат и хеш APK будут добавлены после Android-сборки.
+## Итоговый APK
+CI [40660280725](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/40660280725) прошёл 69 unit + 71 browser = 140 проверок и собрал Android из `d10ec9ebdc482b1c2bd82b06567781638c8a48d7`. Artifact `12804470130`. VersionCode 17, versionName `0.17.0-preview`, package `com.danilah.blocky.dev`.
+
+APK: 9 820 756 байт, SHA-256 `629dbafa1d2d01dfe87bcf89fced9a37472fb8213338e594c98f2eb83615c231`. Сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` совпадает с выданной 0.16. ZIP целый; web-assets побайтно совпадают с локальной проверенной production-сборкой. В DEX присутствуют BlockyAdsPlugin, RewardedAdLoader и BannerAdView. Фактическая установка обновления на телефон не проверена.
+
+Из merged manifest извлечены INTERNET, ACCESS_NETWORK_STATE, Google AD_ID, BIND_GET_INSTALL_REFERRER_SERVICE и собственное DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION. Это фактический набор debug APK, не готовая декларация обработки данных: перед публикацией сверить release manifest и документацию SDK/конфигурацию.
