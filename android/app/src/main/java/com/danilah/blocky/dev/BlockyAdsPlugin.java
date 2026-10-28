@@ -186,9 +186,15 @@ public class BlockyAdsPlugin extends Plugin {
     BannerAdSize size=BannerAdSize.sticky(getContext(),dp);
     WindowInsetsCompat wi=ViewCompat.getRootWindowInsets(root);
     Insets in=wi==null?Insets.NONE:wi.getInsets(WindowInsetsCompat.Type.systemBars()|WindowInsetsCompat.Type.displayCutout());
+    // Insets are window-relative; content root may already exclude system bars.
+    // Convert exclusions into root coordinates instead of subtracting bars twice.
+    View decor=getActivity().getWindow().getDecorView();int[] dl=new int[2];decor.getLocationOnScreen(dl);
+    int safeLeft=Math.max(0,dl[0]+in.left-rl[0]),safeTop=Math.max(0,dl[1]+in.top-rl[1]);
+    int safeRight=Math.max(0,rl[0]+root.getWidth()-(dl[0]+decor.getWidth()-in.right));
+    int safeBottom=Math.max(0,rl[1]+root.getHeight()-(dl[1]+decor.getHeight()-in.bottom));
     JSObject geometry=new JSObject().put("webView",new JSObject().put("x",wl[0]-rl[0]).put("y",wl[1]-rl[1]).put("width",web.getWidth()).put("height",web.getHeight()))
       .put("root",new JSObject().put("width",root.getWidth()).put("height",root.getHeight()))
-      .put("safeInsets",new JSObject().put("left",in.left).put("top",in.top).put("right",in.right).put("bottom",in.bottom))
+      .put("safeInsets",new JSObject().put("left",safeLeft).put("top",safeTop).put("right",safeRight).put("bottom",safeBottom))
       .put("parentPadding",new JSObject().put("left",root.getPaddingLeft()).put("top",root.getPaddingTop()))
       .put("adHeight",size.getHeightInPixels(getContext()));
     call.resolve(new JSObject().put("geometry",geometry).put("epoch",epoch));
