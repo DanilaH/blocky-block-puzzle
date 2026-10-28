@@ -1,3 +1,4 @@
+import { type AdsState, validRevivePlan } from "./monetization";
 import { fits, hasMove, shapeById, type GameState, type Move } from "./rules";
 export interface HintReceipt {
   gameId: string;
@@ -8,6 +9,7 @@ export interface HintReceipt {
 }
 export interface Profile {
   schemaVersion: 1;
+  ads?: AdsState;
   tutorialStep?: number;
   revision: number;
   game: GameState;
@@ -149,6 +151,50 @@ export function validProfile(value: unknown): value is Profile {
         !fits(g.board, shapeById(s.shapeId), h.move.x, h.move.y)
       )
         return false;
+    }
+    if (p.ads !== undefined) {
+      const a = p.ads;
+      if (
+        !a ||
+        !integer(a.activeMs) ||
+        !integer(a.lastFullscreenMs) ||
+        a.lastFullscreenMs > a.activeMs ||
+        !Array.isArray(a.interstitials) ||
+        !a.interstitials.every(integer) ||
+        !Array.isArray(a.completed) ||
+        !a.completed.every((v) => typeof v === "string") ||
+        !Array.isArray(a.receipts) ||
+        !a.receipts.every((v) => typeof v === "string" && v.length > 0) ||
+        !Array.isArray(a.intents)
+      )
+        return false;
+      const ids = new Set();
+      for (const i of a.intents) {
+        if (
+          !i ||
+          typeof i.id !== "string" ||
+          !i.id ||
+          ids.has(i.id) ||
+          !["hints", "revive"].includes(i.kind) ||
+          !["pending", "applied", "available", "claimed"].includes(i.status) ||
+          !integer(i.revision) ||
+          i.gameId !== i.snapshot?.gameId ||
+          i.revision !== i.snapshot.revision ||
+          !validProfile({
+            ...createProfile(i.snapshot),
+            best: i.snapshot.score,
+          })
+        )
+          return false;
+        ids.add(i.id);
+        if (i.kind === "revive" && !validRevivePlan(i.snapshot, i.plan))
+          return false;
+        if (
+          i.kind === "hints" &&
+          (i.plan !== undefined || ["available", "claimed"].includes(i.status))
+        )
+          return false;
+      }
     }
     return true;
   } catch {

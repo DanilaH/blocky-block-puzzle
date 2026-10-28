@@ -1,5 +1,17 @@
 apply plugin: 'com.android.application'
 
+def liveAdIds = [
+    banner: System.getenv('YANDEX_BANNER_AD_UNIT_ID') ?: '',
+    interstitial: System.getenv('YANDEX_INTERSTITIAL_AD_UNIT_ID') ?: '',
+    rewarded: System.getenv('YANDEX_REWARDED_AD_UNIT_ID') ?: ''
+]
+def validAdIds = liveAdIds.values().every { it ==~ /R-M-[0-9]+-[0-9]+/ }
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.name.toLowerCase().contains('release') } && !validAdIds) {
+        throw new GradleException('Release requires three valid YANDEX_*_AD_UNIT_ID values; demo IDs are debug-only')
+    }
+}
+
 android {
     namespace = "com.danilah.blocky.dev"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -7,8 +19,12 @@ android {
         applicationId "com.danilah.blocky.dev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 16
-        versionName "0.16.0-preview"
+        versionCode 17
+        versionName "0.17.0-preview"
+        resValue "bool", "ads_test_mode", "true"
+        resValue "string", "yandex_banner_id", ""
+        resValue "string", "yandex_interstitial_id", ""
+        resValue "string", "yandex_rewarded_id", ""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -26,6 +42,8 @@ android {
     }
     buildTypes {
         release {
+            resValue "bool", "ads_test_mode", "false"
+            liveAdIds.each { format, id -> resValue "string", "yandex_${format}_id", (id ==~ /R-M-[0-9]+-[0-9]+/) ? id : "" }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -39,6 +57,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.yandex.android:mobileads:8.6.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"

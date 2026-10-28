@@ -116,6 +116,11 @@ export class IndexedSave implements SaveAdapter {
 }
 export class ProfileStore {
   busy = false;
+  private idle: (() => void)[] = [];
+  async waitIdle(): Promise<void> {
+    while (this.busy)
+      await new Promise<void>((resolve) => this.idle.push(resolve));
+  }
   onBusyChange: (() => void) | null = null;
   constructor(
     public state: Profile,
@@ -134,6 +139,7 @@ export class ProfileStore {
     } finally {
       this.busy = false;
       this.onBusyChange?.();
+      this.idle.splice(0).forEach((resolve) => resolve());
     }
   }
 }

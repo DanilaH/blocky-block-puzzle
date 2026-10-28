@@ -1871,3 +1871,26 @@ dialog h2 {
   font-size: 14px;
   line-height: 1.4;
 }
+
+/* Empty reservation matches the surface, in both orientations. */
+.ad-slot {
+  background: #f2eee3;
+  border: 0;
+}
+.revive-map {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+  width: min(220px, 100%);
+  aspect-ratio: 1;
+  margin: 12px auto;
+}
+.revive-map i {
+  background: var(--cell-color);
+  border-radius: 3px;
+}
+.revive-map .revive-zone {
+  outline: 2px solid #e0a20b;
+  outline-offset: -1px;
+  box-shadow: inset 0 0 0 3px #fff8;
+}

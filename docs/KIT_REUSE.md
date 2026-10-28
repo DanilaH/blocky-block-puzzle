@@ -17,3 +17,12 @@
 Не добавлена зависимость на весь экспериментальный пакет ради одного файла. Происхождение vendored-файла явно закреплено здесь; обновления только после review. LICENSE-NOTICE kit: «Internal/private reusable production kit. No external publication or licensing commitment is implied by this repository.» Копия используется во втором проекте того же владельца, общей лицензии третьим лицам не заявляем.
 
 Нативные production-практики из судоку/семечек прочитаны, но их APK-результаты не являются доказательством работоспособности Blocky. Реклама, audio focus, измеренная высота баннера, долговечные native reward receipts и AppMetrica ещё не реализованы.
+
+## Реклама: повторная проверка 28.10.2026
+Main по-прежнему `5450f9db344aacb5acdc103b4199fd8aeb11b10d`; нужные Android-практики находятся в `extract/seeds-production-practices@d4dee18c9b466e2b4a68d8d481db6dfc50ec9ee5`, отдельно от main. Прочитаны API index, `ADS_AND_LIFECYCLE`, `DURABLE_RECEIPT_QUEUE`, `INTERSTITIAL_GATE` и исходники.
+
+- `resolveNativeBannerPlacement` и его 16 тестов перенесены из main без изменения логики (форматирование/import path); вся CSS→native геометрия вычисляется этим helper. Java проверяет размеры перед размещением, SDK измеряет нужную высоту.
+- `DurableReceiptQueue` перенесена из указанной ветки без изменения логики. Native хранит квитанции; общий ProfileStore сохраняет эффект и ledger до acknowledge.
+- Java-адаптер основан на `DanilaH/seeds-bits@96caff6aac357e06b8373301b2b895544c9ef179:native/android/SeedsMonetizationPlugin.java`. Изменены package/plugin/настройки, очередь квитанций, привязка к intentId и геометрический контракт; удалены Seeds storage keys, AppMetrica и старый cooldown по wall clock. Никакие production ad IDs/ключи не перенесены.
+- `ActionInterstitialGate` не копировался: у Blocky сохраняемые ограничения по завершённым партиям и активному времени. Ограничение 3 за час реализовано консервативно по часу активной игры; это строже скользящего реального часа и не зависит от перевода часов. Резервируется возможность показа, поэтому no-fill также может отложить следующую попытку.
+- Yandex Games web SDK не используется. Реальный native fill и APK-поведение на физическом телефоне требуют отдельной проверки Blocky.

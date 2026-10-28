@@ -138,10 +138,10 @@ test("depleted and cached hint labels survive focus changes", async ({
   page,
 }) => {
   await setup(page, "depleted");
-  await expect(page.locator("#hint-label")).toHaveText("Подсказки завтра");
+  await expect(page.locator("#hint-label")).toHaveText("Ещё подсказки");
   await page.evaluate(() => window.dispatchEvent(new Event("blur")));
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(page.locator("#hint-label")).toHaveText("Подсказки завтра");
+  await expect(page.locator("#hint-label")).toHaveText("Ещё подсказки");
   await setup(page);
   await page.locator("#hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");

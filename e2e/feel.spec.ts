@@ -144,14 +144,14 @@ test("landscape messages remain visible and tablet uses available width", async 
   await fixture(page, "no-hints");
   await expect(page.locator("#hint-label")).toBeVisible();
   await page.locator("#hint").click();
-  await expect(page.locator("#toast")).toBeVisible();
-  await expect(page.locator("#toast")).toContainText("закончились");
-  const toast = (await page.locator("#toast").boundingBox())!,
-    hint = (await page.locator("#hint").boundingBox())!,
-    ad = (await page.locator("#ad-slot").boundingBox())!;
-  expect(toast.y).toBeGreaterThanOrEqual(hint.y + hint.height);
-  expect(toast.y + toast.height).toBeLessThanOrEqual(ad.y);
-  await page.screenshot({ path: "docs/qa/feel-0.8/landscape-status.png" });
+  await expect(page.locator("#reward-status")).toContainText("недоступна");
+  await expect(page.locator("#watch-reward")).toBeDisabled();
+  await page.locator("#reward-back").scrollIntoViewIfNeeded();
+  const exit = (await page.locator("#reward-back").boundingBox())!;
+  expect(exit.y).toBeGreaterThanOrEqual(0);
+  expect(exit.y + exit.height).toBeLessThanOrEqual(320);
+  await page.screenshot({ path: "docs/qa/ads-0.17/unavailable-landscape.png" });
+  await page.locator("#reward-back").click();
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.waitForTimeout(150);
   expect((await page.locator("#board").boundingBox())!.width).toBeGreaterThan(

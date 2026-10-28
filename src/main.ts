@@ -1,3 +1,5 @@
+import { AdsController, nativeAds, watchBanner } from "./platform/ads";
+import { claimRevive, revivePlan } from "./core/monetization";
 import Phaser from "phaser";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import "./style.css";
@@ -160,6 +162,8 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      ads.setActive(!inLesson() && store.state.game.status === "playing");
+      bannerWatch?.update();
       scene.preview(hintMove(), true, true);
       syncRenderer();
       refreshHintLabel();
@@ -170,6 +174,8 @@ async function start() {
     },
     () => {
       running = false;
+      ads.setActive(false);
+      bannerWatch?.update();
       clearTimeout(resultTimer);
       cancelDrag();
       cancelHint();
@@ -178,6 +184,46 @@ async function start() {
       syncRenderer();
     },
   );
+  const adBridge = nativeAds();
+  let bannerWatch: ReturnType<typeof watchBanner> | undefined;
+  const ads = new AdsController(
+    store,
+    adBridge,
+    (blocked) => {
+      activity.setBlocked("ad", blocked);
+      if (blocked) {
+        cancelDrag();
+        cancelHint();
+        audio.stop();
+        stopCosmetics();
+      }
+      bannerWatch?.update();
+    },
+    () => {
+      if (
+        !ads.busy &&
+        store.state.game.status === "playing" &&
+        ["result", "revive"].includes(modal)
+      ) {
+        resultPending = false;
+        clearTimeout(resultTimer);
+        close();
+      }
+      render();
+    },
+    (message) => toast(message, 6000),
+  );
+  bannerWatch = watchBanner(
+    adBridge,
+    el("ad-slot"),
+    () => !activity.isBlocked() && !inLesson() && !ads.busy && !document.hidden,
+  );
+  activity.onBlockedChange(() => bannerWatch?.update());
+  void ads.init().then(() => bannerWatch?.update());
+  void adBridge?.addListener("geometryChanged", () => bannerWatch?.update());
+  void adBridge?.addListener("ready", () => {
+    if (["reward", "revive"].includes(modal)) void offerAvailability();
+  });
   activity.setGameplayDesired(true);
   installDocumentVisibilityBlocker(activity);
   phaser = new Phaser.Game({
@@ -330,6 +376,10 @@ async function start() {
         : g.moves === 0
           ? "Перенесите фигуру на поле"
           : "";
+    ads.setActive(
+      running && !inLesson() && store.state.game.status === "playing",
+    );
+    bannerWatch?.update();
     syncSaving();
   }
   function syncSaving() {
@@ -387,7 +437,7 @@ async function start() {
         : cached
           ? "Показать ход"
           : count === 0
-            ? "Подсказки завтра"
+            ? "Ещё подсказки"
             : "Подсказка";
   }
   function cancelHint() {
@@ -457,7 +507,7 @@ async function start() {
           };
         return result
           ? {
-              ...p,
+              ...ads.stamp(p),
               revision: p.revision + 1,
               game: result.state,
               best: Math.max(p.best, result.state.score),
@@ -1012,7 +1062,7 @@ async function start() {
     }
     const p = store.state;
     if ((p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints <= 0) {
-      toast("На сегодня подсказки закончились. Завтра будут ещё три.");
+      showRewardHints();
       return;
     }
     const generation = ++hintGeneration;
@@ -1108,12 +1158,14 @@ async function start() {
     dialog.scrollTop = 0;
   }
   function close() {
+    if (ads.busy) return;
     dialog.close();
     modal = "";
     activity.setBlocked("dialog", false);
     render();
   }
   function back() {
+    if (ads.busy) return;
     if (dialog.open) {
       if (modal === "rules" || modal === "restart") {
         dialog.close();
@@ -1122,6 +1174,106 @@ async function start() {
     } else if (resultPending) showResult();
     else showPause();
   }
+  function savedReviveButton() {
+    return store.state.ads?.intents.some((i) => i.status === "available")
+      ? '<button class="secondary" id="saved-revive">Второй шанс в предыдущей партии</button>'
+      : "";
+  }
+  function wireSavedRevive() {
+    dialog
+      .querySelector<HTMLButtonElement>("#saved-revive")
+      ?.addEventListener("click", () => {
+        const intent = store.state.ads?.intents.find(
+          (i) => i.status === "available",
+        );
+        if (!intent) return;
+        open(
+          '<h2 id="dialog-title">Вернуться к предыдущей партии?</h2><p>Полученный второй шанс сохранён. Он заменит текущую партию. Рекорд и подсказки останутся.</p><button class="primary" id="claim-revive">Вернуться</button><button class="secondary" id="cancel-claim">Продолжить текущую</button>',
+          "claim",
+        );
+        el("cancel-claim").onclick = close;
+        el("claim-revive").onclick = async () => {
+          try {
+            if (await store.update((p) => claimRevive(p, intent.id))) {
+              resultPending = false;
+              clearTimeout(resultTimer);
+              close();
+              render();
+            }
+          } catch (e) {
+            await writeFailure(
+              e,
+              "Не удалось восстановить партию. Второй шанс сохранён.",
+            );
+          }
+        };
+      });
+  }
+  async function offerAvailability() {
+    const button = dialog.querySelector<HTMLButtonElement>("#watch-reward");
+    const status = dialog.querySelector<HTMLElement>("#reward-status");
+    if (!button || !status) return;
+    const ready = await ads.ready();
+    if (!button.isConnected) return;
+    button.disabled = !ready;
+    if (status.textContent?.startsWith("Проверяем"))
+      status.textContent = ready
+        ? ""
+        : "Реклама сейчас недоступна. Можно продолжить без неё.";
+    ads.preload();
+  }
+  function rewardButton(kind: "hints" | "revive") {
+    el("watch-reward").onclick = async () => {
+      if (ads.busy) return;
+      const result = await ads.rewarded(kind);
+      if (result === "rewarded") {
+        resultPending = false;
+        clearTimeout(resultTimer);
+        close();
+        render();
+        toast(
+          kind === "hints" ? "Добавлены 3 подсказки" : "Второй шанс получен",
+        );
+      } else {
+        const status = dialog.querySelector<HTMLElement>("#reward-status");
+        if (status)
+          status.textContent =
+            result === "closed"
+              ? "Просмотр не подтверждён. Награда не начислена."
+              : "Реклама недоступна или показ прерван. Игра сохранена.";
+        void offerAvailability();
+      }
+    };
+    void offerAvailability();
+  }
+  function showRewardHints() {
+    open(
+      '<h2 id="dialog-title">Нужны подсказки?</h2><p>На сегодня бесплатные подсказки закончились. Завтра будут ещё три.</p><p>За просмотр рекламы получите 3 подсказки. Используйте их в любой партии.</p><p id="reward-status" role="status">Проверяем доступность…</p><button class="primary" id="watch-reward" disabled>Посмотреть рекламу — получить 3 подсказки</button><button class="secondary" id="reward-back">Продолжить без рекламы</button>',
+      "reward",
+    );
+    el("reward-back").onclick = close;
+    rewardButton("hints");
+  }
+  function showRevive() {
+    const plan = revivePlan(store.state.game);
+    if (!plan) return;
+    const cells = store.state.game.board
+      .map(
+        (c, i) =>
+          `<i class="${i % 8 >= plan.x && i % 8 < plan.x + 3 && Math.floor(i / 8) >= plan.y && Math.floor(i / 8) < plan.y + 3 ? "revive-zone" : ""}" style="--cell-color:${c ? `#${COLORS[c]!.toString(16).padStart(6, "0")}` : "#ded8cb"}"></i>`,
+      )
+      .join("");
+    open(
+      `<h2 id="dialog-title">Второй шанс</h2><p>После просмотра очистится выделенный квадрат 3×3. Фигуры и очки сохранятся, серия сбросится. Один раз за партию.</p><div class="revive-map" role="img" aria-label="Очистится квадрат: столбцы ${plan.x + 1}–${plan.x + 3}, строки ${plan.y + 1}–${plan.y + 3}">${cells}</div><p id="reward-status" role="status">Проверяем доступность…</p><button class="primary" id="watch-reward" disabled>Посмотреть рекламу — продолжить</button><button class="secondary" id="finish-game">Закончить</button>`,
+      "revive",
+    );
+    el("finish-game").onclick = () => {
+      if (ads.busy) return;
+      dialog.close();
+      showResult();
+    };
+    rewardButton("revive");
+  }
   function showPause() {
     if (dialog.open) return;
     if (resultPending) {
@@ -1129,12 +1281,14 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
       "pause",
     );
     el("resume").onclick = close;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
+    wireSavedRevive();
+    ads.preload();
     for (const key of ["sound", "calm"] as const)
       el<HTMLInputElement>(key).onchange = async (event) => {
         const value = (event.target as HTMLInputElement).checked;
@@ -1210,16 +1364,21 @@ async function start() {
     el("keep-game").onclick = close;
   }
   async function restart(dealer: DealerVersion = currentGame().dealerVersion) {
+    if (ads.busy || store.busy) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";
     try {
-      const changed = await store.update((p) => ({
-        ...p,
-        revision: p.revision + 1,
-        game: fresh(dealer),
-        tutorialStep: 4,
-        hint: null,
-      }));
+      const nextGame = fresh(dealer);
+      const changed =
+        store.state.game.status === "over"
+          ? await ads.betweenGames(nextGame)
+          : await store.update((p) => ({
+              ...ads.stamp(p),
+              revision: p.revision + 1,
+              game: nextGame,
+              tutorialStep: 4,
+              hint: null,
+            }));
       if (changed) {
         recordCelebrated = false;
         resultPending = false;
@@ -1251,7 +1410,7 @@ async function start() {
       )
       .join("");
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div>${revivePlan(store.state.game) ? `<button class="secondary" id="revive-offer">Второй шанс за рекламу</button>` : ""}<button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>${savedReviveButton()}`,
       "result",
     );
     dialog.dataset.record = String(bestFinish);
@@ -1265,6 +1424,11 @@ async function start() {
         220,
       );
     el("again").onclick = () => void restart();
+    dialog
+      .querySelector<HTMLButtonElement>("#revive-offer")
+      ?.addEventListener("click", showRevive);
+    wireSavedRevive();
+    ads.preload();
     el("look-board").onclick = close;
   }
   el("lesson-skip").onclick = async () => {
@@ -1303,9 +1467,14 @@ async function start() {
       .addListener("backButton", back)
       .catch(() => toast("Системная кнопка «Назад» пока недоступна"));
     void native
-      .addListener("appStateChange", (data) =>
-        activity.setBlocked("native", data.isActive === false),
-      )
+      .addListener("appStateChange", (data) => {
+        activity.setBlocked("native", data.isActive === false);
+        if (data.isActive) {
+          void ads.recover();
+          ads.preload();
+          bannerWatch?.update();
+        }
+      })
       .catch(() => {});
   }
   render();
@@ -1323,6 +1492,8 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
+      void ads.dispose();
+      bannerWatch?.dispose();
       phaser?.loop.wake();
       phaser?.destroy(true);
       cancelHint();
