@@ -277,3 +277,35 @@ it("wall clock changes do not expire the conservative hourly active-play cap", (
   expect(canInterstitial(p, 0)).toBe(false);
   expect(canInterstitial(p, Date.now() + 9e10)).toBe(false);
 });
+it("locks immediately on consent while native readiness is pending", async () => {
+  const h = harness();
+  await h.controller.init();
+  let resolve!: (v: { rewarded: boolean; interstitial: boolean }) => void;
+  h.bridge.status = () => new Promise((r) => (resolve = r));
+  const result = h.controller.rewarded("hints");
+  expect(h.controller.busy).toBe(true);
+  expect(h.block).toHaveBeenLastCalledWith(true);
+  resolve({ rewarded: false, interstitial: false });
+  expect(await result).toBe("unavailable");
+  expect(h.controller.busy).toBe(false);
+});
+it("retry of the same pending revive restarts fullscreen cooldown", async () => {
+  const h = harness();
+  await h.controller.init();
+  h.store.state = profile();
+  await h.controller.rewarded("revive");
+  const id = h.store.state.ads!.intents[0]!.id;
+  h.store.state.ads!.activeMs = 240000;
+  await h.controller.rewarded("revive");
+  expect(h.store.state.ads!.intents).toHaveLength(1);
+  expect(h.store.state.ads!.intents[0]!.id).toBe(id);
+  expect(h.store.state.ads!.lastFullscreenMs).toBe(240000);
+});
+it("late confirmed reward postpones interstitial from delivery, not old intent time", () => {
+  let p = prepareReward(profile(), "late", "hints");
+  p.ads!.activeMs = 500000;
+  p.ads!.completed = ["a", "b"];
+  p = applyReceipt(p, { id: "receipt", intentId: "late" });
+  expect(p.ads!.lastFullscreenMs).toBe(500000);
+  expect(canInterstitial(p)).toBe(false);
+});

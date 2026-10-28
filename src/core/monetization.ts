@@ -190,6 +190,7 @@ export function applyReceipt(
     hint: game === p.game ? p.hint : null,
     ads: {
       ...a,
+      lastFullscreenMs: a.activeMs,
       receipts: [...a.receipts, r.id],
       intents: a.intents.map((i) =>
         i.id === intent.id ? { ...i, status } : i,

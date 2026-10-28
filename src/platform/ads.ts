@@ -72,7 +72,7 @@ export class AdsController {
       commit: async (r) => {
         await store.waitIdle();
         if (store.state.ads?.receipts.includes(r.id)) return "already-applied";
-        if (!(await store.update((p) => applyReceipt(p, r))))
+        if (!(await store.update((p) => applyReceipt(this.stamp(p), r))))
           throw Error("Save busy");
         this.changed();
         return "applied";
@@ -151,9 +151,7 @@ export class AdsController {
     void this.bridge?.preload().catch(() => {});
   }
   async rewarded(kind: RewardIntent["kind"]): Promise<string> {
-    if (this.busy || !this.bridge || !(await this.ready()))
-      return "unavailable";
-    if (this.busy) return "unavailable";
+    if (this.busy || !this.bridge || !this.enabled) return "unavailable";
     this.busy = true;
     this.block(true);
     try {
@@ -173,11 +171,19 @@ export class AdsController {
           : null;
       const id = prior?.id ?? crypto.randomUUID();
       if (
-        !(await this.store.update((p) =>
-          prior
-            ? { ...this.stamp(p), revision: p.revision + 1 }
-            : prepareReward(this.stamp(p), id, kind),
-        ))
+        !(await this.store.update((p) => {
+          const current = this.stamp(p);
+          return prior
+            ? {
+                ...current,
+                revision: p.revision + 1,
+                ads: {
+                  ...current.ads!,
+                  lastFullscreenMs: current.ads!.activeMs,
+                },
+              }
+            : prepareReward(current, id, kind);
+        }))
       )
         return "error";
       const result = await this.bridge.show({ kind: "rewarded", intentId: id });
