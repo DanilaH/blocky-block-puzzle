@@ -1,6 +1,23 @@
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
-  enabled = true;
+  private soundEnabled = true;
+  private allowed = true;
+  private generation = 0;
+  private unlocked = false;
+  beforeUnlock?: () => Promise<boolean>;
+  get enabled() {
+    return this.soundEnabled;
+  }
+  set enabled(value: boolean) {
+    if (this.soundEnabled === value) return;
+    this.soundEnabled = value;
+    if (!value) this.stop();
+  }
+  setAllowed(value: boolean) {
+    if (this.allowed === value) return;
+    this.allowed = value;
+    if (!value) this.stop();
+  }
   calm = false;
   private variant = 0;
   private context: AudioContext | null = null;
@@ -10,10 +27,15 @@ export class GameAudio {
   private delay: DelayNode | null = null;
   private wet: GainNode | null = null;
   async unlock() {
+    const generation = this.generation;
+    if (!this.enabled) return;
+    if (this.beforeUnlock && !(await this.beforeUnlock())) return;
+    if (!this.allowed || !this.enabled || generation !== this.generation)
+      return;
     if (!this.context) {
       this.context = new AudioContext();
       this.master = this.context.createGain();
-      this.master.gain.value = 0.65;
+      this.master.gain.value = 0;
       const limiter = this.context.createDynamicsCompressor();
       limiter.threshold.value = -10;
       limiter.ratio.value = 8;
@@ -27,9 +49,23 @@ export class GameAudio {
       this.wet.gain.value = this.calm ? 0 : 0.15;
       this.master!.connect(this.delay).connect(this.wet).connect(this.output!);
     }
-    if (this.context.state === "suspended") await this.context.resume();
+    try {
+      if (this.context.state === "suspended") await this.context.resume();
+    } catch {
+      return;
+    }
+    if (!this.allowed || !this.enabled || generation !== this.generation) {
+      // A pending resume must not resurrect audio after pause/focus loss.
+      if (!this.unlocked) void this.context.suspend().catch(() => {});
+      return;
+    }
+    this.master!.gain.value = 0.65;
+    this.unlocked = true;
   }
   stop() {
+    this.generation++;
+    this.unlocked = false;
+    if (this.master) this.master.gain.value = 0;
     for (const voice of this.voices.keys()) {
       try {
         voice.stop();
@@ -41,7 +77,7 @@ export class GameAudio {
     this.wet?.disconnect();
     this.delay = null;
     this.wet = null;
-    void this.context?.suspend();
+    void this.context?.suspend().catch(() => {});
   }
   private tone(
     hz: number,
@@ -95,7 +131,13 @@ export class GameAudio {
     points = 0,
     intensity = 0,
   ) {
-    if (!this.enabled || !this.context || this.context.state !== "running")
+    if (
+      !this.enabled ||
+      !this.allowed ||
+      !this.unlocked ||
+      !this.context ||
+      this.context.state !== "running"
+    )
       return;
     const t = this.context.currentTime;
     if (kind === "cancel") {

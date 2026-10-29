@@ -1,3 +1,4 @@
+import { AudioFocus, nativeAudioFocus } from "./platform/audio-focus";
 import { AdsController, nativeAds, watchBanner } from "./platform/ads";
 import { claimRevive, revivePlan } from "./core/monetization";
 import Phaser from "phaser";
@@ -50,6 +51,10 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene();
+  const audioFocus = new AudioFocus(nativeAudioFocus(), (allowed) =>
+    audio.setAllowed(allowed),
+  );
+  audio.beforeUnlock = () => audioFocus.request();
   const lessonStep = () => store.state.tutorialStep ?? 4;
   const inLesson = () => lessonStep() < 4;
   const currentGame = () =>
@@ -162,6 +167,7 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      audioFocus.setActive(store.state.settings.sound);
       ads.setActive(!inLesson() && store.state.game.status === "playing");
       bannerWatch?.update();
       scene.preview(hintMove(), true, true);
@@ -174,6 +180,7 @@ async function start() {
     },
     () => {
       running = false;
+      audioFocus.setActive(false);
       ads.setActive(false);
       bannerWatch?.update();
       clearTimeout(resultTimer);
@@ -348,6 +355,7 @@ async function start() {
         .querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)
         ?.focus({ preventScroll: true });
     audio.enabled = p.settings.sound;
+    audioFocus.setActive(running && p.settings.sound);
     scene.calm =
       p.settings.calm || matchMedia("(prefers-reduced-motion: reduce)").matches;
     audio.calm = scene.calm;

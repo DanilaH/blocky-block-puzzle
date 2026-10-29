@@ -145,3 +145,62 @@ it("a new reward keeps a live tail and stop clears all voices", async () => {
   audio.stop();
   expect(active.size).toBe(0);
 });
+
+it("mute and focus loss cut live tails, gain does not replay them", async () => {
+  vi.stubGlobal("AudioContext", FakeContext);
+  const audio = new GameAudio();
+  await audio.unlock();
+  audio.play("allClear");
+  expect(active.size).toBeGreaterThan(0);
+  audio.setAllowed(false);
+  expect(active.size).toBe(0);
+  await audio.unlock();
+  audio.play("place");
+  expect(active.size).toBe(0);
+  audio.setAllowed(true);
+  audio.play("place");
+  expect(active.size).toBe(0);
+  await audio.unlock();
+  audio.play("place");
+  expect(active.size).toBeGreaterThan(0);
+  audio.enabled = false;
+  expect(active.size).toBe(0);
+});
+
+it("late AudioContext.resume cannot play after stop", async () => {
+  let finish!: () => void;
+  let context!: FakeContext;
+  class DeferredContext extends FakeContext {
+    constructor() {
+      super();
+      context = this;
+      this.state = "suspended";
+    }
+    override resume() {
+      return new Promise<void>((resolve) => {
+        finish = () => {
+          this.state = "running";
+          resolve();
+        };
+      });
+    }
+  }
+  vi.stubGlobal("AudioContext", DeferredContext);
+  const audio = new GameAudio();
+  const pending = audio.unlock();
+  audio.stop();
+  finish();
+  await pending;
+  audio.play("clear");
+  expect(active.size).toBe(0);
+  expect(context.state).toBe("suspended");
+});
+
+it("denied native focus never creates an AudioContext", async () => {
+  const ctor = vi.fn();
+  vi.stubGlobal("AudioContext", ctor);
+  const audio = new GameAudio();
+  audio.beforeUnlock = async () => false;
+  await audio.unlock();
+  expect(ctor).not.toHaveBeenCalled();
+});
