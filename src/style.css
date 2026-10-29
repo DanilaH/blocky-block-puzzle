@@ -2083,3 +2083,17 @@ dialog h2 {
     white-space: nowrap;
   }
 }
+@media (orientation: landscape) {
+  .board-column {
+    padding-top: 20px;
+  }
+  .board-wrap {
+    max-width: calc(var(--usable-height) - 96px);
+  }
+  .learning .board-column {
+    padding-top: 0;
+  }
+  .learning .board-wrap {
+    max-width: none;
+  }
+}

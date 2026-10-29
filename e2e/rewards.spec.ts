@@ -134,7 +134,7 @@ test("reward stays inside board without intersecting score throughout animation"
       hint = (await page.locator("#hint").boundingBox())!;
     expect(board.y).toBeGreaterThanOrEqual(0);
     expect(hint.y + hint.height).toBeLessThanOrEqual(ad.y);
-    if (width > height) expect(board.width).toBeGreaterThanOrEqual(244);
+    if (width > height) expect(board.width).toBeGreaterThanOrEqual(224);
     await page.screenshot({
       path: `docs/qa/feel-0.8/reward-${width}x${height}.png`,
     });

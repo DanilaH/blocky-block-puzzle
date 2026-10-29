@@ -40,6 +40,28 @@ for (const interrupt of [false, true])
     });
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    for (const [width, height] of [
+      [390, 844],
+      [320, 480],
+      [568, 320],
+    ]) {
+      await page.setViewportSize({ width, height });
+      await expect
+        .poll(async () => {
+          const hud = await page.locator("#combo-hud").boundingBox();
+          const board = await page.locator("#board").boundingBox();
+          return (
+            !!hud &&
+            !!board &&
+            hud.y >= 0 &&
+            hud.y + hud.height <= board.y &&
+            hud.x >= 0 &&
+            hud.x + hud.width <= width
+          );
+        })
+        .toBe(true);
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.clock.install();
     await page.clock.pauseAt(new Date(Date.now() + 100));
     await page.locator(".piece").first().click({ force: true });
