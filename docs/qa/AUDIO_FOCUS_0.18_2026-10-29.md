@@ -20,8 +20,17 @@ Native generation отбрасывает callback уже освобождённ�
 
 - Unit: прекращение хвостов при mute/loss, отсутствие replay после gain, отложенный resume после stop, отсутствие AudioContext при denied, устаревший granted-ответ после loss, пауза/возврат во время запроса, отказ bridge/listener, web fallback.
 - Browser: mock native loss/gain при настоящем AudioContext, сохранение управления без фокуса, пауза не допускает unmute.
-- Итоговые результаты сборки/регрессии записываются после завершения проверок.
+- Локально: 78 unit и 72 browser прошли; production build успешен. Первый web-прогон был нарушен редактированием dev-модулей (reload/navigation failures); повторный полный прогон на неизменном исходнике прошёл 72/72.
+- CI 40879344281, verify job 123466369660: unit, build и browser прошли. Android job 123468293818 завершился успешно. Всего 150 автоматических проверок.
 
 ## Не проверено
 
 Физический Android: звонок/ассистент/уведомление, другая музыка, отключение наушников/Bluetooth, rewarded/interstitial и возврат, API 24–25 и современный WebView. Сценарий отключения наушников отдельно ещё не обработан. Нет заявления о проверенном на телефоне звуке или итоговом feel. APK 0.17 этих изменений не содержит.
+
+## APK 0.18
+
+- Исходный commit: `82bd0e76e2b1770de543da28790035885617cd55`, PR CI `40879344281`, artifact `12900201593`.
+- `com.danilah.blocky.dev`, versionCode 18, `0.18.0-preview`; 9 823 412 байт.
+- SHA256: `c859546f3b534f2801510b2f0e0622f312f962300e3c14bfdcff698dd41ad33a`.
+- SHA256 сертификата: `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`, совпадает с 0.17. Установка обновления на телефон не проверена.
+- ZIP цел, Android manifest проверен, production web-assets совпали побайтово, `BlockyAudioFocusPlugin` присутствует в DEX. Новых manifest permissions нет. Реклама по-прежнему demo/debug.
