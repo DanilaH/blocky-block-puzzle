@@ -14,11 +14,13 @@ export interface Profile {
   revision: number;
   game: GameState;
   best: number;
+  legacyBest?: number;
+  festivalBest?: number;
   freeDay: string;
   freeHints: number;
   earnedHints: number;
   hint: HintReceipt | null;
-  settings: { sound: boolean; calm: boolean };
+  settings: { sound: boolean; calm: boolean; haptics?: boolean };
 }
 export function dayKey(date = new Date()): string {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -84,6 +86,10 @@ export function validProfile(value: unknown): value is Profile {
         (!integer(p.tutorialStep) || p.tutorialStep > 4)) ||
       !integer(p.revision) ||
       !integer(p.best) ||
+      (p.legacyBest !== undefined && !integer(p.legacyBest)) ||
+      (p.festivalBest !== undefined && !integer(p.festivalBest)) ||
+      (p.settings?.haptics !== undefined &&
+        typeof p.settings.haptics !== "boolean") ||
       !integer(p.freeHints) ||
       p.freeHints > 3 ||
       !integer(p.earnedHints) ||
@@ -99,6 +105,7 @@ export function validProfile(value: unknown): value is Profile {
       !integer(g.revision) ||
       !integer(g.moves) ||
       !integer(g.score) ||
+      (g.scoringVersion !== undefined && g.scoringVersion !== "festival-v3") ||
       !integer(g.streak) ||
       (g.rulesVersion !== undefined &&
         !["classic-v1", "grace-v2"].includes(g.rulesVersion)) ||
@@ -200,4 +207,22 @@ export function validProfile(value: unknown): value is Profile {
   } catch {
     return false;
   }
+}
+
+export function bestFor(p: Profile): number {
+  return p.game.scoringVersion === "festival-v3"
+    ? (p.festivalBest ?? 0)
+    : (p.legacyBest ?? p.best);
+}
+export function recordScore(p: Profile, game: GameState) {
+  const legacyBest = p.legacyBest ?? p.best;
+  return {
+    best: Math.max(p.best, game.score),
+    legacyBest: game.scoringVersion
+      ? legacyBest
+      : Math.max(legacyBest, game.score),
+    festivalBest: game.scoringVersion
+      ? Math.max(p.festivalBest ?? 0, game.score)
+      : (p.festivalBest ?? 0),
+  };
 }

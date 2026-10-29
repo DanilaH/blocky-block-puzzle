@@ -115,7 +115,7 @@ test("record survives recent combo and drag source returns after cancel", async 
   const b = (await page.locator("#board").boundingBox())!;
   await page.locator(".piece").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#burst")).toContainText("Две линии");
+  await expect(page.locator("#burst")).toContainText("ДВОЙНАЯ!");
   await page.locator(".piece").nth(1).click();
   await page
     .locator("#board")

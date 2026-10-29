@@ -2,9 +2,9 @@
 export function contactScale(age: number): number {
   if (age < 0 || age >= 120) return 1;
   // Immediate compression, one restrained rebound, then rest.
-  if (age < 35) return 0.94 + 0.075 * (age / 35);
+  if (age < 35) return 0.84 + 0.24 * (age / 35);
   const t = (age - 35) / 85;
-  return 1 + 0.015 * (1 - t) ** 2;
+  return 1 + 0.08 * (1 - t) ** 2;
 }
 export function waveOrigins(placed: number[]) {
   const rows = Array<number>(8).fill(3.5),
@@ -50,7 +50,7 @@ export class Celebration {
   add(lines: number, now: number) {
     this.value = Math.min(
       1,
-      this.level(now) + 0.32 + Math.min(3, lines) * 0.13,
+      this.level(now) + 0.55 + Math.min(3, lines) * 0.15,
     );
     this.at = now;
     return this.value;

@@ -1,3 +1,28 @@
+export const comboMultiplier = (streak: number) =>
+  [1, 1.5, 2, 3, 4, 5][Math.max(0, Math.min(5, streak - 1))]!;
+export function scoreBreakdown(
+  cells: number,
+  lines: number,
+  streak: number,
+  allClear: boolean,
+  festival: boolean,
+) {
+  const lineBase = festival ? 50 * lines * (lines + 1) : 10 * lines ** 2;
+  const combo = lines
+    ? festival
+      ? lineBase * (comboMultiplier(streak) - 1)
+      : 5 * (streak - 1) * lines
+    : 0;
+  const empty = allClear ? (festival ? 1000 : 100) : 0;
+  return {
+    placement: cells,
+    lines: lineBase,
+    combo,
+    empty,
+    total: cells + lineBase + combo + empty,
+  };
+}
+
 import catalog from "./shapes.json";
 export type Cell = readonly [number, number];
 export interface Shape {
@@ -31,6 +56,7 @@ export interface GameState {
   revision: number;
   board: Board;
   tray: Slot[];
+  scoringVersion?: "festival-v3";
   score: number;
   streak: number;
   rulesVersion?: "classic-v1" | "grace-v2";
@@ -287,6 +313,7 @@ export function applyMove(
   lines: number;
   points: number;
   allClear: boolean;
+  breakdown: ReturnType<typeof scoreBreakdown>;
 } | null {
   const slot = state.tray[move.slot];
   if (
@@ -306,12 +333,14 @@ export function applyMove(
         ? state.streak
         : 0;
   const allClear = placed.board.every((c) => c === 0),
-    points =
-      shape.cells.length +
-      (placed.lines
-        ? 10 * placed.lines ** 2 + 5 * (streak - 1) * placed.lines
-        : 0) +
-      (allClear ? 100 : 0);
+    breakdown = scoreBreakdown(
+      shape.cells.length,
+      placed.lines,
+      streak,
+      allClear,
+      state.scoringVersion === "festival-v3",
+    ),
+    points = breakdown.total;
   let tray = state.tray.map((s, i) => ({
       ...s,
       used: i === move.slot || s.used,
@@ -341,6 +370,7 @@ export function applyMove(
     cells: placed.cells,
     lines: placed.lines,
     points,
+    breakdown,
     allClear,
   };
 }

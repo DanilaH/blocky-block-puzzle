@@ -117,8 +117,8 @@ test("compact controls keep 48px targets and rules explain points", async ({
   }
   await page.locator("#pause").click();
   await page.locator("#rules").click();
-  await expect(page.locator(".dialog-body")).toContainText("100 очков");
-  await expect(page.locator(".dialog-body")).toContainText("14 очков");
+  await expect(page.locator(".dialog-body")).toContainText("+1000");
+  await expect(page.locator(".dialog-body")).toContainText("×1,5");
   await page.screenshot({ path: "docs/qa/feel-0.8/rules-landscape.png" });
   await page.locator("#practice").click();
   await expect(page.locator("#lesson-skip")).toBeVisible();

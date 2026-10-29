@@ -247,7 +247,7 @@ export class BoardScene extends Phaser.Scene {
         g.strokeRoundedRect(3, 3, 506, 506, 8);
       }
     }
-    let particlesLeft = 160;
+    let particlesLeft = 240;
     for (const e of this.impacts) {
       const age = now - e.started;
       // Celebrate the empty board after the last clear, never over a new move.
@@ -302,7 +302,7 @@ export class BoardScene extends Phaser.Scene {
         // Broad white afterimage belongs to cleared cells, never a new placement.
         if (elapsed > 90 && elapsed < 900) {
           const fade = (elapsed - 90) / 810;
-          g.fillStyle(0xffffff, 0.62 * (1 - fade) ** 2);
+          g.fillStyle(0xffffff, 0.95 * (1 - fade) ** 1.4);
           if (e.rows.includes(Math.floor(i / 8)))
             g.fillRect(x, y + 4 + fade * 18, 64, 56 - fade * 36);
           if (e.columns.includes(i % 8))
@@ -338,13 +338,14 @@ export class BoardScene extends Phaser.Scene {
         if (elapsed < 100 || elapsed > 650) continue;
         const flight = (elapsed - 100) / 550;
         const horizontal = e.rows.includes(Math.floor(i / 8));
-        for (let p = 0; p < 2 && particlesLeft > 0; p++, particlesLeft--) {
-          const sign = p ? 1 : -1;
-          const along = sign * (12 + flight * 48);
-          const across = sign * Math.sin(flight * Math.PI) * (9 + (i % 3) * 5);
+        for (let p = 0; p < 4 && particlesLeft > 0; p++, particlesLeft--) {
+          const sign = p % 2 ? 1 : -1;
+          const along = sign * (18 + flight * (90 + p * 25));
+          const across =
+            sign * Math.sin(flight * Math.PI) * (20 + (i % 3) * 12);
           const px = x + 32 + (horizontal ? along : across);
           const py = y + 32 + (horizontal ? across : along);
-          const size = (p ? 5 : 8) * (1 - flight);
+          const size = (p % 2 ? 8 : 12) * (1 - flight);
           g.fillStyle(COLORS[e.board[i] || 1]!, (1 - flight) ** 2);
           g.fillRect(px - size / 2, py - size / 2, size, size);
           g.lineStyle(2 * (1 - flight), 0xffffff, 0.8 * (1 - flight));

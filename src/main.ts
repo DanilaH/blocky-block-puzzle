@@ -1,3 +1,7 @@
+import { Festival } from "./game/festival";
+import { GameHaptics } from "./platform/haptics";
+import { comboMultiplier } from "./core/scoring";
+import { bestFor, recordScore } from "./core/profile";
 import { AudioFocus, nativeAudioFocus } from "./platform/audio-focus";
 import { AdsController, nativeAds, watchBanner } from "./platform/ads";
 import { claimRevive, revivePlan } from "./core/monetization";
@@ -41,8 +45,10 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "initial-v1") =>
-  newGame(seed(), crypto.randomUUID(), dealer);
+const fresh = (dealer: DealerVersion = "initial-v1") => ({
+  ...newGame(seed(), crypto.randomUUID(), dealer),
+  scoringVersion: "festival-v3" as const,
+});
 async function start() {
   const adapter = new IndexedSave();
   const loaded = await adapter.load();
@@ -51,6 +57,16 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene();
+  const festival = new Festival(),
+    haptics = new GameHaptics();
+  const festivalTimers = new Set<number>();
+  const later = (fn: () => void, delay: number) => {
+    const id = window.setTimeout(() => {
+      festivalTimers.delete(id);
+      if (running) fn();
+    }, delay);
+    festivalTimers.add(id);
+  };
   const audioFocus = new AudioFocus(nativeAudioFocus(), (allowed) =>
     audio.setAllowed(allowed),
   );
@@ -59,7 +75,7 @@ async function start() {
   const inLesson = () => lessonStep() < 4;
   const currentGame = () =>
     inLesson() ? lessonGame(lessonStep()) : store.state.game;
-  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
+  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div class="combo-hud" id="combo-hud" aria-live="polite"><strong id="combo-title"></strong><span id="combo-stock"></span></div><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
   const dialog = el<HTMLDialogElement>("dialog"),
@@ -92,7 +108,7 @@ async function start() {
     else phaser.loop.sleep();
   }
   let recordCelebrated =
-    initial.game.score > 0 && initial.game.score >= initial.best;
+    initial.game.score > 0 && initial.game.score >= bestFor(initial);
   let rewardHoldUntil = 0;
   let pendingPoints = 0;
   const rewards = new Map<HTMLElement, () => void>();
@@ -123,7 +139,7 @@ async function start() {
       return;
     }
     const start = performance.now(),
-      duration = Math.min(650, 260 + Math.log2(value - from + 1) * 40);
+      duration = Math.min(260, 130 + Math.log2(value - from + 1) * 10);
     const tick = (now: number) => {
       const t = Math.max(0, Math.min(1, (now - start) / duration));
       paint(from + (value - from) * (1 - (1 - t) ** 3));
@@ -149,6 +165,9 @@ async function start() {
     return a;
   }
   function stopCosmetics() {
+    festivalTimers.forEach(clearTimeout);
+    festivalTimers.clear();
+    festival.stop();
     cancelAnimationFrame(scoreFrame);
     scoreFrame = 0;
     pendingPoints = 0;
@@ -167,6 +186,12 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      root.classList.remove("effects-paused");
+      haptics.setActive(
+        store.state.settings.haptics !== false &&
+          !store.state.settings.calm &&
+          !matchMedia("(prefers-reduced-motion: reduce)").matches,
+      );
       audioFocus.setActive(store.state.settings.sound);
       ads.setActive(!inLesson() && store.state.game.status === "playing");
       bannerWatch?.update();
@@ -180,6 +205,8 @@ async function start() {
     },
     () => {
       running = false;
+      root.classList.add("effects-paused");
+      haptics.setActive(false);
       audioFocus.setActive(false);
       ads.setActive(false);
       bannerWatch?.update();
@@ -316,7 +343,7 @@ async function start() {
       g.gameId,
       smoothScore || pendingPoints > 0,
     );
-    el("best").textContent = p.best.toLocaleString("ru");
+    el("best").textContent = bestFor(p).toLocaleString("ru");
     el("hint-count").textContent = String(
       (p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints,
     );
@@ -359,6 +386,7 @@ async function start() {
     scene.calm =
       p.settings.calm || matchMedia("(prefers-reduced-motion: reduce)").matches;
     audio.calm = scene.calm;
+    haptics.setActive(running && p.settings.haptics !== false && !scene.calm);
     document.documentElement.classList.toggle("calm", scene.calm);
     scene.setState(g);
     scene.preview(hintMove(), true, true);
@@ -378,6 +406,37 @@ async function start() {
     el("streak").title =
       "Можно сделать два хода без очистки. Третий сбросит серию. Время не ограничено.";
     el("streak").dataset.level = String(Math.min(4, g.streak));
+    const comboTitle = g.streak
+      ? g.scoringVersion
+        ? `КОМБО ×${comboMultiplier(g.streak).toLocaleString("ru")}`
+        : `СЕРИЯ ${g.streak}`
+      : "";
+    const stock =
+      g.rulesVersion === "grace-v2"
+        ? Math.max(0, 2 - (g.streakMisses ?? 0))
+        : 0;
+    const hud = el("combo-hud");
+    const changedCombo = hud.dataset.key !== `${g.gameId}:${g.streak}:${stock}`;
+    hud.dataset.key = `${g.gameId}:${g.streak}:${stock}`;
+    hud.classList.toggle("visible", !!g.streak && !inLesson());
+    hud.classList.toggle("urgent", !!g.streak && stock === 0);
+    el("combo-title").textContent = comboTitle;
+    el("combo-stock").textContent = g.streak
+      ? stock
+        ? `${"●".repeat(stock)}${"○".repeat(2 - stock)}  ${stock === 2 ? "2 хода в запасе" : "1 ход в запасе"}`
+        : "Очисти линию следующим ходом"
+      : "";
+    if (changedCombo && g.streak)
+      animate(
+        hud,
+        [
+          { transform: "scale(.85)" },
+          { transform: "scale(1.18)", offset: 0.45 },
+          { transform: "scale(1)" },
+        ],
+        340,
+      );
+
     el("score").classList.toggle("compact", g.score >= 100000);
     el("caption").textContent = inLesson()
       ? ""
@@ -417,7 +476,7 @@ async function start() {
           store.state = latest.profile;
           recordCelebrated =
             latest.profile.game.score > 0 &&
-            latest.profile.game.score >= latest.profile.best;
+            latest.profile.game.score >= bestFor(latest.profile);
           resultPending = false;
           clearTimeout(resultTimer);
           render();
@@ -486,7 +545,7 @@ async function start() {
       toast("Поставьте фигуру в светлый контур");
       return;
     }
-    const previousBest = store.state.best;
+    const previousBest = bestFor(store.state);
     const piece = before.tray[move.slot];
     const placedCells = piece
       ? shapeById(piece.shapeId).cells.map(
@@ -520,7 +579,7 @@ async function start() {
               ...ads.stamp(p),
               revision: p.revision + 1,
               game: result.state,
-              best: Math.max(p.best, result.state.score),
+              ...recordScore(p, result.state),
               hint: null,
             }
           : null;
@@ -556,11 +615,19 @@ async function start() {
             animate(
               e,
               [
-                { opacity: 0, transform: "translateY(10px) scale(.7)" },
+                {
+                  opacity: 0,
+                  transform: "translateY(24px) rotate(-8deg) scale(.4)",
+                },
+                {
+                  opacity: 1,
+                  transform: "translateY(-6px) rotate(3deg) scale(1.12)",
+                  offset: 0.65,
+                },
                 { opacity: 1, transform: "none" },
               ],
-              180,
-              i * 35,
+              360,
+              i * 55,
             ),
           );
         scene.impact(
@@ -570,6 +637,32 @@ async function start() {
           event.lines,
           event.allClear,
         );
+        haptics.pulse(
+          event.lines ? "clear" : "place",
+          Math.max(event.lines, Math.min(5, event.state.streak)),
+        );
+        if (event.lines && !scene.calm) {
+          festival.burst(
+            canvasBox.getBoundingClientRect(),
+            event.cells,
+            event.lines,
+            false,
+          );
+          animate(
+            canvasBox.querySelector("canvas")!,
+            [
+              { transform: "translate(0,0)" },
+              {
+                transform: `translate(${Math.min(5, event.lines * 2)}px,3px)`,
+                offset: 0.2,
+              },
+              { transform: "translate(-3px,-2px)", offset: 0.45 },
+              { transform: "translate(1px,0)", offset: 0.7 },
+              { transform: "none" },
+            ],
+            220,
+          );
+        }
         audio.play(
           event.allClear
             ? "allClear"
@@ -586,33 +679,6 @@ async function start() {
           event.points,
           scene.intensity,
         );
-        const praise = event.allClear
-          ? "Чистое поле!"
-          : newRecord
-            ? "Новый рекорд!"
-            : event.lines >= 3
-              ? `Отлично! ×${event.lines}`
-              : event.lines === 2
-                ? "Две линии!"
-                : "";
-        const tier = event.allClear
-          ? "all-clear"
-          : newRecord
-            ? "record"
-            : event.lines >= 2
-              ? "combo"
-              : event.lines
-                ? "line"
-                : "place";
-        if (event.state.streak > 1)
-          animate(
-            el("streak"),
-            [
-              { transform: "scale(1.25)", color: "#a66b12" },
-              { transform: "scale(1)" },
-            ],
-            260,
-          );
         const rows = Array.from({ length: 8 }, (_, y) => y).filter((y) =>
           Array.from({ length: 8 }, (_, x) => y * 8 + x).every((i) =>
             event.cells.includes(i),
@@ -629,18 +695,86 @@ async function start() {
               y: rows.length ? ((rows[0]! + 0.5) / 8) * 100 : 50,
             }
           : null;
-        presentReward(
-          tier,
-          praise ||
-            (event.state.streak > 1 && event.lines
-              ? `Серия ×${event.state.streak}`
-              : ""),
-          event.points,
-          anchor,
-          deferred,
-          event.state.streak,
-          event.state.gameId,
-        );
+        const lineName =
+          event.lines >= 4
+            ? `${event.lines} ЛИНИИ!`
+            : event.lines === 3
+              ? "ТРОЙНАЯ!"
+              : event.lines === 2
+                ? "ДВОЙНАЯ!"
+                : "ЛИНИЯ!";
+        if (!event.lines) presentReward("place", "", event.points, anchor);
+        else {
+          const linePoints = event.breakdown.lines + event.breakdown.combo;
+          presentReward(
+            event.lines >= 2 ? "combo" : "line",
+            lineName,
+            linePoints,
+            anchor,
+            deferred ? linePoints : 0,
+            event.state.streak,
+            event.state.gameId,
+          );
+          if (event.state.streak > 1)
+            later(
+              () =>
+                presentReward(
+                  "chain",
+                  event.state.scoringVersion
+                    ? `КОМБО ×${comboMultiplier(event.state.streak).toLocaleString("ru")}`
+                    : `СЕРИЯ ${event.state.streak}`,
+                  0,
+                  { x: 50, y: 30 },
+                ),
+              140,
+            );
+          if (event.allClear) {
+            later(
+              () => {
+                presentReward(
+                  "all-clear",
+                  "Чистое поле!",
+                  event.breakdown.empty,
+                  { x: 50, y: 52 },
+                  deferred ? event.breakdown.empty : 0,
+                  event.state.streak,
+                  event.state.gameId,
+                );
+                haptics.pulse("empty");
+                if (!scene.calm)
+                  festival.burst(
+                    canvasBox.getBoundingClientRect(),
+                    [],
+                    event.lines,
+                    true,
+                  );
+              },
+              scene.calm ? 0 : 650,
+            );
+          }
+        }
+        if (newRecord)
+          later(
+            () => {
+              presentReward("record", "Новый рекорд!", 0, { x: 50, y: 32 });
+              haptics.pulse("record");
+              if (!scene.calm)
+                festival.burst(
+                  canvasBox.getBoundingClientRect(),
+                  event.cells,
+                  1,
+                  false,
+                  true,
+                );
+            },
+            event.allClear ? 1400 : 600,
+          );
+        if (newRecord || event.allClear)
+          rewardHoldUntil = Math.max(
+            rewardHoldUntil,
+            performance.now() +
+              (scene.calm ? 1200 : newRecord && event.allClear ? 3000 : 2250),
+          );
       }
       el("announce").textContent =
         `Счёт ${event.state.score}. ${event.lines ? "Очищено линий: " + event.lines : ""}`;
@@ -686,35 +820,33 @@ async function start() {
     node.style.top = `${Math.max(15, Math.min(82, anchor?.y ?? 48))}%`;
     const label = document.createElement("span");
     label.className = "reward-praise";
-    label.textContent = important
-      ? praise
-      : tier !== "place" && streak > 1
-        ? "Комбо"
-        : praise;
-    if (!important && tier !== "place" && streak > 1) {
-      const digit = document.createElement("b");
-      digit.textContent = String(streak);
-      label.append(digit);
-      animate(
-        digit,
-        [
-          { transform: "scale(.45)" },
-          { transform: "scale(1.35)", offset: 0.55 },
-          { transform: "scale(1)" },
-        ],
-        360,
-      );
+    label.textContent = praise;
+    if (important) {
+      label.textContent = "";
+      Array.from(praise).forEach((letter, i) => {
+        const span = document.createElement("i");
+        span.textContent = letter;
+        span.style.setProperty("--letter", String(i));
+        label.append(span);
+      });
     }
     const amount = document.createElement("span");
     amount.className = "reward-points";
-    amount.textContent = `+${deferred || points}`;
+    amount.textContent = points ? `+${deferred || points}` : "";
     node.append(label, amount);
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();
-    label.style.fontSize = `${Math.min(important ? 29 : 32, boardBox.width * (important ? 0.075 : 0.09))}px`;
+    label.style.fontSize = `${Math.min(important ? 38 : 36, boardBox.width * (important ? 0.09 : 0.1))}px`;
+    const naturalWidth = label.getBoundingClientRect().width;
+    const maxLabelWidth = Math.max(1, (boardBox.width - 32) / 1.2);
+    if (naturalWidth > maxLabelWidth)
+      label.style.fontSize = `${(parseFloat(label.style.fontSize) * maxLabelWidth) / naturalWidth}px`;
     const bounds = node.getBoundingClientRect();
-    const insetX = ((bounds.width * 0.56 + 6) / boardBox.width) * 100;
-    const insetY = ((bounds.height * 0.6 + 16) / boardBox.height) * 100;
+    const insetX = Math.min(
+      50,
+      ((bounds.width * 0.68 + 12) / boardBox.width) * 100,
+    );
+    const insetY = ((bounds.height * 0.75 + 24) / boardBox.height) * 100;
     node.style.left = `${Math.max(insetX, Math.min(100 - insetX, anchor?.x ?? 50))}%`;
     const candidates = [
       anchor?.y ?? 48,
@@ -736,8 +868,10 @@ async function start() {
       : tier === "place"
         ? 420
         : important
-          ? 1900
-          : 1150;
+          ? 1600
+          : tier === "chain"
+            ? 430
+            : 600;
     if (important) rewardHoldUntil = performance.now() + duration;
     const timerIds: number[] = [];
     let settled = false;
@@ -761,8 +895,12 @@ async function start() {
     const labelAnimation = animate(
       label,
       [
-        { opacity: 0, transform: "translateY(12px) scale(.7)" },
-        { opacity: 1, transform: "translateY(0) scale(1.08)", offset: 0.18 },
+        { opacity: 0, transform: "translateY(22px) rotate(-7deg) scale(.3)" },
+        {
+          opacity: 1,
+          transform: "translateY(-5px) rotate(3deg) scale(1.16)",
+          offset: 0.1,
+        },
         { opacity: 1, transform: "none", offset: 0.7 },
         { opacity: 0, transform: "translateY(-14px) scale(.96)" },
       ],
@@ -800,7 +938,7 @@ async function start() {
                   transform: `translate(${dx}px,${dy}px) scale(.35)`,
                 },
               ],
-              380,
+              220,
             )?.effect?.updateTiming({ easing: "ease-in" });
             timerIds.push(
               window.setTimeout(() => {
@@ -818,10 +956,10 @@ async function start() {
                     260,
                   );
                 }
-              }, 380),
+              }, 220),
             );
           },
-          important ? 650 : 420,
+          important ? 260 : 140,
         ),
       );
     timerIds.push(window.setTimeout(finish, duration));
@@ -1291,7 +1429,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
       "pause",
     );
     el("resume").onclick = close;
@@ -1299,7 +1437,7 @@ async function start() {
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
     ads.preload();
-    for (const key of ["sound", "calm"] as const)
+    for (const key of ["sound", "calm", "haptics"] as const)
       el<HTMLInputElement>(key).onchange = async (event) => {
         const value = (event.target as HTMLInputElement).checked;
         dialog.querySelector<HTMLElement>(".dialog-status")!.textContent = "";
@@ -1318,10 +1456,10 @@ async function start() {
         } catch (error) {
           await writeFailure(error, "Настройка не сохранена");
         } finally {
-          for (const setting of ["sound", "calm"] as const) {
+          for (const setting of ["sound", "calm", "haptics"] as const) {
             const input = dialog.querySelector<HTMLInputElement>(`#${setting}`);
             if (input) {
-              input.checked = store.state.settings[setting];
+              input.checked = store.state.settings[setting] ?? true;
               input.disabled = false;
             }
           }
@@ -1331,7 +1469,7 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><p>Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков.</p><p>За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10. ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} Полностью пустое поле даёт дополнительно 100 очков.</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><p>${currentGame().scoringVersion ? "Клетка — 1 очко. Линии за один ход: 100 / 300 / 600 / 1000 за одну / две / три / четыре. Пересечения считаются вместе. Комбо умножает очки линий: ×1 → ×1,5 → ×2 → ×3 → ×4 → ×5. Чистое поле: отдельно +1000. Рекорд этой шкалы хранится отдельно." : "Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков."}</p><p>${currentGame().scoringVersion ? "" : "За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10."} ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} ${currentGame().scoringVersion ? "" : "Полностью пустое поле даёт дополнительно 100 очков."}</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;
@@ -1360,7 +1498,7 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.</p><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Подсказки сохранятся. В новой партии — увеличенные награды за линии и комбо, с отдельным рекордом.</p><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
     el<HTMLSelectElement>("dealer-choice").value =
@@ -1411,7 +1549,8 @@ async function start() {
     resultPending = false;
     if (dialog.open) return;
     const bestFinish =
-      store.state.game.score > 0 && store.state.game.score >= store.state.best;
+      store.state.game.score > 0 &&
+      store.state.game.score >= bestFor(store.state);
     const remaining = store.state.game.tray
       .map((piece, slot) =>
         piece.used
@@ -1420,7 +1559,7 @@ async function start() {
       )
       .join("");
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${store.state.best.toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div>${revivePlan(store.state.game) ? `<button class="secondary" id="revive-offer">Второй шанс за рекламу</button>` : ""}<button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>${savedReviveButton()}`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${bestFor(store.state).toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div>${revivePlan(store.state.game) ? `<button class="secondary" id="revive-offer">Второй шанс за рекламу</button>` : ""}<button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>${savedReviveButton()}`,
       "result",
     );
     dialog.dataset.record = String(bestFinish);

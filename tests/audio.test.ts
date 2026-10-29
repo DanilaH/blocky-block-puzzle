@@ -77,7 +77,7 @@ afterEach(() => {
   peak = 0;
 });
 it.each(["record", "allClear"] as const)(
-  "keeps the placement hit after %s and pickup within twelve voices",
+  "keeps the placement hit after %s and pickup within eighteen voices",
   async (kind) => {
     vi.stubGlobal("AudioContext", FakeContext);
     const audio = new GameAudio();
@@ -89,7 +89,7 @@ it.each(["record", "allClear"] as const)(
     expect([...active].some((v) => v.hz >= 690 && v.hz <= 810)).toBe(true);
     expect([...active].some((v) => v.hz >= 1160 && v.hz <= 1370)).toBe(true);
     for (let i = 0; i < 12; i++) audio.play("place");
-    expect(peak).toBeLessThanOrEqual(12);
+    expect(peak).toBeLessThanOrEqual(18);
     audio.stop();
     expect(active.size).toBe(0);
     await audio.unlock();
@@ -100,7 +100,7 @@ it.each(["record", "allClear"] as const)(
 );
 
 it.each(["place", "clear", "combo", "mega", "record", "allClear"] as const)(
-  "%s includes one shared contact before reward notes within twelve voices",
+  "%s includes one shared contact before reward notes within eighteen voices",
   async (kind) => {
     vi.stubGlobal("AudioContext", FakeContext);
     const audio = new GameAudio();
@@ -109,7 +109,7 @@ it.each(["place", "clear", "combo", "mega", "record", "allClear"] as const)(
     expect([...active].filter((v) => v.hz === 230)).toHaveLength(1);
     expect([...active].filter((v) => v.hz === 740)).toHaveLength(1);
     expect([...active].filter((v) => v.hz === 1250)).toHaveLength(1);
-    expect(peak).toBeLessThanOrEqual(12);
+    expect(peak).toBeLessThanOrEqual(18);
   },
 );
 
@@ -128,7 +128,7 @@ it("reward pitch rises with combo and points, stays bounded and respects mute", 
   expect(Math.max(...high)).toBeGreaterThan(Math.max(...low));
   audio.play("clear", 999, 999999);
   expect(Math.max(...[...active].map((v) => v.hz))).toBeLessThan(2300);
-  expect(peak).toBeLessThanOrEqual(12);
+  expect(peak).toBeLessThanOrEqual(18);
   audio.stop();
   expect(active.size).toBe(0);
 });
@@ -141,7 +141,7 @@ it("a new reward keeps a live tail and stop clears all voices", async () => {
   const old = [...active];
   audio.play("clear", 2, 16, 0.8);
   expect(old.some((v) => active.has(v))).toBe(true);
-  expect(peak).toBeLessThanOrEqual(12);
+  expect(peak).toBeLessThanOrEqual(18);
   audio.stop();
   expect(active.size).toBe(0);
 });

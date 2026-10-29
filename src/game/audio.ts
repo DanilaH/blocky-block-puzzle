@@ -1,3 +1,4 @@
+import { MusicalChain } from "./festival";
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
   private soundEnabled = true;
@@ -20,6 +21,7 @@ export class GameAudio {
   }
   calm = false;
   private variant = 0;
+  private chain = new MusicalChain();
   private context: AudioContext | null = null;
   private voices = new Map<AudioScheduledSourceNode, number>();
   private master: GainNode | null = null;
@@ -63,6 +65,7 @@ export class GameAudio {
     this.unlocked = true;
   }
   stop() {
+    this.chain.reset();
     this.generation++;
     this.unlocked = false;
     if (this.master) this.master.gain.value = 0;
@@ -88,7 +91,7 @@ export class GameAudio {
     type: OscillatorType = "sine",
     priority = 0,
   ) {
-    if (this.voices.size >= 12) {
+    if (this.voices.size >= 18) {
       // Keep the latest tactile hit audible; decorative tails yield first.
       if (priority === 0) return;
       const victim = [...this.voices].sort((a, b) => a[1] - b[1])[0];
@@ -140,6 +143,8 @@ export class GameAudio {
     )
       return;
     const t = this.context.currentTime;
+    if (["clear", "combo", "mega", "allClear", "record"].includes(kind))
+      this.chain.next(performance.now());
     if (kind === "cancel") {
       this.tone(200, 130, t, 0.07, 0.07);
       return;
@@ -152,9 +157,7 @@ export class GameAudio {
     if (this.wet)
       this.wet.gain.value = this.calm ? 0 : 0.1 + Math.min(1, intensity) * 0.12;
     if (kind === "score") {
-      const base =
-        659.25 *
-        [1, 1.125, 1.25, 1.5, 1.667][Math.min(4, Math.floor(streak / 2))]!;
+      const base = 659.25 * Math.pow(2, this.chain.semitones / 12);
       this.tone(base, base, t, 0.22, 0.065, "sine", 1);
       if (!this.calm) this.tone(base * 1.5, base * 1.5, t + 0.065, 0.38, 0.035);
       return;
@@ -218,14 +221,7 @@ export class GameAudio {
                 ? [659.25, 987.77]
                 : [523.25, 783.99, 1046.5];
     notes.forEach((hz, i) => {
-      const f =
-          hz *
-          Math.pow(
-            2,
-            (Math.min(streak, 6) * 1.5 +
-              Math.min(4, Math.log2(Math.max(1, points / 20)))) /
-              12,
-          ),
+      const f = hz * Math.pow(2, this.chain.semitones / 12),
         at =
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
@@ -235,8 +231,8 @@ export class GameAudio {
         f * 0.999,
         at,
         this.calm ? 0.18 : 0.48 + intensity * 0.5,
-        0.075,
-        "sine",
+        0.105,
+        "triangle",
         1,
       );
       if (!this.calm && i === 0) {

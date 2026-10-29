@@ -1894,3 +1894,192 @@ dialog h2 {
   outline-offset: -1px;
   box-shadow: inset 0 0 0 3px #fff8;
 }
+
+/* 0.19: legible combo stock, per-event reward lettering, full-screen confetti. */
+.festival-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+}
+#streak {
+  visibility: hidden;
+}
+.combo-hud {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.combo-hud.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.combo-hud strong {
+  color: #b94d19;
+  font-size: 17px;
+  line-height: 18px;
+  font-weight: 950;
+  font-style: italic;
+  animation: combo-bob 1.5s ease-in-out infinite;
+}
+.combo-hud span {
+  color: #62523e;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 12px;
+}
+.combo-hud.urgent strong {
+  color: #c13d27;
+  animation: combo-urgent 0.8s ease-in-out infinite;
+}
+.reward-praise {
+  gap: 0;
+}
+.reward-praise i {
+  font-style: inherit;
+  display: inline-block;
+  animation: letter-dance 0.65s ease-in-out infinite alternate;
+  animation-delay: calc(var(--letter) * -45ms);
+}
+.reward-event[data-tier="chain"] .reward-praise {
+  color: #ffcc38;
+}
+.reward-event[data-tier="all-clear"] .reward-praise {
+  color: #fff26e;
+  filter: drop-shadow(0 3px 0 #b34a18);
+}
+.result-heading {
+  animation: combo-bob 1.5s ease-in-out infinite;
+}
+#again {
+  animation: again-breathe 1.4s ease-in-out infinite;
+}
+@keyframes combo-bob {
+  0%,
+  100% {
+    transform: rotate(-1deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1deg) translateY(-2px);
+  }
+}
+@keyframes combo-urgent {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+@keyframes letter-dance {
+  from {
+    transform: translateY(1px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(-4px) rotate(3deg);
+  }
+}
+@keyframes again-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 2px 0 #b99540,
+      0 0 0 0 #ffcb4c00;
+  }
+  50% {
+    box-shadow:
+      0 2px 0 #b99540,
+      0 0 0 5px #ffcb4c44;
+  }
+}
+.effects-paused .combo-hud *,
+.effects-paused .reward-praise i {
+  animation: none;
+}
+.calm .combo-hud *,
+.calm .reward-praise i,
+.calm #again,
+.calm .result-heading {
+  animation: none;
+}
+@media (orientation: landscape) {
+  .board-column {
+    padding-top: 32px;
+  }
+  .board-wrap {
+    max-width: calc(var(--usable-height) - 76px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .combo-hud *,
+  .reward-praise i,
+  #again,
+  .result-heading {
+    animation: none;
+  }
+}
+
+.reward-praise {
+  text-transform: uppercase;
+}
+.reward-praise i {
+  white-space: pre;
+}
+
+.combo-hud:not(.visible) * {
+  animation: none;
+}
+@media (orientation: landscape) {
+  .learning .board-column {
+    padding-top: 0;
+  }
+  .learning .board-wrap {
+    max-width: none;
+  }
+}
+
+.calm .combo-hud {
+  transition: none;
+}
+
+.effects-paused .combo-hud {
+  transition: none;
+}
+/* Short landscape uses the existing top margin: keep the board large and fixed. */
+@media (orientation: landscape) {
+  .board-column {
+    padding-top: 0;
+  }
+  .combo-hud {
+    height: 18px;
+    bottom: calc(100% + 2px);
+    flex-direction: row;
+    gap: 7px;
+  }
+  .combo-hud strong {
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+  .combo-hud span {
+    font-size: 8px;
+    line-height: 12px;
+    white-space: nowrap;
+  }
+}

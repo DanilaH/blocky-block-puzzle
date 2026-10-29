@@ -217,12 +217,12 @@ test("cross clear animates after save and accepts next move during particles", a
   await page.reload();
   await page.locator("#tray button").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#burst")).toContainText("Две линии");
+  await expect(page.locator("#burst")).toContainText("ДВОЙНАЯ!");
   await page.screenshot({ path: "docs/qa/feel-0.8/preview-combo.png" });
   await page.locator("#tray button").nth(1).click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#score")).toHaveText("42");
+  await expect(page.locator("#score")).toHaveText("302");
   await page.reload();
-  await expect(page.locator("#score")).toHaveText("42");
+  await expect(page.locator("#score")).toHaveText("302");
   expect(errors).toEqual([]);
 });

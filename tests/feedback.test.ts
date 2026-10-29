@@ -19,8 +19,8 @@ it("cross shares an origin and center placement reaches both ends symmetrically"
   expect(clearWaveDelay(3, [3], [3, 4], o)).toBe(124);
 });
 it("contact settles without repeated oscillation", () => {
-  expect(contactScale(0)).toBe(0.94);
-  expect(contactScale(35)).toBeCloseTo(1.015);
+  expect(contactScale(0)).toBe(0.84);
+  expect(contactScale(35)).toBeCloseTo(1.08);
   expect(contactScale(80)).toBeLessThan(contactScale(35));
   expect(contactScale(120)).toBe(1);
   expect(contactScale(1000)).toBe(1);
