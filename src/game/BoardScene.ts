@@ -255,9 +255,14 @@ export class BoardScene extends Phaser.Scene {
         e.allClear &&
         !this.calm &&
         age >= 400 &&
+        age < 1000 &&
         !this.state?.board.some(Boolean)
       ) {
-        const t = (age - 400) / 400;
+        const t = (age - 400) / 600;
+        g.fillStyle(0xffeb8a, Math.sin(t * Math.PI) * 0.12);
+        g.fillRect(0, 0, 512, 512);
+        g.lineStyle(2 + 10 * (1 - t), 0xffee9c, (1 - t) * 0.9);
+        g.strokeCircle(256, 256, 30 + t * 330);
         g.lineStyle(3 + 3 * (1 - t), 0xffe2a0, Math.sin(t * Math.PI) * 0.85);
         g.strokeRoundedRect(
           5 + t * 6,
