@@ -62,3 +62,6 @@ Preview 0.14: versionCode 14, тот же applicationId и сертификат 
 
 ### Preview signing continuity (0.22)
 GitHub Actions signing caches are ref-scoped. User APK 0.21 and compatible 0.22 come from PR #1 / feat/classic-preview. An experimental branch may generate a different debug key despite using the same cache key. Always verify the final signer fingerprint against the previously delivered APK before handing out an update. Expected preview fingerprint: e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13. Do not ask users to uninstall to hide a signing mismatch. A durable signing secret remains a release requirement.
+
+## Preview 0.23
+VersionCode 23, versionName 0.23.0-preview; APK из PR #1 / CI 41116476674. 174 автопроверки и Android CI прошли. Сертификат e96d961e…fdbe13 совпадает с 0.22; 16 production-файлов проверены побайтово. Физическая установка остаётся непроверенной. [Протокол](qa/ENAMEL_0.23_2026-10-31.md).

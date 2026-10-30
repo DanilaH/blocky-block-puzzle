@@ -18,6 +18,11 @@ try {
  });
  await p.reload();await p.locator('#theme-preview').waitFor();
  for(const stage of [0,3,6,10,15,20,30,40,50,75,100]) {
+  // DEV zero means actual saved series, so reset it for the base screenshot.
+  if(stage===0 || stage===3) {
+   await p.evaluate(async streak=>{const {IndexedSave}=await import('/src/platform/save.ts');const a=new IndexedSave(),q=(await a.load()).profile;q.revision++;q.game.streak=streak;await a.write(q);},stage);
+   await p.reload();await p.locator('#theme-preview').waitFor();
+  }
   await p.locator('#theme-preview').selectOption(String(stage));await p.waitForTimeout(2000);
   await p.screenshot({path:`${out}/theme-${stage}.png`});
  }
