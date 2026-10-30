@@ -27,6 +27,8 @@ for (const calm of [false, true])
     await page.locator(".piece").first().click();
     await page.evaluate(() => {
       (window as any).scoreSamples = [];
+      // Start at the actual input, not before Playwright waits for a moving board.
+      document.querySelector("#board")!.addEventListener("pointerup", () => {
       const start = performance.now();
       const sample = () => {
         (window as any).scoreSamples.push(
@@ -37,6 +39,7 @@ for (const calm of [false, true])
         if (performance.now() - start < 1000) requestAnimationFrame(sample);
       };
       sample();
+      }, { once: true });
     });
     const b = (await page.locator("#board").boundingBox())!;
     await page

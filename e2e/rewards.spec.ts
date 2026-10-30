@@ -39,13 +39,21 @@ async function setup(page: Page, kind = "record") {
   }, kind);
   await page.reload();
   await page.locator("#board canvas").waitFor();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
 }
 async function put(page: Page, slot: number, x: number, y: number) {
-  await page.locator(".piece").nth(slot).click();
+  // Exercise rapid input while celebration transforms are still running.
+  // locator.click waits for visual stability, which can outlive the reward.
+  const piece = page.locator(".piece").nth(slot);
+  await expect(piece).toBeVisible();
+  await expect(piece).toBeEnabled();
+  let r: {x:number;y:number;width:number;height:number} | null = null;
+  await expect.poll(async () => { r = await piece.boundingBox(); return r; }).not.toBeNull();
+  const hit = r!;
+  await page.mouse.click(hit.x + hit.width / 2, hit.y + hit.height / 2);
   const b = (await page.locator("#board").boundingBox())!;
-  await page.locator("#board").click({
-    position: { x: ((x + 0.3) * b.width) / 8, y: ((y + 0.3) * b.height) / 8 },
-  });
+  await page.mouse.click(b.x + ((x + 0.3) * b.width) / 8,
+    b.y + ((y + 0.3) * b.height) / 8);
 }
 test("important reward survives rapid moves with converging score; pause clears it", async ({
   page,

@@ -35,6 +35,7 @@ export class BoardScene extends Phaser.Scene {
   private vfx?: VfxSprites;
   private study?: TileStudySprites;
   private bed?: Phaser.GameObjects.Graphics;
+  private bedKey = "";
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
@@ -128,6 +129,7 @@ export class BoardScene extends Phaser.Scene {
     this.ink = this.add.graphics();
     if (TILE_STUDY) {
       this.bed = this.add.graphics().setDepth(0);
+      this.bedKey = "";
       this.ink.setDepth(1);
       this.study = new TileStudySprites(this);
       this.events.once("shutdown", () => this.study?.destroy());
@@ -286,7 +288,12 @@ export class BoardScene extends Phaser.Scene {
     const g = this.ink,
       now = performance.now();
     g.clear();
-    this.bed?.clear();
+    // The inset bed is static between placements/theme frames. Avoid rebuilding
+    // 64 rounded wells for every particle/score animation frame.
+    const bedColor = this.currentColor(this.fromShade, this.shade);
+    const bedKey = `${bedColor}:${this.state?.board.join(",")}`;
+    const repaintBed = bedKey !== this.bedKey;
+    if (repaintBed) { this.bed?.clear(); this.bedKey = bedKey; }
     this.study?.begin();
     this.vfx?.begin();
     if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
@@ -297,8 +304,9 @@ export class BoardScene extends Phaser.Scene {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
       if (this.bed) {
+        if (repaintBed) {
         const bg = this.bed;
-        bg.fillStyle(this.currentColor(this.fromShade, this.shade), 1);
+        bg.fillStyle(bedColor, 1);
         bg.fillRect(x, y, 64, 64);
         bg.fillStyle(STUDY_BOARD.well, 0.13);
         bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
@@ -309,6 +317,7 @@ export class BoardScene extends Phaser.Scene {
         if (this.state?.board[i]) {
           bg.fillStyle(STUDY_BOARD.contact, 0.17);
           bg.fillRoundedRect(x + 5, y + 8, 55, 54, 8);
+        }
         }
       } else {
         g.fillStyle(
