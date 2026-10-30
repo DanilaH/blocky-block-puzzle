@@ -204,3 +204,23 @@ it("denied native focus never creates an AudioContext", async () => {
   await audio.unlock();
   expect(ctor).not.toHaveBeenCalled();
 });
+
+it("series pitch survives a long wait and audio stop/resume", async () => {
+  vi.stubGlobal("AudioContext", FakeContext);
+  const audio = new GameAudio();
+  await audio.unlock();
+  audio.play("clear", 4, 300);
+  const frequency = 523.25 * Math.pow(2, 7 / 12);
+  expect([...active].some((v) => Math.abs(v.hz - frequency) < 0.01)).toBe(true);
+  audio.stop();
+  await audio.unlock();
+  audio.play("place", 4, 1);
+  audio.play("clear", 5, 400);
+  const next = 523.25 * Math.pow(2, 10 / 12);
+  expect([...active].some((v) => Math.abs(v.hz - next) < 0.01)).toBe(true);
+  audio.stop();
+  await audio.unlock();
+  audio.play("clear", 1, 100);
+  expect([...active].some((v) => v.hz === 523.25)).toBe(true);
+  audio.stop();
+});

@@ -33,6 +33,7 @@ public class BlockyHapticsPlugin extends Plugin {
         long[] times; int[] amps;
         switch (kind) {
           case "empty": times = new long[]{0,35,65,45,80,110}; amps = new int[]{0,180,0,220,0,255}; break;
+          case "defeat": times = new long[]{0,30,100,50}; amps = new int[]{0,130,0,170}; break;
           case "record": times = new long[]{0,25,55,55}; amps = new int[]{0,170,0,230}; break;
           case "clear": times = new long[]{0,25+level*5,45,30+level*8}; amps = new int[]{0,180,0,Math.min(255,180+level*15)}; break;
           default: times = new long[]{0,22}; amps = new int[]{0,155};

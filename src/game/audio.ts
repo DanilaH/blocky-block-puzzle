@@ -1,3 +1,4 @@
+import { seriesPitch } from "./themes";
 import { MusicalChain } from "./festival";
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
@@ -120,6 +121,9 @@ export class GameAudio {
   }
   play(
     kind:
+      | "defeat"
+      | "praise"
+      | "theme"
       | "score"
       | "pick"
       | "place"
@@ -143,6 +147,20 @@ export class GameAudio {
     )
       return;
     const t = this.context.currentTime;
+    const pitch = seriesPitch(streak);
+    if (kind === "defeat") {
+      this.tone(293.66, 196, t, 0.28, 0.09, "triangle", 2);
+      this.tone(196, 146.83, t + 0.18, 0.45, 0.07, "sine", 2);
+      return;
+    }
+    if (kind === "praise" || kind === "theme") {
+      [659.25, 987.77, 1318.5]
+        .slice(0, kind === "theme" ? 3 : 2)
+        .forEach((f, i) =>
+          this.tone(f, f, t + i * 0.075, 0.25, 0.055, "sine", 1),
+        );
+      return;
+    }
     if (["clear", "combo", "mega", "allClear", "record"].includes(kind))
       this.chain.next(performance.now());
     if (kind === "cancel") {
@@ -155,11 +173,22 @@ export class GameAudio {
       return;
     }
     if (this.wet)
-      this.wet.gain.value = this.calm ? 0 : 0.1 + Math.min(1, intensity) * 0.12;
+      this.wet.gain.value = this.calm
+        ? 0
+        : 0.1 +
+          Math.min(1, intensity) * 0.12 +
+          (this.chain.semitones / 17) * 0.035;
     if (kind === "score") {
-      const base = 659.25 * Math.pow(2, this.chain.semitones / 12);
+      const base = 659.25 * Math.pow(2, pitch / 12);
       this.tone(base, base, t, 0.22, 0.065, "sine", 1);
-      if (!this.calm) this.tone(base * 1.5, base * 1.5, t + 0.065, 0.38, 0.035);
+      if (!this.calm)
+        this.tone(
+          Math.min(2200, base * 1.5),
+          Math.min(2200, base * 1.5),
+          t + 0.065,
+          0.38,
+          0.035,
+        );
       return;
     }
     // Overlapping tails survive new rewards; only the bounded voice allocator evicts.
@@ -221,7 +250,7 @@ export class GameAudio {
                 ? [659.25, 987.77]
                 : [523.25, 783.99, 1046.5];
     notes.forEach((hz, i) => {
-      const f = hz * Math.pow(2, this.chain.semitones / 12),
+      const f = Math.min(1450, hz * Math.pow(2, pitch / 12)),
         at =
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +

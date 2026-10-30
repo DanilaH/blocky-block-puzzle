@@ -76,7 +76,7 @@ for (const interrupt of [false, true])
         }),
       )
       .toBe(1901);
-    await expect(page.locator("#combo-title")).toHaveText("КОМБО ×3");
+    await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 4 · ×3");
     await expect(page.locator("#combo-stock")).toContainText("2 хода");
     if (interrupt) {
       await page.locator("#pause").click({ force: true });
@@ -87,7 +87,7 @@ for (const interrupt of [false, true])
       await expect(
         page.locator('[data-tier="all-clear"].reward-event'),
       ).toContainText("+1000");
-      await page.clock.runFor(2400);
+      await page.clock.runFor(3200);
       expect(await page.locator(".reward-event").count()).toBe(0);
       expect(
         await page.evaluate(() =>

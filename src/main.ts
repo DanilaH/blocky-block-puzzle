@@ -1,3 +1,6 @@
+import { Atmosphere } from "./game/atmosphere";
+import { THEMES, themeFor, themeAccent } from "./game/themes";
+import { praiseFor, type PraiseResult } from "./core/praise";
 import { Festival } from "./game/festival";
 import { GameHaptics } from "./platform/haptics";
 import { comboMultiplier } from "./core/scoring";
@@ -57,8 +60,50 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene();
+  const atmosphere = new Atmosphere();
   const festival = new Festival(),
     haptics = new GameHaptics();
+  let praiseWorker: Worker | null = null;
+  let praiseResult: PraiseResult | null = null;
+  let praiseKey = "";
+  let lastPraiseMove = -5;
+  let defeatPlayed = "";
+  let themeKey = "";
+  let themeGame = "";
+  let themeIndex = 0;
+  function stopPraise() {
+    praiseWorker?.terminate();
+    praiseWorker = null;
+    praiseKey = "";
+    praiseResult = null;
+  }
+  function schedulePraise(g: GameState) {
+    const key = `${g.gameId}:${g.revision}`;
+    if (!running || inLesson() || g.status !== "playing") {
+      stopPraise();
+      return;
+    }
+    if (key === praiseKey) return;
+    stopPraise();
+    praiseKey = key;
+    if (g.board.filter(Boolean).length < 12 || worker) return;
+    const job = new Worker(
+      new URL("./game/praise.worker.ts", import.meta.url),
+      { type: "module" },
+    );
+    praiseWorker = job;
+    job.onmessage = (event: MessageEvent<PraiseResult>) => {
+      if (praiseWorker !== job) return;
+      praiseResult = event.data;
+      job.terminate();
+      praiseWorker = null;
+    };
+    job.onerror = () => {
+      job.terminate();
+      if (praiseWorker === job) praiseWorker = null;
+    };
+    job.postMessage(g);
+  }
   const festivalTimers = new Set<number>();
   const later = (fn: () => void, delay: number) => {
     const id = window.setTimeout(() => {
@@ -104,6 +149,15 @@ async function start() {
   let rendererReady = false;
   function syncRenderer() {
     if (!phaser || !rendererReady) return;
+    const debugSeries = import.meta.env.DEV
+      ? Number(new URLSearchParams(location.search).get("themeSeries"))
+      : 0;
+    atmosphere.set(
+      debugSeries > 0 ? debugSeries : currentGame().streak,
+      running,
+      scene.calm,
+    );
+    if (running) schedulePraise(currentGame());
     if (running) phaser.loop.wake();
     else phaser.loop.sleep();
   }
@@ -200,12 +254,14 @@ async function start() {
       refreshHintLabel();
       if (resultPending)
         queueMicrotask(() => {
-          if (running && resultPending && !dialog.open) showResult();
+          if (running && resultPending && !dialog.open) beginDefeat();
         });
     },
     () => {
       running = false;
       root.classList.add("effects-paused");
+      stopPraise();
+      atmosphere.set(currentGame().streak, false, scene.calm);
       haptics.setActive(false);
       audioFocus.setActive(false);
       ads.setActive(false);
@@ -388,6 +444,44 @@ async function start() {
     audio.calm = scene.calm;
     haptics.setActive(running && p.settings.haptics !== false && !scene.calm);
     document.documentElement.classList.toggle("calm", scene.calm);
+    const debugSeries = import.meta.env.DEV
+      ? Number(new URLSearchParams(location.search).get("themeSeries"))
+      : 0;
+    const visualSeries = debugSeries > 0 ? debugSeries : g.streak;
+    atmosphere.set(visualSeries, running, scene.calm);
+    scene.setTheme(themeFor(visualSeries), themeAccent(visualSeries));
+    const nextTheme = themeFor(visualSeries),
+      nextKey = `${nextTheme}:${visualSeries >= 100 ? Math.floor((visualSeries - 100) / 25) : 0}`;
+    if (
+      themeGame === g.gameId &&
+      themeKey !== nextKey &&
+      nextTheme > 0 &&
+      running &&
+      !inLesson()
+    ) {
+      const from = themeIndex;
+      later(
+        () => {
+          presentReward(
+            "theme",
+            `СЕРИЯ ${visualSeries} · ${THEMES[nextTheme]!.name.toUpperCase()}`,
+            0,
+            { x: 50, y: 20 },
+          );
+          audio.play("theme", g.streak);
+          atmosphere.impulse(1.5);
+        },
+        from < nextTheme ? 300 : 0,
+      );
+    }
+    if (themeGame !== g.gameId) {
+      lastPraiseMove = -5;
+      defeatPlayed = "";
+    }
+    themeGame = g.gameId;
+    themeKey = nextKey;
+    themeIndex = nextTheme;
+    schedulePraise(g);
     scene.setState(g);
     scene.preview(hintMove(), true, true);
     el("hint").toggleAttribute("disabled", g.status === "over");
@@ -408,7 +502,7 @@ async function start() {
     el("streak").dataset.level = String(Math.min(4, g.streak));
     const comboTitle = g.streak
       ? g.scoringVersion
-        ? `КОМБО ×${comboMultiplier(g.streak).toLocaleString("ru")}`
+        ? `СЕРИЯ ${g.streak} · ×${comboMultiplier(g.streak).toLocaleString("ru")}`
         : `СЕРИЯ ${g.streak}`
       : "";
     const stock =
@@ -533,6 +627,10 @@ async function start() {
     cancelHint();
     const before = currentGame();
     const practicing = inLesson();
+    const praise =
+      !practicing && before.moves - lastPraiseMove >= 3
+        ? praiseFor(praiseResult, before, move)
+        : null;
     const expected = LESSON_MOVES[lessonStep()];
     if (
       practicing &&
@@ -610,6 +708,48 @@ async function start() {
       pendingPoints += deferred;
       render(running);
       if (running) {
+        atmosphere.impulse(
+          event.allClear
+            ? 3
+            : event.lines
+              ? 1 + Math.min(1, event.state.streak / 10)
+              : 0.15,
+        );
+        if (praise) {
+          lastPraiseMove = before.moves;
+          scene.praise(placedCells, praise === "excellent");
+          if (!event.lines) {
+            presentReward(
+              "praise",
+              praise === "excellent" ? "Отличный ход!" : "Хороший ход!",
+              0,
+              { x: 50, y: 35 },
+            );
+            audio.play("praise", event.state.streak);
+            haptics.pulse("clear", praise === "excellent" ? 2 : 1);
+          }
+        }
+        if (event.lines) {
+          animate(
+            canvasBox,
+            [
+              { boxShadow: "0 0 0 0 transparent" },
+              {
+                boxShadow: `0 0 ${24 + Math.min(35, event.state.streak * 3)}px 9px ${themeAccent(event.state.streak)}`,
+                offset: 0.18,
+              },
+              { boxShadow: "0 0 0 0 transparent" },
+            ],
+            event.allClear ? 1900 : 1200,
+          );
+          if (event.state.streak >= 6)
+            festival.burst(
+              canvasBox.getBoundingClientRect(),
+              event.cells,
+              1,
+              true,
+            );
+        }
         if (before.tray.filter((s) => s.used).length === 2)
           document.querySelectorAll(".piece .mini-shape").forEach((e, i) =>
             animate(
@@ -708,7 +848,9 @@ async function start() {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
           presentReward(
             event.lines >= 2 ? "combo" : "line",
-            lineName,
+            praise
+              ? `${lineName} ${praise === "excellent" ? "Отлично!" : "Хорошо!"}`
+              : lineName,
             linePoints,
             anchor,
             deferred ? linePoints : 0,
@@ -773,7 +915,13 @@ async function start() {
           rewardHoldUntil = Math.max(
             rewardHoldUntil,
             performance.now() +
-              (scene.calm ? 1200 : newRecord && event.allClear ? 3000 : 2250),
+              (scene.calm
+                ? 1200
+                : newRecord && event.allClear
+                  ? 3500
+                  : event.allClear
+                    ? 2750
+                    : 2700),
           );
       }
       el("announce").textContent =
@@ -784,7 +932,7 @@ async function start() {
         if (running)
           resultTimer = window.setTimeout(
             () => {
-              if (running && resultPending && !dialog.open) showResult();
+              if (running && resultPending && !dialog.open) beginDefeat();
             },
             Math.max(
               scene.calm ? 220 : event.lines ? 1650 : 700,
@@ -834,6 +982,10 @@ async function start() {
     amount.className = "reward-points";
     amount.textContent = points ? `+${deferred || points}` : "";
     node.append(label, amount);
+    for (const old of rewards.keys()) {
+      old.style.opacity = ".35";
+      old.style.marginTop = "-18px";
+    }
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();
     label.style.fontSize = `${Math.min(important ? 38 : 36, boardBox.width * (important ? 0.09 : 0.1))}px`;
@@ -868,11 +1020,12 @@ async function start() {
       : tier === "place"
         ? 420
         : important
-          ? 1600
+          ? 2100
           : tier === "chain"
-            ? 430
-            : 600;
-    if (important) rewardHoldUntil = performance.now() + duration;
+            ? 1200
+            : 1250;
+    if (important)
+      rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
     let settled = false;
     const settle = () => {
@@ -891,7 +1044,7 @@ async function start() {
       rewards.delete(node);
     };
     rewards.set(node, finish);
-    if (rewards.size > 6) rewards.values().next().value?.();
+    if (rewards.size > 3) rewards.values().next().value?.();
     const labelAnimation = animate(
       label,
       [
@@ -1215,6 +1368,7 @@ async function start() {
     }
     const generation = ++hintGeneration;
     const snapshot = structuredClone(p.game);
+    stopPraise();
     worker = new Worker(new URL("./game/hint.worker.ts", import.meta.url), {
       type: "module",
     });
@@ -1429,7 +1583,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты — без вибрации и активных анимаций<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
       "pause",
     );
     el("resume").onclick = close;
@@ -1544,6 +1698,35 @@ async function start() {
       );
     }
   }
+  function beginDefeat() {
+    if (defeatPlayed === currentGame().gameId || scene.calm) {
+      showResult();
+      return;
+    }
+    defeatPlayed = currentGame().gameId;
+    const record =
+      currentGame().score > 0 && currentGame().score >= bestFor(store.state);
+    scene.defeat(record);
+    document
+      .querySelectorAll(".piece")
+      .forEach((e) =>
+        animate(
+          e,
+          [
+            { transform: "rotate(0deg)" },
+            { transform: "rotate(-6deg)", offset: 0.25 },
+            { transform: "rotate(5deg)", offset: 0.6 },
+            { transform: "rotate(0deg)" },
+          ],
+          480,
+        ),
+      );
+    if (!record) audio.play("defeat");
+    haptics.pulse(record ? "record" : "defeat");
+    resultTimer = window.setTimeout(() => {
+      if (running && resultPending && !dialog.open) showResult();
+    }, 750);
+  }
   function showResult() {
     clearTimeout(resultTimer);
     resultPending = false;
@@ -1628,6 +1811,29 @@ async function start() {
   }
   render();
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
+  if (
+    import.meta.env.DEV &&
+    new URLSearchParams(location.search).has("themeSeries")
+  ) {
+    const select = document.createElement("select");
+    select.id = "theme-preview";
+    select.setAttribute("aria-label", "Отладочный просмотр тем");
+    select.style.cssText =
+      "position:fixed;bottom:5px;left:5px;z-index:99;max-width:220px;font:12px sans-serif";
+    select.innerHTML =
+      THEMES.map(
+        (t) => `<option value="${t.at}">${t.at} · ${t.name}</option>`,
+      ).join("") + `<option value="125">125 · Призма II</option>`;
+    select.value =
+      new URLSearchParams(location.search).get("themeSeries") || "0";
+    select.onchange = () => {
+      const url = new URL(location.href);
+      url.searchParams.set("themeSeries", select.value);
+      history.replaceState(null, "", url);
+      render();
+    };
+    document.body.append(select);
+  }
   if (!inLesson() && initial.game.status === "over") showResult();
   window.addEventListener("pageshow", () =>
     activity.setBlocked("pagehide", false),

@@ -1,3 +1,4 @@
+import { THEMES } from "./themes";
 import Phaser from "phaser";
 import {
   fits,
@@ -36,6 +37,66 @@ export class BoardScene extends Phaser.Scene {
   private pending: number[] = [];
   private impacts: Impact[] = [];
   calm = false;
+  private theme = 0;
+  private themeAt = 0;
+  private shade = 0x35363b;
+  private fromShade = 0x35363b;
+  private accent = 0xefaa39;
+  private fromAccent = 0xefaa39;
+  private sheen = 0;
+  private fromSheen = 0;
+  private defeatAt = 0;
+  private defeatSoft = false;
+  private praiseHit: { cells: number[]; at: number; strong: boolean } | null =
+    null;
+  setTheme(index: number, accent: string) {
+    const color = parseInt(accent.slice(1), 16);
+    if (index === this.theme && color === this.accent) return;
+    this.fromShade = this.currentColor(this.fromShade, this.shade);
+    this.fromAccent = this.currentColor(this.fromAccent, this.accent);
+    this.fromSheen = this.materialLevel();
+    this.theme = index;
+    this.shade = THEMES[index]!.board;
+    this.accent = color;
+    this.themeAt = performance.now();
+    this.sheen =
+      index === 0
+        ? 0
+        : index === 5
+          ? 0.8
+          : index === 4
+            ? 0.65
+            : 0.35 + index * 0.035;
+    this.draw();
+  }
+  private mix() {
+    return Math.min(
+      1,
+      (performance.now() - this.themeAt) /
+        (this.calm ? 250 : this.theme === 0 ? 1800 : 1000),
+    );
+  }
+  private currentColor(a: number, b: number) {
+    const t = this.mix();
+    return (
+      (((((a >> 16) & 255) * (1 - t) + ((b >> 16) & 255) * t) | 0) << 16) |
+      (((((a >> 8) & 255) * (1 - t) + ((b >> 8) & 255) * t) | 0) << 8) |
+      (((a & 255) * (1 - t) + (b & 255) * t) | 0)
+    );
+  }
+  private materialLevel() {
+    return this.fromSheen + (this.sheen - this.fromSheen) * this.mix();
+  }
+  praise(cells: number[], strong: boolean) {
+    if (!this.calm) this.praiseHit = { cells, at: performance.now(), strong };
+  }
+  defeat(soft: boolean) {
+    if (!this.calm) {
+      this.defeatAt = performance.now();
+      this.defeatSoft = soft;
+    }
+  }
+
   private celebration = new Celebration();
   get intensity() {
     return this.calm ? 0 : this.celebration.level(performance.now());
@@ -52,6 +113,16 @@ export class BoardScene extends Phaser.Scene {
       this.impacts = [];
       this.celebration.reset();
     }
+    if (this.state?.status === "over" && state.status === "playing") {
+      this.defeatAt = 0;
+      if (!this.calm)
+        this.praiseHit = {
+          cells: state.board.map((v, i) => (v ? i : -1)).filter((i) => i >= 0),
+          at: performance.now(),
+          strong: true,
+        };
+    }
+    if (this.state?.gameId !== state.gameId) this.defeatAt = 0;
     this.previewEcho = null;
     this.state = state;
     this.ghost = null;
@@ -131,6 +202,7 @@ export class BoardScene extends Phaser.Scene {
   }
   stopEffects() {
     this.pending = [];
+    this.praiseHit = null;
     this.previewEcho = null;
     this.celebration.reset();
     this.hint = false;
@@ -139,6 +211,9 @@ export class BoardScene extends Phaser.Scene {
   }
   update() {
     if (
+      this.mix() < 1 ||
+      this.praiseHit ||
+      (this.defeatAt > 0 && performance.now() - this.defeatAt < 900) ||
       this.previewEcho ||
       this.intensity > 0 ||
       this.impacts.length ||
@@ -161,6 +236,17 @@ export class BoardScene extends Phaser.Scene {
         true,
       );
     }
+    const level = this.materialLevel();
+    if (level > 0) {
+      g.lineStyle(
+        1 + level * 2,
+        this.currentColor(this.fromAccent, this.accent),
+        alpha * level * 0.75,
+      );
+      g.strokeRoundedRect(x + 4, y + 4, 56, 55, 5);
+      g.fillStyle(0xffffff, alpha * level * 0.14);
+      g.fillTriangle(x + 7, y + 7, x + 55, y + 7, x + 7, y + 43);
+    }
   }
 
   private draw() {
@@ -168,15 +254,19 @@ export class BoardScene extends Phaser.Scene {
     const g = this.ink,
       now = performance.now();
     g.clear();
+    if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
     this.impacts = this.impacts.filter(
       (e) => now - e.started < (this.calm ? 180 : e.allClear ? 1500 : 1250),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
-      g.fillStyle((i + Math.floor(i / 8)) % 2 ? 0x34353a : 0x38393e);
+      g.fillStyle(
+        this.currentColor(this.fromShade, this.shade),
+        (i + Math.floor(i / 8)) % 2 ? 1 : 0.94,
+      );
       g.fillRect(x, y, 64, 64);
-      g.lineStyle(1, 0x28292d, 0.35);
+      g.lineStyle(1.5, 0x98a5b5, 0.16);
       g.strokeRect(x, y, 64, 64);
       const color = this.state?.board[i];
       if (color) {
@@ -184,7 +274,40 @@ export class BoardScene extends Phaser.Scene {
           .reverse()
           .find((e) => e.placed.includes(i));
         const scale = hit && !this.calm ? contactScale(now - hit.started) : 1;
-        this.tile(x, y, COLORS[color]!, 1, scale);
+        const neighbor = this.calm
+          ? 0
+          : Math.max(
+              0,
+              ...this.impacts.map((e) => {
+                const t = (now - e.started) / 300;
+                if (t >= 1) return 0;
+                return e.placed.some(
+                  (p) =>
+                    Math.abs((p % 8) - (i % 8)) +
+                      Math.abs(Math.floor(p / 8) - Math.floor(i / 8)) ===
+                    1,
+                )
+                  ? Math.sin(t * Math.PI) * 0.025
+                  : 0;
+              }),
+            );
+        const loss = this.defeatAt
+          ? Math.min(1, Math.max(0, (now - this.defeatAt - i * 4) / 500))
+          : 0;
+        this.tile(
+          x,
+          y + loss * 2,
+          COLORS[color]!,
+          1 - loss * (this.defeatSoft ? 0.12 : 0.35),
+          scale * (1 - loss * 0.035 + neighbor),
+        );
+        if (this.praiseHit && this.praiseHit.cells.includes(i)) {
+          const t = (now - this.praiseHit.at) / 700;
+          if (t < 1) {
+            g.lineStyle(5, 0xffffff, Math.sin(t * Math.PI) * 0.9);
+            g.strokeRoundedRect(x + 5, y + 5, 54, 54, 6);
+          }
+        }
       }
     }
     if (this.previewEcho) {

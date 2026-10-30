@@ -2097,3 +2097,121 @@ dialog h2 {
     max-width: none;
   }
 }
+
+/* Series atmosphere. Geometry and hit targets never move during a theme transition. */
+:root {
+  --world-bg: #eee9dd;
+  --world-ink: #383329;
+  --world-accent: #efaa39;
+  --world-duration: 1000ms;
+  background: var(--world-bg);
+  transition: background-color var(--world-duration);
+}
+body {
+  background: var(--world-bg);
+  transition: background-color var(--world-duration);
+}
+#app {
+  background: transparent;
+  color: var(--world-ink);
+  transition: color var(--world-duration);
+  position: relative;
+  z-index: 1;
+}
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.score,
+.best,
+.brand,
+.tray-label,
+.board-caption,
+.score-title {
+  color: var(--world-ink);
+  transition: color var(--world-duration);
+}
+#combo-title {
+  color: var(--world-accent);
+  text-shadow:
+    0 1px 2px #261d20,
+    0 0 12px color-mix(in srgb, var(--world-accent) 35%, transparent);
+  transition: color var(--world-duration);
+}
+#combo-stock {
+  color: var(--world-ink);
+  transition: color var(--world-duration);
+}
+#board {
+  transition: box-shadow 600ms;
+}
+.reward-event {
+  transition:
+    opacity 250ms,
+    margin-top 400ms;
+}
+[data-tier="praise"] .reward-praise {
+  color: #fff1b0;
+}
+[data-tier="theme"] .reward-praise {
+  color: var(--world-accent);
+}
+.mini-shape {
+  position: relative;
+}
+.mini-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 25%,
+    #ffffff55 36%,
+    transparent 48%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--world-duration);
+  mix-blend-mode: screen;
+}
+:root:not([data-material="plastic"]) .mini-cell::after {
+  opacity: 0.65;
+}
+:root[data-material="chrome"] .mini-cell::after,
+:root[data-material="ice"] .mini-cell::after {
+  opacity: 1;
+}
+.calm .mini-cell::after {
+  transition-duration: 250ms;
+}
+
+.mini-cell {
+  position: relative;
+}
+:root.calm,
+:root.calm body,
+:root.calm #app,
+:root.calm .score,
+:root.calm .best,
+:root.calm .brand,
+:root.calm .tray-label,
+:root.calm .board-caption,
+:root.calm .score-title,
+:root.calm #combo-title,
+:root.calm #combo-stock,
+:root.calm .mini-cell::after,
+:root.calm .reward-event,
+:root.calm #board {
+  transition: none;
+}
+:root:has(#app.effects-paused),
+body:has(#app.effects-paused),
+#app.effects-paused,
+#app.effects-paused *,
+#app.effects-paused *::after {
+  transition: none !important;
+}
