@@ -59,3 +59,6 @@ Preview 0.14: versionCode 14, тот же applicationId и сертификат 
 
 ## Preview 0.17
 Добавлен Yandex Mobile Ads SDK 8.6.0: native banner/interstitial/rewarded и сохраняемые награды. Debug использует demo IDs. В браузере без native SDK реклама недоступна, игра работает. Для release нужны три собственных переменных окружения `YANDEX_BANNER_AD_UNIT_ID`, `YANDEX_INTERSTITIAL_AD_UNIT_ID`, `YANDEX_REWARDED_AD_UNIT_ID`; отсутствие корректных значений блокирует release build. Не подменять demo IDs production-значениями в debug. Ранее приведённое описание «нет нативной рекламы/reward/revive» относится к 0.16 и старше. [Проверки 0.17](qa/ADS_0.17_2026-10-28.md). Реальные показы на устройстве не подтверждены.
+
+### Preview signing continuity (0.22)
+GitHub Actions signing caches are ref-scoped. User APK 0.21 and compatible 0.22 come from PR #1 / feat/classic-preview. An experimental branch may generate a different debug key despite using the same cache key. Always verify the final signer fingerprint against the previously delivered APK before handing out an update. Expected preview fingerprint: e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13. Do not ask users to uninstall to hide a signing mismatch. A durable signing secret remains a release requirement.
