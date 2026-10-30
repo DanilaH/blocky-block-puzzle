@@ -1,3 +1,4 @@
+import { COLORS } from "./tiles";
 // Full-viewport cosmetic layer. No gameplay RNG, input, state, or persistent loop.
 type Spark = {
   x: number;
@@ -17,6 +18,24 @@ export class Festival {
   private sparks: Spark[] = [];
   private frame = 0;
   private last = 0;
+  private chips = new Map<string, HTMLCanvasElement>();
+  private flash: CanvasImageSource | null = null;
+  setTextures(chip: CanvasImageSource, flash: CanvasImageSource) {
+    this.flash = flash;
+    for (const color of COLORS.slice(1).concat(0xffffff)) {
+      const key = "#" + color.toString(16).padStart(6, "0");
+      const c = document.createElement("canvas");
+      c.width = c.height = 64;
+      const g = c.getContext("2d")!;
+      g.drawImage(chip, 0, 0, 64, 64);
+      g.globalCompositeOperation = "multiply";
+      g.fillStyle = key;
+      g.fillRect(0, 0, 64, 64);
+      g.globalCompositeOperation = "destination-in";
+      g.drawImage(chip, 0, 0, 64, 64);
+      this.chips.set(key, c);
+    }
+  }
   constructor() {
     this.canvas.className = "festival-canvas";
     this.canvas.setAttribute("aria-hidden", "true");
@@ -30,16 +49,12 @@ export class Festival {
     lines: number,
     empty: boolean,
     record = false,
+    sourceBoard?: number[],
   ) {
-    const palette = [
-      "#ffcc36",
-      "#ff663c",
-      "#49cddb",
-      "#b283ff",
-      "#ffffff",
-      "#94d349",
-    ];
-    const count = empty ? 240 : record ? 100 : Math.min(150, 36 + lines * 28);
+    const palette = COLORS.slice(1).map(
+      (c) => "#" + c.toString(16).padStart(6, "0"),
+    );
+    const count = empty ? 200 : record ? 85 : Math.min(130, 24 + lines * 24);
     const dpr = Math.min(1.5, devicePixelRatio);
     this.canvas.width = innerWidth * dpr;
     this.canvas.height = innerHeight * dpr;
@@ -65,10 +80,10 @@ export class Festival {
         vy: Math.sin(angle) * speed - (empty ? 0 : 80),
         age: 0,
         life: empty ? 1500 + Math.random() * 500 : 550 + Math.random() * 550,
-        size: 3 + Math.random() * 6,
-        color: palette[i % palette.length]!,
+        size: 9 + Math.random() * 9,
+        color: palette[(sourceBoard?.[cell] || (i % palette.length) + 1) - 1]!,
         spin: Math.random() * 8 - 4,
-        star: i % 4 === 0,
+        star: i % 8 === 0,
       });
     }
     this.sparks = this.sparks.slice(-360);
@@ -78,7 +93,7 @@ export class Festival {
     }
   }
   private draw(now: number) {
-    const dt = Math.min(40, now - this.last);
+    const dt = Math.max(0, Math.min(40, now - this.last));
     this.last = now;
     const g = this.ctx;
     g.clearRect(0, 0, innerWidth, innerHeight);
@@ -94,7 +109,14 @@ export class Festival {
       g.rotate(s.spin * t * 4);
       g.globalAlpha = Math.min(1, Math.max(0, (1 - t) * 2));
       g.fillStyle = s.color;
-      if (s.star) {
+      const texture = this.chips.get(s.color);
+      if (s.star && this.flash) {
+        g.globalCompositeOperation = "screen";
+        g.drawImage(this.flash, -s.size, -s.size, s.size * 2, s.size * 2);
+      } else if (texture) {
+        const height = s.size * (0.45 + Math.abs(Math.cos(t * 9)) * 0.55);
+        g.drawImage(texture, -s.size / 2, -height / 2, s.size, height);
+      } else if (s.star) {
         g.beginPath();
         for (let n = 0; n < 10; n++) {
           const a = (n * Math.PI) / 5;

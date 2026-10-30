@@ -55,6 +55,7 @@ async function fixture(page: Page, kind = "base") {
   }, kind);
   await page.reload();
   await expect(page.locator("#board canvas")).toBeVisible();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
 }
 test("keyboard selection and rejected tap preserve control", async ({
   page,

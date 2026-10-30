@@ -12,7 +12,9 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "android:sync": "npm run build && cap sync android",
-    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug"
+    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+    "assets:build": "node scripts/build-vfx.mjs",
+    "assets:check": "node scripts/check-vfx.mjs"
   },
   "dependencies": {
     "@capacitor/android": "8.5.3",
@@ -24,6 +26,7 @@
     "@capacitor/cli": "8.5.3",
     "@playwright/test": "1.56.1",
     "prettier": "3.6.2",
+    "sharp": "0.35.4",
     "typescript": "~5.9.3",
     "vite": "8.3.5",
     "vitest": "5.0.5"

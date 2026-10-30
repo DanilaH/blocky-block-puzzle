@@ -1,3 +1,4 @@
+import { VfxSprites, VFX_KINDS } from "./vfx";
 import { THEMES } from "./themes";
 import Phaser from "phaser";
 import {
@@ -27,6 +28,8 @@ type Impact = {
   origins: ReturnType<typeof waveOrigins>;
 };
 export class BoardScene extends Phaser.Scene {
+  onTexturesReady = () => {};
+  private vfx?: VfxSprites;
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
@@ -104,8 +107,15 @@ export class BoardScene extends Phaser.Scene {
   constructor() {
     super("board");
   }
+  preload() {
+    for (const kind of VFX_KINDS)
+      this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
+  }
   create() {
+    this.vfx = new VfxSprites(this);
+    this.events.once("shutdown", () => this.vfx?.destroy());
     this.ink = this.add.graphics();
+    this.onTexturesReady();
     this.draw();
   }
   setState(state: GameState) {
@@ -254,6 +264,7 @@ export class BoardScene extends Phaser.Scene {
     const g = this.ink,
       now = performance.now();
     g.clear();
+    this.vfx?.begin();
     if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
     this.impacts = this.impacts.filter(
       (e) => now - e.started < (this.calm ? 180 : e.allClear ? 1500 : 1250),
@@ -370,7 +381,8 @@ export class BoardScene extends Phaser.Scene {
         g.strokeRoundedRect(3, 3, 506, 506, 8);
       }
     }
-    let particlesLeft = 240;
+    const fx = this.vfx!;
+    const accent = this.currentColor(this.fromAccent, this.accent);
     for (const e of this.impacts) {
       const age = now - e.started;
       // Celebrate the empty board after the last clear, never over a new move.
@@ -384,8 +396,25 @@ export class BoardScene extends Phaser.Scene {
         const t = (age - 400) / 600;
         g.fillStyle(0xffeb8a, Math.sin(t * Math.PI) * 0.12);
         g.fillRect(0, 0, 512, 512);
-        g.lineStyle(2 + 10 * (1 - t), 0xffee9c, (1 - t) * 0.9);
-        g.strokeCircle(256, 256, 30 + t * 330);
+        fx.stamp(
+          "ring",
+          256,
+          256,
+          130 + t * 620,
+          130 + t * 620,
+          (1 - t) * 0.8,
+          accent,
+          t * 0.15,
+        );
+        if (t < 0.55)
+          fx.stamp(
+            "flash",
+            256,
+            256,
+            150 + t * 150,
+            150 + t * 150,
+            (1 - t / 0.55) * 0.8,
+          );
         g.lineStyle(3 + 3 * (1 - t), 0xffe2a0, Math.sin(t * Math.PI) * 0.85);
         g.strokeRoundedRect(
           5 + t * 6,
@@ -395,16 +424,18 @@ export class BoardScene extends Phaser.Scene {
           12,
         );
       }
-      if (!this.calm && !e.lines && age < 140)
+      if (!this.calm && age < 240)
         for (const i of e.placed) {
-          const t = age / 140;
-          g.lineStyle(3 * (1 - t), 0xffffff, (1 - t) * 0.65);
-          g.strokeRoundedRect(
-            (i % 8) * 64 + 4 - t * 7,
-            Math.floor(i / 8) * 64 + 4 - t * 7,
-            56 + t * 14,
-            56 + t * 14,
-            1,
+          const t = age / 240;
+          fx.stamp(
+            "flash",
+            (i % 8) * 64 + 48,
+            Math.floor(i / 8) * 64 + 12,
+            28 + t * 42,
+            28 + t * 42,
+            (1 - t) ** 1.5,
+            0xffffff,
+            -0.3,
           );
         }
       for (const i of e.cleared) {
@@ -427,101 +458,115 @@ export class BoardScene extends Phaser.Scene {
           g.fillStyle(0xffffff, Math.sin(collapse * Math.PI) * 0.85);
           g.fillRoundedRect(x + 2, y + 3, 60, 58, 4);
         }
-        // Broad white afterimage belongs to cleared cells, never a new placement.
-        if (elapsed > 90 && elapsed < 900) {
-          const fade = (elapsed - 90) / 810;
-          g.fillStyle(0xffffff, 0.95 * (1 - fade) ** 1.4);
+        // Cell-local soft light preserves new placements placed during the tail.
+        if (elapsed > 80 && elapsed < 1050) {
+          const fade = (elapsed - 80) / 970;
+          const alpha = 0.85 * (1 - fade) ** 1.6;
           if (e.rows.includes(Math.floor(i / 8)))
-            g.fillRect(x, y + 4 + fade * 18, 64, 56 - fade * 36);
+            fx.stamp("streak", x + 32, y + 32, 108, 250 - fade * 160, alpha);
           if (e.columns.includes(i % 8))
-            g.fillRect(x + 4 + fade * 18, y, 56 - fade * 36, 64);
-          g.fillStyle(0xffffff, 0.7 * (1 - fade) ** 2);
-          if (e.rows.includes(Math.floor(i / 8))) g.fillRect(x, y + 29, 64, 6);
-          if (e.columns.includes(i % 8)) g.fillRect(x + 29, y, 6, 64);
+            fx.stamp(
+              "streak",
+              x + 32,
+              y + 32,
+              108,
+              250 - fade * 160,
+              alpha,
+              0xffffff,
+              Math.PI / 2,
+            );
         }
-        if (
-          elapsed >= 170 &&
-          elapsed < 1100 &&
-          e.energy > 0.5 &&
-          i % 2 === 0 &&
-          particlesLeft-- > 0
-        ) {
-          const f = (elapsed - 170) / 930;
-          const sx = x + 32 + Math.sin(i * 4) * f * 55;
-          const sy = y + 32 - f * (45 + (i % 5) * 12);
-          const r = (4 + e.energy * 6) * Math.sin(Math.PI * f);
-          g.fillStyle(0xffe8a2, (1 - f) * 0.8);
-          g.fillPoints(
-            Array.from(
-              { length: 8 },
-              (_, n) =>
-                new Phaser.Math.Vector2(
-                  sx + Math.cos((n * Math.PI) / 4) * (n % 2 ? r * 0.28 : r),
-                  sy + Math.sin((n * Math.PI) / 4) * (n % 2 ? r * 0.28 : r),
-                ),
-            ),
-            true,
+        if (elapsed >= 70 && elapsed < 280) {
+          const f = (elapsed - 70) / 210;
+          fx.stamp(
+            "flash",
+            x + 32,
+            y + 32,
+            68 + f * 55,
+            68 + f * 55,
+            (1 - f) * 0.8,
+            0xffffff,
+            i * 0.7,
           );
         }
-        if (elapsed < 100 || elapsed > 650) continue;
-        const flight = (elapsed - 100) / 550;
+        if (elapsed < 110 || elapsed > 1150) continue;
+        const flight = (elapsed - 110) / 1040;
+        const travel = 1 - (1 - flight) ** 2;
         const horizontal = e.rows.includes(Math.floor(i / 8));
-        for (let p = 0; p < 4 && particlesLeft > 0; p++, particlesLeft--) {
-          const sign = p % 2 ? 1 : -1;
-          const along = sign * (18 + flight * (90 + p * 25));
-          const across =
-            sign * Math.sin(flight * Math.PI) * (20 + (i % 3) * 12);
+        for (let p = 0; p < 3; p++) {
+          const sign = (p + i) % 2 ? 1 : -1;
+          const along = sign * travel * (30 + p * 27);
+          const across = (p - 1) * travel * (56 + (i % 3) * 15);
           const px = x + 32 + (horizontal ? along : across);
-          const py = y + 32 + (horizontal ? across : along);
-          const size = (p % 2 ? 8 : 12) * (1 - flight);
-          g.fillStyle(COLORS[e.board[i] || 1]!, (1 - flight) ** 2);
-          g.fillRect(px - size / 2, py - size / 2, size, size);
-          g.lineStyle(2 * (1 - flight), 0xffffff, 0.8 * (1 - flight));
-          g.lineBetween(
+          const py =
+            y +
+            32 +
+            (horizontal ? across : along) -
+            travel * 65 +
+            flight * flight * 95;
+          const size = (21 + p * 6) * (1 - flight * 0.55);
+          fx.stamp(
+            "chip",
             px,
             py,
-            px - (horizontal ? sign * 12 : 0),
-            py - (horizontal ? 0 : sign * 12),
+            size,
+            size * (0.7 + Math.abs(Math.cos(flight * 8 + i)) * 0.3),
+            Math.min(1, (1 - flight) * 2.5),
+            COLORS[e.board[i] || 1]!,
+            i * 0.8 + sign * flight * (3 + p),
+            false,
           );
+          if (p === 1 && e.energy > 0.35)
+            fx.stamp(
+              "flash",
+              px,
+              py - 8,
+              25 * (1 - flight),
+              25 * (1 - flight),
+              Math.sin(Math.PI * flight) * 0.8,
+              accent,
+              flight,
+            );
         }
       }
-      if (!this.calm && e.lines && age >= 40 && age < 300) {
+      if (!this.calm && e.lines && age >= 40 && age < 360) {
         const distance = ((age - 40) / 28) * 64;
-        for (let trail = 4; trail >= 0; trail--) {
-          const d = distance - trail * 8;
-          if (d < 0) continue;
-          g.fillStyle(
-            trail
-              ? e.energy > 0.65
-                ? COLORS[(trail % 6) + 1]!
-                : COLORS[e.board[e.placed[0]!] || 1]!
-              : 0xffffff,
-            (1 - trail / 5) * 0.8,
-          );
-          for (const sign of [-1, 1]) {
-            for (const row of e.rows) {
-              const at = e.origins.rows[row]! * 64 + 32 + sign * d;
-              if (at >= 0 && at <= 512)
-                g.fillRect(
-                  at - 8,
-                  row * 64 + 10 + trail * 3,
-                  16,
-                  44 - trail * 6,
-                );
+        const opacity = Math.min(1, (360 - age) / 100);
+        for (const sign of [-1, 1]) {
+          for (const row of e.rows) {
+            const at = e.origins.rows[row]! * 64 + 32 + sign * distance;
+            if (at >= 0 && at <= 512) {
+              fx.stamp(
+                "streak",
+                at,
+                row * 64 + 32,
+                170,
+                240,
+                opacity * 0.7,
+                accent,
+              );
+              fx.stamp("flash", at, row * 64 + 32, 80, 80, opacity);
             }
-            for (const col of e.columns) {
-              const at = e.origins.columns[col]! * 64 + 32 + sign * d;
-              if (at >= 0 && at <= 512)
-                g.fillRect(
-                  col * 64 + 10 + trail * 3,
-                  at - 8,
-                  44 - trail * 6,
-                  16,
-                );
+          }
+          for (const col of e.columns) {
+            const at = e.origins.columns[col]! * 64 + 32 + sign * distance;
+            if (at >= 0 && at <= 512) {
+              fx.stamp(
+                "streak",
+                col * 64 + 32,
+                at,
+                170,
+                240,
+                opacity * 0.7,
+                accent,
+                Math.PI / 2,
+              );
+              fx.stamp("flash", col * 64 + 32, at, 80, 80, opacity);
             }
           }
         }
       }
     }
+    fx.end();
   }
 }

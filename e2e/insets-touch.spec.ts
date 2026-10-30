@@ -7,6 +7,7 @@ test.use({
 async function fixture(page) {
   await page.goto("/");
   await page.locator("#board canvas").waitFor();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await page.evaluate(async () => {
     const { IndexedSave } = await import("/src/platform/save.ts");
     const { createProfile } = await import("/src/core/profile.ts");
@@ -25,6 +26,7 @@ async function fixture(page) {
   });
   await page.reload();
   await page.locator("#board canvas").waitFor();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
 }
 test("safe-area keeps gameplay and lesson above the banner", async ({
   page,

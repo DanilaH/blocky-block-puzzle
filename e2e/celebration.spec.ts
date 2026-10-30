@@ -5,6 +5,7 @@ for (const ending of ["finish", "pause", "reload"])
   }) => {
     await page.goto("/");
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     await page.evaluate(async () => {
       const { IndexedSave } = await import("/src/platform/save.ts");
       const { newGame } = await import("/src/core/rules.ts");
@@ -26,6 +27,7 @@ for (const ending of ["finish", "pause", "reload"])
     });
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     // Control cosmetic time so slow CI actionability checks cannot consume the overlap window.
     await page.clock.install({ time: new Date("2026-10-27T00:00:00Z") });
     await page.clock.pauseAt(new Date("2026-10-27T00:00:01Z"));

@@ -318,6 +318,21 @@ async function start() {
   });
   activity.setGameplayDesired(true);
   installDocumentVisibilityBlocker(activity);
+  root.inert = true;
+  root.setAttribute("aria-busy", "true");
+  scene.onTexturesReady = () => {
+    root.inert = ads.busy;
+    root.removeAttribute("aria-busy");
+    if (scene.textures.exists("vfx-chip") && scene.textures.exists("vfx-flash"))
+      festival.setTextures(
+        scene.textures.get("vfx-chip").getSourceImage() as HTMLImageElement,
+        scene.textures.get("vfx-flash").getSourceImage() as HTMLImageElement,
+      );
+    scene.game.events.once("postrender", () => {
+      rendererReady = true;
+      syncRenderer();
+    });
+  };
   phaser = new Phaser.Game({
     type: Phaser.AUTO,
     width: 512,
@@ -330,10 +345,6 @@ async function start() {
     audio: { noAudio: true },
     scale: { mode: Phaser.Scale.NONE },
     fps: { target: 60 },
-  });
-  phaser.events.once("postrender", () => {
-    rendererReady = true;
-    syncRenderer();
   });
   const unsubscribeResize = () => {
     cancelDrag();
@@ -788,6 +799,8 @@ async function start() {
             event.cells,
             event.lines,
             false,
+            false,
+            effectBoard,
           );
           animate(
             canvasBox.querySelector("canvas")!,

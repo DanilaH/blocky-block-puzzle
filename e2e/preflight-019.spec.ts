@@ -11,6 +11,7 @@ async function prepare(page: Page) {
   });
   await page.goto("/");
   await page.locator("#board canvas").waitFor();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await page.evaluate(async () => {
     const { IndexedSave } = await import("/src/platform/save.ts");
     const { newGame } = await import("/src/core/rules.ts");
@@ -38,6 +39,7 @@ async function prepare(page: Page) {
   });
   await page.reload();
   await page.locator("#board canvas").waitFor();
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
 }
 async function place(page: Page, slot: number, x = 4, y = 4) {
   await page.locator(`[data-slot="${slot}"]`).click({ force: true });
@@ -86,6 +88,7 @@ for (const mode of ["background", "next-move"] as const) {
     expect(await page.locator(".reward-event").count()).toBe(0);
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     expect((await saved(page)).game.score).toBe(
       mode === "background" ? 1901 : 1902,
     );
@@ -103,6 +106,7 @@ for (const setting of ["haptics", "calm"] as const) {
       .toBe(setting === "calm");
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     await place(page, 0);
     await expect.poll(async () => (await saved(page)).game.score).toBe(1901);
     await page.clock.install();

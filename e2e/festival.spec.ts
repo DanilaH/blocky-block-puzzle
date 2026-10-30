@@ -13,6 +13,7 @@ for (const interrupt of [false, true])
     });
     await page.goto("/");
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     await page.evaluate(async () => {
       const { IndexedSave } = await import("/src/platform/save.ts");
       const { newGame } = await import("/src/core/rules.ts");
@@ -40,6 +41,7 @@ for (const interrupt of [false, true])
     });
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     for (const [width, height] of [
       [390, 844],
       [320, 480],
@@ -100,6 +102,7 @@ for (const interrupt of [false, true])
     ).toBe("1901");
     await page.reload();
     await page.locator("#board canvas").waitFor();
+    await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     expect(
       (await page.locator("#best").textContent())?.replace(/\D/g, ""),
     ).toBe("1901");
