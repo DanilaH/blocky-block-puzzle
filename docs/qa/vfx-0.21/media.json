@@ -1,0 +1,32 @@
+[
+  {
+    "file": "blocky-021-allClear.gif",
+    "bytes": 2195351,
+    "frames": 52,
+    "durationMs": 3470,
+    "size": [
+      480,
+      519
+    ]
+  },
+  {
+    "file": "blocky-021-right-line.gif",
+    "bytes": 1013858,
+    "frames": 48,
+    "durationMs": 3200,
+    "size": [
+      480,
+      519
+    ]
+  },
+  {
+    "file": "blocky-021-sequence.gif",
+    "bytes": 4580285,
+    "frames": 82,
+    "durationMs": 5470,
+    "size": [
+      480,
+      519
+    ]
+  }
+]
