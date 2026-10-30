@@ -11,6 +11,6 @@ for kind,label in labels.items():
         target.unlink(missing_ok=True);target.symlink_to(directory/frames[j]['file'])
     dest=media/(kind+'.mp4')
     caption=f'0.20 · {label} · Заданная позиция'
-    subprocess.run(['ffmpeg','-y','-loglevel','error','-framerate','30','-i',str(seq/'%05d.jpg'),'-i',str(directory/'audio.webm'),'-vf',f"drawbox=x=0:y=804:w=390:h=40:color=black@0.8:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='{caption}':x=8:y=818:fontsize=12:fontcolor=white",'-c:v','libx264','-pix_fmt','yuv420p','-crf','19','-c:a','aac','-ar','48000','-ac','2','-shortest',str(dest)],check=True);clips.append(dest)
+    subprocess.run(['ffmpeg','-y','-loglevel','error','-framerate','30','-i',str(seq/'%05d.jpg'),'-i',str(directory/'audio.webm'),'-vf',f"drawbox=x=0:y=804:w=390:h=40:color=black@0.8:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='{caption}':x=8:y=818:fontsize=12:fontcolor=white",'-c:v','libx264','-pix_fmt','yuv420p','-crf','19','-c:a','aac','-ar','48000','-ac','2','-af','apad','-t',str(round((d['end']-d['start'])*30)/30),str(dest)],check=True);clips.append(dest)
 (media/'concat.txt').write_text(''.join(f"file '{p}'\n" for p in clips))
 subprocess.run(['ffmpeg','-y','-loglevel','error','-f','concat','-safe','0','-i',str(media/'concat.txt'),'-c','copy','-movflags','+faststart',str(output)],check=True)

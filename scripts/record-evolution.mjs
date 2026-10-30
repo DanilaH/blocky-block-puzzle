@@ -14,7 +14,7 @@ for (const [version, port] of [
     "cross",
     "allClear",
     "sequence",
-  ]) {
+  ].filter(kind=>!process.env.CAPTURE_KIND || kind===process.env.CAPTURE_KIND)) {
     const dir = root + `${version}-${kind}/`;
     await fs.mkdir(dir, { recursive: true });
     const c = await b.newContext({

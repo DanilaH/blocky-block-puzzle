@@ -2215,3 +2215,13 @@ body:has(#app.effects-paused),
 #app.effects-paused *::after {
   transition: none !important;
 }
+/* Dialog surfaces stay light regardless of the surrounding series theme. */
+#dialog[data-kind="result"] .result-heading,
+#dialog[data-kind="result"] h2.result-score,
+#dialog[data-kind="result"] .score-title {
+  color: #303136;
+  text-shadow: none;
+}
+#dialog[data-kind="result"][data-record="true"] .result-heading {
+  color: #825316;
+}

@@ -132,13 +132,66 @@ test("background analysis praises an independently selected eligible move", asyn
   await page.waitForTimeout(700);
   await page.locator(`[data-slot="${move.slot}"]`).click();
   const box = (await page.locator("#board").boundingBox())!;
-  await page
-    .locator("#board")
-    .click({
-      position: {
-        x: ((move.x + 0.5) * box.width) / 8,
-        y: ((move.y + 0.5) * box.height) / 8,
-      },
-    });
+  await page.locator("#board").click({
+    position: {
+      x: ((move.x + 0.5) * box.width) / 8,
+      y: ((move.y + 0.5) * box.height) / 8,
+    },
+  });
   await expect(page.locator("#burst")).toContainText(/Отличн/);
+});
+
+test("result text stays readable on a light dialog inside a dark theme", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.locator("#board canvas").waitFor();
+  await page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    const a = new IndexedSave(),
+      p = (await a.load()).profile;
+    p.revision++;
+    p.tutorialStep = 4;
+    p.best = 10000;
+    p.festivalBest = 10000;
+    p.game.board = Array.from({ length: 64 }, (_, i) =>
+      ((i % 8) + Math.floor(i / 8)) % 2 ? 1 : 0,
+    );
+    p.game.tray = [0, 1, 2].map((i) => ({
+      shapeId: "O2-0",
+      color: i + 1,
+      used: false,
+    }));
+    p.game.moves = 10;
+    p.game.score = 121;
+    p.game.status = "over";
+    p.game.streak = 10;
+    await a.write(p);
+  });
+  await page.goto("/?themeSeries=75");
+  await page.locator("#again").waitFor();
+  const contrast = await page.evaluate(() => {
+    const lum = (s: string) => {
+      const v = s
+        .match(/[\d.]+/g)!
+        .slice(0, 3)
+        .map(Number)
+        .map((c) => {
+          c /= 255;
+          return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+        });
+      return v[0] * 0.2126 + v[1] * 0.7152 + v[2] * 0.0722;
+    };
+    const bg = lum(
+      getComputedStyle(document.querySelector("dialog")!).backgroundColor,
+    );
+    return [".result-heading", ".result-score", ".score-title"].map((s) => {
+      const fg = lum(
+        getComputedStyle(document.querySelector("dialog " + s)!).color,
+      );
+      return (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05);
+    });
+  });
+  contrast.forEach((c) => expect(c).toBeGreaterThanOrEqual(4.5));
+  await page.screenshot({ path: "docs/qa/evolution-0.20/result.png" });
 });
