@@ -11,6 +11,7 @@ import { claimRevive, revivePlan } from "./core/monetization";
 import Phaser from "phaser";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import "./style.css";
+import "./enamel.css";
 import { BoardScene } from "./game/BoardScene";
 import { COLORS, tileURL } from "./game/tiles";
 import { GameAudio } from "./game/audio";

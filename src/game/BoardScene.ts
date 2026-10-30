@@ -310,6 +310,14 @@ export class BoardScene extends Phaser.Scene {
         bg.fillRect(x, y, 64, 64);
         bg.fillStyle(STUDY_BOARD.well, 0.13);
         bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
+        // Shallow inset: a few translucent top layers, lit lower edge.
+        // Rebuilt only with the cached bed, never as independent per-cell effects.
+        for (let layer = 0; layer < 28; layer++) {
+          bg.fillStyle(STUDY_BOARD.well, 0.0028);
+          bg.fillRoundedRect(x + 3, y + 3, 58, 58 - layer * 1.6, 7);
+        }
+        bg.lineStyle(1, STUDY_BOARD.lip, 0.5);
+        bg.lineBetween(x + 10, y + 62, x + 54, y + 62);
         bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
         bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);
         bg.lineStyle(1, STUDY_BOARD.edge, 0.16);
