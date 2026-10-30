@@ -9,10 +9,11 @@ for(const style of ['plastic','enamel','caramel']) {
  if(!Number.isInteger(width)||!Number.isInteger(height))throw Error('Nonintegral atlas cells');
  for(let i=0;i<6;i++) {
   const crop=await sharp(input).extract({left:i%3*width,top:Math.floor(i/3)*height,width,height}).png().toBuffer();
-  const p=await prepareImageAsset(crop,{canvas:128,padding:4,webpQuality:90,backgroundRemoval:'preserve'});
-  const check=await validatePreparedImage(p.buffer,{canvas:128,minTransparentPadding:3});
+  const p=await prepareImageAsset(crop,{canvas:128,padding:2,webpQuality:90,backgroundRemoval:'preserve'});
+  const check=await validatePreparedImage(p.buffer,{canvas:128,minTransparentPadding:1});
   if(check.errors.length)throw Error(style+': '+check.errors.join(','));
-  // Only 4px canonical gutters; physical trim offers little saving and would
+  // 2px canonical gutters halve the seam for board, tray and dragged tiles.
+  // Physical trim offers little saving and would
   // complicate identical board/DOM pivots. Preserve 128x128 canvas intentionally.
   const file=`public/assets/tile-study/${style}-${i+1}.webp`;
   await fs.writeFile(file,p.buffer);rows.push({id:`${style}-${i+1}`,file,category:style});
