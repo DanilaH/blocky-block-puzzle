@@ -2225,3 +2225,20 @@ body:has(#app.effects-paused),
 #dialog[data-kind="result"][data-record="true"] .result-heading {
   color: #825316;
 }
+
+/* Material study: shallow tray, quieter wells, generated color-preserving tiles. */
+:root[data-tile-study] .board-wrap {
+  border-radius: 12px;
+  background: #464b55;
+  box-shadow: 0 0 0 3px #555b66, 0 0 0 5px #31353d,
+    0 4px 0 4px #252a32, 0 8px 12px #1b1d2426;
+}
+:root[data-tile-study] #board {
+  border-radius: 10px;
+  background: #30353f;
+}
+:root[data-tile-study] .mini-shape {
+  filter: drop-shadow(0 2px 1px #17202b50);
+}
+:root[data-tile-study] .mini-cell { filter: none; }
+:root[data-tile-study] .mini-cell::after { display: none; }

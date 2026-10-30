@@ -1,3 +1,4 @@
+import { TILE_STUDY, TileStudySprites } from "./tile-study";
 import { VfxSprites, VFX_KINDS } from "./vfx";
 import { THEMES } from "./themes";
 import Phaser from "phaser";
@@ -30,6 +31,8 @@ type Impact = {
 export class BoardScene extends Phaser.Scene {
   onTexturesReady = () => {};
   private vfx?: VfxSprites;
+  private study?: TileStudySprites;
+  private bed?: Phaser.GameObjects.Graphics;
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
@@ -108,6 +111,12 @@ export class BoardScene extends Phaser.Scene {
     super("board");
   }
   preload() {
+    if (TILE_STUDY)
+      for (let color = 1; color <= 6; color++)
+        this.load.image(
+          `study-${color}`,
+          `assets/tile-study/${TILE_STUDY}-${color}.webp`,
+        );
     for (const kind of VFX_KINDS)
       this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
   }
@@ -115,6 +124,12 @@ export class BoardScene extends Phaser.Scene {
     this.vfx = new VfxSprites(this);
     this.events.once("shutdown", () => this.vfx?.destroy());
     this.ink = this.add.graphics();
+    if (TILE_STUDY) {
+      this.bed = this.add.graphics().setDepth(0);
+      this.ink.setDepth(1);
+      this.study = new TileStudySprites(this);
+      this.events.once("shutdown", () => this.study?.destroy());
+    }
     this.onTexturesReady();
     this.draw();
   }
@@ -232,6 +247,10 @@ export class BoardScene extends Phaser.Scene {
       this.draw();
   }
   private tile(x: number, y: number, color: number, alpha = 1, scale = 1) {
+    if (this.study) {
+      this.study.tile(x, y, color, alpha, scale);
+      return;
+    }
     const g = this.ink;
     for (const q of TILE_FACES) {
       g.fillStyle(q.color ?? color, q.alpha * alpha);
@@ -264,6 +283,8 @@ export class BoardScene extends Phaser.Scene {
     const g = this.ink,
       now = performance.now();
     g.clear();
+    this.bed?.clear();
+    this.study?.begin();
     this.vfx?.begin();
     if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
     this.impacts = this.impacts.filter(
@@ -272,13 +293,29 @@ export class BoardScene extends Phaser.Scene {
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
-      g.fillStyle(
-        this.currentColor(this.fromShade, this.shade),
-        (i + Math.floor(i / 8)) % 2 ? 1 : 0.94,
-      );
-      g.fillRect(x, y, 64, 64);
-      g.lineStyle(1.5, 0x98a5b5, 0.16);
-      g.strokeRect(x, y, 64, 64);
+      if (this.bed) {
+        const bg = this.bed;
+        bg.fillStyle(this.currentColor(this.fromShade, this.shade), 1);
+        bg.fillRect(x, y, 64, 64);
+        bg.fillStyle(0x10151f, 0.28);
+        bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
+        bg.lineStyle(1, 0xffffff, 0.055);
+        bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);
+        bg.lineStyle(1, 0x000000, 0.16);
+        bg.lineBetween(x + 10, y + 3, x + 54, y + 3);
+        if (this.state?.board[i]) {
+          bg.fillStyle(0x000000, 0.25);
+          bg.fillRoundedRect(x + 5, y + 8, 55, 54, 8);
+        }
+      } else {
+        g.fillStyle(
+          this.currentColor(this.fromShade, this.shade),
+          (i + Math.floor(i / 8)) % 2 ? 1 : 0.94,
+        );
+        g.fillRect(x, y, 64, 64);
+        g.lineStyle(1.5, 0x98a5b5, 0.16);
+        g.strokeRect(x, y, 64, 64);
+      }
       const color = this.state?.board[i];
       if (color) {
         const hit = [...this.impacts]
@@ -568,5 +605,6 @@ export class BoardScene extends Phaser.Scene {
       }
     }
     fx.end();
+    this.study?.end();
   }
 }

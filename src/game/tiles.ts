@@ -1,3 +1,4 @@
+import { TILE_STUDY } from "./tile-study-config";
 /** Own shallow plastic tiles; shared by board, tray and drag. */
 export const COLORS = [
   0x303136, 0xffb719, 0xef5140, 0x83c633, 0x19b9ad, 0x4279ed, 0xa160d6,
@@ -54,6 +55,8 @@ export const TILE_FACES = [
 ] as const;
 const urls = new Map<number, string>();
 export function tileURL(color: number) {
+  if (TILE_STUDY)
+    return `/assets/tile-study/${TILE_STUDY}-${COLORS.indexOf(color)}.webp`;
   const cached = urls.get(color);
   if (cached) return cached;
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
