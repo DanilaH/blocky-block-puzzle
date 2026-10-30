@@ -537,7 +537,7 @@ async function start() {
         hud,
         [
           { transform: "scale(.85)" },
-          { transform: "scale(1.18)", offset: 0.45 },
+          { transform: "scale(1.06)", offset: 0.45 },
           { transform: "scale(1)" },
         ],
         340,
