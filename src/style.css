@@ -2229,13 +2229,13 @@ body:has(#app.effects-paused),
 /* Material study: shallow tray, quieter wells, generated color-preserving tiles. */
 :root[data-tile-study] .board-wrap {
   border-radius: 12px;
-  background: #464b55;
-  box-shadow: 0 0 0 3px #555b66, 0 0 0 5px #31353d,
-    0 4px 0 4px #252a32, 0 8px 12px #1b1d2426;
+  background: #d5cfc3;
+  box-shadow: 0 0 0 3px #e4ded2, 0 0 0 5px #b6ad9e,
+    0 4px 0 4px #a69b89, 0 8px 12px #6f604226;
 }
 :root[data-tile-study] #board {
   border-radius: 10px;
-  background: #30353f;
+  background: #d5cfc3;
 }
 :root[data-tile-study] .mini-shape {
   filter: drop-shadow(0 2px 1px #17202b50);
