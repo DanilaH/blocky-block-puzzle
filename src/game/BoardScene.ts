@@ -1,3 +1,4 @@
+import { cacheTileURL } from "./tiles";
 import { STUDY_BOARD } from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
 import { VfxSprites, VFX_KINDS } from "./vfx";
@@ -46,8 +47,8 @@ export class BoardScene extends Phaser.Scene {
   calm = false;
   private theme = 0;
   private themeAt = 0;
-  private shade = 0x35363b;
-  private fromShade = 0x35363b;
+  private shade = THEMES[0].board as number;
+  private fromShade = THEMES[0].board as number;
   private accent = 0xefaa39;
   private fromAccent = 0xefaa39;
   private sheen = 0;
@@ -131,6 +132,10 @@ export class BoardScene extends Phaser.Scene {
       this.study = new TileStudySprites(this);
       this.events.once("shutdown", () => this.study?.destroy());
     }
+    // DOM tray/drag reuse decoded startup textures: no requests during moves,
+    // including WebViews with disabled/evicted HTTP cache.
+    for (let color = 1; color <= 6; color++)
+      cacheTileURL(COLORS[color]!, this.textures.getBase64(`study-${color}`));
     this.onTexturesReady();
     this.draw();
   }
@@ -248,12 +253,9 @@ export class BoardScene extends Phaser.Scene {
       this.draw();
   }
   private tile(x: number, y: number, color: number, alpha = 1, scale = 1) {
-    if (this.study) {
-      this.study.tile(x, y, color, alpha, scale);
-      return;
-    }
     const g = this.ink;
-    for (const q of TILE_FACES) {
+    if (this.study) this.study.tile(x, y, color, alpha, scale);
+    else for (const q of TILE_FACES) {
       g.fillStyle(q.color ?? color, q.alpha * alpha);
       g.fillPoints(
         q.points.map(
@@ -296,9 +298,9 @@ export class BoardScene extends Phaser.Scene {
         y = Math.floor(i / 8) * 64;
       if (this.bed) {
         const bg = this.bed;
-        bg.fillStyle(STUDY_BOARD.base, 1);
+        bg.fillStyle(this.currentColor(this.fromShade, this.shade), 1);
         bg.fillRect(x, y, 64, 64);
-        bg.fillStyle(STUDY_BOARD.well, 1);
+        bg.fillStyle(STUDY_BOARD.well, 0.13);
         bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
         bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
         bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);

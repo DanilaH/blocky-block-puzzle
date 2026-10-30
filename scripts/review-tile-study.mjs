@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 const out=process.env.REVIEW_DIR||'/workspace/scratch/fcab71b1aa53/tile-study-review';
 await fs.mkdir(out,{recursive:true});
 const browser=await chromium.launch();const errors=[];
-for(const style of ['before','plastic','enamel','caramel']) {
+for(const style of ['plastic']) {
  const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2});
  page.on('pageerror',e=>errors.push(style+': '+e.message));
  const url='http://127.0.0.1:5187/'+(style==='before'?'':`?tileStudy=${style}&boardStudy=${process.env.BOARD_STUDY || "cream"}`);
@@ -37,4 +37,4 @@ for(const style of ['before','plastic','enamel','caramel']) {
  await page.close();console.log(style,'snapshot and placement OK');
 }
 await browser.close();if(errors.length)throw Error(errors.join('\n'));
-await fs.writeFile(`${out}/checks.json`,JSON.stringify({pageErrors:errors,realPlacements:4,viewports:['390x844 DPR2','320x568 DPR2']},null,2));
+await fs.writeFile(`${out}/checks.json`,JSON.stringify({pageErrors:errors,realPlacements:1,viewports:['390x844 DPR2','320x568 DPR2']},null,2));

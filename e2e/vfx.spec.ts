@@ -7,7 +7,7 @@ test("session textures finish before input unlock; no asset requests on clear", 
   page.on("pageerror", (e) => errors.push(e.message));
   let release!: () => void;
   const gate = new Promise<void>((r) => (release = r));
-  await page.route("**/assets/vfx/*.webp", async (route) => {
+  await page.route("**/assets/{vfx,tile-study}/*.webp", async (route) => {
     await gate;
     await route.continue();
   });
@@ -38,7 +38,7 @@ test("session textures finish before input unlock; no asset requests on clear", 
   await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   const requests: string[] = [];
   page.on("request", (r) => {
-    if (r.url().includes("/assets/vfx/")) requests.push(r.url());
+    if (/\/assets\/(vfx|tile-study)\//.test(r.url())) requests.push(r.url());
   });
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });

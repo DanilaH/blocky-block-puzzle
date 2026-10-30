@@ -21,3 +21,17 @@ for(const [id,a] of Object.entries(m.assets)) {
 const budget=await inspectRuntimeImageBudget(Object.keys(m.assets).map(id=>({id,file:`public/assets/vfx/${id}.webp`,category:'session-required'})));
 assert.deepEqual(budget,m.budget);assert(budget.encodedBytes<=100000);assert(budget.estimatedRgbaBytes<=2000000);
 console.log('VFX alpha, trim frames, encoded / RGBA budgets OK:',budget);
+
+// Selected production tiles: alpha survives, no cut edges, no unused study sets.
+const tileNames = (await fs.readdir('public/assets/tile-study')).sort();
+assert.deepEqual(tileNames, Array.from({length:6},(_,i)=>`plastic-${i+1}.webp`));
+for (const name of tileNames) {
+ const meta = await sharp(`public/assets/tile-study/${name}`).metadata();
+ assert.equal(meta.width,128);assert.equal(meta.height,128);assert.equal(meta.hasAlpha,true);
+ const {validatePreparedImage}=await import('../tools/vendor/mini-games-kit/pipeline.ts');
+ const check=await validatePreparedImage(await fs.readFile(`public/assets/tile-study/${name}`),{canvas:128,minTransparentPadding:1});
+ assert.deepEqual(check.errors,[]);
+}
+const tileBudget=await inspectRuntimeImageBudget(tileNames.map(id=>({id,file:`public/assets/tile-study/${id}`,category:'plastic'})));
+assert(tileBudget.encodedBytes<30000);assert.equal(tileBudget.estimatedRgbaBytes,393216);
+console.log('Selected tile alpha and budgets OK:',tileBudget);

@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import {prepareImageAsset,validatePreparedImage} from '../tools/vendor/mini-games-kit/pipeline.ts';
 import {inspectRuntimeImageBudget} from '../tools/vendor/mini-games-kit/runtime-images.ts';
 const rows=[];
-for(const style of ['plastic','enamel','caramel']) {
+for(const style of ['plastic']) {
  const input=`assets-src/tile-study/${style}.png`,m=await sharp(input).metadata();
  const width=m.width/3,height=m.height/2;
  if(!Number.isInteger(width)||!Number.isInteger(height))throw Error('Nonintegral atlas cells');

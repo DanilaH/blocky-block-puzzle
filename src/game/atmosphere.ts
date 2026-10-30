@@ -54,6 +54,9 @@ export class Atmosphere {
       themeAccent(streak),
     );
     document.documentElement.dataset.material = THEMES[next]!.material;
+    const boardColor = "#" + THEMES[next]!.board.toString(16).padStart(6, "0");
+    document.documentElement.style.setProperty("--study-board", boardColor);
+    document.documentElement.style.setProperty("--tile-sheen", next === 0 ? "0" : next === 4 || next === 5 ? ".22" : ".10");
     document.documentElement.style.setProperty(
       "--world-duration",
       calm ? "250ms" : next === 0 ? "1800ms" : "1000ms",

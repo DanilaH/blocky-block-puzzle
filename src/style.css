@@ -2100,8 +2100,8 @@ dialog h2 {
 
 /* Series atmosphere. Geometry and hit targets never move during a theme transition. */
 :root {
-  --world-bg: #eee9dd;
-  --world-ink: #383329;
+  --world-bg: #edf6fa;
+  --world-ink: #304959;
   --world-accent: #efaa39;
   --world-duration: 1000ms;
   background: var(--world-bg);
@@ -2243,17 +2243,17 @@ body:has(#app.effects-paused),
 :root[data-tile-study] .mini-cell { filter: none; }
 :root[data-tile-study] .mini-cell::after { display: none; }
 
-:root[data-board-study="cream"] {
-  --study-board: #ffebbe;
-  --study-rim: #fff9e7;
-  --study-edge: #e4bd70;
-  --study-bottom: #d6a64f;
-  --study-shadow: #bc822426;
-}
 :root[data-board-study="sky"] {
-  --study-board: #c4ecff;
-  --study-rim: #edfbff;
-  --study-edge: #82c3e6;
-  --study-bottom: #63add5;
+  --study-board: #cce7f3;
+  --study-rim: color-mix(in srgb, var(--study-board) 65%, white);
+  --study-edge: color-mix(in srgb, var(--study-board) 80%, #5089a8);
+  --study-bottom: color-mix(in srgb, var(--study-board) 65%, #5089a8);
   --study-shadow: #286b9a26;
+}
+:root[data-tile-study] .board-wrap {
+  transition: background-color var(--world-duration), box-shadow var(--world-duration);
+}
+:root[data-tile-study] .mini-cell {
+  filter: brightness(calc(1 + var(--tile-sheen, 0)));
+  transition: filter var(--world-duration);
 }

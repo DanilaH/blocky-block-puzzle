@@ -3,7 +3,7 @@ import { COLORS } from "./tiles";
 
 export { TILE_STUDY } from "./tile-study-config";
 
-/** Preview-only shared material; never changes saved game or cosmetic themes. */
+/** Shared production tile sprites; bounded pool below hints and effects. */
 export class TileStudySprites {
   private pool: Phaser.GameObjects.Image[] = [];
   private cursor = 0;

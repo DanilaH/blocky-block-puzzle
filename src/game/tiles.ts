@@ -54,11 +54,14 @@ export const TILE_FACES = [
   },
 ] as const;
 const urls = new Map<number, string>();
+export function cacheTileURL(color: number, url: string) {
+  urls.set(color, url);
+}
 export function tileURL(color: number) {
-  if (TILE_STUDY)
-    return `/assets/tile-study/${TILE_STUDY}-${COLORS.indexOf(color)}.webp`;
   const cached = urls.get(color);
   if (cached) return cached;
+  if (TILE_STUDY)
+    return `/assets/tile-study/${TILE_STUDY}-${COLORS.indexOf(color)}.webp`;
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_FACES.map((q) => `<polygon points="${q.points.map((p) => p.join(",")).join(" ")}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
   const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;

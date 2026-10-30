@@ -2,10 +2,10 @@ export const THEMES = [
   {
     at: 0,
     name: "Пластик",
-    bg: "#eee9dd",
-    ink: "#383329",
+    bg: "#edf6fa",
+    ink: "#304959",
     accent: "#efaa39",
-    board: 0x35363b,
+    board: 0xcce7f3,
     material: "plastic",
   },
   {

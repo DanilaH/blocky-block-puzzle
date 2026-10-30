@@ -7,3 +7,5 @@ Three separate original RGBA atlases generated with built-in image_gen: glossy p
 DEV-only URLs: `/?tileStudy=plastic`, `/?tileStudy=enamel`, `/?tileStudy=caramel`. No query = original0.21. Same color assets used in board, tray and dragged figure. Scene preloads only six selected textures, image pool is bounded256. Tiles have their own layer below hints/clear overlays and VFX. Preview board has shallow frame and rounded inset cells. No rule, save, score or audio changes.
 
 This is a material-selection prototype, not release0.22. Series-specific material evolution still needs adaptation after choosing the base material; do not ship all three study sets as a release. No Android APK issued from this branch.
+
+Release 0.22 selects plastic only (24,256 bytes). Generator now emits only the six selected textures; enamel/caramel masters stay archived here and their runtime files are removed. The material is always active, without DEV parameters. Sky base is muted and background cooled; existing series board transitions and material sheen are retained. Historical study query parameters no longer select alternate assets.
