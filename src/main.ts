@@ -705,6 +705,7 @@ async function start() {
         running && !scene.calm && event.lines
           ? event.points - placedCells.length
           : 0;
+      atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
       render(running);
       if (running) {
