@@ -2229,16 +2229,31 @@ body:has(#app.effects-paused),
 /* Material study: shallow tray, quieter wells, generated color-preserving tiles. */
 :root[data-tile-study] .board-wrap {
   border-radius: 12px;
-  background: #d5cfc3;
-  box-shadow: 0 0 0 3px #e4ded2, 0 0 0 5px #b6ad9e,
-    0 4px 0 4px #a69b89, 0 8px 12px #6f604226;
+  background: var(--study-board);
+  box-shadow: 0 0 0 3px var(--study-rim), 0 0 0 5px var(--study-edge),
+    0 4px 0 4px var(--study-bottom), 0 8px 12px var(--study-shadow);
 }
 :root[data-tile-study] #board {
   border-radius: 10px;
-  background: #d5cfc3;
+  background: var(--study-board);
 }
 :root[data-tile-study] .mini-shape {
   filter: drop-shadow(0 2px 1px #17202b50);
 }
 :root[data-tile-study] .mini-cell { filter: none; }
 :root[data-tile-study] .mini-cell::after { display: none; }
+
+:root[data-board-study="cream"] {
+  --study-board: #ffebbe;
+  --study-rim: #fff9e7;
+  --study-edge: #e4bd70;
+  --study-bottom: #d6a64f;
+  --study-shadow: #bc822426;
+}
+:root[data-board-study="sky"] {
+  --study-board: #c4ecff;
+  --study-rim: #edfbff;
+  --study-edge: #82c3e6;
+  --study-bottom: #63add5;
+  --study-shadow: #286b9a26;
+}

@@ -1,3 +1,4 @@
+import { STUDY_BOARD } from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
 import { VfxSprites, VFX_KINDS } from "./vfx";
 import { THEMES } from "./themes";
@@ -295,16 +296,16 @@ export class BoardScene extends Phaser.Scene {
         y = Math.floor(i / 8) * 64;
       if (this.bed) {
         const bg = this.bed;
-        bg.fillStyle(0xd5cfc3, 1);
+        bg.fillStyle(STUDY_BOARD.base, 1);
         bg.fillRect(x, y, 64, 64);
-        bg.fillStyle(0x8e877b, 0.23);
+        bg.fillStyle(STUDY_BOARD.well, 1);
         bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
-        bg.lineStyle(1, 0xfffcf4, 0.48);
+        bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
         bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);
-        bg.lineStyle(1, 0x766c5d, 0.15);
+        bg.lineStyle(1, STUDY_BOARD.edge, 0.16);
         bg.lineBetween(x + 10, y + 3, x + 54, y + 3);
         if (this.state?.board[i]) {
-          bg.fillStyle(0x64594a, 0.20);
+          bg.fillStyle(STUDY_BOARD.contact, 0.17);
           bg.fillRoundedRect(x + 5, y + 8, 55, 54, 8);
         }
       } else {

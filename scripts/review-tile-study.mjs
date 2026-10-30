@@ -6,7 +6,7 @@ const browser=await chromium.launch();const errors=[];
 for(const style of ['before','plastic','enamel','caramel']) {
  const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2});
  page.on('pageerror',e=>errors.push(style+': '+e.message));
- const url='http://127.0.0.1:5187/'+(style==='before'?'':`?tileStudy=${style}`);
+ const url='http://127.0.0.1:5187/'+(style==='before'?'':`?tileStudy=${style}&boardStudy=${process.env.BOARD_STUDY || "cream"}`);
  await page.goto(url);await page.locator('#board canvas').waitFor();await page.waitForFunction(()=>!document.querySelector('#app').inert);
  await page.evaluate(async()=>{
   const {IndexedSave}=await import('/src/platform/save.ts');const {newGame}=await import('/src/core/rules.ts');
