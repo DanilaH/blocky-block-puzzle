@@ -54,14 +54,16 @@ test("safe-area keeps gameplay and lesson above the banner", async ({
       }
       await expect
         .poll(async () => {
-          const a = (await page.locator("#ad-slot").boundingBox())!;
+          const a = await page.locator("#ad-slot").boundingBox();
+          if (!a) return "banner layout pending";
           const selectors = [
             "#board",
             ".tray",
             learning ? "#lesson-skip" : "#hint",
           ];
           for (const selector of selectors) {
-            const r = (await page.locator(selector).boundingBox())!;
+            const r = await page.locator(selector).boundingBox();
+            if (!r) return `${selector} layout pending`;
             if (
               r.y < top - 0.5 ||
               r.x < left - 0.5 ||

@@ -36,6 +36,7 @@ export class BoardScene extends Phaser.Scene {
   private study?: TileStudySprites;
   private bed?: Phaser.GameObjects.Graphics;
   private bedKey = "";
+  private wells: Phaser.GameObjects.Image[] = [];
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
@@ -128,7 +129,26 @@ export class BoardScene extends Phaser.Scene {
     this.events.once("shutdown", () => this.vfx?.destroy());
     this.ink = this.add.graphics();
     if (TILE_STUDY) {
-      this.bed = this.add.graphics().setDepth(0);
+      // One 64px grayscale well shared by all cells; tint follows the theme.
+      // Avoid replaying 1,792 rounded gradient layers on every WebGL frame.
+      if (!this.textures.exists("enamel-well")) {
+        const texture = this.textures.createCanvas("enamel-well", 64, 64)!;
+        const ctx = texture.context;
+        const gradient = ctx.createLinearGradient(0, 3, 0, 63);
+        gradient.addColorStop(0, "#e7e7e7");
+        gradient.addColorStop(0.8, "#f1f1f1");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();ctx.moveTo(10, 3);ctx.lineTo(54, 3);
+        ctx.quadraticCurveTo(62, 3, 62, 11);ctx.lineTo(62, 55);
+        ctx.quadraticCurveTo(62, 63, 54, 63);ctx.lineTo(10, 63);
+        ctx.quadraticCurveTo(2, 63, 2, 55);ctx.lineTo(2, 11);
+        ctx.quadraticCurveTo(2, 3, 10, 3);ctx.closePath();ctx.fill();
+        texture.refresh();
+      }
+      this.wells = Array.from({length:64}, (_, i) =>
+        this.add.image((i % 8) * 64, Math.floor(i / 8) * 64, "enamel-well")
+          .setOrigin(0).setDepth(0));
+      this.bed = this.add.graphics().setDepth(0.25);
       this.bedKey = "";
       this.ink.setDepth(1);
       this.study = new TileStudySprites(this);
@@ -293,7 +313,11 @@ export class BoardScene extends Phaser.Scene {
     const bedColor = this.currentColor(this.fromShade, this.shade);
     const bedKey = `${bedColor}:${this.state?.board.join(",")}`;
     const repaintBed = bedKey !== this.bedKey;
-    if (repaintBed) { this.bed?.clear(); this.bedKey = bedKey; }
+    if (repaintBed) {
+      this.bed?.clear(); this.bedKey = bedKey;
+      this.cameras.main.setBackgroundColor(bedColor);
+      this.wells.forEach(well => well.setTint(bedColor));
+    }
     this.study?.begin();
     this.vfx?.begin();
     if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
@@ -306,16 +330,6 @@ export class BoardScene extends Phaser.Scene {
       if (this.bed) {
         if (repaintBed) {
         const bg = this.bed;
-        bg.fillStyle(bedColor, 1);
-        bg.fillRect(x, y, 64, 64);
-        bg.fillStyle(0x000000, 0.055);
-        bg.fillRoundedRect(x + 2, y + 3, 60, 60, 8);
-        // Shallow inset: a few translucent top layers, lit lower edge.
-        // Rebuilt only with the cached bed, never as independent per-cell effects.
-        for (let layer = 0; layer < 28; layer++) {
-          bg.fillStyle(0x000000, 0.0015);
-          bg.fillRoundedRect(x + 3, y + 3, 58, 58 - layer * 1.6, 7);
-        }
         bg.lineStyle(1, STUDY_BOARD.lip, 0.5);
         bg.lineBetween(x + 10, y + 62, x + 54, y + 62);
         bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
