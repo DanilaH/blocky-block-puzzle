@@ -156,15 +156,58 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
   expect(before.sampleCount).toBeGreaterThan(0);
 });
 
-test("unchanged banner geometry is deduplicated but native invalidation refreshes it", async ({page})=>{
-  await page.goto('/');await expect(page.locator('#app')).not.toHaveAttribute('aria-busy','true');
-  const counts=await page.evaluate(async()=>{
-    const {watchBanner}=await import('/src/platform/ads.ts');
-    const slot=document.createElement('div');slot.style.cssText='position:fixed;left:0;top:100px;width:300px;height:52px';document.body.append(slot);
-    let reads=0,shows=0;const bridge={geometry:async()=>{reads++;return {epoch:1,geometry:{webView:{x:0,y:0,width:innerWidth,height:innerHeight},root:{width:innerWidth,height:innerHeight},adHeight:52}};},banner:async p=>{if(p.visible)shows++;}};
-    const watcher=watchBanner(bridge as any,slot,()=>true);const wait=()=>new Promise(r=>setTimeout(r,150));
-    await wait();const initial={reads,shows};watcher.update();watcher.update();await wait();const same={reads,shows};
-    watcher.invalidate();await wait();const forced={reads,shows};watcher.dispose();slot.remove();return {initial,same,forced};
+test("unchanged banner geometry is deduplicated but native invalidation refreshes it", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
+  const counts = await page.evaluate(async () => {
+    const { watchBanner } = await import("/src/platform/ads.ts");
+    const slot = document.createElement("div");
+    slot.style.cssText =
+      "position:fixed;left:0;top:100px;width:300px;height:52px";
+    document.body.append(slot);
+    let reads = 0,
+      shows = 0;
+    const bridge = {
+      geometry: async () => {
+        reads++;
+        return {
+          epoch: 1,
+          geometry: {
+            webView: { x: 0, y: 0, width: innerWidth, height: innerHeight },
+            root: { width: innerWidth, height: innerHeight },
+            adHeight: 52,
+          },
+        };
+      },
+      banner: async (p) => {
+        if (p.visible) shows++;
+      },
+    };
+    const watcher = watchBanner(bridge as any, slot, () => true);
+    const wait = () => new Promise((r) => setTimeout(r, 150));
+    await wait();
+    const initial = { reads, shows };
+    watcher.update();
+    watcher.update();
+    await wait();
+    const same = { reads, shows };
+    watcher.invalidate();
+    await wait();
+    const forced = { reads, shows };
+    const originalNow = performance.now.bind(performance);
+    performance.now = () => originalNow() + 61000;
+    watcher.update();
+    await wait();
+    const expired = { reads, shows };
+    performance.now = originalNow;
+    watcher.dispose();
+    slot.remove();
+    return { initial, same, forced, expired };
   });
-  expect(counts.initial).toEqual({reads:1,shows:1});expect(counts.same).toEqual(counts.initial);expect(counts.forced).toEqual({reads:2,shows:2});
+  expect(counts.initial).toEqual({ reads: 1, shows: 1 });
+  expect(counts.same).toEqual(counts.initial);
+  expect(counts.forced).toEqual({ reads: 2, shows: 2 });
+  expect(counts.expired).toEqual({ reads: 3, shows: 3 });
 });

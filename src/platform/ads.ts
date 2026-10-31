@@ -272,6 +272,7 @@ export function watchBanner(
     sequence = 0,
     timer: ReturnType<typeof setTimeout> | undefined;
   let lastKey = "";
+  let lastPlacementAt = -Infinity;
   const update = async () => {
     const seq = ++sequence;
     if (!bridge) return;
@@ -292,7 +293,10 @@ export function watchBanner(
         viewport.width,
         viewport.height,
       ].join(":");
-      if (key === lastKey) return;
+      // Native load failure clears the banner without changing its geometry.
+      // Preserve its existing 60-second retry opportunity on a later render.
+      if (key === lastKey && performance.now() - lastPlacementAt < 60000)
+        return;
       const { geometry, epoch } = await bridge.geometry({
         width: b.width,
         viewportWidth: viewport.width,
@@ -316,7 +320,10 @@ export function watchBanner(
         return;
       }
       await bridge.banner({ visible: true, epoch, ...result.rect });
-      if (!disposed && seq === sequence) lastKey = key;
+      if (!disposed && seq === sequence) {
+        lastKey = key;
+        lastPlacementAt = performance.now();
+      }
     } catch {
       lastKey = "";
       await bridge?.banner({ visible: false }).catch(() => {});
