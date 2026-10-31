@@ -325,9 +325,6 @@ body {
 }
 
 /* 0.27: fixed-size local feedback, no new per-frame paint loop. */
-.best {
-  position: relative;
-}
 .hud-notice {
   position: absolute;
   z-index: 12;
@@ -417,6 +414,16 @@ body {
   font-weight: 400;
 }
 /* The record label occupies its own badge, never the series strip below. */
+@media (orientation: landscape) {
+  .best {
+    top: 0;
+    height: 24px;
+    padding-block: 0;
+  }
+  .score-panel {
+    padding-top: 32px;
+  }
+}
 .best:has(.hud-notice) {
   min-width: 112px;
 }

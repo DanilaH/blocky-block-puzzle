@@ -128,6 +128,10 @@ test("record stays beside crown without intersecting score throughout animation"
         const time = Number(burst.getAnimations()[0]?.currentTime ?? -1);
         data.push({
           score: overlap(a, b),
+          combo: overlap(
+            document.querySelector("#combo-hud")!.getBoundingClientRect(),
+            b,
+          ),
           board:
             b.left >= 0 &&
             b.right <= innerWidth &&
@@ -140,7 +144,7 @@ test("record stays beside crown without intersecting score throughout animation"
       }
       return data;
     });
-    expect(samples.every((s) => !s.score && s.board)).toBe(true);
+    expect(samples.every((s) => !s.score && !s.combo && s.board)).toBe(true);
     const readable = samples.filter((s) => s.time >= 400 && s.time <= 1000);
     expect(readable.length).toBeGreaterThan(0);
     expect(readable.every((s) => s.opacity > 0.95)).toBe(true);
