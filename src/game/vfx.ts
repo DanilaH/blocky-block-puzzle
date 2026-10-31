@@ -44,6 +44,9 @@ export class VfxSprites {
     const dx = (f.x + f.width / 2 - f.logicalWidth / 2) * sx;
     const dy = (f.y + f.height / 2 - f.logicalHeight / 2) * sy;
     sprite
+      // Keep opaque fragments together, then all additive light. Interleaving
+      // NORMAL/ADD per cell flushes WebGL batches twice for every fragment group.
+      .setDepth(additive ? 3 : 2)
       .setTexture(`vfx-${kind}`)
       .setVisible(true)
       .setPosition(

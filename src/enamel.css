@@ -161,3 +161,12 @@ dialog p, .setting, .result-best { color: #3f5c70; }
   .combo-hud strong { font-size: 11px; line-height: 14px; flex: none; }
   .combo-hud span { font-size: 8px; line-height: 8px; min-width: 0; white-space: normal; }
 }
+
+/* Independent composited halo: no per-frame blur repaint of the board. */
+.clear-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}

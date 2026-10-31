@@ -109,3 +109,41 @@ test("trimmed sprite anchors and pool stay bounded under excessive effects", asy
   expect(result.pool).toBe(220);
   expect(result.active).toBe(0);
 });
+
+test("mixed clear particles stay in two blend batches without dropping fragments", async ({ page }) => {
+  await page.goto("/");
+  const result = await page.evaluate(async () => {
+    const { VfxSprites } = await import("/src/game/vfx.ts");
+    const sprites: any[] = [];
+    const scene = {
+      textures: { exists: () => true },
+      add: { image: () => {
+        const s: any = {};
+        for (const name of ["setTexture", "setDisplaySize", "setRotation", "setAlpha", "setTint", "setPosition"])
+          s[name] = () => s;
+        for (const [method, key] of [["setDepth", "depth"], ["setBlendMode", "blend"], ["setVisible", "visible"]])
+          s[method!] = (v: number | boolean) => { s[key!] = v; return s; };
+        s.destroy = () => {};
+        sprites.push(s);return s;
+      } },
+    };
+    const fx = new VfxSprites(scene as any);
+    const frames = [];
+    for (const cells of [8, 24, 39, 8]) {
+      fx.begin();
+      for (let i = 0; i < cells; i++) {
+        fx.stamp("streak", i, i, 100, 200);
+        for (let j = 0; j < 3; j++) fx.stamp("chip", i, i, 24, 24, 1, 0xffffff, 0, false);
+        fx.stamp("flash", i, i, 30, 30);
+      }
+      fx.end();
+      const visible = sprites.filter(s => s.visible).sort((a,b) => a.depth-b.depth);
+      frames.push({ count: visible.length, switches: visible.slice(1).filter((s,i) => s.blend !== visible[i].blend).length });
+    }
+    fx.clear();
+    return { frames, active: sprites.filter(s => s.visible).length };
+  });
+  expect(result.frames.map(f => f.count)).toEqual([40,120,195,40]);
+  expect(result.frames.every(f => f.switches === 1)).toBe(true);
+  expect(result.active).toBe(0);
+});

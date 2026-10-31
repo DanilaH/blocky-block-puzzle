@@ -1,0 +1,81 @@
+{
+  "environment": "Headless Chromium 141, software WebGL; single sequential sample per scenario, not Android FPS. Final pass overlapped unit tests briefly; timing is diagnostic only.",
+  "before": [
+    {
+      "lines": 1,
+      "frames": 20,
+      "median": 66.60000000000036,
+      "p95": 233.30000000000018,
+      "peakDraws": 37,
+      "meanDraws": 27.285714285714285
+    },
+    {
+      "lines": 3,
+      "frames": 28,
+      "median": 50,
+      "p95": 116.69999999999982,
+      "peakDraws": 101,
+      "meanDraws": 64.17241379310344
+    },
+    {
+      "lines": 6,
+      "frames": 27,
+      "median": 50,
+      "p95": 116.70000000000027,
+      "peakDraws": 161,
+      "meanDraws": 101.82142857142857
+    }
+  ],
+  "batched": [
+    {
+      "lines": 1,
+      "frames": 51,
+      "median": 33.299999999999955,
+      "p95": 83.29999999999995,
+      "peakDraws": 7,
+      "meanDraws": 6.423076923076923
+    },
+    {
+      "lines": 3,
+      "frames": 42,
+      "median": 33.30000000000018,
+      "p95": 66.70000000000027,
+      "peakDraws": 7,
+      "meanDraws": 6.3023255813953485
+    },
+    {
+      "lines": 6,
+      "frames": 30,
+      "median": 50,
+      "p95": 100.00000000000023,
+      "peakDraws": 7,
+      "meanDraws": 6.225806451612903
+    }
+  ],
+  "final": [
+    {
+      "lines": 1,
+      "frames": 28,
+      "median": 66.5,
+      "p95": 83.29999999999995,
+      "peakDraws": 7,
+      "meanDraws": 6.310344827586207
+    },
+    {
+      "lines": 3,
+      "frames": 26,
+      "median": 50,
+      "p95": 166.5,
+      "peakDraws": 7,
+      "meanDraws": 6.37037037037037
+    },
+    {
+      "lines": 6,
+      "frames": 39,
+      "median": 33.399999999999864,
+      "p95": 99.90000000000009,
+      "peakDraws": 7,
+      "meanDraws": 6.3
+    }
+  ]
+}

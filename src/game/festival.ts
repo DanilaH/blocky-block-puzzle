@@ -56,8 +56,14 @@ export class Festival {
     );
     const count = empty ? 200 : record ? 85 : Math.min(130, 24 + lines * 24);
     const dpr = Math.min(1.5, devicePixelRatio);
-    this.canvas.width = innerWidth * dpr;
-    this.canvas.height = innerHeight * dpr;
+    const width = Math.round(innerWidth * dpr);
+    const height = Math.round(innerHeight * dpr);
+    // A second burst can overlap the first. Do not reallocate/reset the full
+    // viewport backing store on every clear (including two bursts in one move).
+    if (this.canvas.width !== width || this.canvas.height !== height) {
+      this.canvas.width = width;
+      this.canvas.height = height;
+    }
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (let i = 0; i < count; i++) {
       const cell = cells[i % Math.max(1, cells.length)] ?? 27;

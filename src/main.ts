@@ -121,7 +121,7 @@ async function start() {
   const inLesson = () => lessonStep() < 4;
   const currentGame = () =>
     inLesson() ? lessonGame(lessonStep()) : store.state.game;
-  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div class="combo-hud" id="combo-hud" aria-live="polite"><strong id="combo-title"></strong><span id="combo-stock"></span></div><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
+  root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div class="combo-hud" id="combo-hud" aria-live="polite"><strong id="combo-title"></strong><span id="combo-stock"></span></div><div class="clear-glow" id="clear-glow" aria-hidden="true"></div><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
   const dialog = el<HTMLDialogElement>("dialog"),
@@ -743,15 +743,17 @@ async function start() {
           }
         }
         if (event.lines) {
+          const glow = el("clear-glow");
+          glow.getAnimations().forEach((a) => a.cancel());
+          // Rasterize the glow once; animate composited opacity/scale instead
+          // of repainting an expanding blur around the live WebGL canvas.
+          glow.style.boxShadow = `0 0 ${24 + Math.min(35, event.state.streak * 3)}px 9px ${themeAccent(event.state.streak)}`;
           animate(
-            canvasBox,
+            glow,
             [
-              { boxShadow: "0 0 0 0 transparent" },
-              {
-                boxShadow: `0 0 ${24 + Math.min(35, event.state.streak * 3)}px 9px ${themeAccent(event.state.streak)}`,
-                offset: 0.18,
-              },
-              { boxShadow: "0 0 0 0 transparent" },
+              { opacity: 0, transform: "scale(.98)" },
+              { opacity: 1, transform: "scale(1)", offset: 0.18 },
+              { opacity: 0, transform: "scale(1.04)" },
             ],
             event.allClear ? 1900 : 1200,
           );
