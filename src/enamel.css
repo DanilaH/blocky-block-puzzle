@@ -323,3 +323,128 @@ body {
     radial-gradient(ellipse at 125% 100%, #ffffff60 0 33%, transparent 33.2%),
     radial-gradient(ellipse at 90% 0%, #8ec8e91a, transparent 65%);
 }
+
+/* 0.27: fixed-size local feedback, no new per-frame paint loop. */
+.best {
+  position: relative;
+}
+.hud-notice {
+  position: absolute;
+  z-index: 12;
+  pointer-events: none;
+  left: 0;
+  top: calc(100% + 6px);
+  width: max-content;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 10px;
+  color: #234c70;
+  background: #fff6cb;
+  box-shadow: 0 2px 0 #c98d2966;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 800;
+  text-align: center;
+}
+.best .hud-notice {
+  max-width: none;
+  font-size: 10px;
+}
+.board-wrap > .hud-notice {
+  top: 4px;
+  left: 50%;
+  translate: -50% 0;
+}
+.board-wrap > .hud-notice[data-tier="series-end"] {
+  top: -26px;
+  background: #edf6fa;
+}
+.piece.selected {
+  outline: 2px solid #276891;
+  outline-offset: -3px;
+  background: #ffffff85;
+}
+.tray.dragging .piece.selected {
+  outline: none;
+  background: transparent;
+}
+.learning .lesson-heading {
+  color: #234c70;
+}
+.pause-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 0;
+}
+.diagnostics {
+  margin: 8px 0;
+}
+.diagnostics summary {
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #234c70;
+  font-weight: 700;
+}
+.diagnostics summary::before {
+  content: "+";
+}
+.diagnostics[open] summary::before {
+  content: "−";
+}
+.diagnostics button {
+  width: 100%;
+  margin-block: 5px;
+}
+.setting {
+  position: relative;
+  padding-right: 44px;
+  flex-wrap: wrap;
+}
+.setting input {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+}
+.setting small {
+  display: block;
+  flex-basis: 100%;
+  font-size: 11px;
+  font-weight: 400;
+}
+/* The record label occupies its own badge, never the series strip below. */
+.best:has(.hud-notice) {
+  min-width: 112px;
+}
+.best .hud-notice {
+  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  padding: 2px 4px;
+  font-size: 11px;
+}
+
+@media (orientation: portrait) and (max-height: 540px) {
+  dialog[data-kind="pause"] .dialog-body {
+    padding-top: 14px;
+    padding-bottom: 6px;
+  }
+  dialog[data-kind="pause"] h2 {
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+  dialog[data-kind="pause"] #save-status {
+    margin: 4px 0;
+  }
+  dialog[data-kind="pause"] .dialog-actions {
+    padding-top: 6px;
+    padding-bottom: 16px;
+  }
+}

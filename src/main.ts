@@ -190,10 +190,17 @@ async function start() {
     scoreShown = initial.game.score,
     scoreTarget = initial.game.score;
   let scoreGame = initial.game.gameId;
+  let visibleBestFloor = bestFor(initial);
   const rewardAnchor = document.createElement("div");
   rewardAnchor.className = "board-reward";
   document.querySelector(".board-wrap")!.append(rewardAnchor);
   rewardAnchor.append(el("burst"));
+  function paintBest() {
+    el("best").textContent = Math.max(
+      visibleBestFloor,
+      Math.round(scoreShown),
+    ).toLocaleString("ru");
+  }
   function updateScore(value: number, gameId: string, smooth: boolean) {
     if (value === scoreTarget && gameId === scoreGame && scoreFrame) return;
     cancelAnimationFrame(scoreFrame);
@@ -205,6 +212,7 @@ async function start() {
     const paint = (n: number) => {
       scoreShown = n;
       el("score").textContent = Math.round(n).toLocaleString("ru");
+      paintBest();
     };
     if (!smooth || scene.calm || !sameGame || value <= from) {
       paint(value);
@@ -246,6 +254,8 @@ async function start() {
     scoreTarget = currentGame().score;
     scoreShown = scoreTarget;
     el("score").textContent = scoreTarget.toLocaleString("ru");
+    paintBest();
+    document.querySelectorAll(".hud-notice").forEach((n) => n.remove());
     cosmetic.forEach((a) => a.cancel());
     cosmetic.clear();
     rewards.forEach((finish) => finish());
@@ -427,13 +437,16 @@ async function start() {
   function render(smoothScore = false) {
     const p = store.state,
       g = currentGame();
-    if (g.gameId !== scoreGame) pendingPoints = 0;
+    if (g.gameId !== scoreGame) {
+      pendingPoints = 0;
+      visibleBestFloor = bestFor(p);
+    }
     updateScore(
       g.score - pendingPoints,
       g.gameId,
       smoothScore || pendingPoints > 0,
     );
-    el("best").textContent = bestFor(p).toLocaleString("ru");
+    paintBest();
     el("hint-count").textContent = String(
       (p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints,
     );
@@ -516,11 +529,9 @@ async function start() {
       const from = themeIndex;
       later(
         () => {
-          presentReward(
+          presentHudNotice(
             "theme",
             `СЕРИЯ ${visualSeries} · ${THEMES[nextTheme]!.name.toUpperCase()}`,
-            0,
-            { x: 50, y: 20 },
           );
           audio.play("theme", g.streak);
           atmosphere.impulse(1.5);
@@ -590,9 +601,11 @@ async function start() {
       ? ""
       : g.status === "over"
         ? "Для этих фигур нет места"
-        : g.moves === 0
-          ? "Перенесите фигуру на поле"
-          : "";
+        : selected !== null && !drag
+          ? "Нажмите на левый верхний угол фигуры на поле"
+          : g.moves === 0
+            ? "Перенесите фигуру на поле"
+            : "";
     ads.setActive(
       running && !inLesson() && store.state.game.status === "playing",
     );
@@ -780,6 +793,14 @@ async function start() {
       pendingPoints += deferred;
       render(running);
       if (running) {
+        if (
+          before.streak > 0 &&
+          event.state.streak === 0 &&
+          event.state.status !== "over"
+        ) {
+          presentHudNotice("series-end", `Серия ${before.streak} завершена`);
+          audio.play("seriesEnd");
+        }
         atmosphere.impulse(
           event.allClear
             ? 3
@@ -927,28 +948,13 @@ async function start() {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
           presentReward(
             event.lines >= 2 ? "combo" : "line",
-            praise
-              ? `${lineName} ${praise === "excellent" ? "Отлично!" : "Хорошо!"}`
-              : lineName,
+            `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak).toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}${praise ? ` · ${praise === "excellent" ? "Отлично!" : "Хорошо!"}` : ""}`,
             linePoints,
             anchor,
             deferred ? linePoints : 0,
             event.state.streak,
             event.state.gameId,
           );
-          if (event.state.streak > 1)
-            later(
-              () =>
-                presentReward(
-                  "chain",
-                  event.state.scoringVersion
-                    ? `КОМБО ×${comboMultiplier(event.state.streak).toLocaleString("ru")}`
-                    : `СЕРИЯ ${event.state.streak}`,
-                  0,
-                  { x: 50, y: 30 },
-                ),
-              140,
-            );
           if (event.allClear) {
             later(
               () => {
@@ -977,7 +983,7 @@ async function start() {
         if (newRecord)
           later(
             () => {
-              presentReward("record", "Новый рекорд!", 0, { x: 50, y: 32 });
+              presentHudNotice("record", "Новый рекорд!");
               haptics.pulse("record");
               if (!scene.calm)
                 festival.burst(
@@ -1030,6 +1036,35 @@ async function start() {
       canvasBox.removeAttribute("aria-busy");
     }
   }
+  function presentHudNotice(
+    tier: "record" | "theme" | "series-end",
+    text: string,
+  ) {
+    const host =
+      tier === "record"
+        ? document.querySelector(".best")!
+        : document.querySelector(".board-wrap")!;
+    // One notice per destination; no queue grows during a long series.
+    host.querySelector(".hud-notice")?.remove();
+    const node = document.createElement("span");
+    node.className = "hud-notice";
+    node.dataset.tier = tier;
+    node.textContent = text;
+    node.setAttribute("role", "status");
+    host.append(node);
+    const duration = tier === "series-end" ? 1400 : 2200;
+    animate(
+      node,
+      [
+        { opacity: 0, transform: "translateY(5px) scale(.9)" },
+        { opacity: 1, transform: "none", offset: 0.12 },
+        { opacity: 1, transform: "none", offset: 0.8 },
+        { opacity: 0, transform: "translateY(-5px)" },
+      ],
+      duration,
+    )?.effect?.updateTiming({ easing: "linear" });
+    later(() => node.remove(), duration);
+  }
   function presentReward(
     tier: string,
     praise: string,
@@ -1061,10 +1096,11 @@ async function start() {
     amount.className = "reward-points";
     amount.textContent = points ? `+${deferred || points}` : "";
     node.append(label, amount);
-    for (const old of rewards.keys()) {
-      old.style.opacity = ".35";
-      old.style.translate = "0 -18px";
-    }
+    // Important all-clear owns the foreground, after the line has had time to read.
+    if (tier === "all-clear")
+      for (const old of rewards.keys()) {
+        if (old.dataset.tier !== "all-clear") old.style.opacity = ".65";
+      }
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();
     label.style.fontSize = `${Math.min(important ? 38 : 36, boardBox.width * (important ? 0.09 : 0.1))}px`;
@@ -1102,7 +1138,7 @@ async function start() {
           ? 2100
           : tier === "chain"
             ? 1200
-            : 1250;
+            : 1650;
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -1123,7 +1159,13 @@ async function start() {
       rewards.delete(node);
     };
     rewards.set(node, finish);
-    if (rewards.size > 3) rewards.values().next().value?.();
+    if (rewards.size > 3) {
+      const disposable =
+        [...rewards.keys()].find((n) => n.dataset.tier === "place") ??
+        [...rewards.keys()].find((n) => n.dataset.tier !== "all-clear") ??
+        rewards.keys().next().value;
+      if (disposable) rewards.get(disposable)?.();
+    }
     const labelAnimation = animate(
       label,
       [
@@ -1698,7 +1740,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты — без вибрации и активных анимаций<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button>${savedReviveButton()}`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     el("resume").onclick = close;
@@ -1750,7 +1792,7 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><p>${currentGame().scoringVersion ? "Клетка — 1 очко. Линии за один ход: 100 / 300 / 600 / 1000 за одну / две / три / четыре. Пересечения считаются вместе. Комбо умножает очки линий: ×1 → ×1,5 → ×2 → ×3 → ×4 → ×5. Чистое поле: отдельно +1000. Рекорд этой шкалы хранится отдельно." : "Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков."}</p><p>${currentGame().scoringVersion ? "" : "За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10."} ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} ${currentGame().scoringVersion ? "" : "Полностью пустое поле даёт дополнительно 100 очков."}</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><details class="diagnostics"><summary>Очки и подсказки</summary><p>${currentGame().scoringVersion ? "Клетка — 1 очко. Линии за один ход: 100 / 300 / 600 / 1000 за одну / две / три / четыре. Пересечения считаются вместе. Комбо умножает очки линий: ×1 → ×1,5 → ×2 → ×3 → ×4 → ×5. Чистое поле: отдельно +1000." : "Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков."}</p><p>${currentGame().scoringVersion ? "" : "За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10."} ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} ${currentGame().scoringVersion ? "" : "Полностью пустое поле даёт дополнительно 100 очков."}</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p></details><p>${currentGame().rulesVersion === "grace-v2" ? "Между очистками есть два подготовительных хода. Третий ход без очистки завершает серию. Время не ограничено." : "Ход без очистки завершает серию."}</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;
@@ -1779,7 +1821,7 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Подсказки сохранятся. В новой партии — увеличенные награды за линии и комбо, с отдельным рекордом.</p><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion ? "" : " В новой партии — увеличенные награды за линии и комбо, с отдельным рекордом."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
     el<HTMLSelectElement>("dealer-choice").value =

@@ -76,7 +76,7 @@ test("final clear completes before result; Escape returns to final board; reload
   await fixture(page, "end");
   await lastMove(page);
   await expect(page.locator("dialog")).not.toBeVisible();
-  await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator(".best")).toContainText("Новый рекорд");
   await expect(page.locator("#again")).toBeVisible();
   await expect(page.locator(".result-heading")).toHaveText("Лучший результат");
   await page.keyboard.press("Escape");
@@ -120,7 +120,7 @@ test("record survives recent combo and drag source returns after cancel", async 
   await page
     .locator("#board")
     .click({ position: { x: 4, y: b.width / 4 + 4 } });
-  await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator(".best")).toContainText("Новый рекорд");
   await expect(page.locator("#score")).toHaveText("194");
   const p = (await page.locator(".piece").nth(2).boundingBox())!;
   await page.mouse.move(p.x + p.width / 2, p.y + p.height / 2);

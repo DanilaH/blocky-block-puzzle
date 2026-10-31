@@ -121,6 +121,7 @@ export class GameAudio {
   }
   play(
     kind:
+      | "seriesEnd"
       | "defeat"
       | "praise"
       | "theme"
@@ -148,6 +149,10 @@ export class GameAudio {
       return;
     const t = this.context.currentTime;
     const pitch = seriesPitch(streak);
+    if (kind === "seriesEnd") {
+      this.tone(392, 329.63, t, 0.22, 0.04, "sine");
+      return;
+    }
     if (kind === "defeat") {
       this.tone(293.66, 196, t, 0.28, 0.09, "triangle", 2);
       this.tone(196, 146.83, t + 0.18, 0.45, 0.07, "sine", 2);
@@ -249,19 +254,25 @@ export class GameAudio {
               : kind === "hint"
                 ? [659.25, 987.77]
                 : [523.25, 783.99, 1046.5];
+    // Limit the whole register, not individual notes: intervals remain intact.
+    const register = Math.min(
+      Math.pow(2, pitch / 12),
+      2200 / Math.max(...notes),
+    );
+    const development = Math.min(1, Math.max(0, streak - 8) / 24);
     notes.forEach((hz, i) => {
-      const f = Math.min(1450, hz * Math.pow(2, pitch / 12)),
+      const f = hz * register,
         at =
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
-          i * (0.07 + Math.min(points, 300) / 3000);
+          i * (0.07 + Math.min(points, 300) / 3000) * (1 - development * 0.25);
       this.tone(
         f,
         f * 0.999,
         at,
         this.calm ? 0.18 : 0.48 + intensity * 0.5,
         0.105,
-        "triangle",
+        development >= 0.5 ? "sine" : "triangle",
         1,
       );
       if (!this.calm && i === 0) {

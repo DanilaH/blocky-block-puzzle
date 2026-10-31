@@ -10,6 +10,7 @@ async function setup(page: Page) {
   await page.locator("#lesson-skip").click();
   await page.locator("#pause").click();
   await page.locator("#restart").click();
+  await page.getByText("Экспериментальная выдача", { exact: true }).click();
 }
 test("dealer choice only commits with a new game; survives reload; cancel keeps exact game", async ({
   page,
@@ -21,6 +22,7 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   expect((await saved(page)).game).toEqual(initial.game);
   await page.locator("#pause").click();
   await page.locator("#restart").click();
+  await page.getByText("Экспериментальная выдача", { exact: true }).click();
   await expect(page.locator("#dealer-choice")).toHaveValue("initial-v1");
   await page.locator("#dealer-choice").selectOption("assist-v1");
   await page.locator("#new-game").click();
@@ -32,11 +34,10 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   expect(assisted.freeHints).toBe(initial.freeHints);
   await page.reload();
   await page.locator("#pause").click();
-  await expect(page.locator(".dealer-note")).toContainText(
-    "с умеренной помощью",
-  );
+  await expect(page.locator(".dealer-note")).toHaveCount(0);
   expect((await saved(page)).game).toEqual(assisted.game);
   await page.locator("#restart").click();
+  await page.getByText("Экспериментальная выдача", { exact: true }).click();
   await expect(page.locator("#dealer-choice")).toHaveValue("assist-v1");
   await page.locator("#dealer-choice").selectOption("initial-v1");
   await page.locator("#new-game").click();

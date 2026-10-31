@@ -135,6 +135,7 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
   await page.goto("/");
   await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await page.locator("#pause").click();
+  await page.getByText("Диагностика", { exact: true }).click();
   await page.locator("#perf-start").click();
   await page.waitForTimeout(150);
   await page.locator("#pause").click();
@@ -149,9 +150,10 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
   await page.waitForTimeout(150);
   expect((await snapshot()).sampleCount).toBe(before.sampleCount);
   const download = page.waitForEvent("download");
+  await page.getByText("Диагностика", { exact: true }).click();
   await page.locator("#perf-export").click();
   expect((await download).suggestedFilename()).toBe(
-    "blocky-performance-0.26.json",
+    "blocky-performance-0.27.json",
   );
   expect(before.sampleCount).toBeGreaterThan(0);
 });

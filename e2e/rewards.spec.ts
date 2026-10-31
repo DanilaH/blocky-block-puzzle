@@ -47,13 +47,20 @@ async function put(page: Page, slot: number, x: number, y: number) {
   const piece = page.locator(".piece").nth(slot);
   await expect(piece).toBeVisible();
   await expect(piece).toBeEnabled();
-  let r: {x:number;y:number;width:number;height:number} | null = null;
-  await expect.poll(async () => { r = await piece.boundingBox(); return r; }).not.toBeNull();
+  let r: { x: number; y: number; width: number; height: number } | null = null;
+  await expect
+    .poll(async () => {
+      r = await piece.boundingBox();
+      return r;
+    })
+    .not.toBeNull();
   const hit = r!;
   await page.mouse.click(hit.x + hit.width / 2, hit.y + hit.height / 2);
   const b = (await page.locator("#board").boundingBox())!;
-  await page.mouse.click(b.x + ((x + 0.3) * b.width) / 8,
-    b.y + ((y + 0.3) * b.height) / 8);
+  await page.mouse.click(
+    b.x + ((x + 0.3) * b.width) / 8,
+    b.y + ((y + 0.3) * b.height) / 8,
+  );
 }
 test("important reward survives rapid moves with converging score; pause clears it", async ({
   page,
@@ -62,7 +69,7 @@ test("important reward survives rapid moves with converging score; pause clears 
   for (const kind of ["record", "calm"]) {
     await setup(page, kind);
     await page.evaluate(() => {
-      const burst = document.querySelector("#burst")!;
+      const burst = document.querySelector(".best")!;
       (window as any).rewardAt700 = null;
       const observer = new MutationObserver(() => {
         if (!burst.textContent?.includes("Новый рекорд")) return;
@@ -74,9 +81,9 @@ test("important reward survives rapid moves with converging score; pause clears 
       observer.observe(burst, { childList: true });
     });
     await put(page, 0, 0, 0);
-    await expect(page.locator("#burst")).toContainText("Новый рекорд");
+    await expect(page.locator(".best")).toContainText("Новый рекорд");
     await put(page, 1, 2, 2);
-    await expect(page.locator("#burst")).toContainText("Новый рекорд");
+    await expect(page.locator(".best")).toContainText("Новый рекорд");
     await expect
       .poll(() => page.evaluate(() => (window as any).rewardAt700))
       .toContain("Новый рекорд");
@@ -90,7 +97,7 @@ test("important reward survives rapid moves with converging score; pause clears 
     await expect(page.locator("#burst")).toHaveText("");
   }
 });
-test("reward stays inside board without intersecting score throughout animation", async ({
+test("record stays beside crown without intersecting score throughout animation", async ({
   page,
 }) => {
   for (const [width, height] of [
@@ -102,30 +109,30 @@ test("reward stays inside board without intersecting score throughout animation"
     await page.setViewportSize({ width, height });
     await setup(page);
     await put(page, 0, 0, 0);
-    await expect(page.locator("#burst")).toContainText("Новый рекорд");
+    await expect(page.locator(".best")).toContainText("Новый рекорд");
     const samples = await page.evaluate(async () => {
       const data = [];
       const start = performance.now();
       while (performance.now() - start < 800) {
         const a = document.querySelector("#score")!.getBoundingClientRect(),
           b = document
-            .querySelector('.reward-event[data-tier="record"] .reward-praise')!
+            .querySelector('.hud-notice[data-tier="record"]')!
             .getBoundingClientRect(),
           board = document.querySelector("#board")!.getBoundingClientRect();
         const overlap = (x: DOMRect, y: DOMRect) =>
           Math.min(x.right, y.right) > Math.max(x.left, y.left) &&
           Math.min(x.bottom, y.bottom) > Math.max(x.top, y.top);
         const burst = document.querySelector(
-          '.reward-event[data-tier="record"] .reward-praise',
+          '.hud-notice[data-tier="record"]',
         )!;
         const time = Number(burst.getAnimations()[0]?.currentTime ?? -1);
         data.push({
           score: overlap(a, b),
           board:
-            b.left >= board.left &&
-            b.right <= board.right &&
-            b.top >= board.top &&
-            b.bottom <= board.bottom,
+            b.left >= 0 &&
+            b.right <= innerWidth &&
+            b.top >= 0 &&
+            b.bottom <= innerHeight,
           time,
           opacity: Number(getComputedStyle(burst).opacity),
         });
@@ -170,9 +177,9 @@ test("two important events overlap; background clears presentation", async ({
 }) => {
   await setup(page, "two");
   await put(page, 0, 0, 0);
-  await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator(".best")).toContainText("Новый рекорд");
   await put(page, 1, 0, 7);
-  await expect(page.locator("#burst")).toContainText("Новый рекорд");
+  await expect(page.locator(".best")).toContainText("Новый рекорд");
   await expect(page.locator("#burst")).toContainText("Чистое поле");
   // Labels now follow a short sequence; correctness does not require exactly two simultaneous nodes.
   expect(await page.locator(".reward-event").count()).toBeLessThanOrEqual(6);

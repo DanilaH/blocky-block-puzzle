@@ -224,3 +224,29 @@ it("series pitch survives a long wait and audio stop/resume", async () => {
   expect([...active].some((v) => v.hz === 523.25)).toBe(true);
   audio.stop();
 });
+
+it.each(["clear", "record", "allClear"] as const)(
+  "%s preserves musical intervals at high series",
+  async (kind) => {
+    vi.stubGlobal("AudioContext", FakeContext);
+    const audio = new GameAudio();
+    audio.calm = true;
+    await audio.unlock();
+    const notes =
+      kind === "record"
+        ? [659.25, 783.99, 1046.5]
+        : kind === "allClear"
+          ? [523.25, 1046.5, 1567.98]
+          : [523.25, 783.99, 1046.5];
+    for (const streak of [8, 20, 100]) {
+      audio.play(kind, streak, 1000);
+      const reward = [...active].slice(3).map((v) => v.hz);
+      expect(reward).toHaveLength(3);
+      expect(reward[1]! / reward[0]!).toBeCloseTo(notes[1]! / notes[0]!, 8);
+      expect(reward[2]! / reward[0]!).toBeCloseTo(notes[2]! / notes[0]!, 8);
+      expect(Math.max(...reward)).toBeLessThanOrEqual(2200);
+      audio.stop();
+      await audio.unlock();
+    }
+  },
+);

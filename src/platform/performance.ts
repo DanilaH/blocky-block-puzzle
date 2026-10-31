@@ -60,7 +60,7 @@ export class PerformanceCapture {
     );
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
-      version: "0.26",
+      version: "0.27",
       clock: "browser RAF intervals; not GPU timings",
       viewport: {
         width: innerWidth,
@@ -90,7 +90,7 @@ export class PerformanceCapture {
       );
       const link = document.createElement("a");
       link.href = url;
-      link.download = "blocky-performance-0.26.json";
+      link.download = "blocky-performance-0.27.json";
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
