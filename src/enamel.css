@@ -316,3 +316,10 @@ body {
 :root.calm .secondary {
   transition: none;
 }
+
+.world-background {
+  background-image:
+    radial-gradient(ellipse at -25% 16%, #ffffff70 0 34%, transparent 34.2%),
+    radial-gradient(ellipse at 125% 100%, #ffffff60 0 33%, transparent 33.2%),
+    radial-gradient(ellipse at 90% 0%, #8ec8e91a, transparent 65%);
+}

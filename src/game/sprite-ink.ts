@@ -236,3 +236,68 @@ export class SpriteInk {
     this.images = [];
   }
 }
+
+/** Static decoration raster: uploaded only when the board occupancy changes. */
+export class RasterInk {
+  private texture: Phaser.Textures.CanvasTexture;
+  private sprite: Phaser.GameObjects.Image;
+  private context: CanvasRenderingContext2D;
+  private fillAlpha = 1;
+  private strokeAlpha = 1;
+  constructor(scene: Phaser.Scene, depth: number) {
+    if (scene.textures.exists("board-decoration")) scene.textures.remove("board-decoration");
+    this.texture = scene.textures.createCanvas("board-decoration", 512, 512)!;
+    this.context = this.texture.context;
+    this.sprite = scene.add
+      .image(0, 0, "board-decoration")
+      .setOrigin(0)
+      .setDepth(depth);
+  }
+  clear() {
+    this.context.clearRect(0, 0, 512, 512);
+    return this;
+  }
+  setVisible(visible: boolean) {
+    this.sprite.setVisible(visible);
+    return this;
+  }
+  fillStyle(color: number, alpha = 1) {
+    this.context.fillStyle = "#" + color.toString(16).padStart(6, "0");
+    this.fillAlpha = alpha;
+    return this;
+  }
+  lineStyle(width: number, color: number, alpha = 1) {
+    this.context.strokeStyle = "#" + color.toString(16).padStart(6, "0");
+    this.context.lineWidth = width;
+    this.strokeAlpha = alpha;
+    return this;
+  }
+  lineBetween(x: number, y: number, x2: number, y2: number) {
+    const c = this.context;
+    c.globalAlpha = this.strokeAlpha;
+    c.beginPath();
+    c.moveTo(x, y);
+    c.lineTo(x2, y2);
+    c.stroke();
+    return this;
+  }
+  strokeRoundedRect(x: number, y: number, w: number, h: number, r: number) {
+    this.context.globalAlpha = this.strokeAlpha;
+    round(this.context, x, y, w, h, r);
+    this.context.stroke();
+    return this;
+  }
+  fillRoundedRect(x: number, y: number, w: number, h: number, r: number) {
+    this.context.globalAlpha = this.fillAlpha;
+    round(this.context, x, y, w, h, r);
+    this.context.fill();
+    return this;
+  }
+  flush() {
+    this.texture.refresh();
+  }
+  destroy() {
+    this.sprite.destroy();
+    this.texture.destroy();
+  }
+}

@@ -1,5 +1,5 @@
 import { performanceCapture } from "../platform/performance";
-import { SpriteInk } from "./sprite-ink";
+import { RasterInk, SpriteInk } from "./sprite-ink";
 import { cacheTileURL } from "./tiles";
 import { STUDY_BOARD } from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
@@ -36,7 +36,8 @@ export class BoardScene extends Phaser.Scene {
   onTexturesReady = () => {};
   private vfx?: VfxSprites;
   private study?: TileStudySprites;
-  private bed?: Phaser.GameObjects.Graphics | SpriteInk;
+  private bed?: Phaser.GameObjects.Graphics | RasterInk;
+  private bedColor = -1;
   private bedKey = "";
   private wells: Phaser.GameObjects.Image[] = [];
   private dirty = true;
@@ -169,9 +170,10 @@ export class BoardScene extends Phaser.Scene {
           .setDepth(0),
       );
       this.bed = textured
-        ? new SpriteInk(this, 0.25)
+        ? new RasterInk(this, 0.25)
         : this.add.graphics().setDepth(0.25);
       this.bedKey = "";
+      this.bedColor = -1;
 
       this.study = new TileStudySprites(this);
       this.events.once("shutdown", () => this.study?.destroy());
@@ -345,11 +347,14 @@ export class BoardScene extends Phaser.Scene {
     // The inset bed is static between placements/theme frames. Avoid rebuilding
     // 64 rounded wells for every particle/score animation frame.
     const bedColor = this.currentColor(this.fromShade, this.shade);
-    const bedKey = `${bedColor}:${this.state?.board.join(",")}`;
+    const bedKey = this.state?.board.join(",") ?? "empty";
     const repaintBed = bedKey !== this.bedKey;
     if (repaintBed) {
       this.bed?.clear();
       this.bedKey = bedKey;
+    }
+    if (this.bedColor !== bedColor) {
+      this.bedColor = bedColor;
       this.cameras.main.setBackgroundColor(bedColor);
       this.wells.forEach((well) => well.setTint(bedColor));
     }
@@ -671,6 +676,7 @@ export class BoardScene extends Phaser.Scene {
         }
       }
     }
+    if (repaintBed && this.bed instanceof RasterInk) this.bed.flush();
     fx.end();
     this.study?.end();
     if (this.mix() >= 1) this.themeAt = 0;

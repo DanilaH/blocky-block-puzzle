@@ -20,8 +20,8 @@ export class TileStudySprites {
       s = this.scene.add.image(0, 0, key).setDepth(0.5);
       this.pool.push(s);
     }
-    s.setTexture(key)
-      .setVisible(true)
+    if (s.texture.key !== key) s.setTexture(key);
+    s.setVisible(true)
       .setPosition(x + 32, y + 32)
       .setDisplaySize(64 * scale, 64 * scale)
       .setAlpha(alpha);
