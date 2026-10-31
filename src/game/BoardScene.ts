@@ -37,6 +37,7 @@ export class BoardScene extends Phaser.Scene {
   private bed?: Phaser.GameObjects.Graphics;
   private bedKey = "";
   private wells: Phaser.GameObjects.Image[] = [];
+  private dirty = true;
   private ink!: Phaser.GameObjects.Graphics;
   private state: GameState | null = null;
   private ghost: Move | null = null;
@@ -77,7 +78,7 @@ export class BoardScene extends Phaser.Scene {
           : index === 4
             ? 0.65
             : 0.35 + index * 0.035;
-    this.draw();
+    this.dirty = true;
   }
   private mix() {
     return Math.min(
@@ -179,7 +180,7 @@ export class BoardScene extends Phaser.Scene {
     this.previewEcho = null;
     this.state = state;
     this.ghost = null;
-    this.draw();
+    this.dirty = true;
   }
   preview(move: Move | null, valid = true, hint = false) {
     if (
@@ -217,11 +218,11 @@ export class BoardScene extends Phaser.Scene {
     this.ghost = move;
     this.valid = valid;
     this.hint = hint;
-    this.draw();
+    this.dirty = true;
   }
   pendingPlacement(cells: number[]) {
     this.pending = cells;
-    this.draw();
+    this.dirty = true;
   }
   impact(
     placed: number[],
@@ -260,10 +261,12 @@ export class BoardScene extends Phaser.Scene {
     this.celebration.reset();
     this.hint = false;
     this.impacts = [];
+    // Pause can stop the loop immediately; clear cosmetic objects synchronously.
     this.draw();
   }
   update() {
     if (
+      this.dirty ||
       this.mix() < 1 ||
       this.praiseHit ||
       (this.defeatAt > 0 && performance.now() - this.defeatAt < 900) ||
@@ -305,6 +308,7 @@ export class BoardScene extends Phaser.Scene {
 
   private draw() {
     if (!this.ink) return;
+    this.dirty = false;
     const g = this.ink,
       now = performance.now();
     g.clear();

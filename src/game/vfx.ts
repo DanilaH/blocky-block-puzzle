@@ -8,7 +8,11 @@ export const VFX_LIMIT = 220;
 export class VfxSprites {
   private pool: Phaser.GameObjects.Image[] = [];
   private cursor = 0;
-  constructor(private scene: Phaser.Scene) {}
+  constructor(private scene: Phaser.Scene) {
+    // Allocate once before input unlock, not in the first large clear frame.
+    this.pool = Array.from({ length: VFX_LIMIT }, () =>
+      scene.add.image(0, 0, "vfx-chip").setDepth(2).setVisible(false));
+  }
   begin() {
     this.cursor = 0;
   }
@@ -43,10 +47,10 @@ export class VfxSprites {
       sy = height / f.logicalHeight;
     const dx = (f.x + f.width / 2 - f.logicalWidth / 2) * sx;
     const dy = (f.y + f.height / 2 - f.logicalHeight / 2) * sy;
+    // Phaser queues a display-list sort even when setDepth repeats its value.
+    const depth = additive ? 3 : 2;
+    if (sprite.depth !== depth) sprite.setDepth(depth);
     sprite
-      // Keep opaque fragments together, then all additive light. Interleaving
-      // NORMAL/ADD per cell flushes WebGL batches twice for every fragment group.
-      .setDepth(additive ? 3 : 2)
       .setTexture(`vfx-${kind}`)
       .setVisible(true)
       .setPosition(

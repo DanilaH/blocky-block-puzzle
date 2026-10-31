@@ -67,12 +67,15 @@ async function start() {
   let praiseWorker: Worker | null = null;
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
+  let praiseTimer = 0;
   let lastPraiseMove = -5;
   let defeatPlayed = "";
   let themeKey = "";
   let themeGame = "";
   let themeIndex = 0;
   function stopPraise() {
+    clearTimeout(praiseTimer);
+    praiseTimer = 0;
     praiseWorker?.terminate();
     praiseWorker = null;
     praiseKey = "";
@@ -88,6 +91,10 @@ async function start() {
     stopPraise();
     praiseKey = key;
     if (g.board.filter(Boolean).length < 12 || worker) return;
+    // Leave the placement/first effect frame free of worker startup and ranking.
+    praiseTimer = window.setTimeout(() => {
+    praiseTimer = 0;
+    if (!running || praiseKey !== key) return;
     const job = new Worker(
       new URL("./game/praise.worker.ts", import.meta.url),
       { type: "module" },
@@ -104,6 +111,7 @@ async function start() {
       if (praiseWorker === job) praiseWorker = null;
     };
     job.postMessage(g);
+    }, 180);
   }
   const festivalTimers = new Set<number>();
   const later = (fn: () => void, delay: number) => {
@@ -439,16 +447,28 @@ async function start() {
       "depleted",
       Number(el("hint-count").textContent) === 0 && hintSlot === undefined,
     );
-    tray.innerHTML = g.tray
-      .map(
-        (s, i) =>
-          `<button class="piece${s.used ? " used" : ""}${blocked[i] ? " unavailable" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}" data-slot="${i}" aria-label="Фигура ${i + 1}: ${s.shapeId}${blocked[i] ? ", сейчас нет места" : ""}" ${s.used || g.status === "over" || (inLesson() && i !== hintSlot) ? "disabled" : ""}>${s.used ? "" : mini(i, cell)}</button>`,
-      )
-      .join("");
+    // Preserve surviving images/buttons instead of parsing every base64 tile
+    // and rebuilding all three pieces on each placement, focus or setting change.
+    for (let i = 0; i < g.tray.length; i++) {
+      const s = g.tray[i]!;
+      let button = tray.children[i] as HTMLButtonElement | undefined;
+      if (!button) {
+        button = document.createElement("button");
+        button.dataset.slot = String(i);
+        tray.append(button);
+      }
+      button.className = `piece${s.used ? " used" : ""}${blocked[i] ? " unavailable" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}`;
+      button.setAttribute("aria-label", `Фигура ${i + 1}: ${s.shapeId}${blocked[i] ? ", сейчас нет места" : ""}`);
+      button.disabled = s.used || g.status === "over" || (inLesson() && i !== hintSlot);
+      const visualKey = s.used ? "used" : `${s.shapeId}:${s.color}:${cell}`;
+      if (button.dataset.visualKey !== visualKey) {
+        button.innerHTML = s.used ? "" : mini(i, cell);
+        button.dataset.visualKey = visualKey;
+      }
+    }
+    while (tray.children.length > g.tray.length) tray.lastElementChild!.remove();
     if (focused !== undefined)
-      tray
-        .querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)
-        ?.focus({ preventScroll: true });
+      tray.querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)?.focus({ preventScroll: true });
     audio.enabled = p.settings.sound;
     audioFocus.setActive(running && p.settings.sound);
     scene.calm =
@@ -643,6 +663,7 @@ async function start() {
       !practicing && before.moves - lastPraiseMove >= 3
         ? praiseFor(praiseResult, before, move)
         : null;
+    stopPraise();
     const expected = LESSON_MOVES[lessonStep()];
     if (
       practicing &&
