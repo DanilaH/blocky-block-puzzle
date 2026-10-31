@@ -1,0 +1,88 @@
+name: Preview checks and APK
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run assets:check
+      - run: npm test
+      - run: npm run build
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Use primary Ubuntu package mirror
+        run: |
+          for source_file in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$source_file" ]; then
+              sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$source_file"
+            fi
+          done
+      - name: Install headless browser and dependencies
+        timeout-minutes: 5
+        run: npx playwright install --with-deps --only-shell chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-review
+          path: |
+            test-results/
+            docs/qa/feel-0.8/*.png
+            docs/qa/feel-0.9/*.png
+            docs/qa/feel-0.10/*.png
+            docs/qa/feel-0.11/*.png
+            docs/qa/feel-0.12/*.png
+            docs/qa/usability-0.13/*.png
+            docs/qa/feel-0.14/*.png
+            docs/qa/feel-0.15/*.png
+            docs/qa/dealer-0.16/*.png
+            docs/qa/ads-0.17/*.png
+  android:
+    needs: verify
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - run: npm ci
+      - run: npm run android:sync
+      - uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: blocky-preview-debug-keystore-v1
+      - name: Ensure cached preview signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Blocky Preview,O=Development,C=RU"
+          fi
+      - run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blocky-preview-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+

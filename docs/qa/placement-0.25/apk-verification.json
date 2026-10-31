@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "72732ece38b393d8f85c84544c67485b8b751362",
+  "ciRun": 41183134886,
+  "package": "com.danilah.blocky.dev",
+  "versionCode": 25,
+  "versionName": "0.25.0-preview",
+  "bytes": 9957331,
+  "sha256": "4d6672c7658fb9d9607f8bcdc9d139ef291b9eea181c46f17ed67dd08e0585f0",
+  "matchingProductionFiles": [
+    "assets/public/assets/hint.worker-BBQAON7F.js",
+    "assets/public/assets/index-Ba13K0qn.js",
+    "assets/public/assets/index-sms0JgLu.css",
+    "assets/public/assets/phaser-B_vcVLyb.js",
+    "assets/public/assets/praise.worker-keudRoz7.js",
+    "assets/public/assets/tile-study/plastic-1.webp",
+    "assets/public/assets/tile-study/plastic-2.webp",
+    "assets/public/assets/tile-study/plastic-3.webp",
+    "assets/public/assets/tile-study/plastic-4.webp",
+    "assets/public/assets/tile-study/plastic-5.webp",
+    "assets/public/assets/tile-study/plastic-6.webp",
+    "assets/public/assets/vfx/chip.webp",
+    "assets/public/assets/vfx/flash.webp",
+    "assets/public/assets/vfx/ring.webp",
+    "assets/public/assets/vfx/streak.webp",
+    "assets/public/index.html"
+  ],
+  "signatureVerified": true,
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "certificateMatches024": true,
+  "physicalDeviceTested": false
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "workerWallMs": 209.8999999994412,
+    "nodes": 8235,
+    "checks": 3036417,
+    "cacheHits": 5386,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 198.20000000018626,
+    "nodes": 4210,
+    "checks": 3389089,
+    "cacheHits": 1102,
+    "elapsedMs": 180,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 198.3999999994412,
+    "nodes": 5461,
+    "checks": 3855617,
+    "cacheHits": 1910,
+    "elapsedMs": 180.20000000018626,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 196.20000000018626,
+    "nodes": 6257,
+    "checks": 4468353,
+    "cacheHits": 2132,
+    "elapsedMs": 180.20000000018626,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 202.80000000074506,
+    "nodes": 5854,
+    "checks": 4068993,
+    "cacheHits": 2085,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 201,
+    "nodes": 5494,
+    "checks": 3973377,
+    "cacheHits": 1809,
+    "elapsedMs": 180.1000000005588,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 201.79999999981374,
+    "nodes": 6310,
+    "checks": 4608129,
+    "cacheHits": 2046,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 195.40000000037253,
+    "nodes": 5447,
+    "checks": 3928193,
+    "cacheHits": 1807,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 199.30000000074506,
+    "nodes": 4875,
+    "checks": 3371009,
+    "cacheHits": 1766,
+    "elapsedMs": 180.1000000005588,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 205.1000000005588,
+    "nodes": 4846,
+    "checks": 3469297,
+    "cacheHits": 1650,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 198.79999999981374,
+    "nodes": 4510,
+    "checks": 3475426,
+    "cacheHits": 1318,
+    "elapsedMs": 180,
+    "cutoff": true,
+    "legal": true
+  },
+  {
+    "workerWallMs": 212.29999999981374,
+    "nodes": 4980,
+    "checks": 3145857,
+    "cacheHits": 2057,
+    "elapsedMs": 180.09999999962747,
+    "cutoff": true,
+    "legal": true
+  }
+]

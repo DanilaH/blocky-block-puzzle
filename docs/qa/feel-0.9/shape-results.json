@@ -1,0 +1,1010 @@
+[
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "S1-0",
+      "I2-0",
+      "I2-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 334.65625,
+          "y": 112,
+          "width": 32,
+          "height": 32
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 401.984375,
+          "y": 112,
+          "width": 64,
+          "height": 32
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 501.3125,
+          "y": 96,
+          "width": 32,
+          "height": 64
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "I3-0",
+      "I3-1",
+      "I4-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 325.15625,
+          "y": 119.5,
+          "width": 51,
+          "height": 17
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 425.484375,
+          "y": 102.5,
+          "width": 17,
+          "height": 51
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 483.3125,
+          "y": 119.5,
+          "width": 68,
+          "height": 17
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "I4-1",
+      "I5-0",
+      "I5-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 344.65625,
+          "y": 104,
+          "width": 12,
+          "height": 48
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 403.984375,
+          "y": 122,
+          "width": 60,
+          "height": 12
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 511.3125,
+          "y": 98,
+          "width": 12,
+          "height": 60
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "O2-0",
+      "O3-0",
+      "L3-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 329.65625,
+          "y": 107,
+          "width": 42,
+          "height": 42
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 402.484375,
+          "y": 96.5,
+          "width": 63,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 496.3125,
+          "y": 107,
+          "width": 42,
+          "height": 42
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "L3-1",
+      "L3-2",
+      "L3-3"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 318.65625,
+          "y": 96,
+          "width": 64,
+          "height": 64
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 401.984375,
+          "y": 96,
+          "width": 64,
+          "height": 64
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 485.3125,
+          "y": 96,
+          "width": 64,
+          "height": 64
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "T4-0",
+      "T4-1",
+      "T4-2"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 319.15625,
+          "y": 107,
+          "width": 63,
+          "height": 42
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 412.984375,
+          "y": 96.5,
+          "width": 42,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 485.8125,
+          "y": 107,
+          "width": 63,
+          "height": 42
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "T4-3",
+      "SZ4-0",
+      "SZ4-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 329.65625,
+          "y": 96.5,
+          "width": 42,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 402.484375,
+          "y": 107,
+          "width": 63,
+          "height": 42
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 496.3125,
+          "y": 96.5,
+          "width": 42,
+          "height": 63
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "SZ4-2",
+      "SZ4-3",
+      "R6-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 319.15625,
+          "y": 107,
+          "width": 63,
+          "height": 42
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 412.984375,
+          "y": 96.5,
+          "width": 42,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 485.8125,
+          "y": 107,
+          "width": 63,
+          "height": 42
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 568,
+    "height": 320,
+    "shapes": [
+      "R6-1",
+      "S1-0",
+      "I2-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 314,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 329.65625,
+          "y": 96.5,
+          "width": 42,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 397.328125,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 423.484375,
+          "y": 117.5,
+          "width": 21,
+          "height": 21
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 480.65625,
+          "y": 92,
+          "width": 73.328125,
+          "height": 72
+        },
+        "shape": {
+          "x": 496.3125,
+          "y": 117.5,
+          "width": 42,
+          "height": 21
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "S1-0",
+      "I2-0",
+      "I2-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 39,
+          "y": 373,
+          "width": 38,
+          "height": 38
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 122,
+          "y": 373,
+          "width": 76,
+          "height": 38
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 243,
+          "y": 354,
+          "width": 38,
+          "height": 76
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "I3-0",
+      "I3-1",
+      "I4-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 26.5,
+          "y": 381.5,
+          "width": 63,
+          "height": 21
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 149.5,
+          "y": 360.5,
+          "width": 21,
+          "height": 63
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 220,
+          "y": 381.5,
+          "width": 84,
+          "height": 21
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "I4-1",
+      "I5-0",
+      "I5-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 50,
+          "y": 360,
+          "width": 16,
+          "height": 64
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 120,
+          "y": 384,
+          "width": 80,
+          "height": 16
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 254,
+          "y": 352,
+          "width": 16,
+          "height": 80
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "O2-0",
+      "O3-0",
+      "L3-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 31,
+          "y": 365,
+          "width": 54,
+          "height": 54
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 119.5,
+          "y": 351.5,
+          "width": 81,
+          "height": 81
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 235,
+          "y": 365,
+          "width": 54,
+          "height": 54
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "L3-1",
+      "L3-2",
+      "L3-3"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 20,
+          "y": 354,
+          "width": 76,
+          "height": 76
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 122,
+          "y": 354,
+          "width": 76,
+          "height": 76
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 224,
+          "y": 354,
+          "width": 76,
+          "height": 76
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "T4-0",
+      "T4-1",
+      "T4-2"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 17.5,
+          "y": 365,
+          "width": 81,
+          "height": 54
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 133,
+          "y": 351.5,
+          "width": 54,
+          "height": 81
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 221.5,
+          "y": 365,
+          "width": 81,
+          "height": 54
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "T4-3",
+      "SZ4-0",
+      "SZ4-1"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 31,
+          "y": 351.5,
+          "width": 54,
+          "height": 81
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 119.5,
+          "y": 365,
+          "width": 81,
+          "height": 54
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 235,
+          "y": 351.5,
+          "width": 54,
+          "height": 81
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "SZ4-2",
+      "SZ4-3",
+      "R6-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 17.5,
+          "y": 365,
+          "width": 81,
+          "height": 54
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 133,
+          "y": 351.5,
+          "width": 54,
+          "height": 81
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 221.5,
+          "y": 365,
+          "width": 81,
+          "height": 54
+        },
+        "fits": true
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "shapes": [
+      "R6-1",
+      "S1-0",
+      "I2-0"
+    ],
+    "slots": [
+      {
+        "slot": {
+          "x": 12,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 31,
+          "y": 351.5,
+          "width": 54,
+          "height": 81
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 114,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 146.5,
+          "y": 378.5,
+          "width": 27,
+          "height": 27
+        },
+        "fits": true
+      },
+      {
+        "slot": {
+          "x": 216,
+          "y": 347,
+          "width": 92,
+          "height": 90
+        },
+        "shape": {
+          "x": 235,
+          "y": 378.5,
+          "width": 54,
+          "height": 27
+        },
+        "fits": true
+      }
+    ]
+  }
+]

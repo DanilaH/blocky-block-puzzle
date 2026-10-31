@@ -1,0 +1,97 @@
+[
+  {
+    "kind": "record",
+    "voices": 0,
+    "accepted": true
+  },
+  {
+    "kind": "record",
+    "voices": 1,
+    "accepted": true
+  },
+  {
+    "kind": "record",
+    "voices": 2,
+    "accepted": true
+  },
+  {
+    "kind": "record",
+    "voices": 3,
+    "accepted": true
+  },
+  {
+    "kind": "record→pick",
+    "voices": 4,
+    "accepted": true
+  },
+  {
+    "kind": "record→pick",
+    "voices": 5,
+    "accepted": true
+  },
+  {
+    "kind": "record→place",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "record→place",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "record→place",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "allClear",
+    "voices": 0,
+    "accepted": true
+  },
+  {
+    "kind": "allClear",
+    "voices": 1,
+    "accepted": true
+  },
+  {
+    "kind": "allClear",
+    "voices": 2,
+    "accepted": true
+  },
+  {
+    "kind": "allClear",
+    "voices": 3,
+    "accepted": true
+  },
+  {
+    "kind": "allClear",
+    "voices": 4,
+    "accepted": true
+  },
+  {
+    "kind": "allClear→pick",
+    "voices": 5,
+    "accepted": true
+  },
+  {
+    "kind": "allClear→pick",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "allClear→place",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "allClear→place",
+    "voices": 6,
+    "accepted": false
+  },
+  {
+    "kind": "allClear→place",
+    "voices": 6,
+    "accepted": false
+  }
+]

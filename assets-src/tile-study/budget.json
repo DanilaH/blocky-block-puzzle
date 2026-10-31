@@ -1,0 +1,14 @@
+{
+  "count": 6,
+  "encodedBytes": 24256,
+  "pixels": 98304,
+  "estimatedRgbaBytes": 393216,
+  "categories": {
+    "plastic": {
+      "count": 6,
+      "encodedBytes": 24256,
+      "pixels": 98304,
+      "estimatedRgbaBytes": 393216
+    }
+  }
+}

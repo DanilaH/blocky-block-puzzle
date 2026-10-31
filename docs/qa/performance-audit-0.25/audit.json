@@ -1,0 +1,569 @@
+{
+  "environment": "Chromium software renderer, 390x844 DPR2, two sequential repetitions; diagnostic ablations are not production changes or Android FPS",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "idle-drag",
+      "frames": 26,
+      "median": 66.59999999999991,
+      "p95": 116.60000000000036,
+      "over33": 25,
+      "metrics": {
+        "LayoutCount": 27,
+        "LayoutDuration": 0.003885,
+        "RecalcStyleCount": 55,
+        "RecalcStyleDuration": 0.005627,
+        "ScriptDuration": 0.262816,
+        "TaskDuration": 1.758275
+      },
+      "audit": {
+        "rectReads": 31,
+        "previewCalls": 28,
+        "draws": 28,
+        "drawCPU": 12.100000003352761,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": [
+          59,
+          50,
+          52,
+          51,
+          51,
+          65,
+          50,
+          71,
+          68,
+          51,
+          54,
+          58,
+          62,
+          67,
+          76,
+          68,
+          63,
+          52,
+          57,
+          55,
+          78,
+          72,
+          109,
+          55,
+          60,
+          132
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "full",
+      "frames": 22,
+      "median": 50,
+      "p95": 150,
+      "over33": 17,
+      "metrics": {
+        "LayoutCount": 33,
+        "LayoutDuration": 0.004322,
+        "RecalcStyleCount": 47,
+        "RecalcStyleDuration": 0.019795,
+        "ScriptDuration": 0.187678,
+        "TaskDuration": 1.8664049999999999
+      },
+      "audit": {
+        "rectReads": 33,
+        "previewCalls": 28,
+        "draws": 31,
+        "drawCPU": 20.699999997392297,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          297,
+          134,
+          76,
+          98,
+          63,
+          54,
+          62,
+          56,
+          50,
+          80,
+          236,
+          173,
+          276,
+          216,
+          119,
+          73,
+          59,
+          52,
+          88,
+          56,
+          57,
+          382,
+          82,
+          52,
+          51,
+          153,
+          61
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "no-graphics",
+      "frames": 75,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 5,
+      "metrics": {
+        "LayoutCount": 88,
+        "LayoutDuration": 0.006019,
+        "RecalcStyleCount": 153,
+        "RecalcStyleDuration": 0.039909,
+        "ScriptDuration": 0.148472,
+        "TaskDuration": 1.646223
+      },
+      "audit": {
+        "rectReads": 88,
+        "previewCalls": 81,
+        "draws": 89,
+        "drawCPU": 35.600000005215406,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          247,
+          55,
+          91,
+          88,
+          88,
+          181,
+          54
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "no-festival",
+      "frames": 48,
+      "median": 33.30000000000018,
+      "p95": 66.60000000000036,
+      "over33": 16,
+      "metrics": {
+        "LayoutCount": 59,
+        "LayoutDuration": 0.004234,
+        "RecalcStyleCount": 99,
+        "RecalcStyleDuration": 0.047113,
+        "ScriptDuration": 0.226721,
+        "TaskDuration": 1.6755849999999999
+      },
+      "audit": {
+        "rectReads": 61,
+        "previewCalls": 54,
+        "draws": 61,
+        "drawCPU": 30.499999998137355,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          66,
+          59,
+          82,
+          86,
+          72,
+          56,
+          100,
+          54,
+          66,
+          60,
+          52,
+          55,
+          66
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "no-ambient",
+      "frames": 51,
+      "median": 33.30000000000018,
+      "p95": 50,
+      "over33": 15,
+      "metrics": {
+        "LayoutCount": 62,
+        "LayoutDuration": 0.004297,
+        "RecalcStyleCount": 105,
+        "RecalcStyleDuration": 0.035057,
+        "ScriptDuration": 0.24235500000000001,
+        "TaskDuration": 1.709848
+      },
+      "audit": {
+        "rectReads": 64,
+        "previewCalls": 57,
+        "draws": 65,
+        "drawCPU": 25.299999995157123,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          81,
+          55,
+          55,
+          50,
+          90,
+          104,
+          62,
+          58,
+          97,
+          54,
+          55
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "no-filters",
+      "frames": 50,
+      "median": 33.30000000000018,
+      "p95": 50,
+      "over33": 17,
+      "metrics": {
+        "LayoutCount": 59,
+        "LayoutDuration": 0.003737,
+        "RecalcStyleCount": 103,
+        "RecalcStyleDuration": 0.032878,
+        "ScriptDuration": 0.242035,
+        "TaskDuration": 1.711857
+      },
+      "audit": {
+        "rectReads": 63,
+        "previewCalls": 56,
+        "draws": 63,
+        "drawCPU": 25.59999998472631,
+        "festivalPeak": 330,
+        "vfxPeak": 219,
+        "long": [
+          126,
+          165,
+          132,
+          50,
+          58,
+          53
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "no-theme-transition",
+      "frames": 47,
+      "median": 33.30000000000018,
+      "p95": 50,
+      "over33": 11,
+      "metrics": {
+        "LayoutCount": 57,
+        "LayoutDuration": 0.00456,
+        "RecalcStyleCount": 97,
+        "RecalcStyleDuration": 0.020649,
+        "ScriptDuration": 0.273365,
+        "TaskDuration": 1.67411
+      },
+      "audit": {
+        "rectReads": 60,
+        "previewCalls": 53,
+        "draws": 61,
+        "drawCPU": 25.799999997019768,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          79,
+          110,
+          75,
+          52,
+          104,
+          56,
+          51,
+          54,
+          50
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "idle-drag",
+      "frames": 51,
+      "median": 33.30000000000018,
+      "p95": 33.5,
+      "over33": 14,
+      "metrics": {
+        "LayoutCount": 52,
+        "LayoutDuration": 0.00345,
+        "RecalcStyleCount": 105,
+        "RecalcStyleDuration": 0.00784,
+        "ScriptDuration": 0.301802,
+        "TaskDuration": 1.687233
+      },
+      "audit": {
+        "rectReads": 56,
+        "previewCalls": 53,
+        "draws": 53,
+        "drawCPU": 13.59999999217689,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": []
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "full",
+      "frames": 45,
+      "median": 33.30000000000018,
+      "p95": 66.59999999999991,
+      "over33": 17,
+      "metrics": {
+        "LayoutCount": 56,
+        "LayoutDuration": 0.007554,
+        "RecalcStyleCount": 93,
+        "RecalcStyleDuration": 0.041123,
+        "ScriptDuration": 0.233208,
+        "TaskDuration": 1.717451
+      },
+      "audit": {
+        "rectReads": 57,
+        "previewCalls": 51,
+        "draws": 59,
+        "drawCPU": 24.700000010430813,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          71,
+          100,
+          71,
+          58,
+          99,
+          53,
+          54,
+          61,
+          54,
+          58,
+          53,
+          51,
+          60,
+          77
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "no-graphics",
+      "frames": 73,
+      "median": 16.699999999999818,
+      "p95": 33.400000000000546,
+      "over33": 10,
+      "metrics": {
+        "LayoutCount": 87,
+        "LayoutDuration": 0.006665,
+        "RecalcStyleCount": 149,
+        "RecalcStyleDuration": 0.055669,
+        "ScriptDuration": 0.13848400000000002,
+        "TaskDuration": 1.6104859999999999
+      },
+      "audit": {
+        "rectReads": 88,
+        "previewCalls": 79,
+        "draws": 87,
+        "drawCPU": 31.19999999552965,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          65,
+          50,
+          75,
+          83,
+          94,
+          85
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "no-festival",
+      "frames": 52,
+      "median": 33.30000000000018,
+      "p95": 50,
+      "over33": 15,
+      "metrics": {
+        "LayoutCount": 63,
+        "LayoutDuration": 0.004794,
+        "RecalcStyleCount": 107,
+        "RecalcStyleDuration": 0.049979,
+        "ScriptDuration": 0.228623,
+        "TaskDuration": 1.675444
+      },
+      "audit": {
+        "rectReads": 65,
+        "previewCalls": 58,
+        "draws": 66,
+        "drawCPU": 27.899999998509884,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          68,
+          94,
+          65,
+          58,
+          102,
+          55,
+          62,
+          50
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "no-ambient",
+      "frames": 50,
+      "median": 33.30000000000018,
+      "p95": 50.09999999999991,
+      "over33": 11,
+      "metrics": {
+        "LayoutCount": 60,
+        "LayoutDuration": 0.004378,
+        "RecalcStyleCount": 103,
+        "RecalcStyleDuration": 0.030566,
+        "ScriptDuration": 0.25212300000000004,
+        "TaskDuration": 1.7005919999999999
+      },
+      "audit": {
+        "rectReads": 62,
+        "previewCalls": 56,
+        "draws": 64,
+        "drawCPU": 27.60000000707805,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          68,
+          127,
+          63,
+          54,
+          106,
+          51,
+          57,
+          58,
+          51,
+          51,
+          53,
+          50
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "no-filters",
+      "frames": 22,
+      "median": 66.69999999999982,
+      "p95": 116.59999999999945,
+      "over33": 22,
+      "metrics": {
+        "LayoutCount": 26,
+        "LayoutDuration": 0.003512,
+        "RecalcStyleCount": 47,
+        "RecalcStyleDuration": 0.01881,
+        "ScriptDuration": 0.27865700000000004,
+        "TaskDuration": 1.786934
+      },
+      "audit": {
+        "rectReads": 36,
+        "previewCalls": 28,
+        "draws": 36,
+        "drawCPU": 29.60000000707805,
+        "festivalPeak": 330,
+        "vfxPeak": 219,
+        "long": [
+          53,
+          95,
+          128,
+          77,
+          171,
+          88,
+          84,
+          122,
+          222,
+          103,
+          96,
+          85,
+          98,
+          157,
+          67,
+          70,
+          80,
+          71,
+          60,
+          68,
+          66,
+          60,
+          62,
+          55,
+          57,
+          73,
+          53,
+          61,
+          70,
+          50,
+          80,
+          120,
+          62
+        ]
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "no-theme-transition",
+      "frames": 34,
+      "median": 50,
+      "p95": 83.39999999999964,
+      "over33": 22,
+      "metrics": {
+        "LayoutCount": 42,
+        "LayoutDuration": 0.003641,
+        "RecalcStyleCount": 72,
+        "RecalcStyleDuration": 0.014243,
+        "ScriptDuration": 0.213549,
+        "TaskDuration": 1.737497
+      },
+      "audit": {
+        "rectReads": 47,
+        "previewCalls": 40,
+        "draws": 48,
+        "drawCPU": 33.50000000745058,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          82,
+          50,
+          55,
+          65,
+          69,
+          65,
+          61,
+          110,
+          137,
+          108,
+          114,
+          103,
+          91,
+          51,
+          68,
+          68,
+          74,
+          72,
+          63,
+          66,
+          71,
+          77,
+          53,
+          78,
+          58,
+          56,
+          83,
+          58,
+          74
+        ]
+      }
+    }
+  ]
+}

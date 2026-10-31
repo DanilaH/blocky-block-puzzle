@@ -1,0 +1,44 @@
+{
+  "sampleMs": 1200,
+  "idle": {
+    "draws": 0,
+    "drawMs": 0,
+    "frames": 72,
+    "maxVoices": 0,
+    "maxImpacts": 0
+  },
+  "hint": {
+    "draws": 73,
+    "drawMs": 7.4000000059604645,
+    "frames": 73,
+    "maxVoices": 4,
+    "maxImpacts": 0
+  },
+  "paused": {
+    "draws": 0,
+    "drawMs": 0,
+    "frames": 0,
+    "maxVoices": 4,
+    "maxImpacts": 0
+  },
+  "moves": 100,
+  "restarts": 3,
+  "settled": {
+    "intensity": 0,
+    "rewards": 0,
+    "impacts": 0,
+    "voices": 0,
+    "animations": 0,
+    "draws": 1955,
+    "drawMs": 179.5999999642372,
+    "frames": 1090,
+    "maxVoices": 12,
+    "maxImpacts": 4
+  },
+  "hintSaving": {
+    "busy": "true",
+    "label": "Сохраняем…",
+    "count": "2",
+    "labelWidth": 87.421875
+  }
+}

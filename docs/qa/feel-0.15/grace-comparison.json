@@ -1,0 +1,2002 @@
+[
+  {
+    "seed": 1,
+    "moves": 68,
+    "censored": false,
+    "clears": 23,
+    "graceScore": 736,
+    "legacyScore": 481,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 2,
+    "moves": 61,
+    "censored": false,
+    "clears": 20,
+    "graceScore": 636,
+    "legacyScore": 426,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 3,
+    "moves": 65,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 612,
+    "legacyScore": 517,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 4,
+    "moves": 41,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 408,
+    "legacyScore": 323,
+    "graceMax": 6,
+    "legacyMax": 4
+  },
+  {
+    "seed": 5,
+    "moves": 79,
+    "censored": false,
+    "clears": 26,
+    "graceScore": 826,
+    "legacyScore": 641,
+    "graceMax": 6,
+    "legacyMax": 3
+  },
+  {
+    "seed": 6,
+    "moves": 31,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 313,
+    "legacyScore": 293,
+    "graceMax": 5,
+    "legacyMax": 4
+  },
+  {
+    "seed": 7,
+    "moves": 47,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 537,
+    "legacyScore": 372,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 8,
+    "moves": 32,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 279,
+    "legacyScore": 234,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 9,
+    "moves": 14,
+    "censored": false,
+    "clears": 1,
+    "graceScore": 89,
+    "legacyScore": 89,
+    "graceMax": 1,
+    "legacyMax": 1
+  },
+  {
+    "seed": 10,
+    "moves": 16,
+    "censored": false,
+    "clears": 2,
+    "graceScore": 78,
+    "legacyScore": 78,
+    "graceMax": 1,
+    "legacyMax": 1
+  },
+  {
+    "seed": 11,
+    "moves": 29,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 245,
+    "legacyScore": 210,
+    "graceMax": 4,
+    "legacyMax": 1
+  },
+  {
+    "seed": 12,
+    "moves": 64,
+    "censored": false,
+    "clears": 25,
+    "graceScore": 1083,
+    "legacyScore": 548,
+    "graceMax": 14,
+    "legacyMax": 4
+  },
+  {
+    "seed": 13,
+    "moves": 62,
+    "censored": false,
+    "clears": 20,
+    "graceScore": 1092,
+    "legacyScore": 572,
+    "graceMax": 14,
+    "legacyMax": 2
+  },
+  {
+    "seed": 14,
+    "moves": 55,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 707,
+    "legacyScore": 522,
+    "graceMax": 8,
+    "legacyMax": 4
+  },
+  {
+    "seed": 15,
+    "moves": 26,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 294,
+    "legacyScore": 244,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 16,
+    "moves": 20,
+    "censored": false,
+    "clears": 4,
+    "graceScore": 143,
+    "legacyScore": 113,
+    "graceMax": 4,
+    "legacyMax": 1
+  },
+  {
+    "seed": 17,
+    "moves": 32,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 278,
+    "legacyScore": 228,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 18,
+    "moves": 20,
+    "censored": false,
+    "clears": 4,
+    "graceScore": 129,
+    "legacyScore": 119,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 19,
+    "moves": 86,
+    "censored": false,
+    "clears": 32,
+    "graceScore": 1235,
+    "legacyScore": 785,
+    "graceMax": 10,
+    "legacyMax": 4
+  },
+  {
+    "seed": 20,
+    "moves": 74,
+    "censored": false,
+    "clears": 26,
+    "graceScore": 721,
+    "legacyScore": 581,
+    "graceMax": 6,
+    "legacyMax": 4
+  },
+  {
+    "seed": 21,
+    "moves": 53,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 520,
+    "legacyScore": 450,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 22,
+    "moves": 50,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 452,
+    "legacyScore": 392,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 23,
+    "moves": 65,
+    "censored": false,
+    "clears": 25,
+    "graceScore": 981,
+    "legacyScore": 691,
+    "graceMax": 11,
+    "legacyMax": 4
+  },
+  {
+    "seed": 24,
+    "moves": 92,
+    "censored": false,
+    "clears": 37,
+    "graceScore": 1625,
+    "legacyScore": 820,
+    "graceMax": 17,
+    "legacyMax": 5
+  },
+  {
+    "seed": 25,
+    "moves": 29,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 238,
+    "legacyScore": 203,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 26,
+    "moves": 68,
+    "censored": false,
+    "clears": 27,
+    "graceScore": 939,
+    "legacyScore": 609,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 27,
+    "moves": 20,
+    "censored": false,
+    "clears": 4,
+    "graceScore": 124,
+    "legacyScore": 114,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 28,
+    "moves": 77,
+    "censored": false,
+    "clears": 30,
+    "graceScore": 1093,
+    "legacyScore": 773,
+    "graceMax": 9,
+    "legacyMax": 3
+  },
+  {
+    "seed": 29,
+    "moves": 23,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 282,
+    "legacyScore": 187,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 30,
+    "moves": 44,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 392,
+    "legacyScore": 347,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 31,
+    "moves": 32,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 222,
+    "legacyScore": 187,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 32,
+    "moves": 74,
+    "censored": false,
+    "clears": 27,
+    "graceScore": 918,
+    "legacyScore": 688,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 33,
+    "moves": 77,
+    "censored": false,
+    "clears": 28,
+    "graceScore": 1003,
+    "legacyScore": 643,
+    "graceMax": 9,
+    "legacyMax": 3
+  },
+  {
+    "seed": 34,
+    "moves": 26,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 207,
+    "legacyScore": 162,
+    "graceMax": 4,
+    "legacyMax": 1
+  },
+  {
+    "seed": 35,
+    "moves": 50,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 461,
+    "legacyScore": 371,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 36,
+    "moves": 35,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 376,
+    "legacyScore": 271,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 37,
+    "moves": 59,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 657,
+    "legacyScore": 402,
+    "graceMax": 10,
+    "legacyMax": 2
+  },
+  {
+    "seed": 38,
+    "moves": 20,
+    "censored": false,
+    "clears": 5,
+    "graceScore": 143,
+    "legacyScore": 133,
+    "graceMax": 2,
+    "legacyMax": 1
+  },
+  {
+    "seed": 39,
+    "moves": 44,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 505,
+    "legacyScore": 345,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 40,
+    "moves": 65,
+    "censored": false,
+    "clears": 24,
+    "graceScore": 889,
+    "legacyScore": 489,
+    "graceMax": 11,
+    "legacyMax": 2
+  },
+  {
+    "seed": 41,
+    "moves": 17,
+    "censored": false,
+    "clears": 5,
+    "graceScore": 153,
+    "legacyScore": 123,
+    "graceMax": 4,
+    "legacyMax": 1
+  },
+  {
+    "seed": 42,
+    "moves": 34,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 359,
+    "legacyScore": 254,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 43,
+    "moves": 35,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 400,
+    "legacyScore": 305,
+    "graceMax": 6,
+    "legacyMax": 5
+  },
+  {
+    "seed": 44,
+    "moves": 74,
+    "censored": false,
+    "clears": 28,
+    "graceScore": 1025,
+    "legacyScore": 635,
+    "graceMax": 12,
+    "legacyMax": 3
+  },
+  {
+    "seed": 45,
+    "moves": 35,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 264,
+    "legacyScore": 219,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 46,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 468,
+    "legacyScore": 283,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 47,
+    "moves": 32,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 299,
+    "legacyScore": 259,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 48,
+    "moves": 32,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 259,
+    "legacyScore": 214,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 49,
+    "moves": 35,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 331,
+    "legacyScore": 261,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 50,
+    "moves": 47,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 442,
+    "legacyScore": 377,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 51,
+    "moves": 23,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 169,
+    "legacyScore": 139,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 52,
+    "moves": 53,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 580,
+    "legacyScore": 425,
+    "graceMax": 7,
+    "legacyMax": 4
+  },
+  {
+    "seed": 53,
+    "moves": 32,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 276,
+    "legacyScore": 256,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 54,
+    "moves": 46,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 490,
+    "legacyScore": 380,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 55,
+    "moves": 95,
+    "censored": false,
+    "clears": 37,
+    "graceScore": 1340,
+    "legacyScore": 830,
+    "graceMax": 11,
+    "legacyMax": 4
+  },
+  {
+    "seed": 56,
+    "moves": 38,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 405,
+    "legacyScore": 300,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 57,
+    "moves": 44,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 397,
+    "legacyScore": 347,
+    "graceMax": 4,
+    "legacyMax": 3
+  },
+  {
+    "seed": 58,
+    "moves": 38,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 491,
+    "legacyScore": 361,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 59,
+    "moves": 35,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 276,
+    "legacyScore": 226,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 60,
+    "moves": 29,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 276,
+    "legacyScore": 246,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 61,
+    "moves": 23,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 161,
+    "legacyScore": 156,
+    "graceMax": 3,
+    "legacyMax": 3
+  },
+  {
+    "seed": 62,
+    "moves": 62,
+    "censored": false,
+    "clears": 22,
+    "graceScore": 673,
+    "legacyScore": 513,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 63,
+    "moves": 140,
+    "censored": false,
+    "clears": 55,
+    "graceScore": 1856,
+    "legacyScore": 1366,
+    "graceMax": 10,
+    "legacyMax": 6
+  },
+  {
+    "seed": 64,
+    "moves": 62,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 665,
+    "legacyScore": 555,
+    "graceMax": 7,
+    "legacyMax": 5
+  },
+  {
+    "seed": 65,
+    "moves": 71,
+    "censored": false,
+    "clears": 28,
+    "graceScore": 1122,
+    "legacyScore": 667,
+    "graceMax": 11,
+    "legacyMax": 3
+  },
+  {
+    "seed": 66,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 419,
+    "legacyScore": 309,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 67,
+    "moves": 65,
+    "censored": false,
+    "clears": 23,
+    "graceScore": 707,
+    "legacyScore": 602,
+    "graceMax": 6,
+    "legacyMax": 4
+  },
+  {
+    "seed": 68,
+    "moves": 26,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 169,
+    "legacyScore": 149,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 69,
+    "moves": 56,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 934,
+    "legacyScore": 429,
+    "graceMax": 13,
+    "legacyMax": 2
+  },
+  {
+    "seed": 70,
+    "moves": 46,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 404,
+    "legacyScore": 349,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 71,
+    "moves": 34,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 295,
+    "legacyScore": 215,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 72,
+    "moves": 47,
+    "censored": false,
+    "clears": 18,
+    "graceScore": 634,
+    "legacyScore": 359,
+    "graceMax": 10,
+    "legacyMax": 2
+  },
+  {
+    "seed": 73,
+    "moves": 107,
+    "censored": false,
+    "clears": 42,
+    "graceScore": 1911,
+    "legacyScore": 1091,
+    "graceMax": 12,
+    "legacyMax": 2
+  },
+  {
+    "seed": 74,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 581,
+    "legacyScore": 386,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 75,
+    "moves": 44,
+    "censored": false,
+    "clears": 17,
+    "graceScore": 636,
+    "legacyScore": 366,
+    "graceMax": 10,
+    "legacyMax": 3
+  },
+  {
+    "seed": 76,
+    "moves": 32,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 289,
+    "legacyScore": 269,
+    "graceMax": 5,
+    "legacyMax": 4
+  },
+  {
+    "seed": 77,
+    "moves": 56,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 1431,
+    "legacyScore": 691,
+    "graceMax": 18,
+    "legacyMax": 3
+  },
+  {
+    "seed": 78,
+    "moves": 53,
+    "censored": false,
+    "clears": 17,
+    "graceScore": 589,
+    "legacyScore": 419,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 79,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 910,
+    "legacyScore": 445,
+    "graceMax": 14,
+    "legacyMax": 3
+  },
+  {
+    "seed": 80,
+    "moves": 38,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 445,
+    "legacyScore": 350,
+    "graceMax": 7,
+    "legacyMax": 5
+  },
+  {
+    "seed": 81,
+    "moves": 49,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 633,
+    "legacyScore": 423,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 82,
+    "moves": 52,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 837,
+    "legacyScore": 392,
+    "graceMax": 13,
+    "legacyMax": 2
+  },
+  {
+    "seed": 83,
+    "moves": 47,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 460,
+    "legacyScore": 345,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 84,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 369,
+    "legacyScore": 244,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 85,
+    "moves": 29,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 403,
+    "legacyScore": 298,
+    "graceMax": 7,
+    "legacyMax": 1
+  },
+  {
+    "seed": 86,
+    "moves": 125,
+    "censored": false,
+    "clears": 50,
+    "graceScore": 1521,
+    "legacyScore": 1061,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 87,
+    "moves": 41,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 496,
+    "legacyScore": 366,
+    "graceMax": 6,
+    "legacyMax": 3
+  },
+  {
+    "seed": 88,
+    "moves": 41,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 473,
+    "legacyScore": 338,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 89,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 376,
+    "legacyScore": 296,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 90,
+    "moves": 41,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 364,
+    "legacyScore": 304,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 91,
+    "moves": 56,
+    "censored": false,
+    "clears": 18,
+    "graceScore": 733,
+    "legacyScore": 538,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 92,
+    "moves": 37,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 378,
+    "legacyScore": 263,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 93,
+    "moves": 29,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 221,
+    "legacyScore": 196,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 94,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 806,
+    "legacyScore": 556,
+    "graceMax": 10,
+    "legacyMax": 5
+  },
+  {
+    "seed": 95,
+    "moves": 28,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 189,
+    "legacyScore": 169,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 96,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 639,
+    "legacyScore": 479,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 97,
+    "moves": 23,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 198,
+    "legacyScore": 183,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 98,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 719,
+    "legacyScore": 524,
+    "graceMax": 9,
+    "legacyMax": 4
+  },
+  {
+    "seed": 99,
+    "moves": 47,
+    "censored": false,
+    "clears": 17,
+    "graceScore": 471,
+    "legacyScore": 411,
+    "graceMax": 4,
+    "legacyMax": 3
+  },
+  {
+    "seed": 100,
+    "moves": 14,
+    "censored": false,
+    "clears": 1,
+    "graceScore": 63,
+    "legacyScore": 63,
+    "graceMax": 1,
+    "legacyMax": 1
+  },
+  {
+    "seed": 101,
+    "moves": 26,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 215,
+    "legacyScore": 210,
+    "graceMax": 4,
+    "legacyMax": 4
+  },
+  {
+    "seed": 102,
+    "moves": 32,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 369,
+    "legacyScore": 234,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 103,
+    "moves": 61,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 808,
+    "legacyScore": 543,
+    "graceMax": 10,
+    "legacyMax": 4
+  },
+  {
+    "seed": 104,
+    "moves": 62,
+    "censored": false,
+    "clears": 22,
+    "graceScore": 841,
+    "legacyScore": 511,
+    "graceMax": 12,
+    "legacyMax": 3
+  },
+  {
+    "seed": 105,
+    "moves": 44,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 459,
+    "legacyScore": 369,
+    "graceMax": 6,
+    "legacyMax": 3
+  },
+  {
+    "seed": 106,
+    "moves": 104,
+    "censored": false,
+    "clears": 40,
+    "graceScore": 1866,
+    "legacyScore": 936,
+    "graceMax": 17,
+    "legacyMax": 4
+  },
+  {
+    "seed": 107,
+    "moves": 44,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 394,
+    "legacyScore": 329,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 108,
+    "moves": 29,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 187,
+    "legacyScore": 172,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 109,
+    "moves": 20,
+    "censored": false,
+    "clears": 5,
+    "graceScore": 185,
+    "legacyScore": 160,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 110,
+    "moves": 37,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 306,
+    "legacyScore": 261,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 111,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 293,
+    "legacyScore": 238,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 112,
+    "moves": 68,
+    "censored": false,
+    "clears": 25,
+    "graceScore": 1127,
+    "legacyScore": 607,
+    "graceMax": 13,
+    "legacyMax": 3
+  },
+  {
+    "seed": 113,
+    "moves": 59,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 883,
+    "legacyScore": 463,
+    "graceMax": 12,
+    "legacyMax": 2
+  },
+  {
+    "seed": 114,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 752,
+    "legacyScore": 362,
+    "graceMax": 13,
+    "legacyMax": 2
+  },
+  {
+    "seed": 115,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 382,
+    "legacyScore": 282,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 116,
+    "moves": 46,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 452,
+    "legacyScore": 392,
+    "graceMax": 4,
+    "legacyMax": 4
+  },
+  {
+    "seed": 117,
+    "moves": 53,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 855,
+    "legacyScore": 495,
+    "graceMax": 10,
+    "legacyMax": 3
+  },
+  {
+    "seed": 118,
+    "moves": 29,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 231,
+    "legacyScore": 191,
+    "graceMax": 4,
+    "legacyMax": 1
+  },
+  {
+    "seed": 119,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 379,
+    "legacyScore": 254,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 120,
+    "moves": 95,
+    "censored": false,
+    "clears": 35,
+    "graceScore": 1319,
+    "legacyScore": 889,
+    "graceMax": 11,
+    "legacyMax": 4
+  },
+  {
+    "seed": 121,
+    "moves": 95,
+    "censored": false,
+    "clears": 39,
+    "graceScore": 1224,
+    "legacyScore": 989,
+    "graceMax": 8,
+    "legacyMax": 5
+  },
+  {
+    "seed": 122,
+    "moves": 11,
+    "censored": false,
+    "clears": 1,
+    "graceScore": 49,
+    "legacyScore": 49,
+    "graceMax": 1,
+    "legacyMax": 1
+  },
+  {
+    "seed": 123,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 502,
+    "legacyScore": 327,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 124,
+    "moves": 59,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 556,
+    "legacyScore": 446,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 125,
+    "moves": 17,
+    "censored": false,
+    "clears": 4,
+    "graceScore": 114,
+    "legacyScore": 99,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 126,
+    "moves": 50,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 618,
+    "legacyScore": 483,
+    "graceMax": 7,
+    "legacyMax": 5
+  },
+  {
+    "seed": 127,
+    "moves": 26,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 268,
+    "legacyScore": 238,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 128,
+    "moves": 29,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 314,
+    "legacyScore": 209,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 129,
+    "moves": 47,
+    "censored": false,
+    "clears": 17,
+    "graceScore": 594,
+    "legacyScore": 344,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 130,
+    "moves": 64,
+    "censored": false,
+    "clears": 22,
+    "graceScore": 735,
+    "legacyScore": 625,
+    "graceMax": 7,
+    "legacyMax": 5
+  },
+  {
+    "seed": 131,
+    "moves": 31,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 268,
+    "legacyScore": 203,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 132,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 760,
+    "legacyScore": 315,
+    "graceMax": 14,
+    "legacyMax": 2
+  },
+  {
+    "seed": 133,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 324,
+    "legacyScore": 289,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 134,
+    "moves": 35,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 306,
+    "legacyScore": 246,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 135,
+    "moves": 32,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 348,
+    "legacyScore": 238,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 136,
+    "moves": 77,
+    "censored": false,
+    "clears": 27,
+    "graceScore": 924,
+    "legacyScore": 689,
+    "graceMax": 8,
+    "legacyMax": 4
+  },
+  {
+    "seed": 137,
+    "moves": 77,
+    "censored": false,
+    "clears": 30,
+    "graceScore": 1094,
+    "legacyScore": 729,
+    "graceMax": 12,
+    "legacyMax": 4
+  },
+  {
+    "seed": 138,
+    "moves": 43,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 499,
+    "legacyScore": 349,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 139,
+    "moves": 38,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 374,
+    "legacyScore": 334,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 140,
+    "moves": 65,
+    "censored": false,
+    "clears": 25,
+    "graceScore": 1229,
+    "legacyScore": 519,
+    "graceMax": 16,
+    "legacyMax": 2
+  },
+  {
+    "seed": 141,
+    "moves": 101,
+    "censored": false,
+    "clears": 41,
+    "graceScore": 1673,
+    "legacyScore": 1083,
+    "graceMax": 13,
+    "legacyMax": 5
+  },
+  {
+    "seed": 142,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 390,
+    "legacyScore": 275,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 143,
+    "moves": 32,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 278,
+    "legacyScore": 248,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 144,
+    "moves": 40,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 468,
+    "legacyScore": 328,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 145,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 854,
+    "legacyScore": 599,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 146,
+    "moves": 29,
+    "censored": false,
+    "clears": 9,
+    "graceScore": 234,
+    "legacyScore": 219,
+    "graceMax": 4,
+    "legacyMax": 3
+  },
+  {
+    "seed": 147,
+    "moves": 38,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 340,
+    "legacyScore": 300,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 148,
+    "moves": 49,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 567,
+    "legacyScore": 407,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 149,
+    "moves": 23,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 195,
+    "legacyScore": 185,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 150,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 342,
+    "legacyScore": 247,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 151,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 338,
+    "legacyScore": 258,
+    "graceMax": 6,
+    "legacyMax": 3
+  },
+  {
+    "seed": 152,
+    "moves": 14,
+    "censored": false,
+    "clears": 3,
+    "graceScore": 94,
+    "legacyScore": 79,
+    "graceMax": 3,
+    "legacyMax": 1
+  },
+  {
+    "seed": 153,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 567,
+    "legacyScore": 352,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 154,
+    "moves": 89,
+    "censored": false,
+    "clears": 33,
+    "graceScore": 1062,
+    "legacyScore": 822,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 155,
+    "moves": 23,
+    "censored": false,
+    "clears": 5,
+    "graceScore": 293,
+    "legacyScore": 223,
+    "graceMax": 5,
+    "legacyMax": 1
+  },
+  {
+    "seed": 156,
+    "moves": 41,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 452,
+    "legacyScore": 402,
+    "graceMax": 6,
+    "legacyMax": 5
+  },
+  {
+    "seed": 157,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 439,
+    "legacyScore": 319,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 158,
+    "moves": 31,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 403,
+    "legacyScore": 223,
+    "graceMax": 9,
+    "legacyMax": 1
+  },
+  {
+    "seed": 159,
+    "moves": 62,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 803,
+    "legacyScore": 513,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 160,
+    "moves": 47,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 414,
+    "legacyScore": 349,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 161,
+    "moves": 46,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 426,
+    "legacyScore": 336,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 162,
+    "moves": 59,
+    "censored": false,
+    "clears": 21,
+    "graceScore": 601,
+    "legacyScore": 531,
+    "graceMax": 5,
+    "legacyMax": 5
+  },
+  {
+    "seed": 163,
+    "moves": 56,
+    "censored": false,
+    "clears": 20,
+    "graceScore": 734,
+    "legacyScore": 459,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 164,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 608,
+    "legacyScore": 413,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 165,
+    "moves": 41,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 438,
+    "legacyScore": 273,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 166,
+    "moves": 26,
+    "censored": false,
+    "clears": 6,
+    "graceScore": 211,
+    "legacyScore": 186,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 167,
+    "moves": 136,
+    "censored": false,
+    "clears": 52,
+    "graceScore": 1877,
+    "legacyScore": 1267,
+    "graceMax": 9,
+    "legacyMax": 4
+  },
+  {
+    "seed": 168,
+    "moves": 55,
+    "censored": false,
+    "clears": 20,
+    "graceScore": 625,
+    "legacyScore": 475,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 169,
+    "moves": 53,
+    "censored": false,
+    "clears": 20,
+    "graceScore": 616,
+    "legacyScore": 436,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 170,
+    "moves": 53,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 528,
+    "legacyScore": 488,
+    "graceMax": 4,
+    "legacyMax": 4
+  },
+  {
+    "seed": 171,
+    "moves": 35,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 341,
+    "legacyScore": 226,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 172,
+    "moves": 38,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 449,
+    "legacyScore": 339,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 173,
+    "moves": 38,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 442,
+    "legacyScore": 292,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 174,
+    "moves": 41,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 463,
+    "legacyScore": 323,
+    "graceMax": 8,
+    "legacyMax": 3
+  },
+  {
+    "seed": 175,
+    "moves": 38,
+    "censored": false,
+    "clears": 13,
+    "graceScore": 516,
+    "legacyScore": 321,
+    "graceMax": 9,
+    "legacyMax": 2
+  },
+  {
+    "seed": 176,
+    "moves": 59,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 792,
+    "legacyScore": 507,
+    "graceMax": 11,
+    "legacyMax": 3
+  },
+  {
+    "seed": 177,
+    "moves": 32,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 281,
+    "legacyScore": 231,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 178,
+    "moves": 26,
+    "censored": false,
+    "clears": 7,
+    "graceScore": 212,
+    "legacyScore": 167,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 179,
+    "moves": 41,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 440,
+    "legacyScore": 365,
+    "graceMax": 6,
+    "legacyMax": 3
+  },
+  {
+    "seed": 180,
+    "moves": 32,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 343,
+    "legacyScore": 288,
+    "graceMax": 5,
+    "legacyMax": 3
+  },
+  {
+    "seed": 181,
+    "moves": 89,
+    "censored": false,
+    "clears": 35,
+    "graceScore": 1570,
+    "legacyScore": 845,
+    "graceMax": 16,
+    "legacyMax": 3
+  },
+  {
+    "seed": 182,
+    "moves": 47,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 450,
+    "legacyScore": 345,
+    "graceMax": 6,
+    "legacyMax": 4
+  },
+  {
+    "seed": 183,
+    "moves": 68,
+    "censored": false,
+    "clears": 24,
+    "graceScore": 710,
+    "legacyScore": 580,
+    "graceMax": 7,
+    "legacyMax": 3
+  },
+  {
+    "seed": 184,
+    "moves": 74,
+    "censored": false,
+    "clears": 28,
+    "graceScore": 903,
+    "legacyScore": 643,
+    "graceMax": 10,
+    "legacyMax": 2
+  },
+  {
+    "seed": 185,
+    "moves": 43,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 419,
+    "legacyScore": 374,
+    "graceMax": 3,
+    "legacyMax": 2
+  },
+  {
+    "seed": 186,
+    "moves": 56,
+    "censored": false,
+    "clears": 18,
+    "graceScore": 498,
+    "legacyScore": 398,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 187,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 502,
+    "legacyScore": 277,
+    "graceMax": 10,
+    "legacyMax": 2
+  },
+  {
+    "seed": 188,
+    "moves": 26,
+    "censored": false,
+    "clears": 8,
+    "graceScore": 221,
+    "legacyScore": 171,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 189,
+    "moves": 35,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 366,
+    "legacyScore": 256,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 190,
+    "moves": 11,
+    "censored": false,
+    "clears": 1,
+    "graceScore": 53,
+    "legacyScore": 53,
+    "graceMax": 1,
+    "legacyMax": 1
+  },
+  {
+    "seed": 191,
+    "moves": 40,
+    "censored": false,
+    "clears": 12,
+    "graceScore": 362,
+    "legacyScore": 307,
+    "graceMax": 5,
+    "legacyMax": 2
+  },
+  {
+    "seed": 192,
+    "moves": 71,
+    "censored": false,
+    "clears": 25,
+    "graceScore": 952,
+    "legacyScore": 592,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 193,
+    "moves": 50,
+    "censored": false,
+    "clears": 16,
+    "graceScore": 548,
+    "legacyScore": 423,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 194,
+    "moves": 17,
+    "censored": false,
+    "clears": 5,
+    "graceScore": 247,
+    "legacyScore": 222,
+    "graceMax": 4,
+    "legacyMax": 2
+  },
+  {
+    "seed": 195,
+    "moves": 52,
+    "censored": false,
+    "clears": 18,
+    "graceScore": 623,
+    "legacyScore": 423,
+    "graceMax": 8,
+    "legacyMax": 2
+  },
+  {
+    "seed": 196,
+    "moves": 44,
+    "censored": false,
+    "clears": 15,
+    "graceScore": 505,
+    "legacyScore": 355,
+    "graceMax": 7,
+    "legacyMax": 2
+  },
+  {
+    "seed": 197,
+    "moves": 44,
+    "censored": false,
+    "clears": 14,
+    "graceScore": 469,
+    "legacyScore": 339,
+    "graceMax": 6,
+    "legacyMax": 2
+  },
+  {
+    "seed": 198,
+    "moves": 32,
+    "censored": false,
+    "clears": 10,
+    "graceScore": 516,
+    "legacyScore": 276,
+    "graceMax": 10,
+    "legacyMax": 2
+  },
+  {
+    "seed": 199,
+    "moves": 56,
+    "censored": false,
+    "clears": 19,
+    "graceScore": 768,
+    "legacyScore": 488,
+    "graceMax": 11,
+    "legacyMax": 2
+  },
+  {
+    "seed": 200,
+    "moves": 35,
+    "censored": false,
+    "clears": 11,
+    "graceScore": 398,
+    "legacyScore": 323,
+    "graceMax": 7,
+    "legacyMax": 4
+  }
+]
