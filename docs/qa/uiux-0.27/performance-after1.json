@@ -1,0 +1,104 @@
+{
+  "environment": "Chromium software renderer, 390x844 DPR2; one full-combo and one idle-drag scenario per invocation; not Android FPS",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "full",
+      "frames": 19,
+      "median": 83.30000000000018,
+      "p95": 166.60000000000036,
+      "over33": 19,
+      "metrics": {
+        "LayoutCount": 4,
+        "LayoutDuration": 0.000713,
+        "RecalcStyleCount": 22,
+        "RecalcStyleDuration": 0.008309,
+        "ScriptDuration": 0.12473500000000001,
+        "TaskDuration": 1.790423
+      },
+      "audit": {
+        "rectReads": 9,
+        "previewCalls": 13,
+        "draws": 33,
+        "drawCPU": 35.80000001192093,
+        "festivalPeak": 194,
+        "vfxPeak": 220,
+        "long": [
+          75,
+          111,
+          66,
+          74,
+          83,
+          71,
+          83,
+          55,
+          52,
+          70,
+          65,
+          59,
+          60,
+          184,
+          230,
+          133,
+          71,
+          120,
+          89,
+          159,
+          79,
+          106,
+          100,
+          173,
+          80,
+          97,
+          100,
+          116,
+          99,
+          63,
+          77,
+          76,
+          145,
+          94,
+          87,
+          64,
+          70,
+          79,
+          53,
+          60
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "idle-drag",
+      "frames": 39,
+      "median": 33.40000000000009,
+      "p95": 66.69999999999982,
+      "over33": 23,
+      "metrics": {
+        "LayoutCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleCount": 44,
+        "RecalcStyleDuration": 0.007769,
+        "ScriptDuration": 0.06310400000000001,
+        "TaskDuration": 1.737069
+      },
+      "audit": {
+        "rectReads": 5,
+        "previewCalls": 20,
+        "draws": 30,
+        "drawCPU": 9.400000005960464,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": [
+          52,
+          52,
+          56,
+          53,
+          65,
+          55,
+          78
+        ]
+      }
+    }
+  ]
+}

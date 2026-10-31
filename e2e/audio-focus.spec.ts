@@ -30,7 +30,10 @@ test("native focus loss silences tails; gain needs a fresh gesture; pause cannot
   });
   await page.goto("/");
   await page.locator("#lesson-skip").click();
+  // Skip commits asynchronously; a gesture during that write is intentionally ignored.
+  await expect(page.locator("#lesson")).toBeHidden();
   await page.locator('[data-slot="0"]').click();
+  await expect(page.locator('[data-slot="0"]')).toHaveClass(/selected/);
   await expect
     .poll(() => page.evaluate(() => window.testAudio.context?.state))
     .toBe("running");
