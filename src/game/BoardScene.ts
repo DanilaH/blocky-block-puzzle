@@ -1,3 +1,5 @@
+import { performanceCapture } from "../platform/performance";
+import { SpriteInk } from "./sprite-ink";
 import { cacheTileURL } from "./tiles";
 import { STUDY_BOARD } from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
@@ -34,11 +36,11 @@ export class BoardScene extends Phaser.Scene {
   onTexturesReady = () => {};
   private vfx?: VfxSprites;
   private study?: TileStudySprites;
-  private bed?: Phaser.GameObjects.Graphics;
+  private bed?: Phaser.GameObjects.Graphics | SpriteInk;
   private bedKey = "";
   private wells: Phaser.GameObjects.Image[] = [];
   private dirty = true;
-  private ink!: Phaser.GameObjects.Graphics;
+  private ink!: Phaser.GameObjects.Graphics | SpriteInk;
   private state: GameState | null = null;
   private ghost: Move | null = null;
   private previewEcho: { cells: number[]; color: number; at: number } | null =
@@ -128,7 +130,14 @@ export class BoardScene extends Phaser.Scene {
   create() {
     this.vfx = new VfxSprites(this);
     this.events.once("shutdown", () => this.vfx?.destroy());
-    this.ink = this.add.graphics();
+    const textured = this.game.renderer.type === Phaser.WEBGL && !!TILE_STUDY;
+    this.ink = textured
+      ? new SpriteInk(this, 1)
+      : this.add.graphics().setDepth(1);
+    this.events.once("shutdown", () => {
+      this.ink.destroy();
+      this.bed?.destroy();
+    });
     if (TILE_STUDY) {
       // One 64px grayscale well shared by all cells; tint follows the theme.
       // Avoid replaying 1,792 rounded gradient layers on every WebGL frame.
@@ -139,19 +148,31 @@ export class BoardScene extends Phaser.Scene {
         gradient.addColorStop(0, "#e7e7e7");
         gradient.addColorStop(0.8, "#f1f1f1");
         ctx.fillStyle = gradient;
-        ctx.beginPath();ctx.moveTo(10, 3);ctx.lineTo(54, 3);
-        ctx.quadraticCurveTo(62, 3, 62, 11);ctx.lineTo(62, 55);
-        ctx.quadraticCurveTo(62, 63, 54, 63);ctx.lineTo(10, 63);
-        ctx.quadraticCurveTo(2, 63, 2, 55);ctx.lineTo(2, 11);
-        ctx.quadraticCurveTo(2, 3, 10, 3);ctx.closePath();ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(10, 3);
+        ctx.lineTo(54, 3);
+        ctx.quadraticCurveTo(62, 3, 62, 11);
+        ctx.lineTo(62, 55);
+        ctx.quadraticCurveTo(62, 63, 54, 63);
+        ctx.lineTo(10, 63);
+        ctx.quadraticCurveTo(2, 63, 2, 55);
+        ctx.lineTo(2, 11);
+        ctx.quadraticCurveTo(2, 3, 10, 3);
+        ctx.closePath();
+        ctx.fill();
         texture.refresh();
       }
-      this.wells = Array.from({length:64}, (_, i) =>
-        this.add.image((i % 8) * 64, Math.floor(i / 8) * 64, "enamel-well")
-          .setOrigin(0).setDepth(0));
-      this.bed = this.add.graphics().setDepth(0.25);
+      this.wells = Array.from({ length: 64 }, (_, i) =>
+        this.add
+          .image((i % 8) * 64, Math.floor(i / 8) * 64, "enamel-well")
+          .setOrigin(0)
+          .setDepth(0),
+      );
+      this.bed = textured
+        ? new SpriteInk(this, 0.25)
+        : this.add.graphics().setDepth(0.25);
       this.bedKey = "";
-      this.ink.setDepth(1);
+
       this.study = new TileStudySprites(this);
       this.events.once("shutdown", () => this.study?.destroy());
     }
@@ -183,6 +204,14 @@ export class BoardScene extends Phaser.Scene {
     this.dirty = true;
   }
   preview(move: Move | null, valid = true, hint = false) {
+    if (
+      this.ghost?.slot === move?.slot &&
+      this.ghost?.x === move?.x &&
+      this.ghost?.y === move?.y &&
+      this.valid === valid &&
+      this.hint === hint
+    )
+      return;
     if (
       this.ghost &&
       this.state &&
@@ -267,7 +296,7 @@ export class BoardScene extends Phaser.Scene {
   update() {
     if (
       this.dirty ||
-      this.mix() < 1 ||
+      this.themeAt > 0 ||
       this.praiseHit ||
       (this.defeatAt > 0 && performance.now() - this.defeatAt < 900) ||
       this.previewEcho ||
@@ -275,24 +304,25 @@ export class BoardScene extends Phaser.Scene {
       this.impacts.length ||
       (this.hint && this.ghost && !this.calm)
     )
-      this.draw();
+      performanceCapture.measure("boardDraw", () => this.draw());
   }
   private tile(x: number, y: number, color: number, alpha = 1, scale = 1) {
     const g = this.ink;
     if (this.study) this.study.tile(x, y, color, alpha, scale);
-    else for (const q of TILE_FACES) {
-      g.fillStyle(q.color ?? color, q.alpha * alpha);
-      g.fillPoints(
-        q.points.map(
-          ([px, py]) =>
-            new Phaser.Math.Vector2(
-              x + 32 + (px - 32) * scale,
-              y + 32 + (py - 32) * scale,
-            ),
-        ),
-        true,
-      );
-    }
+    else
+      for (const q of TILE_FACES) {
+        g.fillStyle(q.color ?? color, q.alpha * alpha);
+        (g as Phaser.GameObjects.Graphics).fillPoints(
+          q.points.map(
+            ([px, py]) =>
+              new Phaser.Math.Vector2(
+                x + 32 + (px - 32) * scale,
+                y + 32 + (py - 32) * scale,
+              ),
+          ),
+          true,
+        );
+      }
     const level = this.materialLevel();
     if (level > 0) {
       g.lineStyle(
@@ -318,9 +348,10 @@ export class BoardScene extends Phaser.Scene {
     const bedKey = `${bedColor}:${this.state?.board.join(",")}`;
     const repaintBed = bedKey !== this.bedKey;
     if (repaintBed) {
-      this.bed?.clear(); this.bedKey = bedKey;
+      this.bed?.clear();
+      this.bedKey = bedKey;
       this.cameras.main.setBackgroundColor(bedColor);
-      this.wells.forEach(well => well.setTint(bedColor));
+      this.wells.forEach((well) => well.setTint(bedColor));
     }
     this.study?.begin();
     this.vfx?.begin();
@@ -333,17 +364,17 @@ export class BoardScene extends Phaser.Scene {
         y = Math.floor(i / 8) * 64;
       if (this.bed) {
         if (repaintBed) {
-        const bg = this.bed;
-        bg.lineStyle(1, STUDY_BOARD.lip, 0.5);
-        bg.lineBetween(x + 10, y + 62, x + 54, y + 62);
-        bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
-        bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);
-        bg.lineStyle(1, 0x000000, 0.10);
-        bg.lineBetween(x + 10, y + 3, x + 54, y + 3);
-        if (this.state?.board[i]) {
-          bg.fillStyle(STUDY_BOARD.contact, 0.17);
-          bg.fillRoundedRect(x + 5, y + 8, 55, 54, 8);
-        }
+          const bg = this.bed;
+          bg.lineStyle(1, STUDY_BOARD.lip, 0.5);
+          bg.lineBetween(x + 10, y + 62, x + 54, y + 62);
+          bg.lineStyle(1, STUDY_BOARD.lip, 0.65);
+          bg.strokeRoundedRect(x + 2, y + 3, 60, 59, 8);
+          bg.lineStyle(1, 0x000000, 0.1);
+          bg.lineBetween(x + 10, y + 3, x + 54, y + 3);
+          if (this.state?.board[i]) {
+            bg.fillStyle(STUDY_BOARD.contact, 0.17);
+            bg.fillRoundedRect(x + 5, y + 8, 55, 54, 8);
+          }
         }
       } else {
         g.fillStyle(
@@ -356,27 +387,25 @@ export class BoardScene extends Phaser.Scene {
       }
       const color = this.state?.board[i];
       if (color) {
-        const hit = [...this.impacts]
-          .reverse()
-          .find((e) => e.placed.includes(i));
+        let hit: Impact | undefined;
+        let neighbor = 0;
+        for (let j = this.impacts.length - 1; j >= 0; j--) {
+          const impact = this.impacts[j]!;
+          if (!hit && impact.placed.includes(i)) hit = impact;
+          const t = (now - impact.started) / 300;
+          if (
+            !this.calm &&
+            t < 1 &&
+            impact.placed.some(
+              (p) =>
+                Math.abs((p % 8) - (i % 8)) +
+                  Math.abs(Math.floor(p / 8) - Math.floor(i / 8)) ===
+                1,
+            )
+          )
+            neighbor = Math.max(neighbor, Math.sin(t * Math.PI) * 0.025);
+        }
         const scale = hit && !this.calm ? contactScale(now - hit.started) : 1;
-        const neighbor = this.calm
-          ? 0
-          : Math.max(
-              0,
-              ...this.impacts.map((e) => {
-                const t = (now - e.started) / 300;
-                if (t >= 1) return 0;
-                return e.placed.some(
-                  (p) =>
-                    Math.abs((p % 8) - (i % 8)) +
-                      Math.abs(Math.floor(p / 8) - Math.floor(i / 8)) ===
-                    1,
-                )
-                  ? Math.sin(t * Math.PI) * 0.025
-                  : 0;
-              }),
-            );
         const loss = this.defeatAt
           ? Math.min(1, Math.max(0, (now - this.defeatAt - i * 4) / 500))
           : 0;
@@ -644,5 +673,6 @@ export class BoardScene extends Phaser.Scene {
     }
     fx.end();
     this.study?.end();
+    if (this.mix() >= 1) this.themeAt = 0;
   }
 }

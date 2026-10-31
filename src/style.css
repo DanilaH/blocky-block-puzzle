@@ -2152,7 +2152,7 @@ body {
 .reward-event {
   transition:
     opacity 250ms,
-    margin-top 400ms;
+    translate 400ms;
 }
 [data-tier="praise"] .reward-praise {
   color: #fff1b0;

@@ -1,9 +1,13 @@
+import { visualClock } from "./visual-clock";
 import { THEMES, themeFor, themeAccent } from "./themes";
 // Cosmetic RNG is isolated from saved game RNG. One bounded RAF, suspended with gameplay.
 export class Atmosphere {
   private canvas = document.createElement("canvas");
+  private background = document.createElement("div");
+  private previousBackground = document.createElement("div");
+  private backgroundAnimation: Animation | null = null;
   private ctx: CanvasRenderingContext2D;
-  private frame = 0;
+  private frame: (() => void) | null = null;
   private last = 0;
   private time = 0;
   private energy = 0;
@@ -22,6 +26,7 @@ export class Atmosphere {
   private active = false;
   private calm = false;
   private index = 0;
+  private styleKey = "";
   private streak = 0;
   private weights: number[] = THEMES.map((_, i) => (i === 0 ? 1 : 0));
   private motes = Array.from({ length: 48 }, (_, i) => ({
@@ -34,40 +39,74 @@ export class Atmosphere {
   constructor() {
     this.canvas.className = "ambient-canvas";
     this.canvas.setAttribute("aria-hidden", "true");
-    document.body.prepend(this.canvas);
+    this.background.className = this.previousBackground.className =
+      "world-background";
+    this.background.setAttribute("aria-hidden", "true");
+    this.previousBackground.setAttribute("aria-hidden", "true");
+    this.previousBackground.style.opacity = "0";
+    document.body.prepend(
+      this.background,
+      this.previousBackground,
+      this.canvas,
+    );
     this.ctx = this.canvas.getContext("2d")!;
   }
   set(streak: number, active: boolean, calm: boolean) {
     const next = themeFor(streak);
+    if (next !== this.index || !this.background.style.backgroundColor) {
+      this.backgroundAnimation?.cancel();
+      this.previousBackground.style.backgroundColor = THEMES[this.index]!.bg;
+      this.background.style.backgroundColor = THEMES[next]!.bg;
+      if (active && !calm && this.styleKey)
+        this.backgroundAnimation = this.previousBackground.animate(
+          [{ opacity: 1 }, { opacity: 0 }],
+          { duration: next === 0 ? 1800 : 1000, easing: "ease" },
+        );
+    }
+    if (!active || calm) {
+      this.backgroundAnimation?.cancel();
+      this.backgroundAnimation = null;
+    }
     this.streak = streak;
     if (next !== this.index && active && !calm) this.wave = performance.now();
     this.index = next;
     this.active = active;
     this.calm = calm;
-    document.documentElement.style.setProperty("--world-bg", THEMES[next]!.bg);
-    document.documentElement.style.setProperty(
-      "--world-ink",
-      THEMES[next]!.ink,
-    );
-    document.documentElement.style.setProperty(
-      "--world-accent",
-      themeAccent(streak),
-    );
-    document.documentElement.dataset.material = THEMES[next]!.material;
-    const boardColor = "#" + THEMES[next]!.board.toString(16).padStart(6, "0");
-    document.documentElement.style.setProperty("--study-board", boardColor);
-    document.documentElement.style.setProperty("--tile-sheen", next === 0 ? "0" : next === 4 || next === 5 ? ".22" : ".10");
-    document.documentElement.style.setProperty(
-      "--world-duration",
-      calm ? "250ms" : next === 0 ? "1800ms" : "1000ms",
-    );
+    const styleKey = `${next}:${themeAccent(streak)}:${calm}`;
+    if (styleKey !== this.styleKey) {
+      this.styleKey = styleKey;
+      document.documentElement.style.setProperty(
+        "--world-bg",
+        THEMES[next]!.bg,
+      );
+      document.documentElement.style.setProperty(
+        "--world-ink",
+        THEMES[next]!.ink,
+      );
+      document.documentElement.style.setProperty(
+        "--world-accent",
+        themeAccent(streak),
+      );
+      document.documentElement.dataset.material = THEMES[next]!.material;
+      const boardColor =
+        "#" + THEMES[next]!.board.toString(16).padStart(6, "0");
+      document.documentElement.style.setProperty("--study-board", boardColor);
+      document.documentElement.style.setProperty(
+        "--tile-sheen",
+        next === 0 ? "0" : next === 4 || next === 5 ? ".22" : ".10",
+      );
+      document.documentElement.style.setProperty(
+        "--world-duration",
+        calm ? "250ms" : next === 0 ? "1800ms" : "1000ms",
+      );
+    }
     if (active && !calm && !this.frame) {
       this.last = performance.now();
-      this.frame = requestAnimationFrame((t) => this.draw(t));
+      this.frame = visualClock.add((t) => this.draw(t), 30);
     }
     if (!active || calm) {
-      cancelAnimationFrame(this.frame);
-      this.frame = 0;
+      this.frame?.();
+      this.frame = null;
       this.energy = 0;
       this.wave = 0;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -209,6 +248,5 @@ export class Atmosphere {
         c.globalAlpha = 1;
       } else this.wave = 0;
     }
-    this.frame = requestAnimationFrame((t) => this.draw(t));
   }
 }

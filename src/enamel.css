@@ -10,7 +10,7 @@
   initial-value: #edf6fa;
 }
 :root {
-  transition: background-color var(--world-duration), --study-board var(--world-duration), --world-bg var(--world-duration);
+  transition: none;
   --enamel-top: color-mix(in srgb, var(--world-bg) 12%, white);
   --enamel-base: color-mix(in srgb, var(--world-bg) 38%, white);
   --enamel-edge: color-mix(in srgb, var(--world-bg) 75%, #497b9b);
@@ -21,14 +21,18 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at -25% 16%, #ffffff70 0 34%, transparent 34.2%),
+  background:
+    radial-gradient(ellipse at -25% 16%, #ffffff70 0 34%, transparent 34.2%),
     radial-gradient(ellipse at 125% 100%, #ffffff60 0 33%, transparent 33.2%),
     radial-gradient(ellipse at 90% 0%, #8ec8e91a, transparent 65%);
 }
 :root[data-tile-study] .board-wrap {
   border-radius: 13px;
-  box-shadow: 0 0 0 3px var(--enamel-top), 0 0 0 5px var(--enamel-base),
-    0 3px 0 5px var(--enamel-edge), 0 8px 12px #27567724;
+  box-shadow:
+    0 0 0 3px var(--enamel-top),
+    0 0 0 5px var(--enamel-base),
+    0 3px 0 5px var(--enamel-edge),
+    0 8px 12px #27567724;
 }
 .board-wrap::after {
   content: "";
@@ -36,35 +40,58 @@ body::before {
   inset: -5px;
   border-radius: 17px;
   pointer-events: none;
-  box-shadow: inset 0 2px 1px #ffffffed, inset 0 -2px 2px #ffffff70;
+  box-shadow:
+    inset 0 2px 1px #ffffffed,
+    inset 0 -2px 2px #ffffff70;
 }
 .score {
   font-weight: 900;
-  text-shadow: 0 1px 0 #ffffffbc, 0 2px 1px #315c781a;
+  text-shadow:
+    0 1px 0 #ffffffbc,
+    0 2px 1px #315c781a;
   letter-spacing: -1.5px;
 }
 .best {
   padding: 3px 9px 4px 6px;
   border-radius: 22px;
   background: linear-gradient(170deg, var(--enamel-top), var(--enamel-base));
-  box-shadow: inset 0 2px 1px #fff, 0 2px 0 var(--enamel-edge), 0 4px 7px #27567719;
+  box-shadow:
+    inset 0 2px 1px #fff,
+    0 2px 0 var(--enamel-edge),
+    0 4px 7px #27567719;
   color: var(--enamel-ink);
 }
-.best svg, .result-best svg {
+.best svg,
+.result-best svg {
   fill: #ffc32b;
   stroke: #c88012;
   filter: drop-shadow(0 1px 0 #fff3b1);
 }
-.icon, .hint, .secondary {
-  background: linear-gradient(155deg, var(--enamel-top) 12%, var(--enamel-base) 85%, var(--enamel-top));
+.icon,
+.hint,
+.secondary {
+  background: linear-gradient(
+    155deg,
+    var(--enamel-top) 12%,
+    var(--enamel-base) 85%,
+    var(--enamel-top)
+  );
   border: 1px solid #ffffffc0;
   color: var(--enamel-ink);
-  box-shadow: inset 0 2px 2px #fff, inset 0 -3px 4px #ffffff9c,
-    0 3px 0 var(--enamel-edge), 0 5px 9px #27567724;
+  box-shadow:
+    inset 0 2px 2px #fff,
+    inset 0 -3px 4px #ffffff9c,
+    0 3px 0 var(--enamel-edge),
+    0 5px 9px #27567724;
   border-radius: 15px;
 }
-.icon svg { filter: drop-shadow(0 1px 0 white); }
-.hint svg { fill: #ffd348; stroke: #b87a19; }
+.icon svg {
+  filter: drop-shadow(0 1px 0 white);
+}
+.hint svg {
+  fill: #ffd348;
+  stroke: #b87a19;
+}
 .hint-count {
   background: linear-gradient(#4385b4, #245579);
   border-color: #f5fbff;
@@ -76,16 +103,25 @@ body::before {
   color: var(--enamel-ink);
   box-shadow: inset 0 1px 3px #23456720;
 }
-.hint.depleted svg { stroke: #567386; }
+.hint.depleted svg {
+  stroke: #567386;
+}
 .tray {
   position: relative;
   border-radius: 22px;
   background: linear-gradient(165deg, #ffffff50, #ffffff18 55%, #ffffff48);
-  box-shadow: inset 0 2px 1px #ffffffbd, inset 0 -1px 1px #ffffff90,
-    0 2px 0 #45759018, 0 4px 8px #2756770d;
+  box-shadow:
+    inset 0 2px 1px #ffffffbd,
+    inset 0 -1px 1px #ffffff90,
+    0 2px 0 #45759018,
+    0 4px 8px #2756770d;
 }
-.piece { border-radius: 18px; }
-.piece.selected { background: #ffffff32; }
+.piece {
+  border-radius: 18px;
+}
+.piece.selected {
+  background: #ffffff32;
+}
 :root[data-tile-study] .piece.selected .mini-shape {
   filter: drop-shadow(0 5px 3px #23456745);
 }
@@ -98,39 +134,86 @@ body::before {
   border-radius: 18px;
   padding: 1px 13px;
   background: linear-gradient(#fff1a0, #ffd450 48%, #ffbd31);
-  box-shadow: inset 0 2px 1px #fff8ce, inset 0 -2px 2px #f4a62c,
-    0 2px 0 #c98d29, 0 3px 7px #98671c25;
+  box-shadow:
+    inset 0 2px 1px #fff8ce,
+    inset 0 -2px 2px #f4a62c,
+    0 2px 0 #c98d29,
+    0 3px 7px #98671c25;
 }
-#combo-title { color: #77430f; text-shadow: 0 1px #fff0a4; font-style: normal; }
-#combo-stock { color: #68441b; }
-.combo-hud.urgent { background: linear-gradient(#ffeeb1, #ffbe67); }
-.ad-slot { background: color-mix(in srgb, var(--world-bg) 95%, #7aa1b8); border-color: #ffffff60; }
+#combo-title {
+  color: #77430f;
+  text-shadow: 0 1px #fff0a4;
+  font-style: normal;
+}
+#combo-stock {
+  color: #68441b;
+}
+.combo-hud.urgent {
+  background: linear-gradient(#ffeeb1, #ffbe67);
+}
+.ad-slot {
+  background: color-mix(in srgb, var(--world-bg) 95%, #7aa1b8);
+  border-color: #ffffff60;
+}
 dialog {
   background: linear-gradient(155deg, #f9fdff, #deedf5);
   background-color: #deedf5;
   border: 2px solid #ffffff;
-  box-shadow: inset 0 2px 2px white, 0 4px 0 #9fbed0, 0 16px 50px #173c5859;
+  box-shadow:
+    inset 0 2px 2px white,
+    0 4px 0 #9fbed0,
+    0 16px 50px #173c5859;
 }
-:root.calm { transition: none; }
-dialog h2 { color: #234c70; }
-dialog p, .setting, .result-best { color: #3f5c70; }
+:root.calm {
+  transition: none;
+}
+dialog h2 {
+  color: #234c70;
+}
+dialog p,
+.setting,
+.result-best {
+  color: #3f5c70;
+}
 .primary {
   background: linear-gradient(#ffeb87, #ffca3e 65%, #f9b62b);
   border: 1px solid #fff0a2;
   color: #624011;
-  box-shadow: inset 0 2px 1px #fff7c4, 0 3px 0 #c28b28, 0 5px 7px #76501820;
+  box-shadow:
+    inset 0 2px 1px #fff7c4,
+    0 3px 0 #c28b28,
+    0 5px 7px #76501820;
 }
-.setting input { background: #bdd2df; border-color: #95b3c7; }
-.setting input::after { background: #f7fcff; box-shadow: 0 1px 2px #23456744; }
-.setting input:checked { background: #ebb83d; border-color: #c59222; }
-.dialog-status { color: #805315; }
+.setting input {
+  background: #bdd2df;
+  border-color: #95b3c7;
+}
+.setting input::after {
+  background: #f7fcff;
+  box-shadow: 0 1px 2px #23456744;
+}
+.setting input:checked {
+  background: #ebb83d;
+  border-color: #c59222;
+}
+.dialog-status {
+  color: #805315;
+}
 @media (orientation: portrait) and (max-height: 700px) {
-  .best { padding: 1px 6px; }
-  .tray { border-radius: 16px; }
+  .best {
+    padding: 1px 6px;
+  }
+  .tray {
+    border-radius: 16px;
+  }
 }
 @media (orientation: landscape) {
-  .combo-hud { padding-inline: 9px; }
-  .best { padding: 1px 6px; }
+  .combo-hud {
+    padding-inline: 9px;
+  }
+  .best {
+    padding: 1px 6px;
+  }
 }
 
 /* 0.23: leave room for the living label inside its capsule. */
@@ -146,20 +229,49 @@ dialog p, .setting, .result-best { color: #3f5c70; }
   white-space: nowrap;
   animation-name: enamel-combo-breathe;
 }
-.combo-hud span { font-size: 9px; line-height: 11px; }
-.combo-hud.urgent strong { animation-name: enamel-combo-urgent; }
+.combo-hud span {
+  font-size: 9px;
+  line-height: 11px;
+}
+.combo-hud.urgent strong {
+  animation-name: enamel-combo-urgent;
+}
 @keyframes enamel-combo-breathe {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
 }
 @keyframes enamel-combo-urgent {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.025); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
 }
 @media (orientation: landscape) {
-  .combo-hud { height: 20px; padding: 2px 8px; gap: 6px; bottom: calc(100% + 3px); }
-  .combo-hud strong { font-size: 11px; line-height: 14px; flex: none; }
-  .combo-hud span { font-size: 8px; line-height: 8px; min-width: 0; white-space: normal; }
+  .combo-hud {
+    height: 20px;
+    padding: 2px 8px;
+    gap: 6px;
+    bottom: calc(100% + 3px);
+  }
+  .combo-hud strong {
+    font-size: 11px;
+    line-height: 14px;
+    flex: none;
+  }
+  .combo-hud span {
+    font-size: 8px;
+    line-height: 8px;
+    min-width: 0;
+    white-space: normal;
+  }
 }
 
 /* Independent composited halo: no per-frame blur repaint of the board. */
@@ -169,4 +281,38 @@ dialog p, .setting, .result-best { color: #3f5c70; }
   border-radius: inherit;
   pointer-events: none;
   opacity: 0;
+}
+
+/* Interpolate small enamel surfaces locally, never the inherited root palette. */
+@property --enamel-local {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #edf6fa;
+}
+.best,
+.icon,
+.hint,
+.secondary {
+  --enamel-local: var(--world-bg);
+  --enamel-top: color-mix(in srgb, var(--enamel-local) 12%, white);
+  --enamel-base: color-mix(in srgb, var(--enamel-local) 38%, white);
+  --enamel-edge: color-mix(in srgb, var(--enamel-local) 75%, #497b9b);
+  transition:
+    --enamel-local var(--world-duration),
+    color var(--world-duration);
+}
+.world-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+body {
+  transition: none;
+}
+:root.calm .best,
+:root.calm .icon,
+:root.calm .hint,
+:root.calm .secondary {
+  transition: none;
 }

@@ -1,3 +1,4 @@
+import { visualClock } from "./visual-clock";
 import { COLORS } from "./tiles";
 // Full-viewport cosmetic layer. No gameplay RNG, input, state, or persistent loop.
 type Spark = {
@@ -16,7 +17,7 @@ export class Festival {
   private canvas = document.createElement("canvas");
   private ctx: CanvasRenderingContext2D;
   private sparks: Spark[] = [];
-  private frame = 0;
+  private frame: (() => void) | null = null;
   private last = 0;
   private chips = new Map<string, HTMLCanvasElement>();
   private flash: CanvasImageSource | null = null;
@@ -50,11 +51,15 @@ export class Festival {
     empty: boolean,
     record = false,
     sourceBoard?: number[],
+    budget = 200,
   ) {
     const palette = COLORS.slice(1).map(
       (c) => "#" + c.toString(16).padStart(6, "0"),
     );
-    const count = empty ? 200 : record ? 85 : Math.min(130, 24 + lines * 24);
+    const count = Math.min(
+      budget,
+      empty ? 200 : record ? 85 : Math.min(130, 24 + lines * 24),
+    );
     const dpr = Math.min(1.5, devicePixelRatio);
     const width = Math.round(innerWidth * dpr);
     const height = Math.round(innerHeight * dpr);
@@ -92,10 +97,11 @@ export class Festival {
         star: i % 8 === 0,
       });
     }
-    this.sparks = this.sparks.slice(-360);
+    if (this.sparks.length > 260)
+      this.sparks.splice(0, this.sparks.length - 260);
     if (!this.frame) {
       this.last = performance.now();
-      this.frame = requestAnimationFrame((t) => this.draw(t));
+      this.frame = visualClock.add((t) => this.draw(t));
     }
   }
   private draw(now: number) {
@@ -103,7 +109,10 @@ export class Festival {
     this.last = now;
     const g = this.ctx;
     g.clearRect(0, 0, innerWidth, innerHeight);
-    this.sparks = this.sparks.filter((s) => s.age < s.life);
+    let live = 0;
+    for (const spark of this.sparks)
+      if (spark.age < spark.life) this.sparks[live++] = spark;
+    this.sparks.length = live;
     for (const s of this.sparks) {
       s.age += dt;
       s.x += (s.vx * dt) / 1000;
@@ -141,14 +150,15 @@ export class Festival {
       }
       g.restore();
     }
-    this.frame = this.sparks.length
-      ? requestAnimationFrame((t) => this.draw(t))
-      : 0;
+    if (!this.sparks.length) {
+      this.frame?.();
+      this.frame = null;
+    }
     if (!this.frame) g.clearRect(0, 0, innerWidth, innerHeight);
   }
   stop() {
-    cancelAnimationFrame(this.frame);
-    this.frame = 0;
+    this.frame?.();
+    this.frame = null;
     this.sparks = [];
     this.ctx.clearRect(0, 0, innerWidth, innerHeight);
   }

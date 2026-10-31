@@ -1,3 +1,4 @@
+import { performanceCapture } from "./platform/performance";
 import { Atmosphere } from "./game/atmosphere";
 import { THEMES, themeFor, themeAccent } from "./game/themes";
 import { praiseFor, type PraiseResult } from "./core/praise";
@@ -73,6 +74,13 @@ async function start() {
   let themeKey = "";
   let themeGame = "";
   let themeIndex = 0;
+  function suspendPraise() {
+    clearTimeout(praiseTimer);
+    praiseTimer = 0;
+    praiseWorker?.terminate();
+    praiseWorker = null;
+    if (!praiseResult) praiseKey = "";
+  }
   function stopPraise() {
     clearTimeout(praiseTimer);
     praiseTimer = 0;
@@ -87,30 +95,30 @@ async function start() {
       stopPraise();
       return;
     }
-    if (key === praiseKey) return;
+    if (drag || key === praiseKey) return;
     stopPraise();
     praiseKey = key;
     if (g.board.filter(Boolean).length < 12 || worker) return;
     // Leave the placement/first effect frame free of worker startup and ranking.
     praiseTimer = window.setTimeout(() => {
-    praiseTimer = 0;
-    if (!running || praiseKey !== key) return;
-    const job = new Worker(
-      new URL("./game/praise.worker.ts", import.meta.url),
-      { type: "module" },
-    );
-    praiseWorker = job;
-    job.onmessage = (event: MessageEvent<PraiseResult>) => {
-      if (praiseWorker !== job) return;
-      praiseResult = event.data;
-      job.terminate();
-      praiseWorker = null;
-    };
-    job.onerror = () => {
-      job.terminate();
-      if (praiseWorker === job) praiseWorker = null;
-    };
-    job.postMessage(g);
+      praiseTimer = 0;
+      if (!running || praiseKey !== key) return;
+      const job = new Worker(
+        new URL("./game/praise.worker.ts", import.meta.url),
+        { type: "module" },
+      );
+      praiseWorker = job;
+      job.onmessage = (event: MessageEvent<PraiseResult>) => {
+        if (praiseWorker !== job) return;
+        praiseResult = event.data;
+        job.terminate();
+        praiseWorker = null;
+      };
+      job.onerror = () => {
+        job.terminate();
+        if (praiseWorker === job) praiseWorker = null;
+      };
+      job.postMessage(g);
     }, 180);
   }
   const festivalTimers = new Set<number>();
@@ -144,6 +152,7 @@ async function start() {
       revision: number;
       touch: boolean;
       moved: boolean;
+      rect: DOMRect;
     } | null = null;
   let currentMove: Move | null = null,
     worker: Worker | null = null,
@@ -249,6 +258,7 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      performanceCapture.setActive(true);
       root.classList.remove("effects-paused");
       haptics.setActive(
         store.state.settings.haptics !== false &&
@@ -268,6 +278,7 @@ async function start() {
     },
     () => {
       running = false;
+      performanceCapture.setActive(false);
       root.classList.add("effects-paused");
       stopPraise();
       atmosphere.set(currentGame().streak, false, scene.calm);
@@ -321,7 +332,10 @@ async function start() {
   );
   activity.onBlockedChange(() => bannerWatch?.update());
   void ads.init().then(() => bannerWatch?.update());
-  void adBridge?.addListener("geometryChanged", () => bannerWatch?.update());
+  void adBridge?.addListener("geometryChanged", () => {
+    cancelDrag();
+    bannerWatch?.invalidate();
+  });
   void adBridge?.addListener("ready", () => {
     if (["reward", "revive"].includes(modal)) void offerAvailability();
   });
@@ -353,7 +367,7 @@ async function start() {
     banner: false,
     audio: { noAudio: true },
     scale: { mode: Phaser.Scale.NONE },
-    fps: { target: 60 },
+    fps: { target: 60, limit: 60 },
   });
   const unsubscribeResize = () => {
     cancelDrag();
@@ -457,18 +471,26 @@ async function start() {
         button.dataset.slot = String(i);
         tray.append(button);
       }
+      button.setAttribute("aria-pressed", String(selected === i));
       button.className = `piece${s.used ? " used" : ""}${blocked[i] ? " unavailable" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}`;
-      button.setAttribute("aria-label", `Фигура ${i + 1}: ${s.shapeId}${blocked[i] ? ", сейчас нет места" : ""}`);
-      button.disabled = s.used || g.status === "over" || (inLesson() && i !== hintSlot);
+      button.setAttribute(
+        "aria-label",
+        `Фигура ${i + 1}: ${s.shapeId}${blocked[i] ? ", сейчас нет места" : ""}`,
+      );
+      button.disabled =
+        s.used || g.status === "over" || (inLesson() && i !== hintSlot);
       const visualKey = s.used ? "used" : `${s.shapeId}:${s.color}:${cell}`;
       if (button.dataset.visualKey !== visualKey) {
         button.innerHTML = s.used ? "" : mini(i, cell);
         button.dataset.visualKey = visualKey;
       }
     }
-    while (tray.children.length > g.tray.length) tray.lastElementChild!.remove();
+    while (tray.children.length > g.tray.length)
+      tray.lastElementChild!.remove();
     if (focused !== undefined)
-      tray.querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)?.focus({ preventScroll: true });
+      tray
+        .querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)
+        ?.focus({ preventScroll: true });
     audio.enabled = p.settings.sound;
     audioFocus.setActive(running && p.settings.sound);
     scene.calm =
@@ -642,16 +664,25 @@ async function start() {
     el("hint").removeAttribute("aria-busy");
     refreshHintLabel();
   }
+  let dragFrame = 0;
+  let dragSample: PointerEvent | null = null;
+  function clearDragFrame() {
+    cancelAnimationFrame(dragFrame);
+    dragFrame = 0;
+    dragSample = null;
+  }
   function cancelDrag() {
+    clearDragFrame();
     drag = null;
     currentMove = null;
     selected = null;
     floating.getAnimations().forEach((a) => a.cancel());
     floating.hidden = true;
     el("tray").classList.remove("dragging");
-    document
-      .querySelectorAll(".piece.selected")
-      .forEach((e) => e.classList.remove("selected"));
+    document.querySelectorAll(".piece.selected").forEach((e) => {
+      e.classList.remove("selected");
+      e.setAttribute("aria-pressed", "false");
+    });
     scene.preview(hintMove(), true, true);
   }
   async function commit(move: Move, revision: number) {
@@ -695,9 +726,12 @@ async function start() {
       scene.pendingPlacement(placedCells);
       canvasBox.setAttribute("aria-busy", "true");
     }
+    const saveStarted = performance.now();
     try {
       const changed = await store.update((p) => {
-        const result = applyMove(before, move, revision);
+        const result = performanceCapture.measure("applyMove", () =>
+          applyMove(before, move, revision),
+        );
         outcome.result = result;
         if (result && practicing)
           return {
@@ -715,6 +749,10 @@ async function start() {
             }
           : null;
       });
+      performanceCapture.record(
+        "commitIncludingSaveWallTime",
+        performance.now() - saveStarted,
+      );
       if (!changed) {
         selected = move.slot;
         currentMove = move;
@@ -784,6 +822,9 @@ async function start() {
               event.cells,
               1,
               true,
+              false,
+              undefined,
+              64,
             );
         }
         if (before.tray.filter((s) => s.used).length === 2)
@@ -1022,7 +1063,7 @@ async function start() {
     node.append(label, amount);
     for (const old of rewards.keys()) {
       old.style.opacity = ".35";
-      old.style.marginTop = "-18px";
+      old.style.translate = "0 -18px";
     }
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();
@@ -1156,7 +1197,7 @@ async function start() {
     timerIds.push(window.setTimeout(finish, duration));
   }
   function locate(event: PointerEvent, slot: number, touch: boolean): Move {
-    const rect = canvasBox.getBoundingClientRect(),
+    const rect = drag?.rect ?? canvasBox.getBoundingClientRect(),
       cell = rect.width / 8,
       shape = shapeById(currentGame().tray[slot]!.shapeId);
     const left = event.clientX - (shape.width * cell) / 2,
@@ -1171,8 +1212,7 @@ async function start() {
               )
           : shape.height / 2) *
           cell;
-    floating.style.left = `${left}px`;
-    floating.style.top = `${top}px`;
+    floating.style.translate = `${left}px ${top}px`;
     return {
       slot,
       x: Math.round((left - rect.left) / cell),
@@ -1223,11 +1263,24 @@ async function start() {
     el("tray").setPointerCapture(event.pointerId);
     cancelHint();
     selected = Number(button.dataset.slot);
-    render();
+    for (const element of el("tray").querySelectorAll<HTMLElement>(
+      "[data-slot]",
+    )) {
+      element.classList.toggle(
+        "selected",
+        Number(element.dataset.slot) === selected,
+      );
+      element.setAttribute(
+        "aria-pressed",
+        String(Number(element.dataset.slot) === selected),
+      );
+    }
     if (button.classList.contains("unavailable"))
       toast("Сейчас не помещается. Освободите место другой фигурой.", 5000);
     const rect = canvasBox.getBoundingClientRect();
     floating.getAnimations().forEach((a) => a.cancel());
+    floating.style.left = "0px";
+    floating.style.top = "0px";
     floating.innerHTML = mini(selected, rect.width / 8);
     floating.hidden = false;
     el("tray").classList.add("dragging");
@@ -1239,7 +1292,9 @@ async function start() {
       revision: currentGame().revision,
       touch: event.pointerType === "touch",
       moved: false,
+      rect,
     };
+    suspendPraise();
     currentMove = locate(event, selected, drag.touch);
     animate(
       floating,
@@ -1264,15 +1319,37 @@ async function start() {
       drag.moved ||=
         Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) >
         7;
-      currentMove = locate(event, drag.slot, drag.touch);
-      scene.preview(currentMove);
+      dragSample = event;
+      if (!dragFrame)
+        dragFrame = requestAnimationFrame(() => {
+          dragFrame = 0;
+          const sample = dragSample;
+          dragSample = null;
+          if (!drag || !sample) return;
+          const next = locate(sample, drag.slot, drag.touch);
+          if (
+            !currentMove ||
+            next.x !== currentMove.x ||
+            next.y !== currentMove.y ||
+            next.slot !== currentMove.slot
+          ) {
+            currentMove = next;
+            scene.preview(next);
+          }
+        });
     },
     { passive: false },
   );
   window.addEventListener("pointerup", (event) => {
     if (!drag || drag.id !== event.pointerId) return;
     el("tray").classList.remove("dragging");
+    clearDragFrame();
     const previous = drag;
+    previous.moved ||=
+      Math.hypot(
+        event.clientX - previous.startX,
+        event.clientY - previous.startY,
+      ) > 7;
     const move = locate(event, previous.slot, previous.touch);
     drag = null;
     floating.hidden = true;
@@ -1621,10 +1698,22 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты — без вибрации и активных анимаций<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button>${savedReviveButton()}`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><p class="dealer-note">Выдача: ${currentGame().dealerVersion === "assist-v1" ? "с умеренной помощью" : currentGame().dealerVersion === "solvable-v1" ? "размещаемые тройки" : "обычная"}</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты — без вибрации и активных анимаций<input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button>${savedReviveButton()}`,
       "pause",
     );
     el("resume").onclick = close;
+    el("perf-start").onclick = () => {
+      performanceCapture.start();
+      close();
+      toast(
+        "Запись включена. После нескольких ходов выгрузите замер из паузы.",
+        5000,
+      );
+    };
+    el("perf-export").onclick = () =>
+      void performanceCapture
+        .export()
+        .catch(() => toast("Не удалось выгрузить замер. Попробуйте ещё раз."));
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();

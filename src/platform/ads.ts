@@ -271,16 +271,28 @@ export function watchBanner(
   let disposed = false,
     sequence = 0,
     timer: ReturnType<typeof setTimeout> | undefined;
+  let lastKey = "";
   const update = async () => {
     const seq = ++sequence;
     if (!bridge) return;
     try {
       if (!isVisible()) {
+        if (lastKey === "hidden") return;
+        lastKey = "hidden";
         await bridge.banner({ visible: false });
         return;
       }
       const b = slot.getBoundingClientRect(),
         viewport = { width: innerWidth, height: innerHeight };
+      const key = [
+        b.x,
+        b.y,
+        b.width,
+        b.height,
+        viewport.width,
+        viewport.height,
+      ].join(":");
+      if (key === lastKey) return;
       const { geometry, epoch } = await bridge.geometry({
         width: b.width,
         viewportWidth: viewport.width,
@@ -304,7 +316,9 @@ export function watchBanner(
         return;
       }
       await bridge.banner({ visible: true, epoch, ...result.rect });
+      if (!disposed && seq === sequence) lastKey = key;
     } catch {
+      lastKey = "";
       await bridge?.banner({ visible: false }).catch(() => {});
     }
   };
@@ -320,6 +334,10 @@ export function watchBanner(
   schedule();
   return {
     update: schedule,
+    invalidate: () => {
+      lastKey = "";
+      schedule();
+    },
     dispose: () => {
       disposed = true;
       sequence++;

@@ -222,7 +222,7 @@ public class BlockyAdsPlugin extends Plugin {
       });
       banner.loadAd(new AdRequest.Builder(unit("banner")).build());
     }
-    if(bannerHost!=null){FrameLayout.LayoutParams lp=new FrameLayout.LayoutParams(w,h);lp.leftMargin=x-root.getPaddingLeft();lp.topMargin=y-root.getPaddingTop();bannerHost.setLayoutParams(lp);bannerHost.setVisibility(View.VISIBLE);}
+    if(bannerHost!=null){FrameLayout.LayoutParams lp=new FrameLayout.LayoutParams(w,h);lp.leftMargin=x-root.getPaddingLeft();lp.topMargin=y-root.getPaddingTop();android.view.ViewGroup.LayoutParams previous=bannerHost.getLayoutParams(); if(!(previous instanceof FrameLayout.LayoutParams) || previous.width!=w || previous.height!=h || ((FrameLayout.LayoutParams)previous).leftMargin!=lp.leftMargin || ((FrameLayout.LayoutParams)previous).topMargin!=lp.topMargin) bannerHost.setLayoutParams(lp);bannerHost.setVisibility(View.VISIBLE);}
     call.resolve();
   });}
   @Override protected void handleOnConfigurationChanged(Configuration config){epoch++;clearBanner();lastBannerRequest=0;notifyListeners("geometryChanged",new JSObject(),true);}
