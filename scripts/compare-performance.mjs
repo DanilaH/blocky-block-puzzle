@@ -30,4 +30,4 @@ try {for(let repeat=0;repeat<1;repeat++)for(const mode of modes) {
  const audit=await page.evaluate(()=>window.audit);const sorted=frames.slice(1).sort((a,b)=>a-b);results.push({repeat,mode,frames:sorted.length,median:sorted[Math.floor(sorted.length*.5)],p95:sorted[Math.floor(sorted.length*.95)],over33:sorted.filter(t=>t>33.4).length,metrics,audit});
  await page.evaluate(()=>window.dispatchEvent(new PointerEvent('pointercancel',{pointerId:1,pointerType:'mouse',bubbles:true})));await page.mouse.up();await page.close();console.log(JSON.stringify(results.at(-1)));
 }}finally{await browser.close();await server.close();}
-await fs.writeFile('/tmp/blocky-compare-'+(process.env.BLOCKY_TAG||'current')+'.json',JSON.stringify({environment:'Chromium software renderer, 390x844 DPR2, two sequential repetitions; diagnostic ablations are not production changes or Android FPS',results},null,2));
+await fs.writeFile('/tmp/blocky-compare-'+(process.env.BLOCKY_TAG||'current')+'.json',JSON.stringify({environment:'Chromium software renderer, 390x844 DPR2; one full-combo and one idle-drag scenario per invocation; not Android FPS',results},null,2));
