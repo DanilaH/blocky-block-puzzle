@@ -360,8 +360,6 @@ async function start() {
   root.inert = true;
   root.setAttribute("aria-busy", "true");
   scene.onTexturesReady = () => {
-    root.inert = ads.busy;
-    root.removeAttribute("aria-busy");
     if (scene.textures.exists("vfx-chip") && scene.textures.exists("vfx-flash"))
       festival.setTextures(
         scene.textures.get("vfx-chip").getSourceImage() as HTMLImageElement,
@@ -369,6 +367,8 @@ async function start() {
       );
     scene.game.events.once("postrender", () => {
       rendererReady = true;
+      root.inert = ads.busy;
+      root.removeAttribute("aria-busy");
       syncRenderer();
     });
   };
@@ -382,9 +382,18 @@ async function start() {
     antialias: true,
     banner: false,
     audio: { noAudio: true },
-    scale: { mode: Phaser.Scale.NONE },
+    // CSS owns the fixed 512px canvas display size; input uses DOM coordinates.
+    // ResizeObserver invalidates real size changes instead of polling layout.
+    scale: {
+      mode: Phaser.Scale.NONE,
+      resizeInterval: Number.POSITIVE_INFINITY,
+    },
     fps: { target: 60, limit: 60 },
   });
+  const canvasResize = new ResizeObserver(() => {
+    if (phaser) phaser.scale.dirty = true;
+  });
+  canvasResize.observe(canvasBox);
   const unsubscribeResize = () => {
     cancelDrag();
     cancelHint();
@@ -2035,6 +2044,7 @@ async function start() {
       phaser?.destroy(true);
       cancelHint();
       window.removeEventListener("resize", unsubscribeResize);
+      canvasResize.disconnect();
     });
 }
 void start().catch((error) => {

@@ -99,6 +99,8 @@ test("drag coalesces events without layout reads and commits the final pointer p
         }),
       );
     await new Promise(requestAnimationFrame);
+    // Cover the old ScaleManager polling interval as well as the move frame.
+    await new Promise((resolve) => setTimeout(resolve, 650));
     const duringDrag = reads;
     // A different final position in the same task must win over the queued sample.
     window.dispatchEvent(
