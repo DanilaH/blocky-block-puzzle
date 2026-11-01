@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "6f2947992d3a651c70f1b67b104fb0dd6db3f64a",
+  "ciRun": 41309894088,
+  "verifyJob": 124857868881,
+  "androidJob": 124859412029,
+  "unitTests": 94,
+  "browserTests": 103,
+  "ciResult": "success",
+  "apkVerified": true,
+  "nativeUpgradeTested": false,
+  "nativeAdsTested": false,
+  "physicalDeviceTested": false,
+  "longSoak": {
+    "result": "passed",
+    "elapsedMs": 1804248,
+    "cycles": 614,
+    "hints": 164,
+    "losses": 122,
+    "scope": "Synthetic source harness; started after reward retry fix, before IDB exception handling and version bump. Final error paths covered separately by CI."
+  }
+}
