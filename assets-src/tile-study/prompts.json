@@ -4,5 +4,15 @@
     "plastic": "glossy dense injection-molded toy plastic, softly pillowed face, broad smoothly rounded bevels, short crisp cream specular streak near upper edge. Friendly substantial tactile piece, not glass or gem.",
     "enamel": "hard polished enamel over a beveled solid tile, flatter central face, precise thick chamfer, a narrow bright reflected band and crisp edge gleam. Jewel-like richness but no crystal facets or cut gems.",
     "caramel": "translucent hard candy resin, softly pillowed face, luminous saturated inner color and refractive rim, restrained internal caustic at lower edge. Clear solid outline and readable thick body, not liquid, no bubbles or glitter."
+  },
+  "chrome": {
+    "tool": "built-in imagegen",
+    "date": "2026-11-01",
+    "references": [
+      "plastic.png",
+      "enamel.png"
+    ],
+    "transparent_background": true,
+    "prompt": "Use case: style-transfer. Production sprite sheet for our casual block puzzle. Inputs are silhouette, six color and exact layout references. Create CHROME variant, a single 1536x1024 transparent RGBA sheet: exactly 3 columns x 2 rows of six isolated square rounded block tiles, centered in equal 512x512 cells, same size and orthographic front view as references. Order top yellow gold, red, lime green; bottom turquoise, cobalt blue, purple. Keep saturated recognizable color centers; chrome is colored polished metal, broad soft silver-white diagonal reflection bands and narrow bright bevel rim. More reflective and unmistakably metallic than input enamel. Soften dark edges: colored midtone bevels, NO black bands, NO black cavities, NO grey desaturation. Identical shallow thickness and silhouette for all six, clear large central face, small rounded corners, lighting upper left. True transparent backdrop and gaps, NO background colored glow, NO cast shadows beyond silhouette, NO environment, NO text, NO labels, NO framing. Each tile entirely inside its equal cell with generous transparent margin, not touching other tiles. Crisp high quality baked reflections that read at 48 pixels."
   }
 }

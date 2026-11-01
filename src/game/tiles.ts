@@ -1,4 +1,4 @@
-import { TILE_STUDY } from "./tile-study-config";
+import { TILE_STUDY, type TileMaterial } from "./tile-study-config";
 /** Own shallow plastic tiles; shared by board, tray and drag. */
 export const COLORS = [
   0x303136, 0xffb719, 0xef5140, 0x83c633, 0x19b9ad, 0x4279ed, 0xa160d6,
@@ -53,18 +53,22 @@ export const TILE_FACES = [
     alpha: 0.12,
   },
 ] as const;
-const urls = new Map<number, string>();
-export function cacheTileURL(color: number, url: string) {
-  urls.set(color, url);
+const urls = new Map<string, string>();
+export function cacheTileURL(
+  color: number,
+  url: string,
+  material: TileMaterial = "plastic",
+) {
+  urls.set(`${material}:${color}`, url);
 }
-export function tileURL(color: number) {
-  const cached = urls.get(color);
+export function tileURL(color: number, material: TileMaterial = "plastic") {
+  const cached = urls.get(`${material}:${color}`);
   if (cached) return cached;
   if (TILE_STUDY)
-    return `/assets/tile-study/${TILE_STUDY}-${COLORS.indexOf(color)}.webp`;
+    return `/assets/tile-study/${material}-${COLORS.indexOf(color)}.webp`;
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_FACES.map((q) => `<polygon points="${q.points.map((p) => p.join(",")).join(" ")}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
   const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;
-  urls.set(color, url);
+  urls.set(`${material}:${color}`, url);
   return url;
 }

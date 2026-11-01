@@ -2257,3 +2257,9 @@ body:has(#app.effects-paused),
   filter: brightness(calc(1 + var(--tile-sheen, 0)));
   transition: filter var(--world-duration);
 }
+
+/* Preloaded material layers; WAAPI joins newly created drag tiles to the
+   current blend without layout reads or an extra per-frame JS loop. */
+:root[data-tile-study] .mini-cell { filter: none; transition: none; }
+.tile-plastic { opacity: 1; }
+.tile-enamel, .tile-chrome { opacity: 0; }

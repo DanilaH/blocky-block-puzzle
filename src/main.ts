@@ -1,3 +1,9 @@
+import { TileMaterialDOM } from "./game/tile-material";
+import {
+  TILE_MATERIALS,
+  tileMaterialForTheme,
+  tileTransitionDuration,
+} from "./game/tile-study-config";
 import { performanceCapture } from "./platform/performance";
 import { Atmosphere } from "./game/atmosphere";
 import { THEMES, themeFor, themeAccent } from "./game/themes";
@@ -429,10 +435,11 @@ async function start() {
       ? h.move
       : null;
   }
+  const tileMaterials = new TileMaterialDOM();
   function mini(slot: number, cell: number) {
     const piece = currentGame().tray[slot]!,
       shape = shapeById(piece.shapeId);
-    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => `<img draggable="false" alt="" class="mini-cell" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[piece.color]!)}">`).join("")}</span>`;
+    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => TILE_MATERIALS.map((material) => `<img draggable="false" alt="" class="mini-cell tile-${material}" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[piece.color]!, material)}">`).join("")).join("")}</span>`;
   }
   function render(smoothScore = false) {
     const p = store.state,
@@ -517,6 +524,10 @@ async function start() {
     const visualSeries = debugSeries > 0 ? debugSeries : g.streak;
     atmosphere.set(visualSeries, running, scene.calm);
     scene.setTheme(themeFor(visualSeries), themeAccent(visualSeries));
+    tileMaterials.set(
+      tileMaterialForTheme(themeFor(visualSeries)),
+      tileTransitionDuration(scene.calm, themeFor(visualSeries)),
+    );
     const nextTheme = themeFor(visualSeries),
       nextKey = `${nextTheme}:${visualSeries >= 100 ? Math.floor((visualSeries - 100) / 25) : 0}`;
     if (
@@ -1324,6 +1335,7 @@ async function start() {
     floating.style.left = "0px";
     floating.style.top = "0px";
     floating.innerHTML = mini(selected, rect.width / 8);
+    tileMaterials.sync(floating);
     floating.hidden = false;
     el("tray").classList.add("dragging");
     drag = {
@@ -1914,6 +1926,7 @@ async function start() {
       `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${bestFor(store.state).toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div>${revivePlan(store.state.game) ? `<button class="secondary" id="revive-offer">Второй шанс за рекламу</button>` : ""}<button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>${savedReviveButton()}`,
       "result",
     );
+    tileMaterials.sync(dialog);
     dialog.dataset.record = String(bestFinish);
     if (bestFinish)
       animate(

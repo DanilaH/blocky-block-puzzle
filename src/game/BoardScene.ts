@@ -1,7 +1,12 @@
 import { performanceCapture } from "../platform/performance";
 import { RasterInk, SpriteInk } from "./sprite-ink";
 import { cacheTileURL } from "./tiles";
-import { STUDY_BOARD } from "./tile-study-config";
+import {
+  STUDY_BOARD,
+  TILE_MATERIALS,
+  tileMaterialForTheme,
+  tileTransitionDuration,
+} from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
 import { VfxSprites, VFX_KINDS } from "./vfx";
 import { THEMES } from "./themes";
@@ -73,6 +78,11 @@ export class BoardScene extends Phaser.Scene {
     this.shade = THEMES[index]!.board;
     this.accent = color;
     this.themeAt = performance.now();
+    this.study?.setMaterial(
+      tileMaterialForTheme(index),
+      this.themeAt,
+      tileTransitionDuration(this.calm, index),
+    );
     this.sheen =
       index === 0
         ? 0
@@ -87,7 +97,7 @@ export class BoardScene extends Phaser.Scene {
     return Math.min(
       1,
       (performance.now() - this.themeAt) /
-        (this.calm ? 250 : this.theme === 0 ? 1800 : 1000),
+        tileTransitionDuration(this.calm, this.theme),
     );
   }
   private currentColor(a: number, b: number) {
@@ -120,11 +130,12 @@ export class BoardScene extends Phaser.Scene {
   }
   preload() {
     if (TILE_STUDY)
-      for (let color = 1; color <= 6; color++)
-        this.load.image(
-          `study-${color}`,
-          `assets/tile-study/${TILE_STUDY}-${color}.webp`,
-        );
+      for (const material of TILE_MATERIALS)
+        for (let color = 1; color <= 6; color++)
+          this.load.image(
+            `study-${material}-${color}`,
+            `assets/tile-study/${material}-${color}.webp`,
+          );
     for (const kind of VFX_KINDS)
       this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
   }
@@ -176,12 +187,22 @@ export class BoardScene extends Phaser.Scene {
       this.bedColor = -1;
 
       this.study = new TileStudySprites(this);
+      this.study.setMaterial(
+        tileMaterialForTheme(this.theme),
+        performance.now(),
+        0,
+      );
       this.events.once("shutdown", () => this.study?.destroy());
     }
     // DOM tray/drag reuse decoded startup textures: no requests during moves,
     // including WebViews with disabled/evicted HTTP cache.
-    for (let color = 1; color <= 6; color++)
-      cacheTileURL(COLORS[color]!, this.textures.getBase64(`study-${color}`));
+    for (const material of TILE_MATERIALS)
+      for (let color = 1; color <= 6; color++)
+        cacheTileURL(
+          COLORS[color]!,
+          this.textures.getBase64(`study-${material}-${color}`),
+          material,
+        );
     this.onTexturesReady();
     this.draw();
   }

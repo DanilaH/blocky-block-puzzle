@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import {prepareImageAsset,validatePreparedImage} from '../tools/vendor/mini-games-kit/pipeline.ts';
 import {inspectRuntimeImageBudget} from '../tools/vendor/mini-games-kit/runtime-images.ts';
 const rows=[];
-for(const style of ['plastic']) {
+for(const style of ['plastic','enamel','chrome']) {
  const input=`assets-src/tile-study/${style}.png`,m=await sharp(input).metadata();
  const width=m.width/3,height=m.height/2;
  if(!Number.isInteger(width)||!Number.isInteger(height))throw Error('Nonintegral atlas cells');
@@ -20,6 +20,6 @@ for(const style of ['plastic']) {
  }
 }
 const budget=await inspectRuntimeImageBudget(rows);
-if(budget.encodedBytes>160000)throw Error('Study budget exceeded');
+if(budget.encodedBytes>100000)throw Error('Study budget exceeded');
 await fs.writeFile('assets-src/tile-study/budget.json',JSON.stringify(budget,null,2)+'\n');
 console.log(budget);
