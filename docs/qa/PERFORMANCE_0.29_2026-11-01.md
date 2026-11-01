@@ -22,14 +22,16 @@ Reproduce: `BLOCKY_TRACE=1 BLOCKY_MODES=full,no-material-blend,no-dom-blend,no-b
 
 0.29 includes the previous bounded phase ring and session aggregates. Schema 3 adds up to 128 placement markers (line count, series, all-clear, calm setting) and up to 128 browser long-task start/duration pairs. No board, player identifier or save content is exported. Long-task observation only runs while opt-in recording and gameplay are active; unsupported WebViews report `longTaskSupported: false`. Restart clears all records; pause disconnects the observer, stale callbacks are ignored. All timestamps use performance.now.
 
+Fixed Android export filename: it no longer claims version 0.27. The shared file is `blocky-performance.json`; its JSON carries the actual app/schema versions.
+
 Record on device: Pause → Диагностика → Записать плавность игры. Play normally, including dragging during a clear. Pause → Диагностика → Выгрузить замер. Save/export wait is labelled wall time, not CPU. This captures CPU long tasks and RAF gaps, not GPU duration.
 
 ## Lifecycle stress
 
 `scripts/soak-performance.mjs` repeatedly injects deterministic fixtures into the live store while paused, then uses actual placement/drag/pause controls. It alternates full-board and six-line clears, series 0/5/19/99, and restarts through the real menu every ten cycles. One loaded page, no reload between cycles. Every ten cycles it collects garbage and records heap, DOM/listener counts, animation count, sprite pools, particle/audio counts and shared visual-clock subscriptions. HMR is disabled to keep source edits from resetting the session.
 
-This synthetic test does not replace the specification's 30-minute physical-device playtest, native audio focus, vibration or ad testing. Full final stress results and APK verification will be recorded after completion.
+This synthetic test does not replace the specification's 30-minute physical-device playtest, native audio focus, vibration or ad testing. Completed 60 cycles and six real restarts in one loaded page with no page errors. [Raw stress samples](performance-0.29/soak.json). All paused samples: 0 shared-clock subscribers, 0 festival sparks, 0 tracked audio voices; 3 canvases, 768 tile sprites and 1309 scene children throughout. Post-GC JS heap: 24,688,012 bytes after first cycle; 25,159,232 after cycle 60. DOM/listener counts fluctuate rather than grow monotonically. These samples do not establish the absence of all native/browser leaks. The first development run was interrupted by HMR during source editing after 40 cycles; only the clean rerun with HMR disabled is included.
 
 ## Validation
 
-93 unit tests and TypeScript/Vite build passed locally. Targeted browser regression covers placement, strict drag layout reads, diagnostic export and material transitions. Complete CI and APK checks pending at source publication.
+93 unit tests and TypeScript/Vite build passed locally. Seven targeted browser tests passed and cover placement, strict drag layout reads, diagnostic export and material transitions. Complete CI and APK checks pending at source publication.
