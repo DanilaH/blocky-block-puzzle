@@ -799,6 +799,12 @@ async function start() {
       currentMove = null;
       rejectedDrags = 0;
       const event = outcome.result!;
+      performanceCapture.markPlacement(
+        event.lines,
+        event.state.streak,
+        event.allClear,
+        scene.calm,
+      );
       const newRecord =
         !practicing &&
         !recordCelebrated &&

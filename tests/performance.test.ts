@@ -54,3 +54,79 @@ it("bounds capture storage and excludes inactive gaps", () => {
     vi.unstubAllGlobals();
   }
 });
+
+it("bounds long tasks and placement markers, excludes pause and stale observers", () => {
+  let now = 100;
+  const clock = vi.spyOn(performance, "now").mockImplementation(() => now);
+  const observers: Observer[] = [];
+  class Observer {
+    static supportedEntryTypes = ["longtask"];
+    records: PerformanceEntry[] = [];
+    disconnected = false;
+    constructor(
+      public callback: (list: { getEntries(): PerformanceEntry[] }) => void,
+    ) {
+      observers.push(this);
+    }
+    observe() {}
+    disconnect() {
+      this.disconnected = true;
+    }
+    takeRecords() {
+      const records = this.records;
+      this.records = [];
+      return records;
+    }
+    emit(at: number) {
+      this.callback({
+        getEntries: () => [{ startTime: at, duration: 75 } as PerformanceEntry],
+      });
+    }
+  }
+  vi.stubGlobal("PerformanceObserver", Observer);
+  vi.stubGlobal("requestAnimationFrame", () => 1);
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+  vi.stubGlobal("innerWidth", 390);
+  vi.stubGlobal("innerHeight", 844);
+  vi.stubGlobal("devicePixelRatio", 2);
+  try {
+    const capture = new PerformanceCapture();
+    capture.start();
+    expect(observers).toHaveLength(0);
+    capture.setActive(true);
+    const first = observers[0]!;
+    first.emit(99); // task started before recording resumed
+    for (let i = 0; i < 140; i++) {
+      now = 100 + i;
+      first.emit(now);
+      capture.markPlacement(6, i, true, false);
+    }
+    let snapshot = capture.snapshot();
+    expect(snapshot.longTasks).toHaveLength(128);
+    expect(snapshot.longTasks[0]?.at).toBe(112);
+    expect(snapshot.placements[0]?.streak).toBe(12);
+    first.records.push({ startTime: 240, duration: 60 } as PerformanceEntry);
+    capture.setActive(false);
+    expect(first.disconnected).toBe(true);
+    expect(capture.snapshot().longTasks.at(-1)?.at).toBe(240);
+    capture.markPlacement(0, 999, false, false);
+    first.emit(999);
+    expect(capture.snapshot().placements.at(-1)?.streak).toBe(139);
+    now = 1000;
+    capture.setActive(true);
+    first.emit(1001); // obsolete callback must not enter the resumed session
+    observers[1]!.emit(950);
+    expect(capture.snapshot().longTasks.at(-1)?.at).toBe(240);
+    observers[1]!.emit(1002);
+    expect(capture.snapshot().longTasks.at(-1)?.at).toBe(1002);
+    capture.start();
+    expect(observers[1]!.disconnected).toBe(true);
+    snapshot = capture.snapshot();
+    expect(snapshot.longTasks).toEqual([]);
+    expect(snapshot.placements).toEqual([]);
+    capture.setActive(false);
+  } finally {
+    clock.mockRestore();
+    vi.unstubAllGlobals();
+  }
+});

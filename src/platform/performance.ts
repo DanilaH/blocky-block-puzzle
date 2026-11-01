@@ -1,5 +1,12 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
 type Phase = { name: string; ms: number; at: number };
+type Marker = {
+  at: number;
+  lines: number;
+  streak: number;
+  allClear: boolean;
+  calm: boolean;
+};
 type Summary = { count: number; totalMs: number; maxMs: number };
 /** Opt-in, bounded diagnostics. No board, save data or persistent identifiers. */
 export class PerformanceCapture {
@@ -14,7 +21,45 @@ export class PerformanceCapture {
   private phases: Phase[] = [];
   private phaseCursor = 0;
   private summaries = new Map<string, Summary>();
+  private markers: Marker[] = [];
+  private markerCursor = 0;
+  private longTasks: { at: number; ms: number }[] = [];
+  private longTaskCursor = 0;
+  private observer: PerformanceObserver | null = null;
+  private activeSince = 0;
+  private longTaskSupported = false;
+  markPlacement(
+    lines: number,
+    streak: number,
+    allClear: boolean,
+    calm: boolean,
+  ) {
+    if (!this.enabled || !this.active) return;
+    this.markers[this.markerCursor] = {
+      at: performance.now(),
+      lines,
+      streak,
+      allClear,
+      calm,
+    };
+    this.markerCursor = (this.markerCursor + 1) % 128;
+  }
+  private collectTasks(entries: PerformanceEntry[]) {
+    for (const entry of entries) {
+      if (entry.startTime < this.activeSince) continue;
+      this.longTasks[this.longTaskCursor] = {
+        at: entry.startTime,
+        ms: entry.duration,
+      };
+      this.longTaskCursor = (this.longTaskCursor + 1) % 128;
+    }
+  }
   start() {
+    this.observer?.disconnect();
+    this.observer = null;
+    this.markers = [];
+    this.longTasks = [];
+    this.markerCursor = this.longTaskCursor = 0;
     this.cursor = this.count = 0;
     this.phases = [];
     this.phaseCursor = 0;
@@ -27,6 +72,22 @@ export class PerformanceCapture {
     this.sync();
   }
   private sync() {
+    if (this.observer) {
+      this.collectTasks(this.observer.takeRecords());
+      this.observer.disconnect();
+      this.observer = null;
+    }
+    this.longTaskSupported =
+      typeof PerformanceObserver !== "undefined" &&
+      PerformanceObserver.supportedEntryTypes.includes("longtask");
+    if (this.enabled && this.active && this.longTaskSupported) {
+      this.activeSince = performance.now();
+      const observer = new PerformanceObserver((list) => {
+        if (this.observer === observer) this.collectTasks(list.getEntries());
+      });
+      this.observer = observer;
+      observer.observe({ type: "longtask" });
+    }
     cancelAnimationFrame(this.frame);
     this.frame = 0;
     this.last = 0;
@@ -79,8 +140,8 @@ export class PerformanceCapture {
     );
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
-      version: "0.28",
-      schemaVersion: 2,
+      version: "0.29",
+      schemaVersion: 3,
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
       phaseUnits:
@@ -91,6 +152,17 @@ export class PerformanceCapture {
         height: innerHeight,
         dpr: devicePixelRatio,
       },
+      longTaskSupported: this.longTaskSupported,
+      longTasks: Array.from({ length: this.longTasks.length }, (_, i) => ({
+        ...this.longTasks[
+          (this.longTaskCursor - this.longTasks.length + i + 128) % 128
+        ]!,
+      })),
+      placements: Array.from({ length: this.markers.length }, (_, i) => ({
+        ...this.markers[
+          (this.markerCursor - this.markers.length + i + 128) % 128
+        ]!,
+      })),
       sampleCount: samples.length,
       median: sorted[Math.floor(sorted.length * 0.5)] ?? null,
       p95: sorted[Math.floor(sorted.length * 0.95)] ?? null,
@@ -132,7 +204,7 @@ export class PerformanceCapture {
       );
       const link = document.createElement("a");
       link.href = url;
-      link.download = "blocky-performance-0.28.json";
+      link.download = "blocky-performance-0.29.json";
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     }

@@ -21,6 +21,10 @@ const allowed = new Set([
   "no-graphics",
   "no-ink",
   "no-bed",
+  "no-material-blend",
+  "no-dom-blend",
+  "no-board-blend",
+  "no-overlay-canvases",
 ]);
 if (modes.some((mode) => !allowed.has(mode))) {
   await browser.close();
@@ -117,16 +121,32 @@ try {
             window.audit.festivalPeak,
             this.sparks.length,
           );
-          if (mode === "no-festival") {
+          if (mode === "no-festival" || mode === "no-overlay-canvases") {
             this.stop();
             return;
           }
           return fd.apply(this, a);
         };
-        if (mode === "no-ambient") {
+        if (mode === "no-ambient" || mode === "no-overlay-canvases") {
           const { Atmosphere } = await import("/src/game/atmosphere.ts");
           Atmosphere.prototype.draw = function () {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          };
+        }
+        if (mode === "no-material-blend" || mode === "no-dom-blend") {
+          const { TileMaterialDOM } = await import(
+            "/src/game/tile-material.ts"
+          );
+          const set = TileMaterialDOM.prototype.set;
+          TileMaterialDOM.prototype.set = function (material) {
+            return set.call(this, material, 0);
+          };
+        }
+        if (mode === "no-material-blend" || mode === "no-board-blend") {
+          const { TileStudySprites } = await import("/src/game/tile-study.ts");
+          const set = TileStudySprites.prototype.setMaterial;
+          TileStudySprites.prototype.setMaterial = function (material, now) {
+            return set.call(this, material, now, 0);
           };
         }
         if (mode === "no-filters" || mode === "no-theme-transition") {
