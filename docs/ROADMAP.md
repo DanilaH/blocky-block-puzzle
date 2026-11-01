@@ -291,6 +291,6 @@ Evidence and limitations: [performance follow-up](qa/PERFORMANCE_FOLLOWUP_2026-1
 - [x] Isolate DOM/board material blends and simultaneous background/festival drawing; stalls persist, production effects retained.
 - [x] Bounded placement markers and browser long-task capture, active lifecycle only, schema 3.
 - [x] Reproducible single-session clear/drag/pause/restart stress script.
-- [ ] Final stress protocol, full CI and signed preview APK verification.
+- [x] 60-cycle single-session stress; CI 41301342060: 93 unit + 99 browser, Android success. APK 0.29 verified by version, matching 0.28 certificate and 28 production files.
 - [ ] Physical Android profiling; no phone FPS improvement claimed.
 Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).

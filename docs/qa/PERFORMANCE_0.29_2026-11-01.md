@@ -34,4 +34,8 @@ This synthetic test does not replace the specification's 30-minute physical-devi
 
 ## Validation
 
-93 unit tests and TypeScript/Vite build passed locally. Seven targeted browser tests passed and cover placement, strict drag layout reads, diagnostic export and material transitions. Complete CI and APK checks pending at source publication.
+93 unit tests and TypeScript/Vite build passed locally. Seven targeted browser tests passed and cover placement, strict drag layout reads, diagnostic export and material transitions. A manual browser export probe scheduled a 100 ms busy task via setTimeout: the downloaded `blocky-performance-0.29.json` reported schema 3, 25 RAF samples, `longTaskSupported: true`, and a 100 ms long task. A first attempt using direct DevTools evaluation did not appear as a page long task; the timer task correctly exercises the browser event loop. Full CI 41301342060 on commit 93504f152577998e17ad9fc2f6e001745b4dd535 passed: 93 unit + 99 browser tests, Android build successful. The first source build (41301099195) passed tests but failed Android dependency download with Maven Central HTTP 403; the final build completed without repository or dependency changes.
+
+APK: versionCode 29 / 0.29.0-preview, package com.danilah.blocky.dev, 10,032,979 bytes. SHA256: `066dc58dee21c4821db284cea14817cc01f8e8ec04af27e57b14d01dde83ca15`. ZIP artifact 13081647983 digest verified before extraction. APK signature verified with apksig; certificate matches 0.28. All 28 packaged production files match fresh local dist byte-for-byte. DEX contains the fixed export filename and no stale 0.27 filename. [APK checks](performance-0.29/apk-verification.json), [validation summary](performance-0.29/validation.json).
+
+This is a diagnostic preview, not a demonstrated FPS improvement. Physical-device performance, audio, vibration and ad gates remain open.
