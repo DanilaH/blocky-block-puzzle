@@ -1,0 +1,20 @@
+{
+  "source": "previous APK web payload",
+  "destination": "supplied APK web payload",
+  "sameOrigin": true,
+  "profilePreservedExactly": true,
+  "checked": [
+    "game and RNG",
+    "records",
+    "settings",
+    "hint credits",
+    "pending and applied reward intents",
+    "receipt deduplication markers"
+  ],
+  "errors": [],
+  "nativeInstallTested": false,
+  "fromVersion": "028",
+  "toVersion": "029",
+  "sourceApkSha256": "249ed43763d0a0966305a912b37241b81dafeb077276d34599d9e8c478fdc3a5",
+  "destinationApkSha256": "066dc58dee21c4821db284cea14817cc01f8e8ec04af27e57b14d01dde83ca15"
+}

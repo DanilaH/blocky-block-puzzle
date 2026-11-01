@@ -285,6 +285,7 @@ it("locks immediately on consent while native readiness is pending", async () =>
   const result = h.controller.rewarded("hints");
   expect(h.controller.busy).toBe(true);
   expect(h.block).toHaveBeenLastCalledWith(true);
+  await vi.waitFor(() => expect(resolve).toBeTypeOf("function"));
   resolve({ rewarded: false, interstitial: false });
   expect(await result).toBe("unavailable");
   expect(h.controller.busy).toBe(false);
@@ -308,4 +309,28 @@ it("late confirmed reward postpones interstitial from delivery, not old intent t
   p = applyReceipt(p, { id: "receipt", intentId: "late" });
   expect(p.ads!.lastFullscreenMs).toBe(500000);
   expect(canInterstitial(p)).toBe(false);
+});
+
+it("readiness retries a saved reward even when native pending receipts block new ads", async () => {
+  const h = harness();
+  await h.controller.init();
+  await h.controller.rewarded("hints");
+  const receipt = {
+    id: "retry-without-relaunch",
+    intentId: h.store.state.ads!.intents[0]!.id,
+  };
+  h.receipts([receipt]);
+  h.fail(true);
+  await h.controller.recover();
+  h.fail(false);
+  h.bridge.status = async () => ({
+    rewarded: h.store.state.earnedHints === 3,
+    interstitial: false,
+  });
+  expect(await h.controller.ready()).toBe(true);
+  expect(h.store.state.earnedHints).toBe(3);
+  expect(h.bridge.acknowledge).toHaveBeenCalledOnce();
+  await h.controller.ready();
+  expect(h.store.state.earnedHints).toBe(3);
+  expect(h.bridge.show).toHaveBeenCalledTimes(1);
 });

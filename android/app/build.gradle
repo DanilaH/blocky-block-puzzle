@@ -19,8 +19,8 @@ android {
         applicationId "com.danilah.blocky.dev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 29
-        versionName "0.29.0-preview"
+        versionCode 30
+        versionName "0.30.0-preview"
         resValue "bool", "ads_test_mode", "true"
         resValue "string", "yandex_banner_id", ""
         resValue "string", "yandex_interstitial_id", ""

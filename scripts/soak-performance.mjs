@@ -3,6 +3,11 @@ import { createServer } from "vite";
 import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
 const cycles = Number(process.env.BLOCKY_CYCLES || 60);
+const durationMs = Number(process.env.BLOCKY_MINUTES || 0) * 60000;
+const started = Date.now();
+let completed = 0,
+  hints = 0,
+  losses = 0;
 const server = await createServer({
   server: {
     host: "127.0.0.1",
@@ -74,7 +79,11 @@ try {
     return { label, ...dom, heap: heap.usedSize, ...state };
   };
   const samples = [];
-  for (let i = 0; i < cycles; i++) {
+  for (
+    let i = 0;
+    durationMs ? Date.now() - started < durationMs : i < cycles;
+    i++
+  ) {
     await page.evaluate(async (i) => {
       const { newGame } = await import("/src/core/rules.ts");
       await window.soakStore.waitIdle();
@@ -95,8 +104,21 @@ try {
             if ((y < 3 && x >= 3) || (x < 3 && y >= 3))
               game.board[y * 8 + x] = ((x + y) % 6) + 1;
         if (i % 2) game.board[63] = 3;
+        if (i % 5 === 4) {
+          game.board = Array.from(
+            { length: 64 },
+            (_, k) => ((k % 8) + Math.floor(k / 8)) % 2,
+          );
+          game.tray = [1, 2, 3].map((color) => ({
+            shapeId: "O3-0",
+            color,
+            used: false,
+          }));
+          game.tray[0].shapeId = "S1-0";
+        }
         return {
           ...p,
+          earnedHints: 3,
           revision: p.revision + 1,
           tutorialStep: 4,
           best: 10000000,
@@ -106,22 +128,38 @@ try {
       });
     }, i);
     await page.locator("#resume").click();
-    await page.locator('[data-slot="0"]').click();
-    const board = await page.locator("#board").boundingBox();
-    await page.mouse.click(
-      board.x + board.width / 16,
-      board.y + board.height / 16,
-    );
-    await page.waitForFunction(() => window.soakStore.state.game.moves === 11);
-    const b = await page.locator('[data-slot="1"]').boundingBox();
-    await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
-    await page.mouse.down();
-    await page.mouse.move(150, 300, { steps: 4 });
-    await page.waitForTimeout(350);
-    await page.mouse.move(1, 1);
-    await page.mouse.up();
+    if (i % 5 === 4) {
+      await page.locator('[data-slot="0"]').click();
+      const b = await page.locator("#board").boundingBox();
+      await page.mouse.click(b.x + b.width / 16, b.y + b.height / 16);
+      await page.locator("#again").click();
+      losses++;
+    } else {
+      if (i % 3 === 0) {
+        await page.locator("#hint").click();
+        await page.waitForFunction(() => !!window.soakStore.state.hint);
+        hints++;
+      }
+      await page.locator('[data-slot="0"]').click();
+      const board = await page.locator("#board").boundingBox();
+      await page.mouse.click(
+        board.x + board.width / 16,
+        board.y + board.height / 16,
+      );
+      await page.waitForFunction(
+        () => window.soakStore.state.game.moves === 11,
+      );
+      const b = await page.locator('[data-slot="1"]').boundingBox();
+      await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(150, 300, { steps: 4 });
+      await page.waitForTimeout(350);
+      await page.mouse.move(1, 1);
+      await page.mouse.up();
+    }
     await page.locator("#pause").click();
     await page.waitForTimeout(50);
+    completed = i + 1;
     // Also exercise real restart, with no page reload.
     if (i % 10 === 9) {
       await page.locator("#restart").click();
@@ -131,7 +169,29 @@ try {
     if (i % 10 === 9 || i === 0) {
       const s = await sample(i + 1);
       samples.push(s);
-      console.log(JSON.stringify(s));
+      console.log(
+        JSON.stringify({
+          ...s,
+          elapsedMs: Date.now() - started,
+          hints,
+          losses,
+        }),
+      );
+      await fs.writeFile(
+        "/tmp/blocky-soak-checkpoint.json",
+        JSON.stringify(
+          {
+            completed,
+            elapsedMs: Date.now() - started,
+            hints,
+            losses,
+            errors,
+            samples,
+          },
+          null,
+          2,
+        ),
+      );
     }
   }
   await page.waitForTimeout(2200);
@@ -139,7 +199,10 @@ try {
   const result = {
     environment:
       "Chromium software renderer, synthetic repeated clear/drag/pause and restart; not a 30-minute physical playtest",
-    cycles,
+    cycles: completed,
+    elapsedMs: Date.now() - started,
+    hints,
+    losses,
     errors,
     samples,
   };

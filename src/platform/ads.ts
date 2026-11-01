@@ -142,6 +142,9 @@ export class AdsController {
   async ready() {
     if (!this.bridge || !this.enabled) return false;
     try {
+      // Native readiness is false while an unacknowledged receipt exists.
+      // Retry its durable application before asking for another advertisement.
+      await this.recover();
       return (await this.bridge.status()).rewarded;
     } catch {
       return false;

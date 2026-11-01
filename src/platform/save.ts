@@ -88,29 +88,33 @@ export class IndexedSave implements SaveAdapter {
       const tx = db.transaction("save", "readwrite"),
         s = tx.objectStore("save"),
         read = s.get("current");
-      let conflict = false;
+      let failure: unknown = new Error("Failed transaction");
       read.onsuccess = () => {
-        const current: unknown = read.result;
-        if (validProfile(current)) {
-          if (
-            current.revision > profile.revision ||
-            (current.revision === profile.revision &&
-              JSON.stringify(current) !== JSON.stringify(profile))
-          ) {
-            conflict = true;
-            tx.abort();
-            return;
+        try {
+          const current: unknown = read.result;
+          if (validProfile(current)) {
+            if (
+              current.revision > profile.revision ||
+              (current.revision === profile.revision &&
+                JSON.stringify(current) !== JSON.stringify(profile))
+            ) {
+              failure = new SaveConflictError();
+              tx.abort();
+              return;
+            }
+            s.put(current, "backup");
           }
-          s.put(current, "backup");
+          s.put(profile, "current");
+        } catch (error) {
+          // Synchronous quota/serialization failures in an IDB callback must
+          // reject this write, not escape as an uncaught window error.
+          failure = error;
+          tx.abort();
         }
-        s.put(profile, "current");
       };
       tx.oncomplete = () => resolve();
       tx.onerror = () => reject(tx.error);
-      tx.onabort = () =>
-        reject(
-          conflict ? new SaveConflictError() : new Error("Failed transaction"),
-        );
+      tx.onabort = () => reject(failure);
     });
   }
 }

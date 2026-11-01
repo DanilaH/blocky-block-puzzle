@@ -140,7 +140,7 @@ export class PerformanceCapture {
     );
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
-      version: "0.29",
+      version: "0.30",
       schemaVersion: 3,
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
@@ -204,7 +204,7 @@ export class PerformanceCapture {
       );
       const link = document.createElement("a");
       link.href = url;
-      link.download = "blocky-performance-0.29.json";
+      link.download = "blocky-performance-0.30.json";
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     }

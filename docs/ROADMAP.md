@@ -294,3 +294,12 @@ Evidence and limitations: [performance follow-up](qa/PERFORMANCE_FOLLOWUP_2026-1
 - [x] 60-cycle single-session stress; CI 41301342060: 93 unit + 99 browser, Android success. APK 0.29 verified by version, matching 0.28 certificate and 28 production files.
 - [ ] Physical Android profiling; no phone FPS improvement claimed.
 Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
+
+## Надёжность 0.30 — 01.11.2026
+- [x] Повторное применение ожидающей рекламной награды при проверке доступности, без обязательного перезапуска.
+- [x] Обработка синхронного отказа IDB-записи без uncaught exception; rollback обеих копий и повторная запись.
+- [x] Конфликт двух писателей, закрытие вкладки во время транзакции, browser-origin обновления 0.28→0.29 и 0.29→0.30.
+- [x] Релизная матрица: package/key, реальные ad IDs, аналитика, SDK/privacy, магазин, физические устройства.
+- [ ] Финальный 30-минутный синтетический прогон, CI и проверка APK.
+- [ ] Аппаратная приёмка; product analytics, production-реквизиты, privacy и магазин остаются открытыми.
+Протокол: [надёжность 0.30](qa/RELIABILITY_0.30_2026-11-01.md).
