@@ -7,6 +7,7 @@ export { TILE_STUDY } from "./tile-study-config";
 /** Fixed startup allocation; only visible material layers enter the render list.
  * A second boundary samples the current blend, so even a reset cannot pop. */
 export class TileStudySprites {
+  transitioning = false;
   private pools: Phaser.GameObjects.Image[][];
   private cursor = [0, 0, 0];
   private previous = [0, 0, 0];
@@ -23,10 +24,13 @@ export class TileStudySprites {
     );
   }
   setMaterial(material: TileMaterial, now: number, duration: number) {
-    this.blend.set(material, now, duration);
+    if (this.blend.set(material, now, duration))
+      this.transitioning = duration > 0;
   }
   begin() {
-    const layers = this.blend.sample(performance.now());
+    const now = performance.now();
+    const layers = this.blend.sample(now);
+    this.transitioning = now < this.blend.started + this.blend.duration;
     this.opacity[1] = layers[0]!;
     this.opacity[2] = layers[1]!;
     this.cursor.fill(0);

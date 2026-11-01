@@ -320,6 +320,7 @@ export class BoardScene extends Phaser.Scene {
     if (
       this.dirty ||
       this.themeAt > 0 ||
+      this.study?.transitioning ||
       this.praiseHit ||
       (this.defeatAt > 0 && performance.now() - this.defeatAt < 900) ||
       this.previewEcho ||

@@ -112,3 +112,78 @@ for (const [streak, material] of [
     await page.mouse.up();
   });
 }
+
+test("material pool is bounded and requests its final frame even if the theme timer finishes first", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const result = await page.evaluate(async () => {
+    const { TileStudySprites } = await import("/src/game/tile-study.ts");
+    const sprites: any[] = [];
+    const scene = {
+      add: {
+        image: (_x, _y, key) => {
+          const s: any = { visible: false, texture: { key } };
+          for (const name of [
+            "setDepth",
+            "setPosition",
+            "setDisplaySize",
+            "setAlpha",
+          ])
+            s[name] = () => s;
+          s.setTexture = (key) => {
+            s.texture.key = key;
+            return s;
+          };
+          s.setVisible = (visible) => {
+            s.visible = visible;
+            return s;
+          };
+          s.destroy = () => {};
+          sprites.push(s);
+          return s;
+        },
+      },
+    };
+    const tiles = new TileStudySprites(scene as any);
+    const original = performance.now.bind(performance);
+    let now = 100;
+    performance.now = () => now;
+    try {
+      tiles.setMaterial("chrome", now, 1000);
+      now = 900;
+      tiles.begin();
+      for (let i = 0; i < 1000; i++) tiles.tile(0, 0, 0xffb719, 1, 1);
+      tiles.end();
+      const intermediate = {
+        active: tiles.transitioning,
+        count: sprites.filter((s) => s.visible).length,
+      };
+      now = 1200;
+      tiles.begin();
+      tiles.tile(0, 0, 0xffb719, 1, 1);
+      tiles.end();
+      const final = {
+        active: tiles.transitioning,
+        keys: sprites.filter((s) => s.visible).map((s) => s.texture.key),
+      };
+      tiles.begin();
+      tiles.end();
+      return {
+        intermediate,
+        final,
+        count: sprites.length,
+        cleared: sprites.every((s) => !s.visible),
+      };
+    } finally {
+      performance.now = original;
+      tiles.destroy();
+    }
+  });
+  expect(result).toEqual({
+    intermediate: { active: true, count: 768 },
+    final: { active: false, keys: ["study-chrome-1"] },
+    count: 768,
+    cleared: true,
+  });
+});
