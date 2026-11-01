@@ -86,6 +86,9 @@ for (const mode of ["background", "next-move"] as const) {
       (await page.locator("#score").textContent())?.replace(/\D/g, ""),
     ).toBe(mode === "background" ? "1901" : "1902");
     expect(await page.locator(".reward-event").count()).toBe(0);
+    // Readiness now includes the first rendered frame. A reloaded page cannot
+    // produce it while the test's synthetic requestAnimationFrame is frozen.
+    await page.clock.resume();
     await page.reload();
     await page.locator("#board canvas").waitFor();
     await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");

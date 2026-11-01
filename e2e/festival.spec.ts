@@ -100,6 +100,9 @@ for (const interrupt of [false, true])
     expect(
       (await page.locator("#score").textContent())?.replace(/\D/g, ""),
     ).toBe("1901");
+    // Readiness now includes the first rendered frame. A reloaded page cannot
+    // produce it while the test's synthetic requestAnimationFrame is frozen.
+    await page.clock.resume();
     await page.reload();
     await page.locator("#board canvas").waitFor();
     await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
