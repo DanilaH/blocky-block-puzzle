@@ -277,3 +277,12 @@ Gate: нет потери принятого хода, неверного кон
 - [ ] Плейтест и performance capture на физическом Android: пороги, читаемость хрома, плавность перехода во время комбо.
 
 - [x] Устранён обнаруженный в полном CI polling размеров Phaser: ResizeObserver вместо таймера; ввод после первого кадра; строгий drag-check расширен до 650 мс. 13 связанных browser checks прошли локально.
+
+### 2026-11-01 — Remaining-spike investigation after 0.28
+
+- [x] Controlled six-line clear/material transition/drag trace and idle control; isolate festival, ambient and CSS filters individually.
+- [x] Replace diagnostic phase-array shifts with bounded ring; retain session phase aggregates, timestamp RAF samples, separate placement rendering.
+- [x] Reproducible optional Chrome traces and ablation selection in `scripts/compare-performance.mjs`.
+- [ ] Confirm bottleneck with physical Android capture; software Chromium Commit stalls are not proof of Android GPU cost.
+
+Evidence and limitations: [performance follow-up](qa/PERFORMANCE_FOLLOWUP_2026-11-01.md). No reduction of production effect budgets; existing 0.28 APK unchanged.

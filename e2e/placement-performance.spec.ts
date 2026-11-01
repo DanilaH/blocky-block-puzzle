@@ -158,6 +158,13 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
     "blocky-performance-0.28.json",
   );
   expect(before.sampleCount).toBeGreaterThan(0);
+  expect(before.schemaVersion).toBe(2);
+  expect(before.frameTimes).toHaveLength(before.sampleCount);
+  expect(
+    before.frameTimes.every(
+      (value, i, times) => i === 0 || value > times[i - 1]!,
+    ),
+  ).toBe(true);
 });
 
 test("unchanged banner geometry is deduplicated but native invalidation refreshes it", async ({

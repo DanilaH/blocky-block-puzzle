@@ -1,17 +1,24 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
+type Phase = { name: string; ms: number; at: number };
+type Summary = { count: number; totalMs: number; maxMs: number };
 /** Opt-in, bounded diagnostics. No board, save data or persistent identifiers. */
 export class PerformanceCapture {
   private frames = new Float32Array(7200);
+  private frameTimes = new Float64Array(7200);
   private cursor = 0;
   private count = 0;
   private last = 0;
   private frame = 0;
   private active = false;
   enabled = false;
-  private phases: { name: string; ms: number; at: number }[] = [];
+  private phases: Phase[] = [];
+  private phaseCursor = 0;
+  private summaries = new Map<string, Summary>();
   start() {
     this.cursor = this.count = 0;
     this.phases = [];
+    this.phaseCursor = 0;
+    this.summaries.clear();
     this.enabled = true;
     this.sync();
   }
@@ -29,6 +36,7 @@ export class PerformanceCapture {
   private tick = (now: number) => {
     if (this.last) {
       this.frames[this.cursor] = now - this.last;
+      this.frameTimes[this.cursor] = now;
       this.cursor = (this.cursor + 1) % this.frames.length;
       this.count = Math.min(this.frames.length, this.count + 1);
     }
@@ -46,8 +54,19 @@ export class PerformanceCapture {
   }
   record(name: string, ms: number) {
     if (!this.enabled) return;
-    if (this.phases.length === 512) this.phases.shift();
-    this.phases.push({ name, ms, at: performance.now() });
+    if (!Number.isFinite(ms) || ms < 0) return;
+    let summary = this.summaries.get(name);
+    // Call sites use fixed names; still bound storage if a new caller does not.
+    if (!summary) {
+      if (this.summaries.size >= 32) return;
+      summary = { count: 0, totalMs: 0, maxMs: 0 };
+      this.summaries.set(name, summary);
+    }
+    summary.count++;
+    summary.totalMs += ms;
+    summary.maxMs = Math.max(summary.maxMs, ms);
+    this.phases[this.phaseCursor] = { name, ms, at: performance.now() };
+    this.phaseCursor = (this.phaseCursor + 1) % 512;
   }
   snapshot() {
     const samples = Array.from(
@@ -61,6 +80,11 @@ export class PerformanceCapture {
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
       version: "0.28",
+      schemaVersion: 2,
+      timestampClock:
+        "performance.now milliseconds; frame timestamps mark interval end",
+      phaseUnits:
+        "milliseconds; commitIncludingSaveWallTime includes asynchronous storage wait",
       clock: "browser RAF intervals; not GPU timings",
       viewport: {
         width: innerWidth,
@@ -73,7 +97,25 @@ export class PerformanceCapture {
       over33: samples.filter((x) => x > 33.4).length,
       over50: samples.filter((x) => x > 50).length,
       frames: samples,
-      phases: this.phases.slice(),
+      frameTimes: Array.from(
+        { length: this.count },
+        (_, i) =>
+          this.frameTimes[
+            (this.cursor - this.count + i + this.frames.length) %
+              this.frames.length
+          ]!,
+      ),
+      phases: Array.from({ length: this.phases.length }, (_, i) => ({
+        ...this.phases[
+          (this.phaseCursor - this.phases.length + i + 512) % 512
+        ]!,
+      })),
+      phaseSummary: Object.fromEntries(
+        Array.from(this.summaries, ([name, value]) => [
+          name,
+          { ...value, meanMs: value.totalMs / value.count },
+        ]),
+      ),
     };
   }
   async export() {

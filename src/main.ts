@@ -811,7 +811,7 @@ async function start() {
           : 0;
       atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
-      render(running);
+      performanceCapture.measure("placementRender", () => render(running));
       if (running) {
         if (
           before.streak > 0 &&
