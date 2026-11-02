@@ -1,11 +1,27 @@
+import { MusicLoop, musicalFrequency } from "./music";
 import { seriesPitch } from "./themes";
 import { MusicalChain } from "./festival";
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
   private soundEnabled = true;
+  private musicVolume = 0;
+  private effectsVolume = 1;
+  private music: MusicLoop | null = null;
+  get audible() {
+    return (this.enabled && this.effectsVolume > 0) || this.musicVolume > 0;
+  }
+  configure(musicVolume: number, effectsVolume: number) {
+    this.musicVolume = Math.max(0, Math.min(1, musicVolume));
+    this.effectsVolume = Math.max(0, Math.min(1, effectsVolume));
+    if (this.master)
+      this.master.gain.value = this.enabled ? 0.65 * this.effectsVolume : 0;
+    this.music?.setVolume(this.musicVolume);
+    if (!this.audible) this.stop();
+  }
   private allowed = true;
   private generation = 0;
   private unlocked = false;
+  private activated = false;
   beforeUnlock?: () => Promise<boolean>;
   get enabled() {
     return this.soundEnabled;
@@ -13,12 +29,16 @@ export class GameAudio {
   set enabled(value: boolean) {
     if (this.soundEnabled === value) return;
     this.soundEnabled = value;
-    if (!value) this.stop();
+    if (this.master)
+      this.master.gain.value = value ? 0.65 * this.effectsVolume : 0;
+    if (!this.audible) this.stop();
   }
   setAllowed(value: boolean) {
     if (this.allowed === value) return;
+    const changed = this.allowed !== value;
     this.allowed = value;
     if (!value) this.stop();
+    else if (changed && this.activated) void this.unlock();
   }
   calm = false;
   private variant = 0;
@@ -31,12 +51,12 @@ export class GameAudio {
   private wet: GainNode | null = null;
   async unlock() {
     const generation = this.generation;
-    if (!this.enabled) return;
+    if (!this.audible) return;
     if (this.beforeUnlock && !(await this.beforeUnlock())) return;
-    if (!this.allowed || !this.enabled || generation !== this.generation)
+    if (!this.allowed || !this.audible || generation !== this.generation)
       return;
     if (!this.context) {
-      this.context = new AudioContext();
+      this.context = new AudioContext({ sampleRate: 24000 });
       this.master = this.context.createGain();
       this.master.gain.value = 0;
       const limiter = this.context.createDynamicsCompressor();
@@ -44,6 +64,8 @@ export class GameAudio {
       limiter.ratio.value = 8;
       this.master.connect(limiter).connect(this.context.destination);
       this.output = limiter;
+      this.music = new MusicLoop(this.context, limiter);
+      this.music.setVolume(this.musicVolume);
     }
     if (!this.delay) {
       this.delay = this.context.createDelay(0.3);
@@ -57,15 +79,18 @@ export class GameAudio {
     } catch {
       return;
     }
-    if (!this.allowed || !this.enabled || generation !== this.generation) {
+    if (!this.allowed || !this.audible || generation !== this.generation) {
       // A pending resume must not resurrect audio after pause/focus loss.
       if (!this.unlocked) void this.context.suspend().catch(() => {});
       return;
     }
-    this.master!.gain.value = 0.65;
+    this.master!.gain.value = this.enabled ? 0.65 * this.effectsVolume : 0;
+    this.activated = true;
     this.unlocked = true;
+    void this.music?.start();
   }
   stop() {
+    this.music?.stop();
     this.chain.reset();
     this.generation++;
     this.unlocked = false;
@@ -99,6 +124,10 @@ export class GameAudio {
       if (!victim || victim[1] > priority) return;
       victim[0].stop();
       this.voices.delete(victim[0]);
+    }
+    if (this.musicVolume > 0 && duration >= 0.18) {
+      hz = musicalFrequency(hz);
+      end = musicalFrequency(end);
     }
     const c = this.context!,
       o = c.createOscillator(),
@@ -140,13 +169,16 @@ export class GameAudio {
     intensity = 0,
   ) {
     if (
-      !this.enabled ||
+      !this.audible ||
       !this.allowed ||
       !this.unlocked ||
       !this.context ||
       this.context.state !== "running"
     )
       return;
+    if (["clear", "combo", "mega", "allClear", "record"].includes(kind))
+      this.music?.duck(kind === "allClear");
+    if (!this.enabled || this.effectsVolume === 0) return;
     const t = this.context.currentTime;
     const pitch = seriesPitch(streak);
     if (kind === "seriesEnd") {

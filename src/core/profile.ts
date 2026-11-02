@@ -27,7 +27,13 @@ export interface Profile {
   freeHints: number;
   earnedHints: number;
   hint: HintReceipt | null;
-  settings: { sound: boolean; calm: boolean; haptics?: boolean };
+  settings: {
+    sound: boolean;
+    calm: boolean;
+    haptics?: boolean;
+    musicVolume?: number;
+    effectsVolume?: number;
+  };
 }
 export function dayKey(date = new Date()): string {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -42,7 +48,7 @@ export const createProfile = (game: GameState): Profile => ({
   freeHints: 3,
   earnedHints: 0,
   hint: null,
-  settings: { sound: true, calm: false },
+  settings: { sound: true, calm: false, musicVolume: 0.35, effectsVolume: 1 },
 });
 export function withHint(
   profile: Profile,
@@ -97,6 +103,11 @@ export function validProfile(value: unknown): value is Profile {
       (p.festivalBest !== undefined && !integer(p.festivalBest)) ||
       (p.settings?.haptics !== undefined &&
         typeof p.settings.haptics !== "boolean") ||
+      [p.settings?.musicVolume, p.settings?.effectsVolume].some(
+        (v) =>
+          v !== undefined &&
+          (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 1),
+      ) ||
       !integer(p.freeHints) ||
       p.freeHints > 3 ||
       !integer(p.earnedHints) ||

@@ -287,7 +287,7 @@ async function start() {
           !store.state.settings.calm &&
           !matchMedia("(prefers-reduced-motion: reduce)").matches,
       );
-      audioFocus.setActive(store.state.settings.sound);
+      audioFocus.setActive(audio.audible);
       ads.setActive(!inLesson() && store.state.game.status === "playing");
       analytics.setActive(
         !inLesson() && store.state.game.status === "playing",
@@ -533,7 +533,11 @@ async function start() {
         .querySelector<HTMLButtonElement>(`[data-slot="${focused}"]`)
         ?.focus({ preventScroll: true });
     audio.enabled = p.settings.sound;
-    audioFocus.setActive(running && p.settings.sound);
+    audio.configure(
+      p.settings.musicVolume ?? (p.settings.sound ? 0.35 : 0),
+      p.settings.effectsVolume ?? 1,
+    );
+    audioFocus.setActive(running && audio.audible);
     scene.calm =
       p.settings.calm || matchMedia("(prefers-reduced-motion: reduce)").matches;
     audio.calm = scene.calm;
@@ -1800,7 +1804,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     el("resume").onclick = close;
@@ -1820,9 +1824,17 @@ async function start() {
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
     ads.preload();
-    for (const key of ["sound", "calm", "haptics"] as const)
+    for (const key of [
+      "sound",
+      "calm",
+      "haptics",
+      "musicVolume",
+      "effectsVolume",
+    ] as const)
       el<HTMLInputElement>(key).onchange = async (event) => {
-        const value = (event.target as HTMLInputElement).checked;
+        const target = event.target as HTMLInputElement;
+        const value =
+          target.type === "range" ? Number(target.value) / 100 : target.checked;
         dialog.querySelector<HTMLElement>(".dialog-status")!.textContent = "";
         try {
           for (const input of dialog.querySelectorAll<HTMLInputElement>(
@@ -1832,17 +1844,40 @@ async function start() {
           const changed = await store.update((p) => ({
             ...p,
             revision: p.revision + 1,
-            settings: { ...p.settings, [key]: value },
+            settings: {
+              ...p.settings,
+              musicVolume:
+                p.settings.musicVolume ?? (p.settings.sound ? 0.35 : 0),
+              effectsVolume: p.settings.effectsVolume ?? 1,
+              [key]: value,
+            },
           }));
           if (!changed) toast("Дождитесь сохранения и повторите изменение");
           render();
         } catch (error) {
           await writeFailure(error, "Настройка не сохранена");
         } finally {
-          for (const setting of ["sound", "calm", "haptics"] as const) {
+          for (const setting of [
+            "sound",
+            "calm",
+            "haptics",
+            "musicVolume",
+            "effectsVolume",
+          ] as const) {
             const input = dialog.querySelector<HTMLInputElement>(`#${setting}`);
             if (input) {
-              input.checked = store.state.settings[setting] ?? true;
+              if (setting === "musicVolume" || setting === "effectsVolume")
+                input.value = String(
+                  Math.round(
+                    (store.state.settings[setting] ??
+                      (setting === "effectsVolume"
+                        ? 1
+                        : store.state.settings.sound
+                          ? 0.35
+                          : 0)) * 100,
+                  ),
+                );
+              else input.checked = store.state.settings[setting] ?? true;
               input.disabled = false;
             }
           }

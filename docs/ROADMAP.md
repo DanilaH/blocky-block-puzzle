@@ -310,3 +310,9 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] CI 41439465855: 107 unit + 105 browser, Android. Обновление payload 0.30→0.31 и миграция прошли; APK проверен по версии, подписи и 28 файлам.
 - [ ] Собственные ключи, кабинет AppMetrica, ILRD, disclosures и физический Android.
 Протокол: [награды и аналитика](qa/REWARDS_ANALYTICS_0.31_2026-11-02.md).
+
+## Музыка D — 0.32, 02.11.2026
+- [x] Локальный CC0 loop, один декодированный буфер, сохранение позиции, fade-in и ducking.
+- [x] Раздельные громкости, сохранение legacy mute, pentatonic reward register при включённой музыке.
+- [x] Локально 111 unit и 8 browser (audio focus, gameplay, music).
+- [ ] Полный CI / APK; слуховая оценка петли, тональности, внешняя музыка и реклама на физическом Android.

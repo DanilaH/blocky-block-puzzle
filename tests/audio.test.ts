@@ -46,6 +46,8 @@ class FakeContext {
     return {
       gain: {
         value: 0,
+        cancelScheduledValues() {},
+        setTargetAtTime() {},
         setValueAtTime() {},
         exponentialRampToValueAtTime() {},
       },

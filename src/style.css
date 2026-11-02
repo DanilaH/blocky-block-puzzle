@@ -423,7 +423,7 @@ dialog p {
   gap: 12px;
   font-size: 14px;
 }
-.setting input {
+.setting input[type="checkbox"] {
   appearance: none;
   width: 44px;
   height: 26px;
@@ -433,7 +433,7 @@ dialog p {
   flex: none;
   border: 1px solid #738bc5;
 }
-.setting input::after {
+.setting input[type="checkbox"]::after {
   content: "";
   position: absolute;
   width: 18px;
@@ -443,11 +443,11 @@ dialog p {
   top: 3px;
   background: #a9bce8;
 }
-.setting input:checked {
+.setting input[type="checkbox"]:checked {
   background: #69b64c;
   border-color: #96d26f;
 }
-.setting input:checked::after {
+.setting input[type="checkbox"]:checked::after {
   left: 21px;
   background: #fff;
 }
@@ -1003,7 +1003,7 @@ dialog[data-kind="result"] .result-best {
     padding-bottom: 2px;
   }
 }
-.setting input:disabled {
+.setting input[type="checkbox"]:disabled {
   opacity: 0.5;
 }
 
@@ -1175,18 +1175,18 @@ dialog p {
 .secondary:disabled {
   opacity: 0.5;
 }
-.setting input {
+.setting input[type="checkbox"] {
   background: #152d40;
   border-color: #71909d;
 }
-.setting input::after {
+.setting input[type="checkbox"]::after {
   background: #abc1ca;
 }
-.setting input:checked {
+.setting input[type="checkbox"]:checked {
   background: #d3aa59;
   border-color: #efd18b;
 }
-.setting input:checked::after {
+.setting input[type="checkbox"]:checked::after {
   background: #fff0cf;
 }
 .dialog-status {
@@ -1709,7 +1709,7 @@ dialog h2.result-score {
   border-color: #d8cfbc;
   box-shadow: 0 3px #ccc2ad;
 }
-.setting input:checked {
+.setting input[type="checkbox"]:checked {
   background: #dc9e20;
 }
 .lesson-heading,
@@ -1763,18 +1763,18 @@ dialog h2 {
 .dialog-status {
   color: #9b391c;
 }
-.setting input {
+.setting input[type="checkbox"] {
   background: #c4bdad;
   border-color: #a49b86;
 }
-.setting input::after {
+.setting input[type="checkbox"]::after {
   background: #faf7ee;
 }
-.setting input:checked {
+.setting input[type="checkbox"]:checked {
   background: #dc9e20;
   border-color: #b98312;
 }
-.setting input:checked::after {
+.setting input[type="checkbox"]:checked::after {
   background: #fff9e7;
 }
 
@@ -2230,8 +2230,11 @@ body:has(#app.effects-paused),
 :root[data-tile-study] .board-wrap {
   border-radius: 12px;
   background: var(--study-board);
-  box-shadow: 0 0 0 3px var(--study-rim), 0 0 0 5px var(--study-edge),
-    0 4px 0 4px var(--study-bottom), 0 8px 12px var(--study-shadow);
+  box-shadow:
+    0 0 0 3px var(--study-rim),
+    0 0 0 5px var(--study-edge),
+    0 4px 0 4px var(--study-bottom),
+    0 8px 12px var(--study-shadow);
 }
 :root[data-tile-study] #board {
   border-radius: 10px;
@@ -2240,8 +2243,12 @@ body:has(#app.effects-paused),
 :root[data-tile-study] .mini-shape {
   filter: drop-shadow(0 2px 1px #17202b50);
 }
-:root[data-tile-study] .mini-cell { filter: none; }
-:root[data-tile-study] .mini-cell::after { display: none; }
+:root[data-tile-study] .mini-cell {
+  filter: none;
+}
+:root[data-tile-study] .mini-cell::after {
+  display: none;
+}
 
 :root[data-board-study="sky"] {
   --study-board: #cce7f3;
@@ -2251,7 +2258,9 @@ body:has(#app.effects-paused),
   --study-shadow: #286b9a26;
 }
 :root[data-tile-study] .board-wrap {
-  transition: background-color var(--world-duration), box-shadow var(--world-duration);
+  transition:
+    background-color var(--world-duration),
+    box-shadow var(--world-duration);
 }
 :root[data-tile-study] .mini-cell {
   filter: brightness(calc(1 + var(--tile-sheen, 0)));
@@ -2260,6 +2269,26 @@ body:has(#app.effects-paused),
 
 /* Preloaded material layers; WAAPI joins newly created drag tiles to the
    current blend without layout reads or an extra per-frame JS loop. */
-:root[data-tile-study] .mini-cell { filter: none; transition: none; }
-.tile-plastic { opacity: 1; }
-.tile-enamel, .tile-chrome { opacity: 0; }
+:root[data-tile-study] .mini-cell {
+  filter: none;
+  transition: none;
+}
+.tile-plastic {
+  opacity: 1;
+}
+.tile-enamel,
+.tile-chrome {
+  opacity: 0;
+}
+
+.setting.audio-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.audio-level input[type="range"] {
+  width: 44%;
+  min-height: 44px;
+  accent-color: #b85a2d;
+  margin-left: auto;
+}
