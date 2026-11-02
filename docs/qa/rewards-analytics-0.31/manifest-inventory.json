@@ -1,0 +1,15 @@
+{
+  "permissions": [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.INTERNET",
+    "android.permission.VIBRATE",
+    "com.danilah.blocky.dev.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+    "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE",
+    "com.google.android.gms.permission.AD_ID"
+  ],
+  "added": [],
+  "removed": [],
+  "application": "com.danilah.blocky.dev.BlockyApplication",
+  "debuggable": "true",
+  "allowBackup": "false"
+}

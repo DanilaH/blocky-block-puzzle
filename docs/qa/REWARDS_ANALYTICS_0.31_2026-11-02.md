@@ -35,6 +35,12 @@ AppMetrica Android `8.6.0`, явная зависимость и Application ini
 - Browser: настоящие нажатия/ход/подсказка/настройки/reload, миграция при настройке и последующее чтение компактного журнала прошли. Существующие ads/recovery сценарии также прошли локально.
 - 107 unit прошли локально; build/assets check прошли.
 - Web payload из поставленного APK 0.30 → production dist 0.31 на том же origin: профиль точь-в-точь сохраняется при загрузке; после настройки applied marker уплотнён, pending и receipt IDs неизменны, reload успешен. [Протокол](rewards-analytics-0.31/upgrade-030-031.json). Нативный установщик не тестировался.
-- Полный CI и проверка APK — результаты будут добавлены после завершения.
+- Синтетическая сессия на финальном web-коде: 60 циклов / 172 085 мс, 16 подсказок, 12 поражений и рестартов, ошибок нет. В конце анимации/visual clock/sparks/voices = 0, tile pool = 768. [Замеры](rewards-analytics-0.31/soak-60.json). Это не новый 30-минутный прогон и не Android FPS.
+- Полный CI 41439465855 на a66d92e3616331674d08899b52fd6afd1fb0f882: 107 unit + 105 browser успешно, browser-набор 7,6 минуты. Android-сборка успешно завершена. Дополнительный локальный полный набор также завершился: 105 browser, 6,3 минуты.
 
 Физический Android, живые показы, кабинет AppMetrica и субъективный feel не проверялись. Изменений визуала, звуков и бюджета эффектов нет.
+
+
+## Поставленная сборка
+
+APK 0.31.0-preview / versionCode 31, 10 027 491 байт. SHA256 `cd2627a4013e44b9108ace4288f07b91a8207686692d844930e7fddb4a1f05e0`. Архив artifact 13139895762 проверен по SHA256 `137ba11c41e2c3aa4c505180f7c55ead657aa77c4ab0b02575cddae337d6d786` до распаковки. apksig подтвердил криптографическую подпись; сертификат совпадает с 0.30. Все 28 production-файлов совпали побайтно с локальным dist. [Протокол APK](rewards-analytics-0.31/apk-verification.json), [merged manifest](rewards-analytics-0.31/manifest-inventory.json), [проверки](rewards-analytics-0.31/validation.json).

@@ -307,6 +307,6 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 ## Награды и аналитика 0.31 — 02.11.2026
 - [x] Компактные terminal reward markers, сохранение pending/available, защита от повторной выдачи и повторного revive.
 - [x] Продуктовые события, сохранение счётчиков активного времени, bounded non-blocking transport, Android AppMetrica adapter и отдельный test key.
-- [ ] Финальный CI/APK и проверка обновления web payload — в процессе.
+- [x] CI 41439465855: 107 unit + 105 browser, Android. Обновление payload 0.30→0.31 и миграция прошли; APK проверен по версии, подписи и 28 файлам.
 - [ ] Собственные ключи, кабинет AppMetrica, ILRD, disclosures и физический Android.
 Протокол: [награды и аналитика](qa/REWARDS_ANALYTICS_0.31_2026-11-02.md).

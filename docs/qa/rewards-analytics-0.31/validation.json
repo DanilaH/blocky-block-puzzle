@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "a66d92e3616331674d08899b52fd6afd1fb0f882",
+  "ciRun": 41439465855,
+  "verifyJob": 125257394273,
+  "unitTests": 107,
+  "browserTests": 105,
+  "verifyResult": "success",
+  "browserMinutes": 7.6,
+  "localTargetedBrowserTests": 22,
+  "nativeDeviceTested": false,
+  "dashboardDeliveryTested": false,
+  "soakCycles": 60,
+  "soakElapsedMs": 172085,
+  "androidJob": 125260973566,
+  "androidResult": "success",
+  "apkVerified": true,
+  "localFullBrowserTests": 105,
+  "localFullBrowserResult": "success"
+}
