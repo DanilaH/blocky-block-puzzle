@@ -60,7 +60,7 @@ export class MusicLoop {
     const p = this.gain.gain,
       t = this.context.currentTime;
     p.cancelScheduledValues(t);
-    p.setTargetAtTime(value * 0.32, t, 0.12);
+    p.setTargetAtTime(value * 0.24, t, 0.12);
     if (value === 0) this.stop();
   }
   async start() {
@@ -117,7 +117,7 @@ export class MusicLoop {
     const t = this.context.currentTime;
     this.gain.gain.cancelScheduledValues(t);
     this.gain.gain.setValueAtTime(0, t);
-    this.gain.gain.setTargetAtTime(this.volume * 0.32, t, 0.25);
+    this.gain.gain.setTargetAtTime(this.volume * 0.24, t, 0.25);
     this.startedAt = t;
     this.source = source;
     source.start(t, this.offset);
@@ -138,7 +138,7 @@ export class MusicLoop {
     if (!this.source) return;
     const t = this.context.currentTime,
       p = this.gain.gain,
-      base = this.volume * 0.32;
+      base = this.volume * 0.24;
     p.cancelAndHoldAtTime(t);
     p.linearRampToValueAtTime(base * (big ? 0.4 : 0.63), t + 0.035);
     p.setTargetAtTime(base, t + (big ? 1.1 : 0.55), 0.35);

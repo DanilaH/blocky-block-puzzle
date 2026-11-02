@@ -16,7 +16,7 @@ import {
 } from "./game/themes";
 import { praiseFor, type PraiseResult } from "./core/praise";
 import { Festival } from "./game/festival";
-import { GameHaptics } from "./platform/haptics";
+import { GameHaptics, clearHapticLevel } from "./platform/haptics";
 import { comboMultiplier } from "./core/scoring";
 import { bestFor, recordScore } from "./core/profile";
 import { AudioFocus, nativeAudioFocus } from "./platform/audio-focus";
@@ -935,7 +935,7 @@ async function start() {
         );
         haptics.pulse(
           event.lines ? "clear" : "place",
-          Math.max(event.lines, Math.min(5, event.state.streak)),
+          clearHapticLevel(event.lines, event.state.streak),
         );
         if (event.lines && !scene.calm) {
           festival.burst(
