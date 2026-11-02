@@ -7,7 +7,13 @@ import {
 } from "./game/tile-study-config";
 import { performanceCapture } from "./platform/performance";
 import { Atmosphere } from "./game/atmosphere";
-import { THEMES, themeFor, themeAccent } from "./game/themes";
+import {
+  THEMES,
+  themeFor,
+  themeAccent,
+  seriesVisual,
+  labelDevelopment,
+} from "./game/themes";
 import { praiseFor, type PraiseResult } from "./core/praise";
 import { Festival } from "./game/festival";
 import { GameHaptics } from "./platform/haptics";
@@ -59,7 +65,7 @@ const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 const fresh = (dealer: DealerVersion = "initial-v1") => ({
   ...newGame(seed(), crypto.randomUUID(), dealer),
-  scoringVersion: "festival-v3" as const,
+  scoringVersion: "festival-v4" as const,
 });
 async function start() {
   const adapter = new IndexedSave();
@@ -523,6 +529,7 @@ async function start() {
       const visualKey = s.used ? "used" : `${s.shapeId}:${s.color}:${cell}`;
       if (button.dataset.visualKey !== visualKey) {
         button.innerHTML = s.used ? "" : mini(i, cell);
+        tileMaterials.sync(button);
         button.dataset.visualKey = visualKey;
       }
     }
@@ -546,7 +553,13 @@ async function start() {
     const debugSeries = import.meta.env.DEV
       ? Number(new URLSearchParams(location.search).get("themeSeries"))
       : 0;
-    const visualSeries = debugSeries > 0 ? debugSeries : g.streak;
+    const visualSeries =
+      debugSeries > 0
+        ? debugSeries
+        : g.scoringVersion === "festival-v4"
+          ? seriesVisual(g.streak)
+          : g.streak;
+    audio.setSeries(g.streak);
     atmosphere.set(visualSeries, running, scene.calm);
     scene.setTheme(themeFor(visualSeries), themeAccent(visualSeries));
     tileMaterials.set(
@@ -567,9 +580,11 @@ async function start() {
         () => {
           presentHudNotice(
             "theme",
-            `СЕРИЯ ${visualSeries} · ${THEMES[nextTheme]!.name.toUpperCase()}`,
+            `СЕРИЯ ${g.streak} · ${THEMES[nextTheme]!.name.toUpperCase()}${g.scoringVersion === "festival-v4" ? ` · ×${comboMultiplier(g.streak, true)}` : ""}`,
           );
           audio.play("theme", g.streak);
+          if (from < nextTheme && g.scoringVersion === "festival-v4")
+            haptics.pulse("record");
           atmosphere.impulse(1.5);
         },
         from < nextTheme ? 300 : 0,
@@ -603,7 +618,7 @@ async function start() {
     el("streak").dataset.level = String(Math.min(4, g.streak));
     const comboTitle = g.streak
       ? g.scoringVersion
-        ? `СЕРИЯ ${g.streak} · ×${comboMultiplier(g.streak).toLocaleString("ru")}`
+        ? `СЕРИЯ ${g.streak} · ×${comboMultiplier(g.streak, g.scoringVersion === "festival-v4").toLocaleString("ru")}`
         : `СЕРИЯ ${g.streak}`
       : "";
     const stock =
@@ -996,7 +1011,7 @@ async function start() {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
           presentReward(
             event.lines >= 2 ? "combo" : "line",
-            `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak).toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}${praise ? ` · ${praise === "excellent" ? "Отлично!" : "Хорошо!"}` : ""}`,
+            `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak, event.state.scoringVersion === "festival-v4").toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}${praise ? ` · ${praise === "excellent" ? "Отлично!" : "Хорошо!"}` : ""}`,
             linePoints,
             anchor,
             deferred ? linePoints : 0,
@@ -1126,6 +1141,8 @@ async function start() {
     const node = document.createElement("span");
     node.className = "reward-event";
     node.dataset.tier = tier;
+    const development = labelDevelopment(streak);
+    node.dataset.step = String(development.step);
     node.style.left = `${Math.max(27, Math.min(73, anchor?.x ?? 50))}%`;
     node.style.top = `${Math.max(15, Math.min(82, anchor?.y ?? 48))}%`;
     const label = document.createElement("span");
@@ -1151,7 +1168,7 @@ async function start() {
       }
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();
-    label.style.fontSize = `${Math.min(important ? 38 : 36, boardBox.width * (important ? 0.09 : 0.1))}px`;
+    label.style.fontSize = `${Math.min(important ? 42 : 38, boardBox.width * (important ? 0.13 : 0.09 * development.size))}px`;
     const naturalWidth = label.getBoundingClientRect().width;
     const maxLabelWidth = Math.max(1, (boardBox.width - 32) / 1.2);
     if (naturalWidth > maxLabelWidth)
@@ -1186,7 +1203,7 @@ async function start() {
           ? 2100
           : tier === "chain"
             ? 1200
-            : 1650;
+            : 1650 + development.hold;
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -1220,7 +1237,7 @@ async function start() {
         { opacity: 0, transform: "translateY(22px) rotate(-7deg) scale(.3)" },
         {
           opacity: 1,
-          transform: "translateY(-5px) rotate(3deg) scale(1.16)",
+          transform: `translateY(-5px) rotate(3deg) scale(${important ? 1.2 : Math.min(1.16, 1.05 + development.step * 0.015)})`,
           offset: 0.1,
         },
         { opacity: 1, transform: "none", offset: 0.7 },
@@ -1892,7 +1909,7 @@ async function start() {
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
-    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><details class="diagnostics"><summary>Очки и подсказки</summary><p>${currentGame().scoringVersion ? "Клетка — 1 очко. Линии за один ход: 100 / 300 / 600 / 1000 за одну / две / три / четыре. Пересечения считаются вместе. Комбо умножает очки линий: ×1 → ×1,5 → ×2 → ×3 → ×4 → ×5. Чистое поле: отдельно +1000." : "Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков."}</p><p>${currentGame().scoringVersion ? "" : "За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10."} ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} ${currentGame().scoringVersion ? "" : "Полностью пустое поле даёт дополнительно 100 очков."}</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p></details><p>${currentGame().rulesVersion === "grace-v2" ? "Между очистками есть два подготовительных хода. Третий ход без очистки завершает серию. Время не ограничено." : "Ход без очистки завершает серию."}</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Как играть</h2><p>Перенесите фигуру на свободные клетки. Полные строки и столбцы исчезают одновременно.</p><p>Используйте все три фигуры — появятся следующие. Очистки увеличивают серию. Поворота и отмены хода нет.</p><details class="diagnostics"><summary>Очки и подсказки</summary><p>${currentGame().scoringVersion ? `Клетка — 1 очко. Линии за один ход: 100 / 300 / 600 / 1000 за одну / две / три / четыре. Пересечения считаются вместе. Комбо умножает очки линий: ×1 → ×1,5 → ×2 → ×3 → ×4 → ×5. ${currentGame().scoringVersion === "festival-v4" ? "Далее: серия 8 — ×6, 10 — ×8, 13 — ×10, 16 — ×12, 20 — ×15; затем +1 к множителю каждые 3 очистки. " : ""}Чистое поле: отдельно +1000.` : "Каждая клетка фигуры — 1 очко. Одна линия добавляет 10, две одновременно — 40, три — 90. Например, фигура из четырёх клеток с одной линией даёт 14 очков."}</p><p>${currentGame().scoringVersion ? "" : "За вторую очистку в серии — ещё 5 очков за каждую линию, за третью — ещё 10."} ${currentGame().rulesVersion === "grace-v2" ? "Между очистками можно сделать два подготовительных хода. Третий ход без очистки сбросит серию. Время размышления не ограничено." : "В этой сохранённой партии действуют старые правила: ход без очистки сбрасывает серию. Новая партия разрешает два подготовительных хода."} ${currentGame().scoringVersion ? "" : "Полностью пустое поле даёт дополнительно 100 очков."}</p><p>Подсказки: 3 бесплатных использования в день. Открытый вариант можно показывать повторно бесплатно, пока вы не сделали ход. Неиспользованные ежедневные подсказки не накапливаются.</p></details><p>${currentGame().rulesVersion === "grace-v2" ? "Между очистками есть два подготовительных хода. Третий ход без очистки завершает серию. Время не ограничено." : "Ход без очистки завершает серию."}</p><p>Можно выбрать фигуру и нажать на её верхнюю левую клетку на поле. С клавиатуры: Enter на фигуре, стрелки, Enter для установки.</p><button class="primary" id="back-pause">Понятно</button><button class="secondary" id="practice">Попробовать на поле</button>`;
     structureDialog();
     el("practice").onclick = async () => {
       if (store.busy) return;
@@ -1921,7 +1938,7 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion ? "" : " В новой партии — увеличенные награды за линии и комбо, с отдельным рекордом."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
     el<HTMLSelectElement>("dealer-choice").value =

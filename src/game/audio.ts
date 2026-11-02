@@ -5,6 +5,11 @@ import { MusicalChain } from "./festival";
 export class GameAudio {
   private soundEnabled = true;
   private musicVolume = 0;
+  private series = 0;
+  setSeries(streak: number) {
+    this.series = streak;
+    this.music?.setSeries(streak);
+  }
   private effectsVolume = 1;
   private music: MusicLoop | null = null;
   get audible() {
@@ -66,6 +71,7 @@ export class GameAudio {
       this.output = limiter;
       this.music = new MusicLoop(this.context, limiter);
       this.music.setVolume(this.musicVolume);
+      this.music.setSeries(this.series);
     }
     if (!this.delay) {
       this.delay = this.context.createDelay(0.3);

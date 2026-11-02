@@ -1,3 +1,4 @@
+import { percussionLoops, percussionLevels } from "./music-layers";
 // C-major pentatonic reward register; avoids chromatic whole-chord transposition
 // over the selected diatonic backing. Listening on device remains an acceptance gate.
 export function musicalFrequency(hz: number) {
@@ -14,9 +15,27 @@ export function musicalFrequency(hz: number) {
   return 440 * 2 ** ((best - 69) / 12);
 }
 
-/** One cached buffer and at most one source; late decode cannot undo stop/focus loss. */
+/** Cached backing + three percussion loops; at most four sources, none created on combo. */
 export class MusicLoop {
   private gain: GainNode;
+  private layers: {
+    buffer: AudioBuffer;
+    gain: GainNode;
+    source?: AudioBufferSourceNode;
+  }[] = [];
+  private streak = 0;
+  setSeries(streak: number) {
+    if (this.streak === streak) return;
+    this.streak = streak;
+    const levels = percussionLevels(streak);
+    this.layers.forEach((l, i) =>
+      l.gain.gain.setTargetAtTime(
+        levels[i]!,
+        this.context.currentTime,
+        streak ? 0.35 : 0.65,
+      ),
+    );
+  }
   private buffer?: AudioBuffer;
   private loading?: Promise<void>;
   private source?: AudioBufferSourceNode;
@@ -41,7 +60,7 @@ export class MusicLoop {
     const p = this.gain.gain,
       t = this.context.currentTime;
     p.cancelScheduledValues(t);
-    p.setTargetAtTime(value * 0.8, t, 0.12);
+    p.setTargetAtTime(value * 0.32, t, 0.12);
     if (value === 0) this.stop();
   }
   async start() {
@@ -55,6 +74,12 @@ export class MusicLoop {
         this.buffer = await this.context.decodeAudioData(
           await response.arrayBuffer(),
         );
+        this.layers = percussionLoops(this.context).map((buffer) => {
+          const gain = this.context.createGain();
+          gain.gain.value = 0;
+          gain.connect(this.gain);
+          return { buffer, gain };
+        });
         const frames = Math.min(
           Math.round(this.buffer.duration * this.buffer.sampleRate),
           Math.round(((256 * 60) / 118) * this.buffer.sampleRate),
@@ -92,21 +117,40 @@ export class MusicLoop {
     const t = this.context.currentTime;
     this.gain.gain.cancelScheduledValues(t);
     this.gain.gain.setValueAtTime(0, t);
-    this.gain.gain.setTargetAtTime(this.volume * 0.8, t, 0.25);
+    this.gain.gain.setTargetAtTime(this.volume * 0.32, t, 0.25);
     this.startedAt = t;
     this.source = source;
     source.start(t, this.offset);
+    const levels = percussionLevels(this.streak);
+    this.layers.forEach((layer, i) => {
+      const s = this.context.createBufferSource();
+      s.buffer = layer.buffer;
+      s.loop = true;
+      s.connect(layer.gain);
+      layer.gain.gain.cancelScheduledValues(t);
+      layer.gain.gain.setValueAtTime(0, t);
+      layer.gain.gain.setTargetAtTime(levels[i]!, t, 0.35);
+      s.start(t, this.offset % layer.buffer.duration);
+      layer.source = s;
+    });
   }
   duck(big = false) {
     if (!this.source) return;
     const t = this.context.currentTime,
       p = this.gain.gain,
-      base = this.volume * 0.8;
+      base = this.volume * 0.32;
     p.cancelAndHoldAtTime(t);
     p.linearRampToValueAtTime(base * (big ? 0.4 : 0.63), t + 0.035);
     p.setTargetAtTime(base, t + (big ? 1.1 : 0.55), 0.35);
   }
   stop() {
+    this.layers.forEach((layer) => {
+      layer.source?.stop();
+      layer.source?.disconnect();
+      layer.source = undefined;
+      layer.gain.gain.cancelScheduledValues(this.context.currentTime);
+      layer.gain.gain.value = 0;
+    });
     this.active = false;
     this.generation++;
     if (this.source && this.buffer) {

@@ -20,6 +20,11 @@ function harness() {
   const c = {
     currentTime: 0,
     state: "running",
+    sampleRate: 100,
+    createBuffer: (_: number, length: number, rate: number) => ({
+      duration: length / rate,
+      getChannelData: () => new Float32Array(length),
+    }),
     createGain: () => ({ gain: param, connect: vi.fn() }),
     decodeAudioData: vi.fn(async () => buffer()),
     createBufferSource: () => {
@@ -55,8 +60,10 @@ it("concurrent starts share a decode and source; resume keeps offset, not old du
   await Promise.all([music.start(), music.start(), music.start()]);
   expect(fetch).toHaveBeenCalledTimes(1);
   expect(c.decodeAudioData).toHaveBeenCalledTimes(1);
-  expect(sources).toHaveLength(1);
+  expect(sources).toHaveLength(4);
   expect(sources[0].loop).toBe(true);
+  music.setSeries(2); music.setSeries(6); music.setSeries(10); music.setSeries(0);
+  expect(sources).toHaveLength(4);
   c.currentTime = 12;
   music.duck(true);
   expect(param.cancelAndHoldAtTime).toHaveBeenCalled();
@@ -64,11 +71,14 @@ it("concurrent starts share a decode and source; resume keeps offset, not old du
   music.setVolume(0.35);
   expect(param.cancelScheduledValues).toHaveBeenCalledTimes(count);
   music.stop();
-  expect(sources[0].stop).toHaveBeenCalledTimes(1);
+  for (const s of sources) {
+    expect(s.stop).toHaveBeenCalledTimes(1);
+    expect(s.disconnect).toHaveBeenCalledTimes(1);
+  }
   c.currentTime = 20;
   await music.start();
-  expect(sources).toHaveLength(2);
-  expect(sources[1].start).toHaveBeenCalledWith(20, 12);
+  expect(sources).toHaveLength(8);
+  expect(sources[4].start).toHaveBeenCalledWith(20, 12);
   expect(fetch).toHaveBeenCalledTimes(1);
 });
 it("stop during decode never starts late music; later start uses cached buffer", async () => {
@@ -83,7 +93,7 @@ it("stop during decode never starts late music; later start uses cached buffer",
   await pending;
   expect(sources).toHaveLength(0);
   await music.start();
-  expect(sources).toHaveLength(1);
+  expect(sources).toHaveLength(4);
 });
 it("zero volume and suspended context cannot start music; failures do not retry per move", async () => {
   const { music, c, sources } = harness();

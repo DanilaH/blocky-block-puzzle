@@ -1,16 +1,24 @@
-export const comboMultiplier = (streak: number) =>
-  [1, 1.5, 2, 3, 4, 5][Math.max(0, Math.min(5, streak - 1))]!;
+export function comboMultiplier(streak: number, progressive = false) {
+  if (progressive !== true || streak < 8)
+    return [1, 1.5, 2, 3, 4, 5][Math.max(0, Math.min(5, streak - 1))]!;
+  if (streak < 10) return 6;
+  if (streak < 13) return 8;
+  if (streak < 16) return 10;
+  if (streak < 20) return 12;
+  return 15 + Math.floor((streak - 20) / 3);
+}
 export function scoreBreakdown(
   cells: number,
   lines: number,
   streak: number,
   allClear: boolean,
   festival: boolean,
+  progressive = false,
 ) {
   const lineBase = festival ? 50 * lines * (lines + 1) : 10 * lines ** 2;
   const combo = lines
     ? festival
-      ? lineBase * (comboMultiplier(streak) - 1)
+      ? lineBase * (comboMultiplier(streak, progressive) - 1)
       : 5 * (streak - 1) * lines
     : 0;
   const empty = allClear ? (festival ? 1000 : 100) : 0;
@@ -56,7 +64,7 @@ export interface GameState {
   revision: number;
   board: Board;
   tray: Slot[];
-  scoringVersion?: "festival-v3";
+  scoringVersion?: "festival-v3" | "festival-v4";
   score: number;
   streak: number;
   rulesVersion?: "classic-v1" | "grace-v2";
@@ -338,7 +346,8 @@ export function applyMove(
       placed.lines,
       streak,
       allClear,
-      state.scoringVersion === "festival-v3",
+      !!state.scoringVersion,
+      state.scoringVersion === "festival-v4",
     ),
     points = breakdown.total;
   let tray = state.tray.map((s, i) => ({

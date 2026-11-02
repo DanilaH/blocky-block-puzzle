@@ -33,8 +33,10 @@ export class TileMaterialDOM {
   private applied = new WeakMap<Element, number>();
   private revision = 0;
   set(material: TileMaterial, duration: number) {
-    if (this.blend.set(material, performance.now(), duration)) this.revision++;
-    document.documentElement.dataset.tileMaterial = material;
+    if (document.documentElement.dataset.tileMaterial !== material)
+      document.documentElement.dataset.tileMaterial = material;
+    if (!this.blend.set(material, performance.now(), duration)) return;
+    this.revision++;
     this.sync(document);
   }
   sync(root: ParentNode) {

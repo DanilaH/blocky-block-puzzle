@@ -2258,9 +2258,7 @@ body:has(#app.effects-paused),
   --study-shadow: #286b9a26;
 }
 :root[data-tile-study] .board-wrap {
-  transition:
-    background-color var(--world-duration),
-    box-shadow var(--world-duration);
+  transition: background-color var(--world-duration);
 }
 :root[data-tile-study] .mini-cell {
   filter: brightness(calc(1 + var(--tile-sheen, 0)));
@@ -2337,4 +2335,29 @@ body:has(#app.effects-paused),
     min-height: 48px;
     padding: 8px;
   }
+}
+
+.reward-event[data-step="2"] .reward-praise,
+.reward-event[data-step="3"] .reward-praise {
+  color: #fff3b4;
+}
+.reward-event[data-step="4"] .reward-praise,
+.reward-event[data-step="5"] .reward-praise {
+  color: #fff5c5;
+  text-shadow:
+    0 2px 0 #855019,
+    0 0 5px #f3ae48;
+}
+.reward-event[data-step="6"] .reward-praise,
+.reward-event[data-step="7"] .reward-praise,
+.reward-event[data-step="8"] .reward-praise,
+.reward-event[data-step="9"] .reward-praise,
+.reward-event[data-step="10"] .reward-praise {
+  color: #fffbe0;
+  text-shadow:
+    0 2px 0 #633d73,
+    0 0 7px #efb74d;
+}
+.calm .reward-event .reward-praise {
+  text-shadow: 0 2px 0 #5e4d3f;
 }

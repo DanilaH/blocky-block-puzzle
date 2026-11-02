@@ -19,7 +19,7 @@ it("line rewards, real multipliers and independent empty-board bonus", () => {
     empty: 1000,
     total: 1904,
   });
-  expect([1, 2, 3, 4, 5, 6, 100].map(comboMultiplier)).toEqual([
+  expect([1, 2, 3, 4, 5, 6, 100].map((s) => comboMultiplier(s))).toEqual([
     1, 1.5, 2, 3, 4, 5, 5,
   ]);
   expect(scoreBreakdown(4, 0, 5, false, true).total).toBe(4);
@@ -33,7 +33,8 @@ it("old games keep exact scores; new games use new scale without changing RNG/bo
   const a = applyMove(old, { slot: 0, x: 0, y: 0 }, old.revision)!;
   const b = applyMove(
     { ...old, scoringVersion: "festival-v3" },
-    { slot: 0, x: 0, y: 0 }, old.revision,
+    { slot: 0, x: 0, y: 0 },
+    old.revision,
   )!;
   expect(a.points).toBe(126);
   expect(b.points).toBe(1301);

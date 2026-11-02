@@ -23,6 +23,7 @@ export interface Profile {
   best: number;
   legacyBest?: number;
   festivalBest?: number;
+  progressionBest?: number;
   freeDay: string;
   freeHints: number;
   earnedHints: number;
@@ -100,6 +101,7 @@ export function validProfile(value: unknown): value is Profile {
       !integer(p.revision) ||
       !integer(p.best) ||
       (p.legacyBest !== undefined && !integer(p.legacyBest)) ||
+      (p.progressionBest !== undefined && !integer(p.progressionBest)) ||
       (p.festivalBest !== undefined && !integer(p.festivalBest)) ||
       (p.settings?.haptics !== undefined &&
         typeof p.settings.haptics !== "boolean") ||
@@ -123,7 +125,8 @@ export function validProfile(value: unknown): value is Profile {
       !integer(g.revision) ||
       !integer(g.moves) ||
       !integer(g.score) ||
-      (g.scoringVersion !== undefined && g.scoringVersion !== "festival-v3") ||
+      (g.scoringVersion !== undefined &&
+        !["festival-v3", "festival-v4"].includes(g.scoringVersion)) ||
       !integer(g.streak) ||
       (g.rulesVersion !== undefined &&
         !["classic-v1", "grace-v2"].includes(g.rulesVersion)) ||
@@ -260,6 +263,7 @@ export function validProfile(value: unknown): value is Profile {
 }
 
 export function bestFor(p: Profile): number {
+  if (p.game.scoringVersion === "festival-v4") return p.progressionBest ?? 0;
   return p.game.scoringVersion === "festival-v3"
     ? (p.festivalBest ?? 0)
     : (p.legacyBest ?? p.best);
@@ -271,8 +275,13 @@ export function recordScore(p: Profile, game: GameState) {
     legacyBest: game.scoringVersion
       ? legacyBest
       : Math.max(legacyBest, game.score),
-    festivalBest: game.scoringVersion
-      ? Math.max(p.festivalBest ?? 0, game.score)
-      : (p.festivalBest ?? 0),
+    progressionBest:
+      game.scoringVersion === "festival-v4"
+        ? Math.max(p.progressionBest ?? 0, game.score)
+        : (p.progressionBest ?? 0),
+    festivalBest:
+      game.scoringVersion === "festival-v3"
+        ? Math.max(p.festivalBest ?? 0, game.score)
+        : (p.festivalBest ?? 0),
   };
 }
