@@ -35,3 +35,20 @@ for (const name of tileNames) {
 const tileBudget=await inspectRuntimeImageBudget(tileNames.map(id=>({id,file:`public/assets/tile-study/${id}`,category:id.split('-')[0]})));
 assert(tileBudget.encodedBytes<100000);assert.equal(tileBudget.estimatedRgbaBytes,1179648);
 console.log('Selected tile alpha and budgets OK:',tileBudget);
+
+// Campaign assets: original generated masters, offline WebP, bounded decode cost.
+const adventureNames=['cove','gem','key','locked','open'];
+let advBytes=0,advRgba=0;
+for(const name of adventureNames){
+ const file=`public/adventure/${name}.webp`,m=await sharp(file).metadata();
+ assert.equal(m.format,'webp');assert.equal(m.width,name==='cove'?960:128);assert.equal(m.height,m.width);
+ advBytes+=(await fs.stat(file)).size;advRgba+=m.width*m.height*4;
+ if(name!=='cove'){
+  assert.equal(m.hasAlpha,true);
+  const {data,info}=await sharp(file).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+  let transparent=0;for(let i=3;i<data.length;i+=4)if(data[i]===0)transparent++;
+  assert(transparent>info.width*info.height*.03);
+ }
+}
+assert(advBytes<300000);assert(advRgba<4000000);
+console.log('Campaign encoded / RGBA bytes:',advBytes,advRgba);

@@ -16,6 +16,10 @@ public final class HapticPattern {
   }
   public static HapticPattern forEvent(String kind, int level) {
     switch (kind) {
+      case "collect": return new HapticPattern(2, new long[]{0,30,35,55}, new int[]{0,210,0,245});
+      case "ice": return new HapticPattern(3, new long[]{0,35,25,35,45,95}, new int[]{0,235,0,235,0,255});
+      case "unlock": return new HapticPattern(4, new long[]{0,55,65,100,50,145}, new int[]{0,200,0,245,0,255});
+      case "victory":
       case "empty": return new HapticPattern(5,
         new long[]{0,55,40,65,45,80,55,100,65,130,75,180},
         new int[]{0,195,0,215,0,235,0,255,0,255,0,255});

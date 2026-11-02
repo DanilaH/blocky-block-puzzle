@@ -1,3 +1,5 @@
+import { validCampaign } from "../adventure/save";
+import type { Campaign } from "../adventure/core";
 import { type AdsState, validRevivePlan } from "./monetization";
 import { fits, hasMove, shapeById, type GameState, type Move } from "./rules";
 export interface HintReceipt {
@@ -9,6 +11,7 @@ export interface HintReceipt {
 }
 export interface Profile {
   schemaVersion: 1;
+  campaign?: Campaign;
   metrics?: {
     gameId: string;
     activeMs: number;
@@ -96,6 +99,7 @@ export function validProfile(value: unknown): value is Profile {
       g = p.game;
     if (
       p.schemaVersion !== 1 ||
+      (p.campaign !== undefined && !validCampaign(p.campaign)) ||
       (p.tutorialStep !== undefined &&
         (!integer(p.tutorialStep) || p.tutorialStep > 4)) ||
       !integer(p.revision) ||

@@ -9,3 +9,5 @@
 - Код mini-games-kit: происхождение и ограничения лицензирования в KIT_REUSE.md; внешнюю лицензию на него не заявляем.
 
 Перед релизом отдельно собрать notices всех реально поставляемых зависимостей и окончательных ассетов. Этот список относится к preview.
+
+- Кампания 0.35: original generated Crystal Cove и четыре предмета, masters/промпты `assets-src/adventure/README.md`, runtime WebP `public/adventure/`, offline preload и encoded/RGBA checks.

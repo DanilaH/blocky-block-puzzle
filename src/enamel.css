@@ -455,3 +455,20 @@ body {
     padding-bottom: 16px;
   }
 }
+
+/* Campaign is a separate mode; keep the entry reachable beside pause. */
+.campaign-entry {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #286c83;
+  background: #fff5d4;
+  padding: 9px 12px;
+  border-radius: 16px;
+  margin-right: 8px;
+}
+.topbar:has(.campaign-entry) {
+  display: flex;
+  align-items: center;
+}

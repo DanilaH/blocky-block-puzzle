@@ -156,6 +156,10 @@ export class GameAudio {
   }
   play(
     kind:
+      | "collect"
+      | "ice"
+      | "unlock"
+      | "victory"
       | "seriesEnd"
       | "defeat"
       | "praise"
@@ -187,6 +191,40 @@ export class GameAudio {
     if (!this.enabled || this.effectsVolume === 0) return;
     const t = this.context.currentTime;
     const pitch = seriesPitch(streak);
+    if (
+      kind === "collect" ||
+      kind === "ice" ||
+      kind === "unlock" ||
+      kind === "victory"
+    ) {
+      this.music?.duck(kind === "victory");
+      if (kind === "ice") {
+        this.tone(1800, 420, t, 0.09, 0.12, "triangle", 1);
+        this.tone(2400, 900, t + 0.035, 0.14, 0.07, "sine", 1);
+        this.tone(140, 70, t, 0.12, 0.14, "sine", 2);
+      } else {
+        const notes =
+          kind === "victory"
+            ? [523.25, 659.25, 783.99, 1046.5, 1318.5]
+            : kind === "unlock"
+              ? [329.63, 523.25, 783.99]
+              : [1046.5, 1318.5];
+        notes.forEach((f, i) =>
+          this.tone(
+            f,
+            f,
+            t + i * 0.085,
+            kind === "victory" ? 0.55 : 0.25,
+            0.09,
+            "sine",
+            2,
+          ),
+        );
+        if (kind === "unlock" || kind === "victory")
+          this.tone(180, 70, t, 0.18, 0.18, "triangle", 2);
+      }
+      return;
+    }
     if (kind === "seriesEnd") {
       this.tone(392, 329.63, t, 0.22, 0.04, "sine");
       return;
