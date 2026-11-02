@@ -71,6 +71,8 @@ export class MusicLoop {
     const source = this.context.createBufferSource();
     source.buffer = this.buffer;
     source.loop = true;
+    // Exact 256 beats at 118 BPM: exclude decoder padding at the tail.
+    source.loopEnd = Math.min(this.buffer.duration, (256 * 60) / 118);
     source.connect(this.gain);
     const t = this.context.currentTime;
     this.gain.gain.cancelScheduledValues(t);
@@ -95,7 +97,7 @@ export class MusicLoop {
     if (this.source && this.buffer) {
       this.offset =
         (this.offset + this.context.currentTime - this.startedAt) %
-        this.buffer.duration;
+        Math.min(this.buffer.duration, (256 * 60) / 118);
       this.source.stop();
       this.source.disconnect();
       this.source = undefined;
