@@ -1672,7 +1672,12 @@ async function start() {
       actions = document.createElement("div");
     body.className = "dialog-body";
     actions.className = "dialog-actions";
-    nodes.forEach((n) => (n.tagName === "BUTTON" ? actions : body).append(n));
+    nodes.forEach((n) =>
+      (n.tagName === "BUTTON" || n.classList.contains("pause-links")
+        ? actions
+        : body
+      ).append(n),
+    );
     const status = document.createElement("p");
     status.className = "dialog-status";
     status.setAttribute("role", "alert");

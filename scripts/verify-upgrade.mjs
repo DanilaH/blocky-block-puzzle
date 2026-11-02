@@ -123,6 +123,13 @@ try {
   assert.deepEqual(actual, expected);
   assert.deepEqual(errors, []);
   assert.equal(await page.locator("#score").textContent(), "123");
+  await page.locator("#pause").click();
+  if (await page.locator("#musicVolume").count()) {
+    assert.equal(await page.locator("#musicVolume").inputValue(), "0");
+    assert.equal(await page.locator("#effectsVolume").inputValue(), "100");
+    assert.equal(await page.locator("#sound").isChecked(), false);
+  }
+  await page.locator("#resume").click();
   let ledgerMigration = null;
   if (process.env.BLOCKY_CHECK_LEDGER === "1") {
     await page.locator("#pause").click();
