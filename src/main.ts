@@ -1,3 +1,4 @@
+import { ProductAnalytics, nativeAnalytics } from "./platform/analytics";
 import { TileMaterialDOM } from "./game/tile-material";
 import {
   TILE_MATERIALS,
@@ -68,6 +69,11 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene();
+  const analytics = new ProductAnalytics(nativeAnalytics());
+  store.observer = analytics;
+  analytics.boot(initial, !loaded.profile, loaded.recovered);
+  void analytics.init();
+  if (import.meta.env.DEV) (window as any).__blockyAnalytics = analytics;
   const atmosphere = new Atmosphere();
   const festival = new Festival(),
     haptics = new GameHaptics();
@@ -283,6 +289,10 @@ async function start() {
       );
       audioFocus.setActive(store.state.settings.sound);
       ads.setActive(!inLesson() && store.state.game.status === "playing");
+      analytics.setActive(
+        !inLesson() && store.state.game.status === "playing",
+        store.state,
+      );
       bannerWatch?.update();
       scene.preview(hintMove(), true, true);
       syncRenderer();
@@ -294,6 +304,7 @@ async function start() {
     },
     () => {
       running = false;
+      analytics.setActive(false, store.state);
       performanceCapture.setActive(false);
       root.classList.add("effects-paused");
       stopPraise();
@@ -340,6 +351,7 @@ async function start() {
       render();
     },
     (message) => toast(message, 6000),
+    analytics,
   );
   bannerWatch = watchBanner(
     adBridge,
@@ -629,6 +641,10 @@ async function start() {
     ads.setActive(
       running && !inLesson() && store.state.game.status === "playing",
     );
+    analytics.setActive(
+      running && !inLesson() && store.state.game.status === "playing",
+      store.state,
+    );
     bannerWatch?.update();
     syncSaving();
   }
@@ -690,7 +706,9 @@ async function start() {
             ? "Ещё подсказки"
             : "Подсказка";
   }
-  function cancelHint() {
+  function cancelHint(reason = "cancelled") {
+    if (worker)
+      analytics.track("hint_fail", { gameId: store.state.game.gameId, reason });
     hintGeneration++;
     worker?.terminate();
     worker = null;
@@ -1539,14 +1557,23 @@ async function start() {
   el("hint").addEventListener("click", () => {
     if (!running || store.busy || worker || inLesson()) return;
     cancelDrag();
+    analytics.track("hint_request", { gameId: store.state.game.gameId });
     const cached = hintMove();
     if (cached) {
       scene.preview(cached, true, true);
+      analytics.track("hint_shown", {
+        gameId: store.state.game.gameId,
+        cached: true,
+      });
       toast("Этот вариант уже открыт");
       return;
     }
     const p = store.state;
     if ((p.freeDay === dayKey() ? p.freeHints : 3) + p.earnedHints <= 0) {
+      analytics.track("hint_fail", {
+        gameId: p.game.gameId,
+        reason: "no_credit",
+      });
       showRewardHints();
       return;
     }
@@ -1559,7 +1586,7 @@ async function start() {
     el("hint").setAttribute("aria-busy", "true");
     el("hint-label").textContent = "Ищем ход…";
     worker.onerror = () => {
-      cancelHint();
+      cancelHint("worker");
       toast("Не получилось рассчитать подсказку. Кредит сохранён.");
     };
     worker.onmessage = async (event: MessageEvent<HintResult>) => {
@@ -1571,6 +1598,10 @@ async function start() {
       }
       const r = event.data;
       if (!r.move) {
+        analytics.track("hint_fail", {
+          gameId: snapshot.gameId,
+          reason: "no_move",
+        });
         refreshHintLabel();
         toast("Для оставшихся фигур нет места");
         return;
@@ -1586,6 +1617,7 @@ async function start() {
         if (changed) {
           render();
           if (running) {
+            analytics.track("hint_shown", { gameId: r.gameId, cached: false });
             toast(
               r.lines
                 ? `Этот ход очистит линий: ${r.lines}`
@@ -1600,6 +1632,7 @@ async function start() {
           }
         }
       } catch (error) {
+        analytics.track("hint_fail", { gameId: r.gameId, reason: "save" });
         await writeFailure(
           error,
           "Не удалось сохранить подсказку. Кредит не списан.",
@@ -1781,7 +1814,7 @@ async function start() {
     };
     el("perf-export").onclick = () =>
       void performanceCapture
-        .export()
+        .export(analytics.snapshot())
         .catch(() => toast("Не удалось выгрузить замер. Попробуйте ещё раз."));
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
@@ -1964,11 +1997,14 @@ async function start() {
     if (store.busy) return;
     try {
       if (
-        await store.update((p) => ({
-          ...p,
-          revision: p.revision + 1,
-          tutorialStep: 4,
-        }))
+        await store.update(
+          (p) => ({
+            ...p,
+            revision: p.revision + 1,
+            tutorialStep: 4,
+          }),
+          "tutorial_skip",
+        )
       ) {
         cancelDrag();
         stopCosmetics();
@@ -2044,6 +2080,7 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
+      analytics.dispose();
       void ads.dispose();
       bannerWatch?.dispose();
       phaser?.loop.wake();

@@ -1,3 +1,4 @@
+import type { ProductAnalytics } from "./analytics";
 import type { GameState } from "../core/rules";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import {
@@ -20,7 +21,10 @@ export interface Receipt {
   intentId: string;
 }
 export interface AdBridge {
-  initialize(): Promise<{ enabled: boolean }>;
+  initialize(): Promise<{
+    enabled: boolean;
+    events?: { name: string; kind: string; intentId?: string }[];
+  }>;
   status(): Promise<{ rewarded: boolean; interstitial: boolean }>;
   pending(): Promise<{ rewards: Receipt[] }>;
   acknowledge(p: { id: string }): Promise<void>;
@@ -66,14 +70,29 @@ export class AdsController {
     private block: (v: boolean) => void,
     private changed: () => void,
     private problem: (s: string) => void,
+    private analytics?: Pick<ProductAnalytics, "track">,
   ) {
     this.base = store.state.ads?.activeMs ?? 0;
     this.queue = new DurableReceiptQueue({
       commit: async (r) => {
         await store.waitIdle();
         if (store.state.ads?.receipts.includes(r.id)) return "already-applied";
+        const intent = store.state.ads?.intents.find(
+          (i) => i.id === r.intentId,
+        );
+        const firstGrant = intent?.status === "pending";
         if (!(await store.update((p) => applyReceipt(this.stamp(p), r))))
           throw Error("Save busy");
+        if (firstGrant)
+          this.analytics?.track(
+            "reward_applied",
+            {
+              intentId: r.intentId,
+              gameId: intent!.gameId,
+              kind: intent!.kind,
+            },
+            `reward_applied:${r.intentId}`,
+          );
         this.changed();
         return "applied";
       },
@@ -133,7 +152,17 @@ export class AdsController {
           this.problem("Не удалось сохранить подтверждение награды."),
         ),
       );
-      this.enabled = (await this.bridge.initialize()).enabled;
+      const event = (e: { name: string; kind: string; intentId?: string }) => {
+        if (/^ad_[a-z_]+$/.test(e.name))
+          this.analytics?.track(e.name, {
+            format: e.kind,
+            ...(e.intentId ? { intentId: e.intentId } : {}),
+          });
+      };
+      this.listeners.push(await this.bridge.addListener("analytics", event));
+      const initialized = await this.bridge.initialize();
+      this.enabled = initialized.enabled;
+      initialized.events?.forEach(event);
       await this.recover();
     } catch {
       this.enabled = false;
@@ -157,8 +186,16 @@ export class AdsController {
     if (this.busy || !this.bridge || !this.enabled) return "unavailable";
     this.busy = true;
     this.block(true);
+    this.analytics?.track("ad_opportunity", {
+      format: "rewarded",
+      kind,
+      gameId: this.store.state.game.gameId,
+    });
     try {
-      if (!(await this.ready())) return "unavailable";
+      if (!(await this.ready())) {
+        this.analytics?.track("ad_unavailable", { format: "rewarded", kind });
+        return "unavailable";
+      }
       await this.recover();
       await this.store.waitIdle();
       const g = this.store.state.game;
@@ -220,6 +257,8 @@ export class AdsController {
           i.gameId === original.gameId &&
           i.kind === "revive" &&
           i.status === "applied" &&
+          i.plan !== undefined &&
+          original.moves === i.plan.game.moves &&
           current.game.moves === original.moves
             ? { ...i, status: "available" as const }
             : i,
@@ -249,6 +288,10 @@ export class AdsController {
       // The transition is durable before SDK: a late revive now belongs to its archived game.
       // Reserve the opportunity before requesting SDK; a crash/no-fill cannot bypass caps.
       if (eligible) {
+        this.analytics?.track("ad_opportunity", {
+          format: "interstitial",
+          gameId: original.gameId,
+        });
         try {
           if ((await this.bridge!.status()).interstitial)
             await this.bridge!.show({ kind: "interstitial" });

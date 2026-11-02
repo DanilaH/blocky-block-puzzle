@@ -8,7 +8,7 @@ type Marker = {
   calm: boolean;
 };
 type Summary = { count: number; totalMs: number; maxMs: number };
-/** Opt-in, bounded diagnostics. No board, save data or persistent identifiers. */
+/** Opt-in, bounded performance diagnostics. Optional product events contain game/session IDs, never boards. */
 export class PerformanceCapture {
   private frames = new Float32Array(7200);
   private frameTimes = new Float64Array(7200);
@@ -140,7 +140,7 @@ export class PerformanceCapture {
     );
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
-      version: "0.30",
+      version: "0.31",
       schemaVersion: 3,
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
@@ -190,10 +190,14 @@ export class PerformanceCapture {
       ),
     };
   }
-  async export() {
+  async export(productEvents?: unknown) {
     this.enabled = false;
     this.sync();
-    const json = JSON.stringify(this.snapshot(), null, 2);
+    const json = JSON.stringify(
+      { ...this.snapshot(), ...(productEvents ? { productEvents } : {}) },
+      null,
+      2,
+    );
     if (Capacitor.isNativePlatform()) {
       await registerPlugin<{ share(options: { json: string }): Promise<void> }>(
         "BlockyDiagnostics",
@@ -204,7 +208,7 @@ export class PerformanceCapture {
       );
       const link = document.createElement("a");
       link.href = url;
-      link.download = "blocky-performance-0.30.json";
+      link.download = "blocky-performance-0.31.json";
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     }

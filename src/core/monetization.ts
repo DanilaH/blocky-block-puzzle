@@ -11,11 +11,13 @@ export interface RewardIntent {
   kind: "hints" | "revive";
   gameId: string;
   revision: number;
-  snapshot: GameState;
+  snapshot?: GameState;
+  compact?: true;
   plan?: RevivePlan;
   status: "pending" | "applied" | "available" | "claimed";
 }
 export interface AdsState {
+  ledgerVersion?: 2;
   activeMs: number;
   lastFullscreenMs: number;
   interstitials: number[];
@@ -235,4 +237,40 @@ export function canInterstitial(p: Profile, _now?: number): boolean {
     a.activeMs - a.lastFullscreenMs >= 180000 &&
     a.interstitials.filter((t) => a.activeMs - t < 3600000).length < 3
   );
+}
+
+// Keep permanent small dedup markers. No TTL: native callbacks can arrive late.
+// Applied revives retain their plan until the player has actually continued;
+// betweenGames can still restore an unconsumed, already-applied revive right.
+export function compactRewards(p: Profile, previousGame?: GameState): Profile {
+  const a = p.ads;
+  if (!a) return p;
+  let changed = a.ledgerVersion !== 2;
+  const intents = a.intents.map((i): RewardIntent => {
+    if (
+      i.kind === "revive" &&
+      i.status === "applied" &&
+      i.plan &&
+      previousGame?.gameId === i.gameId &&
+      p.game.gameId !== i.gameId &&
+      previousGame.moves === i.plan.game.moves
+    ) {
+      changed = true;
+      return { ...i, status: "available" };
+    }
+    const terminal =
+      (i.kind === "hints" && i.status === "applied") ||
+      (i.kind === "revive" &&
+        (i.status === "claimed" ||
+          (i.status === "applied" &&
+            i.plan !== undefined &&
+            ((p.game.gameId === i.gameId && p.game.moves > i.plan.game.moves) ||
+              (previousGame?.gameId === i.gameId &&
+                previousGame.moves > i.plan.game.moves)))));
+    if (i.compact || !terminal) return i;
+    changed = true;
+    const { snapshot: _snapshot, plan: _plan, ...marker } = i;
+    return { ...marker, compact: true };
+  });
+  return changed ? { ...p, ads: { ...a, ledgerVersion: 2, intents } } : p;
 }

@@ -303,3 +303,10 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] 30-минутный синтетический прогон: 614 циклов, 164 подсказки, 122 поражения, без ошибок; ограничения исходников в протоколе. CI: 94 unit + 103 browser; APK 0.30 проверен по версии, подписи и 28 production-файлам.
 - [ ] Аппаратная приёмка; product analytics, production-реквизиты, privacy и магазин остаются открытыми.
 Протокол: [надёжность 0.30](qa/RELIABILITY_0.30_2026-11-01.md).
+
+## Награды и аналитика 0.31 — 02.11.2026
+- [x] Компактные terminal reward markers, сохранение pending/available, защита от повторной выдачи и повторного revive.
+- [x] Продуктовые события, сохранение счётчиков активного времени, bounded non-blocking transport, Android AppMetrica adapter и отдельный test key.
+- [ ] Финальный CI/APK и проверка обновления web payload — в процессе.
+- [ ] Собственные ключи, кабинет AppMetrica, ILRD, disclosures и физический Android.
+Протокол: [награды и аналитика](qa/REWARDS_ANALYTICS_0.31_2026-11-02.md).

@@ -9,6 +9,13 @@ export interface HintReceipt {
 }
 export interface Profile {
   schemaVersion: 1;
+  metrics?: {
+    gameId: string;
+    activeMs: number;
+    maxStreak: number;
+    started: boolean;
+    durationComplete: boolean;
+  };
   ads?: AdsState;
   tutorialStep?: number;
   revision: number;
@@ -159,10 +166,21 @@ export function validProfile(value: unknown): value is Profile {
       )
         return false;
     }
+    if (
+      p.metrics !== undefined &&
+      (!p.metrics ||
+        p.metrics.gameId !== g.gameId ||
+        !integer(p.metrics.activeMs) ||
+        !integer(p.metrics.maxStreak) ||
+        typeof p.metrics.started !== "boolean" ||
+        typeof p.metrics.durationComplete !== "boolean")
+    )
+      return false;
     if (p.ads !== undefined) {
       const a = p.ads;
       if (
         !a ||
+        (a.ledgerVersion !== undefined && a.ledgerVersion !== 2) ||
         !integer(a.activeMs) ||
         !integer(a.lastFullscreenMs) ||
         a.lastFullscreenMs > a.activeMs ||
@@ -185,6 +203,27 @@ export function validProfile(value: unknown): value is Profile {
           !["hints", "revive"].includes(i.kind) ||
           !["pending", "applied", "available", "claimed"].includes(i.status) ||
           !integer(i.revision) ||
+          typeof i.gameId !== "string" ||
+          !i.gameId
+        )
+          return false;
+        ids.add(i.id);
+        if (i.compact !== undefined) {
+          if (
+            i.compact !== true ||
+            a.ledgerVersion !== 2 ||
+            i.snapshot !== undefined ||
+            i.plan !== undefined ||
+            !(
+              i.status === "applied" ||
+              (i.kind === "revive" && i.status === "claimed")
+            )
+          )
+            return false;
+          continue;
+        }
+        if (
+          !i.snapshot ||
           i.gameId !== i.snapshot?.gameId ||
           i.revision !== i.snapshot.revision ||
           !validProfile({

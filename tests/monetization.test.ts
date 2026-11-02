@@ -120,7 +120,7 @@ it("interstitial gate enforces final state, two completed games, active interval
   p.game.status = "playing";
   expect(canInterstitial(p, now)).toBe(false);
 });
-function harness() {
+function harness(analytics?: { track: (...args: any[]) => void }) {
   let durable = createProfile(newGame(2, "current")),
     fail = false;
   durable.tutorialStep = 4;
@@ -149,7 +149,14 @@ function harness() {
   } as unknown as AdBridge;
   const block = vi.fn(),
     problem = vi.fn(),
-    controller = new AdsController(store, bridge, block, () => {}, problem);
+    controller = new AdsController(
+      store,
+      bridge,
+      block,
+      () => {},
+      problem,
+      analytics,
+    );
   return {
     store,
     bridge,
@@ -333,4 +340,26 @@ it("readiness retries a saved reward even when native pending receipts block new
   await h.controller.ready();
   expect(h.store.state.earnedHints).toBe(3);
   expect(h.bridge.show).toHaveBeenCalledTimes(1);
+});
+
+it("reward analytics follows durable grant, never failed save or duplicate receipt callbacks", async () => {
+  const track = vi.fn();
+  const h = harness({ track });
+  await h.controller.init();
+  await h.store.update((p) => prepareReward(p, "analytics-hint", "hints"));
+  const r = { id: "r", intentId: "analytics-hint" };
+  h.receipts([r]);
+  h.fail(true);
+  await h.controller.recover();
+  expect(
+    track.mock.calls.filter((c) => c[0] === "reward_applied"),
+  ).toHaveLength(0);
+  h.fail(false);
+  await h.controller.recover();
+  h.receipts([r, { id: "another-token", intentId: r.intentId }]);
+  await h.controller.recover();
+  expect(
+    track.mock.calls.filter((c) => c[0] === "reward_applied"),
+  ).toHaveLength(1);
+  expect(h.store.state.earnedHints).toBe(3);
 });

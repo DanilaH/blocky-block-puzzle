@@ -123,6 +123,48 @@ try {
   assert.deepEqual(actual, expected);
   assert.deepEqual(errors, []);
   assert.equal(await page.locator("#score").textContent(), "123");
+  let ledgerMigration = null;
+  if (process.env.BLOCKY_CHECK_LEDGER === "1") {
+    await page.locator("#pause").click();
+    await page.locator("#sound").check();
+    await page.waitForFunction(
+      () =>
+        document.querySelector("#save-status")?.textContent ===
+        "Партия сохранена",
+    );
+    await page.reload();
+    await page.locator("#board canvas").waitFor();
+    const migrated = await page.evaluate(async () => {
+      const db = await new Promise((r) => {
+        const q = indexedDB.open("blocky-classic", 1);
+        q.onsuccess = () => r(q.result);
+      });
+      return await new Promise((r) => {
+        const q = db.transaction("save").objectStore("save").get("current");
+        q.onsuccess = () => {
+          db.close();
+          r(q.result);
+        };
+      });
+    });
+    assert.deepEqual(migrated.game, expected.game);
+    assert.equal(migrated.earnedHints, expected.earnedHints);
+    assert.equal(migrated.best, expected.best);
+    assert.equal(migrated.ads.ledgerVersion, 2);
+    assert.equal(migrated.ads.intents[0].compact, true);
+    assert.equal(migrated.ads.intents[0].snapshot, undefined);
+    assert.deepEqual(migrated.ads.intents[1], expected.ads.intents[1]);
+    assert.deepEqual(migrated.ads.receipts, expected.ads.receipts);
+    assert.deepEqual(errors, []);
+    ledgerMigration = {
+      committedOnSetting: true,
+      reloaded: true,
+      gamePreserved: true,
+      pendingPreserved: true,
+      receiptsPreserved: true,
+      appliedSnapshotRemoved: true,
+    };
+  }
   const report = {
     source: "previous APK web payload",
     destination: process.env.BLOCKY_NEW_WEB_ROOT
@@ -140,6 +182,7 @@ try {
     ],
     errors,
     nativeInstallTested: false,
+    ...(ledgerMigration ? { ledgerMigration } : {}),
   };
   await fs.writeFile(
     "/tmp/blocky-upgrade.json",

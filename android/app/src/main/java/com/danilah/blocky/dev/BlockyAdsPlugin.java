@@ -45,6 +45,8 @@ public class BlockyAdsPlugin extends Plugin {
   private PluginCall showing;
   private String showingKind, showingAttempt;
   private boolean shown;
+  private boolean telemetryLive;
+  private JSONArray earlyEvents = new JSONArray();
   private int epoch=0;
   private Runnable showDeadline;
 
@@ -67,11 +69,20 @@ public class BlockyAdsPlugin extends Plugin {
     if (test) return "demo-" + kind + "-yandex";
     return getContext().getString(kind.equals("banner") ? R.string.yandex_banner_id : kind.equals("rewarded") ? R.string.yandex_rewarded_id : R.string.yandex_interstitial_id);
   }
-  private void event(String name,String kind) { android.util.Log.d("BlockyAds",name+":"+kind); }
+  private void event(String name,String kind) {
+    JSObject e=new JSObject().put("name",name).put("kind",kind);
+    if ("rewarded".equals(kind) && showingAttempt!=null) e.put("intentId",showingAttempt);
+    if (telemetryLive) notifyListeners("analytics",e);
+    else if (earlyEvents.length()<64) earlyEvents.put(e);
+  }
   private JSONArray receipts() {
     try { return new JSONArray(prefs.getString("receipts", "[]")); } catch(Exception e) { throw new IllegalStateException("Damaged receipts",e); }
   }
-  @PluginMethod public void initialize(PluginCall call) { call.resolve(new JSObject().put("enabled",enabled())); }
+  @PluginMethod public void initialize(PluginCall call) { getActivity().runOnUiThread(() -> {
+    telemetryLive=true;
+    call.resolve(new JSObject().put("enabled",enabled()).put("events",earlyEvents));
+    earlyEvents=new JSONArray();
+  }); }
   @PluginMethod public void status(PluginCall call) {getActivity().runOnUiThread(()->{try{call.resolve(new JSObject().put("rewarded",rewarded!=null && receipts().length()==0 && showing==null).put("interstitial",interstitial!=null && showing==null));}catch(Exception e){call.reject("Ad state unavailable");}});}
   @PluginMethod public void pending(PluginCall call) { getActivity().runOnUiThread(()->{try{call.resolve(new JSObject().put("rewards",receipts()));}catch(Exception e){call.reject("Cannot read receipts");}}); }
   @PluginMethod public void acknowledge(PluginCall call) {getActivity().runOnUiThread(()->{
@@ -155,7 +166,7 @@ public class BlockyAdsPlugin extends Plugin {
     } catch (Exception e) { finish("error"); }
   }
   private void didShow() {
-    if (showing == null) return;
+    if (showing == null || shown) return;
     shown = true; handler.removeCallbacks(showDeadline);
     event("ad_shown", showingKind);
   }

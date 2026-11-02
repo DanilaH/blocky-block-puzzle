@@ -1,3 +1,4 @@
+import { compactRewards } from "../core/monetization";
 import { validProfile, type Profile } from "../core/profile";
 export class DamagedSaveError extends Error {
   constructor() {
@@ -118,7 +119,13 @@ export class IndexedSave implements SaveAdapter {
     });
   }
 }
+export interface StoreObserver {
+  prepare(before: Profile, next: Profile): Profile;
+  committed(before: Profile, next: Profile, reason?: string): void;
+  saveFailed(): void;
+}
 export class ProfileStore {
+  observer: StoreObserver | null = null;
   busy = false;
   private idle: (() => void)[] = [];
   async waitIdle(): Promise<void> {
@@ -130,16 +137,33 @@ export class ProfileStore {
     public state: Profile,
     private readonly save: SaveAdapter,
   ) {}
-  async update(reduce: (current: Profile) => Profile | null): Promise<boolean> {
+  async update(
+    reduce: (current: Profile) => Profile | null,
+    reason?: string,
+  ): Promise<boolean> {
     if (this.busy) return false;
     this.busy = true;
     this.onBusyChange?.();
     try {
-      const next = reduce(this.state);
+      let next = reduce(this.state);
       if (!next || next === this.state) return false;
+      next = compactRewards(next, this.state.game);
+      const before = this.state;
+      // Optional telemetry must never own the save transaction.
+      try {
+        next = this.observer?.prepare(before, next) ?? next;
+      } catch {}
       await this.save.write(next);
       this.state = next;
+      try {
+        this.observer?.committed(before, next, reason);
+      } catch {}
       return true;
+    } catch (error) {
+      try {
+        this.observer?.saveFailed();
+      } catch {}
+      throw error;
     } finally {
       this.busy = false;
       this.onBusyChange?.();
