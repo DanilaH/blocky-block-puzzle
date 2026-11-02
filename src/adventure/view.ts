@@ -5,6 +5,7 @@ import { BoardScene } from "../game/BoardScene";
 import { GameAudio } from "../game/audio";
 import { GameHaptics, clearHapticLevel } from "../platform/haptics";
 import { AudioFocus, nativeAudioFocus } from "../platform/audio-focus";
+import { nativeAds } from "../platform/ads";
 import { IndexedSave, ProfileStore } from "../platform/save";
 import { createProfile, dayKey } from "../core/profile";
 import { newGame, shapeById, type GameState, type Move } from "../core/rules";
@@ -49,6 +50,10 @@ function presentation(a: Attempt): GameState {
   };
 }
 export async function startCampaign() {
+  // A native banner can outlive a WebView document navigation.
+  await nativeAds()
+    ?.banner({ visible: false })
+    .catch(() => {});
   const adapter = new IndexedSave(),
     loaded = await adapter.load();
   const initial =
@@ -444,6 +449,7 @@ export async function startCampaign() {
     const a = store.state.campaign?.active;
     if (!a) return;
     const l = levelFor(a.levelId, a.levelVersion);
+    audio.setSeries(a.streak);
     el("adv-title").textContent = `${LEVELS.indexOf(l) + 1}. ${l.title}`;
     el("adv-goals").innerHTML = Object.entries(l.goals)
       .map(
@@ -731,6 +737,7 @@ export async function startCampaign() {
   if (import.meta.env.DEV)
     (window as any).__adventure = {
       store,
+      audio,
       showAttempt,
       chapter,
       launch,

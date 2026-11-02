@@ -21,6 +21,9 @@ test("five levels through real input, independent classic save, reload and repla
   for (let i = 0; i < 5; i++) {
     if (!i) await page.locator('[data-level="cove-1"]').click();
     else await page.locator("#adv-next").click();
+    expect(
+      await page.evaluate(() => (window as any).__adventure.audio.series),
+    ).toBe(0);
     const solution = await page.evaluate(
       (i) => (window as any).__adventure.levels[i].solution,
       i,
@@ -39,6 +42,9 @@ test("five levels through real input, independent classic save, reload and repla
         await page.reload();
         await page.waitForFunction(() => !!(window as any).__adventure);
         await page.locator("#adv-continue").click();
+        expect(
+          await page.evaluate(() => (window as any).__adventure.audio.series),
+        ).toBe(1);
       }
       if (i === 2 && j === 0)
         await page.screenshot({ path: "docs/qa/adventure-0.35/unlock.png" });
