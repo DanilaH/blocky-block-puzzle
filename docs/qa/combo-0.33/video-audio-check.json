@@ -1,8 +1,10 @@
 {
+  "sourceCommit": "79222bf9d7bb01b6b3a0941419f0673465e669d5",
   "sampleRate": 24000,
-  "duration": 44.544,
-  "peakDbfs": -13.887903598256594,
-  "rmsDbfs": -32.160194883625564,
+  "duration": 45.80266666666667,
+  "peakDbfs": -13.778432572381327,
+  "rmsDbfs": -32.216640796547864,
   "samplesAtFullScale": 0,
-  "subjectiveAudition": false
+  "subjectiveAudition": false,
+  "videoSha256": "38cbb410e5b1da5841288069eacb73a510c665e233ded7a950646c7d09b8289f"
 }
