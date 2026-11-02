@@ -69,9 +69,10 @@ public class BlockyAdsPlugin extends Plugin {
     if (test) return "demo-" + kind + "-yandex";
     return getContext().getString(kind.equals("banner") ? R.string.yandex_banner_id : kind.equals("rewarded") ? R.string.yandex_rewarded_id : R.string.yandex_interstitial_id);
   }
-  private void event(String name,String kind) {
+  private void event(String name,String kind) { event(name,kind,showingAttempt); }
+  private void event(String name,String kind,String intentId) {
     JSObject e=new JSObject().put("name",name).put("kind",kind);
-    if ("rewarded".equals(kind) && showingAttempt!=null) e.put("intentId",showingAttempt);
+    if ("rewarded".equals(kind) && intentId!=null) e.put("intentId",intentId);
     if (telemetryLive) notifyListeners("analytics",e);
     else if (earlyEvents.length()<64) earlyEvents.put(e);
   }
@@ -146,8 +147,8 @@ public class BlockyAdsPlugin extends Plugin {
           @Override public void onAdShown() { if (showing == call) didShow(); }
           @Override public void onAdDismissed() { if (showing == call) finish("closed"); }
           @Override public void onAdFailedToShow(@NonNull AdError e) { if (showing == call) finish("error"); }
-          @Override public void onAdClicked() { event("ad_clicked", "rewarded"); }
-          @Override public void onAdImpression(@Nullable ImpressionData data) { event("ad_impression", "rewarded"); }
+          @Override public void onAdClicked() { event("ad_clicked", "rewarded", intentId); }
+          @Override public void onAdImpression(@Nullable ImpressionData data) { event("ad_impression", "rewarded", intentId); }
           @Override public void onRewarded(@NonNull Reward reward) {
             if (issued || destroyed) return;
             try {
@@ -155,7 +156,7 @@ public class BlockyAdsPlugin extends Plugin {
               JSObject receipt=new JSObject().put("id",UUID.randomUUID().toString()).put("intentId",intentId);
               all.put(receipt);
               if(prefs.edit().putString("receipts",all.toString()).commit()) {
-                issued=true;event("ad_reward_earned","rewarded");notifyListeners("reward",receipt,true);
+                issued=true;event("ad_reward_earned","rewarded",intentId);notifyListeners("reward",receipt,true);
               } else notifyListeners("receiptError",new JSObject(),true);
             } catch(Exception e) {notifyListeners("receiptError",new JSObject(),true);}
 
