@@ -81,6 +81,11 @@ for (const [before, multiplier, step] of [
       before + 1,
     );
     expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
+    const background = await page.locator(".world-background").first().boundingBox();
+    const viewport = page.viewportSize();
+    expect(background?.width).toBe(viewport?.width);
+    expect(background?.height).toBe(viewport?.height);
+    expect(await page.evaluate(() => getComputedStyle(document.body).transitionDuration)).toBe("0s");
     await page.locator("#pause").click();
     expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
     expect(

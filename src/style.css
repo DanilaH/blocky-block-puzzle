@@ -2361,3 +2361,16 @@ body:has(#app.effects-paused),
 .calm .reward-event .reward-praise {
   text-shadow: 0 2px 0 #5e4d3f;
 }
+
+/* Crossfade the two fixed atmosphere surfaces instead of repainting the entire
+   document background on every color-transition frame. */
+:root,
+body {
+  transition: none;
+}
+.world-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
