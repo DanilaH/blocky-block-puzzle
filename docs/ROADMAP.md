@@ -315,4 +315,6 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Локальный CC0 loop, один декодированный буфер, сохранение позиции, fade-in и ducking.
 - [x] Раздельные громкости, сохранение legacy mute, pentatonic reward register при включённой музыке.
 - [x] Локально 111 unit и 8 browser (audio focus, gameplay, music).
-- [ ] Полный CI / APK; слуховая оценка петли, тональности, внешняя музыка и реклама на физическом Android.
+- [x] CI 41449028972: 111 unit + 107 browser и Android; APK 0.32, подпись 0.31 и 30 production-файлов проверены.
+- [ ] Слуховая оценка петли, тональности, внешняя музыка и реклама на физическом Android.
+Протокол: [музыка 0.32](qa/MUSIC_0.32_2026-11-02.md).
