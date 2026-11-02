@@ -21,4 +21,4 @@
 
 Баланс, выдача и сохранения не меняются; новая партия для этих изменений не нужна.
 
-Проверки: TypeScript tier mapping; Java/JUnit — формы волн, чередование пауз, максимальная длительность, защита от рекорда/повтора, приоритет пустого поля, сброс защиты. `testDebugUnitTest` включён в Android CI перед APK. Физическая сила моторчика и субъективный баланс музыки требуют плейтеста на телефоне. CI/APK-результаты добавляются после сборки.
+Проверки: TypeScript tier mapping; Java/JUnit — формы волн, чередование пауз, максимальная длительность, защита от рекорда/повтора, приоритет пустого поля, сброс защиты. `testDebugUnitTest` включён в Android CI перед APK. Физическая сила моторчика и субъективный баланс музыки требуют плейтеста на телефоне. CI [41471190354](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/41471190354): 116 TypeScript unit + 110 browser — passed; Android `testDebugUnitTest` (3 Java-теста) и `assembleDebug` — passed. APK 0.34.0-preview, 11 086 629 байт. Подпись совпала с 0.33, 30 production-файлов совпали побайтово; наличие новой нативной HapticPattern в DEX проверено. [Протокол APK](haptics-0.34/apk-verification.json).
