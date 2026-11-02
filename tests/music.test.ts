@@ -1,6 +1,12 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { MusicLoop, musicalFrequency } from "../src/game/music";
 
+const buffer = () => ({
+  duration: 130,
+  sampleRate: 100,
+  numberOfChannels: 1,
+  getChannelData: () => new Float32Array(13000),
+});
 function harness() {
   const param = {
     value: 0,
@@ -15,7 +21,7 @@ function harness() {
     currentTime: 0,
     state: "running",
     createGain: () => ({ gain: param, connect: vi.fn() }),
-    decodeAudioData: vi.fn(async () => ({ duration: 130 })),
+    decodeAudioData: vi.fn(async () => buffer()),
     createBufferSource: () => {
       const s = {
         start: vi.fn(),
@@ -73,7 +79,7 @@ it("stop during decode never starts late music; later start uses cached buffer",
   const pending = music.start();
   await vi.waitFor(() => expect(c.decodeAudioData).toHaveBeenCalled());
   music.stop();
-  resolve({ duration: 130 });
+  resolve(buffer());
   await pending;
   expect(sources).toHaveLength(0);
   await music.start();

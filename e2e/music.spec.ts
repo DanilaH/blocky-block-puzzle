@@ -24,7 +24,7 @@ test("music decodes once, loops, resumes from offset and stays stopped in pause"
   const info = await page.evaluate(() => {
     const m = window.testAudio.music,
       b = m.buffer,
-      n = b.length;
+      n = Math.round(m.source.loopEnd * b.sampleRate);
     let seam = 0;
     for (let ch = 0; ch < b.numberOfChannels; ch++) {
       const d = b.getChannelData(ch);

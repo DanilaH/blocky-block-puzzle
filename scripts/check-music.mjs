@@ -39,7 +39,12 @@ try {
     let seam = 0;
     for (let ch = 0; ch < b.numberOfChannels; ch++) {
       const d = b.getChannelData(ch);
-      seam = Math.max(seam, Math.abs(d[0] - d[d.length - 1]));
+      seam = Math.max(
+        seam,
+        Math.abs(
+          d[0] - d[Math.ceil(audio.music.source.loopEnd * b.sampleRate) - 1],
+        ),
+      );
     }
     for (let i = 0; i < 10; i++) {
       audio.stop();
@@ -65,6 +70,10 @@ try {
   await page.locator("#pause").click();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: "docs/qa/music-0.32/settings.png" });
+  await page.setViewportSize({ width: 320, height: 480 });
+  await page.screenshot({ path: "docs/qa/music-0.32/settings-small.png" });
+  await page.setViewportSize({ width: 640, height: 360 });
+  await page.screenshot({ path: "docs/qa/music-0.32/settings-landscape.png" });
   await fs.writeFile(
     "docs/qa/music-0.32/audio-check.json",
     JSON.stringify(result, null, 2) + "\n",

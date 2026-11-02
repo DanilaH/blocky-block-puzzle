@@ -22,6 +22,7 @@ export class MusicLoop {
   private source?: AudioBufferSourceNode;
   private generation = 0;
   private offset = 0;
+  private loopDuration = 0;
   private startedAt = 0;
   private volume = 0;
   private active = false;
@@ -54,6 +55,20 @@ export class MusicLoop {
         this.buffer = await this.context.decodeAudioData(
           await response.arrayBuffer(),
         );
+        const frames = Math.min(
+          Math.round(this.buffer.duration * this.buffer.sampleRate),
+          Math.round(((256 * 60) / 118) * this.buffer.sampleRate),
+        );
+        this.loopDuration = frames / this.buffer.sampleRate;
+        // Bridge only the final 2 ms to the first sample: no silent gap, and no
+        // lossy-codec endpoint step when the sample-aligned loop wraps.
+        const bridge = Math.max(1, Math.round(this.buffer.sampleRate * 0.002));
+        for (let ch = 0; ch < this.buffer.numberOfChannels; ch++) {
+          const data = this.buffer.getChannelData(ch);
+          const delta = data[0]! - data[frames - 1]!;
+          for (let i = 0; i < bridge; i++)
+            data[frames - bridge + i]! += (delta * (i + 1)) / bridge;
+        }
       })().catch(() => {
         this.failed = true;
       });
@@ -72,7 +87,7 @@ export class MusicLoop {
     source.buffer = this.buffer;
     source.loop = true;
     // Exact 256 beats at 118 BPM: exclude decoder padding at the tail.
-    source.loopEnd = Math.min(this.buffer.duration, (256 * 60) / 118);
+    source.loopEnd = this.loopDuration;
     source.connect(this.gain);
     const t = this.context.currentTime;
     this.gain.gain.cancelScheduledValues(t);
@@ -97,7 +112,7 @@ export class MusicLoop {
     if (this.source && this.buffer) {
       this.offset =
         (this.offset + this.context.currentTime - this.startedAt) %
-        Math.min(this.buffer.duration, (256 * 60) / 118);
+        this.loopDuration;
       this.source.stop();
       this.source.disconnect();
       this.source = undefined;
