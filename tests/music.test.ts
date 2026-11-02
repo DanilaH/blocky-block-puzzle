@@ -62,7 +62,10 @@ it("concurrent starts share a decode and source; resume keeps offset, not old du
   expect(c.decodeAudioData).toHaveBeenCalledTimes(1);
   expect(sources).toHaveLength(4);
   expect(sources[0].loop).toBe(true);
-  music.setSeries(2); music.setSeries(6); music.setSeries(10); music.setSeries(0);
+  music.setSeries(2);
+  music.setSeries(6);
+  music.setSeries(10);
+  music.setSeries(0);
   expect(sources).toHaveLength(4);
   c.currentTime = 12;
   music.duck(true);

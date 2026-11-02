@@ -17,6 +17,16 @@ for (const [before, multiplier, step] of [
         ),
       });
     });
+    await page.route("**/src/game/atmosphere.ts", async (route) => {
+      const response = await route.fetch();
+      await route.fulfill({
+        response,
+        body: (await response.text()).replace(
+          "constructor() {",
+          "constructor() { window.testAtmosphere = this;",
+        ),
+      });
+    });
     await page.goto("/");
     await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     await page.evaluate(async (before) => {
@@ -70,11 +80,15 @@ for (const [before, multiplier, step] of [
     expect(await page.evaluate(() => window.testAudio.music.streak)).toBe(
       before + 1,
     );
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
     await page.locator("#pause").click();
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
     expect(
       await page.evaluate(
         () => window.testAudio.music.layers.filter((l) => l.source).length,
       ),
     ).toBe(0);
+    await page.locator("#resume").click();
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
   });
 }

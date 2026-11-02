@@ -155,6 +155,16 @@ async function start() {
   const inLesson = () => lessonStep() < 4;
   const currentGame = () =>
     inLesson() ? lessonGame(lessonStep()) : store.state.game;
+  function visualSeriesFor(g: GameState) {
+    const debug = import.meta.env.DEV
+      ? Number(new URLSearchParams(location.search).get("themeSeries"))
+      : 0;
+    return debug > 0
+      ? debug
+      : g.scoringVersion === "festival-v4"
+        ? seriesVisual(g.streak)
+        : g.streak;
+  }
   root.innerHTML = `<main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div class="combo-hud" id="combo-hud" aria-live="polite"><strong id="combo-title"></strong><span id="combo-stock"></span></div><div class="clear-glow" id="clear-glow" aria-hidden="true"></div><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
@@ -185,14 +195,7 @@ async function start() {
   let rendererReady = false;
   function syncRenderer() {
     if (!phaser || !rendererReady) return;
-    const debugSeries = import.meta.env.DEV
-      ? Number(new URLSearchParams(location.search).get("themeSeries"))
-      : 0;
-    atmosphere.set(
-      debugSeries > 0 ? debugSeries : currentGame().streak,
-      running,
-      scene.calm,
-    );
+    atmosphere.set(visualSeriesFor(currentGame()), running, scene.calm);
     if (running) schedulePraise(currentGame());
     if (running) phaser.loop.wake();
     else phaser.loop.sleep();
@@ -314,7 +317,7 @@ async function start() {
       performanceCapture.setActive(false);
       root.classList.add("effects-paused");
       stopPraise();
-      atmosphere.set(currentGame().streak, false, scene.calm);
+      atmosphere.set(visualSeriesFor(currentGame()), false, scene.calm);
       haptics.setActive(false);
       audioFocus.setActive(false);
       ads.setActive(false);
@@ -550,15 +553,7 @@ async function start() {
     audio.calm = scene.calm;
     haptics.setActive(running && p.settings.haptics !== false && !scene.calm);
     document.documentElement.classList.toggle("calm", scene.calm);
-    const debugSeries = import.meta.env.DEV
-      ? Number(new URLSearchParams(location.search).get("themeSeries"))
-      : 0;
-    const visualSeries =
-      debugSeries > 0
-        ? debugSeries
-        : g.scoringVersion === "festival-v4"
-          ? seriesVisual(g.streak)
-          : g.streak;
+    const visualSeries = visualSeriesFor(g);
     audio.setSeries(g.streak);
     atmosphere.set(visualSeries, running, scene.calm);
     scene.setTheme(themeFor(visualSeries), themeAccent(visualSeries));
