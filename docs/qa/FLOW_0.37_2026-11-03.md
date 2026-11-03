@@ -14,11 +14,16 @@ D33 approved after the supplied 7:39 reference. Seven observed theme changes coi
 - Music defaults to zero for new profiles; existing chosen settings are preserved. Sound and vibration never run while lifecycle is blocked.
 
 ## Evidence
-- Unit: final count to be filled after complete checks. Dedicated route replay, deterministic save, shape and theme validation tests.
-- Browser: all-clear save/reload/new game/collection; failed write awards neither theme nor score; actual CDP touch confirms offset and cancellation. Existing advertising/reward gates remain.
+- Unit: 129 passed across 20 files locally and in CI. Dedicated route replay, deterministic save, shape and theme validation tests.
+- Browser: final CI 116/116 passed (7.5 min); all-clear save/reload/new game/collection; failed write awards neither theme nor score; actual CDP touch confirms offset and cancellation. Existing advertising/reward gates remain.
 - `flow-0.37/simulation.json`: paired seeds, random and one-step greedy players, finite move cap. This is synthetic evidence and does not estimate human retention, session duration or phone FPS.
-- `scripts/record-flow37.mjs`: empty seeded board, ordinary deals throughout, automated greedy player through real touch input, live game audio. No injected mid-game positions, no use of dealer's hidden witness. Not a human playtest.
+- `scripts/record-flow37.mjs`: empty seeded board, ordinary deals throughout, automated greedy player through real touch input, live game audio. No injected mid-game positions, no use of dealer's hidden witness. 94.208 seconds, 36 moves, eight full clears; event evidence in `flow-0.37/natural-gameplay.json`. Not a human playtest.
 - `scripts/build-theme-tiles.mjs` and `npm run assets:check`: reproducible palette preparation with bounded encode/decode cost.
 
 ## Open gates
-Full final browser run, CI and signed APK verification will be recorded after completion. Physical Android installation, frame time, tactile strength, listening and human balance/feel assessment are not verified by browser or simulation. Production ad identifiers, release signing and store publication remain outside this preview.
+Source commit `d2d3605bdfd4dabe97cba5790a841bc7fc8fc057`; CI run `41612162238`: assets, 129 unit, build and 116 browser checks passed. Android unit checks and APK build passed. APK version 37 / 0.37.0-preview, package com.danilah.blocky.dev, ZIP CRC, signature continuity with 0.36 and all 76 production files verified. SHA-256 `274df63be0869f26df7427c145048a4b22dd60654d01c82fb791245dbc527565`. Evidence: `flow-0.37/apk-verification.json`. Physical Android installation, frame time, tactile strength, listening and human balance/feel assessment are not verified by browser or simulation. Production ad identifiers, release signing and store publication remain outside this preview.
+
+## Balance and performance limits
+Across 60 paired seeds per strategy (120-move cap), random-player early defeats fell from 20 to 3; greedy-player full clears rose from 5 to 368. However greedy-player defeats increased from 27 to 33 and total moves fell from 5,867 to 5,082. This package improves access to clear sequences, not universally survival. Human balance acceptance remains open.
+
+The isolated cloud browser sample (`flow-0.37/browser-performance.json`) still contains long tasks: full-effect drag p95 33.4 ms, idle drag p95 49.9 ms. These short, noisy software-rendered samples are not phone frame rates and do not establish a speedup. They prevent claiming the frame-stall gate is closed. Worker refill, bounded pools and preloaded theme assets reduce known sources of main-thread work; physical profiling remains required.
