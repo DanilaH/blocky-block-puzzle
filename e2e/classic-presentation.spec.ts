@@ -7,6 +7,7 @@ test("Classic preloads its coherent atlas and keeps the campaign material indepe
     if (r.url().includes("/assets/")) paths.push(r.url());
   });
   await page.goto("/");
+  await page.locator("#board canvas").waitFor();
   await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await expect(page.locator("html")).toHaveAttribute(
     "data-presentation",

@@ -68,7 +68,7 @@ for (const mode of ["background", "next-move"] as const) {
       await page.clock.runFor(2000);
       expect(
         await page.evaluate(
-          () => window.hapticCalls.filter((p) => p.kind === "empty").length,
+          () => window.hapticCalls.filter((p) => ["empty", "bloom", "rain"].includes(p.kind)).length,
         ),
       ).toBe(0);
     } else {
@@ -78,7 +78,7 @@ for (const mode of ["background", "next-move"] as const) {
       expect((await saved(page)).game.board.filter(Boolean)).toHaveLength(1);
       expect(
         await page.evaluate(
-          () => window.hapticCalls.filter((p) => p.kind === "empty").length,
+          () => window.hapticCalls.filter((p) => ["empty", "bloom", "rain"].includes(p.kind)).length,
         ),
       ).toBe(1);
     }
