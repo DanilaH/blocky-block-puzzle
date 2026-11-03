@@ -108,3 +108,32 @@ test("touch pickup immediately clears the finger by 1.2 board cells; cancel does
   await expect(page.locator("#score")).toHaveText("0");
   await expect(page.locator("#floating")).toBeHidden();
 });
+
+test("all-clear takes over the foreground after the line reward and points still settle", async ({
+  page,
+}) => {
+  await fixture(page);
+  await page.locator('[data-slot="0"]').click();
+  await page.locator("#board").click({ position: { x: 4, y: 4 } });
+  await expect(
+    page.locator('.reward-event[data-tier="all-clear"]'),
+  ).toBeVisible();
+  await expect(
+    page.locator(
+      '.reward-event[data-tier="line"], .reward-event[data-tier="combo"]',
+    ),
+  ).toHaveCount(0);
+  await expect
+    .poll(async () =>
+      page.evaluate(async () => {
+        const { IndexedSave } = await import("/src/platform/save.ts");
+        const p = (await new IndexedSave().load()).profile;
+        return (
+          Number(
+            document.querySelector("#score").textContent.replace(/\D/g, ""),
+          ) === p.game.score
+        );
+      }),
+    )
+    .toBe(true);
+});

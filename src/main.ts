@@ -1233,7 +1233,14 @@ async function start() {
     // Important all-clear owns the foreground, after the line has had time to read.
     if (tier === "all-clear")
       for (const old of rewards.keys()) {
-        if (old.dataset.tier !== "all-clear") old.style.opacity = ".65";
+        if (old.dataset.tier === "all-clear") continue;
+        // The line already delivered its points. Hand the foreground over,
+        // rather than keeping two large competing headlines for two seconds.
+        if (scene.calm) rewards.get(old)?.();
+        else {
+          animate(old, [{ opacity: 1 }, { opacity: 0 }], 160);
+          later(() => rewards.get(old)?.(), 160);
+        }
       }
     el("burst").append(node);
     const boardBox = rewardAnchor.getBoundingClientRect();

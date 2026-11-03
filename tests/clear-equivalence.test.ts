@@ -3,7 +3,7 @@ import { clearLines, random } from "../src/core/rules";
 it("mask-based clear preserves simultaneous row/column union, order and input across 1,000 boards", () => {
   let seed = 0x782bd65;
   for (let n = 0; n < 1000; n++) {
-    const board = Array.from({ length: 64 }, () => {
+    const board: number[] = Array.from({ length: 64 }, () => {
       const r = random(seed);
       seed = r.state;
       return r.value < (n % 10) / 10 ? 1 : 0;
