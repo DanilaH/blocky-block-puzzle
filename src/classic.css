@@ -133,3 +133,6 @@
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
+
+.pause-tools {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.pause-tools a {display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:48px;grid-column:1 / -1;}
