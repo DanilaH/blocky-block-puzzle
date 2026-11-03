@@ -44,6 +44,7 @@ try {
         viewport: { width: 390, height: 844 },
         deviceScaleFactor: 2,
       });
+      await page.addInitScript(policy => { window.__auditDealer = policy; }, process.env.BLOCKY_DEALER || "flow-v1");
       await page.goto("http://127.0.0.1:5192");
       await page.waitForFunction(() => !document.querySelector("#app").inert);
       await page.evaluate(async (mode) => {
@@ -72,7 +73,7 @@ try {
         p.game.board[63] = 3;
         if (mode.startsWith('all-clear')) p.game.board[63] = 0;
         if (mode === 'refill') {
-          p.game.board.fill(0); p.game.dealerVersion = 'flow-v1';
+          p.game.board.fill(0); p.game.dealerVersion = window.__auditDealer;
           p.game.tray[1].used = p.game.tray[2].used = true;
         }
         await a.write(p);
@@ -297,7 +298,7 @@ await fs.writeFile(
   JSON.stringify(
     {
       environment:
-        "Chromium software renderer, 390x844 DPR2; one full-combo and one idle-drag scenario per invocation; not Android FPS",
+        "Chromium software renderer, 390x844 DPR2; repetitions/scenarios in results; not Android FPS. placementWallMs includes Playwright action scheduling, not input latency.",
       results,
     },
     null,

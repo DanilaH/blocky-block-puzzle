@@ -1,5 +1,6 @@
 import {createServer} from 'vite';
 import fs from 'node:fs/promises';
+import {makePlanner} from './audit-planner38.mjs';
 const server=await createServer({server:{middlewareMode:true}});
 const seeds=Number(process.env.SIM_SEEDS||60),offset=Number(process.env.SIM_OFFSET||0),limit=Number(process.env.SIM_LIMIT||120);
 const policies=(process.env.SIM_POLICIES||'initial-v1,flow-v1,flow-v2').split(',');
@@ -9,7 +10,7 @@ try {
  const R=await server.ssrLoadModule('/src/core/rules.ts');const all=[];
  const score=b=>{let edges=0;for(let i=0;i<64;i++)if(b[i]){if(i%8<7&&!b[i+1])edges++;if(i<56&&!b[i+8])edges++;}return -b.filter(Boolean).length-edges*3;};
  const opts=(board,tray)=>tray.flatMap((s,slot)=>s.used?[]:R.placements(board,R.shapeById(s.shapeId)).map(m=>{const p=R.place(board,R.shapeById(s.shapeId),m.x,m.y);return {move:{slot,...m},board:p.board,lines:p.lines,value:p.lines*200+score(p.board)};}));
- function pick(g,strategy,rng){
+ function pickReference(g,strategy,rng){
   const a=opts(g.board,g.tray);if(!a.length)throw Error('playing without move');
   if(strategy==='random'||strategy==='imperfect'&&rng<.2)return a[Math.floor((rng*(strategy==='imperfect'?5:1))*a.length)].move;
   a.sort((a,b)=>b.value-a.value);
@@ -22,6 +23,20 @@ try {
   }
   beam.sort((a,b)=>b.depth-a.depth||b.value-a.value);return beam[0].first;
  }
+ const planner=makePlanner(R);
+ const pick=(g,strategy,rng)=>strategy==='planner'?planner(g):pickReference(g,strategy,rng);
+ if(process.env.SIM_VERIFY_PLANNER){
+  let comparisons=0;
+  for(let seed=1;seed<=12;seed++){
+   let g=R.newGame(seed*1777,'verify','flow-v2');
+   for(let turn=0;turn<12&&g.status==='playing';turn++){
+    const fast=planner(g),slow=pickReference(g,'planner',0);
+    if(JSON.stringify(fast)!==JSON.stringify(slow))throw Error('Planner mismatch '+seed+':'+turn);
+    g=R.applyMove(g,fast,g.revision).state;comparisons++;
+   }
+  }
+  console.log(JSON.stringify({plannerDifferentialChecks:comparisons}));
+ }
  for(const strategy of strategies)for(const policy of policies){
   const games=[];let ms=0;
   for(let n=1;n<=seeds;n++){
@@ -33,6 +48,7 @@ try {
     if(g.status==='over'&&g.tray.filter(s=>s.used).length<3)earlyTrap++;
    }
    games.push({seed,moves:g.moves,dead:g.status==='over',early:g.status==='over'&&g.moves<12,clears,rewards,fallbacks:g.dealerFallbacks-fallbacks,maxGap:Math.max(maxGap,g.moves-lastReward),repeat,earlyTrap,board:g.status==='over'?g.board:undefined,tray:g.status==='over'?g.tray:undefined});
+   if(n%25===0)console.error(`${strategy}/${policy}: ${n}/${seeds}`);
   }
   const sum=k=>games.reduce((a,g)=>a+Number(g[k]),0);const entry={strategy,policy,seeds,offset,limit,moves:sum('moves'),deaths:sum('dead'),early:sum('early'),allClear:sum('clears'),rewards:sum('rewards'),fallbacks:sum('fallbacks'),repeatedBags:sum('repeat'),meanMaxGap:sum('maxGap')/seeds,calculationMs:Math.round(ms),games};all.push(entry);
   console.log(JSON.stringify({...entry,games:undefined}));await fs.writeFile(out,JSON.stringify(all,null,2));
