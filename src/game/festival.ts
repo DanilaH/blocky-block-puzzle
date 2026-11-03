@@ -23,13 +23,13 @@ export class Festival {
     age: number;
     mode: number;
     color: string;
-    rear?: SVGPathElement;
+    rear?: SVGSVGElement;
   }[] = [];
   setPalette(theme: number) {
     this.theme = theme;
   }
   private canvas = document.createElement("canvas");
-  private rear = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  private rear = document.createElement("div");
   private ctx: CanvasRenderingContext2D;
   private sparks: Spark[] = [];
   private frame: (() => void) | null = null;
@@ -78,12 +78,29 @@ export class Festival {
         COLORS[themeTile(this.theme, i + 1)]!.toString(16).padStart(6, "0"),
     );
     if (empty) {
-      let rear: SVGPathElement | undefined;
+      let rear: SVGSVGElement | undefined;
       if (variant === 2) {
-        rear = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        rear.setAttribute("fill", "none");
-        rear.setAttribute("stroke-width", "3");
-        rear.setAttribute("stroke", THEMES[this.theme]!.accent);
+        rear = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        const radius = board.width * 0.75,
+          ry = radius * 0.16;
+        rear.setAttribute(
+          "viewBox",
+          `${-radius - 2} ${-ry - 2} ${radius * 2 + 4} ${ry * 2 + 4}`,
+        );
+        rear.style.cssText = `position:absolute;left:${board.left + board.width / 2 - radius - 2}px;top:${board.bottom - ry - 2}px;width:${radius * 2 + 4}px;height:${ry * 2 + 4}px;transform-origin:center;will-change:transform,opacity;overflow:visible`;
+        const path = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "path",
+        );
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke-width", "3");
+        path.setAttribute("vector-effect", "non-scaling-stroke");
+        path.setAttribute("stroke", THEMES[this.theme]!.accent);
+        path.setAttribute(
+          "d",
+          `M ${-radius} 0 A ${radius} ${ry} 0 0 1 ${radius} 0`,
+        );
+        rear.append(path);
         this.rear.append(rear);
       }
       this.reveals.push({
@@ -278,12 +295,10 @@ export class Festival {
         g.stroke();
         // Same age/geometry: the upper arc sits behind the opaque board,
         // the lower arc remains in the foreground with the falling sparks.
-        const cx = b.left + b.width / 2;
-        r.rear?.setAttribute(
-          "d",
-          `M ${cx - radius} ${b.bottom} A ${radius} ${radius * 0.16} 0 0 1 ${cx + radius} ${b.bottom}`,
-        );
-        r.rear?.setAttribute("opacity", String(g.globalAlpha));
+        if (r.rear) {
+          r.rear.style.transform = `scale(${radius / (b.width * 0.75)})`;
+          r.rear.style.opacity = String(g.globalAlpha);
+        }
       }
       g.restore();
     }
