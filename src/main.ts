@@ -577,7 +577,7 @@ async function start() {
         () => {
           presentHudNotice(
             "theme",
-            `СЕРИЯ ${g.streak} · ${THEMES[nextTheme]!.name.toUpperCase()}${g.scoringVersion === "festival-v4" ? ` · ×${comboMultiplier(g.streak, true)}` : ""}`,
+            THEMES[nextTheme]!.name.toUpperCase(),
           );
           audio.play("theme", g.streak);
           if (from < nextTheme && g.scoringVersion === "festival-v4")

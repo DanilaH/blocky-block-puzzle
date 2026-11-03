@@ -19,7 +19,7 @@ export const THEMES = [
   },
   {
     at: 6,
-    name: "Вишнёвая эмаль",
+    name: "Эмаль",
     bg: "#f0e8d5",
     ink: "#484b43",
     accent: "#ffbd44",
@@ -37,7 +37,7 @@ export const THEMES = [
   },
   {
     at: 15,
-    name: "Лёд",
+    name: "Сияние",
     bg: "#f3e5c9",
     ink: "#484b43",
     accent: "#ffbd44",
@@ -55,7 +55,7 @@ export const THEMES = [
   },
   {
     at: 30,
-    name: "Магма",
+    name: "Ритм",
     bg: "#274961",
     ink: "#f3f6f8",
     accent: "#ffcf69",

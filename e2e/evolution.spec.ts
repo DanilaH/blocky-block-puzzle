@@ -37,7 +37,7 @@ test("theme follows durable series, preparation preserves it and reload restores
   await expect(page.locator("html")).toHaveAttribute("data-material", "enamel");
   await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 6 · ×5");
   await expect(page.locator('.hud-notice[data-tier="theme"]')).toContainText(
-    "ВИШНЁВАЯ ЭМАЛЬ",
+    "ЭМАЛЬ",
   );
   await page.locator('[data-slot="1"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
