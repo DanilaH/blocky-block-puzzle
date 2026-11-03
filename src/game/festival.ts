@@ -23,11 +23,13 @@ export class Festival {
     age: number;
     mode: number;
     color: string;
+    rear?: SVGPathElement;
   }[] = [];
   setPalette(theme: number) {
     this.theme = theme;
   }
   private canvas = document.createElement("canvas");
+  private rear = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   private ctx: CanvasRenderingContext2D;
   private sparks: Spark[] = [];
   private frame: (() => void) | null = null;
@@ -53,7 +55,9 @@ export class Festival {
   constructor() {
     this.canvas.className = "festival-canvas";
     this.canvas.setAttribute("aria-hidden", "true");
-    document.body.append(this.canvas);
+    this.rear.classList.add("festival-rear");
+    this.rear.setAttribute("aria-hidden", "true");
+    document.body.append(this.rear, this.canvas);
     this.ctx = this.canvas.getContext("2d")!;
     window.addEventListener("resize", () => this.stop());
   }
@@ -74,13 +78,22 @@ export class Festival {
         COLORS[themeTile(this.theme, i + 1)]!.toString(16).padStart(6, "0"),
     );
     if (empty) {
+      let rear: SVGPathElement | undefined;
+      if (variant === 2) {
+        rear = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        rear.setAttribute("fill", "none");
+        rear.setAttribute("stroke-width", "3");
+        rear.setAttribute("stroke", THEMES[this.theme]!.accent);
+        this.rear.append(rear);
+      }
       this.reveals.push({
+        rear,
         board,
         age: 0,
         mode: variant,
         color: THEMES[this.theme]!.accent,
       });
-      if (this.reveals.length > 2) this.reveals.shift();
+      if (this.reveals.length > 2) this.reveals.shift()?.rear?.remove();
     }
     const count = Math.min(
       budget,
@@ -218,7 +231,10 @@ export class Festival {
       }
     }
     g.globalCompositeOperation = "source-over";
-    this.reveals = this.reveals.filter((r) => r.age < 2400);
+    this.reveals = this.reveals.filter((r) => {
+      if (r.age >= 2400) r.rear?.remove();
+      return r.age < 2400;
+    });
     for (const r of this.reveals) {
       r.age += dt;
       const t = r.age / 2400,
@@ -257,9 +273,17 @@ export class Festival {
           radius * 0.16,
           0,
           0,
-          Math.PI * 2,
+          Math.PI,
         );
         g.stroke();
+        // Same age/geometry: the upper arc sits behind the opaque board,
+        // the lower arc remains in the foreground with the falling sparks.
+        const cx = b.left + b.width / 2;
+        r.rear?.setAttribute(
+          "d",
+          `M ${cx - radius} ${b.bottom} A ${radius} ${radius * 0.16} 0 0 1 ${cx + radius} ${b.bottom}`,
+        );
+        r.rear?.setAttribute("opacity", String(g.globalAlpha));
       }
       g.restore();
     }
@@ -274,6 +298,7 @@ export class Festival {
     this.frame = null;
     this.sparks = [];
     this.reveals = [];
+    this.rear.replaceChildren();
     this.ctx.clearRect(0, 0, innerWidth, innerHeight);
   }
 }

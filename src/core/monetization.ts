@@ -1,3 +1,4 @@
+import { recoveryRhythm } from "./rhythm";
 import { hasMove, placements, shapeById, type GameState } from "./rules";
 import type { Profile } from "./profile";
 export interface RevivePlan {
@@ -71,6 +72,9 @@ export function revivePlan(g: GameState): RevivePlan | null {
           revision: g.revision + 1,
           status: "playing",
           reviveUsed: true,
+          ...(g.dealerVersion === "flow-v3"
+            ? { rhythm: recoveryRhythm() }
+            : {}),
           streak: 0,
           streakMisses: 0,
         },
@@ -109,6 +113,7 @@ export function validRevivePlan(
     revision: g.revision + 1,
     status: "playing",
     reviveUsed: true,
+    ...(g.dealerVersion === "flow-v3" ? { rhythm: recoveryRhythm() } : {}),
     streak: 0,
     streakMisses: 0,
   };

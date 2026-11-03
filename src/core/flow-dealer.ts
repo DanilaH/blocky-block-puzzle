@@ -1,3 +1,4 @@
+import { type RhythmState, assistance } from "./rhythm";
 import { SHAPES, random, type Board, type Move, type Slot } from "./rules";
 const POP = Array.from({ length: 256 }, (_, v) => {
   let n = 0;
@@ -19,23 +20,34 @@ function options() {
   }));
 }
 /** Bounded deterministic beam search. Eight row masks; never a clock/ad dependency. */
-export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
+export function flowDeal(
+  board: Board,
+  seed: number,
+  moves = 0,
+  previous = "",
+  rhythm?: RhythmState,
+) {
   let rng = seed;
   const next = () => {
     const r = random(rng);
     rng = r.state;
     return r.value;
   };
-  const generous = next() < (moves < 12 ? 0.8 : 0.55);
+  const support = assistance(rhythm);
+  const generous = next() < 0.25 + support * 0.65;
+  const clearWeight = support * 6000;
+  const lineWeight = 30 + support * 470;
   const occupiedAtDeal = board.filter(Boolean).length;
   const maxSize =
     moves < 12 && occupiedAtDeal > 12
       ? 3
       : occupiedAtDeal > 24
         ? 4
-        : moves < 12
-          ? 6
-          : 9;
+        : support > 0.65 && occupiedAtDeal > 12
+          ? 3
+          : moves < 12
+            ? 6
+            : 9;
   const order = options()
     .filter((list) => SHAPES[list[0]!.shape]!.cells.length <= maxSize)
     .map((list) => ({ list, rank: next() }))
@@ -123,11 +135,11 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
               .sort()
               .join(",") === previous;
           const value =
-            clears * (generous ? 6000 : 650) +
-            lines * (generous ? 500 : 220) -
+            clears * clearWeight +
+            lines * lineWeight -
             holes * 65 -
             edges * 2 -
-            occupied * 0.7 +
+            Math.abs(occupied - 12 * (1 - support)) * 2 +
             fullness * 1.1 -
             (repeated ? 180 : 0) -
             [...parent.path, op].reduce(
@@ -154,9 +166,7 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
     beam = candidates.slice(0, 4);
     const construction = [...candidates].sort(
       (a, b) =>
-        b.value -
-        b.lines * (generous ? 500 : 220) -
-        (a.value - a.lines * (generous ? 500 : 220)),
+        b.value - b.lines * lineWeight - (a.value - a.lines * lineWeight),
     );
     for (const c of construction) {
       if (!beam.includes(c)) beam.push(c);
@@ -166,9 +176,7 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
   }
   beam.sort((a, b) => b.value - a.value);
   const finalists = generous
-    ? beam.filter(
-        (n) => n.clears === beam[0]!.clears && n.value >= beam[0]!.value - 80,
-      )
+    ? beam.filter((n) => n.value >= beam[0]!.value - 80)
     : beam;
   const chosen =
     finalists[
