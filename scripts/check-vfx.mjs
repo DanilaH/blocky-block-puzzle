@@ -52,3 +52,18 @@ for(const name of adventureNames){
 }
 assert(advBytes<300000);assert(advRgba<4000000);
 console.log('Campaign encoded / RGBA bytes:',advBytes,advRgba);
+
+// Classic has its own atlas; campaign deliberately retains the original material.
+const classicNames=(await fs.readdir('public/assets/classic-tiles')).sort();
+assert.deepEqual(classicNames,tileNames);
+for(const name of classicNames){
+ const file=`public/assets/classic-tiles/${name}`,meta=await sharp(file).metadata();
+ assert.equal(meta.width,128);assert.equal(meta.height,128);assert.equal(meta.hasAlpha,true);
+ const {validatePreparedImage}=await import('../tools/vendor/mini-games-kit/pipeline.ts');
+ const result=await validatePreparedImage(await fs.readFile(file),{canvas:128,minTransparentPadding:1});
+ assert.deepEqual(result.errors,[],name);
+}
+const classicBudget=await inspectRuntimeImageBudget(classicNames.map(name=>({id:name.replace('.webp',''),file:`public/assets/classic-tiles/${name}`,category:name.split('-')[0]})));
+assert.deepEqual(classicBudget,JSON.parse(await fs.readFile('assets-src/classic-tiles/budget.json','utf8')));
+assert(classicBudget.encodedBytes<=100000);assert(classicBudget.estimatedRgbaBytes<=1200000);
+console.log('Classic tile alpha / budget OK:',classicBudget);

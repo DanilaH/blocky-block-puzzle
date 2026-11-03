@@ -125,8 +125,10 @@ export class BoardScene extends Phaser.Scene {
   get intensity() {
     return this.calm ? 0 : this.celebration.level(performance.now());
   }
-  constructor() {
+  constructor(private presentation: "classic" | "enamel" = "enamel") {
     super("board");
+    this.shade = this.fromShade =
+      presentation === "classic" ? THEMES[0].board : 0xcce7f3;
   }
   preload() {
     if (TILE_STUDY)
@@ -134,7 +136,7 @@ export class BoardScene extends Phaser.Scene {
         for (let color = 1; color <= 6; color++)
           this.load.image(
             `study-${material}-${color}`,
-            `assets/tile-study/${material}-${color}.webp`,
+            `assets/${this.presentation === "classic" ? "classic-tiles" : "tile-study"}/${material}-${color}.webp`,
           );
     for (const kind of VFX_KINDS)
       this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
@@ -159,18 +161,22 @@ export class BoardScene extends Phaser.Scene {
         const gradient = ctx.createLinearGradient(0, 3, 0, 63);
         gradient.addColorStop(0, "#e7e7e7");
         gradient.addColorStop(0.8, "#f1f1f1");
-        ctx.fillStyle = gradient;
+        ctx.fillStyle = this.presentation === "classic" ? "#eeeeee" : gradient;
         ctx.beginPath();
-        ctx.moveTo(10, 3);
-        ctx.lineTo(54, 3);
-        ctx.quadraticCurveTo(62, 3, 62, 11);
-        ctx.lineTo(62, 55);
-        ctx.quadraticCurveTo(62, 63, 54, 63);
-        ctx.lineTo(10, 63);
-        ctx.quadraticCurveTo(2, 63, 2, 55);
-        ctx.lineTo(2, 11);
-        ctx.quadraticCurveTo(2, 3, 10, 3);
-        ctx.closePath();
+        if (this.presentation === "classic") {
+          ctx.roundRect(1, 1, 62, 62, 3);
+        } else {
+          ctx.moveTo(10, 3);
+          ctx.lineTo(54, 3);
+          ctx.quadraticCurveTo(62, 3, 62, 11);
+          ctx.lineTo(62, 55);
+          ctx.quadraticCurveTo(62, 63, 54, 63);
+          ctx.lineTo(10, 63);
+          ctx.quadraticCurveTo(2, 63, 2, 55);
+          ctx.lineTo(2, 11);
+          ctx.quadraticCurveTo(2, 3, 10, 3);
+          ctx.closePath();
+        }
         ctx.fill();
         texture.refresh();
       }
@@ -347,7 +353,7 @@ export class BoardScene extends Phaser.Scene {
           true,
         );
       }
-    const level = this.materialLevel();
+    const level = this.presentation === "classic" ? 0 : this.materialLevel();
     if (level > 0) {
       g.lineStyle(
         1 + level * 2,
@@ -390,7 +396,7 @@ export class BoardScene extends Phaser.Scene {
       const x = (i % 8) * 64,
         y = Math.floor(i / 8) * 64;
       if (this.bed) {
-        if (repaintBed) {
+        if (repaintBed && this.presentation !== "classic") {
           const bg = this.bed;
           bg.lineStyle(1, STUDY_BOARD.lip, 0.5);
           bg.lineBetween(x + 10, y + 62, x + 54, y + 62);

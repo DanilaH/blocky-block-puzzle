@@ -1,0 +1,111 @@
+/* Classic presentation. Campaign keeps its existing enamel surfaces and geometry. */
+:root[data-presentation="classic"] body::before {
+  display: none;
+}
+:root[data-presentation="classic"] .world-background {
+  background-image: none;
+}
+:root[data-presentation="classic"] {
+  --enamel-ink: var(--world-ink);
+}
+:root[data-presentation="classic"] .board-wrap {
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px #24445b38,
+    0 3px 0 #24445b22;
+}
+:root[data-presentation="classic"] .board-wrap::after {
+  display: none;
+}
+:root[data-presentation="classic"] #board {
+  border-radius: 8px;
+}
+:root[data-presentation="classic"] .score {
+  color: var(--world-ink);
+  text-shadow: none;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+}
+:root[data-presentation="classic"] .best {
+  background: transparent;
+  box-shadow: none;
+  color: var(--world-ink);
+}
+:root[data-presentation="classic"] .icon,
+:root[data-presentation="classic"] .hint,
+:root[data-presentation="classic"] .secondary {
+  color: var(--world-ink);
+  background: #ffffff30;
+  border: 1px solid #ffffff40;
+  box-shadow: none;
+  border-radius: 12px;
+}
+:root[data-presentation="classic"] .icon svg {
+  filter: none;
+}
+:root[data-presentation="classic"] .hint-count {
+  background: #426581;
+  border: 0;
+  box-shadow: none;
+}
+:root[data-presentation="classic"] .tray {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+:root[data-presentation="classic"] .piece {
+  border-radius: 8px;
+}
+:root[data-presentation="classic"] .piece.selected {
+  background: #ffffff28;
+  outline-color: var(--world-ink);
+}
+:root[data-presentation="classic"] .tray.dragging .piece.selected {
+  background: none;
+}
+:root[data-presentation="classic"] .mini-shape {
+  filter: none;
+}
+:root[data-presentation="classic"] .piece.selected .mini-shape {
+  filter: drop-shadow(0 3px 2px #20394b30);
+}
+:root[data-presentation="classic"] .combo-hud {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+:root[data-presentation="classic"] #combo-title,
+:root[data-presentation="classic"] #combo-stock {
+  color: var(--world-ink);
+  text-shadow: none;
+}
+:root[data-presentation="classic"] .combo-hud.urgent #combo-title {
+  color: #b2551e;
+}
+:root[data-presentation="classic"] .campaign-entry {
+  background: none;
+  color: var(--world-ink);
+  font-weight: 600;
+}
+:root[data-presentation="classic"] .reward-praise,
+:root[data-presentation="classic"] .reward-praise i {
+  font-family: inherit;
+  font-weight: 900;
+  font-style: normal;
+  color: #fff5cf;
+  text-shadow:
+    0 2px 0 #754411,
+    0 3px 3px #263c5870;
+}
+:root[data-presentation="classic"] .reward-points {
+  color: white;
+  text-shadow: 0 2px 1px #263c58;
+}
+:root[data-presentation="classic"] dialog .secondary {
+  color: #234c70;
+  background: #d8e5ed;
+}
+:root[data-presentation="classic"] .ad-slot {
+  border-color: #ffffff20;
+}

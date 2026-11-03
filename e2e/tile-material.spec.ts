@@ -58,7 +58,8 @@ for (const [streak, material] of [
     });
     const requests: string[] = [];
     page.on("request", (r) => {
-      if (r.url().includes("assets/tile-study")) requests.push(r.url());
+      if (/assets\/(?:tile-study|classic-tiles)\//.test(r.url()))
+        requests.push(r.url());
     });
     await page.locator('[data-slot="0"]').click();
     await page.locator("#board").click({ position: { x: 5, y: 5 } });

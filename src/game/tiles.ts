@@ -65,7 +65,7 @@ export function tileURL(color: number, material: TileMaterial = "plastic") {
   const cached = urls.get(`${material}:${color}`);
   if (cached) return cached;
   if (TILE_STUDY)
-    return `/assets/tile-study/${material}-${COLORS.indexOf(color)}.webp`;
+    return `/assets/${typeof document !== "undefined" && document.documentElement.dataset.presentation === "classic" ? "classic-tiles" : "tile-study"}/${material}-${COLORS.indexOf(color)}.webp`;
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_FACES.map((q) => `<polygon points="${q.points.map((p) => p.join(",")).join(" ")}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
   const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;

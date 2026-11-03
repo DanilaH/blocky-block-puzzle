@@ -26,6 +26,7 @@ import Phaser from "phaser";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import "./style.css";
 import "./enamel.css";
+import "./classic.css";
 import { BoardScene } from "./game/BoardScene";
 import { COLORS, tileURL } from "./game/tiles";
 import { GameAudio } from "./game/audio";
@@ -68,13 +69,14 @@ const fresh = (dealer: DealerVersion = "initial-v1") => ({
   scoringVersion: "festival-v4" as const,
 });
 async function start() {
+  document.documentElement.dataset.presentation = "classic";
   const adapter = new IndexedSave();
   const loaded = await adapter.load();
   const initial = loaded.profile ?? createProfile(fresh());
   if (!loaded.profile) await adapter.write(initial);
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
-    scene = new BoardScene();
+    scene = new BoardScene("classic");
   const analytics = new ProductAnalytics(nativeAnalytics());
   store.observer = analytics;
   analytics.boot(initial, !loaded.profile, loaded.recovered);
@@ -1006,7 +1008,7 @@ async function start() {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
           presentReward(
             event.lines >= 2 ? "combo" : "line",
-            `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak, event.state.scoringVersion === "festival-v4").toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}${praise ? ` · ${praise === "excellent" ? "Отлично!" : "Хорошо!"}` : ""}`,
+            `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak, event.state.scoringVersion === "festival-v4").toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}`,
             linePoints,
             anchor,
             deferred ? linePoints : 0,

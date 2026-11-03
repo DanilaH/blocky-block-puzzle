@@ -154,7 +154,7 @@ export class Atmosphere {
       c.fillStyle = idx === 10 ? prismColor : theme.accent;
       c.strokeStyle = c.fillStyle;
       c.save();
-      c.globalAlpha = opacity * 0.09;
+      c.globalAlpha = opacity * 0.025;
       if (idx === 3 || idx === 5) {
         for (let band = 0; band < 3; band++) {
           const x = ((band / 3 + this.time * 0.006) % 1) * w;
@@ -202,7 +202,7 @@ export class Atmosphere {
         c.fill();
       }
       c.restore();
-      const count = Math.min(48, 20 + idx! * 3);
+      const count = Math.min(32, 6 + idx! * 3);
       for (let i = 0; i < count; i++) {
         const m = this.motes[i]!;
         const speed = 0.018 + idx! * 0.002;
@@ -219,7 +219,7 @@ export class Atmosphere {
         c.rotate(this.time * (idx === 5 ? 1 : 0.2) + m.p);
         c.globalAlpha =
           opacity! *
-          (0.18 + 0.22 * (0.5 + 0.5 * Math.sin(this.time + m.p))) *
+          (0.08 + 0.16 * (0.5 + 0.5 * Math.sin(this.time + m.p))) *
           Math.min(1.5, 1 + this.energy * 0.3);
         if (idx === 5) c.fillRect(-m.s * 3, 0, m.s * 6, 1);
         else if (idx === 4 || idx === 7 || idx === 10) {
