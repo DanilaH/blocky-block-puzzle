@@ -115,7 +115,7 @@ export class Atmosphere {
   impulse(amount: number) {
     if (this.active && !this.calm) {
       this.energy = Math.min(3, this.energy + amount);
-      if (amount >= 1) this.wave = performance.now();
+      if (amount >= 2.5) this.wave = performance.now();
     }
   }
   private draw(now: number) {
@@ -240,7 +240,7 @@ export class Atmosphere {
           y = this.source.y * h;
         c.strokeStyle =
           this.index === 10 ? prismColor : themeAccent(this.streak);
-        c.globalAlpha = Math.sin(phase * Math.PI) * 0.3;
+        c.globalAlpha = Math.sin(phase * Math.PI) * 0.12;
         c.lineWidth = 24 * (1 - phase) + 1;
         c.beginPath();
         c.arc(x, y, phase * Math.hypot(w, h) * 0.65, 0, Math.PI * 2);

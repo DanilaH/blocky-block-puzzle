@@ -1,5 +1,6 @@
 import { TileMaterialBlend } from "./tile-material";
 import Phaser from "phaser";
+import { themeTile } from "./themes";
 import { COLORS } from "./tiles";
 import { TILE_MATERIALS, type TileMaterial } from "./tile-study-config";
 export { TILE_STUDY } from "./tile-study-config";
@@ -8,6 +9,10 @@ export { TILE_STUDY } from "./tile-study-config";
  * A second boundary samples the current blend, so even a reset cannot pop. */
 export class TileStudySprites {
   transitioning = false;
+  private theme = 0;
+  setPalette(theme: number) {
+    this.theme = theme;
+  }
   private pools: Phaser.GameObjects.Image[][];
   private cursor = [0, 0, 0];
   private previous = [0, 0, 0];
@@ -48,7 +53,7 @@ export class TileStudySprites {
       if (index >= 256) continue;
       const s = this.pools[layer]![index]!;
       this.cursor[layer] = index + 1;
-      const key = `study-${TILE_MATERIALS[layer]}-${COLORS.indexOf(color)}`;
+      const key = `study-${TILE_MATERIALS[layer]}-${themeTile(this.theme, COLORS.indexOf(color))}`;
       if (s.texture.key !== key) s.setTexture(key);
       s.setVisible(true)
         .setPosition(x + 32, y + 32)

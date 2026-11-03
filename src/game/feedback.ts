@@ -48,10 +48,7 @@ export class Celebration {
     );
   }
   add(lines: number, now: number) {
-    this.value = Math.min(
-      1,
-      this.level(now) + 0.55 + Math.min(3, lines) * 0.15,
-    );
+    this.value = Math.min(1, this.level(now) + 0.12 + Math.min(4, lines) * 0.1);
     this.at = now;
     return this.value;
   }

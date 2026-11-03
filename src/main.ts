@@ -1,3 +1,4 @@
+import { discoverTheme } from "./core/wardrobe";
 import { ProductAnalytics, nativeAnalytics } from "./platform/analytics";
 import { TileMaterialDOM } from "./game/tile-material";
 import {
@@ -10,6 +11,7 @@ import { Atmosphere } from "./game/atmosphere";
 import {
   THEMES,
   themeFor,
+  themeTile,
   themeAccent,
   seriesVisual,
   labelDevelopment,
@@ -64,7 +66,7 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "initial-v1") => ({
+const fresh = (dealer: DealerVersion = "flow-v1") => ({
   ...newGame(seed(), crypto.randomUUID(), dealer),
   scoringVersion: "festival-v4" as const,
 });
@@ -85,6 +87,39 @@ async function start() {
   const atmosphere = new Atmosphere();
   const festival = new Festival(),
     haptics = new GameHaptics();
+  let movePending = false;
+  const moveWorker = new Worker(
+    new URL("./game/move.worker.ts", import.meta.url),
+    { type: "module" },
+  );
+  async function calculateMove(
+    state: GameState,
+    move: Move,
+    revision: number,
+  ): Promise<ReturnType<typeof applyMove>> {
+    if (
+      state.dealerVersion !== "flow-v1" ||
+      state.tray.filter((s) => s.used).length !== 2
+    )
+      return applyMove(state, move, revision);
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        moveWorker.onmessage = null;
+        reject(new Error("Move search timed out"));
+      }, 5000);
+      moveWorker.onmessage = (e) => {
+        clearTimeout(timeout);
+        e.data.error
+          ? reject(new Error("Move search failed"))
+          : resolve(e.data.result);
+      };
+      moveWorker.onerror = () => {
+        clearTimeout(timeout);
+        reject(new Error("Move worker failed"));
+      };
+      moveWorker.postMessage({ state, move, revision });
+    });
+  }
   let praiseWorker: Worker | null = null;
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
@@ -167,6 +202,12 @@ async function start() {
         ? seriesVisual(g.streak)
         : g.streak;
   }
+  function presentationTheme() {
+    const params = new URLSearchParams(location.search);
+    return import.meta.env.DEV && params.has("themeSeries")
+      ? themeFor(Number(params.get("themeSeries")) || 0)
+      : (store.state.wardrobe?.selected ?? 0);
+  }
   root.innerHTML = `<main class="shell"><header class="topbar"><a href="?mode=adventure" class="campaign-entry" aria-label="Кампания">Приключение</a><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>blocky</div><button class="icon" id="pause" aria-label="Пауза">${pauseIcon}</button></header><div class="play-layout"><section class="board-column"><div class="board-wrap"><div class="combo-hud" id="combo-hud" aria-live="polite"><strong id="combo-title"></strong><span id="combo-stock"></span></div><div class="clear-glow" id="clear-glow" aria-hidden="true"></div><div id="board" role="img" aria-label="Игровое поле 8 на 8"></div></div><div class="board-caption"><span id="caption"></span><span class="toast" id="toast" role="status"></span></div></section><aside class="side"><section class="score-panel"><span class="lesson-heading">Обучение</span><div><div class="sr-only">Ваш счёт</div><div class="score" id="score">0</div></div><div class="best">${crown}<span><span class="sr-only">Рекорд </span><b id="best">0</b></span></div><div class="reward-line"><span id="streak"></span><span class="burst" id="burst" aria-hidden="true"></span></div></section><section class="tray-area"><div class="tray-label"><span>Следующие фигуры</span><span id="tray-progress">3 / 3</span></div><div class="tray" id="tray" aria-label="Доступные фигуры"></div></section><section class="hint-area"><div id="lesson" hidden><p id="lesson-text" role="status"></p><button id="lesson-skip" class="lesson-skip">Пропустить</button></div><button class="hint" id="hint">${bulb}<span id="hint-label">Подсказка</span><span class="hint-count" id="hint-count">3</span></button><button class="hint" id="play-again" hidden>Ещё раз</button></section></aside></div></main><div class="ad-slot" id="ad-slot" aria-hidden="true"></div><div class="floating" id="floating" hidden></div><dialog id="dialog" aria-labelledby="dialog-title"></dialog><span id="announce" class="sr-only" aria-live="polite"></span>`;
   const el = <T extends HTMLElement = HTMLElement>(id: string) =>
     document.getElementById(id) as T;
@@ -197,7 +238,7 @@ async function start() {
   let rendererReady = false;
   function syncRenderer() {
     if (!phaser || !rendererReady) return;
-    atmosphere.set(visualSeriesFor(currentGame()), running, scene.calm);
+    atmosphere.set(THEMES[presentationTheme()]!.at, running, scene.calm);
     if (running) schedulePraise(currentGame());
     if (running) phaser.loop.wake();
     else phaser.loop.sleep();
@@ -319,7 +360,7 @@ async function start() {
       performanceCapture.setActive(false);
       root.classList.add("effects-paused");
       stopPraise();
-      atmosphere.set(visualSeriesFor(currentGame()), false, scene.calm);
+      atmosphere.set(THEMES[presentationTheme()]!.at, false, scene.calm);
       haptics.setActive(false);
       audioFocus.setActive(false);
       ads.setActive(false);
@@ -471,7 +512,7 @@ async function start() {
   function mini(slot: number, cell: number) {
     const piece = currentGame().tray[slot]!,
       shape = shapeById(piece.shapeId);
-    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => TILE_MATERIALS.map((material) => `<img draggable="false" alt="" class="mini-cell tile-${material}" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[piece.color]!, material)}">`).join("")).join("")}</span>`;
+    return `<span class="mini-shape" style="grid-template-columns:repeat(${shape.width},${cell}px);grid-template-rows:repeat(${shape.height},${cell}px)">${shape.cells.map(([x, y]) => TILE_MATERIALS.map((material) => `<img draggable="false" alt="" class="mini-cell tile-${material}" style="grid-column:${x + 1};grid-row:${y + 1}" src="${tileURL(COLORS[themeTile(presentationTheme(), piece.color)]!, material)}">`).join("")).join("")}</span>`;
   }
   function render(smoothScore = false) {
     const p = store.state,
@@ -523,6 +564,18 @@ async function start() {
         button.dataset.slot = String(i);
         tray.append(button);
       }
+      if (button.dataset.palette !== String(presentationTheme())) {
+        button.querySelectorAll<HTMLImageElement>("img").forEach((img) => {
+          const material = TILE_MATERIALS.find((m) =>
+            img.classList.contains(`tile-${m}`),
+          )!;
+          img.src = tileURL(
+            COLORS[themeTile(presentationTheme(), s.color)]!,
+            material,
+          );
+        });
+        button.dataset.palette = String(presentationTheme());
+      }
       button.setAttribute("aria-pressed", String(selected === i));
       button.className = `piece${s.used ? " used" : ""}${blocked[i] ? " unavailable" : ""}${selected === i ? " selected" : ""}${hintSlot === i ? " hinted" : ""}`;
       button.setAttribute(
@@ -556,36 +609,26 @@ async function start() {
     haptics.setActive(running && p.settings.haptics !== false && !scene.calm);
     document.documentElement.classList.toggle("calm", scene.calm);
     const visualSeries = visualSeriesFor(g);
+    const nextTheme = presentationTheme();
+    const nextKey = String(nextTheme);
     audio.setSeries(g.streak);
-    atmosphere.set(visualSeries, running, scene.calm);
-    scene.setTheme(themeFor(visualSeries), themeAccent(visualSeries));
+    atmosphere.set(THEMES[nextTheme]!.at, running, scene.calm);
+    scene.setTheme(nextTheme, THEMES[nextTheme]!.accent);
     tileMaterials.set(
-      tileMaterialForTheme(themeFor(visualSeries)),
-      tileTransitionDuration(scene.calm, themeFor(visualSeries)),
+      tileMaterialForTheme(nextTheme),
+      tileTransitionDuration(scene.calm, nextTheme),
     );
-    const nextTheme = themeFor(visualSeries),
-      nextKey = `${nextTheme}:${visualSeries >= 100 ? Math.floor((visualSeries - 100) / 25) : 0}`;
+    festival.setPalette(nextTheme);
     if (
       themeGame === g.gameId &&
       themeKey !== nextKey &&
-      nextTheme > 0 &&
       running &&
       !inLesson()
     ) {
-      const from = themeIndex;
-      later(
-        () => {
-          presentHudNotice(
-            "theme",
-            THEMES[nextTheme]!.name.toUpperCase(),
-          );
-          audio.play("theme", g.streak);
-          if (from < nextTheme && g.scoringVersion === "festival-v4")
-            haptics.pulse("record");
-          atmosphere.impulse(1.5);
-        },
-        from < nextTheme ? 300 : 0,
-      );
+      later(() => {
+        presentHudNotice("theme", THEMES[nextTheme]!.name.toUpperCase());
+        atmosphere.impulse(1.5);
+      }, 450);
     }
     if (themeGame !== g.gameId) {
       lastPraiseMove = -5;
@@ -599,7 +642,7 @@ async function start() {
     scene.preview(hintMove(), true, true);
     el("hint").toggleAttribute("disabled", g.status === "over");
     el("play-again").hidden = g.status !== "over";
-    el("hint").hidden = g.status === "over" || inLesson();
+    el("hint").hidden = true;
     el("lesson").hidden = !inLesson();
     el("lesson-text").textContent = LESSON_TEXT[lessonStep()] ?? "";
     el("lesson-skip").textContent =
@@ -753,7 +796,7 @@ async function start() {
     scene.preview(hintMove(), true, true);
   }
   async function commit(move: Move, revision: number) {
-    if (!running || store.busy) return;
+    if (!running || store.busy || movePending) return;
     cancelHint();
     const before = currentGame();
     const practicing = inLesson();
@@ -794,11 +837,17 @@ async function start() {
       canvasBox.setAttribute("aria-busy", "true");
     }
     const saveStarted = performance.now();
+    movePending = true;
     try {
+      const calculated = await calculateMove(before, move, revision);
       const changed = await store.update((p) => {
-        const result = performanceCapture.measure("applyMove", () =>
-          applyMove(before, move, revision),
-        );
+        if (
+          !practicing &&
+          (p.game.gameId !== before.gameId ||
+            p.game.revision !== before.revision)
+        )
+          return null;
+        const result = calculated;
         outcome.result = result;
         if (result && practicing)
           return {
@@ -811,6 +860,7 @@ async function start() {
               ...ads.stamp(p),
               revision: p.revision + 1,
               game: result.state,
+              wardrobe: result.allClear ? discoverTheme(p) : p.wardrobe,
               ...recordScore(p, result.state),
               hint: null,
             }
@@ -833,6 +883,7 @@ async function start() {
       currentMove = null;
       rejectedDrags = 0;
       const event = outcome.result!;
+      const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
       performanceCapture.markPlacement(
         event.lines,
         event.state.streak,
@@ -887,7 +938,7 @@ async function start() {
           glow.getAnimations().forEach((a) => a.cancel());
           // Rasterize the glow once; animate composited opacity/scale instead
           // of repainting an expanding blur around the live WebGL canvas.
-          glow.style.boxShadow = `0 0 ${24 + Math.min(35, event.state.streak * 3)}px 9px ${themeAccent(event.state.streak)}`;
+          glow.style.boxShadow = `0 0 ${24 + Math.min(35, event.state.streak * 3)}px 9px ${THEMES[store.state.wardrobe?.selected ?? 0]!.accent}`;
           animate(
             glow,
             [
@@ -897,7 +948,7 @@ async function start() {
             ],
             event.allClear ? 1900 : 1200,
           );
-          if (event.state.streak >= 6)
+          if (event.state.streak >= 10 && event.lines >= 2 && !event.allClear)
             festival.burst(
               canvasBox.getBoundingClientRect(),
               event.cells,
@@ -1027,13 +1078,22 @@ async function start() {
                   event.state.streak,
                   event.state.gameId,
                 );
-                haptics.pulse("empty");
+                haptics.pulse(
+                  ["empty", "bloom", "rain"][
+                    (store.state.wardrobe?.discoveries ?? 1) % 3
+                  ]!,
+                );
+                audio.play("theme", revealVariant);
                 if (!scene.calm)
                   festival.burst(
                     canvasBox.getBoundingClientRect(),
                     [],
                     event.lines,
                     true,
+                    false,
+                    undefined,
+                    110,
+                    revealVariant,
                   );
               },
               scene.calm ? 0 : 650,
@@ -1092,6 +1152,7 @@ async function start() {
       );
       render();
     } finally {
+      movePending = false;
       scene.pendingPlacement([]);
       canvasBox.removeAttribute("aria-busy");
     }
@@ -1306,16 +1367,7 @@ async function start() {
       shape = shapeById(currentGame().tray[slot]!.shapeId);
     const left = event.clientX - (shape.width * cell) / 2,
       top =
-        event.clientY -
-        (touch
-          ? shape.height +
-            1.2 *
-              Math.max(
-                0,
-                Math.min(1, (rect.bottom - event.clientY) / (2 * cell)),
-              )
-          : shape.height / 2) *
-          cell;
+        event.clientY - (touch ? shape.height + 1.2 : shape.height / 2) * cell;
     floating.style.translate = `${left}px ${top}px`;
     return {
       slot,
@@ -1360,6 +1412,7 @@ async function start() {
       !running ||
       drag ||
       store.busy ||
+      movePending ||
       event.button !== 0
     )
       return;
@@ -1823,10 +1876,17 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-links"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     el("resume").onclick = close;
+    el("menu-hint").textContent =
+      `${el("hint-label").textContent} · ${el("hint-count").textContent}`;
+    el("menu-hint").onclick = () => {
+      close();
+      el("hint").click();
+    };
+    el("themes").onclick = showThemes;
     el("perf-start").onclick = () => {
       performanceCapture.start();
       close();
@@ -1903,6 +1963,38 @@ async function start() {
         }
       };
   }
+  function showThemes() {
+    const w = store.state.wardrobe ?? {
+      selected: 0,
+      unlocked: [0],
+      discoveries: 0,
+    };
+    dialog.innerHTML = `<h2 id="dialog-title">Оформление</h2><p>Очистите всё поле, чтобы открыть следующее.</p><div class="theme-collection">${w.unlocked.map((i) => `<button class="secondary" data-theme="${i}" aria-pressed="${w.selected === i}" style="background:${THEMES[i]!.bg};color:${THEMES[i]!.ink}">${THEMES[i]!.name}${w.selected === i ? " ✓" : ""}</button>`).join("")}</div><button id="back-themes" class="primary">Назад</button>`;
+    structureDialog();
+    dialog.querySelectorAll<HTMLButtonElement>("[data-theme]").forEach(
+      (button) =>
+        (button.onclick = async () => {
+          try {
+            await store.update((p) => ({
+              ...p,
+              revision: p.revision + 1,
+              wardrobe: {
+                ...(p.wardrobe ?? w),
+                selected: Number(button.dataset.theme),
+              },
+            }));
+            render();
+            showThemes();
+          } catch (error) {
+            await writeFailure(error, "Оформление не сохранено");
+          }
+        }),
+    );
+    el("back-themes").onclick = () => {
+      dialog.close();
+      showPause();
+    };
+  }
   function showRules() {
     modal = "rules";
     dialog.dataset.kind = "rules";
@@ -1935,21 +2027,18 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Тестовое сравнение: помощь иногда предлагает фигуру для очистки линии. Выбор действует на всю новую партию.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v1">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el<HTMLSelectElement>("dealer-choice").value =
-      currentGame().dealerVersion === "assist-v1" ? "assist-v1" : "initial-v1";
+    el<HTMLSelectElement>("dealer-choice").value = "flow-v1";
     el("new-game").onclick = () =>
       void restart(
-        el<HTMLSelectElement>("dealer-choice").value === "assist-v1"
-          ? "assist-v1"
-          : "initial-v1",
+        el<HTMLSelectElement>("dealer-choice").value as DealerVersion,
       );
     el("keep-game").onclick = close;
   }
-  async function restart(dealer: DealerVersion = currentGame().dealerVersion) {
-    if (ads.busy || store.busy) return;
+  async function restart(dealer: DealerVersion = "flow-v1") {
+    if (ads.busy || store.busy || movePending) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";
     try {

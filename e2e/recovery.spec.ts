@@ -59,7 +59,8 @@ for (const fail of [false, true])
   test(`hint remains busy through save; failure=${fail}`, async ({ page }) => {
     await ready(page);
     await delay(page);
-    await page.locator("#hint").click();
+    await page.locator("#pause").click();
+    await page.locator("#menu-hint").click();
     await page.waitForFunction(() => typeof window.finish === "function");
     await expect(page.locator("#hint")).toHaveAttribute("aria-busy", "true");
     await expect(page.locator("#hint")).toBeDisabled();
@@ -75,7 +76,8 @@ for (const fail of [false, true])
     await page.reload();
     await expect(page.locator("#hint-count")).toHaveText(fail ? "3" : "2");
     if (!fail) {
-      await page.locator("#hint").click();
+      await page.locator("#pause").click();
+      await page.locator("#menu-hint").click();
       await expect(page.locator("#hint-count")).toHaveText("2");
     }
   });
@@ -202,11 +204,11 @@ test("short portrait makes board usable and keeps controls separate", async ({
   await ready(page);
   const b = await page.locator("#board").boundingBox(),
     tray = await page.locator("#tray").boundingBox(),
-    hint = await page.locator("#hint").boundingBox(),
+    hint = await page.locator("#pause").boundingBox(),
     ad = await page.locator("#ad-slot").boundingBox();
   // Reserve room for visible tiles as well as their touch targets.
   expect(b.width).toBeGreaterThanOrEqual(210);
-  expect(b.x + b.width).toBeLessThanOrEqual(hint.x);
+  expect(hint.y + hint.height).toBeLessThanOrEqual(b.y + 1);
   expect(hint.y + hint.height).toBeLessThanOrEqual(tray.y);
   expect(hint.height).toBeGreaterThanOrEqual(48);
   expect(hint.y + hint.height).toBeLessThan(ad.y - 3);

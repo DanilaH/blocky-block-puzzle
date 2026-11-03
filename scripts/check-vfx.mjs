@@ -67,3 +67,15 @@ const classicBudget=await inspectRuntimeImageBudget(classicNames.map(name=>({id:
 assert.deepEqual(classicBudget,JSON.parse(await fs.readFile('assets-src/classic-tiles/budget.json','utf8')));
 assert(classicBudget.encodedBytes<=100000);assert(classicBudget.estimatedRgbaBytes<=1200000);
 console.log('Classic tile alpha / budget OK:',classicBudget);
+
+const themeNames=await fs.readdir('public/assets/theme-tiles');
+assert.equal(themeNames.length,18);
+let themeBytes=0;
+for(const name of themeNames){
+ const file=`public/assets/theme-tiles/${name}`,buffer=await fs.readFile(file);
+ const {validatePreparedImage}=await import('../tools/vendor/mini-games-kit/pipeline.ts');
+ assert.deepEqual((await validatePreparedImage(buffer,{canvas:128,minTransparentPadding:1})).errors,[]);
+ themeBytes+=buffer.length;
+}
+assert(themeBytes<100000);
+console.log('Theme variants: alpha/gutters OK; bytes',themeBytes,'decoded',18*128*128*4);

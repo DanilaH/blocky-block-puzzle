@@ -50,7 +50,7 @@ for (const [width, height] of [
         expect(g.bh).toBeGreaterThanOrEqual(48);
         expect(g.inside).toBe(true);
       }
-      const hint = await page.locator("#hint").boundingBox(),
+      const hint = await page.locator("#pause").boundingBox(),
         board = await page.locator("#board").boundingBox();
       expect(hint.y + hint.height).toBeLessThanOrEqual(height - 52);
       expect(board.width).toBeGreaterThanOrEqual(width === 320 ? 200 : 170);

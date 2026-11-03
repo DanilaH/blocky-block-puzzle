@@ -12,6 +12,7 @@ export interface HintReceipt {
 export interface Profile {
   schemaVersion: 1;
   campaign?: Campaign;
+  wardrobe?: { selected: number; unlocked: number[]; discoveries: number };
   metrics?: {
     gameId: string;
     activeMs: number;
@@ -52,7 +53,7 @@ export const createProfile = (game: GameState): Profile => ({
   freeHints: 3,
   earnedHints: 0,
   hint: null,
-  settings: { sound: true, calm: false, musicVolume: 0.35, effectsVolume: 1 },
+  settings: { sound: true, calm: false, musicVolume: 0, effectsVolume: 1 },
 });
 export function withHint(
   profile: Profile,
@@ -102,6 +103,16 @@ export function validProfile(value: unknown): value is Profile {
       (p.campaign !== undefined && !validCampaign(p.campaign)) ||
       (p.tutorialStep !== undefined &&
         (!integer(p.tutorialStep) || p.tutorialStep > 4)) ||
+      (p.wardrobe !== undefined &&
+        (!p.wardrobe ||
+          !integer(p.wardrobe.selected) ||
+          p.wardrobe.selected > 10 ||
+          !integer(p.wardrobe.discoveries) ||
+          !Array.isArray(p.wardrobe.unlocked) ||
+          !p.wardrobe.unlocked.includes(0) ||
+          !p.wardrobe.unlocked.includes(p.wardrobe.selected) ||
+          new Set(p.wardrobe.unlocked).size !== p.wardrobe.unlocked.length ||
+          !p.wardrobe.unlocked.every((n) => integer(n) && n <= 10))) ||
       !integer(p.revision) ||
       !integer(p.best) ||
       (p.legacyBest !== undefined && !integer(p.legacyBest)) ||
@@ -142,7 +153,9 @@ export function validProfile(value: unknown): value is Profile {
       !integer(g.rngState) ||
       g.rngState < 1 ||
       g.rngState > 0xffffffff ||
-      !["initial-v1", "solvable-v1", "assist-v1"].includes(g.dealerVersion) ||
+      !["initial-v1", "solvable-v1", "assist-v1", "flow-v1"].includes(
+        g.dealerVersion,
+      ) ||
       typeof g.reviveUsed !== "boolean" ||
       typeof g.assisted !== "boolean"
     )

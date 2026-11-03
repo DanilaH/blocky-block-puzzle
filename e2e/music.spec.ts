@@ -15,6 +15,11 @@ test.beforeEach(async ({ page }) => {
 test("music decodes once, loops, resumes from offset and stays stopped in pause", async ({
   page,
 }) => {
+  await page.locator("#pause").click();
+  await page.locator("#musicVolume").fill("35");
+  await page.locator("#musicVolume").dispatchEvent("change");
+  await expect(page.locator("#musicVolume")).toBeEnabled();
+  await page.locator("#resume").click();
   await page.locator('[data-slot="0"]').click();
   await expect
     .poll(() => page.evaluate(() => !!window.testAudio.music?.source), {

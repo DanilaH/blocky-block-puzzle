@@ -106,7 +106,7 @@ test("all shapes stay inside slots through rotation; dialog actions remain visib
     expect(violations).toBe(0);
     const board = (await page.locator("#board").boundingBox())!,
       tray = (await page.locator("#tray").boundingBox())!,
-      hint = (await page.locator("#hint").boundingBox())!,
+      hint = (await page.locator("#pause").boundingBox())!,
       ad = (await page.locator("#ad-slot").boundingBox())!;
     if (height > width) expect(tray.y).toBeGreaterThan(board.y + board.height);
     expect(hint.y + hint.height).toBeLessThanOrEqual(ad.y + 1);
@@ -132,11 +132,12 @@ test("hint identifies source; pause cancels all cosmetic animations", async ({
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await fixture(page);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator(".hinted")).toHaveCount(1);
   const toast = (await page.locator("#toast").boundingBox())!,
-    hint = (await page.locator("#hint").boundingBox())!;
-  expect(toast.y + toast.height).toBeLessThan(hint.y);
+    hint = (await page.locator("#pause").boundingBox())!;
+  expect(toast.y).toBeGreaterThan(hint.y + hint.height);
   await fixture(page, "cross");
   await page.locator("#tray button").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });

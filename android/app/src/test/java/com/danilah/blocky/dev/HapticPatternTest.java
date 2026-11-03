@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 public class HapticPatternTest {
   @Test public void finiteWaveformsWorkWithAndWithoutAmplitudeControl() {
-    for(String kind : new String[]{"place","clear","record","empty","defeat","collect","ice","unlock","victory"}) {
+    for(String kind : new String[]{"place","clear","record","empty","bloom","rain","defeat","collect","ice","unlock","victory"}) {
       for(int level = 1; level <= 8; level++) {
         HapticPattern p = HapticPattern.forEvent(kind, level);
         assertEquals(p.times.length, p.amplitudes.length);

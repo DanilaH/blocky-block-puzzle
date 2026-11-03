@@ -12,7 +12,7 @@ it("material milestones keep all subsequent palettes and reset with the series",
     ),
   ).toEqual([
     "plastic",
-    "plastic",
+    "enamel",
     "enamel",
     "enamel",
     "chrome",

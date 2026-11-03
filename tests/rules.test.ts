@@ -18,10 +18,10 @@ import { createProfile, validProfile, withHint } from "../src/core/profile";
 import { ProfileStore, type SaveAdapter } from "../src/platform/save";
 
 describe("rules contract", () => {
-  it("has exactly 25 unique normalized shapes and family weights", () => {
-    expect(SHAPES).toHaveLength(25);
-    expect(new Set(SHAPES.map((s) => JSON.stringify(s.cells))).size).toBe(25);
-    expect(SHAPES.reduce((n, s) => n + s.weight, 0)).toBeCloseTo(100);
+  it("has 31 unique normalized shapes and family weights", () => {
+    expect(SHAPES).toHaveLength(31);
+    expect(new Set(SHAPES.map((s) => JSON.stringify(s.cells))).size).toBe(31);
+    expect(SHAPES.reduce((n, s) => n + s.weight, 0)).toBeCloseTo(106);
     for (const s of SHAPES) {
       expect(Math.min(...s.cells.map((c) => c[0]))).toBe(0);
       expect(Math.min(...s.cells.map((c) => c[1]))).toBe(0);

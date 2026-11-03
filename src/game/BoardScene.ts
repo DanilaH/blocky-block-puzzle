@@ -9,7 +9,7 @@ import {
 } from "./tile-study-config";
 import { TILE_STUDY, TileStudySprites } from "./tile-study";
 import { VfxSprites, VFX_KINDS } from "./vfx";
-import { THEMES } from "./themes";
+import { THEMES, themeTile } from "./themes";
 import Phaser from "phaser";
 import {
   fits,
@@ -75,6 +75,7 @@ export class BoardScene extends Phaser.Scene {
     this.fromAccent = this.currentColor(this.fromAccent, this.accent);
     this.fromSheen = this.materialLevel();
     this.theme = index;
+    this.study?.setPalette(this.presentation === "classic" ? index : 0);
     this.shade = THEMES[index]!.board;
     this.accent = color;
     this.themeAt = performance.now();
@@ -133,10 +134,14 @@ export class BoardScene extends Phaser.Scene {
   preload() {
     if (TILE_STUDY)
       for (const material of TILE_MATERIALS)
-        for (let color = 1; color <= 6; color++)
+        for (
+          let color = 1;
+          color <= (this.presentation === "classic" ? 12 : 6);
+          color++
+        )
           this.load.image(
             `study-${material}-${color}`,
-            `assets/${this.presentation === "classic" ? "classic-tiles" : "tile-study"}/${material}-${color}.webp`,
+            `assets/${this.presentation === "classic" ? (color > 6 ? "theme-tiles" : "classic-tiles") : "tile-study"}/${material}-${color}.webp`,
           );
     for (const kind of VFX_KINDS)
       this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
@@ -193,6 +198,7 @@ export class BoardScene extends Phaser.Scene {
       this.bedColor = -1;
 
       this.study = new TileStudySprites(this);
+      this.study.setPalette(this.presentation === "classic" ? this.theme : 0);
       this.study.setMaterial(
         tileMaterialForTheme(this.theme),
         performance.now(),
@@ -203,7 +209,11 @@ export class BoardScene extends Phaser.Scene {
     // DOM tray/drag reuse decoded startup textures: no requests during moves,
     // including WebViews with disabled/evicted HTTP cache.
     for (const material of TILE_MATERIALS)
-      for (let color = 1; color <= 6; color++)
+      for (
+        let color = 1;
+        color <= (this.presentation === "classic" ? 12 : 6);
+        color++
+      )
         cacheTileURL(
           COLORS[color]!,
           this.textures.getBase64(`study-${material}-${color}`),

@@ -110,7 +110,7 @@ test("compact controls keep 48px targets and rules explain points", async ({
     [844, 390],
   ]) {
     await page.setViewportSize({ width, height });
-    const h = (await page.locator("#hint").boundingBox())!,
+    const h = (await page.locator("#pause").boundingBox())!,
       ad = (await page.locator("#ad-slot").boundingBox())!;
     expect(h.height).toBeGreaterThanOrEqual(48);
     expect(h.y + h.height).toBeLessThanOrEqual(ad.y);

@@ -36,6 +36,7 @@ for (const [before, multiplier, step] of [
         p = (await save.load()).profile;
       p.revision++;
       p.tutorialStep = 4;
+      p.settings.musicVolume = 0.35;
       p.best = p.festivalBest = p.progressionBest = 100000;
       p.game = {
         ...newGame(20, "progression"),
@@ -80,20 +81,27 @@ for (const [before, multiplier, step] of [
     expect(await page.evaluate(() => window.testAudio.music.streak)).toBe(
       before + 1,
     );
-    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
-    const background = await page.locator(".world-background").first().boundingBox();
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(0);
+    const background = await page
+      .locator(".world-background")
+      .first()
+      .boundingBox();
     const viewport = page.viewportSize();
     expect(background?.width).toBe(viewport?.width);
     expect(background?.height).toBe(viewport?.height);
-    expect(await page.evaluate(() => getComputedStyle(document.body).transitionDuration)).toBe("0s");
+    expect(
+      await page.evaluate(
+        () => getComputedStyle(document.body).transitionDuration,
+      ),
+    ).toBe("0s");
     await page.locator("#pause").click();
-    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(0);
     expect(
       await page.evaluate(
         () => window.testAudio.music.layers.filter((l) => l.source).length,
       ),
     ).toBe(0);
     await page.locator("#resume").click();
-    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(step);
+    expect(await page.evaluate(() => window.testAtmosphere.index)).toBe(0);
   });
 }

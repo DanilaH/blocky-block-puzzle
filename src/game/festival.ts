@@ -1,4 +1,5 @@
 import { visualClock } from "./visual-clock";
+import { THEMES, themeTile } from "./themes";
 import { COLORS } from "./tiles";
 // Full-viewport cosmetic layer. No gameplay RNG, input, state, or persistent loop.
 type Spark = {
@@ -12,8 +13,20 @@ type Spark = {
   color: string;
   spin: number;
   star: boolean;
+  mode: number;
+  floor: number;
 };
 export class Festival {
+  private theme = 0;
+  private reveals: {
+    board: DOMRect;
+    age: number;
+    mode: number;
+    color: string;
+  }[] = [];
+  setPalette(theme: number) {
+    this.theme = theme;
+  }
   private canvas = document.createElement("canvas");
   private ctx: CanvasRenderingContext2D;
   private sparks: Spark[] = [];
@@ -52,13 +65,26 @@ export class Festival {
     record = false,
     sourceBoard?: number[],
     budget = 200,
+    variant = 0,
   ) {
-    const palette = COLORS.slice(1).map(
-      (c) => "#" + c.toString(16).padStart(6, "0"),
+    const palette = Array.from(
+      { length: 6 },
+      (_, i) =>
+        "#" +
+        COLORS[themeTile(this.theme, i + 1)]!.toString(16).padStart(6, "0"),
     );
+    if (empty) {
+      this.reveals.push({
+        board,
+        age: 0,
+        mode: variant,
+        color: THEMES[this.theme]!.accent,
+      });
+      if (this.reveals.length > 2) this.reveals.shift();
+    }
     const count = Math.min(
       budget,
-      empty ? 200 : record ? 85 : Math.min(130, 24 + lines * 24),
+      empty ? 110 : record ? 35 : Math.min(80, 10 + lines * 14),
     );
     const dpr = Math.min(1.5, devicePixelRatio);
     const width = Math.round(innerWidth * dpr);
@@ -72,10 +98,10 @@ export class Festival {
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (let i = 0; i < count; i++) {
       const cell = cells[i % Math.max(1, cells.length)] ?? 27;
-      const x = empty
+      let x = empty
         ? board.left + board.width * (i % 2 ? 0.92 : 0.08)
         : board.left + (((cell % 8) + 0.5) * board.width) / 8;
-      const y = empty
+      let y = empty
         ? board.bottom - 12
         : board.top + ((Math.floor(cell / 8) + 0.5) * board.height) / 8;
       const angle = empty
@@ -84,12 +110,25 @@ export class Festival {
       const speed = empty
         ? 280 + Math.random() * 310
         : 90 + Math.random() * 210;
+      if (empty && variant === 1) {
+        x = board.left + board.width / 2;
+        y = board.bottom;
+      }
+      if (empty && variant === 2) {
+        x = board.left + Math.random() * board.width;
+        y = board.top - board.height * 0.2;
+      }
       this.sparks.push({
+        mode: empty ? variant + 1 : 0,
+        floor: board.bottom,
         x,
         y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - (empty ? 0 : 80),
-        age: 0,
+        vx: empty && variant === 2 ? 0 : Math.cos(angle) * speed,
+        vy:
+          empty && variant === 2
+            ? 220 + Math.random() * 100
+            : Math.sin(angle) * speed - (empty ? 0 : 80),
+        age: empty && variant === 2 ? -Math.random() * 650 : 0,
         life: empty ? 1500 + Math.random() * 500 : 550 + Math.random() * 550,
         size: 9 + Math.random() * 9,
         color: palette[(sourceBoard?.[cell] || (i % palette.length) + 1) - 1]!,
@@ -115,9 +154,32 @@ export class Festival {
     this.sparks.length = live;
     for (const s of this.sparks) {
       s.age += dt;
+      if (s.age < 0) continue;
       s.x += (s.vx * dt) / 1000;
       s.y += (s.vy * dt) / 1000;
-      s.vy += (420 * dt) / 1000;
+      s.vy += ((s.mode === 3 ? 0 : s.mode === 2 ? 170 : 420) * dt) / 1000;
+      if (s.mode === 3 && s.y > s.floor) {
+        const radius = Math.min(22, (s.y - s.floor) * 0.4);
+        g.strokeStyle = s.color;
+        g.globalAlpha = Math.max(0, 1 - radius / 22);
+        g.lineWidth = 2;
+        g.beginPath();
+        g.ellipse(s.x, s.floor, radius, radius * 0.3, 0, 0, Math.PI * 2);
+        g.stroke();
+        g.globalAlpha = 1;
+        if (radius >= 22) s.age = s.life;
+        continue;
+      }
+      if (s.mode === 3) {
+        g.strokeStyle = s.color;
+        g.globalAlpha = 0.35;
+        g.lineWidth = 2;
+        g.beginPath();
+        g.moveTo(s.x, s.y - 32);
+        g.lineTo(s.x, s.y);
+        g.stroke();
+        g.globalAlpha = 1;
+      }
       const t = s.age / s.life;
       g.save();
       g.translate(s.x, s.y);
@@ -150,7 +212,52 @@ export class Festival {
       }
       g.restore();
     }
-    if (!this.sparks.length) {
+    this.reveals = this.reveals.filter((r) => r.age < 2400);
+    for (const r of this.reveals) {
+      r.age += dt;
+      const t = r.age / 2400,
+        b = r.board;
+      g.save();
+      g.strokeStyle = r.color;
+      g.fillStyle = r.color;
+      g.globalAlpha = Math.sin(Math.min(1, t) * Math.PI) * 0.85;
+      g.lineWidth = 3;
+      if (r.mode === 0) {
+        const length = 2 * (b.width + b.height);
+        g.setLineDash([length * 0.22, length * 0.78]);
+        g.lineDashOffset = -length * t * 2;
+        g.strokeRect(b.left - 3, b.top - 3, b.width + 6, b.height + 6);
+        g.setLineDash([]);
+      } else if (r.mode === 1) {
+        g.translate(b.left + b.width / 2, b.top + b.height * 0.18);
+        g.rotate(t * 0.8);
+        const size = 14 + Math.sin((Math.min(1, t * 3) * Math.PI) / 2) * 25;
+        g.beginPath();
+        g.moveTo(0, -size);
+        g.lineTo(size, 0);
+        g.lineTo(0, size);
+        g.lineTo(-size, 0);
+        g.closePath();
+        g.stroke();
+        g.globalAlpha *= 0.25;
+        g.fill();
+      } else {
+        const radius = b.width * (0.15 + t * 0.6);
+        g.beginPath();
+        g.ellipse(
+          b.left + b.width / 2,
+          b.bottom,
+          radius,
+          radius * 0.16,
+          0,
+          0,
+          Math.PI * 2,
+        );
+        g.stroke();
+      }
+      g.restore();
+    }
+    if (!this.sparks.length && !this.reveals.length) {
       this.frame?.();
       this.frame = null;
     }
@@ -160,6 +267,7 @@ export class Festival {
     this.frame?.();
     this.frame = null;
     this.sparks = [];
+    this.reveals = [];
     this.ctx.clearRect(0, 0, innerWidth, innerHeight);
   }
 }

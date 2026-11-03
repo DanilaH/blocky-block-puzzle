@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-test("theme follows durable series, preparation preserves it and reload restores it", async ({
+test("full clear unlocks a durable theme; preparation and reload preserve it", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -26,26 +26,29 @@ test("theme follows durable series, preparation preserves it and reload restores
       used: false,
     }));
     for (let i = 1; i < 8; i++) p.game.board[i] = 1;
-    p.game.board[63] = 2;
+
     await a.write(p);
   });
   await page.reload();
   await page.locator("#board canvas").waitFor();
-  await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-material",
+    "plastic",
+  );
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("html")).toHaveAttribute("data-material", "enamel");
+  await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 6 · ×5");
   await expect(page.locator('.hud-notice[data-tier="theme"]')).toContainText(
-    "ЭМАЛЬ",
+    "ФАРФОР",
   );
   await page.locator('[data-slot="1"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("#combo-stock")).toContainText("1 ход");
-  await expect(page.locator("html")).toHaveAttribute("data-material", "enamel");
+  await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   await page.reload();
   await page.locator("#board canvas").waitFor();
-  await expect(page.locator("html")).toHaveAttribute("data-material", "enamel");
+  await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   expect(errors).toEqual([]);
   await page.locator("#pause").click();
   await expect(

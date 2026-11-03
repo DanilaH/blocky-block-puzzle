@@ -93,7 +93,9 @@ for (const interrupt of [false, true])
       expect(await page.locator(".reward-event").count()).toBe(0);
       expect(
         await page.evaluate(() =>
-          window.hapticCalls.some((p) => p.kind === "empty"),
+          window.hapticCalls.some((p) =>
+            ["empty", "bloom", "rain"].includes(p.kind),
+          ),
         ),
       ).toBe(true);
     }

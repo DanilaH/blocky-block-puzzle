@@ -59,7 +59,7 @@ test("safe-area keeps gameplay and lesson above the banner", async ({
           const selectors = [
             "#board",
             ".tray",
-            learning ? "#lesson-skip" : "#hint",
+            learning ? "#lesson-skip" : "#pause",
           ];
           for (const selector of selectors) {
             const r = await page.locator(selector).boundingBox();

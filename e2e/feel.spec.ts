@@ -142,8 +142,9 @@ test("landscape messages remain visible and tablet uses available width", async 
 }) => {
   await page.setViewportSize({ width: 568, height: 320 });
   await fixture(page, "no-hints");
-  await expect(page.locator("#hint-label")).toBeVisible();
-  await page.locator("#hint").click();
+  await expect(page.locator("#hint")).toBeHidden();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#reward-status")).toContainText("недоступна");
   await expect(page.locator("#watch-reward")).toBeDisabled();
   await page.locator("#reward-back").scrollIntoViewIfNeeded();

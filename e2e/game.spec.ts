@@ -31,12 +31,14 @@ test("play, cancel drag, hint receipt, reload and responsive bounds", async ({
       "ru",
     );
   });
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   await page.reload();
   await expect(page.locator("#score")).toHaveText(score!);
   await expect(page.locator("#hint-count")).toHaveText("2");
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   await page.locator("#pause").click();
   await expect(page.locator("dialog")).toBeVisible();
@@ -53,7 +55,7 @@ test("play, cancel drag, hint receipt, reload and responsive bounds", async ({
     await page.waitForTimeout(100);
     const bounds = await page.locator("#board").boundingBox();
     const ad = await page.locator("#ad-slot").boundingBox();
-    const hint = await page.locator("#hint").boundingBox();
+    const hint = await page.locator("#pause").boundingBox();
     expect(bounds!.x).toBeGreaterThanOrEqual(0);
     expect(bounds!.y).toBeGreaterThanOrEqual(0);
     expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(ad!.y + 1);
@@ -99,7 +101,8 @@ test("backup recovery preserves the last complete profile", async ({
 }) => {
   await page.goto("/");
   await expect(page.locator("#tray button")).toHaveCount(3);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   await page.evaluate(async () => {
     await new Promise<void>((resolve, reject) => {

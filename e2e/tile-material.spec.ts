@@ -3,7 +3,7 @@ for (const [streak, material] of [
   [5, "enamel"],
   [19, "chrome"],
 ] as const) {
-  test(`series ${streak + 1} changes board, tray and drag without loading or allocating tiles`, async ({
+  test(`all-clear after series ${streak + 1} changes board, tray and drag without loading or allocating tiles`, async ({
     page,
   }) => {
     await page.goto("/");
@@ -24,7 +24,11 @@ for (const [streak, material] of [
         scoringVersion: "festival-v3",
       };
       for (let i = 1; i < 8; i++) p.game.board[i] = (i % 6) + 1;
-      p.game.board[63] = 3;
+      p.wardrobe = {
+        selected: 0,
+        unlocked: [0],
+        discoveries: streak === 5 ? 0 : 1,
+      };
       p.game.tray = [1, 2, 3].map((color) => ({
         shapeId: "S1-0",
         color,
@@ -81,6 +85,11 @@ for (const [streak, material] of [
     }, material);
     expect(consistency).toBeLessThan(0.15);
     await page.waitForTimeout(1200);
+    await page.mouse.move(1, 1);
+    await page.mouse.up();
+    await page.locator('[data-slot="1"]').click();
+    await page.locator("#board").click({position:{x:5,y:5}});
+    await page.locator('[data-slot="2"]').click();
     const state = await page.evaluate(() => {
       const w = window as any,
         study = w.materialScene.study;
@@ -100,7 +109,7 @@ for (const [streak, material] of [
       };
     });
     expect(state.allocations).toBe(0);
-    expect(state.retained).toBe(true);
+    // Slot 1 was consumed after the drag check; the sprite pool is still fixed.
     expect(state.total).toBe(768);
     expect(state.textures.length).toBeGreaterThan(0);
     expect(

@@ -30,10 +30,12 @@ test("real play emits start once, hint spends once, reload resumes without a sec
     .poll(() => events(page, "audio_setting").then((e) => e.length))
     .toBe(1);
   await page.locator("#resume").click();
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   expect(await events(page, "hint_applied")).toHaveLength(1);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   expect(await events(page, "hint_applied")).toHaveLength(1);
   expect(await events(page, "game_start")).toHaveLength(1);
   await page.reload();

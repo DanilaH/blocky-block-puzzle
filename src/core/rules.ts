@@ -31,6 +31,7 @@ export function scoreBreakdown(
   };
 }
 
+import { flowDeal } from "./flow-dealer";
 import catalog from "./shapes.json";
 export type Cell = readonly [number, number];
 export interface Shape {
@@ -58,7 +59,11 @@ export interface Slot {
   used: boolean;
   color: number;
 }
-export type DealerVersion = "initial-v1" | "solvable-v1" | "assist-v1";
+export type DealerVersion =
+  | "initial-v1"
+  | "solvable-v1"
+  | "assist-v1"
+  | "flow-v1";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -149,7 +154,12 @@ export function random(state: number): { state: number; value: number } {
   x ^= x << 5;
   return { state: x >>> 0, value: (x >>> 0) / 4294967296 };
 }
-function draw(state: number, allowed: readonly Shape[] = SHAPES) {
+function draw(
+  state: number,
+  allowed: readonly Shape[] = SHAPES.filter(
+    (s) => !["D3", "L5"].includes(s.family),
+  ),
+) {
   const r = random(state);
   const total = allowed.reduce((n, s) => n + s.weight, 0);
   let target = r.value * total;
@@ -190,12 +200,19 @@ export function deal(
   board: Board,
   rngState: number,
   version: DealerVersion,
+  moves = 0,
+  previous = "",
 ): {
   tray: Slot[];
   rngState: number;
   fallback: boolean;
   witness: Move[] | null;
 } {
+  if (version === "flow-v1") {
+    const flow = flowDeal(board, rngState, moves, previous);
+    if (flow) return flow;
+    return { ...deal(board, rngState, "initial-v1"), fallback: true };
+  }
   // Experimental moderate assistance: retain the baseline unless it has no
   // immediate clear and a deterministic 35% gate opens. Never force a reward.
   if (version === "assist-v1") {
@@ -245,7 +262,9 @@ export function deal(
     }
     return { ...base, rngState: nextRng };
   }
-  const allowed = SHAPES.filter((s) => placements(board, s).length);
+  const allowed = SHAPES.filter(
+    (s) => !["D3", "L5"].includes(s.family) && placements(board, s).length,
+  );
   if (!allowed.length)
     return { tray: [], rngState, fallback: false, witness: null };
   function triple(): Slot[] {
@@ -357,7 +376,16 @@ export function applyMove(
     rngState = state.rngState,
     dealerFallbacks = state.dealerFallbacks;
   if (tray.every((s) => s.used)) {
-    const d = deal(placed.board, rngState, state.dealerVersion);
+    const d = deal(
+      placed.board,
+      rngState,
+      state.dealerVersion,
+      state.moves + 1,
+      state.tray
+        .map((s) => shapeById(s.shapeId).family)
+        .sort()
+        .join(","),
+    );
     tray = d.tray;
     rngState = d.rngState;
     dealerFallbacks += Number(d.fallback);

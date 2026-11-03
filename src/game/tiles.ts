@@ -2,6 +2,7 @@ import { TILE_STUDY, type TileMaterial } from "./tile-study-config";
 /** Own shallow plastic tiles; shared by board, tray and drag. */
 export const COLORS = [
   0x303136, 0xffb719, 0xef5140, 0x83c633, 0x19b9ad, 0x4279ed, 0xa160d6,
+  0x619de9, 0xeea8c5, 0xbda7e8, 0xedc566, 0xbce3e7, 0xecedf5,
 ];
 export const TILE_FACES = [
   {
@@ -65,7 +66,7 @@ export function tileURL(color: number, material: TileMaterial = "plastic") {
   const cached = urls.get(`${material}:${color}`);
   if (cached) return cached;
   if (TILE_STUDY)
-    return `/assets/${typeof document !== "undefined" && document.documentElement.dataset.presentation === "classic" ? "classic-tiles" : "tile-study"}/${material}-${COLORS.indexOf(color)}.webp`;
+    return `/assets/${typeof document !== "undefined" && document.documentElement.dataset.presentation === "classic" ? (COLORS.indexOf(color) > 6 ? "theme-tiles" : "classic-tiles") : "tile-study"}/${material}-${COLORS.indexOf(color)}.webp`;
   const hex = (n: number) => "#" + n.toString(16).padStart(6, "0");
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">${TILE_FACES.map((q) => `<polygon points="${q.points.map((p) => p.join(",")).join(" ")}" fill="${hex(q.color ?? color)}" opacity="${q.alpha}"/>`).join("")}</svg>`;
   const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;

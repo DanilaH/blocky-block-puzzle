@@ -235,10 +235,25 @@ export class GameAudio {
       return;
     }
     if (kind === "praise" || kind === "theme") {
-      [659.25, 987.77, 1318.5]
-        .slice(0, kind === "theme" ? 3 : 2)
+      (kind === "theme"
+        ? [
+            [523.25, 783.99, 1046.5, 1567.98],
+            [659.25, 783.99, 987.77, 1318.5],
+            [1046.5, 783.99, 659.25, 523.25],
+          ][streak % 3]!
+        : [659.25, 987.77]
+      )
+        .slice(0, kind === "theme" ? 4 : 2)
         .forEach((f, i) =>
-          this.tone(f, f, t + i * 0.075, 0.25, 0.055, "sine", 1),
+          this.tone(
+            f,
+            f,
+            t + i * (kind === "theme" ? 0.14 : 0.075),
+            kind === "theme" ? 0.55 : 0.25,
+            0.055,
+            "sine",
+            1,
+          ),
         );
       return;
     }

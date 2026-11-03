@@ -76,7 +76,8 @@ test("rewarded hints commit once despite duplicate event and result; banner hide
   await expect
     .poll(() => page.evaluate(() => window.lastBanner?.visible))
     .toBe(true);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#watch-reward")).toBeEnabled();
   await expect
     .poll(() => page.evaluate(() => window.lastBanner?.visible))
@@ -95,7 +96,8 @@ for (const outcome of ["closed", "unavailable"])
     await mock(page, outcome);
     await fixture(page);
     const before = await saved(page);
-    await page.locator("#hint").click();
+    await page.locator("#pause").click();
+    await page.locator("#menu-hint").click();
     await page.locator("#watch-reward").click();
     await expect.poll(() => page.evaluate(() => window.showStarted)).toBe(true);
     await expect
@@ -157,7 +159,8 @@ test("web without native SDK offers an honest unavailable state and exit", async
   page,
 }) => {
   await fixture(page);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#watch-reward")).toBeDisabled();
   await expect(page.locator("#reward-status")).toContainText("недоступна");
   await page.locator("#reward-back").click();
@@ -197,7 +200,8 @@ test("fullscreen blocks dialog and game navigation until bridge closes", async (
   await mock(page);
   await fixture(page);
   await page.evaluate(() => (window.adHold = true));
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await page.locator("#watch-reward").click();
   await expect.poll(() => page.evaluate(() => window.showStarted)).toBe(true);
   await expect(page.locator("#app")).toHaveJSProperty("inert", true);

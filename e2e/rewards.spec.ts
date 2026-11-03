@@ -150,7 +150,7 @@ test("record stays beside crown without intersecting score throughout animation"
     expect(readable.every((s) => s.opacity > 0.95)).toBe(true);
     const board = (await page.locator("#board").boundingBox())!,
       ad = (await page.locator("#ad-slot").boundingBox())!,
-      hint = (await page.locator("#hint").boundingBox())!;
+      hint = (await page.locator("#pause").boundingBox())!;
     expect(board.y).toBeGreaterThanOrEqual(0);
     expect(hint.y + hint.height).toBeLessThanOrEqual(ad.y);
     if (width > height) expect(board.width).toBeGreaterThanOrEqual(224);
@@ -168,7 +168,8 @@ test("depleted and cached hint labels survive focus changes", async ({
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(page.locator("#hint-label")).toHaveText("Ещё подсказки");
   await setup(page);
-  await page.locator("#hint").click();
+  await page.locator("#pause").click();
+  await page.locator("#menu-hint").click();
   await expect(page.locator("#hint-count")).toHaveText("2");
   await expect(page.locator("#hint-label")).toHaveText("Показать ход");
   await page.evaluate(() => window.dispatchEvent(new Event("blur")));

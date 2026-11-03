@@ -109,3 +109,27 @@
 :root[data-presentation="classic"] .ad-slot {
   border-color: #ffffff20;
 }
+
+/* The playfield owns attention. Secondary actions remain accessible in pause. */
+:root[data-presentation="classic"] .campaign-entry,
+:root[data-presentation="classic"] .brand,
+:root[data-presentation="classic"] .tray-label,
+:root[data-presentation="classic"] .reward-line {
+  display: none;
+}
+:root[data-presentation="classic"] .topbar {
+  justify-content: flex-end;
+}
+.theme-collection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+.theme-collection button {
+  min-height: 52px;
+}
+.theme-collection [aria-pressed="true"] {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
