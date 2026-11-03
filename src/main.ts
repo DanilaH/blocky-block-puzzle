@@ -66,7 +66,7 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "flow-v1") => ({
+const fresh = (dealer: DealerVersion = "flow-v2") => ({
   ...newGame(seed(), crypto.randomUUID(), dealer),
   scoringVersion: "festival-v4" as const,
 });
@@ -98,7 +98,7 @@ async function start() {
     revision: number,
   ): Promise<ReturnType<typeof applyMove>> {
     if (
-      state.dealerVersion !== "flow-v1" ||
+      !["flow-v1", "flow-v2"].includes(state.dealerVersion) ||
       state.tray.filter((s) => s.used).length !== 2
     )
       return applyMove(state, move, revision);
@@ -517,6 +517,10 @@ async function start() {
   function render(smoothScore = false) {
     const p = store.state,
       g = currentGame();
+    // Read stable tray geometry before score/text/class writes can dirty layout.
+    const tray = el("tray"),
+      trayWidth = tray.clientWidth,
+      trayHeight = tray.clientHeight;
     if (g.gameId !== scoreGame) {
       pendingPoints = 0;
       visibleBestFloor = bestFor(p);
@@ -532,7 +536,6 @@ async function start() {
     );
     el("tray-progress").textContent =
       `${g.tray.filter((s) => !s.used).length} / 3`;
-    const tray = el("tray");
     const focused = (document.activeElement as HTMLElement)?.dataset?.slot;
     const shapes = g.tray.map((s) => shapeById(s.shapeId));
     const cell = Math.max(
@@ -540,9 +543,8 @@ async function start() {
       Math.floor(
         Math.min(
           38,
-          (tray.clientWidth / 3 - 12) /
-            Math.max(1, ...shapes.map((s) => s.width)),
-          (tray.clientHeight - 8) / Math.max(1, ...shapes.map((s) => s.height)),
+          (trayWidth / 3 - 12) / Math.max(1, ...shapes.map((s) => s.width)),
+          (trayHeight - 8) / Math.max(1, ...shapes.map((s) => s.height)),
         ),
       ),
     );
@@ -840,6 +842,11 @@ async function start() {
     movePending = true;
     try {
       const calculated = await calculateMove(before, move, revision);
+      performanceCapture.record(
+        "moveCalculationWallTime",
+        performance.now() - saveStarted,
+      );
+      const storageStarted = performance.now();
       const changed = await store.update((p) => {
         if (
           !practicing &&
@@ -866,6 +873,10 @@ async function start() {
             }
           : null;
       });
+      performanceCapture.record(
+        "atomicSaveWallTime",
+        performance.now() - storageStarted,
+      );
       performanceCapture.record(
         "commitIncludingSaveWallTime",
         performance.now() - saveStarted,
@@ -2027,17 +2038,17 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v1">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v2">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el<HTMLSelectElement>("dealer-choice").value = "flow-v1";
+    el<HTMLSelectElement>("dealer-choice").value = "flow-v2";
     el("new-game").onclick = () =>
       void restart(
         el<HTMLSelectElement>("dealer-choice").value as DealerVersion,
       );
     el("keep-game").onclick = close;
   }
-  async function restart(dealer: DealerVersion = "flow-v1") {
+  async function restart(dealer: DealerVersion = "flow-v2") {
     if (ads.busy || store.busy || movePending) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";

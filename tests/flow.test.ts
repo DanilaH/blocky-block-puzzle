@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { flowDeal } from "../src/core/flow-dealer";
+import { flowDealV1 as flowDeal } from "../src/core/flow-dealer-v1";
 import {
   emptyBoard,
   place,

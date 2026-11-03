@@ -191,9 +191,12 @@ export class BoardScene extends Phaser.Scene {
           .setOrigin(0)
           .setDepth(0),
       );
-      this.bed = textured
-        ? new RasterInk(this, 0.25)
-        : this.add.graphics().setDepth(0.25);
+      // Classic never paints contact decoration. Keep an empty graphics object
+      // instead of uploading a transparent 512x512 texture on every placement.
+      this.bed =
+        textured && this.presentation !== "classic"
+          ? new RasterInk(this, 0.25)
+          : this.add.graphics().setDepth(0.25);
       this.bedKey = "";
       this.bedColor = -1;
 

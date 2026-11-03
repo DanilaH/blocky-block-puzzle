@@ -136,7 +136,8 @@ try {
       losses++;
     } else {
       if (i % 3 === 0) {
-        await page.locator("#hint").click();
+        await page.locator("#pause").click();
+        await page.locator("#menu-hint").click();
         await page.waitForFunction(() => !!window.soakStore.state.hint);
         hints++;
       }

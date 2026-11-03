@@ -23,7 +23,7 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   await page.locator("#pause").click();
   await page.locator("#restart").click();
   await page.getByText("Экспериментальная выдача", { exact: true }).click();
-  await expect(page.locator("#dealer-choice")).toHaveValue("flow-v1");
+  await expect(page.locator("#dealer-choice")).toHaveValue("flow-v2");
   await page.locator("#dealer-choice").selectOption("assist-v1");
   await page.locator("#new-game").click();
   await expect(page.locator("dialog")).not.toBeVisible();
@@ -38,7 +38,7 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   expect((await saved(page)).game).toEqual(assisted.game);
   await page.locator("#restart").click();
   await page.getByText("Экспериментальная выдача", { exact: true }).click();
-  await expect(page.locator("#dealer-choice")).toHaveValue("flow-v1");
+  await expect(page.locator("#dealer-choice")).toHaveValue("flow-v2");
   await page.locator("#dealer-choice").selectOption("initial-v1");
   await page.locator("#new-game").click();
   await expect

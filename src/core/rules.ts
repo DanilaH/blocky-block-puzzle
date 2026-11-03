@@ -31,6 +31,7 @@ export function scoreBreakdown(
   };
 }
 
+import { flowDealV1 } from "./flow-dealer-v1";
 import { flowDeal } from "./flow-dealer";
 import catalog from "./shapes.json";
 export type Cell = readonly [number, number];
@@ -43,8 +44,9 @@ export interface Shape {
   height: number;
 }
 export const SHAPES = catalog as unknown as readonly Shape[];
+const shapesById = new Map(SHAPES.map((s) => [s.id, s]));
 export const shapeById = (id: string): Shape => {
-  const shape = SHAPES.find((s) => s.id === id);
+  const shape = shapesById.get(id);
   if (!shape) throw new Error("Unknown shape");
   return shape;
 };
@@ -63,7 +65,8 @@ export type DealerVersion =
   | "initial-v1"
   | "solvable-v1"
   | "assist-v1"
-  | "flow-v1";
+  | "flow-v1"
+  | "flow-v2";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -114,20 +117,29 @@ export function clearLines(board: Board): {
   cells: number[];
   lines: number;
 } {
-  const rows: number[] = [],
-    cols: number[] = [];
-  for (let n = 0; n < 8; n++) {
-    if (Array.from({ length: 8 }, (_, x) => board[n * 8 + x]).every(Boolean))
-      rows.push(n);
-    if (Array.from({ length: 8 }, (_, y) => board[y * 8 + n]).every(Boolean))
-      cols.push(n);
+  // One scan, no per-row arrays or repeated membership searches.
+  let rows = 0,
+    columns = 255,
+    lines = 0;
+  for (let y = 0; y < 8; y++) {
+    let occupied = 0;
+    for (let x = 0; x < 8; x++) if (board[y * 8 + x]) occupied |= 1 << x;
+    columns &= occupied;
+    if (occupied === 255) {
+      rows |= 1 << y;
+      lines++;
+    }
   }
-  const cells = Array.from({ length: 64 }, (_, i) => i).filter(
-    (i) => rows.includes(Math.floor(i / 8)) || cols.includes(i % 8),
-  );
-  const next = board.slice();
-  for (const i of cells) next[i] = 0;
-  return { board: next, cells, lines: rows.length + cols.length };
+  for (let x = 0; x < 8; x++) if (columns & (1 << x)) lines++;
+  const next = board.slice(),
+    cells: number[] = [];
+  if (lines)
+    for (let i = 0; i < 64; i++)
+      if (rows & (1 << (i >> 3)) || columns & (1 << i % 8)) {
+        next[i] = 0;
+        cells.push(i);
+      }
+  return { board: next, cells, lines };
 }
 export function place(
   board: Board,
@@ -208,9 +220,36 @@ export function deal(
   fallback: boolean;
   witness: Move[] | null;
 } {
-  if (version === "flow-v1") {
-    const flow = flowDeal(board, rngState, moves, previous);
+  if (version === "flow-v1" || version === "flow-v2") {
+    const flow = (version === "flow-v1" ? flowDealV1 : flowDeal)(
+      board,
+      rngState,
+      moves,
+      previous,
+    );
     if (flow) return flow;
+    // A bounded search miss must not turn assistance into an arbitrary weighted
+    // tray. Three singles have a replayable route on any non-full board.
+    if (version === "flow-v2" && board.includes(0)) {
+      let b = board;
+      const witness: Move[] = [];
+      for (let slot = 0; slot < 3; slot++) {
+        const cell = b.indexOf(0);
+        const move = { slot, x: cell % 8, y: Math.floor(cell / 8) };
+        witness.push(move);
+        b = place(b, shapeById("S1-0"), move.x, move.y).board;
+      }
+      return {
+        tray: [1, 2, 3].map((color) => ({
+          shapeId: "S1-0",
+          color,
+          used: false,
+        })),
+        rngState: random(rngState).state,
+        fallback: true,
+        witness,
+      };
+    }
     return { ...deal(board, rngState, "initial-v1"), fallback: true };
   }
   // Experimental moderate assistance: retain the baseline unless it has no

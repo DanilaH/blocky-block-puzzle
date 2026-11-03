@@ -31,7 +31,7 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
   const maxSize =
     moves < 12 && occupiedAtDeal > 12
       ? 3
-      : occupiedAtDeal > 36
+      : occupiedAtDeal > 24
         ? 4
         : moves < 12
           ? 6
@@ -41,6 +41,15 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
     .map((list) => ({ list, rank: next() }))
     .sort((a, b) => a.rank - b.rank);
   const reverse = next() > 0.5;
+  const initialRows = Array(8).fill(0);
+  board.forEach((v, i) => {
+    if (v) initialRows[i >> 3] |= 1 << i % 8;
+  });
+  const availability = options().map(
+    (list) =>
+      list.filter((op) => op.rows.every((r, y) => !(r & initialRows[y])))
+        .length,
+  );
   type Node = {
     rows: number[];
     path: Option[];
@@ -56,7 +65,7 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
   let visited = 0;
   for (let depth = 0; depth < 3; depth++) {
     const candidates: Node[] = [];
-    const seen = new Set<string>();
+    const seen = new Map<string, Node>();
     for (const parent of beam)
       for (const { list } of generous ? order : order.slice(0, 8))
         for (let k = 0; k < list.length; k++) {
@@ -120,18 +129,27 @@ export function flowDeal(board: Board, seed: number, moves = 0, previous = "") {
             edges * 2 -
             occupied * 0.7 +
             fullness * 1.1 -
-            (repeated ? 7000 : 0);
+            (repeated ? 180 : 0) -
+            [...parent.path, op].reduce(
+              (penalty, p) =>
+                penalty +
+                (availability[p.shape] === 0
+                  ? 900
+                  : 45 / availability[p.shape]!),
+              0,
+            );
           const key = r.join(",");
-          if (seen.has(key)) continue;
-          seen.add(key);
-          candidates.push({
+          if ((seen.get(key)?.value ?? -Infinity) >= value) continue;
+          const candidate = {
             rows: r,
             path: [...parent.path, op],
             lines,
             clears,
             value,
-          });
+          };
+          seen.set(key, candidate);
         }
+    candidates.push(...seen.values());
     candidates.sort((a, b) => b.value - a.value);
     beam = candidates.slice(0, 4);
     const construction = [...candidates].sort(

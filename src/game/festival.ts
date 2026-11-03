@@ -152,66 +152,72 @@ export class Festival {
     for (const spark of this.sparks)
       if (spark.age < spark.life) this.sparks[live++] = spark;
     this.sparks.length = live;
-    for (const s of this.sparks) {
-      s.age += dt;
-      if (s.age < 0) continue;
-      s.x += (s.vx * dt) / 1000;
-      s.y += (s.vy * dt) / 1000;
-      s.vy += ((s.mode === 3 ? 0 : s.mode === 2 ? 170 : 420) * dt) / 1000;
-      if (s.mode === 3 && s.y > s.floor) {
-        const radius = Math.min(22, (s.y - s.floor) * 0.4);
-        g.strokeStyle = s.color;
-        g.globalAlpha = Math.max(0, 1 - radius / 22);
-        g.lineWidth = 2;
-        g.beginPath();
-        g.ellipse(s.x, s.floor, radius, radius * 0.3, 0, 0, Math.PI * 2);
-        g.stroke();
-        g.globalAlpha = 1;
-        if (radius >= 22) s.age = s.life;
-        continue;
-      }
-      if (s.mode === 3) {
-        g.strokeStyle = s.color;
-        g.globalAlpha = 0.35;
-        g.lineWidth = 2;
-        g.beginPath();
-        g.moveTo(s.x, s.y - 32);
-        g.lineTo(s.x, s.y);
-        g.stroke();
-        g.globalAlpha = 1;
-      }
-      const t = s.age / s.life;
-      g.save();
-      g.translate(s.x, s.y);
-      g.rotate(s.spin * t * 4);
-      g.globalAlpha = Math.min(1, Math.max(0, (1 - t) * 2));
-      g.fillStyle = s.color;
-      const texture = this.chips.get(s.color);
-      if (s.star && this.flash) {
-        g.globalCompositeOperation = "screen";
-        g.drawImage(this.flash, -s.size, -s.size, s.size * 2, s.size * 2);
-      } else if (texture) {
-        const height = s.size * (0.45 + Math.abs(Math.cos(t * 9)) * 0.55);
-        g.drawImage(texture, -s.size / 2, -height / 2, s.size, height);
-      } else if (s.star) {
-        g.beginPath();
-        for (let n = 0; n < 10; n++) {
-          const a = (n * Math.PI) / 5;
-          const r = s.size * (n % 2 ? 0.4 : 1.5);
-          g.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+    // Draw normal chips together, then additive stars: two blend batches,
+    // rather than switching source-over/screen for every eighth particle.
+    for (let pass = 0; pass < 2; pass++) {
+      g.globalCompositeOperation = pass ? "screen" : "source-over";
+      for (const s of this.sparks) {
+        if (Number(s.star && !!this.flash) !== pass) continue;
+        s.age += dt;
+        if (s.age < 0) continue;
+        s.x += (s.vx * dt) / 1000;
+        s.y += (s.vy * dt) / 1000;
+        s.vy += ((s.mode === 3 ? 0 : s.mode === 2 ? 170 : 420) * dt) / 1000;
+        if (s.mode === 3 && s.y > s.floor) {
+          const radius = Math.min(22, (s.y - s.floor) * 0.4);
+          g.strokeStyle = s.color;
+          g.globalAlpha = Math.max(0, 1 - radius / 22);
+          g.lineWidth = 2;
+          g.beginPath();
+          g.ellipse(s.x, s.floor, radius, radius * 0.3, 0, 0, Math.PI * 2);
+          g.stroke();
+          g.globalAlpha = 1;
+          if (radius >= 22) s.age = s.life;
+          continue;
         }
-        g.closePath();
-        g.fill();
-      } else {
-        g.fillRect(
-          -s.size / 2,
-          -s.size / 2,
-          s.size,
-          s.size * (0.4 + Math.abs(Math.cos(t * 12))),
-        );
+        if (s.mode === 3) {
+          g.strokeStyle = s.color;
+          g.globalAlpha = 0.35;
+          g.lineWidth = 2;
+          g.beginPath();
+          g.moveTo(s.x, s.y - 32);
+          g.lineTo(s.x, s.y);
+          g.stroke();
+          g.globalAlpha = 1;
+        }
+        const t = s.age / s.life;
+        g.save();
+        g.translate(s.x, s.y);
+        g.rotate(s.spin * t * 4);
+        g.globalAlpha = Math.min(1, Math.max(0, (1 - t) * 2));
+        g.fillStyle = s.color;
+        const texture = this.chips.get(s.color);
+        if (s.star && this.flash) {
+          g.drawImage(this.flash, -s.size, -s.size, s.size * 2, s.size * 2);
+        } else if (texture) {
+          const height = s.size * (0.45 + Math.abs(Math.cos(t * 9)) * 0.55);
+          g.drawImage(texture, -s.size / 2, -height / 2, s.size, height);
+        } else if (s.star) {
+          g.beginPath();
+          for (let n = 0; n < 10; n++) {
+            const a = (n * Math.PI) / 5;
+            const r = s.size * (n % 2 ? 0.4 : 1.5);
+            g.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+          }
+          g.closePath();
+          g.fill();
+        } else {
+          g.fillRect(
+            -s.size / 2,
+            -s.size / 2,
+            s.size,
+            s.size * (0.4 + Math.abs(Math.cos(t * 12))),
+          );
+        }
+        g.restore();
       }
-      g.restore();
     }
+    g.globalCompositeOperation = "source-over";
     this.reveals = this.reveals.filter((r) => r.age < 2400);
     for (const r of this.reveals) {
       r.age += dt;

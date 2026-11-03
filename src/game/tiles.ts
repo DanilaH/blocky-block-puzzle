@@ -55,12 +55,21 @@ export const TILE_FACES = [
   },
 ] as const;
 const urls = new Map<string, string>();
+// Retain decoded DOM sources as well as Phaser's separate texture sources.
+const decoded = new Map<string, HTMLImageElement>();
 export function cacheTileURL(
   color: number,
   url: string,
   material: TileMaterial = "plastic",
 ) {
-  urls.set(`${material}:${color}`, url);
+  const key = `${material}:${color}`;
+  urls.set(key, url);
+  if (typeof Image !== "undefined" && !decoded.has(key)) {
+    const image = new Image();
+    image.src = url;
+    decoded.set(key, image);
+    void image.decode().catch(() => {});
+  }
 }
 export function tileURL(color: number, material: TileMaterial = "plastic") {
   const cached = urls.get(`${material}:${color}`);
