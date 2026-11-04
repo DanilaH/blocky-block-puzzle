@@ -35,6 +35,7 @@ import { Capacitor, registerPlugin } from "@capacitor/core";
 import "./style.css";
 import "./enamel.css";
 import "./classic.css";
+import "./arcade.css";
 import { BoardScene } from "./game/BoardScene";
 import { COLORS, tileURL } from "./game/tiles";
 import { GameAudio } from "./game/audio";
@@ -65,7 +66,9 @@ import { lessonGame, LESSON_MOVES, LESSON_TEXT } from "./core/tutorial";
 
 const svg = (body: string) =>
   `<svg viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
-const pauseIcon = svg('<path d="M8 5v14M16 5v14"/>');
+const pauseIcon = svg(
+  '<path d="m9 3-.7 2.2-2 .9L4 5.6 2 9l1.8 1.6v2.8L2 15l2 3.4 2.3-.5 2 .9L9 21h4l.7-2.2 2-.9 2.3.5 2-3.4-1.8-1.6v-2.8L20 9l-2-3.4-2.3.5-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/>',
+);
 const bulb = svg(
   '<path d="M9 18h6m-5 3h4M8 14a6 6 0 1 1 8 0c-1 1-1 2-1 2H9s0-1-1-2Z"/>',
 );
@@ -2183,7 +2186,7 @@ async function start() {
       unlocked: [0],
       discoveries: 0,
     };
-    dialog.innerHTML = `<h2 id="dialog-title">Оформление</h2><p>Выберите любое оформление. Полная очистка поля по-прежнему меняет тему автоматически.</p><div class="theme-collection">${THEMES.map((_, i) => `<button class="secondary" data-theme="${i}" aria-pressed="${w.selected === i}" style="background:${THEMES[i]!.bg};color:${THEMES[i]!.ink}">${THEMES[i]!.name}${w.selected === i ? " ✓" : ""}</button>`).join("")}</div><button id="back-themes" class="primary">Назад</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Оформление</h2><p>Выберите любое оформление. Полная очистка поля по-прежнему меняет тему автоматически.</p><div class="theme-collection">${THEMES.map((theme, i) => `<button class="secondary" data-theme="${i}" aria-pressed="${w.selected === i}" style="background:${theme.bg};color:${theme.ink}"><span class="theme-preview" aria-hidden="true" style="background:#${theme.board.toString(16).padStart(6, "0")}">${Array.from({ length: 12 }, (_, cell) => `<i>${[0, 1, 5, 6, 8, 9, 10].includes(cell) ? `<img alt="" loading="lazy" draggable="false" src="${tileURL(COLORS[themeTile(i, (cell % 3) + 1)]!, tileMaterialForTheme(i))}">` : ""}</i>`).join("")}</span><span class="theme-name">${theme.name}${w.selected === i ? " ✓" : ""}</span></button>`).join("")}</div><button id="back-themes" class="primary">Назад</button>`;
     structureDialog();
     dialog.querySelectorAll<HTMLButtonElement>("[data-theme]").forEach(
       (button) =>
