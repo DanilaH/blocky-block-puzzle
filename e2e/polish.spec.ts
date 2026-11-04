@@ -176,6 +176,8 @@ test("recorded showcase: placement, return, clear hierarchy and calm mode", asyn
     await page.waitForTimeout(800);
   }
   await fixture(page, "over");
+  await expect(page.locator("#revive-clock")).toBeVisible();
+  await page.locator("#finish-game").click();
   await expect(page.locator("#again")).toBeVisible();
   await page.screenshot({ path: "docs/qa/feel-0.8/polish-result.png" });
   await page.locator("#look-board").click();
