@@ -6,6 +6,13 @@
   font-synthesis: style weight;
 }
 :root[data-presentation="classic"] .world-background {
+  background-image: repeating-linear-gradient(
+    135deg,
+    #ffffff02 0 1px,
+    transparent 1px 4px
+  );
+}
+:root[data-presentation="classic"][data-material="plastic"] .world-background {
   background-image:
     radial-gradient(ellipse at 50% 60%, #2875e31c, #000a2440),
     repeating-linear-gradient(135deg, #ffffff02 0 1px, transparent 1px 4px);
