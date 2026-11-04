@@ -5,6 +5,9 @@ export interface RhythmState {
   dryMoves: number;
   recoveryDeals: number;
   reliefMoves: number;
+  cycleMoves?: number;
+  recentBags?: string[];
+  encoreDeals?: number;
 }
 export const initialRhythm = (): RhythmState => ({
   pressure: 0,
@@ -64,5 +67,53 @@ export function validRhythm(value: RhythmState | undefined): boolean {
     Number.isInteger(value.reliefMoves) &&
     value.reliefMoves >= 0 &&
     value.reliefMoves <= 18
+  );
+}
+
+/** v4: every earned theme starts a fresh buildup; manual theme selection is cosmetic. */
+export const initialRhythmV4 = (): RhythmState => ({
+  ...initialRhythm(),
+  cycleMoves: 0,
+  recentBags: [],
+  encoreDeals: 0,
+});
+export function advanceRhythmV4(
+  previous: RhythmState,
+  board: Board,
+  lines: number,
+  allClear: boolean,
+  roll: number,
+): RhythmState {
+  const next = advanceRhythm(previous, board, lines, allClear);
+  if (allClear)
+    return {
+      ...next,
+      pressure: 0,
+      dryMoves: 0,
+      reliefMoves: 0,
+      cycleMoves: 0,
+      encoreDeals: (previous.cycleMoves ?? 0) >= 9 && roll < 1 / 6 ? 1 : 0,
+    };
+  return {
+    ...next,
+    cycleMoves: Math.min(1000000, (previous.cycleMoves ?? 0) + 1),
+  };
+}
+export function validRhythmV4(value: RhythmState | undefined) {
+  return (
+    validRhythm(value) &&
+    !!value &&
+    Number.isInteger(value.cycleMoves) &&
+    value.cycleMoves! >= 0 &&
+    value.cycleMoves! <= 1000000 &&
+    Number.isInteger(value.encoreDeals) &&
+    value.encoreDeals! >= 0 &&
+    value.encoreDeals! <= 1 &&
+    Array.isArray(value.recentBags) &&
+    value.recentBags.length <= 4 &&
+    value.recentBags.every(
+      (s) =>
+        typeof s === "string" && s.length <= 60 && /^[A-Za-z0-9,-]+$/.test(s),
+    )
   );
 }

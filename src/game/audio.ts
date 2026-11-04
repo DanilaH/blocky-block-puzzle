@@ -172,6 +172,8 @@ export class GameAudio {
       | "hint"
       | "cancel"
       | "mega"
+      | "cross"
+      | "quad"
       | "record"
       | "allClear",
     streak = 0,
@@ -186,7 +188,18 @@ export class GameAudio {
       this.context.state !== "running"
     )
       return;
-    if (["clear", "combo", "mega", "allClear", "record"].includes(kind))
+    if (
+      [
+        "clear",
+        "combo",
+        "mega",
+        "quad",
+        "cross",
+        "seriesEnd",
+        "allClear",
+        "record",
+      ].includes(kind)
+    )
       this.music?.duck(kind === "allClear");
     if (!this.enabled || this.effectsVolume === 0) return;
     const t = this.context.currentTime;
@@ -226,7 +239,12 @@ export class GameAudio {
       return;
     }
     if (kind === "seriesEnd") {
-      this.tone(392, 329.63, t, 0.22, 0.04, "sine");
+      if (points) {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) =>
+          this.tone(f, f, t + i * 0.085, 0.35, 0.08, "sine", 2),
+        );
+        this.tone(196, 130.81, t, 0.16, 0.15, "triangle", 2);
+      } else this.tone(392, 329.63, t, 0.22, 0.04, "sine");
       return;
     }
     if (kind === "defeat") {
@@ -257,7 +275,18 @@ export class GameAudio {
         );
       return;
     }
-    if (["clear", "combo", "mega", "allClear", "record"].includes(kind))
+    if (
+      [
+        "clear",
+        "combo",
+        "mega",
+        "quad",
+        "cross",
+        "seriesEnd",
+        "allClear",
+        "record",
+      ].includes(kind)
+    )
       this.chain.next(performance.now());
     if (kind === "cancel") {
       this.tone(200, 130, t, 0.07, 0.07);
@@ -338,13 +367,17 @@ export class GameAudio {
         ? [523.25, 1046.5, 1567.98]
         : kind === "record"
           ? [659.25, 783.99, 1046.5]
-          : kind === "mega"
-            ? [523.25, 987.77, 1318.5]
-            : kind === "combo"
-              ? [523.25, 659.25, 1046.5]
-              : kind === "hint"
-                ? [659.25, 987.77]
-                : [523.25, 783.99, 1046.5];
+          : kind === "cross"
+            ? [523.25, 783.99, 1046.5, 1567.98]
+            : kind === "quad"
+              ? [261.63, 523.25, 783.99, 1046.5]
+              : kind === "mega"
+                ? [523.25, 659.25, 783.99]
+                : kind === "combo"
+                  ? [523.25, 659.25, 1046.5]
+                  : kind === "hint"
+                    ? [659.25, 987.77]
+                    : [523.25, 783.99, 1046.5];
     // Limit the whole register, not individual notes: intervals remain intact.
     const register = Math.min(
       Math.pow(2, pitch / 12),
@@ -356,7 +389,16 @@ export class GameAudio {
         at =
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
-          i * (0.07 + Math.min(points, 300) / 3000) * (1 - development * 0.25);
+          (kind === "cross"
+            ? (i % 2) * 0.055
+            : kind === "quad"
+              ? i * 0.09
+              : kind === "mega"
+                ? i * 0.12
+                : kind === "combo"
+                  ? Math.floor(i / 2) * 0.16
+                  : i * (0.07 + Math.min(points, 300) / 3000)) *
+            (1 - development * 0.25);
       this.tone(
         f,
         f * 0.999,

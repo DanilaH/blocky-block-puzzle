@@ -35,7 +35,8 @@ export const emptyAds = (): AdsState => ({
   receipts: [],
 });
 export function revivePlan(g: GameState): RevivePlan | null {
-  if (g.status !== "over" || g.reviveUsed) return null;
+  if (g.status !== "over" || g.reviveUsed || g.reviveOffer?.expired)
+    return null;
   let best: RevivePlan | null = null,
     bestMoves = -1,
     bestCells = -1;
@@ -74,7 +75,9 @@ export function revivePlan(g: GameState): RevivePlan | null {
           reviveUsed: true,
           ...(g.dealerVersion === "flow-v3"
             ? { rhythm: recoveryRhythm() }
-            : {}),
+            : g.dealerVersion === "flow-v4"
+              ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
+              : {}),
           streak: 0,
           streakMisses: 0,
         },
@@ -113,7 +116,11 @@ export function validRevivePlan(
     revision: g.revision + 1,
     status: "playing",
     reviveUsed: true,
-    ...(g.dealerVersion === "flow-v3" ? { rhythm: recoveryRhythm() } : {}),
+    ...(g.dealerVersion === "flow-v3"
+      ? { rhythm: recoveryRhythm() }
+      : g.dealerVersion === "flow-v4"
+        ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
+        : {}),
     streak: 0,
     streakMisses: 0,
   };
@@ -134,6 +141,7 @@ export function prepareReward(
   if (
     kind === "revive" &&
     (!plan ||
+      (p.game.reviveOffer && !p.game.reviveOffer.accepted) ||
       a.intents.some(
         (i) =>
           i.kind === "revive" &&

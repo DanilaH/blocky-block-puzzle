@@ -45,7 +45,7 @@ test("all-clear theme is atomic with the move, reload/new game preserve it and c
   await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   await page.locator("#pause").click();
   await page.locator("#themes").click();
-  await expect(page.locator("[data-theme]")).toHaveCount(2);
+  await expect(page.locator("[data-theme]")).toHaveCount(11);
   await page.locator('[data-theme="0"]').click();
   await expect(page.locator('[data-theme="0"]')).toHaveAttribute(
     "aria-pressed",

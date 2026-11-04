@@ -1,4 +1,4 @@
-import { validRhythm } from "./rhythm";
+import { validRhythm, validRhythmV4 } from "./rhythm";
 import { validCampaign } from "../adventure/save";
 import type { Campaign } from "../adventure/core";
 import { type AdsState, validRevivePlan } from "./monetization";
@@ -161,8 +161,16 @@ export function validProfile(value: unknown): value is Profile {
         "flow-v1",
         "flow-v2",
         "flow-v3",
+        "flow-v4",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
+      (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
+      (g.seriesBonusVersion !== undefined && g.seriesBonusVersion !== 1) ||
+      (g.reviveOffer !== undefined &&
+        (!integer(g.reviveOffer.deadline) ||
+          typeof g.reviveOffer.accepted !== "boolean" ||
+          typeof g.reviveOffer.expired !== "boolean" ||
+          (g.reviveOffer.accepted && g.reviveOffer.expired))) ||
       typeof g.reviveUsed !== "boolean" ||
       typeof g.assisted !== "boolean"
     )

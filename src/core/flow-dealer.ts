@@ -33,19 +33,28 @@ export function flowDeal(
     rng = r.state;
     return r.value;
   };
-  const support = assistance(rhythm);
+  const cycleMoves = rhythm?.cycleMoves ?? moves;
+  const support = rhythm?.encoreDeals
+    ? 1
+    : rhythm?.recoveryDeals
+      ? assistance(rhythm)
+      : Math.min(assistance(rhythm), cycleMoves < 9 ? 0.25 : 1);
+  const history = rhythm?.recentBags ?? [];
+  const blocked = new Set(
+    history.filter((bag) => history.filter((x) => x === bag).length >= 2),
+  );
   const generous = next() < 0.25 + support * 0.65;
   const clearWeight = support * 6000;
   const lineWeight = 30 + support * 470;
   const occupiedAtDeal = board.filter(Boolean).length;
   const maxSize =
-    moves < 12 && occupiedAtDeal > 12
+    cycleMoves < 12 && !rhythm?.encoreDeals && occupiedAtDeal > 12
       ? 3
       : occupiedAtDeal > 24
         ? 4
         : support > 0.65 && occupiedAtDeal > 12
           ? 3
-          : moves < 12
+          : cycleMoves < 12 && !rhythm?.encoreDeals
             ? 6
             : 9;
   const order = options()
@@ -134,6 +143,16 @@ export function flowDeal(
               .map((p) => SHAPES[p.shape]!.family)
               .sort()
               .join(",") === previous;
+          if (
+            depth === 2 &&
+            blocked.has(
+              [...parent.path, op]
+                .map((p) => SHAPES[p.shape]!.family)
+                .sort()
+                .join(","),
+            )
+          )
+            continue;
           const value =
             clears * clearWeight +
             lines * lineWeight -

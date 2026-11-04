@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 public class HapticPatternTest {
   @Test public void finiteWaveformsWorkWithAndWithoutAmplitudeControl() {
-    for(String kind : new String[]{"place","clear","record","empty","bloom","rain","defeat","collect","ice","unlock","victory"}) {
+    for(String kind : new String[]{"double","triple","quad","cross","series","place","clear","record","empty","bloom","rain","defeat","collect","ice","unlock","victory"}) {
       for(int level = 1; level <= 8; level++) {
         HapticPattern p = HapticPattern.forEvent(kind, level);
         assertEquals(p.times.length, p.amplitudes.length);
@@ -18,6 +18,11 @@ public class HapticPatternTest {
     }
     assertTrue(HapticPattern.forEvent("empty",1).duration > HapticPattern.forEvent("clear",8).duration);
     assertEquals(12, HapticPattern.forEvent("empty",1).times.length);
+  }
+  @Test public void lineGeometriesHaveDifferentRhythms() {
+    assertFalse(java.util.Arrays.equals(HapticPattern.forEvent("double",8).times,HapticPattern.forEvent("triple",8).times));
+    assertFalse(java.util.Arrays.equals(HapticPattern.forEvent("triple",8).times,HapticPattern.forEvent("quad",8).times));
+    assertFalse(java.util.Arrays.equals(HapticPattern.forEvent("quad",8).times,HapticPattern.forEvent("cross",8).times));
   }
   @Test public void largeClearSurvivesMilestonesAndRepeatedCalls() {
     HapticPattern.Gate g = new HapticPattern.Gate();

@@ -146,7 +146,17 @@ export class BoardScene extends Phaser.Scene {
     for (const kind of VFX_KINDS)
       this.load.image(`vfx-${kind}`, `assets/vfx/${kind}.webp`);
   }
+  syncResolution() {
+    if (!this.cameras?.main) return;
+    const side = this.scale.width;
+    this.cameras.main
+      .setViewport(0, 0, side, side)
+      .setZoom(side / 512)
+      .centerOn(256, 256);
+    this.dirty = true;
+  }
   create() {
+    this.syncResolution();
     this.vfx = new VfxSprites(this);
     this.events.once("shutdown", () => this.vfx?.destroy());
     const textured = this.game.renderer.type === Phaser.WEBGL && !!TILE_STUDY;
@@ -535,6 +545,72 @@ export class BoardScene extends Phaser.Scene {
     const accent = this.currentColor(this.fromAccent, this.accent);
     for (const e of this.impacts) {
       const age = now - e.started;
+      if (!this.calm && e.lines >= 2 && age < 700) {
+        const cross = e.rows.length > 0 && e.columns.length > 0;
+        if (cross) {
+          const t = Math.min(1, age / 650);
+          // One focal intersection, not a burst for every crossed cell.
+          const cx = e.columns[0]! * 64 + 32,
+            cy = e.rows[0]! * 64 + 32;
+          fx.stamp(
+            "flash",
+            cx,
+            cy,
+            130 + t * 220,
+            130 + t * 220,
+            (1 - t) ** 2,
+            0xffffff,
+          );
+          fx.stamp(
+            "ring",
+            cx,
+            cy,
+            60 + t * 450,
+            60 + t * 450,
+            (1 - t) * 0.8,
+            accent,
+          );
+          for (const sign of [-1, 1]) {
+            fx.stamp(
+              "flash",
+              cx + sign * t * 420,
+              cy,
+              60 * (1 - t),
+              60 * (1 - t),
+              1 - t,
+            );
+            fx.stamp(
+              "flash",
+              cx,
+              cy + sign * t * 420,
+              60 * (1 - t),
+              60 * (1 - t),
+              1 - t,
+            );
+          }
+        } else if (e.lines >= 4) {
+          const t = age / 700;
+          g.lineStyle(12 * (1 - t) + 2, 0xffffff, (1 - t) * 0.9);
+          const inset = 6 + (1 - t) * 45;
+          g.strokeRoundedRect(
+            inset,
+            inset,
+            512 - 2 * inset,
+            512 - 2 * inset,
+            8,
+          );
+        } else {
+          const lanes = e.rows.length ? e.rows : e.columns;
+          for (let i = 0; i < lanes.length; i++) {
+            const t = (age - i * (e.lines === 3 ? 120 : 160)) / 280;
+            if (t < 0 || t > 1) continue;
+            const at = lanes[i]! * 64;
+            g.fillStyle(0xffffff, Math.sin(t * Math.PI) * 0.55);
+            if (e.rows.length) g.fillRect(0, at + 24, 512, 16);
+            else g.fillRect(at + 24, 0, 16, 512);
+          }
+        }
+      }
       // Celebrate the empty board after the last clear, never over a new move.
       if (
         e.allClear &&

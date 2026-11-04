@@ -32,6 +32,8 @@ export function scoreBreakdown(
 }
 
 import { flowDealV1 } from "./flow-dealer-v1";
+import { flowDealV3 } from "./flow-dealer-v3";
+import { initialRhythmV4, advanceRhythmV4 } from "./rhythm";
 import { flowDealV2 } from "./flow-dealer-v2";
 import { initialRhythm, advanceRhythm, type RhythmState } from "./rhythm";
 import { flowDeal } from "./flow-dealer";
@@ -69,7 +71,8 @@ export type DealerVersion =
   | "assist-v1"
   | "flow-v1"
   | "flow-v2"
-  | "flow-v3";
+  | "flow-v3"
+  | "flow-v4";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -84,6 +87,8 @@ export interface GameState {
   rngState: number;
   dealerVersion: DealerVersion;
   rhythm?: RhythmState;
+  seriesBonusVersion?: 1;
+  reviveOffer?: { deadline: number; accepted: boolean; expired: boolean };
   status: "playing" | "over";
   reviveUsed: boolean;
   assisted: boolean;
@@ -225,18 +230,30 @@ export function deal(
   fallback: boolean;
   witness: Move[] | null;
 } {
-  if (version === "flow-v1" || version === "flow-v2" || version === "flow-v3") {
+  if (
+    version === "flow-v1" ||
+    version === "flow-v2" ||
+    version === "flow-v3" ||
+    version === "flow-v4"
+  ) {
     const flow = (
       version === "flow-v1"
         ? flowDealV1
         : version === "flow-v2"
           ? flowDealV2
-          : flowDeal
+          : version === "flow-v3"
+            ? flowDealV3
+            : flowDeal
     )(board, rngState, moves, previous, rhythm);
     if (flow) return flow;
     // A bounded search miss must not turn assistance into an arbitrary weighted
     // tray. Three singles have a replayable route on any non-full board.
-    if ((version === "flow-v2" || version === "flow-v3") && board.includes(0)) {
+    if (
+      (version === "flow-v2" ||
+        version === "flow-v3" ||
+        version === "flow-v4") &&
+      board.includes(0)
+    ) {
       let b = board;
       const witness: Move[] = [];
       for (let slot = 0; slot < 3; slot++) {
@@ -369,7 +386,21 @@ export function newGame(
     moves: 0,
     rngState: d.rngState,
     dealerVersion,
-    ...(dealerVersion === "flow-v3" ? { rhythm: initialRhythm() } : {}),
+    ...(dealerVersion === "flow-v3"
+      ? { rhythm: initialRhythm() }
+      : dealerVersion === "flow-v4"
+        ? {
+            rhythm: {
+              ...initialRhythmV4(),
+              recentBags: [
+                d.tray
+                  .map((s) => shapeById(s.shapeId).family)
+                  .sort()
+                  .join(","),
+              ],
+            },
+          }
+        : {}),
     status: "playing",
     reviveUsed: false,
     assisted: false,
@@ -387,6 +418,8 @@ export function applyMove(
   points: number;
   allClear: boolean;
   breakdown: ReturnType<typeof scoreBreakdown>;
+  seriesBonus: number;
+  finishedStreak: number;
 } | null {
   const slot = state.tray[move.slot];
   if (
@@ -422,14 +455,22 @@ export function applyMove(
     rngState = state.rngState,
     dealerFallbacks = state.dealerFallbacks;
   let rhythm =
-    state.dealerVersion === "flow-v3"
-      ? advanceRhythm(
-          state.rhythm ?? initialRhythm(),
+    state.dealerVersion === "flow-v4"
+      ? advanceRhythmV4(
+          state.rhythm ?? initialRhythmV4(),
           placed.board,
           placed.lines,
           allClear,
+          random(state.rngState).value,
         )
-      : undefined;
+      : state.dealerVersion === "flow-v3"
+        ? advanceRhythm(
+            state.rhythm ?? initialRhythm(),
+            placed.board,
+            placed.lines,
+            allClear,
+          )
+        : undefined;
   if (tray.every((s) => s.used)) {
     const d = deal(
       placed.board,
@@ -447,11 +488,36 @@ export function applyMove(
         ...rhythm,
         recoveryDeals: Math.max(0, rhythm.recoveryDeals - 1),
       };
+    if (rhythm && state.dealerVersion === "flow-v4")
+      rhythm = {
+        ...rhythm,
+        encoreDeals: Math.max(0, (rhythm.encoreDeals ?? 0) - 1),
+        recentBags: [
+          ...(rhythm.recentBags ?? []),
+          d.tray
+            .map((s) => shapeById(s.shapeId).family)
+            .sort()
+            .join(","),
+        ].slice(-4),
+      };
     tray = d.tray;
     rngState = d.rngState;
     dealerFallbacks += Number(d.fallback);
   }
+  const status = hasMove(placed.board, tray) ? "playing" : "over";
+  const finishedStreak =
+    status === "over"
+      ? Math.max(streak, state.streak)
+      : state.streak > 0 && streak === 0
+        ? state.streak
+        : 0;
+  const seriesBonus =
+    state.seriesBonusVersion === 1 && finishedStreak >= 2
+      ? 100 * finishedStreak + 250 * Math.floor(finishedStreak / 5)
+      : 0;
   return {
+    seriesBonus,
+    finishedStreak,
     state: {
       ...state,
       revision: state.revision + 1,
@@ -460,15 +526,15 @@ export function applyMove(
       rngState,
       dealerFallbacks,
       ...(rhythm ? { rhythm } : {}),
-      score: state.score + points,
+      score: state.score + points + seriesBonus,
       streak,
       streakMisses: streak ? misses : 0,
       moves: state.moves + 1,
-      status: hasMove(placed.board, tray) ? "playing" : "over",
+      status,
     },
     cells: placed.cells,
     lines: placed.lines,
-    points,
+    points: points + seriesBonus,
     breakdown,
     allClear,
   };

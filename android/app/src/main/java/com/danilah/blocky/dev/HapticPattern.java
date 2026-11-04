@@ -14,8 +14,19 @@ public final class HapticPattern {
     for (long t : times) total += t;
     this.duration = total;
   }
+  private static HapticPattern develop(HapticPattern pattern, int level) {
+    double gain = 1 + Math.min(8, Math.max(0, level - 1)) * .045;
+    long[] times = pattern.times.clone();
+    for (int i = 1; i < times.length; i += 2) times[i] = Math.round(times[i] * gain);
+    return new HapticPattern(pattern.priority, times, pattern.amplitudes);
+  }
   public static HapticPattern forEvent(String kind, int level) {
     switch (kind) {
+      case "double": return develop(new HapticPattern(3, new long[]{0,55,90,90}, new int[]{0,220,0,255}), level);
+      case "triple": return develop(new HapticPattern(3, new long[]{0,45,75,60,75,105}, new int[]{0,210,0,235,0,255}), level);
+      case "quad": return develop(new HapticPattern(4, new long[]{0,55,55,65,55,75,55,160}, new int[]{0,215,0,230,0,245,0,255}), level);
+      case "cross": return develop(new HapticPattern(4, new long[]{0,95,45,35,45,35,65,140}, new int[]{0,255,0,220,0,220,0,255}), level);
+      case "series": return develop(new HapticPattern(3, new long[]{0,35,50,55,50,110}, new int[]{0,205,0,230,0,255}), level);
       case "collect": return new HapticPattern(2, new long[]{0,30,35,55}, new int[]{0,210,0,245});
       case "ice": return new HapticPattern(3, new long[]{0,35,25,35,45,95}, new int[]{0,235,0,235,0,255});
       case "unlock": return new HapticPattern(4, new long[]{0,55,65,100,50,145}, new int[]{0,200,0,245,0,255});

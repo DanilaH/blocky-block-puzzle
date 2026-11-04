@@ -1,3 +1,9 @@
+import {
+  startReviveOffer,
+  acceptReviveOffer,
+  expireReviveOffer,
+} from "./core/revive-offer";
+import { clearSignature } from "./game/clear-signature";
 import { discoverTheme } from "./core/wardrobe";
 import { ProductAnalytics, nativeAnalytics } from "./platform/analytics";
 import { TileMaterialDOM } from "./game/tile-material";
@@ -66,9 +72,10 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "flow-v3") => ({
+const fresh = (dealer: DealerVersion = "flow-v4") => ({
   ...newGame(seed(), crypto.randomUUID(), dealer),
   scoringVersion: "festival-v4" as const,
+  seriesBonusVersion: 1 as const,
 });
 async function start() {
   document.documentElement.dataset.presentation = "classic";
@@ -98,7 +105,9 @@ async function start() {
     revision: number,
   ): Promise<ReturnType<typeof applyMove>> {
     if (
-      !["flow-v1", "flow-v2", "flow-v3"].includes(state.dealerVersion) ||
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4"].includes(
+        state.dealerVersion,
+      ) ||
       state.tray.filter((s) => s.used).length !== 2
     )
       return applyMove(state, move, revision);
@@ -434,19 +443,36 @@ async function start() {
       root.inert = ads.busy;
       root.removeAttribute("aria-busy");
       syncRenderer();
+      if (!inLesson() && currentGame().status === "over" && !dialog.open)
+        void showResult();
     });
   };
+  const boardResolution = () =>
+    Math.min(
+      1024,
+      Math.max(
+        512,
+        Math.ceil(
+          (canvasBox.getBoundingClientRect().width *
+            Math.min(devicePixelRatio || 1, 3)) /
+            64,
+        ) * 64,
+      ),
+    );
+  const resolution = boardResolution();
   phaser = new Phaser.Game({
     type: Phaser.AUTO,
-    width: 512,
-    height: 512,
+    width: resolution,
+    height: resolution,
     parent: "board",
     transparent: true,
     scene,
     antialias: true,
+    // Edges are already rasterized in textures; avoid MSAA on every high-DPI pixel.
+    antialiasGL: false,
     banner: false,
     audio: { noAudio: true },
-    // CSS owns the fixed 512px canvas display size; input uses DOM coordinates.
+    // Logical board remains 512; backing pixels follow screen density (cap 1024).
     // ResizeObserver invalidates real size changes instead of polling layout.
     scale: {
       mode: Phaser.Scale.NONE,
@@ -455,7 +481,14 @@ async function start() {
     fps: { target: 60, limit: 60 },
   });
   const canvasResize = new ResizeObserver(() => {
-    if (phaser) phaser.scale.dirty = true;
+    if (phaser) {
+      const size = boardResolution();
+      if (phaser.scale.width !== size) {
+        phaser.scale.resize(size, size);
+        scene.syncResolution();
+      }
+      phaser.scale.dirty = true;
+    }
   });
   canvasResize.observe(canvasBox);
   const unsubscribeResize = () => {
@@ -894,6 +927,7 @@ async function start() {
       currentMove = null;
       rejectedDrags = 0;
       const event = outcome.result!;
+      const signature = clearSignature(event.cells);
       const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
       performanceCapture.markPlacement(
         event.lines,
@@ -909,19 +943,42 @@ async function start() {
       if (newRecord) recordCelebrated = true;
       const deferred =
         running && !scene.calm && event.lines
-          ? event.points - placedCells.length
+          ? event.points - placedCells.length - event.seriesBonus
           : 0;
       atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
       performanceCapture.measure("placementRender", () => render(running));
       if (running) {
-        if (
-          before.streak > 0 &&
-          event.state.streak === 0 &&
-          event.state.status !== "over"
-        ) {
-          presentHudNotice("series-end", `Серия ${before.streak} завершена`);
-          audio.play("seriesEnd");
+        if (event.finishedStreak > 0) {
+          if (event.seriesBonus) {
+            presentReward(
+              "series",
+              `СЕРИЯ ${event.finishedStreak} ЗАВЕРШЕНА!`,
+              event.seriesBonus,
+              { x: 50, y: 32 },
+              0,
+              event.finishedStreak,
+            );
+            haptics.pulse(
+              "series",
+              Math.min(8, Math.ceil(event.finishedStreak / 3)),
+            );
+            if (!scene.calm)
+              festival.burst(
+                canvasBox.getBoundingClientRect(),
+                placedCells,
+                2,
+                false,
+                true,
+                undefined,
+                48,
+              );
+          } else
+            presentHudNotice(
+              "series-end",
+              `Серия ${event.finishedStreak} завершена`,
+            );
+          audio.play("seriesEnd", event.finishedStreak, event.seriesBonus);
         }
         atmosphere.impulse(
           event.allClear
@@ -998,7 +1055,11 @@ async function start() {
           event.allClear,
         );
         haptics.pulse(
-          event.lines ? "clear" : "place",
+          event.lines
+            ? signature.kind === "single"
+              ? "clear"
+              : signature.kind
+            : "place",
           clearHapticLevel(event.lines, event.state.streak),
         );
         if (event.lines && !scene.calm) {
@@ -1030,13 +1091,17 @@ async function start() {
             ? "allClear"
             : newRecord
               ? "record"
-              : event.lines >= 3
-                ? "mega"
-                : event.lines > 1
-                  ? "combo"
-                  : event.lines
-                    ? "clear"
-                    : "place",
+              : signature.kind === "cross"
+                ? "cross"
+                : signature.kind === "quad"
+                  ? "quad"
+                  : event.lines >= 3
+                    ? "mega"
+                    : event.lines > 1
+                      ? "combo"
+                      : event.lines
+                        ? "clear"
+                        : "place",
           event.state.streak,
           event.points,
           scene.intensity,
@@ -1058,14 +1123,17 @@ async function start() {
             }
           : null;
         const lineName =
-          event.lines >= 4
-            ? `${event.lines} ЛИНИИ!`
-            : event.lines === 3
-              ? "ТРОЙНАЯ!"
-              : event.lines === 2
-                ? "ДВОЙНАЯ!"
-                : "ЛИНИЯ!";
-        if (!event.lines) presentReward("place", "", event.points, anchor);
+          signature.kind === "cross"
+            ? `ПЕРЕКРЕСТИЕ · ${event.lines}!`
+            : event.lines >= 4
+              ? `${event.lines} ЛИНИИ!`
+              : event.lines === 3
+                ? "ТРОЙНАЯ!"
+                : event.lines === 2
+                  ? "ДВОЙНАЯ!"
+                  : "ЛИНИЯ!";
+        if (!event.lines)
+          presentReward("place", "", event.points - event.seriesBonus, anchor);
         else {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
           presentReward(
@@ -1206,7 +1274,8 @@ async function start() {
     streak = 0,
     gameId = currentGame().gameId,
   ) {
-    const important = tier === "record" || tier === "all-clear";
+    const important =
+      tier === "record" || tier === "all-clear" || tier === "series";
     const node = document.createElement("span");
     node.className = "reward-event";
     node.dataset.tier = tier;
@@ -1880,10 +1949,29 @@ async function start() {
       `<h2 id="dialog-title">Второй шанс</h2><p>После просмотра очистится выделенный квадрат 3×3. Фигуры и очки сохранятся, серия сбросится. Один раз за партию.</p><div class="revive-map" role="img" aria-label="Очистится квадрат: столбцы ${plan.x + 1}–${plan.x + 3}, строки ${plan.y + 1}–${plan.y + 3}">${cells}</div><p id="reward-status" role="status">Проверяем доступность…</p><button class="primary" id="watch-reward" disabled>Посмотреть рекламу — продолжить</button><button class="secondary" id="finish-game">Закончить</button>`,
       "revive",
     );
-    el("finish-game").onclick = () => {
-      if (ads.busy) return;
-      dialog.close();
-      showResult();
+    el("finish-game").onclick = async () => {
+      if (ads.busy || store.busy) return;
+      try {
+        if (
+          !(await store.update((p) => ({
+            ...p,
+            revision: p.revision + 1,
+            game: {
+              ...p.game,
+              reviveOffer: {
+                deadline: p.game.reviveOffer?.deadline ?? Date.now(),
+                accepted: false,
+                expired: true,
+              },
+            },
+          })))
+        )
+          return;
+        dialog.close();
+        void showResult();
+      } catch (error) {
+        await writeFailure(error, "Не удалось сохранить. Попробуйте ещё раз.");
+      }
     };
     rewardButton("revive");
   }
@@ -1987,7 +2075,7 @@ async function start() {
       unlocked: [0],
       discoveries: 0,
     };
-    dialog.innerHTML = `<h2 id="dialog-title">Оформление</h2><p>Очистите всё поле, чтобы открыть следующее.</p><div class="theme-collection">${w.unlocked.map((i) => `<button class="secondary" data-theme="${i}" aria-pressed="${w.selected === i}" style="background:${THEMES[i]!.bg};color:${THEMES[i]!.ink}">${THEMES[i]!.name}${w.selected === i ? " ✓" : ""}</button>`).join("")}</div><button id="back-themes" class="primary">Назад</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Оформление</h2><p>Выберите любое оформление. Полная очистка поля по-прежнему меняет тему автоматически.</p><div class="theme-collection">${THEMES.map((_, i) => `<button class="secondary" data-theme="${i}" aria-pressed="${w.selected === i}" style="background:${THEMES[i]!.bg};color:${THEMES[i]!.ink}">${THEMES[i]!.name}${w.selected === i ? " ✓" : ""}</button>`).join("")}</div><button id="back-themes" class="primary">Назад</button>`;
     structureDialog();
     dialog.querySelectorAll<HTMLButtonElement>("[data-theme]").forEach(
       (button) =>
@@ -1999,6 +2087,12 @@ async function start() {
               wardrobe: {
                 ...(p.wardrobe ?? w),
                 selected: Number(button.dataset.theme),
+                unlocked: [
+                  ...new Set([
+                    ...(p.wardrobe ?? w).unlocked,
+                    Number(button.dataset.theme),
+                  ]),
+                ],
               },
             }));
             render();
@@ -2045,17 +2139,17 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v3">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v4">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el<HTMLSelectElement>("dealer-choice").value = "flow-v3";
+    el<HTMLSelectElement>("dealer-choice").value = "flow-v4";
     el("new-game").onclick = () =>
       void restart(
         el<HTMLSelectElement>("dealer-choice").value as DealerVersion,
       );
     el("keep-game").onclick = close;
   }
-  async function restart(dealer: DealerVersion = "flow-v3") {
+  async function restart(dealer: DealerVersion = "flow-v4") {
     if (ads.busy || store.busy || movePending) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";
@@ -2117,7 +2211,106 @@ async function start() {
       if (running && resultPending && !dialog.open) showResult();
     }, 750);
   }
-  function showResult() {
+  let reviveTimer = 0;
+  let openingResult = false;
+  async function showResult() {
+    if (dialog.open || openingResult) return;
+    openingResult = true;
+    try {
+      const game = store.state.game;
+      if (revivePlan(game) && !game.reviveOffer) {
+        await store.update((p) =>
+          p.game.gameId !== game.gameId
+            ? p
+            : {
+                ...p,
+                revision: p.revision + 1,
+                game: startReviveOffer(p.game, Date.now()),
+              },
+        );
+      }
+      const expired = expireReviveOffer(store.state.game, Date.now());
+      if (expired !== store.state.game)
+        await store.update((p) => ({
+          ...p,
+          revision: p.revision + 1,
+          game: expireReviveOffer(p.game, Date.now()),
+        }));
+      renderResult();
+      clearInterval(reviveTimer);
+      const gameId = store.state.game.gameId;
+      const tick = async () => {
+        const g = store.state.game,
+          offer = g.reviveOffer;
+        if (
+          g.gameId !== gameId ||
+          !offer ||
+          offer.accepted ||
+          offer.expired ||
+          g.status !== "over"
+        ) {
+          clearInterval(reviveTimer);
+          return;
+        }
+        const remaining = Math.max(0, offer.deadline - Date.now());
+        const button = dialog.querySelector<HTMLButtonElement>("#revive-offer");
+        if (button) {
+          button.textContent = `Второй шанс за рекламу · ${Math.ceil(remaining / 1000)} с`;
+          button.style.setProperty("--remaining", `${remaining / 50}%`);
+          button.disabled = remaining <= 0 || store.busy;
+        }
+        if (!remaining && !store.busy) {
+          try {
+            await store.update((p) => ({
+              ...p,
+              revision: p.revision + 1,
+              game: expireReviveOffer(p.game, Date.now()),
+            }));
+            if (modal === "result" && dialog.open) {
+              dialog.close();
+              renderResult();
+            }
+          } catch {
+            /* Retry durable expiration; the deadline still forbids accepting. */
+          }
+        }
+      };
+      reviveTimer = window.setInterval(() => void tick(), 100);
+      void tick();
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить предложение второго шанса. Попробуйте ещё раз.",
+      );
+    } finally {
+      openingResult = false;
+    }
+  }
+  async function acceptRevive() {
+    if (store.busy) return;
+    const now = Date.now();
+    try {
+      const changed = await store.update((p) => ({
+        ...p,
+        revision: p.revision + 1,
+        game: acceptReviveOffer(p.game, now),
+      }));
+      if (!changed) return;
+      if (store.state.game.reviveOffer?.accepted) {
+        clearInterval(reviveTimer);
+        showRevive();
+      } else {
+        dialog.close();
+        void showResult();
+      }
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить выбор. Попробуйте ещё раз.",
+      );
+    }
+  }
+  function renderResult() {
     clearTimeout(resultTimer);
     resultPending = false;
     if (dialog.open) return;
@@ -2149,7 +2342,7 @@ async function start() {
     el("again").onclick = () => void restart();
     dialog
       .querySelector<HTMLButtonElement>("#revive-offer")
-      ?.addEventListener("click", showRevive);
+      ?.addEventListener("click", () => void acceptRevive());
     wireSavedRevive();
     ads.preload();
     el("look-board").onclick = close;
@@ -2228,7 +2421,8 @@ async function start() {
     };
     document.body.append(select);
   }
-  if (!inLesson() && initial.game.status === "over") showResult();
+  if (!inLesson() && initial.game.status === "over" && rendererReady)
+    void showResult();
   window.addEventListener("pageshow", () =>
     activity.setBlocked("pagehide", false),
   );
@@ -2241,6 +2435,7 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
+      clearInterval(reviveTimer);
       analytics.dispose();
       void ads.dispose();
       bannerWatch?.dispose();
