@@ -50,11 +50,18 @@ try {
    const deathMoves=g.moves,original=g;let recovery=null;
    if(g.status==='over'){
     const plan=M.revivePlan(g);
-    if(plan){g=plan.game;let recoveredClears=0;const dealSupport=[];
+    if(plan){
+     let control=null;
+     if(process.env.SIM_PAIRED_RECOVERY && policy==='flow-v3'){
+      let c={...structuredClone(plan.game),rhythm:structuredClone(original.rhythm)},crng=rng,cc=0;
+      while(c.status==='playing' && c.moves<deathMoves+24){const r=R.random(crng);crng=r.state;const v=R.applyMove(c,pick(c,strategy,r.value),c.revision);cc+=Number(v.allClear);c=v.state;}
+      control={moves:c.moves-deathMoves,dead:c.status==='over',clears:cc};
+     }
+     g=plan.game;let recoveredClears=0;const dealSupport=[];
      while(g.status==='playing'&&g.moves<deathMoves+24){
       const r=R.random(rng);rng=r.state;const v=R.applyMove(g,pick(g,strategy,r.value),g.revision);if(g.tray.filter(s=>!s.used).length===1)dealSupport.push(g.rhythm?.recoveryDeals ?? 0);recoveredClears+=Number(v.allClear);g=v.state;
      }
-     recovery={moves:g.moves-deathMoves,dead:g.status==='over',clears:recoveredClears,dealSupport};
+     recovery={moves:g.moves-deathMoves,dead:g.status==='over',clears:recoveredClears,dealSupport,...(control?{control}:{})};
     }
    }
    // Main balance endpoints precede the optional recovery experiment.

@@ -27,6 +27,15 @@ try {
     );
     await route.fulfill({ response, body });
   });
+  if(process.env.CAPTURE_REVIVE) await page.route("**/src/platform/ads.ts", async route=>{
+    const response=await route.fetch(),body=await response.text();
+    const patched=body.replace(/export function nativeAds\(\) \{[\s\S]*?\n\}/, `export function nativeAds(){return {
+      initialize:async()=>({enabled:true}),status:async()=>({rewarded:true,interstitial:false}),pending:async()=>({rewards:[]}),preload:async()=>{},acknowledge:async()=>{},addListener:async()=>({remove:async()=>{}}),
+      geometry:async()=>({epoch:0,geometry:{webView:{x:0,y:0,width:innerWidth,height:innerHeight},root:{width:innerWidth,height:innerHeight},adHeight:52}}),banner:async()=>{},
+      show:async p=>{const label=document.createElement('div');label.textContent='Тестовое подтверждение награды';label.style.cssText='position:fixed;inset:0;display:grid;place-items:center;background:#102534;color:white;z-index:9999';document.body.append(label);await new Promise(r=>setTimeout(r,1000));label.remove();return {status:'closed',shown:true,rewards:[{id:'demo-'+p.intentId,intentId:p.intentId}]};}
+    };}`);
+    if(patched===body)throw Error('mock bridge not installed');await route.fulfill({response,body:patched});
+  });
   await page.addInitScript(() => {
     const Base = window.AudioContext;
     window.AudioContext = class extends Base {
@@ -110,7 +119,14 @@ try {
         if(score>best){best=score;choice={...m,width:shape.width,height:shape.height,revision:g.revision,allClear:r.board.every(c=>!c),lines:r.lines};}
       }return choice;
     });
-    if(!move)break;
+    if(!move){
+      await page.waitForTimeout(2000);
+      if(process.env.CAPTURE_REVIVE && await page.locator('#revive-offer').count()){
+        await page.waitForTimeout(1200);await page.locator('#revive-offer').click();await page.waitForTimeout(700);await page.locator('#watch-reward').click();await page.waitForFunction(()=>window.demo.store.state.game.status==='playing');
+        events.push({kind:'revive',mockReward:true,t:(await page.evaluate(()=>Date.now()/1000))-start});continue;
+      }
+      break;
+    }
     const box=await page.locator('#board').boundingBox(),piece=await page.locator(`[data-slot="${move.slot}"]`).boundingBox();
     const from={x:piece.x+piece.width/2,y:piece.y+piece.height/2};
     const to={x:box.x+(move.x+move.width/2)*box.width/8,y:box.y+(move.y+move.height+1.2)*box.width/8};
@@ -123,7 +139,7 @@ try {
     await page.waitForTimeout(150);
     await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
     await page.waitForFunction(rev=>window.demo.store.state.game.revision>rev,move.revision);
-    events.push({...move,t:(await page.evaluate(()=>Date.now()/1000))-start,theme:await page.evaluate(()=>window.demo.store.state.wardrobe?.selected??0)});
+    events.push({...move,t:(await page.evaluate(()=>Date.now()/1000))-start,theme:await page.evaluate(()=>window.demo.store.state.wardrobe?.selected??0),rhythm:await page.evaluate(()=>window.demo.store.state.game.rhythm),occupied:await page.evaluate(()=>window.demo.store.state.game.board.filter(Boolean).length)});
     await page.waitForTimeout(move.allClear?1000:400);
     if(move.allClear)await page.screenshot({path:dir+`/clear-${turn}.png`});
     await page.waitForTimeout(move.allClear?800:150);
