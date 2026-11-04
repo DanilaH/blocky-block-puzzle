@@ -113,8 +113,11 @@ test("result shows remaining shapes and field review preserves their visibility"
     await a.write(q);
   });
   await page.reload();
+  await page.locator("#finish-game").click();
   await expect(page.locator(".result-piece")).toHaveCount(2);
-  await expect(page.locator(".result-piece .mini-cell.tile-plastic")).toHaveCount(10);
+  await expect(
+    page.locator(".result-piece .mini-cell.tile-plastic"),
+  ).toHaveCount(10);
   await page.locator("#look-board").click();
   expect(
     await page

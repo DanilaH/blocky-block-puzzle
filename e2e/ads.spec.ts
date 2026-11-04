@@ -61,6 +61,7 @@ async function fixture(page: Page, end = false) {
   }, end);
   await page.reload();
   await page.locator("#board canvas").waitFor();
+  if (end) await expect(page.locator("#watch-reward")).toBeVisible();
 }
 async function saved(page: Page) {
   return page.evaluate(async () => {
@@ -115,7 +116,6 @@ test("revive previews exact area; keeps tray and score; no interstitial on accep
   await mock(page);
   await fixture(page, true);
   const before = await saved(page);
-  await page.locator("#revive-offer").click();
   await expect(page.locator(".revive-zone")).toHaveCount(9);
   await page.locator("#watch-reward").click();
   await expect(page.locator("dialog")).not.toBeVisible();
@@ -143,6 +143,7 @@ test("interstitial only on eligible final replay, once, then new game", async ({
     await a.write(p);
   });
   await page.reload();
+  await page.locator("#finish-game").click();
   await expect(page.locator("#again")).toBeVisible();
   expect(await page.evaluate(() => window.adCalls)).toEqual([]);
   await page.locator("#again").click();
@@ -175,7 +176,6 @@ for (const [width, height] of [
     await page.setViewportSize({ width, height });
     await mock(page);
     await fixture(page, true);
-    await page.locator("#revive-offer").click();
     await expect(page.locator(".revive-zone")).toHaveCount(9);
     await page.locator("#finish-game").scrollIntoViewIfNeeded();
     const b = (await page.locator("#finish-game").boundingBox())!;

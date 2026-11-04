@@ -1849,6 +1849,10 @@ async function start() {
   function back() {
     if (ads.busy) return;
     if (dialog.open) {
+      if (modal === "revive") {
+        void declineRevive();
+        return;
+      }
       if (modal === "rules" || modal === "restart") {
         dialog.close();
         showPause();
@@ -1895,6 +1899,8 @@ async function start() {
     const button = dialog.querySelector<HTMLButtonElement>("#watch-reward");
     const status = dialog.querySelector<HTMLElement>("#reward-status");
     if (!button || !status) return;
+    // The initial choice is available even while the SDK is still loading.
+    if (modal === "revive" && !store.state.game.reviveOffer?.accepted) return;
     const ready = await ads.ready();
     if (!button.isConnected) return;
     button.disabled = !ready;
@@ -1905,28 +1911,27 @@ async function start() {
     ads.preload();
   }
   function rewardButton(kind: "hints" | "revive") {
-    el("watch-reward").onclick = async () => {
-      if (ads.busy) return;
-      const result = await ads.rewarded(kind);
-      if (result === "rewarded") {
-        resultPending = false;
-        clearTimeout(resultTimer);
-        close();
-        render();
-        toast(
-          kind === "hints" ? "Добавлены 3 подсказки" : "Второй шанс получен",
-        );
-      } else {
-        const status = dialog.querySelector<HTMLElement>("#reward-status");
-        if (status)
-          status.textContent =
-            result === "closed"
-              ? "Просмотр не подтверждён. Награда не начислена."
-              : "Реклама недоступна или показ прерван. Игра сохранена.";
-        void offerAvailability();
-      }
-    };
+    el("watch-reward").onclick = () => void performReward(kind);
     void offerAvailability();
+  }
+  async function performReward(kind: "hints" | "revive") {
+    if (ads.busy) return;
+    const result = await ads.rewarded(kind);
+    if (result === "rewarded") {
+      resultPending = false;
+      clearTimeout(resultTimer);
+      close();
+      render();
+      toast(kind === "hints" ? "Добавлены 3 подсказки" : "Второй шанс получен");
+    } else {
+      const status = dialog.querySelector<HTMLElement>("#reward-status");
+      if (status)
+        status.textContent =
+          result === "closed"
+            ? "Просмотр не подтверждён. Награда не начислена."
+            : "Реклама недоступна или показ прерван. Игра сохранена.";
+      void offerAvailability();
+    }
   }
   function showRewardHints() {
     open(
@@ -1936,9 +1941,40 @@ async function start() {
     el("reward-back").onclick = close;
     rewardButton("hints");
   }
+  async function declineRevive() {
+    if (ads.busy || store.busy) return;
+    try {
+      if (
+        !(await store.update((p) => ({
+          ...p,
+          revision: p.revision + 1,
+          game: {
+            ...p.game,
+            reviveOffer: {
+              deadline: p.game.reviveOffer?.deadline ?? Date.now(),
+              accepted: false,
+              expired: true,
+            },
+          },
+        })))
+      )
+        return;
+      clearInterval(reviveTimer);
+      dialog.close();
+      renderResult();
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить отказ. Попробуйте ещё раз.",
+      );
+    }
+  }
   function showRevive() {
     const plan = revivePlan(store.state.game);
     if (!plan) return;
+    clearTimeout(resultTimer);
+    resultPending = false;
+    const accepted = !!store.state.game.reviveOffer?.accepted;
     const cells = store.state.game.board
       .map(
         (c, i) =>
@@ -1946,34 +1982,18 @@ async function start() {
       )
       .join("");
     open(
-      `<h2 id="dialog-title">Второй шанс</h2><p>После просмотра очистится выделенный квадрат 3×3. Фигуры и очки сохранятся, серия сбросится. Один раз за партию.</p><div class="revive-map" role="img" aria-label="Очистится квадрат: столбцы ${plan.x + 1}–${plan.x + 3}, строки ${plan.y + 1}–${plan.y + 3}">${cells}</div><p id="reward-status" role="status">Проверяем доступность…</p><button class="primary" id="watch-reward" disabled>Посмотреть рекламу — продолжить</button><button class="secondary" id="finish-game">Закончить</button>`,
+      `<h2 id="dialog-title">Ещё один шанс?</h2>
+      <div id="revive-clock" class="revive-clock" ${accepted ? "hidden" : ""} role="timer" aria-label="Время на решение"><strong id="revive-countdown">5</strong><span>секунд</span></div>
+      <p class="revive-copy">Очистим выделенный квадрат 3×3.<br>Очки и фигуры останутся.</p>
+      <div class="revive-map" role="img" aria-label="Очистится квадрат: столбцы ${plan.x + 1}–${plan.x + 3}, строки ${plan.y + 1}–${plan.y + 3}">${cells}</div>
+      <p id="reward-status" role="status">${accepted ? "Выбор сохранён. Можно повторить показ рекламы." : "Один раз за партию"}</p>
+      <button class="primary" id="watch-reward">Продолжить за рекламу</button>
+      <button class="secondary" id="finish-game">Нет, закончить</button>`,
       "revive",
     );
-    el("finish-game").onclick = async () => {
-      if (ads.busy || store.busy) return;
-      try {
-        if (
-          !(await store.update((p) => ({
-            ...p,
-            revision: p.revision + 1,
-            game: {
-              ...p.game,
-              reviveOffer: {
-                deadline: p.game.reviveOffer?.deadline ?? Date.now(),
-                accepted: false,
-                expired: true,
-              },
-            },
-          })))
-        )
-          return;
-        dialog.close();
-        void showResult();
-      } catch (error) {
-        await writeFailure(error, "Не удалось сохранить. Попробуйте ещё раз.");
-      }
-    };
-    rewardButton("revive");
+    el("finish-game").onclick = () => void declineRevive();
+    el("watch-reward").onclick = () => void acceptRevive();
+    ads.preload();
   }
   function showPause() {
     if (dialog.open) return;
@@ -2229,6 +2249,11 @@ async function start() {
               },
         );
       }
+      if (revivePlan(store.state.game) && !store.state.game.reviveOffer) {
+        resultPending = true;
+        resultTimer = window.setTimeout(() => void showResult(), 100);
+        return;
+      }
       const expired = expireReviveOffer(store.state.game, Date.now());
       if (expired !== store.state.game)
         await store.update((p) => ({
@@ -2236,7 +2261,8 @@ async function start() {
           revision: p.revision + 1,
           game: expireReviveOffer(p.game, Date.now()),
         }));
-      renderResult();
+      if (revivePlan(store.state.game)) showRevive();
+      else renderResult();
       clearInterval(reviveTimer);
       const gameId = store.state.game.gameId;
       const tick = async () => {
@@ -2253,10 +2279,17 @@ async function start() {
           return;
         }
         const remaining = Math.max(0, offer.deadline - Date.now());
-        const button = dialog.querySelector<HTMLButtonElement>("#revive-offer");
+        const button = dialog.querySelector<HTMLButtonElement>("#watch-reward");
         if (button) {
-          button.textContent = `Второй шанс за рекламу · ${Math.ceil(remaining / 1000)} с`;
-          button.style.setProperty("--remaining", `${remaining / 50}%`);
+          const clock = dialog.querySelector<HTMLElement>("#revive-clock");
+          const count = dialog.querySelector<HTMLElement>("#revive-countdown");
+          if (clock)
+            clock.style.setProperty("--remaining", `${remaining / 50}%`);
+          if (
+            count &&
+            count.textContent !== String(Math.ceil(remaining / 1000))
+          )
+            count.textContent = String(Math.ceil(remaining / 1000));
           button.disabled = remaining <= 0 || store.busy;
         }
         if (!remaining && !store.busy) {
@@ -2266,7 +2299,11 @@ async function start() {
               revision: p.revision + 1,
               game: expireReviveOffer(p.game, Date.now()),
             }));
-            if (modal === "result" && dialog.open) {
+            if (
+              modal === "revive" &&
+              dialog.open &&
+              store.state.game.reviveOffer?.expired
+            ) {
               dialog.close();
               renderResult();
             }
@@ -2287,7 +2324,7 @@ async function start() {
     }
   }
   async function acceptRevive() {
-    if (store.busy) return;
+    if (store.busy || ads.busy) return;
     const now = Date.now();
     try {
       const changed = await store.update((p) => ({
@@ -2298,7 +2335,10 @@ async function start() {
       if (!changed) return;
       if (store.state.game.reviveOffer?.accepted) {
         clearInterval(reviveTimer);
-        showRevive();
+        el("revive-clock").hidden = true;
+        el("reward-status").textContent = "Подготавливаем рекламу…";
+        el<HTMLButtonElement>("watch-reward").disabled = true;
+        await performReward("revive");
       } else {
         dialog.close();
         void showResult();
@@ -2325,7 +2365,7 @@ async function start() {
       )
       .join("");
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${bestFor(store.state).toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div>${revivePlan(store.state.game) ? `<button class="secondary" id="revive-offer">Второй шанс за рекламу</button>` : ""}<button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>${savedReviveButton()}`,
+      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${bestFor(store.state).toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
       "result",
     );
     tileMaterials.sync(dialog);
@@ -2340,10 +2380,6 @@ async function start() {
         220,
       );
     el("again").onclick = () => void restart();
-    dialog
-      .querySelector<HTMLButtonElement>("#revive-offer")
-      ?.addEventListener("click", () => void acceptRevive());
-    wireSavedRevive();
     ads.preload();
     el("look-board").onclick = close;
   }

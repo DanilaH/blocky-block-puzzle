@@ -2386,5 +2386,62 @@ body {
   overflow: visible;
 }
 
-#revive-offer { background: linear-gradient(90deg, #65bbd63b var(--remaining, 100%), transparent var(--remaining, 100%)); }
-.reward-event[data-tier="series"] { color: #fff1ad; }
+.reward-event[data-tier="series"] {
+  color: #fff1ad;
+}
+
+/* A decision before the final result, with a readable clock and one ad action. */
+#dialog[data-kind="revive"] {
+  max-width: 360px;
+  text-align: center;
+}
+.revive-clock {
+  --remaining: 100%;
+  width: 104px;
+  height: 104px;
+  margin: 8px auto 12px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle, var(--panel, #f8f7f0) 62%, transparent 64%),
+    conic-gradient(#e6a340 var(--remaining), #24364a20 0);
+}
+.revive-clock[hidden] {
+  display: none;
+}
+.revive-clock strong {
+  font-size: 48px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.revive-clock span {
+  font-size: 12px;
+  opacity: 0.75;
+}
+#dialog[data-kind="revive"] .revive-map {
+  width: 112px;
+  margin: 8px auto;
+}
+#dialog[data-kind="revive"] .revive-copy {
+  margin: 8px 0;
+}
+#dialog[data-kind="revive"] #reward-status {
+  min-height: 1.3em;
+  font-size: 12px;
+}
+@media (max-height: 500px) {
+  #dialog[data-kind="revive"] .revive-map {
+    display: none;
+  }
+  #dialog[data-kind="revive"] .revive-clock {
+    width: 72px;
+    height: 72px;
+    margin: 4px auto;
+  }
+  #dialog[data-kind="revive"] .revive-clock strong {
+    font-size: 34px;
+  }
+}
