@@ -78,14 +78,12 @@ test("final clear completes before result; Escape returns to final board; reload
   await expect(page.locator("dialog")).not.toBeVisible();
   await expect(page.locator(".best")).toContainText("Новый рекорд");
   await expect(page.locator("#again")).toBeVisible({ timeout: 12000 });
-  await expect(page.locator(".result-heading")).toHaveText("Лучший результат");
+  await expect(page.locator(".result-heading")).toHaveText("Новый рекорд!");
   await page.keyboard.press("Escape");
-  await expect(page.locator("dialog")).not.toBeVisible();
-  await expect(page.locator("#play-again")).toBeVisible();
+  await expect(page.locator("#again")).toBeVisible();
   await page.reload();
   await expect(page.locator("#again")).toBeVisible({ timeout: 12000 });
-  await page.locator("#look-board").click();
-  await expect(page.locator("dialog")).not.toBeVisible();
+  await expect(page.locator("#look-board")).toHaveCount(0);
 });
 test("interrupted ending resumes once; nested Back returns to pause", async ({
   page,

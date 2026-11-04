@@ -542,6 +542,15 @@ async function start() {
       : null;
   }
   const tileMaterials = new TileMaterialDOM();
+  const rewardEmblems = new Map<string, HTMLImageElement>();
+  for (const id of ["all-clear", "series"]) {
+    const img = new Image();
+    img.src = `/assets/rewards/${id}.webp`;
+    void img
+      .decode()
+      .then(() => rewardEmblems.set(id, img))
+      .catch(() => {});
+  }
   function mini(slot: number, cell: number) {
     const piece = currentGame().tray[slot]!,
       shape = shapeById(piece.shapeId);
@@ -570,14 +579,13 @@ async function start() {
     el("tray-progress").textContent =
       `${g.tray.filter((s) => !s.used).length} / 3`;
     const focused = (document.activeElement as HTMLElement)?.dataset?.slot;
-    const shapes = g.tray.map((s) => shapeById(s.shapeId));
     const cell = Math.max(
       7,
       Math.floor(
         Math.min(
-          38,
-          (trayWidth / 3 - 12) / Math.max(1, ...shapes.map((s) => s.width)),
-          (trayHeight - 8) / Math.max(1, ...shapes.map((s) => s.height)),
+          (canvasBox.getBoundingClientRect().width / 8) * 0.48,
+          (trayWidth / 3 - 12) / 5,
+          (trayHeight - 8) / 5,
         ),
       ),
     );
@@ -693,7 +701,7 @@ async function start() {
     el("streak").dataset.level = String(Math.min(4, g.streak));
     const comboTitle = g.streak
       ? g.scoringVersion
-        ? `СЕРИЯ ${g.streak} · ×${comboMultiplier(g.streak, g.scoringVersion === "festival-v4").toLocaleString("ru")}`
+        ? `СЕРИЯ ${g.streak}`
         : `СЕРИЯ ${g.streak}`
       : "";
     const stock =
@@ -706,10 +714,11 @@ async function start() {
     hud.classList.toggle("visible", !!g.streak && !inLesson());
     hud.classList.toggle("urgent", !!g.streak && stock === 0);
     el("combo-title").textContent = comboTitle;
+    hud.setAttribute("aria-label", `Серия ${g.streak}. ${stock} хода в запасе`);
     el("combo-stock").textContent = g.streak
       ? stock
-        ? `${"●".repeat(stock)}${"○".repeat(2 - stock)}  ${stock === 2 ? "2 хода в запасе" : "1 ход в запасе"}`
-        : "Очисти линию следующим ходом"
+        ? `${"●".repeat(stock)}${"○".repeat(2 - stock)}`
+        : "○○"
       : "";
     if (changedCombo && g.streak)
       animate(
@@ -1276,6 +1285,7 @@ async function start() {
   ) {
     const important =
       tier === "record" || tier === "all-clear" || tier === "series";
+    for (const old of rewards.keys()) old.classList.add("yield-to-drag");
     const node = document.createElement("span");
     node.className = "reward-event";
     node.dataset.tier = tier;
@@ -1298,6 +1308,17 @@ async function start() {
     const amount = document.createElement("span");
     amount.className = "reward-points";
     amount.textContent = points ? `+${deferred || points}` : "";
+    if (tier === "all-clear" || (tier === "series" && streak >= 10)) {
+      const source = rewardEmblems.get(
+        tier === "all-clear" ? "all-clear" : "series",
+      );
+      if (source) {
+        const img = source.cloneNode() as HTMLImageElement;
+        img.className = "reward-emblem";
+        img.alt = "";
+        node.append(img);
+      }
+    }
     node.append(label, amount);
     // Important all-clear owns the foreground, after the line has had time to read.
     if (tier === "all-clear")
@@ -1540,6 +1561,7 @@ async function start() {
       rect,
     };
     suspendPraise();
+    for (const node of rewards.keys()) node.classList.add("yield-to-drag");
     currentMove = locate(event, selected, drag.touch);
     animate(
       floating,
@@ -1849,6 +1871,7 @@ async function start() {
   function back() {
     if (ads.busy) return;
     if (dialog.open) {
+      if (modal === "result") return;
       if (modal === "revive") {
         void declineRevive();
         return;
@@ -1961,7 +1984,7 @@ async function start() {
         return;
       clearInterval(reviveTimer);
       dialog.close();
-      renderResult();
+      void finishResult();
     } catch (error) {
       await writeFailure(
         error,
@@ -1969,32 +1992,43 @@ async function start() {
       );
     }
   }
+  function positionRevive() {
+    if (modal !== "revive" || !dialog.open) return;
+    const r = canvasBox.getBoundingClientRect();
+    dialog.style.setProperty("--revive-x", `${r.left + r.width / 2}px`);
+    dialog.style.setProperty("--revive-y", `${r.top + r.height * 0.26}px`);
+    dialog.style.setProperty(
+      "--revive-size",
+      `${Math.min(170, r.width * 0.43)}px`,
+    );
+    dialog.style.setProperty(
+      "--revive-button-y",
+      `${r.top + r.height * 0.82}px`,
+    );
+  }
+  window.addEventListener("resize", () =>
+    requestAnimationFrame(positionRevive),
+  );
   function showRevive() {
     const plan = revivePlan(store.state.game);
     if (!plan) return;
     clearTimeout(resultTimer);
     resultPending = false;
     const accepted = !!store.state.game.reviveOffer?.accepted;
-    const cells = store.state.game.board
-      .map(
-        (c, i) =>
-          `<i class="${i % 8 >= plan.x && i % 8 < plan.x + 3 && Math.floor(i / 8) >= plan.y && Math.floor(i / 8) < plan.y + 3 ? "revive-zone" : ""}" style="--cell-color:${c ? `#${COLORS[c]!.toString(16).padStart(6, "0")}` : "#ded8cb"}"></i>`,
-      )
-      .join("");
     open(
-      `<h2 id="dialog-title">Ещё один шанс?</h2>
-      <div id="revive-clock" class="revive-clock" ${accepted ? "hidden" : ""} role="timer" aria-label="Время на решение"><strong id="revive-countdown">5</strong><span>секунд</span></div>
-      <p class="revive-copy">Очистим выделенный квадрат 3×3.<br>Очки и фигуры останутся.</p>
-      <div class="revive-map" role="img" aria-label="Очистится квадрат: столбцы ${plan.x + 1}–${plan.x + 3}, строки ${plan.y + 1}–${plan.y + 3}">${cells}</div>
-      <p id="reward-status" role="status">${accepted ? "Выбор сохранён. Можно повторить показ рекламы." : "Один раз за партию"}</p>
-      <button class="primary" id="watch-reward">Продолжить за рекламу</button>
-      <button class="secondary" id="finish-game">Нет, закончить</button>`,
+      `<h2 id="dialog-title" class="sr-only">Второй шанс</h2>
+      <div id="revive-clock" class="revive-clock" ${accepted ? "hidden" : ""} role="timer" aria-label="Время на решение"><svg class="clock-ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="clock-track" cx="60" cy="60" r="53"/><circle class="clock-progress" cx="60" cy="60" r="53" pathLength="100"/></svg><strong id="revive-countdown">5</strong></div>
+      <p id="reward-status" role="status">${accepted ? "Можно повторить показ рекламы" : ""}</p>
+      <button class="primary" id="watch-reward" aria-label="Посмотреть рекламу и продолжить"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M3 8h26v21H3zM4 2l24-2 1 5L5 7z"/><path fill="#239b19" d="m13 13 10 6-10 6z"/></svg>Продолжить</button>`,
       "revive",
     );
-    el("finish-game").onclick = () => void declineRevive();
+    positionRevive();
     el("watch-reward").onclick = () => void acceptRevive();
     ads.preload();
   }
+  let rememberedMusicVolume = Math.round(
+    (store.state.settings.musicVolume || 0.12) * 100,
+  );
   function showPause() {
     if (dialog.open) return;
     if (resultPending) {
@@ -2005,6 +2039,54 @@ async function start() {
       `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
+    const body = dialog.querySelector(".dialog-body")!;
+    const quick = document.createElement("div");
+    quick.className = "quick-settings";
+    for (const key of ["sound", "haptics"]) {
+      const label = el(key).closest("label")!;
+      label.classList.add("quick-setting");
+      quick.append(label);
+    }
+    const music = document.createElement("label");
+    music.className = "setting quick-setting";
+    music.innerHTML = `Музыка<input id="music-toggle" type="checkbox" ${(store.state.settings.musicVolume ?? 0) > 0 ? "checked" : ""}>`;
+    quick.insertBefore(music, quick.lastChild);
+    const quickIcons = {
+      sound:
+        '<path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+      "music-toggle":
+        '<path d="M9 17V5l11-2v12M9 8l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="16" rx="3" ry="2"/>',
+      haptics:
+        '<rect x="8" y="3" width="8" height="18" rx="2"/><path d="m4 7-2 3 2 4-2 3m18-10 2 3-2 4 2 3"/>',
+    };
+    for (const [id, paths] of Object.entries(quickIcons)) {
+      const input = quick.querySelector<HTMLInputElement>(`#${id}`)!,
+        label = input.closest("label")!;
+      label.replaceChildren();
+      label.insertAdjacentHTML(
+        "beforeend",
+        `<svg viewBox="0 0 24 24" aria-hidden="true">${paths}</svg><span>${id === "sound" ? "Звук" : id === "haptics" ? "Вибрация" : "Музыка"}</span>`,
+      );
+      label.append(input);
+    }
+    const details = document.createElement("details");
+    details.className = "advanced-settings";
+    details.innerHTML = "<summary>Ещё настройки</summary>";
+    for (const key of ["musicVolume", "effectsVolume", "calm"])
+      details.append(el(key).closest("label")!);
+    const diagnostics = dialog.querySelector<HTMLElement>(".diagnostics")!;
+    diagnostics.hidden = !import.meta.env.DEV;
+    details.append(diagnostics);
+    body.insertBefore(quick, el("save-status").nextSibling);
+    body.append(details);
+    el("music-toggle").onchange = () => {
+      const range = el<HTMLInputElement>("musicVolume");
+      if (Number(range.value) > 0) rememberedMusicVolume = Number(range.value);
+      range.value = el<HTMLInputElement>("music-toggle").checked
+        ? String(rememberedMusicVolume)
+        : "0";
+      range.dispatchEvent(new Event("change"));
+    };
     el("resume").onclick = close;
     el("menu-hint").textContent =
       `${el("hint-label").textContent} · ${el("hint-count").textContent}`;
@@ -2062,6 +2144,12 @@ async function start() {
         } catch (error) {
           await writeFailure(error, "Настройка не сохранена");
         } finally {
+          const musicToggle =
+            dialog.querySelector<HTMLInputElement>("#music-toggle");
+          if (musicToggle) {
+            musicToggle.disabled = false;
+            musicToggle.checked = (store.state.settings.musicVolume ?? 0) > 0;
+          }
           for (const setting of [
             "sound",
             "calm",
@@ -2262,7 +2350,7 @@ async function start() {
           game: expireReviveOffer(p.game, Date.now()),
         }));
       if (revivePlan(store.state.game)) showRevive();
-      else renderResult();
+      else void finishResult();
       clearInterval(reviveTimer);
       const gameId = store.state.game.gameId;
       const tick = async () => {
@@ -2284,7 +2372,7 @@ async function start() {
           const clock = dialog.querySelector<HTMLElement>("#revive-clock");
           const count = dialog.querySelector<HTMLElement>("#revive-countdown");
           if (clock)
-            clock.style.setProperty("--remaining", `${remaining / 50}%`);
+            clock.style.setProperty("--remaining", `${100 - remaining / 50}`);
           if (
             count &&
             count.textContent !== String(Math.ceil(remaining / 1000))
@@ -2305,7 +2393,7 @@ async function start() {
               store.state.game.reviveOffer?.expired
             ) {
               dialog.close();
-              renderResult();
+              void finishResult();
             }
           } catch {
             /* Retry durable expiration; the deadline still forbids accepting. */
@@ -2350,38 +2438,44 @@ async function start() {
       );
     }
   }
+  let finishingResult = false;
+  async function finishResult() {
+    if (finishingResult || store.state.game.status !== "over") return;
+    finishingResult = true;
+    try {
+      if (await ads.finishGame()) {
+        if (store.state.game.status === "over") renderResult();
+        else {
+          close();
+          render();
+        }
+      } else resultTimer = window.setTimeout(() => void finishResult(), 100);
+    } catch (error) {
+      await writeFailure(
+        error,
+        "Не удалось сохранить результат. Повторяем сохранение…",
+      );
+      resultTimer = window.setTimeout(() => void finishResult(), 1500);
+    } finally {
+      finishingResult = false;
+    }
+  }
   function renderResult() {
     clearTimeout(resultTimer);
     resultPending = false;
     if (dialog.open) return;
-    const bestFinish =
+    const record =
       store.state.game.score > 0 &&
       store.state.game.score >= bestFor(store.state);
-    const remaining = store.state.game.tray
-      .map((piece, slot) =>
-        piece.used
-          ? ""
-          : `<div class="result-piece" aria-label="Оставшаяся фигура ${slot + 1}">${mini(slot, 16)}</div>`,
-      )
-      .join("");
     open(
-      `<div class="result-heading">${bestFinish ? crown + "Лучший результат" : "Партия завершена"}</div><h2 id="dialog-title" class="result-score">${store.state.game.score.toLocaleString("ru")}</h2><div class="score-title">очков</div><div class="result-summary">Ходов: ${store.state.game.moves}${store.state.game.assisted ? " · С подсказкой" : ""}${store.state.game.reviveUsed ? " · После второго шанса" : ""}</div>${bestFinish ? "" : `<div class="result-best">${crown} Рекорд ${bestFor(store.state).toLocaleString("ru")}</div>`}<p>Для этих фигур нет места:</p><div class="result-pieces">${remaining}</div><button class="primary" id="again">Ещё раз</button><button class="secondary" id="look-board">Посмотреть поле</button>`,
+      `<h2 id="dialog-title" class="result-heading">${record ? "Новый рекорд!" : "Ещё одну?"}</h2>
+      <div class="result-total"><span>Счёт</span><strong class="result-score">${store.state.game.score.toLocaleString("ru")}</strong></div>
+      <div class="result-record"><span>Рекорд</span><strong>${bestFor(store.state).toLocaleString("ru")}</strong></div>
+      <button class="primary" id="again" aria-label="Новая партия"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M9 3a2 2 0 0 0-3 2v22a2 2 0 0 0 3 2l19-11a2 2 0 0 0 0-4z"/></svg></button>`,
       "result",
     );
-    tileMaterials.sync(dialog);
-    dialog.dataset.record = String(bestFinish);
-    if (bestFinish)
-      animate(
-        el("dialog-title"),
-        [
-          { transform: "scale(.9)", opacity: 0.4 },
-          { transform: "scale(1)", opacity: 1 },
-        ],
-        220,
-      );
     el("again").onclick = () => void restart();
     ads.preload();
-    el("look-board").onclick = close;
   }
   el("lesson-skip").onclick = async () => {
     if (store.busy) return;

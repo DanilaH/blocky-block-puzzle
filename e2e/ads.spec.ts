@@ -110,13 +110,13 @@ for (const outcome of ["closed", "unavailable"])
     await page.locator("#reward-back").click();
     await expect(page.locator("dialog")).not.toBeVisible();
   });
-test("revive previews exact area; keeps tray and score; no interstitial on accepting reward", async ({
+test("revive has one action; keeps tray and score; no interstitial on accepting reward", async ({
   page,
 }) => {
   await mock(page);
   await fixture(page, true);
   const before = await saved(page);
-  await expect(page.locator(".revive-zone")).toHaveCount(9);
+  await expect(page.locator("#dialog button")).toHaveCount(1);
   await page.locator("#watch-reward").click();
   await expect(page.locator("dialog")).not.toBeVisible();
   const after = await saved(page);
@@ -128,7 +128,7 @@ test("revive previews exact area; keeps tray and score; no interstitial on accep
     "rewarded",
   ]);
 });
-test("interstitial only on eligible final replay, once, then new game", async ({
+test("interstitial on final defeat once; replay does not show another ad", async ({
   page,
 }) => {
   await mock(page);
@@ -143,9 +143,12 @@ test("interstitial only on eligible final replay, once, then new game", async ({
     await a.write(p);
   });
   await page.reload();
-  await page.locator("#finish-game").click();
+  await expect(page.locator("#watch-reward")).toBeVisible();
+  await page.keyboard.press("Escape");
   await expect(page.locator("#again")).toBeVisible();
-  expect(await page.evaluate(() => window.adCalls)).toEqual([]);
+  expect(await page.evaluate(() => window.adCalls.map((c) => c.kind))).toEqual([
+    "interstitial",
+  ]);
   await page.locator("#again").click();
   await expect(page.locator("dialog")).not.toBeVisible();
   expect(await page.evaluate(() => window.adCalls.map((c) => c.kind))).toEqual([
@@ -176,9 +179,9 @@ for (const [width, height] of [
     await page.setViewportSize({ width, height });
     await mock(page);
     await fixture(page, true);
-    await expect(page.locator(".revive-zone")).toHaveCount(9);
-    await page.locator("#finish-game").scrollIntoViewIfNeeded();
-    const b = (await page.locator("#finish-game").boundingBox())!;
+    await expect(page.locator("#dialog button")).toHaveCount(1);
+    await page.locator("#watch-reward").scrollIntoViewIfNeeded();
+    const b = (await page.locator("#watch-reward").boundingBox())!;
     expect(b.y).toBeGreaterThanOrEqual(0);
     expect(b.y + b.height).toBeLessThanOrEqual(height);
     expect(
@@ -187,8 +190,8 @@ for (const [width, height] of [
     await page.screenshot({
       path: `docs/qa/ads-0.17/revive-${width}x${height}.png`,
     });
-    await page.locator("#finish-game").click();
-    await page.locator("#look-board").click();
+    await page.keyboard.press("Escape");
+    await page.locator("#again").click();
     const board = (await page.locator("#board").boundingBox())!,
       slot = (await page.locator("#ad-slot").boundingBox())!;
     expect(board.y + board.height).toBeLessThanOrEqual(slot.y);

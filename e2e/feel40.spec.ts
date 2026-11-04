@@ -52,8 +52,9 @@ test("accepted decision survives slow or unavailable ads; explicit finish is fin
   await page.waitForTimeout(5300);
   expect((await saved(page)).game.reviveOffer.accepted).toBe(true);
   await page.reload();
+  await expect(page.locator("#watch-reward")).toBeVisible();
   await expect(page.locator("#revive-clock")).toBeHidden();
-  await page.locator("#finish-game").click();
+  await page.keyboard.press("Escape");
   await expect(page.locator("#again")).toBeVisible();
   await expect(page.locator("#watch-reward")).toHaveCount(0);
   await page.reload();

@@ -19,6 +19,7 @@ test("settings serialize visible input and restore confirmed values after a fail
     };
   });
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.locator("#sound").uncheck();
   await expect(page.locator("#calm")).toBeDisabled();
   await expect(page.locator("#calm")).not.toBeChecked();
@@ -26,6 +27,7 @@ test("settings serialize visible input and restore confirmed values after a fail
   await expect(page.locator("#calm")).toBeEnabled();
   await page.reload();
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await expect(page.locator("#sound")).not.toBeChecked();
   await expect(page.locator("#calm")).toBeChecked();
   await page.evaluate(async () => {
@@ -60,6 +62,7 @@ test("renderer sleeps through pause and background, resumes after resize and con
     .poll(() => page.evaluate(() => !!(window as any).auditGame))
     .toBe(true);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.evaluate(() => {
     (window as any).frames = 0;
   });
@@ -116,6 +119,7 @@ test("compact controls keep 48px targets and rules explain points", async ({
     expect(h.y + h.height).toBeLessThanOrEqual(ad.y);
   }
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.locator("#rules").click();
   await expect(page.locator(".dialog-body")).toContainText("+1000");
   await expect(page.locator(".dialog-body")).toContainText("×1,5");

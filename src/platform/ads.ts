@@ -240,6 +240,57 @@ export class AdsController {
       this.changed();
     }
   }
+  async finishGame(): Promise<boolean> {
+    if (this.busy) return false;
+    this.busy = true;
+    this.block(true);
+    try {
+      await this.store.waitIdle();
+      const original = this.store.state.game;
+      if (original.status !== "over") return false;
+      if (this.store.state.ads?.completed.includes(original.gameId))
+        return true;
+      let eligible = false;
+      const saved = await this.store.update((current) => {
+        const next = finishAttempt(this.stamp(current)),
+          a = next.ads!;
+        eligible = this.enabled && !!this.bridge && canInterstitial(next);
+        return {
+          ...next,
+          revision: current.revision + 1,
+          ads: {
+            ...a,
+            ...(eligible
+              ? {
+                  lastFullscreenMs: a.activeMs,
+                  interstitials: [
+                    ...a.interstitials.filter((t) => a.activeMs - t < 3600000),
+                    a.activeMs,
+                  ],
+                }
+              : {}),
+          },
+        };
+      });
+      if (!saved) return false;
+      if (eligible) {
+        this.analytics?.track("ad_opportunity", {
+          format: "interstitial",
+          gameId: original.gameId,
+        });
+        try {
+          if ((await this.bridge!.status()).interstitial)
+            await this.bridge!.show({ kind: "interstitial" });
+        } catch {
+          /* The completed decision is durable; no retry on reload. */
+        }
+      }
+      return true;
+    } finally {
+      this.busy = false;
+      this.block(false);
+    }
+  }
   async betweenGames(nextGame: GameState): Promise<boolean> {
     if (this.busy) return false;
     this.busy = true;
@@ -247,11 +298,9 @@ export class AdsController {
     const original = this.store.state.game;
     try {
       await this.store.waitIdle();
-      let eligible = false;
       const changed = await this.store.update((current) => {
         const next = finishAttempt(this.stamp(current)),
           a = next.ads!;
-        eligible = this.enabled && !!this.bridge && canInterstitial(next);
         const intents = a.intents.map((i) =>
           original.status === "over" &&
           i.gameId === original.gameId &&
@@ -272,33 +321,10 @@ export class AdsController {
           ads: {
             ...a,
             intents,
-            ...(eligible
-              ? {
-                  lastFullscreenMs: a.activeMs,
-                  interstitials: [
-                    ...a.interstitials.filter((t) => a.activeMs - t < 3600000),
-                    a.activeMs,
-                  ],
-                }
-              : {}),
           },
         };
       });
       if (!changed) return false;
-      // The transition is durable before SDK: a late revive now belongs to its archived game.
-      // Reserve the opportunity before requesting SDK; a crash/no-fill cannot bypass caps.
-      if (eligible) {
-        this.analytics?.track("ad_opportunity", {
-          format: "interstitial",
-          gameId: original.gameId,
-        });
-        try {
-          if ((await this.bridge!.status()).interstitial)
-            await this.bridge!.show({ kind: "interstitial" });
-        } catch {
-          /* Continue the already-saved transition immediately. */
-        }
-      }
       return true;
     } finally {
       this.busy = false;

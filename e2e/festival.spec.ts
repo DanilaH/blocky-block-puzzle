@@ -78,8 +78,8 @@ for (const interrupt of [false, true])
         }),
       )
       .toBe(1901);
-    await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 4 · ×3");
-    await expect(page.locator("#combo-stock")).toContainText("2 хода");
+    await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 4");
+    await expect(page.locator("#combo-stock")).toHaveText("●●");
     if (interrupt) {
       await page.locator("#pause").click({ force: true });
       await page.clock.runFor(3000);

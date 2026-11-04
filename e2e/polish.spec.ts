@@ -177,13 +177,10 @@ test("recorded showcase: placement, return, clear hierarchy and calm mode", asyn
   }
   await fixture(page, "over");
   await expect(page.locator("#revive-clock")).toBeVisible();
-  await page.locator("#finish-game").click();
+  await page.keyboard.press("Escape");
   await expect(page.locator("#again")).toBeVisible();
   await page.screenshot({ path: "docs/qa/feel-0.8/polish-result.png" });
-  await page.locator("#look-board").click();
-  await expect(page.locator("#play-again")).toBeVisible();
-  await page.screenshot({ path: "docs/qa/feel-0.8/polish-result-board.png" });
-  await page.locator("#play-again").click();
+  await page.locator("#again").click();
   await expect(page.locator("#score")).toHaveText("0");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await fixture(page, "cross");

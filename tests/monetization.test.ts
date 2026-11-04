@@ -256,20 +256,16 @@ it("failed native acknowledgement retries without granting again", async () => {
   expect(h.store.state.earnedHints).toBe(3);
   expect(h.bridge.acknowledge).toHaveBeenCalledTimes(2);
 });
-it("late reward during interstitial cannot replace newly committed game", async () => {
+it("late reward after final replay cannot replace newly committed game", async () => {
   const h = harness();
   await h.controller.init();
   h.store.state = prepareReward(profile(), "old-revive", "revive");
   h.store.state.ads!.activeMs = 180001;
   h.store.state.ads!.lastFullscreenMs = 0;
   h.store.state.ads!.completed = ["earlier"];
-  vi.mocked(h.bridge.show).mockImplementationOnce(async () => {
-    expect(h.store.state.game.gameId).toBe("next");
-    h.receipts([{ id: "late", intentId: "old-revive" }]);
-    await h.controller.recover();
-    return { status: "closed", shown: true };
-  });
   expect(await h.controller.betweenGames(newGame(4, "next"))).toBe(true);
+  h.receipts([{ id: "late", intentId: "old-revive" }]);
+  await h.controller.recover();
   expect(h.store.state.game.gameId).toBe("next");
   expect(h.store.state.ads!.intents[0]!.status).toBe("available");
 });
@@ -362,4 +358,36 @@ it("reward analytics follows durable grant, never failed save or duplicate recei
     track.mock.calls.filter((c) => c[0] === "reward_applied"),
   ).toHaveLength(1);
   expect(h.store.state.earnedHints).toBe(3);
+});
+
+it("final defeat reserves one interstitial durably; reload and replay cannot repeat it", async () => {
+  const h = harness();
+  await h.controller.init();
+  h.store.state = profile();
+  h.store.state.ads = {
+    ...emptyAds(),
+    activeMs: 180001,
+    completed: ["previous"],
+  };
+  expect(await h.controller.finishGame()).toBe(true);
+  expect(h.bridge.show).toHaveBeenCalledTimes(1);
+  expect(h.store.state.game.status).toBe("over");
+  expect(h.store.state.ads!.completed).toContain(h.store.state.game.gameId);
+  await h.controller.finishGame();
+  await h.controller.betweenGames(newGame(4, "next"));
+  expect(h.bridge.show).toHaveBeenCalledTimes(1);
+});
+it("failed final result save never requests interstitial", async () => {
+  const h = harness();
+  await h.controller.init();
+  h.store.state = profile();
+  h.store.state.ads = {
+    ...emptyAds(),
+    activeMs: 180001,
+    completed: ["previous"],
+  };
+  h.fail(true);
+  await expect(h.controller.finishGame()).rejects.toThrow();
+  expect(h.bridge.show).not.toHaveBeenCalled();
+  expect(h.controller.busy).toBe(false);
 });

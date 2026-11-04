@@ -11,3 +11,6 @@
 Перед релизом отдельно собрать notices всех реально поставляемых зависимостей и окончательных ассетов. Этот список относится к preview.
 
 - Кампания 0.35: original generated Crystal Cove и четыре предмета, masters/промпты `assets-src/adventure/README.md`, runtime WebP `public/adventure/`, offline preload и encoded/RGBA checks.
+
+## 0.42: original reward emblems
+Две самостоятельные generated эмблемы — полная очистка и завершение серии 10+. [Мастера, происхождение и обработка](../assets-src/rewards/README.md). Runtime WebP: 45,394 bytes total, 722,304 decoded RGBA. Сохранены alpha/trim metadata; проверка входит в assets:check. Фоны, кнопки и кольцо остаются кодовыми, текст не запекается в картинки.

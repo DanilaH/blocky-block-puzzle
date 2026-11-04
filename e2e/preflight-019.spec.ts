@@ -68,7 +68,10 @@ for (const mode of ["background", "next-move"] as const) {
       await page.clock.runFor(2000);
       expect(
         await page.evaluate(
-          () => window.hapticCalls.filter((p) => ["empty", "bloom", "rain"].includes(p.kind)).length,
+          () =>
+            window.hapticCalls.filter((p) =>
+              ["empty", "bloom", "rain"].includes(p.kind),
+            ).length,
         ),
       ).toBe(0);
     } else {
@@ -78,7 +81,10 @@ for (const mode of ["background", "next-move"] as const) {
       expect((await saved(page)).game.board.filter(Boolean)).toHaveLength(1);
       expect(
         await page.evaluate(
-          () => window.hapticCalls.filter((p) => ["empty", "bloom", "rain"].includes(p.kind)).length,
+          () =>
+            window.hapticCalls.filter((p) =>
+              ["empty", "bloom", "rain"].includes(p.kind),
+            ).length,
         ),
       ).toBe(1);
     }
@@ -103,6 +109,8 @@ for (const setting of ["haptics", "calm"] as const) {
   }) => {
     await prepare(page);
     await page.locator("#pause").click();
+    if (setting === "calm")
+      await page.locator(".advanced-settings > summary").click();
     await page.locator(`#${setting}`).setChecked(setting === "calm");
     await expect
       .poll(async () => (await saved(page)).settings[setting])

@@ -38,19 +38,20 @@ test("full clear unlocks a durable theme; preparation and reload preserve it", a
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
-  await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 6 · ×5");
+  await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 6");
   await expect(page.locator('.hud-notice[data-tier="theme"]')).toContainText(
     "ФАРФОР",
   );
   await page.locator('[data-slot="1"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#combo-stock")).toContainText("1 ход");
+  await expect(page.locator("#combo-stock")).toHaveText("●○");
   await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   await page.reload();
   await page.locator("#board canvas").waitFor();
   await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   expect(errors).toEqual([]);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await expect(
     page.locator("label").filter({ has: page.locator("#calm") }),
   ).toContainText(/без вибрации/i);
@@ -144,7 +145,7 @@ test("background analysis praises an independently selected eligible move", asyn
   await expect(page.locator("#burst")).toContainText(/Отличн/);
 });
 
-test("result text stays readable on a light dialog inside a dark theme", async ({
+test("fullscreen result text stays readable across its blue gradient", async ({
   page,
 }) => {
   await page.goto("/");
@@ -185,16 +186,32 @@ test("result text stays readable on a light dialog inside a dark theme", async (
         });
       return v[0] * 0.2126 + v[1] * 0.7152 + v[2] * 0.0722;
     };
-    const bg = lum(
-      getComputedStyle(document.querySelector("dialog")!).backgroundColor,
-    );
-    return [".result-heading", ".result-score", ".score-title"].map((s) => {
+    const background = getComputedStyle(
+      document.querySelector("dialog")!,
+    ).backgroundImage;
+    const stops = background.match(/rgb\([^)]+\)/g)!.map(lum);
+    return [
+      ".result-heading",
+      ".result-score",
+      ".result-record strong",
+      ".result-total > span",
+      ".result-record > span",
+    ].map((selector) => {
       const fg = lum(
-        getComputedStyle(document.querySelector("dialog " + s)!).color,
+        getComputedStyle(document.querySelector("dialog " + selector)!).color,
       );
-      return (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05);
+      return {
+        selector,
+        ratio: Math.min(
+          ...stops.map(
+            (bg) => (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05),
+          ),
+        ),
+      };
     });
   });
-  contrast.forEach((c) => expect(c).toBeGreaterThanOrEqual(4.5));
+  contrast.forEach(({ selector, ratio }) =>
+    expect(ratio).toBeGreaterThanOrEqual(selector.includes("span") ? 4.5 : 3),
+  );
   await page.screenshot({ path: "docs/qa/evolution-0.20/result.png" });
 });

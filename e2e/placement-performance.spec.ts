@@ -137,10 +137,12 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
   await page.goto("/");
   await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.getByText("Диагностика", { exact: true }).click();
   await page.locator("#perf-start").click();
   await page.waitForTimeout(150);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   const snapshot = () =>
     page.evaluate(async () => {
       const { performanceCapture } = await import(

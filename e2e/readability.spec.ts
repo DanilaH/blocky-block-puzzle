@@ -11,7 +11,8 @@ for (const [width, height] of [
     await page.setViewportSize({ width, height });
     await page.goto("/");
     await page.locator("#board canvas").waitFor();
-    for (const longShape of ["I5-0", "I5-1"]) {
+    let previousCell: number | undefined;
+    for (const longShape of ["I5-0", "I5-1", "S1-0"]) {
       await page.evaluate(async (longShape) => {
         const { IndexedSave } = await import("/src/platform/save.ts");
         const a = new IndexedSave(),
@@ -45,7 +46,12 @@ for (const [width, height] of [
         }),
       );
       for (const g of geometry) {
-        expect(g.cell).toBeGreaterThanOrEqual(width === 568 ? 12 : 16);
+        const board = (await page.locator("#board").boundingBox())!;
+        expect(g.cell / (board.width / 8)).toBeGreaterThanOrEqual(0.32);
+        expect(g.cell / (board.width / 8)).toBeLessThanOrEqual(0.5);
+        if (previousCell !== undefined)
+          expect(g.cell).toBeCloseTo(previousCell, 1);
+        previousCell = g.cell;
         expect(g.bw).toBeGreaterThanOrEqual(48);
         expect(g.bh).toBeGreaterThanOrEqual(48);
         expect(g.inside).toBe(true);

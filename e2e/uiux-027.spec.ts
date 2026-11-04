@@ -40,8 +40,10 @@ test("compact pause exposes settings and diagnostics is optional", async ({
   await page.setViewportSize({ width: 320, height: 480 });
   await fixture(page);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   for (const id of ["sound", "haptics", "calm"]) {
     const input = page.locator("#" + id);
+    await input.scrollIntoViewIfNeeded();
     const box = await input.boundingBox();
     const body = await page.locator(".dialog-body").boundingBox();
     expect(box!.y).toBeGreaterThanOrEqual(body!.y);
@@ -80,6 +82,7 @@ test("compound reward preserves score, record and distinct destinations", async 
   expect(samples.every((s) => s.best === Math.max(500, s.score))).toBe(true);
   expect(await page.locator(".reward-event[data-tier=chain]").count()).toBe(0);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await expect(page.locator(".hud-notice")).toHaveCount(0);
 });
 test("tap selection is explicit and series closure permits the next move", async ({
@@ -98,6 +101,50 @@ test("tap selection is explicit and series closure permits the next move", async
   );
   await page.locator(".piece").nth(1).click();
   const board = (await page.locator("#board").boundingBox())!;
-  await page.locator("#board").click({ position: { x: board.width / 8 + 5, y: 5 } });
+  await page
+    .locator("#board")
+    .click({ position: { x: board.width / 8 + 5, y: 5 } });
   await expect(page.locator("#score")).toHaveText("422");
+});
+
+async function saved(page) {
+  return page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    return (await new IndexedSave().load()).profile;
+  });
+}
+test("minimal pause keeps quick toggles visible and restores music level", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 480 });
+  await fixture(page);
+  await page.locator("#pause").click();
+  for (const id of ["sound", "music-toggle", "haptics"]) {
+    await expect(page.locator(`#${id}`)).toBeInViewport();
+  }
+  const bounds = await page.locator(".pause-tools > *").evaluateAll((els) =>
+    els.map((e) => {
+      const r = e.getBoundingClientRect();
+      return r.left >= 0 && r.right <= innerWidth;
+    }),
+  );
+  expect(bounds.every(Boolean)).toBe(true);
+  await expect(page.locator("#musicVolume")).toBeHidden();
+  await expect(page.locator("#calm")).toBeHidden();
+  await page.locator(".advanced-settings > summary").click();
+  await page.locator("#musicVolume").evaluate((input: HTMLInputElement) => {
+    input.value = "25";
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+  await expect
+    .poll(async () => (await saved(page)).settings.musicVolume)
+    .toBe(0.25);
+  await page.locator("#music-toggle").uncheck();
+  await expect
+    .poll(async () => (await saved(page)).settings.musicVolume)
+    .toBe(0);
+  await page.locator("#music-toggle").check();
+  await expect
+    .poll(async () => (await saved(page)).settings.musicVolume)
+    .toBe(0.25);
 });

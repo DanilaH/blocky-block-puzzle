@@ -1,0 +1,42 @@
+{
+  "assets": {
+    "all-clear": {
+      "frame": {
+        "logicalWidth": 320,
+        "logicalHeight": 320,
+        "x": 11,
+        "y": 8,
+        "width": 298,
+        "height": 304
+      },
+      "bytes": 18848,
+      "avifComparisonBytes": 11544
+    },
+    "series": {
+      "frame": {
+        "logicalWidth": 320,
+        "logicalHeight": 320,
+        "x": 12,
+        "y": 8,
+        "width": 296,
+        "height": 304
+      },
+      "bytes": 26546,
+      "avifComparisonBytes": 14145
+    }
+  },
+  "budget": {
+    "count": 2,
+    "encodedBytes": 45394,
+    "pixels": 180576,
+    "estimatedRgbaBytes": 722304,
+    "categories": {
+      "session-required": {
+        "count": 2,
+        "encodedBytes": 45394,
+        "pixels": 180576,
+        "estimatedRgbaBytes": 722304
+      }
+    }
+  }
+}

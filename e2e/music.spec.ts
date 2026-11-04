@@ -16,6 +16,7 @@ test("music decodes once, loops, resumes from offset and stays stopped in pause"
   page,
 }) => {
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.locator("#musicVolume").fill("35");
   await page.locator("#musicVolume").dispatchEvent("change");
   await expect(page.locator("#musicVolume")).toBeEnabled();
@@ -50,6 +51,7 @@ test("music decodes once, loops, resumes from offset and stays stopped in pause"
   expect(info.seam).toBeLessThan(0.03);
   await page.waitForTimeout(300);
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await expect
     .poll(() => page.evaluate(() => window.testAudio.context.state))
     .toBe("suspended");
@@ -81,6 +83,7 @@ test("separate levels persist and music works with effects disabled", async ({
 }) => {
   await page.locator('[data-slot="0"]').click();
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await page.locator("#sound").uncheck();
   await expect(page.locator("#sound")).toBeEnabled();
   await page.locator("#musicVolume").fill("50");
@@ -98,12 +101,13 @@ test("separate levels persist and music works with effects disabled", async ({
   expect(await page.evaluate(() => window.testAudio.master.gain.value)).toBe(0);
   await page.reload();
   await page.locator("#pause").click();
+  await page.locator(".advanced-settings > summary").click();
   await expect(page.locator("#sound")).not.toBeChecked();
   await expect(page.locator("#musicVolume")).toHaveValue("50");
   await expect(page.locator("#effectsVolume")).toHaveValue("25");
   await page.setViewportSize({ width: 320, height: 568 });
   await expect(page.locator("#resume")).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(
-    320,
-  );
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+    .toBe(320);
 });

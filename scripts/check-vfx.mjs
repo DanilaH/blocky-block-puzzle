@@ -79,3 +79,25 @@ for(const name of themeNames){
 }
 assert(themeBytes<100000);
 console.log('Theme variants: alpha/gutters OK; bytes',themeBytes,'decoded',18*128*128*4);
+
+// Reward emblems: original masters stay offline; runtime uses bounded RGBA WebP.
+const rewards=JSON.parse(await fs.readFile('assets-src/rewards/manifest.json','utf8'));
+for(const [id,a] of Object.entries(rewards.assets)) {
+ const file=`public/assets/rewards/${id}.webp`,meta=await sharp(file).metadata();
+ assert.equal(meta.format,'webp');assert.equal(meta.hasAlpha,true);
+ assert(validateLogicalTrimFrame(a.frame));
+ assert.equal(meta.width,a.frame.width);assert.equal(meta.height,a.frame.height);
+ assert.equal((await fs.stat(file)).size,a.bytes);
+ const {data,info}=await sharp(file).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ let visible=0,transparent=0;
+ for(let y=0;y<info.height;y++)for(let x=0;x<info.width;x++) {
+  const alpha=data[(y*info.width+x)*4+3];
+  if(alpha>4)visible++;if(alpha===0)transparent++;
+  if(x===0||y===0||x===info.width-1||y===info.height-1)assert(alpha<=4,`${id}: clipped alpha edge`);
+ }
+ assert(visible>100);assert(transparent>info.width*info.height*.03);
+}
+const rewardBudget=await inspectRuntimeImageBudget(Object.keys(rewards.assets).map(id=>({id,file:`public/assets/rewards/${id}.webp`,category:'session-required'})));
+assert.deepEqual(rewardBudget,rewards.budget);
+assert(rewardBudget.encodedBytes<=80000);assert(rewardBudget.estimatedRgbaBytes<=820000);
+console.log('Reward alpha / trim / budgets OK:',rewardBudget);

@@ -91,7 +91,7 @@ test("blocked figures explain their state and three rejected drags reveal tap co
   await expect(page.locator("#toast")).toContainText("Можно без переноса");
   await expect(page.locator("#score")).toHaveText(before);
 });
-test("result shows remaining shapes and field review preserves their visibility", async ({
+test("final result has one restart action and no leftover board controls", async ({
   page,
 }) => {
   await page.goto("/");
@@ -113,16 +113,11 @@ test("result shows remaining shapes and field review preserves their visibility"
     await a.write(q);
   });
   await page.reload();
-  await page.locator("#finish-game").click();
-  await expect(page.locator(".result-piece")).toHaveCount(2);
-  await expect(
-    page.locator(".result-piece .mini-cell.tile-plastic"),
-  ).toHaveCount(10);
-  await page.locator("#look-board").click();
-  expect(
-    await page
-      .locator(".piece.unavailable .mini-shape")
-      .first()
-      .evaluate((e) => getComputedStyle(e).opacity),
-  ).toBe("1");
+  await expect(page.locator("#watch-reward")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#again")).toBeVisible();
+  await expect(page.locator(".result-piece")).toHaveCount(0);
+  await expect(page.locator("#dialog button")).toHaveCount(1);
+  await page.locator("#again").click();
+  await expect(page.locator("#score")).toHaveText("0");
 });

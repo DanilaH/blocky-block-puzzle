@@ -51,6 +51,7 @@ export class BoardScene extends Phaser.Scene {
   private ghost: Move | null = null;
   private previewEcho: { cells: number[]; color: number; at: number } | null =
     null;
+  private readonly previewLineCounts = new Uint8Array(16);
   private valid = true;
   private hint = false;
   private pending: number[] = [];
@@ -496,8 +497,11 @@ export class BoardScene extends Phaser.Scene {
         const shape = shapeById(s.shapeId),
           { x, y } = this.ghost;
         const ok = this.valid && fits(this.state.board, shape, x, y);
-        if (ok)
+        if (ok) {
+          this.previewLineCounts.fill(0);
           for (const i of place(this.state.board, shape, x, y).cells) {
+            this.previewLineCounts[i >> 3]!++;
+            this.previewLineCounts[8 + (i % 8)]!++;
             const px = (i % 8) * 64,
               py = Math.floor(i / 8) * 64;
             this.tile(px, py, COLORS[s.color]!, 1);
@@ -508,6 +512,16 @@ export class BoardScene extends Phaser.Scene {
             g.fillStyle(0xffffff, 0.18);
             g.fillRect(px + 5, py + 5, 54, 54);
           }
+          // One continuous outline makes a complete row/column readable as a unit.
+          // Counts reuse a fixed buffer and the existing placement preview result.
+          g.lineStyle(3, 0xffffff, 0.9);
+          for (let line = 0; line < 8; line++) {
+            if (this.previewLineCounts[line] === 8)
+              g.strokeRoundedRect(2, line * 64 + 2, 508, 60, 3);
+            if (this.previewLineCounts[8 + line] === 8)
+              g.strokeRoundedRect(line * 64 + 2, 2, 60, 508, 3);
+          }
+        }
         for (const [dx, dy] of shape.cells) {
           const px = (x + dx) * 64,
             py = (y + dy) * 64;

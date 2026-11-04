@@ -29,3 +29,6 @@ Main по-прежнему `5450f9db344aacb5acdc103b4199fd8aeb11b10d`; нужн�
 
 ## Журнал и аналитика — 02.11.2026
 Повторно сверены main `5450f9db344aacb5acdc103b4199fd8aeb11b10d` (API index, platform/analytics, interstitial policy) и `extract/seeds-production-practices@d4dee18c9b466e2b4a68d8d481db6dfc50ec9ee5` (Android ADS_AND_LIFECYCLE). Новые vendor-копии не добавлены. Применены принципы: нефатальная аналитика, game_start по первому принятому действию, раздельные этапы рекламы и durable grant, отдельный тестовый ключ, отсутствие сырых полей в событиях. Web Metrica adapter для Yandex Games не применяется к Android. Собственный тонкий AppMetrica/Capacitor adapter; проверка кабинета не подменяется mocked tests.
+
+## 04.11.2026 — наградные эмблемы 0.42
+Повторно проверен main `5450f9db344aacb5acdc103b4199fd8aeb11b10d`, прочитаны `docs/assets/RUNTIME_IMAGES.md` и `ASSET_PIPELINE.md`. Использованы уже vendored `prepareImageAsset`, `validatePreparedImage`, `trimTransparentWebp`, `inspectRuntimeImageBudget` без новой runtime-зависимости. [Мастера/параметры/бюджеты](../assets-src/rewards/README.md). WebP выбран после сравнения размера с AVIF; доказательство равного визуального качества AVIF не заявляется.
