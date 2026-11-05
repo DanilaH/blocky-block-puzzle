@@ -261,6 +261,27 @@ export class Festival {
       g.fillStyle = r.color;
       g.globalAlpha = Math.sin(Math.min(1, t) * Math.PI) * 0.85;
       g.lineWidth = 3;
+      // Shared long tail around the field, with three distinct centre motifs.
+      g.globalAlpha = (1 - t) ** 1.5 * 0.8;
+      g.strokeRect(b.left - 3, b.top - 3, b.width + 6, b.height + 6);
+      g.globalAlpha = Math.sin(Math.min(1, t) * Math.PI) * 0.85;
+      if (r.mode !== 2 && t < 0.65) {
+        g.save();
+        g.translate(b.left + b.width / 2, b.top + b.height / 2);
+        g.rotate(r.mode === 0 ? t * 0.65 : -t * 0.9);
+        g.globalAlpha *= 1 - t / 0.65;
+        const radius = b.width * (0.12 + t * 0.45);
+        g.beginPath();
+        const sides = r.mode === 0 ? 8 : 4;
+        for (let i = 0; i <= sides; i++) {
+          const a = (i * Math.PI * 2) / sides - Math.PI / 2;
+          const rr = r.mode === 0 && i % 2 ? radius * 0.48 : radius;
+          if (i === 0) g.moveTo(Math.cos(a) * rr, Math.sin(a) * rr);
+          else g.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+        }
+        g.stroke();
+        g.restore();
+      }
       if (r.mode === 0) {
         const length = 2 * (b.width + b.height);
         g.setLineDash([length * 0.22, length * 0.78]);

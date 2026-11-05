@@ -3,6 +3,7 @@ import { seriesPitch } from "./themes";
 import { MusicalChain } from "./festival";
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
+  menuOnly = false;
   private soundEnabled = true;
   private musicVolume = 0;
   private series = 0;
@@ -93,7 +94,7 @@ export class GameAudio {
     this.master!.gain.value = this.enabled ? 0.65 * this.effectsVolume : 0;
     this.activated = true;
     this.unlocked = true;
-    void this.music?.start();
+    if (!this.menuOnly) void this.music?.start();
   }
   stop() {
     this.music?.stop();
@@ -164,6 +165,7 @@ export class GameAudio {
       | "defeat"
       | "praise"
       | "theme"
+      | "count"
       | "score"
       | "pick"
       | "place"
@@ -303,17 +305,26 @@ export class GameAudio {
         : 0.1 +
           Math.min(1, intensity) * 0.12 +
           (this.chain.semitones / 17) * 0.035;
+    if (kind === "count") {
+      const hz = 520 * 2 ** (Math.min(7, streak) / 12);
+      this.tone(hz, hz, t, 0.09, 0.035, "sine", 1);
+      return;
+    }
     if (kind === "score") {
-      const base = 659.25 * Math.pow(2, pitch / 12);
-      this.tone(base, base, t, 0.22, 0.065, "sine", 1);
-      if (!this.calm)
+      const base = 587.33 * Math.pow(2, pitch / 12);
+      const notes = this.calm ? 1 : points >= 500 ? 5 : points >= 100 ? 3 : 2;
+      for (let i = 0; i < notes; i++) {
+        const hz = Math.min(2400, base * 2 ** ((i * 2) / 12));
         this.tone(
-          Math.min(2200, base * 1.5),
-          Math.min(2200, base * 1.5),
-          t + 0.065,
-          0.38,
-          0.035,
+          hz,
+          hz,
+          t + i * 0.085,
+          0.16,
+          0.045 / Math.sqrt(notes),
+          "sine",
+          1,
         );
+      }
       return;
     }
     // Overlapping tails survive new rewards; only the bounded voice allocator evicts.

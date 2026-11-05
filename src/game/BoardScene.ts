@@ -616,10 +616,10 @@ export class BoardScene extends Phaser.Scene {
         } else {
           const lanes = e.rows.length ? e.rows : e.columns;
           for (let i = 0; i < lanes.length; i++) {
-            const t = (age - i * (e.lines === 3 ? 120 : 160)) / 280;
+            const t = (age - i * (e.lines === 3 ? 120 : 160)) / 420;
             if (t < 0 || t > 1) continue;
             const at = lanes[i]! * 64;
-            g.fillStyle(0xffffff, Math.sin(t * Math.PI) * 0.55);
+            g.fillStyle(0xffffff, Math.sin(t * Math.PI) * 0.8);
             if (e.rows.length) g.fillRect(0, at + 24, 512, 16);
             else g.fillRect(at + 24, 0, 16, 512);
           }
@@ -664,6 +664,24 @@ export class BoardScene extends Phaser.Scene {
           12,
         );
       }
+      if (!this.calm && age < 420) {
+        const t = age / 420;
+        for (const i of e.placed.slice(0, 8)) {
+          const cx = (i % 8) * 64 + 32,
+            cy = Math.floor(i / 8) * 64 + 32;
+          g.fillStyle(COLORS[e.board[i] || 1]!, (1 - t) ** 2);
+          for (let k = 0; k < 4; k++) {
+            const angle = (k * Math.PI) / 2 + 0.7;
+            const distance = 26 + t * 25;
+            g.fillRect(
+              cx + Math.cos(angle) * distance,
+              cy + Math.sin(angle) * distance - t * 14,
+              4 * (1 - t) + 1,
+              4 * (1 - t) + 1,
+            );
+          }
+        }
+      }
       if (!this.calm && age < 240)
         for (const i of e.placed) {
           const t = age / 240;
@@ -702,6 +720,9 @@ export class BoardScene extends Phaser.Scene {
         if (elapsed > 80 && elapsed < 1050) {
           const fade = (elapsed - 80) / 970;
           const alpha = 0.85 * (1 - fade) ** 1.6;
+          g.fillStyle(0xffffff, 0.32 * (1 - fade) ** 2);
+          if (e.rows.includes(Math.floor(i / 8))) g.fillRect(x, y + 25, 64, 14);
+          if (e.columns.includes(i % 8)) g.fillRect(x + 25, y, 14, 64);
           if (e.rows.includes(Math.floor(i / 8)))
             fx.stamp("streak", x + 32, y + 32, 108, 250 - fade * 160, alpha);
           if (e.columns.includes(i % 8))

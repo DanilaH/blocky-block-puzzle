@@ -1,3 +1,4 @@
+import { presentResult } from "./game/result-presentation";
 import {
   startReviveOffer,
   acceptReviveOffer,
@@ -214,7 +215,10 @@ async function start() {
         ? seriesVisual(g.streak)
         : g.streak;
   }
+  let heldTheme: number | null = null;
+  let themeRevealGeneration = 0;
   function presentationTheme() {
+    if (heldTheme !== null) return heldTheme;
     const params = new URLSearchParams(location.search);
     return import.meta.env.DEV && params.has("themeSeries")
       ? themeFor(Number(params.get("themeSeries")) || 0)
@@ -262,6 +266,8 @@ async function start() {
   const rewards = new Map<HTMLElement, () => void>();
   let resultTimer = 0,
     resultPending = false;
+  let resultFeedbackTimer = 0;
+  let finishResultPresentation = () => {};
   let scoreFrame = 0,
     scoreShown = initial.game.score,
     scoreTarget = initial.game.score;
@@ -295,7 +301,10 @@ async function start() {
       return;
     }
     const start = performance.now(),
-      duration = Math.min(260, 130 + Math.log2(value - from + 1) * 10);
+      duration =
+        value - from < 20
+          ? 180
+          : Math.min(900, 340 + Math.log2(value - from + 1) * 36);
     const tick = (now: number) => {
       const t = Math.max(0, Math.min(1, (now - start) / duration));
       paint(from + (value - from) * (1 - (1 - t) ** 3));
@@ -321,6 +330,9 @@ async function start() {
     return a;
   }
   function stopCosmetics() {
+    finishResultPresentation();
+    heldTheme = null;
+    themeRevealGeneration++;
     festivalTimers.forEach(clearTimeout);
     festivalTimers.clear();
     festival.stop();
@@ -864,6 +876,7 @@ async function start() {
       toast("Поставьте фигуру в светлый контур");
       return;
     }
+    const previousTheme = presentationTheme();
     const previousBest = bestFor(store.state);
     const piece = before.tray[move.slot];
     const placedCells = piece
@@ -954,11 +967,22 @@ async function start() {
         event.state.score > previousBest;
       if (newRecord) recordCelebrated = true;
       const deferred =
-        running && !scene.calm && event.lines
-          ? event.points - placedCells.length - event.seriesBonus
+        running && !scene.calm
+          ? event.lines
+            ? event.points - placedCells.length
+            : event.seriesBonus
           : 0;
       atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
+      if (event.allClear && running && !scene.calm) {
+        heldTheme = previousTheme;
+        const generation = ++themeRevealGeneration;
+        later(() => {
+          if (generation !== themeRevealGeneration) return;
+          heldTheme = null;
+          render(running);
+        }, 320);
+      }
       performanceCapture.measure("placementRender", () => render(running));
       if (running) {
         if (event.finishedStreak > 0) {
@@ -968,7 +992,7 @@ async function start() {
               `СЕРИЯ ${event.finishedStreak} ЗАВЕРШЕНА!`,
               event.seriesBonus,
               { x: 50, y: 32 },
-              0,
+              deferred ? event.seriesBonus : 0,
               event.finishedStreak,
             );
             haptics.pulse(
@@ -1133,7 +1157,21 @@ async function start() {
               x: cols.length ? ((cols[0]! + 0.5) / 8) * 100 : 50,
               y: rows.length ? ((rows[0]! + 0.5) / 8) * 100 : 50,
             }
-          : null;
+          : {
+              x:
+                (placedCells.reduce((sum, i) => sum + (i % 8) + 0.5, 0) /
+                  placedCells.length /
+                  8) *
+                100,
+              y:
+                (placedCells.reduce(
+                  (sum, i) => sum + Math.floor(i / 8) + 0.5,
+                  0,
+                ) /
+                  placedCells.length /
+                  8) *
+                100,
+            };
         const lineName =
           signature.kind === "cross"
             ? `ПЕРЕКРЕСТИЕ · ${event.lines}!`
@@ -1288,7 +1326,8 @@ async function start() {
   ) {
     const important =
       tier === "record" || tier === "all-clear" || tier === "series";
-    for (const old of rewards.keys()) old.classList.add("yield-to-drag");
+    if (tier !== "place")
+      for (const old of rewards.keys()) old.classList.add("yield-to-drag");
     const node = document.createElement("span");
     node.className = "reward-event";
     node.dataset.tier = tier;
@@ -1322,7 +1361,7 @@ async function start() {
         node.append(img);
       }
     }
-    node.append(label, amount);
+    node.append(amount, label);
     // Important all-clear owns the foreground, after the line has had time to read.
     if (tier === "all-clear")
       for (const old of rewards.keys()) {
@@ -1373,6 +1412,10 @@ async function start() {
           : tier === "chain"
             ? 1200
             : 1650 + development.hold;
+    if (tier === "combo")
+      node.dataset.signature = praise.startsWith("ПЕРЕКРЕСТИЕ")
+        ? "cross"
+        : "lanes";
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -1446,14 +1489,27 @@ async function start() {
                   transform: `translate(${dx}px,${dy}px) scale(.35)`,
                 },
               ],
-              220,
+              300,
             )?.effect?.updateTiming({ easing: "ease-in" });
             timerIds.push(
               window.setTimeout(() => {
                 settle();
                 amount.style.opacity = "0";
                 if (running && gameId === currentGame().gameId) {
-                  audio.play("score", streak, points, scene.intensity);
+                  audio.play(
+                    "score",
+                    Math.max(streak, currentGame().streak),
+                    points,
+                    scene.intensity,
+                  );
+                  animate(
+                    el("score"),
+                    [
+                      { textShadow: "0 0 18px #8edaff" },
+                      { textShadow: "0 2px 2px #00000026" },
+                    ],
+                    600,
+                  );
                   animate(
                     el("score"),
                     [
@@ -1464,10 +1520,10 @@ async function start() {
                     260,
                   );
                 }
-              }, 220),
+              }, 300),
             );
           },
-          important ? 260 : 140,
+          important ? 400 : 280,
         ),
       );
     timerIds.push(window.setTimeout(finish, duration));
@@ -1829,6 +1885,7 @@ async function start() {
   });
   function open(content: string, type: string) {
     modal = type;
+    dialog.classList.remove("result-celebrate");
     dialog.dataset.kind = type;
     activity.setBlocked("dialog", true);
     dialog.innerHTML = content;
@@ -1948,6 +2005,18 @@ async function start() {
       clearTimeout(resultTimer);
       close();
       render();
+      if (kind === "revive" && !scene.calm) {
+        animate(
+          canvasBox,
+          [
+            { opacity: 0.5, transform: "scale(.98)" },
+            { opacity: 1, transform: "scale(1)" },
+          ],
+          320,
+        );
+        audio.play("praise", currentGame().streak);
+        haptics.pulse("record");
+      }
       toast(kind === "hints" ? "Добавлены 3 подсказки" : "Второй шанс получен");
     } else {
       const status = dialog.querySelector<HTMLElement>("#reward-status");
@@ -2379,8 +2448,15 @@ async function start() {
           if (
             count &&
             count.textContent !== String(Math.ceil(remaining / 1000))
-          )
+          ) {
             count.textContent = String(Math.ceil(remaining / 1000));
+            if (!document.hidden)
+              animate(
+                count,
+                [{ transform: "scale(1.18)" }, { transform: "scale(1)" }],
+                remaining < 1100 ? 280 : 180,
+              );
+          }
           button.disabled = remaining <= 0 || store.busy;
         }
         if (!remaining && !store.busy) {
@@ -2477,7 +2553,54 @@ async function start() {
       <button class="primary" id="again" aria-label="Новая партия"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M9 3a2 2 0 0 0-3 2v22a2 2 0 0 0 3 2l19-11a2 2 0 0 0 0-4z"/></svg></button>`,
       "result",
     );
-    el("again").onclick = () => void restart();
+    audio.menuOnly = true;
+    audioFocus.setActive(audio.audible && !document.hidden);
+    if (!document.hidden) void audio.unlock();
+    haptics.setActive(
+      !document.hidden && store.state.settings.haptics !== false && !scene.calm,
+    );
+    const endResult = presentResult(
+      dialog,
+      store.state.game.score,
+      scene.calm,
+      (step) => audio.play("count", step, store.state.game.score),
+      (celebrate) => {
+        if (celebrate && record) {
+          haptics.pulse("record");
+          dialog.classList.add("result-celebrate");
+        }
+        if (celebrate) {
+          audio.play(
+            record ? "record" : "score",
+            currentGame().streak,
+            store.state.game.score,
+          );
+          resultFeedbackTimer = window.setTimeout(() => {
+            audio.menuOnly = false;
+            audioFocus.setActive(false);
+            audio.stop();
+            haptics.setActive(false);
+          }, 650);
+        } else {
+          audio.menuOnly = false;
+          audioFocus.setActive(false);
+          audio.stop();
+          haptics.setActive(false);
+        }
+      },
+    );
+    finishResultPresentation = () => {
+      endResult();
+      clearTimeout(resultFeedbackTimer);
+      audio.menuOnly = false;
+      audioFocus.setActive(false);
+      audio.stop();
+      haptics.setActive(false);
+    };
+    el("again").onclick = () => {
+      finishResultPresentation();
+      void restart();
+    };
     ads.preload();
   }
   el("lesson-skip").onclick = async () => {
@@ -2520,6 +2643,7 @@ async function start() {
       .catch(() => toast("Системная кнопка «Назад» пока недоступна"));
     void native
       .addListener("appStateChange", (data) => {
+        if (data.isActive === false) finishResultPresentation();
         activity.setBlocked("native", data.isActive === false);
         if (data.isActive) {
           void ads.recover();
@@ -2559,6 +2683,9 @@ async function start() {
   window.addEventListener("pageshow", () =>
     activity.setBlocked("pagehide", false),
   );
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && modal === "result") finishResultPresentation();
+  });
   window.addEventListener("pagehide", () => {
     activity.setBlocked("pagehide", true);
     cancelDrag();
