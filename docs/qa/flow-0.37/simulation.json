@@ -1,0 +1,54 @@
+[
+  {
+    "strategy": "random",
+    "policy": "initial-v1",
+    "games": 60,
+    "limit": 120,
+    "allClear": 0,
+    "moves": 911,
+    "early": 20,
+    "deaths": 60,
+    "max": 6,
+    "distinctShapes": 25,
+    "calculationMs": 25
+  },
+  {
+    "strategy": "random",
+    "policy": "flow-v1",
+    "games": 60,
+    "limit": 120,
+    "allClear": 0,
+    "moves": 1144,
+    "early": 3,
+    "deaths": 60,
+    "max": 6,
+    "distinctShapes": 31,
+    "calculationMs": 1687
+  },
+  {
+    "strategy": "greedy",
+    "policy": "initial-v1",
+    "games": 60,
+    "limit": 120,
+    "allClear": 5,
+    "moves": 5867,
+    "early": 0,
+    "deaths": 27,
+    "max": 28,
+    "distinctShapes": 25,
+    "calculationMs": 144
+  },
+  {
+    "strategy": "greedy",
+    "policy": "flow-v1",
+    "games": 60,
+    "limit": 120,
+    "allClear": 368,
+    "moves": 5082,
+    "early": 0,
+    "deaths": 33,
+    "max": 51,
+    "distinctShapes": 31,
+    "calculationMs": 16268
+  }
+]

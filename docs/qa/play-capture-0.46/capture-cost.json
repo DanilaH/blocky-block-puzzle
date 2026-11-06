@@ -1,0 +1,10 @@
+{
+  "source": "synthetic diagnostic, not human",
+  "moves": 1000,
+  "segments": 3,
+  "bytes": 135937,
+  "p50Ms": 0.024015999999846827,
+  "p95Ms": 0.1087840000000142,
+  "maxMs": 1.7703010000000177,
+  "environment": "Node CPU; recorder only, excludes game calculations, not Android FPS"
+}

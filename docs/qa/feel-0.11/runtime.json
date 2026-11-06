@@ -1,0 +1,42 @@
+{
+  "sampleMs": 1200,
+  "idle": {
+    "draws": 0,
+    "drawMs": 0,
+    "frames": 73,
+    "maxVoices": 0,
+    "maxImpacts": 0
+  },
+  "hint": {
+    "draws": 72,
+    "drawMs": 8.700000006705523,
+    "frames": 72,
+    "maxVoices": 2,
+    "maxImpacts": 0
+  },
+  "paused": {
+    "draws": 0,
+    "drawMs": 0,
+    "frames": 0,
+    "maxVoices": 2,
+    "maxImpacts": 0
+  },
+  "moves": 100,
+  "restarts": 3,
+  "settled": {
+    "impacts": 0,
+    "voices": 0,
+    "animations": 0,
+    "draws": 2195,
+    "drawMs": 280.300000006333,
+    "frames": 1350,
+    "maxVoices": 6,
+    "maxImpacts": 2
+  },
+  "hintSaving": {
+    "busy": "true",
+    "label": "Сохраняем…",
+    "count": "2",
+    "labelWidth": 87.421875
+  }
+}

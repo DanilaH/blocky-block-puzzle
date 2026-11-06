@@ -1,0 +1,187 @@
+{
+  "errors": [],
+  "multitouch": {
+    "dragStillVisible": true,
+    "beforeMoves": 0,
+    "afterMoves": 0
+  },
+  "insets": [
+    {
+      "width": 320,
+      "height": 568,
+      "insets": {
+        "top": 24,
+        "bottom": 24,
+        "left": 0,
+        "right": 0
+      },
+      "padding": "24px 0px",
+      "board": {
+        "x": 36,
+        "y": 103,
+        "right": 284,
+        "bottom": 351,
+        "width": 248,
+        "height": 248
+      },
+      "hint": {
+        "x": 132.5,
+        "y": 467,
+        "right": 187.5,
+        "bottom": 515,
+        "width": 55,
+        "height": 48
+      },
+      "ad": {
+        "x": 0,
+        "y": 492,
+        "right": 320,
+        "bottom": 544,
+        "width": 320,
+        "height": 52
+      },
+      "pause": {
+        "x": 260,
+        "y": 28,
+        "right": 308,
+        "bottom": 76,
+        "width": 48,
+        "height": 48
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "insets": {
+        "top": 24,
+        "bottom": 24,
+        "left": 0,
+        "right": 0
+      },
+      "padding": "24px 0px",
+      "board": {
+        "x": 16,
+        "y": 164,
+        "right": 374,
+        "bottom": 522,
+        "width": 358,
+        "height": 358
+      },
+      "hint": {
+        "x": 167.5,
+        "y": 722,
+        "right": 222.5,
+        "bottom": 770,
+        "width": 55,
+        "height": 48
+      },
+      "ad": {
+        "x": 0,
+        "y": 768,
+        "right": 390,
+        "bottom": 820,
+        "width": 390,
+        "height": 52
+      },
+      "pause": {
+        "x": 330,
+        "y": 40,
+        "right": 378,
+        "bottom": 88,
+        "width": 48,
+        "height": 48
+      }
+    },
+    {
+      "width": 568,
+      "height": 320,
+      "insets": {
+        "top": 0,
+        "bottom": 24,
+        "left": 24,
+        "right": 0
+      },
+      "padding": "0px 0px 24px 24px",
+      "board": {
+        "x": 48,
+        "y": 12,
+        "right": 292,
+        "bottom": 256,
+        "width": 244,
+        "height": 244
+      },
+      "hint": {
+        "x": 406.5,
+        "y": 188,
+        "right": 461.5,
+        "bottom": 236,
+        "width": 55,
+        "height": 48
+      },
+      "ad": {
+        "x": 24,
+        "y": 244,
+        "right": 568,
+        "bottom": 296,
+        "width": 544,
+        "height": 52
+      },
+      "pause": {
+        "x": 508,
+        "y": 8,
+        "right": 556,
+        "bottom": 56,
+        "width": 48,
+        "height": 48
+      }
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "insets": {
+        "top": 0,
+        "bottom": 24,
+        "left": 24,
+        "right": 0
+      },
+      "padding": "0px 0px 24px 24px",
+      "board": {
+        "x": 47.578125,
+        "y": 6,
+        "right": 331.578125,
+        "bottom": 290,
+        "width": 284,
+        "height": 284
+      },
+      "hint": {
+        "x": 462.078125,
+        "y": 202,
+        "right": 517.078125,
+        "bottom": 250,
+        "width": 55,
+        "height": 48
+      },
+      "ad": {
+        "x": 24,
+        "y": 284,
+        "right": 640,
+        "bottom": 336,
+        "width": 616,
+        "height": 52
+      },
+      "pause": {
+        "x": 580,
+        "y": 8,
+        "right": 628,
+        "bottom": 56,
+        "width": 48,
+        "height": 48
+      }
+    }
+  ],
+  "backgroundCommit": {
+    "moves": 1,
+    "burst": "",
+    "reloadedMoves": 1
+  }
+}

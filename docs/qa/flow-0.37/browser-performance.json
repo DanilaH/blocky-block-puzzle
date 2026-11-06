@@ -1,0 +1,66 @@
+{
+  "environment": "Cloud Chromium, not physical Android; one short diagnostic sample, no baseline speedup claim",
+  "sourceCommit": "d2d3605bdfd4dabe97cba5790a841bc7fc8fc057",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "full",
+      "frames": 72,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 8,
+      "metrics": {
+        "LayoutCount": 13,
+        "LayoutDuration": 0.002449,
+        "RecalcStyleCount": 74,
+        "RecalcStyleDuration": 0.029721,
+        "ScriptDuration": 0.10673999999999999,
+        "TaskDuration": 1.681762
+      },
+      "audit": {
+        "rectReads": 5,
+        "previewCalls": 41,
+        "draws": 93,
+        "drawCPU": 40.9000000115484,
+        "festivalPeak": 80,
+        "vfxPeak": 220,
+        "long": [
+          54,
+          56,
+          55,
+          64,
+          63,
+          58
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "idle-drag",
+      "frames": 69,
+      "median": 16.700000000000273,
+      "p95": 49.90000000000009,
+      "over33": 12,
+      "metrics": {
+        "LayoutCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleCount": 70,
+        "RecalcStyleDuration": 0.051434,
+        "ScriptDuration": 0.077798,
+        "TaskDuration": 1.6383159999999999
+      },
+      "audit": {
+        "rectReads": 1,
+        "previewCalls": 37,
+        "draws": 76,
+        "drawCPU": 18.19999998807907,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": [
+          58,
+          62
+        ]
+      }
+    }
+  ]
+}

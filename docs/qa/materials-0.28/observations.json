@@ -1,0 +1,314 @@
+[
+  {
+    "name": "plastic",
+    "material": "plastic",
+    "images": [
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "name": "enamel",
+    "material": "enamel",
+    "images": [
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "0"
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "name": "chrome",
+    "material": "chrome",
+    "images": [
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      },
+      {
+        "loaded": true,
+        "opacity": "1"
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "errors": []
+  }
+]

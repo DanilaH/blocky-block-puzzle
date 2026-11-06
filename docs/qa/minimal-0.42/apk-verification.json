@@ -1,0 +1,14 @@
+{
+  "version": "0.42.0-preview",
+  "versionCode": 42,
+  "package": "com.danilah.blocky.dev",
+  "bytes": 11538029,
+  "sha256": "b5fb8ad87f495daf639a1de282269bf251c099775cc072e9e938cc53010fc0ea",
+  "signatureVerified": true,
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "matchesVersion41Signer": true,
+  "productionFilesMatched": 78,
+  "applicationCommit": "7a55360d0ede5ce36863320e69cc75687ddf9cfb",
+  "ciRun": 41849463134,
+  "ciCommit": "7a55360d0ede5ce36863320e69cc75687ddf9cfb"
+}

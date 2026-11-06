@@ -1,0 +1,416 @@
+[
+  {
+    "name": "damaged-320x480",
+    "viewport": [
+      320,
+      480
+    ],
+    "scroll": 480,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "retry",
+        "text": "Повторить",
+        "x": 24,
+        "y": 220.5625,
+        "w": 272,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "recover",
+        "text": "Начать заново",
+        "x": 24,
+        "y": 276.5625,
+        "w": 272,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "damaged-568x320",
+    "viewport": [
+      568,
+      320
+    ],
+    "scroll": 320,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "retry",
+        "text": "Повторить",
+        "x": 108,
+        "y": 156.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "recover",
+        "text": "Начать заново",
+        "x": 108,
+        "y": 212.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "damaged-landscape-after-swipe",
+    "viewport": [
+      568,
+      320
+    ],
+    "scroll": 320,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "retry",
+        "text": "Повторить",
+        "x": 108,
+        "y": 156.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "recover",
+        "text": "Начать заново",
+        "x": 108,
+        "y": 212.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "recovery-confirm-320x480",
+    "viewport": [
+      320,
+      480
+    ],
+    "scroll": 480,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "confirm-recovery",
+        "text": "Сбросить и начать",
+        "x": 24,
+        "y": 175.96875,
+        "w": 272,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "cancel-recovery",
+        "text": "Назад",
+        "x": 24,
+        "y": 231.96875,
+        "w": 272,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "recovery-confirm-568x320",
+    "viewport": [
+      568,
+      320
+    ],
+    "scroll": 320,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "confirm-recovery",
+        "text": "Сбросить и начать",
+        "x": 108,
+        "y": 131.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "cancel-recovery",
+        "text": "Назад",
+        "x": 108,
+        "y": 187.375,
+        "w": 352,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "recovery-confirm-390x844",
+    "viewport": [
+      390,
+      844
+    ],
+    "scroll": 844,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "confirm-recovery",
+        "text": "Сбросить и начать",
+        "x": 24,
+        "y": 456,
+        "w": 342,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "cancel-recovery",
+        "text": "Назад",
+        "x": 24,
+        "y": 516,
+        "w": 342,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "rules-320x480",
+    "viewport": [
+      320,
+      480
+    ],
+    "scroll": 480,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "pause",
+        "text": "",
+        "x": 260,
+        "y": 4,
+        "w": 48,
+        "h": 48,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 12,
+        "y": 336,
+        "w": 94.671875,
+        "h": 88,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 112.671875,
+        "y": 336,
+        "w": 94.671875,
+        "h": 88,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 213.34375,
+        "y": 336,
+        "w": 94.671875,
+        "h": 88,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "lesson-skip",
+        "text": "Пропустить",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "hint",
+        "text": "Подсказка\n3",
+        "x": 256,
+        "y": 178,
+        "w": 52,
+        "h": 48,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "play-again",
+        "text": "Ещё раз",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "back-pause",
+        "text": "Понятно",
+        "x": 44,
+        "y": 333,
+        "w": 232,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "practice",
+        "text": "Попробовать на поле",
+        "x": 44,
+        "y": 393,
+        "w": 232,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "rules-focus",
+    "viewport": [
+      320,
+      480
+    ],
+    "before": "BODY",
+    "after": ""
+  },
+  {
+    "name": "rules-568x320",
+    "viewport": [
+      568,
+      320
+    ],
+    "scroll": 320,
+    "scrollY": 0,
+    "overflow": "hidden",
+    "controls": [
+      {
+        "id": "pause",
+        "text": "",
+        "x": 508,
+        "y": 8,
+        "w": 48,
+        "h": 48,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 303.890625,
+        "y": 92,
+        "w": 76.703125,
+        "h": 96,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 390.59375,
+        "y": 92,
+        "w": 76.703125,
+        "h": 96,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "",
+        "text": "",
+        "x": 477.296875,
+        "y": 92,
+        "w": 76.703125,
+        "h": 96,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "lesson-skip",
+        "text": "Пропустить",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "hint",
+        "text": "Подсказка\n3",
+        "x": 400.4375,
+        "y": 188,
+        "w": 57,
+        "h": 48,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "play-again",
+        "text": "Ещё раз",
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0,
+        "visible": true,
+        "hit": false
+      },
+      {
+        "id": "back-pause",
+        "text": "Понятно",
+        "x": 40,
+        "y": 245,
+        "w": 238,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      },
+      {
+        "id": "practice",
+        "text": "Попробовать на поле",
+        "x": 290,
+        "y": 245,
+        "w": 238,
+        "h": 48,
+        "visible": true,
+        "hit": true
+      }
+    ]
+  },
+  {
+    "name": "rules-focus",
+    "viewport": [
+      568,
+      320
+    ],
+    "before": "BODY",
+    "after": ""
+  }
+]

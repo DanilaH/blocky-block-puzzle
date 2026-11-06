@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "e6bd27961ccfc5fb01a662e1b583d2c5cb9f806c",
+  "preparedPositions": true,
+  "liveGameAudio": true,
+  "duration": 29.730000019073486,
+  "events": [
+    {
+      "kind": "double",
+      "t": 1.5269999504089355
+    },
+    {
+      "kind": "triple",
+      "t": 5.884000062942505
+    },
+    {
+      "kind": "quad",
+      "t": 10.287999868392944
+    },
+    {
+      "kind": "cross",
+      "t": 14.651999950408936
+    },
+    {
+      "kind": "series",
+      "t": 19.119999885559082
+    },
+    {
+      "kind": "theme",
+      "t": 23.43400001525879
+    }
+  ]
+}

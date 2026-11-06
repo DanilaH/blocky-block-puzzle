@@ -1,0 +1,42 @@
+{
+  "after-gameplay": {
+    "duration": 9.303999900817871,
+    "frames": 489
+  },
+  "before-right-line": {
+    "duration": 2.252000093460083,
+    "frames": 100
+  },
+  "before-placement": {
+    "duration": 2.757999897003174,
+    "frames": 106
+  },
+  "before-allClear": {
+    "duration": 2.6429998874664307,
+    "frames": 89
+  },
+  "before-cross": {
+    "duration": 2.951000213623047,
+    "frames": 105
+  },
+  "after-right-line": {
+    "duration": 1.8329999446868896,
+    "frames": 116
+  },
+  "before-gameplay": {
+    "duration": 21.26799988746643,
+    "frames": 673
+  },
+  "after-allClear": {
+    "duration": 1.7369999885559082,
+    "frames": 108
+  },
+  "after-placement": {
+    "duration": 1.8339998722076416,
+    "frames": 110
+  },
+  "after-cross": {
+    "duration": 1.690000057220459,
+    "frames": 105
+  }
+}

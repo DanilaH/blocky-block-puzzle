@@ -1,0 +1,52 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "capture": "Chromium CDP screencast + live Web Audio MediaRecorder",
+  "outputFPS": 30,
+  "outputSeconds": 13.454362,
+  "audioPeakDBFS": -11.8,
+  "scenarios": [
+    {
+      "scenario": "after-allClear",
+      "frames": 102,
+      "durationSeconds": 1.641
+    },
+    {
+      "scenario": "after-cross",
+      "frames": 102,
+      "durationSeconds": 1.64
+    },
+    {
+      "scenario": "after-placement",
+      "frames": 106,
+      "durationSeconds": 1.738
+    },
+    {
+      "scenario": "after-right-line",
+      "frames": 102,
+      "durationSeconds": 1.638
+    },
+    {
+      "scenario": "before-allClear",
+      "frames": 103,
+      "durationSeconds": 1.655
+    },
+    {
+      "scenario": "before-cross",
+      "frames": 105,
+      "durationSeconds": 1.686
+    },
+    {
+      "scenario": "before-placement",
+      "frames": 107,
+      "durationSeconds": 1.77
+    },
+    {
+      "scenario": "before-right-line",
+      "frames": 103,
+      "durationSeconds": 1.656
+    }
+  ]
+}

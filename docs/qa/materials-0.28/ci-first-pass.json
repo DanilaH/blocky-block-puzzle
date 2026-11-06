@@ -1,0 +1,10 @@
+{
+  "run": 41293485113,
+  "source": "7064eef64a40b3f86c44082fa51dc13fee56a801",
+  "unitPassed": 92,
+  "browserPassed": 98,
+  "browserFailed": 1,
+  "failure": "placement-performance: drag coalesces events without layout reads; expected 0, received 1",
+  "diagnostic": "650ms local window: 3 reads, all ScaleManager.getParentBounds -> ScaleManager.step",
+  "fix": "event-driven resize invalidation; input after first postrender; retain zero-read assertion over 650ms"
+}
