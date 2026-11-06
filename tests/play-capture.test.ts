@@ -86,6 +86,8 @@ it("marks hints, bounds memory, retains export after stopping, and clears explic
   small.start(g);
   expect(small.enabled).toBe(false);
   expect(small.status).toBe("limit");
+  small.stop();
+  expect(small.snapshot().stopped).toBe("limit");
 });
 it("rejects tampered coordinates, hashes and backwards clocks before analysis", () => {
   const g = game(),

@@ -90,6 +90,8 @@ export class PlayCapture {
     this.checkpoint(g, this.events.length ? "resumed" : "start");
   }
   stop(reason = "manual") {
+    if (!this.enabled && ["limit", "capture-error"].includes(this.stopped))
+      return;
     this.clock();
     this.enabled = false;
     this.stopped = reason;
