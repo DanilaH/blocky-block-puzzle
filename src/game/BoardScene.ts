@@ -80,6 +80,12 @@ export class BoardScene extends Phaser.Scene {
     this.shade = THEMES[index]!.board;
     this.accent = color;
     this.themeAt = performance.now();
+    if (this.presentation === "classic" && this.game?.canvas) {
+      const board = this.game.canvas.parentElement!;
+      board.style.transition = `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
+      board.style.backgroundColor =
+        "#" + this.shade.toString(16).padStart(6, "0");
+    }
     this.study?.setMaterial(
       tileMaterialForTheme(index),
       this.themeAt,
@@ -158,6 +164,17 @@ export class BoardScene extends Phaser.Scene {
   }
   create() {
     this.syncResolution();
+    if (this.presentation === "classic") {
+      const board = this.game.canvas.parentElement!;
+      board.dataset.staticBoard = "true";
+      this.events.once("shutdown", () => {
+        delete board.dataset.staticBoard;
+        board.style.removeProperty("background-color");
+        board.style.removeProperty("transition");
+      });
+      board.style.backgroundColor =
+        "#" + this.shade.toString(16).padStart(6, "0");
+    }
     this.vfx = new VfxSprites(this);
     this.events.once("shutdown", () => this.vfx?.destroy());
     const textured = this.game.renderer.type === Phaser.WEBGL && !!TILE_STUDY;
@@ -171,17 +188,18 @@ export class BoardScene extends Phaser.Scene {
     if (TILE_STUDY) {
       // One 64px grayscale well shared by all cells; tint follows the theme.
       // Avoid replaying 1,792 rounded gradient layers on every WebGL frame.
-      if (!this.textures.exists("enamel-well")) {
+      if (
+        this.presentation !== "classic" &&
+        !this.textures.exists("enamel-well")
+      ) {
         const texture = this.textures.createCanvas("enamel-well", 64, 64)!;
         const ctx = texture.context;
         const gradient = ctx.createLinearGradient(0, 3, 0, 63);
         gradient.addColorStop(0, "#e7e7e7");
         gradient.addColorStop(0.8, "#f1f1f1");
-        ctx.fillStyle = this.presentation === "classic" ? "#eeeeee" : gradient;
+        ctx.fillStyle = gradient;
         ctx.beginPath();
-        if (this.presentation === "classic") {
-          ctx.roundRect(1, 1, 62, 62, 3);
-        } else {
+        {
           ctx.moveTo(10, 3);
           ctx.lineTo(54, 3);
           ctx.quadraticCurveTo(62, 3, 62, 11);
@@ -196,11 +214,13 @@ export class BoardScene extends Phaser.Scene {
         ctx.fill();
         texture.refresh();
       }
-      this.wells = Array.from({ length: 64 }, (_, i) =>
-        this.add
-          .image((i % 8) * 64, Math.floor(i / 8) * 64, "enamel-well")
-          .setOrigin(0)
-          .setDepth(0),
+      this.wells = Array.from(
+        { length: this.presentation === "classic" ? 0 : 64 },
+        (_, i) =>
+          this.add
+            .image((i % 8) * 64, Math.floor(i / 8) * 64, "enamel-well")
+            .setOrigin(0)
+            .setDepth(0),
       );
       // Classic never paints contact decoration. Keep an empty graphics object
       // instead of uploading a transparent 512x512 texture on every placement.
@@ -407,7 +427,8 @@ export class BoardScene extends Phaser.Scene {
     }
     if (this.bedColor !== bedColor) {
       this.bedColor = bedColor;
-      this.cameras.main.setBackgroundColor(bedColor);
+      if (this.presentation !== "classic")
+        this.cameras.main.setBackgroundColor(bedColor);
       this.wells.forEach((well) => well.setTint(bedColor));
     }
     this.study?.begin();

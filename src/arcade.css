@@ -327,3 +327,9 @@
 .calm .reward-event::before {
   display: none;
 }
+
+/* Static wells stay sharp at device density without joining every WebGL frame. */
+:root[data-presentation="classic"] #board[data-static-board="true"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect x='1' y='1' width='62' height='62' rx='3' fill='black' fill-opacity='.066666667'/%3E%3C/svg%3E");
+  background-size: 12.5% 12.5%;
+}
