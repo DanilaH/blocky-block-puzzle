@@ -1,3 +1,5 @@
+import { PlayCapture } from "./platform/play-capture";
+import { sharePlayRecord } from "./platform/share-json";
 import { presentResult } from "./game/result-presentation";
 import {
   startReviveOffer,
@@ -91,7 +93,15 @@ async function start() {
     audio = new GameAudio(),
     scene = new BoardScene("classic");
   const analytics = new ProductAnalytics(nativeAnalytics());
-  store.observer = analytics;
+  const playCapture = new PlayCapture();
+  store.observer = {
+    prepare: (before, next) => analytics.prepare(before, next),
+    committed: (before, next, reason) => {
+      playCapture.committed(before, next);
+      analytics.committed(before, next, reason);
+    },
+    saveFailed: () => analytics.saveFailed(),
+  };
   analytics.boot(initial, !loaded.profile, loaded.recovered);
   void analytics.init();
   if (import.meta.env.DEV) (window as any).__blockyAnalytics = analytics;
@@ -356,6 +366,9 @@ async function start() {
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      playCapture.setActive(
+        !inLesson() && store.state.game.status === "playing",
+      );
       performanceCapture.setActive(true);
       root.classList.remove("effects-paused");
       haptics.setActive(
@@ -380,6 +393,7 @@ async function start() {
     },
     () => {
       running = false;
+      playCapture.setActive(false);
       analytics.setActive(false, store.state);
       performanceCapture.setActive(false);
       root.classList.add("effects-paused");
@@ -952,6 +966,7 @@ async function start() {
       currentMove = null;
       rejectedDrags = 0;
       const event = outcome.result!;
+      if (!practicing) playCapture.record(before, move, event.state);
       const signature = clearSignature(event.cells);
       const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
       performanceCapture.markPlacement(
@@ -2151,6 +2166,45 @@ async function start() {
     details.append(diagnostics);
     body.insertBefore(quick, el("save-status").nextSibling);
     body.append(details);
+    const captureUI = document.createElement("details");
+    captureUI.className = "diagnostics";
+    captureUI.innerHTML = `<summary>Запись партии для разбора</summary><p>Только ходы и время активной игры. Ничего не отправляется автоматически. Выгрузите запись до закрытия игры.</p><p id="play-capture-status" role="status"></p><button id="play-capture-toggle" class="secondary"></button><button id="play-capture-export" class="secondary">Выгрузить запись партии</button><button id="play-capture-clear" class="secondary">Удалить запись</button>`;
+    details.append(captureUI);
+    const updateCapture = () => {
+      el("play-capture-status").textContent =
+        `${playCapture.enabled ? "Запись идёт" : playCapture.status === "limit" ? "Достигнут лимит записи" : playCapture.hasData ? "Запись остановлена" : "Запись выключена"} · ходов: ${playCapture.count}`;
+      el("play-capture-toggle").textContent = playCapture.enabled
+        ? "Остановить запись"
+        : playCapture.hasData
+          ? "Продолжить запись"
+          : "Начать запись";
+      el<HTMLButtonElement>("play-capture-toggle").disabled =
+        playCapture.status === "limit";
+      el<HTMLButtonElement>("play-capture-export").disabled =
+        !playCapture.hasData;
+      el<HTMLButtonElement>("play-capture-clear").disabled =
+        !playCapture.hasData;
+    };
+    updateCapture();
+    el("play-capture-toggle").onclick = () => {
+      if (playCapture.enabled) playCapture.stop();
+      else playCapture.start(store.state.game, !!store.state.hint);
+      updateCapture();
+    };
+    el("play-capture-clear").onclick = () => {
+      playCapture.clear();
+      updateCapture();
+    };
+    el("play-capture-export").onclick = () => {
+      playCapture.stop();
+      updateCapture();
+      void sharePlayRecord(playCapture.snapshot()).catch(() =>
+        toast(
+          "Не удалось выгрузить запись. Она сохранена до закрытия игры — попробуйте ещё раз.",
+        ),
+      );
+    };
+
     el("music-toggle").onchange = () => {
       const range = el<HTMLInputElement>("musicVolume");
       if (Number(range.value) > 0) rememberedMusicVolume = Number(range.value);
