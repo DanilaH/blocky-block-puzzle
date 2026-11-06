@@ -10,7 +10,13 @@ const styles = (process.env.DIRECTOR_STYLES || "clear,three,plausible").split(
 );
 const policy = process.env.DIRECTOR_POLICY || "observed-v7";
 const policyPath = {
-  "observed-v7": "policy.ts",
+  "observed-v7": "policy-v7.ts",
+  "wave-guaranteed": "policy-wave-guaranteed.ts",
+  "wave-neutral": "policy-wave-neutral.ts",
+  "neutral-control": "policy-neutral-control.ts",
+  "wave-reward": "policy-wave-reward.ts",
+  "wave-guaranteed-short": "policy-wave-guaranteed-short.ts",
+  "wave-neutral-short": "policy-wave-neutral-short.ts",
   "resilience-v6": "policy-v6.ts",
   "qualified-v5": "policy-v5.ts",
   "geometry-v4": "policy-v4.ts",
@@ -25,6 +31,7 @@ try {
     M = await server.ssrLoadModule("/src/core/monetization.ts"),
     P = await server.ssrLoadModule("/scripts/difficulty/players.ts"),
     D = await server.ssrLoadModule("/scripts/director/" + policyPath);
+  const G = await server.ssrLoadModule("/scripts/director/geometry.ts");
   const games = [];
   for (const style of styles)
     for (let n = 1; n <= seeds; n++)
@@ -46,10 +53,24 @@ try {
           maxDry = 0,
           repeat = 0,
           lastBag = "",
+          shallowDecisions = 0,
           rng = seed ^ 1234;
         const timings = [],
           deals = [],
-          opening = [];
+          opening = [],
+          trajectory = [];
+        function playerMove(roll) {
+          const rate =
+            style === "three-slip1" ? 0.01 : style === "three-slip5" ? 0.05 : 0;
+          if (rate) {
+            if (roll < rate) {
+              shallowDecisions++;
+              return P.choose(g.board, g.tray, "plausible", roll / rate);
+            }
+            return P.choose(g.board, g.tray, "three", roll);
+          }
+          return P.choose(g.board, g.tray, style, roll);
+        }
         function replace() {
           const t = performance.now(),
             s = D.select(g, director);
@@ -101,7 +122,7 @@ try {
           }
           const r = R.random(rng);
           rng = r.state;
-          const move = P.choose(g.board, g.tray, style, r.value);
+          const move = playerMove(r.value);
           if (!move) throw Error("No move");
           const refill = g.tray.filter((s) => !s.used).length === 1;
           const v = R.applyMove(g, move, g.revision);
@@ -109,6 +130,13 @@ try {
           if (g.moves <= 12) opening.push({ board: g.board, score: g.score });
           linesInTray += v.lines;
           clearInTray ||= v.allClear;
+          trajectory.push({
+            move: g.moves,
+            ...G.geometry(g.board),
+            lines: v.lines,
+            allClear: v.allClear,
+            phase: director.phase,
+          });
           clears += Number(v.allClear);
           rewardMoves += Number(v.lines > 0);
           dry = v.lines ? 0 : dry + 1;
@@ -142,7 +170,7 @@ try {
             while (g.status === "playing" && survived < 18) {
               const r = R.random(rng);
               rng = r.state;
-              const move = P.choose(g.board, g.tray, style, r.value);
+              const move = playerMove(r.value);
               if (!move) throw Error("No revive move");
               const refill = g.tray.filter((s) => !s.used).length === 1;
               const v = R.applyMove(g, move, g.revision);
@@ -186,6 +214,8 @@ try {
           recovery,
           deals,
           timings,
+          trajectory,
+          shallowDecisions,
         });
         console.log(
           JSON.stringify({
