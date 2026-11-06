@@ -2,7 +2,7 @@ import {createServer} from 'vite';
 import fs from 'node:fs/promises';
 import {makePlanner} from './audit-planner38.mjs';
 const variant=process.env.SIM_VARIANT||'baseline';
-const variants={baseline:null, cap_only:{floor:.15,large:0}, taper:{floor:.5,large:12},taper_variety:{floor:.3,large:28}};
+const variants={baseline:null, choice_wave:{floor:1,large:0}, wave:{floor:.3,large:0}, wave_dense:{floor:.2,large:0}, cap_only:{floor:.15,large:0}, taper:{floor:.5,large:12},taper_variety:{floor:.3,large:28}};
 if(!(variant in variants))throw Error('Unknown experiment');
 const config=variants[variant];
 const server=await createServer({server:{middlewareMode:true},plugins:config?[{name:'audit-only-dealer-transform',enforce:'pre',transform(code,id){
@@ -10,12 +10,16 @@ const server=await createServer({server:{middlewareMode:true},plugins:config?[{n
  const source='const support = rhythm?.encoreDeals';
  if(!code.includes(source))throw Error('Source no longer matches experiment');
  code=code.replace(source,'const originalSupport = rhythm?.encoreDeals');
- code=code.replace('const history = rhythm?.recentBags ?? [];',`const fatigue=Math.min(1,Math.max(0,(moves-60)/240));
+ code=code.replace('const history = rhythm?.recentBags ?? [];',`const fatigue=${(variant.startsWith('wave')||variant==='choice_wave')?'(moves>=60 && Math.floor((moves-60)/3)%18>='+(variant==='wave_dense'?9:12)+' ? 1 : 0)':"Math.min(1,Math.max(0,(moves-60)/240))"};
  const support=rhythm?.recoveryDeals?originalSupport:originalSupport*(1-fatigue*(1-${config.floor}));
  const history = rhythm?.recentBags ?? [];`);
  code=code.replace('const value =\n            clears * clearWeight +',`const value =
             -fatigue*${config.large}*[...parent.path,op].reduce((n,p)=>n+Math.max(0,SHAPES[p.shape]!.cells.length-5)**2,0) +
             clears * clearWeight +`);
+ if(variant==='choice_wave'){
+   code=code.replace('const finalists = generous','const finalists = generous && !fatigue');
+   code=code.replace('Math.min(generous ? 3 : 8, finalists.length)','Math.min(generous && !fatigue ? 3 : 8, finalists.length)');
+ }
  return code;
 }}]:[]});
 const seeds=Number(process.env.SIM_SEEDS||60),offset=Number(process.env.SIM_OFFSET||0),limit=Number(process.env.SIM_LIMIT||300);
