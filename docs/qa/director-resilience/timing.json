@@ -1,0 +1,249 @@
+{
+  "environment": "Cloud Node CPU, sequential, warm; not Android frames",
+  "n": 48,
+  "p50": 41.31438600000001,
+  "p95": 72.31564200000003,
+  "max": 76.36705800000027,
+  "samples": [
+    {
+      "ms": 72.31564200000003,
+      "changed": false,
+      "checks": 195393
+    },
+    {
+      "ms": 65.82285899999988,
+      "changed": false,
+      "checks": 228426
+    },
+    {
+      "ms": 25.454793999999993,
+      "changed": false,
+      "checks": 65470
+    },
+    {
+      "ms": 17.891403999999966,
+      "changed": false,
+      "checks": 88866
+    },
+    {
+      "ms": 40.50913199999991,
+      "changed": false,
+      "checks": 111156
+    },
+    {
+      "ms": 5.912751000000071,
+      "changed": true,
+      "checks": 65352
+    },
+    {
+      "ms": 52.653418999999985,
+      "changed": false,
+      "checks": 193223
+    },
+    {
+      "ms": 64.69127000000003,
+      "changed": false,
+      "checks": 187623
+    },
+    {
+      "ms": 17.717251999999917,
+      "changed": true,
+      "checks": 100236
+    },
+    {
+      "ms": 49.29140800000005,
+      "changed": true,
+      "checks": 136726
+    },
+    {
+      "ms": 52.32464400000026,
+      "changed": false,
+      "checks": 145366
+    },
+    {
+      "ms": 40.26791400000002,
+      "changed": false,
+      "checks": 143523
+    },
+    {
+      "ms": 41.31438600000001,
+      "changed": false,
+      "checks": 134271
+    },
+    {
+      "ms": 14.135553000000073,
+      "changed": false,
+      "checks": 87678
+    },
+    {
+      "ms": 19.399795000000267,
+      "changed": true,
+      "checks": 103806
+    },
+    {
+      "ms": 71.23610999999983,
+      "changed": false,
+      "checks": 213646
+    },
+    {
+      "ms": 72.52954399999999,
+      "changed": false,
+      "checks": 195393
+    },
+    {
+      "ms": 64.29337199999964,
+      "changed": false,
+      "checks": 228426
+    },
+    {
+      "ms": 24.17954899999995,
+      "changed": false,
+      "checks": 65470
+    },
+    {
+      "ms": 18.641941999999744,
+      "changed": false,
+      "checks": 88866
+    },
+    {
+      "ms": 41.02412099999992,
+      "changed": false,
+      "checks": 111156
+    },
+    {
+      "ms": 5.113491000000067,
+      "changed": true,
+      "checks": 65352
+    },
+    {
+      "ms": 55.65808599999991,
+      "changed": false,
+      "checks": 193223
+    },
+    {
+      "ms": 76.36705800000027,
+      "changed": false,
+      "checks": 187623
+    },
+    {
+      "ms": 28.120828999999958,
+      "changed": true,
+      "checks": 100236
+    },
+    {
+      "ms": 59.291629999999714,
+      "changed": true,
+      "checks": 136726
+    },
+    {
+      "ms": 69.78592200000003,
+      "changed": false,
+      "checks": 145366
+    },
+    {
+      "ms": 43.94693099999995,
+      "changed": false,
+      "checks": 143523
+    },
+    {
+      "ms": 45.31259199999977,
+      "changed": false,
+      "checks": 134271
+    },
+    {
+      "ms": 13.350652999999966,
+      "changed": false,
+      "checks": 87678
+    },
+    {
+      "ms": 11.955477999999857,
+      "changed": true,
+      "checks": 103806
+    },
+    {
+      "ms": 63.73860800000011,
+      "changed": false,
+      "checks": 213646
+    },
+    {
+      "ms": 58.61852399999998,
+      "changed": false,
+      "checks": 195393
+    },
+    {
+      "ms": 58.09628399999974,
+      "changed": false,
+      "checks": 228426
+    },
+    {
+      "ms": 22.417193000000225,
+      "changed": false,
+      "checks": 65470
+    },
+    {
+      "ms": 16.35470600000008,
+      "changed": false,
+      "checks": 88866
+    },
+    {
+      "ms": 38.7145959999998,
+      "changed": false,
+      "checks": 111156
+    },
+    {
+      "ms": 5.587653000000046,
+      "changed": true,
+      "checks": 65352
+    },
+    {
+      "ms": 52.18277100000023,
+      "changed": false,
+      "checks": 193223
+    },
+    {
+      "ms": 61.21116299999994,
+      "changed": false,
+      "checks": 187623
+    },
+    {
+      "ms": 17.678714000000127,
+      "changed": true,
+      "checks": 100236
+    },
+    {
+      "ms": 43.68622899999991,
+      "changed": true,
+      "checks": 136726
+    },
+    {
+      "ms": 46.66328000000021,
+      "changed": false,
+      "checks": 145366
+    },
+    {
+      "ms": 40.41534599999977,
+      "changed": false,
+      "checks": 143523
+    },
+    {
+      "ms": 38.809443999999985,
+      "changed": false,
+      "checks": 134271
+    },
+    {
+      "ms": 10.443807000000106,
+      "changed": false,
+      "checks": 87678
+    },
+    {
+      "ms": 11.077498999999989,
+      "changed": true,
+      "checks": 103806
+    },
+    {
+      "ms": 70.31687999999986,
+      "changed": false,
+      "checks": 213646
+    }
+  ]
+}

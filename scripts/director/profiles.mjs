@@ -1,6 +1,7 @@
 import { createServer } from "vite";
 import fs from "node:fs/promises";
 import { gzipSync, gunzipSync } from "node:zlib";
+const out = process.env.DIRECTOR_OUT || "docs/qa/director-resilience";
 const server = await createServer({ server: { middlewareMode: true } });
 try {
   const R = await server.ssrLoadModule("/src/core/rules.ts"),
@@ -56,6 +57,7 @@ try {
         profile,
         diagnostic: s.diagnostic,
         safeRatio: a.safeRatio,
+        behavior: s.diagnostic.behavior,
         orderFreedom: a.orderFreedom,
         preparation: a.minMovesToClearOnSuccess,
         allClear: a.allClearPossible,
@@ -88,8 +90,9 @@ try {
       ),
     };
   });
+  await fs.mkdir(out, { recursive: true });
   await fs.writeFile(
-    "docs/qa/director-package2/profiles.json",
+    out + "/profiles.json",
     JSON.stringify({ summary, results }, null, 2),
   );
   console.log(JSON.stringify(summary));

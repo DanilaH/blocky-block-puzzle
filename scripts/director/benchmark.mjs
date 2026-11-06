@@ -8,9 +8,11 @@ const out = process.env.DIRECTOR_OUT || "docs/qa/director-package2",
 const styles = (process.env.DIRECTOR_STYLES || "clear,three,plausible").split(
   ",",
 );
-const policy = process.env.DIRECTOR_POLICY || "qualified-v5";
+const policy = process.env.DIRECTOR_POLICY || "observed-v7";
 const policyPath = {
-  "qualified-v5": "policy.ts",
+  "observed-v7": "policy.ts",
+  "resilience-v6": "policy-v6.ts",
+  "qualified-v5": "policy-v5.ts",
   "geometry-v4": "policy-v4.ts",
   "recipes-v3": "policy-v3.ts",
   "guarded-v2": "policy-v2.ts",
@@ -34,7 +36,8 @@ try {
             seriesBonusVersion: 1,
           },
           director = D.initialDirector(seed),
-          difficulty = null;
+          difficulty = null,
+          planning = null;
         let linesInTray = 0,
           clearInTray = false,
           clears = 0,
@@ -53,6 +56,16 @@ try {
           timings.push(performance.now() - t);
           director = s.director;
           difficulty = s.difficulty;
+          const behavior = s.diagnostic.behavior;
+          planning =
+            behavior?.every((b) => b.complete) && s.diagnostic.maxLines !== null
+              ? {
+                  expectedLines: Math.max(
+                    ...behavior.map((b) => b.expectedLines),
+                  ),
+                  maxLines: s.diagnostic.maxLines,
+                }
+              : null;
           g = { ...g, tray: s.tray };
           // Replace the just-recorded baseline bag with the actual experimental bag.
           if (g.rhythm?.recentBags?.length)
@@ -107,6 +120,7 @@ try {
               allClear: clearInTray,
               occupied: g.board.filter(Boolean).length,
               difficulty,
+              planning,
             });
             linesInTray = 0;
             clearInTray = false;

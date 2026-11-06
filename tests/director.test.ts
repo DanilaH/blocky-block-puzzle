@@ -180,3 +180,28 @@ it("does not substitute a tray before qualification, during payoff or during rec
     expect(result.diagnostic.checked).toBe(1);
   }
 });
+
+it("learns planning from realized above-baseline rewards, not guaranteed gift trays", () => {
+  const d = initialDirector(4);
+  const gift = {
+    success: true,
+    lines: 3,
+    allClear: true,
+    occupied: 0,
+    difficulty: 0,
+    planning: { expectedLines: 3, maxLines: 3 },
+  };
+  expect(observe(d, gift).skill).toBe(d.skill);
+  const planned = {
+    ...gift,
+    allClear: false,
+    planning: { expectedLines: 1, maxLines: 3 },
+  };
+  let n = d;
+  for (let i = 0; i < 8; i++) n = observe(n, planned);
+  expect(n.evidence).toBe(4);
+  expect(n.skill).toBeGreaterThan(0.6);
+  const failed = observe(n, { ...planned, success: false, lines: 0 });
+  expect(failed.skill).toBeLessThan(n.skill);
+  expect(observe(revived(d), planned).skill).toBe(d.skill);
+});

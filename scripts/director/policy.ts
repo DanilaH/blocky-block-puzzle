@@ -7,6 +7,7 @@ import {
   type Slot,
 } from "../../src/core/rules";
 import { analyze } from "../difficulty/analyze";
+import { resilience } from "./resilience";
 import { constructTasks } from "./recipes";
 export type Phase = "build" | "challenge" | "payoff" | "encore" | "recovery";
 export type Director = {
@@ -42,6 +43,7 @@ export type Observation = {
   allClear: boolean;
   occupied: number;
   difficulty: number | null;
+  planning?: { expectedLines: number; maxLines: number } | null;
 };
 /** Update on completed tray or loss, not on wall-clock time or advertising state. */
 export function observe(d: Director, o: Observation): Director {
@@ -63,6 +65,26 @@ export function observe(d: Director, o: Observation): Director {
         d.skill + (o.success ? 1 - d.skill : -d.skill) * 0.12 * weight,
       ),
     );
+  }
+  // Learn from realized rewards only when planning could outperform the behavioral baseline.
+  // Trivial gifts and recovery never manufacture mastery evidence.
+  const p = o.planning;
+  if (
+    d.phase !== "recovery" &&
+    p &&
+    Number.isFinite(p.expectedLines) &&
+    Number.isFinite(p.maxLines) &&
+    p.maxLines - p.expectedLines >= 0.5
+  ) {
+    const delta = o.lines - p.expectedLines;
+    if (!o.success || Math.abs(delta) >= 0.5) {
+      const good = o.success && delta >= 0.5;
+      n.evidence += 0.5;
+      n.skill = Math.max(
+        0,
+        Math.min(1, n.skill + (good ? 1 - n.skill : -n.skill) * 0.1),
+      );
+    }
   }
   if (d.phase === "recovery") {
     n.recovery = d.recovery;
@@ -118,7 +140,7 @@ export function select(
       director: structuredClone(d),
       difficulty: null,
       diagnostic: {
-        revision: "qualified-v5",
+        revision: "observed-v7",
         qualified: false,
         recipe: "opening",
         phase: d.phase,
@@ -142,12 +164,34 @@ export function select(
     rng = r.state;
     return r.value;
   };
-  if (d.phase === "challenge" && d.evidence >= 1 && d.skill >= 0.5) {
-    const tasks = constructTasks(g.board, rng);
-    rng = tasks.rng;
-    pool.push(...tasks.proposals.slice(0, Math.max(0, limits.candidates - 1)));
+  if (d.phase === "challenge" && d.evidence >= 3 && d.skill >= 0.6) {
+    for (
+      let attempt = 0;
+      attempt < 3 && pool.length < limits.candidates;
+      attempt++
+    ) {
+      const tasks = constructTasks(g.board, rng);
+      rng = tasks.rng;
+      for (const task of tasks.proposals) {
+        const bag = task.tray
+          .map((s) => s.shapeId)
+          .sort()
+          .join(",");
+        if (
+          !pool.some(
+            (p) =>
+              p.tray
+                .map((s) => s.shapeId)
+                .sort()
+                .join(",") === bag,
+          ) &&
+          pool.length < limits.candidates
+        )
+          pool.push(task);
+      }
+    }
   }
-  const changing = d.evidence >= 1 && d.skill >= 0.5 && d.phase === "challenge";
+  const changing = d.evidence >= 3 && d.skill >= 0.6 && d.phase === "challenge";
   for (let i = pool.length; changing && i < limits.candidates; i++) {
     if (i % 2) {
       const tray = Array.from({ length: 3 }, () => ({
@@ -179,10 +223,15 @@ export function select(
   const evaluated = unique.map((c) => ({
     ...c,
     metrics: analyze(g.board, c.tray, limits.checks),
+    behavior: [
+      resilience(g.board, c.tray, "lines", 4, limits.checks),
+      resilience(g.board, c.tray, "space", 4, limits.checks),
+    ],
   }));
-  const qualified = d.evidence >= 1 && d.skill >= 0.5;
+  const qualified = d.evidence >= 3 && d.skill >= 0.6;
   const effectiveSkill = qualified ? d.skill : 0.2;
   const base = evaluated.find((c) => c.source === "baseline")?.metrics;
+  const baseBehavior = evaluated[0]!.behavior;
   const target =
     d.phase === "recovery"
       ? 0.05
@@ -198,25 +247,23 @@ export function select(
       if (c.source === "baseline") return true;
       if (!base?.complete) return false;
       if (base.allClearPossible && !m.allClearPossible) return false;
-      if (!m.endOccupiedRange || !base.endOccupiedRange) return false;
-      if (m.endOccupiedRange[0]! > base.endOccupiedRange[0]!) return false;
-      if (m.endOccupiedRange[1]! > base.endOccupiedRange[1]!) return false;
-      if ((m.maxLinesOnSuccess ?? 0) < (base.maxLinesOnSuccess ?? 0))
-        return false;
-      const floor =
-        d.phase === "recovery"
-          ? 0.95
-          : qualified
-            ? 0.35
-            : Math.max(0.95, base.safeRatio ?? 1);
-      if ((m.safeRatio ?? 0) < floor) return false;
-      if (!qualified && (m.greedyTrapRatio ?? 0) > (base.greedyTrapRatio ?? 0))
+      if (
+        !c.behavior.every(
+          (b, i) =>
+            b.complete &&
+            baseBehavior[i]!.complete &&
+            b.success! >= 0.85 &&
+            b.success! >= baseBehavior[i]!.success! - 0.08 &&
+            b.expectedLines! >= baseBehavior[i]!.expectedLines! * 0.8 &&
+            b.expectedOccupied! <= baseBehavior[i]!.expectedOccupied! + 4,
+        )
+      )
         return false;
       return true;
     })
     .map((c) => {
       const m = c.metrics,
-        difficulty = 1 - m.safeRatio!;
+        difficulty = 1 - Math.min(...c.behavior.map((b) => b.success ?? 1));
       const order = 1 - m.orderFreedom!;
       const preparation = (m.minMovesToClearOnSuccess ?? 0) >= 2 ? 1 : 0;
       const lines = m.maxLinesOnSuccess ?? 0;
@@ -273,9 +320,11 @@ export function select(
       recovery:
         d.phase === "recovery" ? Math.max(0, d.recovery - 1) : d.recovery,
     },
-    difficulty: chosen?.difficulty ?? null,
+    difficulty: chosen?.behavior.every((b) => b.complete)
+      ? chosen.difficulty
+      : null,
     diagnostic: {
-      revision: "qualified-v5",
+      revision: "observed-v7",
       qualified,
       recipe: chosen?.recipe ?? "baseline",
       phase: d.phase,
@@ -289,6 +338,7 @@ export function select(
       preparation: chosen?.metrics.minMovesToClearOnSuccess ?? null,
       maxLines: chosen?.metrics.maxLinesOnSuccess ?? null,
       motif,
+      behavior: chosen?.behavior ?? evaluated[0]!.behavior,
     },
   };
 }
