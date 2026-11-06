@@ -100,9 +100,10 @@ it("theme earn resets buildup, encore is rare and cannot chain on a short cycle"
   );
   expect(validRhythmV4(normal)).toBe(true);
 });
-it("dealer bans the third matching family bag in four, keeps a legal route and inputs intact", () => {
-  const bag = "O3,O3,R6";
-  for (let seed = 1; seed <= 25; seed++) {
+it.each(Array.from({ length: 25 }, (_, i) => i + 1))(
+  "dealer bans repeated family bags and preserves replay for seed %i",
+  (seed) => {
+    const bag = "O3,O3,R6";
     const board = emptyBoard();
     for (let i = 0; i < 8; i++) board[16 + i] = 1;
     const rhythm = {
@@ -124,8 +125,8 @@ it("dealer bans the third matching family bag in four, keeps a legal route and i
       b = place(b, shapeById(d.tray[m.slot]!.shapeId), m.x, m.y).board;
     expect(JSON.stringify({ board, rhythm })).toBe(original);
     expect(deal(board, seed, "flow-v4", 50, bag, rhythm)).toEqual(d);
-  }
-});
+  },
+);
 it("line geometry distinguishes parallel triples, four lines and intersections", () => {
   expect(clearSignature(Array.from({ length: 24 }, (_, i) => i)).kind).toBe(
     "triple",
