@@ -1,0 +1,44 @@
+{
+  "policy": "recipes-v3",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 500,
+  "limit": 600,
+  "openingMatches": 6,
+  "summary": [
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 103,
+      "rewardRate": 0.4658333333333333,
+      "repeat": 25,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 1,
+      "medianMoves": 600,
+      "moves": 3104,
+      "clears": 84,
+      "rewardRate": 0.4652061855670103,
+      "repeat": 18,
+      "maxDry": 7,
+      "p95Selection": 103.74319800000012,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 8,
+          "dead": false
+        }
+      ]
+    }
+  ]
+}

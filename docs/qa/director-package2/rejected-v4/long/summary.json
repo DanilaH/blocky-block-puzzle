@@ -1,0 +1,38 @@
+{
+  "policy": "geometry-v4",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 800,
+  "limit": 600,
+  "openingMatches": 6,
+  "summary": [
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 73,
+      "rewardRate": 0.46694444444444444,
+      "repeat": 20,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 109,
+      "rewardRate": 0.4636111111111111,
+      "repeat": 22,
+      "maxDry": 7,
+      "p95Selection": 116.82679199999984,
+      "recovery": []
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "seeds": 6,
+  "offset": 400,
+  "limit": 600,
+  "openingMatches": 6,
+  "summary": [
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 125,
+      "rewardRate": 0.4513888888888889,
+      "repeat": 17,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 84,
+      "rewardRate": 0.4752777777777778,
+      "repeat": 23,
+      "maxDry": 7,
+      "p95Selection": 110.61141700000007,
+      "recovery": []
+    }
+  ]
+}
