@@ -1,0 +1,41 @@
+{
+  "recordedBeforeRunAt": "2026-11-07T18:01:37.264464+00:00",
+  "candidate": "Precomposed four same-color energy-border masks, 64 levels, 8 quads instead of 32; only border intensity quantized. No native-trim candidate in this runtime.",
+  "sourceSha256": {
+    "src/game/sprite-ink.ts": "8f8876bc4aa7049a3fab408c0ad710b5f7eb8b941e1e69edfceb566971fe07a2",
+    "src/game/BoardScene.ts": "e9e68d3bf3148fed74cf780f5de9fe72c2052eba6aba38729bfc04e98d3093cd",
+    "scripts/audit-performance-probe.mjs": "653b7078b0f4e8e182490bf6d4620711df2fe8bc68158ff1669421b962331818",
+    "scripts/performance-probe/browser.mjs": "a428ed699fab11e2acee6211f35d028a0f6ecb4a84ad5a09e5139a32b462c67d"
+  },
+  "conditions": {
+    "fixtures": [
+      0,
+      1,
+      2
+    ],
+    "androidUA": true,
+    "dpr": 2.75,
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "rounds": 3,
+    "repeats": 2,
+    "windowMs": 2200
+  },
+  "gate": "Each fixture warm median over25 decreases >=10%; no paired warm count grows >30% allowing 1 interval; cold median no growth >15% allowing 1 interval; scores/board exact. Pixel tolerance for the cache is max channel delta<=3, MAE<0.05; changed-channel fraction is reported, not an acceptance threshold because normal alpha precomposition rounds sub-tone differences over the whole border. Six-level gallery before this plan showed max 3; this is not a retrospective registration for those visual observations or initial performance screen. New high-resolution gallery must meet the same max/MAE bounds.",
+  "limits": [
+    "Engineering gate, not population statistics.",
+    "SwiftShader with Android UA is not the physical phone GPU.",
+    "Control retains allocated cache but draws the original four border strokes.",
+    "Original field clarity, timing, particle count and theme progression unchanged."
+  ],
+  "harnessCorrectionBeforeValidRunAt": "2026-11-07T18:07:18.370332+00:00",
+  "harnessCorrection": "Prototype image wrapper omitted new optional texture key. Previous energy-screen and energy-confirm results are invalid for performance acceptance and retained only as invalid evidence. Wrapper now forwards the key and fails on a missing frame. Same gate, new run.",
+  "correctedSourceSha256": {
+    "src/game/sprite-ink.ts": "8f8876bc4aa7049a3fab408c0ad710b5f7eb8b941e1e69edfceb566971fe07a2",
+    "src/game/BoardScene.ts": "e9e68d3bf3148fed74cf780f5de9fe72c2052eba6aba38729bfc04e98d3093cd",
+    "scripts/audit-performance-probe.mjs": "653b7078b0f4e8e182490bf6d4620711df2fe8bc68158ff1669421b962331818",
+    "scripts/performance-probe/browser.mjs": "90b82554d5fd4531b80748d5add47d866f844d218621a524ac7cec2c79e9930b"
+  }
+}
