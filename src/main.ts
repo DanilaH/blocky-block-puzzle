@@ -2424,7 +2424,22 @@ async function start() {
     defeatPlayed = defeatKey;
     const record =
       currentGame().score > 0 && currentGame().score >= bestFor(store.state);
-    scene.defeat(record);
+    const finalDefeat = !revivePlan(currentGame());
+    // A record must not soften the final loss. Move the existing field as one
+    // surface; no additional particles, textures or full-field light layers.
+    scene.defeat(record && !finalDefeat);
+    if (finalDefeat)
+      animate(
+        canvasBox,
+        [
+          { transform: "translateY(0) scale(1)" },
+          { transform: "translateY(7px) scale(.985)", offset: 0.16 },
+          { transform: "translateY(-3px) scale(1.005)", offset: 0.4 },
+          { transform: "translateY(2px) scale(.997)", offset: 0.65 },
+          { transform: "translateY(0) scale(1)" },
+        ],
+        620,
+      );
     document
       .querySelectorAll(".piece")
       .forEach((e) =>

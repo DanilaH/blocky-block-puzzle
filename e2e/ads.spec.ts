@@ -251,6 +251,7 @@ test("second defeat after a real revive repeats the defeat cue before the final 
 }) => {
   await page.addInitScript(() => {
     (window as any).__defeatShakeCount = 0;
+    (window as any).__finalFieldImpacts = [];
     const animate = Element.prototype.animate;
     Element.prototype.animate = function (frames, options) {
       if (
@@ -259,6 +260,12 @@ test("second defeat after a real revive repeats the defeat cue before the final 
         frames.some((f) => String(f.transform).includes("rotate(-6deg)"))
       )
         (window as any).__defeatShakeCount++;
+      if (
+        this.id === "board" &&
+        Array.isArray(frames) &&
+        frames.some((f) => String(f.transform).includes("translateY(7px)"))
+      )
+        (window as any).__finalFieldImpacts.push({ frames, options });
       return animate.call(this, frames, options);
     };
   });
@@ -293,6 +300,9 @@ test("second defeat after a real revive repeats the defeat cue before the final 
   await placeMove(revivePlaytest.firstMove);
   await expect(page.locator("#watch-reward")).toBeVisible();
   expect(await page.evaluate(() => (window as any).__defeatShakeCount)).toBe(3);
+  expect(
+    await page.evaluate(() => (window as any).__finalFieldImpacts),
+  ).toEqual([]);
   await page.locator("#watch-reward").click();
   await expect(page.locator("dialog")).not.toBeVisible();
   await page.waitForTimeout(400);
@@ -302,6 +312,15 @@ test("second defeat after a real revive repeats the defeat cue before the final 
     .poll(() => page.evaluate(() => (window as any).__defeatShakeCount))
     .toBe(6);
   await expect(page.locator("#again")).toBeVisible();
+  const impacts = await page.evaluate(
+    () => (window as any).__finalFieldImpacts,
+  );
+  expect(impacts).toHaveLength(1);
+  expect(impacts[0].options.duration).toBe(620);
+  expect(impacts[0].frames[1].transform).toBe("translateY(7px) scale(.985)");
+  expect(
+    await page.locator("#board").evaluate((e) => getComputedStyle(e).transform),
+  ).toBe("none");
   const final = (await saved(page)).game;
   expect(final.score).toBe(revivePlaytest.finalScore);
   expect(final.reviveUsed).toBe(true);
