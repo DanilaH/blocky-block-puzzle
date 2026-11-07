@@ -1014,7 +1014,9 @@ async function start() {
               ? 1 + Math.min(1, event.state.streak / 10)
               : 0.15,
         );
-        if (praise) {
+        // Ranking describes the move before commit. A terminal outcome must
+        // not congratulate the player; the earned series bonus above still pays.
+        if (praise && event.state.status === "playing") {
           lastPraiseMove = before.moves;
           scene.praise(placedCells, praise === "excellent");
           if (!event.lines) {
@@ -1043,16 +1045,6 @@ async function start() {
             ],
             event.allClear ? 1900 : 1200,
           );
-          if (event.state.streak >= 10 && event.lines >= 2 && !event.allClear)
-            festival.burst(
-              canvasBox.getBoundingClientRect(),
-              event.cells,
-              1,
-              true,
-              false,
-              undefined,
-              64,
-            );
         }
         if (before.tray.filter((s) => s.used).length === 2)
           document.querySelectorAll(".piece .mini-shape").forEach((e, i) =>
@@ -1116,7 +1108,7 @@ async function start() {
         audio.play(
           event.allClear
             ? "allClear"
-            : newRecord
+            : newRecord && event.lines < 2
               ? "record"
               : signature.kind === "cross"
                 ? "cross"
