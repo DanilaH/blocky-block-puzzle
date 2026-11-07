@@ -230,6 +230,9 @@ async function start() {
     toastTimer = 0,
     modal = "";
   let hintSaving = false;
+  let hintTimeout = 0;
+  let dragFrame = 0;
+  let dragSample: PointerEvent | null = null;
   let rejectedDrags = 0;
   let tapHelpShown = false;
   let running = false;
@@ -811,7 +814,6 @@ async function start() {
             ? "Ещё подсказки"
             : "Подсказка";
   }
-  let hintTimeout = 0;
   function cancelHint(reason = "cancelled") {
     clearTimeout(hintTimeout);
     hintTimeout = 0;
@@ -823,8 +825,6 @@ async function start() {
     el("hint").removeAttribute("aria-busy");
     refreshHintLabel();
   }
-  let dragFrame = 0;
-  let dragSample: PointerEvent | null = null;
   function clearDragFrame() {
     cancelAnimationFrame(dragFrame);
     dragFrame = 0;
