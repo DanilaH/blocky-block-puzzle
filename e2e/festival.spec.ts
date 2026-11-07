@@ -3,6 +3,7 @@ for (const interrupt of [false, true])
   test(`festival rewards are durable and bounded; pause=${interrupt}`, async ({
     page,
   }) => {
+    await page.clock.install();
     await page.route("**/src/platform/haptics.ts", async (route) => {
       const response = await route.fetch();
       const body = (await response.text()).replace(
@@ -64,9 +65,11 @@ for (const interrupt of [false, true])
         .toBe(true);
     }
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.clock.install();
+    // Let resize and selection reach their visible state before freezing RAF.
+    // force-clicking immediately after resize can miss selection on a busy runner.
+    await page.locator(".piece").first().click();
+    await expect(page.locator(".piece").first()).toHaveClass(/selected/);
     await page.clock.pauseAt(new Date(Date.now() + 100));
-    await page.locator(".piece").first().click({ force: true });
     await page
       .locator("#board")
       .click({ force: true, position: { x: 4, y: 4 } });
