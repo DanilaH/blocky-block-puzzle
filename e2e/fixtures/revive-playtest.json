@@ -1,0 +1,134 @@
+{
+  "before": {
+    "gameId": "revive-playtest-regression",
+    "revision": 25,
+    "board": [
+      0,
+      6,
+      6,
+      6,
+      6,
+      6,
+      0,
+      0,
+      6,
+      6,
+      6,
+      6,
+      0,
+      4,
+      0,
+      3,
+      0,
+      0,
+      6,
+      6,
+      6,
+      4,
+      3,
+      3,
+      0,
+      0,
+      4,
+      4,
+      6,
+      6,
+      6,
+      6,
+      0,
+      0,
+      4,
+      4,
+      6,
+      6,
+      6,
+      6,
+      0,
+      2,
+      2,
+      2,
+      2,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      4,
+      4,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      4,
+      6,
+      6,
+      6
+    ],
+    "tray": [
+      {
+        "shapeId": "T4-0",
+        "used": false,
+        "color": 4
+      },
+      {
+        "shapeId": "I4-0",
+        "used": true,
+        "color": 6
+      },
+      {
+        "shapeId": "T4-0",
+        "used": false,
+        "color": 4
+      }
+    ],
+    "score": 2006,
+    "streak": 0,
+    "rulesVersion": "grace-v2",
+    "streakMisses": 0,
+    "moves": 25,
+    "rngState": 3190913920,
+    "dealerVersion": "flow-v4",
+    "rhythm": {
+      "pressure": 100,
+      "dryMoves": 6,
+      "recoveryDeals": 0,
+      "reliefMoves": 6,
+      "cycleMoves": 25,
+      "recentBags": [
+        "L3,SZ4,T4",
+        "I2,I4,L3",
+        "I4,O2,T4",
+        "I4,T4,T4"
+      ],
+      "encoreDeals": 0
+    },
+    "status": "playing",
+    "reviveUsed": false,
+    "assisted": false,
+    "dealerFallbacks": 0,
+    "scoringVersion": "festival-v4",
+    "seriesBonusVersion": 1
+  },
+  "firstMove": {
+    "slot": 2,
+    "x": 0,
+    "y": 6
+  },
+  "afterReviveMoves": [
+    {
+      "slot": 0,
+      "x": 1,
+      "y": 2
+    },
+    {
+      "slot": 2,
+      "x": 2,
+      "y": 3
+    }
+  ],
+  "finalScore": 2018
+}

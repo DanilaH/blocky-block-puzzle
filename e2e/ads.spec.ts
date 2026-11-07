@@ -216,3 +216,100 @@ test("fullscreen blocks dialog and game navigation until bridge closes", async (
   await expect(page.locator("#app")).toHaveJSProperty("inert", false);
   expect((await saved(page)).earnedHints).toBe(3);
 });
+
+import revivePlaytest from "./fixtures/revive-playtest.json" with { type: "json" };
+
+test("revive ring progresses between coarse deadline ticks and keeps its deadline", async ({
+  page,
+}) => {
+  await mock(page);
+  await fixture(page, true);
+  const deadline = (await saved(page)).game.reviveOffer.deadline;
+  const values = await page.evaluate(
+    () =>
+      new Promise<number[]>((resolve) => {
+        const samples: number[] = [];
+        const circle = document.querySelector(".clock-progress")!;
+        const step = () => {
+          samples.push(parseFloat(getComputedStyle(circle).strokeDashoffset));
+          if (samples.length === 12) resolve(samples);
+          else requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }),
+  );
+  expect(new Set(values.map((n) => n.toFixed(2))).size).toBeGreaterThan(7);
+  expect(values.at(-1)!).toBeLessThan(values[0]);
+  expect((await saved(page)).game.reviveOffer.deadline).toBe(deadline);
+  await page.locator("#watch-reward").click();
+  await expect(page.locator("dialog")).not.toBeVisible();
+  expect((await saved(page)).game.reviveUsed).toBe(true);
+});
+
+test("second defeat after a real revive repeats the defeat cue before the final result", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    (window as any).__defeatShakeCount = 0;
+    const animate = Element.prototype.animate;
+    Element.prototype.animate = function (frames, options) {
+      if (
+        this.classList.contains("piece") &&
+        Array.isArray(frames) &&
+        frames.some((f) => String(f.transform).includes("rotate(-6deg)"))
+      )
+        (window as any).__defeatShakeCount++;
+      return animate.call(this, frames, options);
+    };
+  });
+  await mock(page);
+  await fixture(page);
+  await page.evaluate(async (before) => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    const adapter = new IndexedSave();
+    const p = (await adapter.load()).profile;
+    p.revision++;
+    p.game = before;
+    p.best = p.festivalBest = p.progressionBest = 100000;
+    p.hint = null;
+    delete p.metrics;
+    p.settings.calm = false;
+    await adapter.write(p);
+  }, revivePlaytest.before);
+  await page.reload();
+  await page.locator("#board canvas").waitFor();
+  const placeMove = async (move: { slot: number; x: number; y: number }) => {
+    const before = (await saved(page)).game.moves;
+    await page.locator(`[data-slot="${move.slot}"]`).click();
+    const box = (await page.locator("#board").boundingBox())!;
+    await page.mouse.click(
+      box.x + ((move.x + 0.5) * box.width) / 8,
+      box.y + ((move.y + 0.5) * box.height) / 8,
+    );
+    await expect
+      .poll(async () => (await saved(page)).game.moves)
+      .toBe(before + 1);
+  };
+  await placeMove(revivePlaytest.firstMove);
+  await expect(page.locator("#watch-reward")).toBeVisible();
+  expect(await page.evaluate(() => (window as any).__defeatShakeCount)).toBe(3);
+  await page.locator("#watch-reward").click();
+  await expect(page.locator("dialog")).not.toBeVisible();
+  await page.waitForTimeout(400);
+  for (const move of revivePlaytest.afterReviveMoves) await placeMove(move);
+  await expect.poll(async () => (await saved(page)).game.status).toBe("over");
+  await expect
+    .poll(() => page.evaluate(() => (window as any).__defeatShakeCount))
+    .toBe(6);
+  await expect(page.locator("#again")).toBeVisible();
+  const final = (await saved(page)).game;
+  expect(final.score).toBe(revivePlaytest.finalScore);
+  expect(final.reviveUsed).toBe(true);
+  expect(
+    await page.evaluate(
+      () =>
+        (window as any).adCalls.filter((c: any) => c.kind === "rewarded")
+          .length,
+    ),
+  ).toBe(1);
+});

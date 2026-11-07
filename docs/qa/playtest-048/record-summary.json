@@ -1,0 +1,307 @@
+{
+  "schema": "blocky-human-playtest-summary-v1",
+  "appVersion": "0.47.0-preview",
+  "reportedDevice": "POCO M6 Pro (variant not recorded)",
+  "completeGameStart": true,
+  "replayVerifiedMoves": 696,
+  "recordEvents": 704,
+  "sessions": [
+    {
+      "session": 1,
+      "moves": 668,
+      "initialMove": 0,
+      "finalMove": 668,
+      "score": 166658,
+      "status": "over",
+      "recordedActiveMs": 1360717,
+      "fullClears": [
+        {
+          "move": 13,
+          "score": 2298,
+          "lines": 1
+        },
+        {
+          "move": 109,
+          "score": 19470,
+          "lines": 1
+        },
+        {
+          "move": 113,
+          "score": 21894,
+          "lines": 1
+        },
+        {
+          "move": 127,
+          "score": 25150,
+          "lines": 1
+        },
+        {
+          "move": 135,
+          "score": 27640,
+          "lines": 1
+        },
+        {
+          "move": 141,
+          "score": 29314,
+          "lines": 1
+        },
+        {
+          "move": 150,
+          "score": 31296,
+          "lines": 1
+        },
+        {
+          "move": 252,
+          "score": 51123,
+          "lines": 1
+        },
+        {
+          "move": 261,
+          "score": 53655,
+          "lines": 1
+        },
+        {
+          "move": 595,
+          "score": 150263,
+          "lines": 1
+        },
+        {
+          "move": 620,
+          "score": 158091,
+          "lines": 1
+        }
+      ],
+      "deals": 223,
+      "uniqueBags": 154,
+      "consecutiveRepeats": 3,
+      "longestSameBagRun": 2,
+      "mostCommon": [
+        [
+          "O3-0,O3-0,R6-1",
+          12
+        ],
+        [
+          "O3-0,O3-0,R6-0",
+          9
+        ],
+        [
+          "R6-0,R6-0,R6-0",
+          4
+        ],
+        [
+          "O2-0,O3-0,O3-0",
+          4
+        ],
+        [
+          "I2-1,I3-1,L3-0",
+          4
+        ],
+        [
+          "I3-1,L3-0,L3-2",
+          3
+        ],
+        [
+          "I3-0,I3-0,I3-0",
+          3
+        ],
+        [
+          "I5-1,I5-1,I5-1",
+          3
+        ],
+        [
+          "I3-0,I3-1,I3-1",
+          3
+        ],
+        [
+          "I3-1,L3-1,L3-2",
+          3
+        ]
+      ],
+      "maxStreak": 16,
+      "reviveUsed": false
+    },
+    {
+      "session": 2,
+      "moves": 28,
+      "initialMove": 0,
+      "finalMove": 28,
+      "score": 2018,
+      "status": "over",
+      "recordedActiveMs": 55350,
+      "fullClears": [],
+      "deals": 10,
+      "uniqueBags": 10,
+      "consecutiveRepeats": 0,
+      "longestSameBagRun": 1,
+      "mostCommon": [
+        [
+          "L51,R6-1,R6-1",
+          1
+        ],
+        [
+          "I3-0,I3-0,L3-3",
+          1
+        ],
+        [
+          "L50,L50,L52",
+          1
+        ],
+        [
+          "L50,R6-0,R6-0",
+          1
+        ],
+        [
+          "SZ4-0,SZ4-2,T4-2",
+          1
+        ],
+        [
+          "L3-3,SZ4-2,T4-2",
+          1
+        ],
+        [
+          "I2-1,I4-0,L3-2",
+          1
+        ],
+        [
+          "I4-0,O2-0,T4-0",
+          1
+        ],
+        [
+          "I4-0,T4-0,T4-0",
+          1
+        ],
+        [
+          "I4-0,I4-0,T4-2",
+          1
+        ]
+      ],
+      "maxStreak": 4,
+      "reviveUsed": true
+    }
+  ],
+  "checkpoints": [
+    {
+      "reason": "start",
+      "move": 0,
+      "score": 0,
+      "status": "playing",
+      "reviveUsed": false,
+      "activeMs": 0,
+      "wallMs": 0
+    },
+    {
+      "reason": "state-change",
+      "move": 668,
+      "score": 166658,
+      "status": "over",
+      "reviveUsed": false,
+      "activeMs": 1363593,
+      "wallMs": 1381901
+    },
+    {
+      "reason": "state-change",
+      "move": 668,
+      "score": 166658,
+      "status": "over",
+      "reviveUsed": false,
+      "activeMs": 1363598,
+      "wallMs": 1386943
+    },
+    {
+      "reason": "new-game",
+      "move": 0,
+      "score": 0,
+      "status": "playing",
+      "reviveUsed": false,
+      "activeMs": 1363598,
+      "wallMs": 1414692
+    },
+    {
+      "reason": "state-change",
+      "move": 26,
+      "score": 2010,
+      "status": "over",
+      "reviveUsed": false,
+      "activeMs": 1413428,
+      "wallMs": 1464527
+    },
+    {
+      "reason": "state-change",
+      "move": 26,
+      "score": 2010,
+      "status": "over",
+      "reviveUsed": false,
+      "activeMs": 1413430,
+      "wallMs": 1466537
+    },
+    {
+      "reason": "revive",
+      "move": 26,
+      "score": 2010,
+      "status": "playing",
+      "reviveUsed": true,
+      "activeMs": 1413430,
+      "wallMs": 1477584
+    },
+    {
+      "reason": "new-game",
+      "move": 0,
+      "score": 0,
+      "status": "playing",
+      "reviveUsed": false,
+      "activeMs": 1421130,
+      "wallMs": 1496620
+    }
+  ],
+  "targetClearances": [
+    {
+      "segment": 1,
+      "move": 13,
+      "score": 2298,
+      "beforeScore": 995,
+      "lines": 1,
+      "allClear": true,
+      "activeMs": 24654,
+      "wallMs": 42962,
+      "streak": 4,
+      "placement": {
+        "slot": 1,
+        "x": 3,
+        "y": 2
+      }
+    },
+    {
+      "segment": 1,
+      "move": 109,
+      "score": 19470,
+      "beforeScore": 18169,
+      "lines": 1,
+      "allClear": true,
+      "activeMs": 296197,
+      "wallMs": 314505,
+      "streak": 4,
+      "placement": {
+        "slot": 1,
+        "x": 2,
+        "y": 0
+      }
+    }
+  ],
+  "calibrationSummary": {
+    "moves": 696,
+    "segments": 8,
+    "scoreGain": 168676,
+    "fullClears": 11,
+    "rewardMoves": 266,
+    "hintedMoves": 0,
+    "unhintedAvoidableDeadEnds": 3,
+    "unknownChoices": 120,
+    "medianActiveIntervalMs": 1660
+  },
+  "limitations": [
+    "Game recording contains moves/state hashes and clocks, not frame timings, wardrobe selection, audiovisual capture or GPU model.",
+    "Skill and population-level balance cannot be inferred from one player.",
+    "Raw user recording is not published; session identifiers are omitted from this derived summary.",
+    "Search unknown is not a failure; disagreement with bot policy is not an error."
+  ]
+}

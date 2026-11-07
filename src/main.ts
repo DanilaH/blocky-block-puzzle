@@ -1,3 +1,5 @@
+import { APP_VERSION } from "./app-version";
+import { presentReviveClock } from "./game/revive-clock";
 import { MoveCalculator } from "./game/move-calculator";
 import { PlayCapture } from "./platform/play-capture";
 import { sharePlayRecord } from "./platform/share-json";
@@ -2059,6 +2061,7 @@ async function start() {
       )
         return;
       clearInterval(reviveTimer);
+      stopReviveClock();
       dialog.close();
       void finishResult();
     } catch (error) {
@@ -2099,6 +2102,12 @@ async function start() {
       "revive",
     );
     positionRevive();
+    stopReviveClock();
+    if (!accepted)
+      stopReviveClock = presentReviveClock(
+        el("revive-clock"),
+        store.state.game.reviveOffer!.deadline,
+      );
     el("watch-reward").onclick = () => void acceptRevive();
     ads.preload();
   }
@@ -2151,7 +2160,8 @@ async function start() {
     for (const key of ["musicVolume", "effectsVolume", "calm"])
       details.append(el(key).closest("label")!);
     const diagnostics = dialog.querySelector<HTMLElement>(".diagnostics")!;
-    diagnostics.hidden = !import.meta.env.DEV;
+    diagnostics.hidden =
+      !import.meta.env.DEV && !APP_VERSION.endsWith("-preview");
     details.append(diagnostics);
     body.insertBefore(quick, el("save-status").nextSibling);
     body.append(details);
@@ -2406,11 +2416,12 @@ async function start() {
     }
   }
   function beginDefeat() {
-    if (defeatPlayed === currentGame().gameId || scene.calm) {
+    const defeatKey = `${currentGame().gameId}:${currentGame().reviveUsed ? "revived" : "initial"}`;
+    if (defeatPlayed === defeatKey || scene.calm) {
       showResult();
       return;
     }
-    defeatPlayed = currentGame().gameId;
+    defeatPlayed = defeatKey;
     const record =
       currentGame().score > 0 && currentGame().score >= bestFor(store.state);
     scene.defeat(record);
@@ -2435,6 +2446,7 @@ async function start() {
     }, 750);
   }
   let reviveTimer = 0;
+  let stopReviveClock = () => {};
   let openingResult = false;
   async function showResult() {
     if (dialog.open || openingResult) return;
@@ -2464,9 +2476,10 @@ async function start() {
           revision: p.revision + 1,
           game: expireReviveOffer(p.game, Date.now()),
         }));
+      clearInterval(reviveTimer);
+      stopReviveClock();
       if (revivePlan(store.state.game)) showRevive();
       else void finishResult();
-      clearInterval(reviveTimer);
       const gameId = store.state.game.gameId;
       const tick = async () => {
         const g = store.state.game,
@@ -2479,15 +2492,13 @@ async function start() {
           g.status !== "over"
         ) {
           clearInterval(reviveTimer);
+          stopReviveClock();
           return;
         }
         const remaining = Math.max(0, offer.deadline - Date.now());
         const button = dialog.querySelector<HTMLButtonElement>("#watch-reward");
         if (button) {
-          const clock = dialog.querySelector<HTMLElement>("#revive-clock");
           const count = dialog.querySelector<HTMLElement>("#revive-countdown");
-          if (clock)
-            clock.style.setProperty("--remaining", `${100 - remaining / 50}`);
           if (
             count &&
             count.textContent !== String(Math.ceil(remaining / 1000))
@@ -2545,6 +2556,7 @@ async function start() {
       if (!changed) return;
       if (store.state.game.reviveOffer?.accepted) {
         clearInterval(reviveTimer);
+        stopReviveClock();
         el("revive-clock").hidden = true;
         el("reward-status").textContent = "Подготавливаем рекламу…";
         el<HTMLButtonElement>("watch-reward").disabled = true;
@@ -2739,6 +2751,7 @@ async function start() {
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
       clearInterval(reviveTimer);
+      stopReviveClock();
       analytics.dispose();
       void ads.dispose();
       bannerWatch?.dispose();
