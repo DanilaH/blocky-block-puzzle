@@ -1,0 +1,10 @@
+{
+  "note": "Synthetic states; live UI input. Native ad availability mocked; no actual ad. Screenshot overhead means timestamps are nominal waits, not exact animation timestamps.",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "clipped": [],
+  "errors": [],
+  "samples": []
+}

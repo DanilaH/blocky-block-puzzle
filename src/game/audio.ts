@@ -401,7 +401,7 @@ export class GameAudio {
           t +
           (kind === "hint" ? 0 : kind === "allClear" ? 0.4 : 0.04) +
           (kind === "cross"
-            ? (i % 2) * 0.055
+            ? Math.floor(i / 2) * 0.18
             : kind === "quad"
               ? i * 0.09
               : kind === "mega"
@@ -409,7 +409,9 @@ export class GameAudio {
                 : kind === "combo"
                   ? Math.floor(i / 2) * 0.16
                   : i * (0.07 + Math.min(points, 300) / 3000)) *
-            (1 - development * 0.25);
+            (["combo", "mega", "cross"].includes(kind)
+              ? 1
+              : 1 - development * 0.25);
       this.tone(
         f,
         f * 0.999,

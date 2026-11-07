@@ -86,7 +86,10 @@ export async function startCampaign() {
   } | null = null;
   const animations = new Set<Animation>();
   const dialog = el<HTMLDialogElement>("adv-dialog");
+  let hintTimeout = 0;
   const cancelHint = () => {
+    clearTimeout(hintTimeout);
+    hintTimeout = 0;
     generation++;
     job?.terminate();
     job = null;
@@ -643,9 +646,15 @@ export async function startCampaign() {
         revision: a.revision,
       },
       token = ++generation;
-    const worker = new Worker(new URL("./hint.worker.ts", import.meta.url), {
-      type: "module",
-    });
+    let worker: Worker;
+    try {
+      worker = new Worker(new URL("./hint.worker.ts", import.meta.url), {
+        type: "module",
+      });
+    } catch {
+      report("Не удалось рассчитать подсказку. Можно повторить.");
+      return;
+    }
     job = worker;
     report("Ищем ход к цели…");
     worker.onmessage = async ({
@@ -653,9 +662,12 @@ export async function startCampaign() {
     }: {
       data: Omit<CampaignHint, "source">;
     }) => {
+      if (job !== worker || generation !== token) return;
+      clearTimeout(hintTimeout);
+      hintTimeout = 0;
       worker.terminate();
-      if (job !== worker || generation !== token || !running) return;
       job = null;
+      if (!running) return;
       try {
         if (
           data.move &&
@@ -671,11 +683,19 @@ export async function startCampaign() {
         report("Подсказка не списана: не удалось сохранить.");
       }
     };
-    worker.onerror = () => {
+    const failHint = () => {
+      if (job !== worker || generation !== token) return;
       cancelHint();
       report("Не удалось рассчитать подсказку. Можно повторить.");
     };
-    worker.postMessage({ request, state: a });
+    worker.onerror = failHint;
+    worker.onmessageerror = failHint;
+    hintTimeout = window.setTimeout(failHint, 5000);
+    try {
+      worker.postMessage({ request, state: a });
+    } catch {
+      failHint();
+    }
   };
   function openDialog(html: string) {
     cancelDrag();

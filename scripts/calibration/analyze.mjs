@@ -56,8 +56,7 @@ try {
   const times = rows.map((r) => r.activeIntervalMs).sort((a, b) => a - b);
   const report = {
     schema: "blocky-calibration-v1",
-    source:
-      "user-provided recording; provenance not independently authenticated",
+    source: "input recording; provenance not independently authenticated",
     limitations: [
       "Active intervals include interaction, calculation and saving; not pure thinking time.",
       "Different moves from a bot are not automatically mistakes.",

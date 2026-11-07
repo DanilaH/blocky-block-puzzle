@@ -88,8 +88,28 @@ for (const [streak, material] of [
     await page.mouse.move(1, 1);
     await page.mouse.up();
     await page.locator('[data-slot="1"]').click();
-    await page.locator("#board").click({position:{x:5,y:5}});
+    await page.locator("#board").click({ position: { x: 5, y: 5 } });
+    // The click dispatches an async save; selection is not a commit barrier.
+    await expect
+      .poll(() =>
+        page.evaluate(async () => {
+          const { IndexedSave } = await import("/src/platform/save.ts");
+          return (await new IndexedSave().load()).profile!.game.moves;
+        }),
+      )
+      .toBe(12);
     await page.locator('[data-slot="2"]').click();
+    // Drawing is coalesced into RAF after the durable move.
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            (window as any).materialScene.study.pools
+              .flat()
+              .filter((s: any) => s.visible).length,
+        ),
+      )
+      .toBeGreaterThan(0);
     const state = await page.evaluate(() => {
       const w = window as any,
         study = w.materialScene.study;

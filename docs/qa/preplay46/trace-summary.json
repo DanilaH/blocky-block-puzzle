@@ -1,0 +1,530 @@
+[
+  {
+    "trace": "blocky-trace-preplay46-0-all-clear.json",
+    "mainTasksAbove45ms": [
+      {
+        "durationMs": 47.648,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 37.693
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 5.619
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 5.605
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 5.601
+          },
+          {
+            "name": "Layout",
+            "durationMs": 1.23
+          }
+        ]
+      },
+      {
+        "durationMs": 45.949,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 40.147
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.896
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.889
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.884
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.634
+          }
+        ]
+      },
+      {
+        "durationMs": 50.138,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 44.925
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.957
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.95
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.942
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.818
+          }
+        ]
+      },
+      {
+        "durationMs": 57.4,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 46.908
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 6.959
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 6.926
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 6.918
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 0.577
+          }
+        ]
+      },
+      {
+        "durationMs": 49.591,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 27.272
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 19.257
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 18.986
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 18.982
+          },
+          {
+            "name": "MajorGC",
+            "durationMs": 14.744
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "trace": "blocky-trace-preplay46-refill-0-refill.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-0-refill.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-0-full.json",
+    "mainTasksAbove45ms": [
+      {
+        "durationMs": 47.767,
+        "nested": [
+          {
+            "name": "EventDispatch",
+            "durationMs": 44.418
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 43.928
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 4.888
+          },
+          {
+            "name": "ParseHTML",
+            "durationMs": 3.103
+          },
+          {
+            "name": "EventDispatch",
+            "durationMs": 1.418
+          }
+        ]
+      },
+      {
+        "durationMs": 45.563,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 34.987
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 6.176
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 6.163
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 6.158
+          },
+          {
+            "name": "Layout",
+            "durationMs": 1.437
+          }
+        ]
+      },
+      {
+        "durationMs": 56.83,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 51.189
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 3.625
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 3.62
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 3.614
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.673
+          }
+        ]
+      },
+      {
+        "durationMs": 51.685,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 43.575
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 5.608
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 5.592
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 5.587
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.93
+          }
+        ]
+      },
+      {
+        "durationMs": 48.582,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 41.408
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 5.464
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 5.451
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 5.447
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.468
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "trace": "blocky-trace-preplay46-1-refill.json",
+    "mainTasksAbove45ms": [
+      {
+        "durationMs": 46.219,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 40.25
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.037
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.032
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.026
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.73
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "trace": "blocky-trace-preplay46-1-idle-drag.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-1-all-clear.json",
+    "mainTasksAbove45ms": [
+      {
+        "durationMs": 47.863,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 43.302
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.335
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.33
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.326
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.951
+          }
+        ]
+      },
+      {
+        "durationMs": 51.899,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 45.369
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 4.401
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 4.37
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 4.365
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 0.388
+          }
+        ]
+      },
+      {
+        "durationMs": 54.033,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 47.959
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.189
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.184
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.179
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 1.719
+          }
+        ]
+      },
+      {
+        "durationMs": 52.748,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 43.264
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 3.392
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 3.386
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 3.244
+          },
+          {
+            "name": "Layerize",
+            "durationMs": 2.026
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "trace": "blocky-trace-preplay46-0-idle-drag.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-refill-1-refill.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-1-full.json",
+    "mainTasksAbove45ms": [
+      {
+        "durationMs": 47.503,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 38.256
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 4.991
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 4.986
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 4.981
+          },
+          {
+            "name": "Layout",
+            "durationMs": 1.267
+          }
+        ]
+      },
+      {
+        "durationMs": 46.208,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 41.205
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.982
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.976
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.972
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.657
+          }
+        ]
+      },
+      {
+        "durationMs": 54.723,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 49.794
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.638
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.631
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.625
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.684
+          }
+        ]
+      },
+      {
+        "durationMs": 47.534,
+        "nested": [
+          {
+            "name": "Commit",
+            "durationMs": 43.54
+          },
+          {
+            "name": "FireAnimationFrame",
+            "durationMs": 2.248
+          },
+          {
+            "name": "v8.callFunction",
+            "durationMs": 2.243
+          },
+          {
+            "name": "FunctionCall",
+            "durationMs": 2.238
+          },
+          {
+            "name": "UpdateLayoutTree",
+            "durationMs": 0.523
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "trace": "blocky-trace-preplay46-refill-0-refill.json",
+    "mainTasksAbove45ms": []
+  },
+  {
+    "trace": "blocky-trace-preplay46-refill-1-refill.json",
+    "mainTasksAbove45ms": []
+  }
+]

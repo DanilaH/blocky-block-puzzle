@@ -1,0 +1,9 @@
+{
+  "episodes": 696,
+  "moves": 11210,
+  "substitutionProofs": 56,
+  "protectedChecks": 13,
+  "evidenceSha256": "ce95864d0167a7e6d53f117cf7d34ef09ebb97735e11acb0c22a193a2f6139a6",
+  "exactRepeat": true,
+  "unitTests": 201
+}

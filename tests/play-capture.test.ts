@@ -4,12 +4,88 @@ import { newGame, applyMove, placements, shapeById } from "../src/core/rules";
 import { createProfile } from "../src/core/profile";
 import { ProfileStore } from "../src/platform/save";
 import { replayRecord } from "../scripts/calibration/replay";
+import { revivePlan } from "../src/core/monetization";
 const game = () => newGame(42, "capture", "flow-v4");
 const next = (g: ReturnType<typeof game>) => {
-  const pos = placements(g.board, shapeById(g.tray[0]!.shapeId))[0]!;
-  const move = { slot: 0, ...pos };
+  const slot = g.tray.findIndex((s) => !s.used);
+  const pos = placements(g.board, shapeById(g.tray[slot]!.shapeId))[0]!;
+  const move = { slot, ...pos };
   return { move, result: applyMove(g, move, g.revision)! };
 };
+const nextUnused = (g: ReturnType<typeof game>) => {
+  const slot = g.tray.findIndex(
+    (s) => !s.used && placements(g.board, shapeById(s.shapeId)).length > 0,
+  );
+  const move = {
+    slot,
+    ...placements(g.board, shapeById(g.tray[slot]!.shapeId))[0]!,
+  };
+  return { move, result: applyMove(g, move, g.revision)! };
+};
+
+it("replays a recording started at nonzero score without changing its state", () => {
+  const first = next(game()).result.state;
+  const c = new PlayCapture(() => 0),
+    second = nextUnused(first);
+  c.start(first);
+  c.record(first, second.move, second.result.state);
+  const r = replayRecord(c.snapshot());
+  expect(r.segments[0]!.initialMoves).toBe(1);
+  expect(r.final).toEqual(second.result.state);
+});
+
+it("resume after an unrecorded move starts a segment and excludes the recording gap", () => {
+  let t = 0;
+  const g = game(),
+    c = new PlayCapture(() => t),
+    a = next(g);
+  c.start(g);
+  c.setActive(true);
+  t = 100;
+  c.record(g, a.move, a.result.state);
+  c.stop();
+  const b = nextUnused(a.result.state);
+  t = 20000;
+  c.start(b.result.state);
+  const d = nextUnused(b.result.state);
+  t = 20100;
+  c.record(b.result.state, d.move, d.result.state);
+  const r = replayRecord(c.snapshot());
+  expect(r.segments).toHaveLength(2);
+  expect(r.moves.map((m) => m.activeIntervalMs)).toEqual([100, 100]);
+  expect(r.moves[1]!.segment).toBe(2);
+});
+
+it("a scored revive is a checkpoint rather than a fabricated move", () => {
+  const g = game();
+  g.score = 123;
+  g.status = "over";
+  g.board = Array.from(
+    { length: 64 },
+    (_, i) => ((i % 8) + Math.floor(i / 8)) % 2,
+  );
+  g.tray.forEach((s) => (s.shapeId = "O3-0"));
+  const revived = revivePlan(g)!.game;
+  const c = new PlayCapture(() => 0);
+  c.start(g);
+  c.committed(createProfile(g), createProfile(revived));
+  const r = replayRecord(c.snapshot());
+  expect(r.moves).toHaveLength(0);
+  expect(r.segments.map((s) => s.reason)).toEqual(["start", "revive"]);
+  expect(r.final).toEqual(revived);
+});
+
+it("accepting scored checkpoints still rejects damaged geometry", () => {
+  const first = next(game()).result.state;
+  const c = new PlayCapture(() => 0);
+  c.start(first);
+  const data = c.snapshot();
+  const event = data.events[0]!;
+  if (event.kind !== "checkpoint") throw Error();
+  event.state.board[0] = 99;
+  expect(() => replayRecord(data)).toThrow("Invalid checkpoint");
+  expect(replayRecord(c.snapshot()).final).toEqual(first);
+});
 it("is opt-in, records deterministic moves once and excludes paused time", () => {
   let t = 0;
   const c = new PlayCapture(() => t),
@@ -117,4 +193,61 @@ it("keeps an already visible hint on capture start and clears it on restart", ()
   const x = next(n);
   c.record(n, x.move, x.result.state);
   expect(replayRecord(c.snapshot()).moves[1]!.event.hinted).toBe(false);
+});
+
+it("resumes after unrecorded moves without attributing the gap to player thinking", () => {
+  let t = 0;
+  const c = new PlayCapture(() => t),
+    g = game();
+  c.start(g);
+  c.setActive(true);
+  t = 100;
+  c.stop();
+  const first = next(g);
+  c.record(g, first.move, first.result.state);
+  t = 10000;
+  c.start(first.result.state);
+  t = 10200;
+  const second = next(first.result.state);
+  c.record(first.result.state, second.move, second.result.state);
+  const replay = replayRecord(c.snapshot());
+  expect(replay.segments.map((s) => s.reason)).toEqual(["start", "resumed"]);
+  expect(replay.moves).toHaveLength(1);
+  expect(replay.moves[0]!.activeIntervalMs).toBe(200);
+  expect(replay.final).toEqual(second.result.state);
+});
+
+it("replays a committed revive as a separate segment without inventing a move", async () => {
+  const { revivePlan } = await import("../src/core/monetization");
+  const g = game();
+  g.board.fill(1);
+  g.status = "over";
+  g.score = 1200;
+  g.tray = [0, 1, 2].map(() => ({ shapeId: "S1-0", color: 1, used: false }));
+  const revived = revivePlan(g)!.game;
+  const c = new PlayCapture(() => 0);
+  c.start(g);
+  c.committed(createProfile(g), createProfile(revived));
+  const { move, result } = next(revived);
+  c.record(revived, move, result.state);
+  const replay = replayRecord(c.snapshot());
+  expect(replay.segments.map((s) => s.reason)).toEqual(["start", "revive"]);
+  expect(replay.moves).toHaveLength(1);
+  expect(replay.final).toEqual(result.state);
+  const exported = c.snapshot();
+  exported.events.length = 0;
+  expect(c.count).toBe(1);
+});
+
+it("accepts mid-game score but still rejects malformed checkpoint geometry", () => {
+  const g = next(game()).result.state;
+  expect(g.score).toBeGreaterThan(0);
+  const c = new PlayCapture(() => 0);
+  c.start(g);
+  expect(replayRecord(c.snapshot()).final).toEqual(g);
+  const bad = c.snapshot();
+  const checkpoint = bad.events[0]!;
+  if (checkpoint.kind !== "checkpoint") throw Error();
+  checkpoint.state.board.pop();
+  expect(() => replayRecord(bad)).toThrow("Invalid checkpoint");
 });

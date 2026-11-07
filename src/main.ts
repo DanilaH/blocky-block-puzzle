@@ -1,3 +1,4 @@
+import { MoveCalculator } from "./game/move-calculator";
 import { PlayCapture } from "./platform/play-capture";
 import { sharePlayRecord } from "./platform/share-json";
 import { presentResult } from "./game/result-presentation";
@@ -109,40 +110,12 @@ async function start() {
   const festival = new Festival(),
     haptics = new GameHaptics();
   let movePending = false;
-  const moveWorker = new Worker(
-    new URL("./game/move.worker.ts", import.meta.url),
-    { type: "module" },
+  const moveCalculator = new MoveCalculator(
+    () =>
+      new Worker(new URL("./game/move.worker.ts", import.meta.url), {
+        type: "module",
+      }),
   );
-  async function calculateMove(
-    state: GameState,
-    move: Move,
-    revision: number,
-  ): Promise<ReturnType<typeof applyMove>> {
-    if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4"].includes(
-        state.dealerVersion,
-      ) ||
-      state.tray.filter((s) => s.used).length !== 2
-    )
-      return applyMove(state, move, revision);
-    return new Promise((resolve, reject) => {
-      const timeout = window.setTimeout(() => {
-        moveWorker.onmessage = null;
-        reject(new Error("Move search timed out"));
-      }, 5000);
-      moveWorker.onmessage = (e) => {
-        clearTimeout(timeout);
-        e.data.error
-          ? reject(new Error("Move search failed"))
-          : resolve(e.data.result);
-      };
-      moveWorker.onerror = () => {
-        clearTimeout(timeout);
-        reject(new Error("Move worker failed"));
-      };
-      moveWorker.postMessage({ state, move, revision });
-    });
-  }
   let praiseWorker: Worker | null = null;
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
@@ -257,6 +230,9 @@ async function start() {
     toastTimer = 0,
     modal = "";
   let hintSaving = false;
+  let hintTimeout = 0;
+  let dragFrame = 0;
+  let dragSample: PointerEvent | null = null;
   let rejectedDrags = 0;
   let tapHelpShown = false;
   let running = false;
@@ -839,6 +815,8 @@ async function start() {
             : "Подсказка";
   }
   function cancelHint(reason = "cancelled") {
+    clearTimeout(hintTimeout);
+    hintTimeout = 0;
     if (worker)
       analytics.track("hint_fail", { gameId: store.state.game.gameId, reason });
     hintGeneration++;
@@ -847,8 +825,6 @@ async function start() {
     el("hint").removeAttribute("aria-busy");
     refreshHintLabel();
   }
-  let dragFrame = 0;
-  let dragSample: PointerEvent | null = null;
   function clearDragFrame() {
     cancelAnimationFrame(dragFrame);
     dragFrame = 0;
@@ -913,7 +889,7 @@ async function start() {
     const saveStarted = performance.now();
     movePending = true;
     try {
-      const calculated = await calculateMove(before, move, revision);
+      const calculated = await moveCalculator.calculate(before, move, revision);
       performanceCapture.record(
         "moveCalculationWallTime",
         performance.now() - saveStarted,
@@ -1038,7 +1014,9 @@ async function start() {
               ? 1 + Math.min(1, event.state.streak / 10)
               : 0.15,
         );
-        if (praise) {
+        // Ranking describes the move before commit. A terminal outcome must
+        // not congratulate the player; the earned series bonus above still pays.
+        if (praise && event.state.status === "playing") {
           lastPraiseMove = before.moves;
           scene.praise(placedCells, praise === "excellent");
           if (!event.lines) {
@@ -1067,16 +1045,6 @@ async function start() {
             ],
             event.allClear ? 1900 : 1200,
           );
-          if (event.state.streak >= 10 && event.lines >= 2 && !event.allClear)
-            festival.burst(
-              canvasBox.getBoundingClientRect(),
-              event.cells,
-              1,
-              true,
-              false,
-              undefined,
-              64,
-            );
         }
         if (before.tray.filter((s) => s.used).length === 2)
           document.querySelectorAll(".piece .mini-shape").forEach((e, i) =>
@@ -1140,7 +1108,7 @@ async function start() {
         audio.play(
           event.allClear
             ? "allClear"
-            : newRecord
+            : newRecord && event.lines < 2
               ? "record"
               : signature.kind === "cross"
                 ? "cross"
@@ -1834,19 +1802,36 @@ async function start() {
     const generation = ++hintGeneration;
     const snapshot = structuredClone(p.game);
     stopPraise();
-    worker = new Worker(new URL("./game/hint.worker.ts", import.meta.url), {
-      type: "module",
-    });
+    let hintWorker: Worker;
+    try {
+      hintWorker = new Worker(
+        new URL("./game/hint.worker.ts", import.meta.url),
+        {
+          type: "module",
+        },
+      );
+    } catch {
+      toast("Не получилось рассчитать подсказку. Кредит сохранён.");
+      return;
+    }
+    worker = hintWorker;
     el("hint").setAttribute("aria-busy", "true");
     el("hint-label").textContent = "Ищем ход…";
-    worker.onerror = () => {
+    const failHint = () => {
+      if (worker !== hintWorker || generation !== hintGeneration) return;
       cancelHint("worker");
       toast("Не получилось рассчитать подсказку. Кредит сохранён.");
     };
-    worker.onmessage = async (event: MessageEvent<HintResult>) => {
-      worker?.terminate();
+    hintWorker.onerror = failHint;
+    hintWorker.onmessageerror = failHint;
+    hintTimeout = window.setTimeout(failHint, 5000);
+    hintWorker.onmessage = async (event: MessageEvent<HintResult>) => {
+      if (worker !== hintWorker || generation !== hintGeneration) return;
+      clearTimeout(hintTimeout);
+      hintTimeout = 0;
+      hintWorker.terminate();
       worker = null;
-      if (generation !== hintGeneration || !running) {
+      if (!running) {
         refreshHintLabel();
         return;
       }
@@ -1896,7 +1881,11 @@ async function start() {
         syncSaving();
       }
     };
-    worker.postMessage(snapshot);
+    try {
+      hintWorker.postMessage(snapshot);
+    } catch {
+      failHint();
+    }
   });
   function open(content: string, type: string) {
     modal = type;

@@ -1,5 +1,6 @@
 import { expect, it, vi } from "vitest";
 import { PerformanceCapture } from "../src/platform/performance";
+import { APP_VERSION } from "../src/app-version";
 
 it("bounds capture storage and excludes inactive gaps", () => {
   let callback: FrameRequestCallback = () => {};
@@ -18,6 +19,7 @@ it("bounds capture storage and excludes inactive gaps", () => {
     for (let i = 1; i <= 8000; i++) callback(i * 16);
     for (let i = 0; i < 600; i++) capture.record("phase", i);
     const data = capture.snapshot();
+    expect(data.version).toBe(APP_VERSION);
     expect(data.sampleCount).toBe(7200);
     expect(data.phases).toHaveLength(512);
     expect(data.median).toBe(16);
