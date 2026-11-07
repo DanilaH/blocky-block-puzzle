@@ -1,3 +1,4 @@
+import { SpriteInk } from "../../src/game/sprite-ink";
 // Diagnostic-only import, injected by the audit's Vite plugin. Never in the app build.
 export function installProbe({ BoardScene }) {
   const probe = (window.__perfProbe = {
@@ -42,10 +43,55 @@ export function installProbe({ BoardScene }) {
       };
     }
   }
+  // Candidate: retain the full-board wash as a solid Flat-family rectangle,
+  // with the same color/alpha/geometry and display-list position as its Image.
+  const fillRect = SpriteInk.prototype.fillRect;
+  SpriteInk.prototype.fillRect = function (x, y, w, h) {
+    const previous = this.imageCursor;
+    const result = fillRect.call(this, x, y, w, h);
+    if (
+      window.__probeOptions.flatWash &&
+      x === 0 &&
+      y === 0 &&
+      w === 512 &&
+      h === 512 &&
+      this.imageCursor > previous
+    ) {
+      const sprite = this.images[this.imageCursor - 1];
+      const wash = this.scene.__flatWash;
+      if (wash) {
+        sprite.setVisible(false);
+        wash
+          .setPosition(x, y)
+          .setSize(w, h)
+          .setFillStyle(this.fillColor, this.fillAlpha)
+          .setVisible(true);
+        if (wash.__source !== sprite) {
+          this.scene.children.moveTo(
+            wash,
+            this.scene.children.getIndex(sprite),
+          );
+          wash.__source = sprite;
+        }
+      }
+    }
+    return result;
+  };
+  const clearInk = SpriteInk.prototype.clear;
+  SpriteInk.prototype.clear = function () {
+    this.scene.__flatWash?.setVisible(false);
+    return clearInk.call(this);
+  };
   const create = BoardScene.prototype.create;
   BoardScene.prototype.create = function (...args) {
     const result = create.apply(this, args);
     probe.scene = this;
+    if (window.__probeOptions.flatWash)
+      this.__flatWash = this.add
+        .rectangle(0, 0, 512, 512, 0xffffff)
+        .setOrigin(0)
+        .setDepth(1)
+        .setVisible(false);
     const game = this.game;
     if (window.__probeOptions.noRender)
       game.scene.render = function () {

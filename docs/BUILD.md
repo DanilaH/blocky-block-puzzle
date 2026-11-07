@@ -83,3 +83,8 @@ Release требует `APPMETRICA_API_KEY` в формате UUID, а такж�
 ### Preview 0.47: восстановленная объединённая сборка
 
 Исходники `561e8c7`, PR CI `42380128190`, artifact `13576739624`. VersionCode 47, versionName `0.47.0-preview`, applicationId `com.danilah.blocky.dev`. Проверены 220 unit, 146 browser, production build, assets:check и Android unit/build. APK v2-подпись совместима с выданной 0.46; все 78 production-файлов совпали с dist. SHA-256 APK `422fdb0db4a1337885d3dca4e9e4f0f8d4d1a30c6d29dc16722f190d7e2b62e9`. Физическая установка/ощущения/реальный SDK по-прежнему требуют устройства. [Итоговый протокол](qa/RECOVERED_0.47_2026-11-07.md).
+
+
+### Preview 0.48: исправления по реальному плейтесту
+
+Исходники `ca2e9e1`, PR CI `42392425206`, artifact `13581533873`. VersionCode 48, versionName `0.48.0-preview`. 220 unit, 148 browser, Android unit/build — success. Проверены v2-подпись и 78 production-файлов; сертификат совпадает с выданной 0.47. APK SHA-256 `f7d079918cd345e6eb3a926db44b283f5c1814ac833f0f19d04678f728fb1de5`. В preview доступна ручная запись плавности в «Пауза → Ещё настройки → Диагностика». [Протокол и оставшиеся задачи](qa/PLAYTEST_0.47_AND_FIXES_0.48_2026-11-07.md).

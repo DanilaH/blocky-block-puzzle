@@ -15,6 +15,9 @@ const conditions = JSON.parse(
 );
 const rounds = Number(process.env.PROBE_ROUNDS || 3),
   repeats = Number(process.env.PROBE_REPEATS || 2);
+const fixtures = process.env.PROBE_FIXTURE_FILE
+  ? JSON.parse(await fs.readFile(process.env.PROBE_FIXTURE_FILE, "utf8"))
+  : null;
 const production = process.env.PROBE_BUILD === "production",
   trace = process.env.PROBE_TRACE === "1";
 const plugin = {
@@ -56,13 +59,16 @@ const plugin = {
         for(let y=0;y<8;y++)for(let x=0;x<8;x++)if((y<3&&x>=3)||(x<3&&y>=3))g.board[y*8+x]=(x+y)%6+1;
         if(kind==='multi')g.board[63]=3;
       } else {g.tray[0]={shapeId:'S1-0',color:2,used:false};}
+      const fixture = (window as any).__probeOptions.fixtures?.[(window as any).__probeOptions.fixtureIndex];
+      if(fixture) Object.assign(g,structuredClone(fixture.before),{gameId:'probe-'+crypto.randomUUID()});
       await store.update(p=>({...p,revision:p.revision+1,tutorialStep:4,game:g,progressionBest:100000,best:100000,festivalBest:100000,wardrobe:{selected:0,unlocked:[0],discoveries:1},settings:{...p.settings,calm:false,sound:false,haptics:false,musicVolume:0,effectsVolume:0}}),'probe-reset');
       scoreTarget=scoreShown=0; render(false);
     },
     async trigger(kind) {
       if(kind==='idle')return;
       if(kind==='theme') {await store.update(p=>({...p,revision:p.revision+1,wardrobe:{selected:5,unlocked:[0,5],discoveries:2}}),'probe-theme-only');render(true);return;}
-      await commit({slot:0,x:0,y:0},currentGame().revision);
+      const fixture = (window as any).__probeOptions.fixtures?.[(window as any).__probeOptions.fixtureIndex];
+      await commit(fixture?.move ?? {slot:0,x:0,y:0},currentGame().revision);
     }
   });
   if (import.meta.hot)`,
@@ -77,7 +83,10 @@ const manifest = {
   sourceCommit: execFileSync("git", ["rev-parse", "HEAD"], {
     encoding: "utf8",
   }).trim(),
-  runtimeSourceCommit: "561e8c7196572203f138ad970076de47bc6827c9",
+  runtimeSourceCommit:
+    process.env.PROBE_RUNTIME_COMMIT ||
+    "561e8c7196572203f138ad970076de47bc6827c9",
+  fixtureFile: process.env.PROBE_FIXTURE_FILE || null,
   started: new Date().toISOString(),
   production,
   trace,
@@ -154,6 +163,7 @@ try {
         },
         {
           ...condition,
+          fixtures,
           freezeTheme: condition.kind === "allclear-no-theme",
           drag: !!condition.drag,
         },
@@ -222,10 +232,14 @@ try {
           ]),
         );
         if (errors.length) throw Error("Page errors: " + errors.join("; "));
+        const humanFixture = fixtures?.[condition.fixtureIndex];
+        if (humanFixture && row.final.game.score !== humanFixture.expectedScore)
+          throw Error("Human fixture score mismatch");
         if (
           condition.kind !== "idle" &&
           condition.kind !== "theme" &&
-          row.final.game.moves !== 11
+          row.final.game.moves !==
+            (fixtures?.[condition.fixtureIndex]?.before.moves ?? 10) + 1
         )
           throw Error("Fixture placement did not commit");
         if (
