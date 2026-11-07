@@ -97,6 +97,8 @@ async function start() {
     scene = new BoardScene("classic");
   const analytics = new ProductAnalytics(nativeAnalytics());
   const playCapture = new PlayCapture();
+  let exportedPlayEvents = 0;
+  let performanceExported = false;
   store.observer = {
     prepare: (before, next) => analytics.prepare(before, next),
     committed: (before, next, reason) => {
@@ -2121,7 +2123,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2197,11 +2199,16 @@ async function start() {
     el("play-capture-export").onclick = () => {
       playCapture.stop();
       updateCapture();
-      void sharePlayRecord(playCapture.snapshot()).catch(() =>
-        toast(
-          "Не удалось выгрузить запись. Она сохранена до закрытия игры — попробуйте ещё раз.",
-        ),
-      );
+      const record = playCapture.snapshot();
+      void sharePlayRecord(record)
+        .then(() => {
+          exportedPlayEvents = record.events.length;
+        })
+        .catch(() =>
+          toast(
+            "Не удалось выгрузить запись. Она сохранена до закрытия игры — попробуйте ещё раз.",
+          ),
+        );
     };
 
     el("music-toggle").onchange = () => {
@@ -2221,6 +2228,7 @@ async function start() {
     };
     el("themes").onclick = showThemes;
     el("perf-start").onclick = () => {
+      performanceExported = false;
       performanceCapture.start();
       close();
       toast(
@@ -2231,7 +2239,25 @@ async function start() {
     el("perf-export").onclick = () =>
       void performanceCapture
         .export(analytics.snapshot())
+        .then(() => {
+          performanceExported = true;
+        })
         .catch(() => toast("Не удалось выгрузить замер. Попробуйте ещё раз."));
+    el("clear-benchmark").onclick = (event) => {
+      const message =
+        performanceCapture.enabled ||
+        (!performanceExported && performanceCapture.snapshot().sampleCount > 0)
+          ? "Сначала выгрузите текущий замер плавности"
+          : playCapture.hasData &&
+              playCapture.snapshot().events.length !== exportedPlayEvents
+            ? "Сначала выгрузите или удалите запись партии"
+            : "";
+      if (message) {
+        event.preventDefault();
+        dialog.querySelector<HTMLElement>(".dialog-status")!.textContent =
+          message;
+      }
+    };
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();

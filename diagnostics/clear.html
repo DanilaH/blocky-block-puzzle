@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru" data-presentation="classic">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Автозамер очистки</title>
+  </head>
+  <body>
+    <main class="bench-shell">
+      <h1>Автозамер очистки</h1>
+      <p id="bench-status" role="status">Загрузка…</p>
+      <p class="bench-help">
+        Около 70 секунд. Держите телефон вертикально и оставьте экран открытым.
+        Партия сохранена. Во время замера вид эффектов будет меняться.
+      </p>
+      <div class="board-wrap bench-board">
+        <div id="board" aria-hidden="true"></div>
+      </div>
+      <div class="bench-actions">
+        <button class="primary" id="bench-start" disabled>Начать замер</button
+        ><button class="secondary" id="bench-export" disabled>
+          Сохранить замер</button
+        ><button class="secondary" id="bench-return">Вернуться в игру</button>
+      </div>
+    </main>
+    <script type="module" src="../src/diagnostics/clear.ts"></script>
+  </body>
+</html>

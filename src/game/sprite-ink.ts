@@ -66,6 +66,89 @@ export function prepareInk(scene: Phaser.Scene) {
   t.add("triangle", 0, 802, 722, 60, 60);
   t.refresh();
 }
+
+const ENERGY_KEY = "board-energy-border";
+const ENERGY_STEPS = 64;
+/** Precompose the four same-color perimeter glows once, rather than blending
+ * their overlapping transparent strips again on every animation frame. */
+export function prepareEnergyBorder(scene: Phaser.Scene) {
+  if (scene.textures.exists(ENERGY_KEY)) return;
+  const texture = scene.textures.createCanvas(ENERGY_KEY, 640, 640)!;
+  const source = scene.textures.get(KEY);
+  const canvas = source.getSourceImage() as HTMLCanvasElement;
+  const ctx = texture.context;
+  for (let level = 0; level < ENERGY_STEPS; level++) {
+    const x = (level % 8) * CELL,
+      y = Math.floor(level / 8) * CELL;
+    for (let ring = 0; ring < 4; ring++) {
+      const frame = source.get(`8:${2 + ring * 4}`);
+      ctx.globalAlpha = (level / (ENERGY_STEPS - 1)) * (0.24 - ring * 0.05);
+      ctx.drawImage(
+        canvas,
+        frame.cutX,
+        frame.cutY,
+        CELL,
+        CELL,
+        x,
+        y,
+        CELL,
+        CELL,
+      );
+    }
+    const cuts = [0, BORDER, CELL - BORDER, CELL];
+    for (let row = 0; row < 3; row++)
+      for (let col = 0; col < 3; col++) {
+        if (row === 1 && col === 1) continue;
+        texture.add(
+          `${level}:${row}:${col}`,
+          0,
+          x + cuts[col]!,
+          y + cuts[row]!,
+          cuts[col + 1]! - cuts[col]!,
+          cuts[row + 1]! - cuts[row]!,
+        );
+      }
+  }
+  ctx.globalAlpha = 1;
+  // Keep native logical pivots, but omit only fully transparent texels from
+  // the eight perimeter strips. Two source texels protect linear filtering.
+  const rgba = ctx.getImageData(0, 0, 640, 640).data;
+  for (const name of texture.getFrameNames()) {
+    const frame = texture.get(name);
+    const { cutX, cutY, cutWidth, cutHeight } = frame;
+    let left = cutWidth,
+      top = cutHeight,
+      right = -1,
+      bottom = -1;
+    for (let y = 0; y < cutHeight; y++)
+      for (let x = 0; x < cutWidth; x++)
+        if (rgba[((cutY + y) * 640 + cutX + x) * 4 + 3]! > 0) {
+          left = Math.min(left, x);
+          top = Math.min(top, y);
+          right = Math.max(right, x);
+          bottom = Math.max(bottom, y);
+        }
+    if (right < 0) {
+      frame.setSize(1, 1, cutX, cutY).setTrim(cutWidth, cutHeight, 0, 0, 1, 1);
+      continue;
+    }
+    left = Math.max(0, left - 2);
+    top = Math.max(0, top - 2);
+    right = Math.min(cutWidth - 1, right + 2);
+    bottom = Math.min(cutHeight - 1, bottom + 2);
+    frame
+      .setSize(right - left + 1, bottom - top + 1, cutX + left, cutY + top)
+      .setTrim(
+        cutWidth,
+        cutHeight,
+        left,
+        top,
+        right - left + 1,
+        bottom - top + 1,
+      );
+  }
+  texture.refresh();
+}
 export class SpriteInk {
   private images: Phaser.GameObjects.Image[] = [];
   private imageCursor = 0;
@@ -178,17 +261,19 @@ export class SpriteInk {
     color: number,
     alpha: number,
     rotation = 0,
+    key = KEY,
   ) {
     if (alpha <= 0 || w <= 0 || h <= 0 || this.imageCursor >= 512) return this;
     let s = this.images[this.imageCursor++];
     if (!s) {
       s = this.scene.add
-        .image(0, 0, KEY, frame)
+        .image(0, 0, key, frame)
         .setOrigin(0)
         .setDepth(this.depth);
       this.images.push(s);
     }
-    if (s.frame.name !== frame) s.setFrame(frame);
+    if (s.texture.key !== key) s.setTexture(key, frame);
+    else if (s.frame.name !== frame) s.setFrame(frame);
     s.setPosition(x, y)
       .setDisplaySize(w, h)
       .setRotation(rotation)
@@ -196,6 +281,37 @@ export class SpriteInk {
       .setAlpha(alpha)
       .setVisible(this.visible);
     return this;
+  }
+  energyBorder(energy: number) {
+    prepareEnergyBorder(this.scene);
+    const level = Math.max(
+      0,
+      Math.min(ENERGY_STEPS - 1, Math.round(energy * (ENERGY_STEPS - 1))),
+    );
+    const x = 3,
+      y = 3,
+      w = 506,
+      h = 506;
+    const xs = [x - PAD, x - PAD + BORDER, x + w + PAD - BORDER];
+    const ys = [y - PAD, y - PAD + BORDER, y + h + PAD - BORDER];
+    const ws = [BORDER, w + PAD * 2 - BORDER * 2, BORDER];
+    const hs = [BORDER, h + PAD * 2 - BORDER * 2, BORDER];
+    for (let row = 0; row < 3; row++)
+      for (let col = 0; col < 3; col++) {
+        if (row === 1 && col === 1) continue;
+        this.image(
+          `${level}:${row}:${col}`,
+          xs[col]!,
+          ys[row]!,
+          ws[col]!,
+          hs[row]!,
+          0xffd67b,
+          1,
+          0,
+          ENERGY_KEY,
+        );
+      }
+    return this.lineStyle(14, 0xffd67b, energy * 0.09);
   }
   fillRect(x: number, y: number, w: number, h: number) {
     return this.image("pixel", x, y, w, h, this.fillColor, this.fillAlpha);
@@ -245,7 +361,8 @@ export class RasterInk {
   private fillAlpha = 1;
   private strokeAlpha = 1;
   constructor(scene: Phaser.Scene, depth: number) {
-    if (scene.textures.exists("board-decoration")) scene.textures.remove("board-decoration");
+    if (scene.textures.exists("board-decoration"))
+      scene.textures.remove("board-decoration");
     this.texture = scene.textures.createCanvas("board-decoration", 512, 512)!;
     this.context = this.texture.context;
     this.sprite = scene.add

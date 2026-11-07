@@ -1,4 +1,5 @@
-import { SpriteInk } from "../../src/game/sprite-ink";
+import Phaser from "phaser";
+import { SpriteInk, prepareEnergyBorder } from "../../src/game/sprite-ink";
 // Diagnostic-only import, injected by the audit's Vite plugin. Never in the app build.
 export function installProbe({ BoardScene }) {
   const probe = (window.__perfProbe = {
@@ -43,6 +44,60 @@ export function installProbe({ BoardScene }) {
       };
     }
   }
+  // Candidate: one startup atlas, retaining stamp/display order and blend modes.
+  // Diagnostic only until performance and pixel comparisons pass.
+  const setTexture = Phaser.GameObjects.Image.prototype.setTexture;
+  Phaser.GameObjects.Image.prototype.setTexture = function (
+    key,
+    frame,
+    ...args
+  ) {
+    if (
+      this.scene?.__vfxAtlas &&
+      typeof key === "string" &&
+      key.startsWith("vfx-") &&
+      key !== "vfx-probe-atlas"
+    )
+      return setTexture.call(this, "vfx-probe-atlas", key.slice(4), ...args);
+    return setTexture.call(this, key, frame, ...args);
+  };
+  const imageInk = SpriteInk.prototype.image;
+  SpriteInk.prototype.image = function (
+    frame,
+    x,
+    y,
+    w,
+    h,
+    color,
+    alpha,
+    rotation = 0,
+    key = "board-primitives",
+  ) {
+    if (!this.scene.textures.get(key).has(frame))
+      throw new Error("Probe missing texture frame: " + key + "/" + frame);
+    const trim =
+      key === "board-primitives" ? this.scene.__tightInkFrames?.[frame] : null;
+    if (trim?.empty) return this;
+    if (trim) {
+      const dx = w * trim.left,
+        dy = h * trim.top;
+      const cos = rotation ? Math.cos(rotation) : 1;
+      const sin = rotation ? Math.sin(rotation) : 0;
+      return imageInk.call(
+        this,
+        trim.frame,
+        x + dx * cos - dy * sin,
+        y + dx * sin + dy * cos,
+        w * trim.width,
+        h * trim.height,
+        color,
+        alpha,
+        rotation,
+        key,
+      );
+    }
+    return imageInk.call(this, frame, x, y, w, h, color, alpha, rotation, key);
+  };
   // Candidate: retain the full-board wash as a solid Flat-family rectangle,
   // with the same color/alpha/geometry and display-list position as its Image.
   const fillRect = SpriteInk.prototype.fillRect;
@@ -86,6 +141,86 @@ export function installProbe({ BoardScene }) {
   BoardScene.prototype.create = function (...args) {
     const result = create.apply(this, args);
     probe.scene = this;
+    prepareEnergyBorder(this);
+    if (window.__probeOptions.tightInk) {
+      const texture = this.textures.get("board-primitives");
+      const canvas = texture.getSourceImage();
+      const pixels = canvas
+        .getContext("2d")
+        .getImageData(0, 0, canvas.width, canvas.height).data;
+      this.__tightInkFrames = {};
+      for (const [name, f] of Object.entries({ ...texture.frames })) {
+        if (name === "__BASE" || name === "pixel") continue;
+        let left = f.cutWidth,
+          top = f.cutHeight,
+          right = -1,
+          bottom = -1;
+        for (let y = 0; y < f.cutHeight; y++)
+          for (let x = 0; x < f.cutWidth; x++)
+            if (
+              pixels[((f.cutY + y) * canvas.width + f.cutX + x) * 4 + 3] > 0
+            ) {
+              left = Math.min(left, x);
+              top = Math.min(top, y);
+              right = Math.max(right, x);
+              bottom = Math.max(bottom, y);
+            }
+        if (right < 0) {
+          this.__tightInkFrames[name] = { empty: true };
+          continue;
+        }
+        left = Math.max(0, left - 2);
+        top = Math.max(0, top - 2);
+        right = Math.min(f.cutWidth - 1, right + 2);
+        bottom = Math.min(f.cutHeight - 1, bottom + 2);
+        if (
+          left === 0 &&
+          top === 0 &&
+          right === f.cutWidth - 1 &&
+          bottom === f.cutHeight - 1
+        )
+          continue;
+        const frame = "tight-" + name;
+        texture.add(
+          frame,
+          0,
+          f.cutX + left,
+          f.cutY + top,
+          right - left + 1,
+          bottom - top + 1,
+        );
+        this.__tightInkFrames[name] = {
+          frame,
+          left: left / f.cutWidth,
+          top: top / f.cutHeight,
+          width: (right - left + 1) / f.cutWidth,
+          height: (bottom - top + 1) / f.cutHeight,
+        };
+      }
+    }
+    if (window.__probeOptions.discardZero) {
+      this.game.renderer.renderNodes
+        .getNode("BatchHandlerQuad")
+        .programManager.addAddition({
+          name: "ProbeDiscardZero",
+          additions: { fragmentProcess: "if (fragColor.a <= 0.0) discard;" },
+        });
+    }
+    if (window.__probeOptions.vfxAtlas) {
+      const atlas = this.textures.createCanvas("vfx-probe-atlas", 512, 752);
+      for (const [kind, x, y] of [
+        ["ring", 2, 2],
+        ["streak", 2, 508],
+        ["flash", 2, 571],
+        ["chip", 188, 571],
+      ]) {
+        const image = this.textures.get("vfx-" + kind).getSourceImage();
+        atlas.context.drawImage(image, x, y);
+        atlas.add(kind, 0, x, y, image.width, image.height);
+      }
+      atlas.refresh();
+      this.__vfxAtlas = true;
+    }
     if (window.__probeOptions.flatWash)
       this.__flatWash = this.add
         .rectangle(0, 0, 512, 512, 0xffffff)
@@ -184,6 +319,20 @@ export function installProbe({ BoardScene }) {
       ),
       fpsLimit: game.loop.fpsLimit,
       bootGL: { ...probe.bootGL },
+      inkFrameAreas: Object.values(
+        scene.textures.get("board-primitives").frames,
+      )
+        .filter((f) => f.name !== "__BASE")
+        .reduce(
+          (sum, f) => ({
+            cut: sum.cut + f.cutWidth * f.cutHeight,
+            logical: sum.logical + f.realWidth * f.realHeight,
+          }),
+          { cut: 0, logical: 0 },
+        ),
+      discardAdditionEnabled: !!renderer.renderNodes
+        .getNode("BatchHandlerQuad")
+        .programManager.getAddition("ProbeDiscardZero"),
     };
   };
   probe.run = async function (kind, duration = 2200) {

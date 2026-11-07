@@ -57,6 +57,18 @@ export class BoardScene extends Phaser.Scene {
   private pending: number[] = [];
   private impacts: Impact[] = [];
   calm = false;
+  private diagnostic = { cachedBorder: false, hideInk: false, hideVfx: false };
+  /** Transient presentation-only controls for the separate preview benchmark. */
+  setDiagnosticProfile(profile: Partial<typeof this.diagnostic> = {}) {
+    this.diagnostic = {
+      cachedBorder: false,
+      hideInk: false,
+      hideVfx: false,
+      ...profile,
+    };
+    this.ink?.setVisible(!this.diagnostic.hideInk);
+    this.dirty = true;
+  }
   private theme = 0;
   private themeAt = 0;
   private shade = THEMES[0].board as number;
@@ -571,10 +583,13 @@ export class BoardScene extends Phaser.Scene {
     }
     const energy = this.intensity;
     if (energy > 0) {
-      for (let ring = 0; ring < 4; ring++) {
-        g.lineStyle(2 + ring * 4, 0xffd67b, energy * (0.24 - ring * 0.05));
-        g.strokeRoundedRect(3, 3, 506, 506, 8);
-      }
+      if (g instanceof SpriteInk && this.diagnostic.cachedBorder)
+        g.energyBorder(energy);
+      else
+        for (let ring = 0; ring < 4; ring++) {
+          g.lineStyle(2 + ring * 4, 0xffd67b, energy * (0.24 - ring * 0.05));
+          g.strokeRoundedRect(3, 3, 506, 506, 8);
+        }
     }
     const fx = this.vfx!;
     const accent = this.currentColor(this.fromAccent, this.accent);
@@ -892,6 +907,7 @@ export class BoardScene extends Phaser.Scene {
     }
     if (repaintBed && this.bed instanceof RasterInk) this.bed.flush();
     fx.end();
+    if (this.diagnostic.hideVfx) fx.clear();
     this.study?.end();
     if (this.mix() >= 1) this.themeAt = 0;
   }

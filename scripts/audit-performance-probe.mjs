@@ -24,6 +24,11 @@ const plugin = {
   name: "diagnostic-probe-only",
   enforce: "pre",
   transform(source, id) {
+    if (id.split("?")[0] === path.join(root, "src/game/BoardScene.ts"))
+      return source.replace(
+        "if (g instanceof SpriteInk && this.diagnostic.cachedBorder)",
+        "if (g instanceof SpriteInk && !(window as any).__probeOptions?.oldEnergyBorder)",
+      );
     if (id.split("?")[0] !== path.join(root, "src/main.ts")) return;
     if (
       !source.includes("  if (import.meta.hot)") ||
@@ -145,8 +150,8 @@ try {
     const order = round % 2 ? [...conditions].reverse() : conditions;
     for (const condition of order) {
       const context = await browser.newContext({
-        viewport: { width: 390, height: 844 },
-        deviceScaleFactor: 2,
+        viewport: condition.viewport ?? { width: 390, height: 844 },
+        deviceScaleFactor: condition.dpr ?? 2,
         ...(condition.androidUA
           ? {
               userAgent:
