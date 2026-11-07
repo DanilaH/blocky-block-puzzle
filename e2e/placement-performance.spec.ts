@@ -160,7 +160,7 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
     `blocky-performance-${before.version}.json`,
   );
   expect(before.sampleCount).toBeGreaterThan(0);
-  expect(before.schemaVersion).toBe(3);
+  expect(before.schemaVersion).toBe(4);
   expect(before.frameTimes).toHaveLength(before.sampleCount);
   expect(
     before.frameTimes.every(
