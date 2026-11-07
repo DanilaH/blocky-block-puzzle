@@ -127,3 +127,91 @@ test("failed performance export stays protected until a successful retry", async
   await page.locator("#clear-benchmark").click();
   await expect(page).toHaveURL(/diagnostics\/clear.html$/);
 });
+
+test("theme reveal advances the ambient palette together with the field", async ({
+  page,
+}) => {
+  await page.goto("/diagnostics/clear.html");
+  await expect(page.locator("#bench-start")).toBeEnabled();
+  await page.locator("#bench-start").click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-material",
+    "chrome",
+    { timeout: 10000 },
+  );
+  expect(
+    await page
+      .locator("html")
+      .evaluate((e) =>
+        getComputedStyle(e).getPropertyValue("--world-bg").trim(),
+      ),
+  ).toBe("rgb(35, 63, 87)");
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", {
+      configurable: true,
+      value: true,
+    });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect(page.locator("#bench-status")).toContainText("прерван");
+});
+
+test("normal-game performance export carries the exact all-clear fixture", async ({
+  page,
+}) => {
+  await seed(page);
+  await page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    const a = new IndexedSave(),
+      p = (await a.load()).profile;
+    p.revision++;
+    p.game.board.fill(0);
+    for (let x = 1; x < 8; x++) p.game.board[x] = (x % 6) + 1;
+    p.game.tray = [0, 1, 2].map((i) => ({
+      shapeId: "S1-0",
+      color: i + 1,
+      used: false,
+    }));
+    p.game.status = "playing";
+    p.game.score = 12000;
+    p.game.streak = 0;
+    p.best = p.festivalBest = 100000;
+    p.wardrobe = { selected: 0, unlocked: [0], discoveries: 1 };
+    p.settings.calm = false;
+    p.settings.sound = false;
+    await a.write(p);
+  });
+  await page.reload();
+  await page.locator(".piece").first().waitFor();
+  const before = await savedGame(page);
+  await diagnostics(page);
+  await page.locator("#perf-start").click();
+  await page.locator('[data-slot="0"]').click();
+  await page.locator("#board").click({ position: { x: 3, y: 3 } });
+  await expect
+    .poll(async () => (await savedGame(page)).moves)
+    .toBe(before.moves + 1);
+  await diagnostics(page);
+  const event = page.waitForEvent("download");
+  await page.locator("#perf-export").click();
+  const report = JSON.parse(
+    await fs.readFile((await (await event).path())!, "utf8"),
+  );
+  expect(report.schemaVersion).toBe(4);
+  expect(report.context.canvas[0]).toBeGreaterThan(0);
+  const fixture = report.placements.find((x: any) => x.allClear).fixture;
+  expect(fixture.before).toEqual({ ...before, gameId: "diagnostic-game" });
+  expect(fixture.rows).toEqual([0]);
+  expect(fixture.columns).toEqual([]);
+  expect(fixture.beforeTheme).toBe(0);
+  expect(fixture.afterTheme).toBe(5);
+  expect(fixture.beforeWardrobe.discoveries).toBe(1);
+  expect(fixture.afterWardrobe.discoveries).toBe(2);
+  const result = await page.evaluate(async (fixture) => {
+    const { applyMove } = await import("/src/core/rules.ts");
+    const r = applyMove(fixture.before, fixture.move, fixture.before.revision)!;
+    return { allClear: r.allClear, score: r.state.score };
+  }, fixture);
+  expect(result).toEqual({ allClear: true, score: fixture.expectedScore });
+  expect(fixture.expectedScore).toBe((await savedGame(page)).score);
+});

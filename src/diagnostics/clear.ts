@@ -215,6 +215,7 @@ async function episode(profile: Profile, signal: AbortSignal) {
       if (!signal.aborted && !profile.noTheme) {
         performanceCapture.record("themeReveal", 0);
         scene.setTheme(5, THEMES[5]!.accent);
+        ambient.set(THEMES[5]!.at, !profile.noAmbient, false);
         festival.setPalette(5);
       }
     }, 320),

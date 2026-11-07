@@ -1,3 +1,4 @@
+import { readRenderInfo } from "./platform/render-info";
 import { APP_VERSION } from "./app-version";
 import { presentReviveClock } from "./game/revive-clock";
 import { MoveCalculator } from "./game/move-calculator";
@@ -871,6 +872,7 @@ async function start() {
       return;
     }
     const previousTheme = presentationTheme();
+    const previousWardrobe = store.state.wardrobe;
     const previousBest = bestFor(store.state);
     const piece = before.tray[move.slot];
     const placedCells = piece
@@ -949,17 +951,33 @@ async function start() {
       if (!practicing) playCapture.record(before, move, event.state);
       const signature = clearSignature(event.cells);
       const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
-      performanceCapture.markPlacement(
-        event.lines,
-        event.state.streak,
-        event.allClear,
-        scene.calm,
-      );
       const newRecord =
         !practicing &&
         !recordCelebrated &&
         previousBest > 0 &&
         event.state.score > previousBest;
+      performanceCapture.markPlacement(
+        event.lines,
+        event.state.streak,
+        event.allClear,
+        scene.calm,
+        performanceCapture.enabled && event.allClear
+          ? {
+              before,
+              move,
+              expectedScore: event.state.score,
+              rows: signature.rows,
+              columns: signature.cols,
+              beforeTheme: previousTheme,
+              afterTheme: store.state.wardrobe?.selected ?? 0,
+              beforeWardrobe: previousWardrobe,
+              afterWardrobe: store.state.wardrobe,
+              revealVariant,
+              newRecord,
+              settings: store.state.settings,
+            }
+          : undefined,
+      );
       if (newRecord) recordCelebrated = true;
       const deferred =
         running && !scene.calm
@@ -2123,7 +2141,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2229,7 +2247,7 @@ async function start() {
     el("themes").onclick = showThemes;
     el("perf-start").onclick = () => {
       performanceExported = false;
-      performanceCapture.start();
+      performanceCapture.start(readRenderInfo(phaser!));
       close();
       toast(
         "Запись включена. После нескольких ходов выгрузите замер из паузы.",

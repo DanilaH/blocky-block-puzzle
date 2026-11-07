@@ -1,15 +1,33 @@
+import type { GameState, Move } from "../core/rules";
+import type { Profile } from "../core/profile";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import { APP_VERSION } from "../app-version";
 type Phase = { name: string; ms: number; at: number };
+export type ClearFixture = {
+  before: GameState;
+  move: Move;
+  expectedScore: number;
+  rows: number[];
+  columns: number[];
+  beforeTheme: number;
+  afterTheme: number;
+  beforeWardrobe: Profile["wardrobe"];
+  afterWardrobe: Profile["wardrobe"];
+  revealVariant: number;
+  newRecord: boolean;
+  settings: Profile["settings"];
+};
 type Marker = {
   at: number;
   lines: number;
   streak: number;
   allClear: boolean;
   calm: boolean;
+  fixture?: ClearFixture;
 };
 type Summary = { count: number; totalMs: number; maxMs: number };
-/** Opt-in, bounded performance diagnostics. Optional product events contain game/session IDs, never boards. */
+/** Opt-in, bounded RAM diagnostics. Full-clear fixtures are private local exports;
+ * optional product analytics never receive boards or diagnostic payloads. */
 export class PerformanceCapture {
   private frames = new Float32Array(7200);
   private frameTimes = new Float64Array(7200);
@@ -29,11 +47,13 @@ export class PerformanceCapture {
   private observer: PerformanceObserver | null = null;
   private activeSince = 0;
   private longTaskSupported = false;
+  private context: unknown = null;
   markPlacement(
     lines: number,
     streak: number,
     allClear: boolean,
     calm: boolean,
+    fixture?: ClearFixture,
   ) {
     if (!this.enabled || !this.active) return;
     this.markers[this.markerCursor] = {
@@ -42,6 +62,14 @@ export class PerformanceCapture {
       streak,
       allClear,
       calm,
+      ...(allClear && fixture
+        ? {
+            fixture: structuredClone({
+              ...fixture,
+              before: { ...fixture.before, gameId: "diagnostic-game" },
+            }),
+          }
+        : {}),
     };
     this.markerCursor = (this.markerCursor + 1) % 128;
   }
@@ -55,7 +83,8 @@ export class PerformanceCapture {
       this.longTaskCursor = (this.longTaskCursor + 1) % 128;
     }
   }
-  start() {
+  start(context: unknown = null) {
+    this.context = structuredClone(context);
     this.observer?.disconnect();
     this.observer = null;
     this.markers = [];
@@ -142,7 +171,8 @@ export class PerformanceCapture {
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
       version: APP_VERSION,
-      schemaVersion: 3,
+      schemaVersion: 4,
+      context: structuredClone(this.context),
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
       phaseUnits:
@@ -159,11 +189,13 @@ export class PerformanceCapture {
           (this.longTaskCursor - this.longTasks.length + i + 128) % 128
         ]!,
       })),
-      placements: Array.from({ length: this.markers.length }, (_, i) => ({
-        ...this.markers[
-          (this.markerCursor - this.markers.length + i + 128) % 128
-        ]!,
-      })),
+      placements: Array.from({ length: this.markers.length }, (_, i) =>
+        structuredClone(
+          this.markers[
+            (this.markerCursor - this.markers.length + i + 128) % 128
+          ]!,
+        ),
+      ),
       sampleCount: samples.length,
       median: sorted[Math.floor(sorted.length * 0.5)] ?? null,
       p95: sorted[Math.floor(sorted.length * 0.95)] ?? null,

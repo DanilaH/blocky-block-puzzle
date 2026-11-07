@@ -132,3 +132,53 @@ it("bounds long tasks and placement markers, excludes pause and stale observers"
     vi.unstubAllGlobals();
   }
 });
+
+it("keeps exact clear fixtures immutable and removes their game identifier", async () => {
+  const { newGame } = await import("../src/core/rules");
+  const { createProfile } = await import("../src/core/profile");
+  vi.stubGlobal("requestAnimationFrame", () => 1);
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+  vi.stubGlobal("innerWidth", 392);
+  vi.stubGlobal("innerHeight", 872);
+  vi.stubGlobal("devicePixelRatio", 2.75);
+  try {
+    const before = newGame(1234, "private-game-id", "flow-v4");
+    const fixture = {
+      before,
+      move: { slot: 0, x: 0, y: 0 },
+      expectedScore: 1000,
+      rows: [0],
+      columns: [],
+      beforeTheme: 0,
+      afterTheme: 5,
+      beforeWardrobe: { selected: 0, unlocked: [0], discoveries: 1 },
+      afterWardrobe: { selected: 5, unlocked: [0, 5], discoveries: 2 },
+      revealVariant: 2,
+      newRecord: false,
+      settings: createProfile(before).settings,
+    };
+    const capture = new PerformanceCapture(),
+      context = { canvas: [1024, 1024] };
+    capture.markPlacement(1, 1, true, false, fixture);
+    capture.start(context);
+    capture.setActive(true);
+    capture.markPlacement(1, 1, true, false, fixture);
+    before.board[0] = 6;
+    fixture.move.x = 7;
+    context.canvas[0] = 512;
+    const sample = capture.snapshot(),
+      saved = sample.placements[0]!.fixture!;
+    expect(saved.before.gameId).toBe("diagnostic-game");
+    expect(saved.before.board[0]).toBe(0);
+    expect(saved.move.x).toBe(0);
+    expect(sample.context).toEqual({ canvas: [1024, 1024] });
+    saved.before.board[0] = 5;
+    expect(capture.snapshot().placements[0]!.fixture!.before.board[0]).toBe(0);
+    capture.start();
+    expect(capture.snapshot().context).toBeNull();
+    expect(capture.snapshot().placements).toEqual([]);
+    capture.setActive(false);
+  } finally {
+    vi.unstubAllGlobals();
+  }
+});
