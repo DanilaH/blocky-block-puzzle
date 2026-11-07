@@ -811,7 +811,10 @@ async function start() {
             ? "Ещё подсказки"
             : "Подсказка";
   }
+  let hintTimeout = 0;
   function cancelHint(reason = "cancelled") {
+    clearTimeout(hintTimeout);
+    hintTimeout = 0;
     if (worker)
       analytics.track("hint_fail", { gameId: store.state.game.gameId, reason });
     hintGeneration++;
@@ -1807,19 +1810,36 @@ async function start() {
     const generation = ++hintGeneration;
     const snapshot = structuredClone(p.game);
     stopPraise();
-    worker = new Worker(new URL("./game/hint.worker.ts", import.meta.url), {
-      type: "module",
-    });
+    let hintWorker: Worker;
+    try {
+      hintWorker = new Worker(
+        new URL("./game/hint.worker.ts", import.meta.url),
+        {
+          type: "module",
+        },
+      );
+    } catch {
+      toast("Не получилось рассчитать подсказку. Кредит сохранён.");
+      return;
+    }
+    worker = hintWorker;
     el("hint").setAttribute("aria-busy", "true");
     el("hint-label").textContent = "Ищем ход…";
-    worker.onerror = () => {
+    const failHint = () => {
+      if (worker !== hintWorker || generation !== hintGeneration) return;
       cancelHint("worker");
       toast("Не получилось рассчитать подсказку. Кредит сохранён.");
     };
-    worker.onmessage = async (event: MessageEvent<HintResult>) => {
-      worker?.terminate();
+    hintWorker.onerror = failHint;
+    hintWorker.onmessageerror = failHint;
+    hintTimeout = window.setTimeout(failHint, 5000);
+    hintWorker.onmessage = async (event: MessageEvent<HintResult>) => {
+      if (worker !== hintWorker || generation !== hintGeneration) return;
+      clearTimeout(hintTimeout);
+      hintTimeout = 0;
+      hintWorker.terminate();
       worker = null;
-      if (generation !== hintGeneration || !running) {
+      if (!running) {
         refreshHintLabel();
         return;
       }
@@ -1869,7 +1889,11 @@ async function start() {
         syncSaving();
       }
     };
-    worker.postMessage(snapshot);
+    try {
+      hintWorker.postMessage(snapshot);
+    } catch {
+      failHint();
+    }
   });
   function open(content: string, type: string) {
     modal = type;

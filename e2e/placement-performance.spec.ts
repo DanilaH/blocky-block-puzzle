@@ -157,7 +157,7 @@ test("diagnostics exports bounded data and excludes paused intervals", async ({
   await page.getByText("Диагностика", { exact: true }).click();
   await page.locator("#perf-export").click();
   expect((await download).suggestedFilename()).toBe(
-    "blocky-performance-0.31.json",
+    `blocky-performance-${before.version}.json`,
   );
   expect(before.sampleCount).toBeGreaterThan(0);
   expect(before.schemaVersion).toBe(3);

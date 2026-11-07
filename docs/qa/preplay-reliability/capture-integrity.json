@@ -1,0 +1,35 @@
+{
+  "source": "Synthetic integrity test; not a human playtest or a balance comparison",
+  "dealer": "unchanged flow-v4",
+  "seedRange": [
+    250001,
+    250017
+  ],
+  "limit": {
+    "attemptedMoves": 5815,
+    "storedMoves": 5814,
+    "segments": 17,
+    "bytes": 800130,
+    "stopReason": "limit",
+    "sha256": "f87a9eec51bf6a7f918657a6000b73178473b618779b2fd4ebd4f35bd573964c"
+  },
+  "midgame": {
+    "moves": 12,
+    "segments": 2,
+    "initialMoves": 1,
+    "activeIntervalsMs": [
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000,
+      1000
+    ]
+  }
+}

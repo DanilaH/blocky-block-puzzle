@@ -1,4 +1,5 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
+import { APP_VERSION } from "../app-version";
 type Phase = { name: string; ms: number; at: number };
 type Marker = {
   at: number;
@@ -140,7 +141,7 @@ export class PerformanceCapture {
     );
     const sorted = samples.slice().sort((a, b) => a - b);
     return {
-      version: "0.31",
+      version: APP_VERSION,
       schemaVersion: 3,
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
@@ -208,7 +209,7 @@ export class PerformanceCapture {
       );
       const link = document.createElement("a");
       link.href = url;
-      link.download = "blocky-performance-0.31.json";
+      link.download = `blocky-performance-${APP_VERSION}.json`;
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
