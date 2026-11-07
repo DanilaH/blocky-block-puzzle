@@ -252,3 +252,26 @@ it.each(["clear", "record", "allClear"] as const)(
     }
   },
 );
+
+it.each([
+  ["combo", [0, 0, 0.16]],
+  ["mega", [0, 0.12, 0.24]],
+  ["cross", [0, 0, 0.18, 0.18]],
+] as const)(
+  "%s preserves its impact rhythm at low and high combo",
+  async (kind, offsets) => {
+    vi.stubGlobal("AudioContext", FakeContext);
+    const audio = new GameAudio();
+    await audio.unlock();
+    const tones = vi.spyOn(audio as any, "tone").mockImplementation(() => {});
+    for (const streak of [2, 40]) {
+      tones.mockClear();
+      audio.play(kind, streak, 1000, 0.8);
+      const notes = tones.mock.calls.filter((c) => c[4] === 0.105);
+      expect(notes).toHaveLength(offsets.length);
+      notes.forEach((c, i) =>
+        expect(Number(c[2]) - Number(notes[0]![2])).toBeCloseTo(offsets[i]!, 6),
+      );
+    }
+  },
+);

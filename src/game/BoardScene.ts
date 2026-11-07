@@ -583,45 +583,68 @@ export class BoardScene extends Phaser.Scene {
       if (!this.calm && e.lines >= 2 && age < 700) {
         const cross = e.rows.length > 0 && e.columns.length > 0;
         if (cross) {
-          const t = Math.min(1, age / 650);
-          // One focal intersection, not a burst for every crossed cell.
           const cx = e.columns[0]! * 64 + 32,
             cy = e.rows[0]! * 64 + 32;
-          fx.stamp(
-            "flash",
-            cx,
-            cy,
-            130 + t * 220,
-            130 + t * 220,
-            (1 - t) ** 2,
-            0xffffff,
-          );
-          fx.stamp(
-            "ring",
-            cx,
-            cy,
-            60 + t * 450,
-            60 + t * 450,
-            (1 - t) * 0.8,
-            accent,
-          );
-          for (const sign of [-1, 1]) {
+          // A short intake precedes one central impact and four outgoing arms.
+          // Same six sprite slots as the old uniform expansion.
+          if (age < 180) {
+            const t = age / 180;
             fx.stamp(
-              "flash",
-              cx + sign * t * 420,
+              "ring",
+              cx,
               cy,
-              60 * (1 - t),
-              60 * (1 - t),
-              1 - t,
+              240 - t * 180,
+              240 - t * 180,
+              0.3 + t * 0.6,
+              accent,
             );
             fx.stamp(
               "flash",
               cx,
-              cy + sign * t * 420,
-              60 * (1 - t),
-              60 * (1 - t),
-              1 - t,
+              cy,
+              40 + t * 70,
+              40 + t * 70,
+              t * 0.7,
+              0xffffff,
             );
+          } else {
+            const t = Math.min(1, (age - 180) / 470);
+            fx.stamp(
+              "flash",
+              cx,
+              cy,
+              180 + t * 150,
+              180 + t * 150,
+              (1 - t) ** 2,
+              0xffffff,
+            );
+            fx.stamp(
+              "ring",
+              cx,
+              cy,
+              60 + t * 450,
+              60 + t * 450,
+              (1 - t) * 0.8,
+              accent,
+            );
+            for (const sign of [-1, 1]) {
+              fx.stamp(
+                "flash",
+                cx + sign * t * 420,
+                cy,
+                90 * (1 - t),
+                30 * (1 - t),
+                1 - t,
+              );
+              fx.stamp(
+                "flash",
+                cx,
+                cy + sign * t * 420,
+                30 * (1 - t),
+                90 * (1 - t),
+                1 - t,
+              );
+            }
           }
         } else if (e.lines >= 4) {
           const t = age / 700;
@@ -639,10 +662,28 @@ export class BoardScene extends Phaser.Scene {
           for (let i = 0; i < lanes.length; i++) {
             const t = (age - i * (e.lines === 3 ? 120 : 160)) / 420;
             if (t < 0 || t > 1) continue;
-            const at = lanes[i]! * 64;
-            g.fillStyle(0xffffff, Math.sin(t * Math.PI) * 0.8);
-            if (e.rows.length) g.fillRect(0, at + 24, 512, 16);
-            else g.fillRect(at + 24, 0, 16, 512);
+            const at = lanes[i]! * 64 + 32;
+            const reverse = e.lines === 2 && i === 1;
+            const front = (reverse ? 1 - t : t) * 512;
+            const thickness = e.lines === 3 ? 32 : 18;
+            const tail = Math.min(512, 80 + t * 180);
+            g.fillStyle(0xffffff, Math.sin(t * Math.PI) * 0.75);
+            const origin = reverse ? front : Math.max(0, front - tail);
+            const length = reverse
+              ? Math.min(tail, 512 - front)
+              : Math.min(tail, front);
+            if (e.rows.length)
+              g.fillRect(origin, at - thickness / 2, length, thickness);
+            else g.fillRect(at - thickness / 2, origin, thickness, length);
+            fx.stamp(
+              "flash",
+              e.rows.length ? front : at,
+              e.rows.length ? at : front,
+              e.rows.length ? 40 : thickness * 2.4,
+              e.rows.length ? thickness * 2.4 : 40,
+              Math.sin(t * Math.PI),
+              0xffffff,
+            );
           }
         }
       }

@@ -1,4 +1,5 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
+import { APP_VERSION } from "../app-version";
 import type { Profile } from "../core/profile";
 
 export type Params = Record<string, string | number | boolean>;
@@ -52,7 +53,7 @@ export class ProductAnalytics {
         ...params,
         eventId: id,
         sessionId: this.sessionId,
-        appVersion: "0.31.0-preview",
+        appVersion: APP_VERSION,
         eventSchema: 1,
       },
     };

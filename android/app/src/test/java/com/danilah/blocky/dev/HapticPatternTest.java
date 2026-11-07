@@ -24,6 +24,19 @@ public class HapticPatternTest {
     assertFalse(java.util.Arrays.equals(HapticPattern.forEvent("triple",8).times,HapticPattern.forEvent("quad",8).times));
     assertFalse(java.util.Arrays.equals(HapticPattern.forEvent("quad",8).times,HapticPattern.forEvent("cross",8).times));
   }
+  @Test public void strongPatternsKeepVisualBeatOnsets() {
+    String[] kinds = {"double", "triple", "cross"};
+    long[][] expected = {{0,160},{0,120,240},{0,180}};
+    for (int k=0;k<kinds.length;k++) for(int level=1;level<=8;level++) {
+      HapticPattern p=HapticPattern.forEvent(kinds[k],level);
+      long time=0; int beat=0;
+      for(int i=0;i<p.times.length;i++) {
+        if(i%2==1) assertEquals(expected[k][beat++],time);
+        time+=p.times[i];
+      }
+      assertEquals(expected[k].length,beat);
+    }
+  }
   @Test public void largeClearSurvivesMilestonesAndRepeatedCalls() {
     HapticPattern.Gate g = new HapticPattern.Gate();
     assertTrue(g.accept(1000,HapticPattern.forEvent("clear",8)));

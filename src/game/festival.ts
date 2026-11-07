@@ -1,3 +1,4 @@
+import { clearSignature } from "./clear-signature";
 import { visualClock } from "./visual-clock";
 import { THEMES, themeTile } from "./themes";
 import { COLORS } from "./tiles";
@@ -71,6 +72,8 @@ export class Festival {
     budget = 200,
     variant = 0,
   ) {
+    const signature = clearSignature(cells);
+    const directional = !empty && !record && lines >= 2 && signature.count >= 2;
     const palette = Array.from(
       { length: 6 },
       (_, i) =>
@@ -134,7 +137,7 @@ export class Festival {
       let y = empty
         ? board.bottom - 12
         : board.top + ((Math.floor(cell / 8) + 0.5) * board.height) / 8;
-      const angle = empty
+      let angle = empty
         ? -Math.PI / 2 + (Math.random() - 0.5) * 1.6
         : Math.random() * Math.PI * 2;
       const speed = empty
@@ -148,6 +151,31 @@ export class Festival {
         x = board.left + Math.random() * board.width;
         y = board.top - board.height * 0.2;
       }
+      let delay = 0;
+      if (directional) {
+        const horizontal = signature.rows.length > 0;
+        const lanes = horizontal ? signature.rows : signature.cols;
+        const lane = i % Math.max(1, lanes.length);
+        if (signature.kind === "cross") {
+          x = board.left + ((signature.cols[0]! + 0.5) * board.width) / 8;
+          y = board.top + ((signature.rows[0]! + 0.5) * board.height) / 8;
+          angle = ((i % 4) * Math.PI) / 2 + (Math.random() - 0.5) * 0.22;
+          delay = 180;
+        } else {
+          const along = lines === 2 ? (lane === 0 ? 0.1 : 0.9) : (i % 8) / 8;
+          x =
+            board.left +
+            (horizontal ? along : (lanes[lane]! + 0.5) / 8) * board.width;
+          y =
+            board.top +
+            (horizontal ? (lanes[lane]! + 0.5) / 8 : along) * board.height;
+          angle =
+            (horizontal ? 0 : Math.PI / 2) +
+            (lines === 2 && lane === 1 ? Math.PI : 0) +
+            (Math.random() - 0.5) * 0.65;
+          delay = lane * (lines === 2 ? 160 : 120);
+        }
+      }
       this.sparks.push({
         mode: empty ? variant + 1 : 0,
         floor: board.bottom,
@@ -158,7 +186,7 @@ export class Festival {
           empty && variant === 2
             ? 220 + Math.random() * 100
             : Math.sin(angle) * speed - (empty ? 0 : 80),
-        age: empty && variant === 2 ? -Math.random() * 650 : 0,
+        age: empty && variant === 2 ? -Math.random() * 650 : -delay,
         life: empty ? 1500 + Math.random() * 500 : 550 + Math.random() * 550,
         size: 9 + Math.random() * 9,
         color: palette[(sourceBoard?.[cell] || (i % palette.length) + 1) - 1]!,

@@ -51,7 +51,9 @@ export function replayRecord(input: unknown) {
     wall = e.wallMs;
     active = e.activeMs;
     if (e.kind === "checkpoint") {
-      if (!validProfile(createProfile(e.state)))
+      // A checkpoint validates a game, not its missing historical profile.
+      // Its synthetic best must satisfy the profile's best >= score invariant.
+      if (!validProfile({ ...createProfile(e.state), best: e.state?.score }))
         throw Error("Invalid checkpoint");
       state = structuredClone(e.state);
       segment++;

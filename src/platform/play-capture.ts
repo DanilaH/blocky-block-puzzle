@@ -1,4 +1,5 @@
 import type { GameState, Move } from "../core/rules";
+import { APP_VERSION } from "../app-version";
 import type { Profile } from "../core/profile";
 export const PLAY_CAPTURE_LIMIT = 800000;
 export function stateHash(g: GameState): string {
@@ -174,7 +175,7 @@ export class PlayCapture {
   snapshot(): PlayRecord {
     return {
       schema: "blocky-play-v1",
-      appVersion: "0.46.0-preview",
+      appVersion: APP_VERSION,
       origin: "manual-capture",
       completeGameStart: this.completeGameStart,
       stopped: this.stopped,

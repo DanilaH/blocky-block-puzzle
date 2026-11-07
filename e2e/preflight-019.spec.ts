@@ -1,6 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
 
 async function prepare(page: Page) {
+  // Install before any game RAF/timers exist; replacing the clock mid-score
+  // animation can discard the callback whose convergence this test asserts.
+  await page.clock.install();
   await page.route("**/src/platform/haptics.ts", async (route) => {
     const response = await route.fetch();
     const body = (await response.text()).replace(
@@ -43,6 +46,7 @@ async function prepare(page: Page) {
 }
 async function place(page: Page, slot: number, x = 4, y = 4) {
   await page.locator(`[data-slot="${slot}"]`).click({ force: true });
+  await expect(page.locator(`[data-slot="${slot}"]`)).toHaveClass(/selected/);
   await page.locator("#board").click({ force: true, position: { x, y } });
 }
 async function saved(page: Page) {
@@ -54,7 +58,6 @@ async function saved(page: Page) {
 for (const mode of ["background", "next-move"] as const) {
   test(`0.19 pending empty-board reward: ${mode}`, async ({ page }) => {
     await prepare(page);
-    await page.clock.install();
     await page.clock.pauseAt(new Date(Date.now() + 100));
     await place(page, 0);
     await expect.poll(async () => (await saved(page)).game.score).toBe(1901);
@@ -120,7 +123,6 @@ for (const setting of ["haptics", "calm"] as const) {
     await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
     await place(page, 0);
     await expect.poll(async () => (await saved(page)).game.score).toBe(1901);
-    await page.clock.install();
     await page.clock.runFor(4000);
     expect(
       await page.evaluate(
