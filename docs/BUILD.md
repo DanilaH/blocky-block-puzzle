@@ -78,3 +78,8 @@ Release требует `APPMETRICA_API_KEY` в формате UUID, а такж�
 
 ### Preview 0.40: совместимость обновления
 Выданный APK собран PR-run `41811031499`, artifact `13312588228`, versionCode 40. Подпись соответствует 0.39: SHA-256 сертификата `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Push-run с тем же production-кодом дал иной сертификат и был отклонён: брать произвольный artifact по названию недостаточно. Перед каждой выдачей проверять сертификат и байты production-файлов; не предлагать удаление установленной игры для обхода несовместимой подписи. Подробности: [QA 0.40](qa/FEEL_0.40_2026-11-04.md).
+
+
+### Preview 0.47: восстановленная объединённая сборка
+
+Исходники `561e8c7`, PR CI `42380128190`, artifact `13576739624`. VersionCode 47, versionName `0.47.0-preview`, applicationId `com.danilah.blocky.dev`. Проверены 220 unit, 146 browser, production build, assets:check и Android unit/build. APK v2-подпись совместима с выданной 0.46; все 78 production-файлов совпали с dist. SHA-256 APK `422fdb0db4a1337885d3dca4e9e4f0f8d4d1a30c6d29dc16722f190d7e2b62e9`. Физическая установка/ощущения/реальный SDK по-прежнему требуют устройства. [Итоговый протокол](qa/RECOVERED_0.47_2026-11-07.md).
