@@ -1,3 +1,4 @@
+import { MoveCalculator } from "./game/move-calculator";
 import { PlayCapture } from "./platform/play-capture";
 import { sharePlayRecord } from "./platform/share-json";
 import { presentResult } from "./game/result-presentation";
@@ -109,40 +110,12 @@ async function start() {
   const festival = new Festival(),
     haptics = new GameHaptics();
   let movePending = false;
-  const moveWorker = new Worker(
-    new URL("./game/move.worker.ts", import.meta.url),
-    { type: "module" },
+  const moveCalculator = new MoveCalculator(
+    () =>
+      new Worker(new URL("./game/move.worker.ts", import.meta.url), {
+        type: "module",
+      }),
   );
-  async function calculateMove(
-    state: GameState,
-    move: Move,
-    revision: number,
-  ): Promise<ReturnType<typeof applyMove>> {
-    if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4"].includes(
-        state.dealerVersion,
-      ) ||
-      state.tray.filter((s) => s.used).length !== 2
-    )
-      return applyMove(state, move, revision);
-    return new Promise((resolve, reject) => {
-      const timeout = window.setTimeout(() => {
-        moveWorker.onmessage = null;
-        reject(new Error("Move search timed out"));
-      }, 5000);
-      moveWorker.onmessage = (e) => {
-        clearTimeout(timeout);
-        e.data.error
-          ? reject(new Error("Move search failed"))
-          : resolve(e.data.result);
-      };
-      moveWorker.onerror = () => {
-        clearTimeout(timeout);
-        reject(new Error("Move worker failed"));
-      };
-      moveWorker.postMessage({ state, move, revision });
-    });
-  }
   let praiseWorker: Worker | null = null;
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
@@ -913,7 +886,7 @@ async function start() {
     const saveStarted = performance.now();
     movePending = true;
     try {
-      const calculated = await calculateMove(before, move, revision);
+      const calculated = await moveCalculator.calculate(before, move, revision);
       performanceCapture.record(
         "moveCalculationWallTime",
         performance.now() - saveStarted,
