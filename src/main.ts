@@ -1509,8 +1509,13 @@ async function start() {
       node.dataset.signature = praise.startsWith("ПЕРЕКРЕСТИЕ")
         ? "cross"
         : "lanes";
-    const finishLabel = rewardLabels.prepare(label, important && !scene.calm);
-    const finishAmount = rewardLabels.prepare(amount, false);
+    const legacyText = phoneLayers && diagnosticLayer?.legacyRewardText;
+    const finishLabel = legacyText
+      ? () => {}
+      : rewardLabels.prepare(label, important && !scene.calm);
+    const finishAmount = legacyText
+      ? () => {}
+      : rewardLabels.prepare(amount, false);
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -2914,6 +2919,7 @@ async function start() {
                 score: currentGame().score,
                 boardEmpty: currentGame().board.every((n) => n === 0),
                 rewardDomCreated: diagnosticRewardDom,
+                rewardRasters: rewardLabels.snapshot(),
                 shownScore: Math.round(scoreShown),
                 pendingPoints,
                 scene: scene.diagnosticSnapshot(),

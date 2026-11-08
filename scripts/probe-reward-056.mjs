@@ -25,7 +25,7 @@ const server = await createServer({
 });
 await server.listen();
 const browser = await chromium.launch({ headless: true });
-const order = [
+const defaultOrder = [
   "baseline",
   "surface-only",
   "rasters-only",
@@ -35,6 +35,38 @@ const order = [
   "surface-only",
   "baseline",
 ];
+const order = process.env.PROBE_CONDITIONS?.split(",") || defaultOrder;
+const output =
+  process.env.PROBE_OUTPUT || "docs/qa/rewards-056/browser-comparison.json";
+function taskUnion(events, mark, startMs, endMs) {
+  const start = mark.ts + startMs * 1000,
+    end = mark.ts + endMs * 1000;
+  const xs = events
+    .filter(
+      (x) =>
+        x.ph === "X" &&
+        x.tid === mark.tid &&
+        x.name === "ThreadControllerImpl::RunTask" &&
+        x.ts >= start &&
+        x.ts < end,
+    )
+    .sort((a, b) => a.ts - b.ts || b.dur - a.dur);
+  const outer = [];
+  let edge = -Infinity;
+  for (const x of xs) {
+    if (x.ts + x.dur <= edge) continue;
+    outer.push(x);
+    edge = x.ts + x.dur;
+  }
+  return {
+    rawCount: xs.length,
+    outerCount: outer.length,
+    wallMs: outer.reduce((n, x) => n + x.dur / 1000, 0),
+    threadCpuMs: outer.some((x) => x.tdur !== undefined)
+      ? outer.reduce((n, x) => n + (x.tdur || 0) / 1000, 0)
+      : null,
+  };
+}
 const results = [];
 try {
   for (const [index, condition] of order.entries()) {
@@ -91,6 +123,11 @@ try {
       assert.equal(e.state.wardrobe.selected, 5);
       const m = es.find((x) => x.name === `blocky-clear:${e.kind}:committed`);
       assert(m);
+      const startMark = es.find(
+        (x) => x.name === `blocky-clear:${e.kind}:start`,
+      );
+      const endMark = es.find((x) => x.name === `blocky-clear:${e.kind}:end`);
+      assert(startMark && endMark);
       const metrics = Object.fromEntries(
         [
           "Blink.Style.UpdateTime",
@@ -145,12 +182,18 @@ try {
               : null,
           };
         })(),
+        wholeEpisodeTasks: {
+          ...taskUnion(es, startMark, 0, (endMark.ts - startMark.ts) / 1000),
+          durationMs: (endMark.ts - startMark.ts) / 1000,
+        },
+        unionRendererTasks: taskUnion(es, m, 0, 2400),
+        unionEffectTasks: taskUnion(es, m, 320, 1400),
         rasters: e.state.rewardRasters,
       };
     });
     results.push({ index, condition, episodes, errors });
     await fs.writeFile(
-      "docs/qa/rewards-056/browser-comparison.json",
+      output,
       JSON.stringify(
         {
           environment: "Linux Chromium/SwiftShader; not a POCO FPS claim",
@@ -166,6 +209,7 @@ try {
       JSON.stringify({
         index,
         condition,
+        main: episodes.map((e) => e.unionRendererTasks),
         style: episodes.map(
           (e) => +e.metrics["Blink.Style.UpdateTime"].wallMs.toFixed(2),
         ),

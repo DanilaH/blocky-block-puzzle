@@ -30,12 +30,12 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
     timeout: 40000,
   });
   const r = await report(page);
-  expect(r.schema).toBe("blocky-phone-layers-v1");
+  expect(r.schema).toBe("blocky-phone-layers-v2");
   expect(r.completed).toBe(true);
   expect(r.interrupted).toBe(false);
-  expect(r.episodes).toHaveLength(18);
+  expect(r.episodes).toHaveLength(20);
   expect(r.episodes.filter((e: any) => e.phase === "comparison")).toHaveLength(
-    16,
+    18,
   );
   expect(r.protocol.functionalOnly).toBe(true);
   expect(r.summary.rows.every((e: any) => !e.investigate)).toBe(true);
@@ -44,6 +44,9 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
     expect(e.state.game.board.every((n: number) => n === 0)).toBe(true);
     expect(e.state.wardrobe.selected).toBe(5);
     expect(e.validation.errors).toEqual([]);
+    expect(e.state.proof.rewardRasters.prepared === 0).toBe(
+      e.condition.skipRewardDom || e.condition.legacyRewardText,
+    );
   }
   expect(
     r.episodes.find((e: any) => e.condition.id === "no-theme").state.proof
@@ -85,10 +88,13 @@ test("full length layer study includes delayed rain, theme, scores and one consi
   const r = await report(page);
   expect(r.completed).toBe(true);
   expect(r.protocol.functionalOnly).toBe(false);
-  expect(r.episodes).toHaveLength(18);
+  expect(r.episodes).toHaveLength(20);
   const dimensions = JSON.stringify(r.episodes[0].sample.context.canvas);
   for (const e of r.episodes) {
     expect(e.validation.errors).toEqual([]);
+    expect(e.state.proof.rewardRasters.prepared === 0).toBe(
+      e.condition.skipRewardDom || e.condition.legacyRewardText,
+    );
     expect(JSON.stringify(e.sample.context.canvas)).toBe(dimensions);
     expect(e.state.proof.pendingPoints).toBe(0);
     expect(e.state.proof.shownScore).toBe(1574);

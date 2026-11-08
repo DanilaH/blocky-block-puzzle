@@ -14,6 +14,7 @@ function proof(): LayerProof {
     score: 1574,
     boardEmpty: true,
     rewardDomCreated: 3,
+    rewardRasters: { prepared: 4, fallbacks: 0 },
     scene: { draws: 140, inkPeak: 48, vfxPeak: 90 },
     atmosphere: { draws: 70, disabled: false },
     festival: { draws: 140, bursts: 2, spawned: 148, disabled: false },
@@ -31,7 +32,7 @@ function sample(slow: number, max = 40) {
 describe("layer study protocol", () => {
   it("brackets both reversed orders and changes exactly one dimension", () => {
     const plan = layerPlan();
-    expect(plan).toHaveLength(16);
+    expect(plan).toHaveLength(18);
     const a = plan.filter((e) => e.round === 0),
       b = plan.filter((e) => e.round === 1);
     expect(a[0]!.condition.id).toBe("baseline");
@@ -51,6 +52,7 @@ describe("layer study protocol", () => {
       "skipAtmosphere",
       "skipRewardDom",
       "freezeTheme",
+      "legacyRewardText",
     ] as const;
     for (const c of CLEAR_LAYERS.slice(1))
       expect(flags.filter((f) => c[f])).toHaveLength(1);
@@ -72,6 +74,17 @@ describe("layer study protocol", () => {
     expect(validateLayer(CLEAR_LAYERS[6], q).errors).toContain(
       "logical-outcome",
     );
+  });
+  it("requires the selected reward renderer and rejects fallback results", () => {
+    const p = proof();
+    expect(validateLayer(CLEAR_LAYERS[7], p).errors).toContain("renderer-path");
+    p.rewardRasters.prepared = 0;
+    expect(validateLayer(CLEAR_LAYERS[7], p).valid).toBe(true);
+    expect(validateLayer(BASELINE_LAYER, p).errors).toContain("renderer-path");
+    p.rewardRasters = { prepared: 4, fallbacks: 1 };
+    expect(validateLayer(BASELINE_LAYER, p).errors).toContain("renderer-path");
+    p.rewardRasters.prepared = 0;
+    expect(validateLayer(CLEAR_LAYERS[7], p).errors).toContain("renderer-path");
   });
   it("requires both comparable rounds and a stable maximum, excluding warmup/trace and functional runs", () => {
     const episodes = layerPlan().map((e) => ({

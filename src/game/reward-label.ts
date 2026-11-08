@@ -1,5 +1,3 @@
-import { visualClock } from "./visual-clock";
-
 type Shadow = { color: string; x: number; y: number; blur: number };
 type CachedGlyph = { image: HTMLCanvasElement; bytes: number; refs: number };
 type Glyph = {
@@ -10,15 +8,7 @@ type Glyph = {
 };
 type Label = {
   element: HTMLElement;
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  glyphs: Glyph[];
-  width: number;
-  height: number;
-  pad: number;
-  dpr: number;
-  started: number;
-  dancing: boolean;
+  views: HTMLCanvasElement[];
   bytes: number;
 };
 
@@ -38,25 +28,6 @@ function shadows(value: string): Shadow[] {
   return result;
 }
 
-// CSS ease-in-out (.42,0,.58,1), including the negative per-letter delay.
-export function letterPose(age: number, index: number) {
-  const cycle = Math.max(0, age + index * 45) / 650;
-  const fraction = cycle % 1;
-  const x = Math.floor(cycle) % 2 ? 1 - fraction : fraction;
-  let low = 0,
-    high = 1;
-  for (let i = 0; i < 14; i++) {
-    const t = (low + high) / 2;
-    const bx =
-      3 * (1 - t) ** 2 * t * 0.42 + 3 * (1 - t) * t ** 2 * 0.58 + t ** 3;
-    if (bx < x) low = t;
-    else high = t;
-  }
-  const t = (low + high) / 2,
-    eased = 3 * (1 - t) * t ** 2 + t ** 3;
-  return { y: 1 - 5 * eased, angle: ((-3 + 6 * eased) * Math.PI) / 180 };
-}
-
 function surface(width: number, height: number, dpr: number) {
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.ceil(width * dpr));
@@ -67,16 +38,19 @@ function surface(width: number, height: number, dpr: number) {
   return { canvas, context };
 }
 
-/** Bounded, event-local text rasters. No layout/style reads in the frame loop. */
+/** Prepare bounded text rasters once; native transform animations move static pixels. */
 export class RewardLabels {
   private labels = new Set<Label>();
-  private frame: (() => void) | null = null;
   private stats = {
     prepared: 0,
+    cacheHits: 0,
+    cacheMisses: 0,
+    maxPrepareMs: 0,
+    initialCachedBytes: 0,
     fallbacks: 0,
     prepareMs: 0,
-    drawMs: 0,
-    draws: 0,
+    copyMs: 0,
+    rasterCopies: 0,
     peakBytes: 0,
   };
   private bytes = 0;
@@ -86,10 +60,14 @@ export class RewardLabels {
   beginSample() {
     this.stats = {
       prepared: 0,
+      cacheHits: 0,
+      cacheMisses: 0,
+      maxPrepareMs: 0,
+      initialCachedBytes: this.cacheBytes,
       fallbacks: 0,
       prepareMs: 0,
-      drawMs: 0,
-      draws: 0,
+      copyMs: 0,
+      rasterCopies: 0,
       peakBytes: this.bytes + this.cacheBytes,
     };
   }
@@ -100,7 +78,7 @@ export class RewardLabels {
       bytes: this.bytes + this.cacheBytes,
       activeBytes: this.bytes,
       cachedBytes: this.cacheBytes,
-      clockActive: !!this.frame,
+      clockActive: false,
     };
   }
 
@@ -151,8 +129,6 @@ export class RewardLabels {
         1,
         Math.min(3, devicePixelRatio, Math.sqrt((2 * 1024 * 1024) / estimate)),
       );
-      const view = surface(width + pad * 2, height + pad * 2, dpr);
-      allocated.push(view.canvas);
       const glyphs: Glyph[] = [];
       let x = (width - total) / 2;
       for (let i = 0; i < pieces.length; i++) {
@@ -171,6 +147,7 @@ export class RewardLabels {
         ]);
         let entry = this.cache.get(key);
         if (entry) {
+          this.stats.cacheHits++;
           this.cache.delete(key);
           this.cache.set(key, entry);
           entry.refs++;
@@ -179,6 +156,7 @@ export class RewardLabels {
           x += w;
           continue;
         }
+        this.stats.cacheMisses++;
         const ink = surface(w + pad * 2, height + pad * 2, dpr);
         allocated.push(ink.canvas);
         const ctx = ink.context;
@@ -230,29 +208,34 @@ export class RewardLabels {
         glyphs.push({ image, entry, x, width: w });
         x += w;
       }
+      const views: HTMLCanvasElement[] = [];
+      const copied = performance.now();
+      for (const [i, glyph] of glyphs.entries()) {
+        const view = surface(glyph.width + pad * 2, height + pad * 2, dpr);
+        allocated.push(view.canvas);
+        view.context.drawImage(
+          glyph.image,
+          0,
+          0,
+          glyph.image.width / dpr,
+          glyph.image.height / dpr,
+        );
+        view.canvas.className =
+          "reward-raster" + (dancing ? " reward-raster-letter" : "");
+        view.canvas.setAttribute("aria-hidden", "true");
+        view.canvas.style.cssText = `position:absolute;left:${glyph.x - pad}px;top:${-pad}px;width:${glyph.width + pad * 2}px;height:${height + pad * 2}px;pointer-events:none`;
+        view.canvas.style.setProperty("--letter", String(i));
+        views.push(view.canvas);
+      }
+      this.stats.rasterCopies += views.length;
+      this.stats.copyMs += performance.now() - copied;
       const bytes = allocated.reduce((n, c) => n + c.width * c.height * 4, 0);
       if (
         bytes > 9 * 1024 * 1024 ||
         this.cacheBytes + this.bytes + bytes > 28 * 1024 * 1024
       )
         throw Error("Reward raster budget");
-      const label: Label = {
-        element,
-        canvas: view.canvas,
-        context: view.context,
-        glyphs,
-        width,
-        height,
-        pad,
-        dpr,
-        started: performance.now(),
-        dancing,
-        bytes,
-      };
-      this.draw(label, label.started);
-      view.canvas.className = "reward-raster";
-      view.canvas.setAttribute("aria-hidden", "true");
-      view.canvas.style.cssText = `position:absolute;left:${-pad}px;top:${-pad}px;width:${width + pad * 2}px;height:${height + pad * 2}px;pointer-events:none`;
+      const label: Label = { element, views, bytes };
       const semantic = document.createElement("span");
       semantic.className = "sr-only";
       semantic.textContent = semanticText;
@@ -262,7 +245,7 @@ export class RewardLabels {
       element.style.position = "relative";
       element.style.filter = element.style.textShadow = "none";
       element.dataset.rasterized = "true";
-      element.replaceChildren(view.canvas, semantic);
+      element.replaceChildren(...views, semantic);
       this.labels.add(label);
       this.bytes += bytes;
       this.stats.prepared++;
@@ -270,7 +253,6 @@ export class RewardLabels {
         this.stats.peakBytes,
         this.bytes + this.cacheBytes,
       );
-      this.syncClock();
       let finished = false;
       return () => {
         if (finished) return;
@@ -279,19 +261,22 @@ export class RewardLabels {
         this.bytes -= bytes;
         acquired.forEach((e) => e.refs--);
         allocated.forEach((c) => {
+          c.getAnimations().forEach((a) => a.cancel());
           c.width = c.height = 1;
         });
-        this.syncClock();
       };
     } catch {
       acquired.forEach((e) => e.refs--);
       allocated.forEach((c) => {
+        c.getAnimations().forEach((a) => a.cancel());
         c.width = c.height = 1;
       });
       this.stats.fallbacks++;
       return () => {};
     } finally {
-      this.stats.prepareMs += performance.now() - began;
+      const elapsed = performance.now() - began;
+      this.stats.prepareMs += elapsed;
+      this.stats.maxPrepareMs = Math.max(this.stats.maxPrepareMs, elapsed);
     }
   }
   clearCache() {
@@ -311,48 +296,5 @@ export class RewardLabels {
       this.cacheBytes -= entry.bytes;
       entry.image.width = entry.image.height = 1;
     }
-  }
-  private moving(label: Label) {
-    return (
-      label.dancing &&
-      label.element.isConnected &&
-      !label.element.parentElement?.classList.contains("yield-to-drag")
-    );
-  }
-  private syncClock() {
-    if ([...this.labels].some((l) => this.moving(l)))
-      this.frame ??= visualClock.add(this.tick);
-    else {
-      this.frame?.();
-      this.frame = null;
-    }
-  }
-  private tick = (now: number) => {
-    for (const label of this.labels)
-      if (this.moving(label)) this.draw(label, now);
-    this.syncClock();
-  };
-  private draw(label: Label, now: number) {
-    const began = performance.now(),
-      { context: ctx, pad, dpr, height } = label;
-    ctx.clearRect(0, 0, label.canvas.width / dpr, label.canvas.height / dpr);
-    for (const [i, glyph] of label.glyphs.entries()) {
-      const pose = label.dancing
-        ? letterPose(now - label.started, i)
-        : { y: 0, angle: 0 };
-      ctx.save();
-      ctx.translate(pad + glyph.x + glyph.width / 2, pad + height / 2 + pose.y);
-      ctx.rotate(pose.angle);
-      ctx.drawImage(
-        glyph.image,
-        -glyph.width / 2 - pad,
-        -height / 2 - pad,
-        glyph.image.width / dpr,
-        glyph.image.height / dpr,
-      );
-      ctx.restore();
-    }
-    this.stats.draws++;
-    this.stats.drawMs += performance.now() - began;
   }
 }

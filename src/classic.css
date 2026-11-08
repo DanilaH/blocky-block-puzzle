@@ -18,6 +18,20 @@
 :root[data-presentation="classic"] .world-background {
   background-image: none;
 }
+.reward-raster-letter {
+  animation: letter-dance 0.65s ease-in-out infinite alternate;
+  animation-delay: calc(var(--letter) * -45ms);
+  will-change: transform;
+}
+.effects-paused .reward-raster-letter,
+.reward-event.yield-to-drag .reward-raster-letter {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reward-raster-letter {
+    animation: none;
+  }
+}
 :root[data-presentation="classic"] {
   --enamel-ink: var(--world-ink);
 }
@@ -147,5 +161,17 @@
   outline-offset: 2px;
 }
 
-.pause-tools {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
-.pause-tools a {display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:48px;grid-column:1 / -1;}
+.pause-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+.pause-tools a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-height: 48px;
+  grid-column: 1 / -1;
+}

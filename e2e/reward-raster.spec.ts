@@ -53,11 +53,20 @@ test("prepared glyphs keep semantic text, move without DOM letters and release a
   await expect(page.locator("body>.reward-event .reward-praise i")).toHaveCount(
     0,
   );
-  await expect
-    .poll(() =>
-      page.evaluate(() => (window as any).__rasters.renderer.snapshot().draws),
-    )
-    .toBeGreaterThan(3);
+  const nativeMotion = await page.evaluate(() => {
+    const label = (window as any).__rasters.label;
+    const animations = label.getAnimations({ subtree: true });
+    animations.forEach((a: Animation) => {
+      a.pause();
+      a.currentTime = 325;
+    });
+    return {
+      count: animations.length,
+      transform: getComputedStyle(label.querySelector("canvas")).transform,
+    };
+  });
+  expect(nativeMotion.count).toBeGreaterThan(3);
+  expect(nativeMotion.transform).not.toBe("none");
   const final = await page.evaluate(() => {
     const x = (window as any).__rasters;
     x.dispose();
@@ -98,7 +107,7 @@ test("unavailable Canvas2D preserves the original reward and its lifecycle", asy
   expect(r.stats.active).toBe(0);
   expect(r.stats.bytes).toBe(0);
 });
-test("full real clear prepares both reward texts, stays bounded and clears its frame subscriber", async ({
+test("full real clear prepares both reward texts, stays bounded and releases active surfaces", async ({
   page,
 }) => {
   await page.goto("/?clearTrace=1");
@@ -115,27 +124,50 @@ test("full real clear prepares both reward texts, stays bounded and clears its f
     expect(e.state.game.score).toBe(1574);
     expect(e.state.rewardRasters.prepared).toBeGreaterThanOrEqual(4);
     expect(e.state.rewardRasters.fallbacks).toBe(0);
+    expect(e.state.rewardRasters.clockActive).toBe(false);
+    expect(e.state.rewardRasters.initialCachedBytes).toBeGreaterThan(0);
     expect(e.state.rewardRasters.peakBytes).toBeLessThan(28 * 1024 * 1024);
   }
   await expect(page.locator(".reward-raster")).toHaveCount(0);
 });
 
-test("font changes evict unused glyphs within the memory budget", async ({page}) => {
+test("font changes evict unused glyphs within the memory budget", async ({
+  page,
+}) => {
   await open(page);
   const stats = await page.evaluate(async () => {
-    const {RewardLabels} = await import("/src/game/reward-label.ts");
-    const r = new RewardLabels(); let peak = 0;
-    for(let size=20;size<56;size++){
-      const host=document.createElement("span");host.className="reward-event";host.dataset.tier="all-clear";
-      const label=document.createElement("span");label.className="reward-praise";label.style.fontSize=`${size}px`;
-      for(const letter of "Чистое поле!"){const i=document.createElement("i");i.textContent=letter;label.append(i);}
-      host.append(label);document.body.append(host);
-      const dispose=r.prepare(label,false);peak=Math.max(peak,r.snapshot().bytes);dispose();host.remove();
-      if(r.snapshot().cachedBytes>12*1024*1024)throw Error("Unbounded glyph cache");
+    const { RewardLabels } = await import("/src/game/reward-label.ts");
+    const r = new RewardLabels();
+    let peak = 0;
+    for (let size = 20; size < 56; size++) {
+      const host = document.createElement("span");
+      host.className = "reward-event";
+      host.dataset.tier = "all-clear";
+      const label = document.createElement("span");
+      label.className = "reward-praise";
+      label.style.fontSize = `${size}px`;
+      for (const letter of "Чистое поле!") {
+        const i = document.createElement("i");
+        i.textContent = letter;
+        label.append(i);
+      }
+      host.append(label);
+      document.body.append(host);
+      const dispose = r.prepare(label, false);
+      peak = Math.max(peak, r.snapshot().bytes);
+      dispose();
+      host.remove();
+      if (r.snapshot().cachedBytes > 12 * 1024 * 1024)
+        throw Error("Unbounded glyph cache");
     }
-    const after=r.snapshot();r.clearCache();return {after,peak,cleared:r.snapshot()};
+    const after = r.snapshot();
+    r.clearCache();
+    return { after, peak, cleared: r.snapshot() };
   });
-  expect(stats.after.prepared).toBe(36);expect(stats.after.fallbacks).toBe(0);
-  expect(stats.peak).toBeLessThan(28*1024*1024);expect(stats.after.activeBytes).toBe(0);
-  expect(stats.cleared.bytes).toBe(0);expect(stats.cleared.clockActive).toBe(false);
+  expect(stats.after.prepared).toBe(36);
+  expect(stats.after.fallbacks).toBe(0);
+  expect(stats.peak).toBeLessThan(28 * 1024 * 1024);
+  expect(stats.after.activeBytes).toBe(0);
+  expect(stats.cleared.bytes).toBe(0);
+  expect(stats.cleared.clockActive).toBe(false);
 });

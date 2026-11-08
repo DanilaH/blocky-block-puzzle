@@ -214,7 +214,7 @@ export async function installPhoneClear(hooks: Hooks) {
     let captureId: string | undefined;
     start.disabled = share.disabled = true;
     report = {
-      schema: layers ? "blocky-phone-layers-v1" : "blocky-phone-clear-v1",
+      schema: layers ? "blocky-phone-layers-v2" : "blocky-phone-clear-v1",
       appVersion: APP_VERSION,
       startedAt: new Date().toISOString(),
       completed: false,
@@ -245,6 +245,7 @@ export async function installPhoneClear(hooks: Hooks) {
           ? [
               "Local cosmetic seed and ambient animation reset per episode; original complete-session cosmetics are not replayed.",
               "Ink/VFX submission is skipped at the primitive/stamp boundary; shared coordinate/age calculations still run. Ambient ablation omits its animated canvas but retains background/theme DOM. Reward ablation retains score arrival and HUD count-up; no-theme freezes all presentation palettes at1 while saved wardrobe still advances to5.",
+              "Former DOM reward lettering is also compared in both orders, with the same Classic surface settings. Renderer-path counters must validate before nomination.",
               "Functional-only fast mode cannot nominate a performance candidate.",
             ]
           : []),

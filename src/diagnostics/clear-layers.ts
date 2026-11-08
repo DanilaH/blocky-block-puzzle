@@ -7,6 +7,7 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: false,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -17,6 +18,7 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: false,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -27,6 +29,7 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: false,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -37,6 +40,7 @@ export const CLEAR_LAYERS = [
     skipFestival: true,
     skipAtmosphere: false,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -47,6 +51,7 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: true,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -57,6 +62,7 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: false,
     skipRewardDom: true,
+    legacyRewardText: false,
     freezeTheme: false,
   },
   {
@@ -67,7 +73,19 @@ export const CLEAR_LAYERS = [
     skipFestival: false,
     skipAtmosphere: false,
     skipRewardDom: false,
+    legacyRewardText: false,
     freezeTheme: true,
+  },
+  {
+    id: "legacy-reward-text",
+    label: "Прежняя отрисовка наград",
+    hideInk: false,
+    hideVfx: false,
+    skipFestival: false,
+    skipAtmosphere: false,
+    skipRewardDom: false,
+    freezeTheme: false,
+    legacyRewardText: true,
   },
 ] as const;
 export type ClearLayer = (typeof CLEAR_LAYERS)[number];
@@ -90,6 +108,7 @@ export type LayerProof = {
   score: number;
   boardEmpty: boolean;
   rewardDomCreated: number;
+  rewardRasters: { prepared: number; fallbacks: number };
   scene: { draws: number; inkPeak: number; vfxPeak: number };
   atmosphere: { draws: number; disabled: boolean };
   festival: {
@@ -123,6 +142,11 @@ export function validateLayer(condition: ClearLayer, proof: LayerProof) {
     errors.push("festival-output");
   if ((proof.rewardDomCreated === 0) !== condition.skipRewardDom)
     errors.push("reward-dom-output");
+  const raster = proof.rewardRasters;
+  if (!raster || raster.fallbacks !== 0) errors.push("renderer-path");
+  else if (condition.skipRewardDom || condition.legacyRewardText) {
+    if (raster.prepared !== 0) errors.push("renderer-path");
+  } else if (raster.prepared < 4) errors.push("renderer-path");
   return { valid: errors.length === 0, errors };
 }
 type MeasuredEpisode = {

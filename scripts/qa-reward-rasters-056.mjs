@@ -64,8 +64,7 @@ try {
         after.push([a.x, a.y, a.width, a.height]);
       }
       // Freeze the actual raster painter at the same ages as the CSS reference.
-      renderer.frame?.();
-      renderer.frame = null;
+
       window.__renderer = renderer;
       return { before, after, stats: renderer.snapshot() };
     }, raster);
@@ -73,14 +72,10 @@ try {
     for (const phase of [0, 325, 650, 975]) {
       await page.evaluate(
         ({ phase, raster }) => {
-          if (raster) {
-            const r = window.__renderer;
-            for (const label of r.labels) r.draw(label, label.started + phase);
-          } else
-            document.getAnimations().forEach((a) => {
-              a.pause();
-              a.currentTime = phase;
-            });
+          document.getAnimations().forEach((a) => {
+            a.pause();
+            a.currentTime = phase;
+          });
         },
         { phase, raster },
       );
