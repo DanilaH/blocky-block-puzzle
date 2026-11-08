@@ -2,6 +2,7 @@ import { clearSignature } from "./clear-signature";
 import { visualClock } from "./visual-clock";
 import { THEMES, themeTile } from "./themes";
 import { COLORS } from "./tiles";
+import { createEffectSurface } from "./effect-surface";
 // Full-viewport cosmetic layer. No gameplay RNG, input, state, or persistent loop.
 type Spark = {
   x: number;
@@ -29,9 +30,10 @@ export class Festival {
   setPalette(theme: number) {
     this.theme = theme;
   }
-  private canvas = document.createElement("canvas");
+  private surface = createEffectSurface("festival");
+  private canvas = this.surface.canvas;
   private rear = document.createElement("div");
-  private ctx: CanvasRenderingContext2D;
+  private ctx = this.surface.painter;
   private sparks: Spark[] = [];
   private frame: (() => void) | null = null;
   private last = 0;
@@ -67,6 +69,7 @@ export class Festival {
       g.drawImage(chip, 0, 0, 64, 64);
       this.chips.set(key, c);
     }
+    this.ctx.prepareImages([...this.chips.values(), flash]);
   }
   constructor() {
     this.canvas.className = "festival-canvas";
@@ -74,7 +77,6 @@ export class Festival {
     this.rear.classList.add("festival-rear");
     this.rear.setAttribute("aria-hidden", "true");
     document.body.append(this.rear, this.canvas);
-    this.ctx = this.canvas.getContext("2d")!;
     this.syncViewport();
     window.addEventListener("resize", () => {
       this.stop();
@@ -366,6 +368,7 @@ export class Festival {
       this.frame = null;
     }
     if (!this.frame) g.clearRect(0, 0, this.width, this.height);
+    g.present();
   }
   stop() {
     this.frame?.();

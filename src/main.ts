@@ -31,6 +31,7 @@ import {
 } from "./game/themes";
 import { praiseFor, type PraiseResult } from "./core/praise";
 import { Festival } from "./game/festival";
+import { connectVisualClock } from "./game/visual-clock";
 import { GameHaptics, clearHapticLevel } from "./platform/haptics";
 import { comboMultiplier } from "./core/scoring";
 import { bestFor, recordScore } from "./core/profile";
@@ -502,6 +503,7 @@ async function start() {
     },
     fps: { target: 60, limit: 60 },
   });
+  connectVisualClock(phaser);
   const canvasResize = new ResizeObserver(() => {
     if (phaser) {
       const size = boardResolution();

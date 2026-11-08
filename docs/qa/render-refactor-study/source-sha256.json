@@ -1,0 +1,10 @@
+{
+  "src/game/effect-surface.ts": "2e92ff70dc66ba75a709f7b964a2c3be6e73ad0b0b1f783cc70d9cd07b542df4",
+  "src/game/board-backdrop.ts": "9364cf920a00bde23b56f965d7a4ab0e40e1d77ce1d198e53d0165c939dd8a4e",
+  "src/game/festival.ts": "111edca3c14c1191ad5e17ba6d8ab1c60b0e26f336a3f49d4eec02e484b1534e",
+  "src/game/atmosphere.ts": "4d625723f4a9bbd53bd69863433b1dbdc32d2507890784c78a09daf0f3a98807",
+  "src/game/BoardScene.ts": "35379c653ad697e4ef04e4cb234b0dec419e402aa000be7cfbd2f2d3b22f40da",
+  "src/classic.css": "934c1f11ddd4bfdb3bd0c1e49e9b55604b0ce27665782b2aa13b8f4d2f6ee5ab",
+  "src/game/visual-clock.ts": "4916f6b73d1a281472807ff28d0ac0a33ea11c3df02d5c3cf34e3ac04b02af9c",
+  "src/main.ts": "b96d96c1478d65810a954a038bada068d91b70a7c990bd4315d204aee6998f1c"
+}

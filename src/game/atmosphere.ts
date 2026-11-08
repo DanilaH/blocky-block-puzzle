@@ -1,12 +1,14 @@
 import { visualClock } from "./visual-clock";
 import { THEMES, themeFor, themeAccent } from "./themes";
+import { createEffectSurface } from "./effect-surface";
 // Cosmetic RNG is isolated from saved game RNG. One bounded RAF, suspended with gameplay.
 export class Atmosphere {
-  private canvas = document.createElement("canvas");
+  private surface = createEffectSurface("ambient");
+  private canvas = this.surface.canvas;
   private background = document.createElement("div");
   private previousBackground = document.createElement("div");
   private backgroundAnimation: Animation | null = null;
-  private ctx: CanvasRenderingContext2D;
+  private ctx = this.surface.painter;
   private frame: (() => void) | null = null;
   private last = 0;
   private time = 0;
@@ -64,7 +66,6 @@ export class Atmosphere {
       this.previousBackground,
       this.canvas,
     );
-    this.ctx = this.canvas.getContext("2d")!;
     this.syncViewport();
     window.addEventListener("resize", () => this.syncViewport());
   }
@@ -260,5 +261,6 @@ export class Atmosphere {
         c.globalAlpha = 1;
       } else this.wave = 0;
     }
+    c.present();
   }
 }

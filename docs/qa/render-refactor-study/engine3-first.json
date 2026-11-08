@@ -1,0 +1,111 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "cdpTracingActiveAcrossAllEpisodes": true,
+  "scope": "Original board color tween and Canvas2D effects. Runtime-only Phaser version control; maxTextures=1 for both versions; Android UA and mobile viewport, Linux software GPU. All episodes have CDP tracing. ADD visual parity between major versions is not established.",
+  "results": [
+    {
+      "condition": "legacy",
+      "surfaces": [
+        {
+          "kind": "ambient-canvas",
+          "backend": "canvas2d"
+        },
+        {
+          "kind": "festival-canvas",
+          "backend": "canvas2d"
+        }
+      ],
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 5.254000000000001,
+      "forcedStyleLayoutMaxMs": 1.53,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 65,
+          "wallMs": 48.87700000000002,
+          "threadCpuMs": 48.492
+        },
+        "Document::recalcStyle": {
+          "count": 65,
+          "wallMs": 45.79400000000002,
+          "threadCpuMs": 45.796000000000014
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 43,
+          "wallMs": 12.383000000000001,
+          "threadCpuMs": 8.989
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 53,
+          "wallMs": 49.684000000000005,
+          "threadCpuMs": 45.65699999999998
+        },
+        "Canvas2DBitmapProvider::Snapshot": {
+          "count": 0,
+          "wallMs": 0,
+          "threadCpuMs": 0
+        },
+        "Paint": {
+          "count": 357,
+          "wallMs": 17.867000000000008,
+          "threadCpuMs": 15.797999999999996
+        },
+        "Blink.Paint.UpdateTime": {
+          "count": 52,
+          "wallMs": 14.048999999999998,
+          "threadCpuMs": 11.060000000000004
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 101,
+          "wallMs": 25.455000000000016,
+          "threadCpuMs": 22.07
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "phaserTextureUnits": 1,
+          "over33": 3,
+          "theme": 5,
+          "over25": 7,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "phaserTextureUnits": 1,
+          "over33": 3,
+          "theme": 5,
+          "over25": 7,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "phaserTextureUnits": 1,
+          "over33": 5,
+          "theme": 5,
+          "over25": 12,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    }
+  ],
+  "engine": "Phaser 3.90.0"
+}

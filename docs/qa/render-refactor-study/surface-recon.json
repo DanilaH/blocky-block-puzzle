@@ -1,0 +1,355 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "cdpTracingActiveAcrossAllEpisodes": true,
+  "scope": "Same Classic fixture, simulation and DPR. Canvas2D control versus atlas/batched WebGL; all episodes have CDP tracing. Linux software graphics, not POCO.",
+  "results": [
+    {
+      "condition": "canvas2d",
+      "surfaces": [
+        {
+          "kind": "ambient-canvas",
+          "backend": "canvas2d"
+        },
+        {
+          "kind": "festival-canvas",
+          "backend": "canvas2d"
+        }
+      ],
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 6.326000000000001,
+      "forcedStyleLayoutMaxMs": 1.935,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 63,
+          "wallMs": 46.65,
+          "threadCpuMs": 46.06599999999998
+        },
+        "Document::recalcStyle": {
+          "count": 63,
+          "wallMs": 44.02,
+          "threadCpuMs": 43.745000000000005
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 43,
+          "wallMs": 13.223,
+          "threadCpuMs": 9.309999999999997
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 50,
+          "wallMs": 59.33,
+          "threadCpuMs": 51.241
+        },
+        "Canvas2DBitmapProvider::Snapshot": {
+          "count": 0,
+          "wallMs": 0,
+          "threadCpuMs": 0
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 97,
+          "wallMs": 21.011000000000006,
+          "threadCpuMs": 19.573000000000004
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 21,
+          "maxFrameMs": 66.5999984741211
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 50.099998474121094
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 15,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "condition": "festival",
+      "surfaces": [
+        {
+          "kind": "ambient-canvas",
+          "backend": "canvas2d"
+        },
+        {
+          "kind": "festival-canvas",
+          "backend": "webgl"
+        }
+      ],
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 5.157,
+      "forcedStyleLayoutMaxMs": 1.546,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 61,
+          "wallMs": 47.698,
+          "threadCpuMs": 47.09999999999999
+        },
+        "Document::recalcStyle": {
+          "count": 61,
+          "wallMs": 45.371000000000016,
+          "threadCpuMs": 45.135000000000005
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 40,
+          "wallMs": 10.446000000000002,
+          "threadCpuMs": 8.339
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 48,
+          "wallMs": 49.86099999999998,
+          "threadCpuMs": 46.98499999999999
+        },
+        "Canvas2DBitmapProvider::Snapshot": {
+          "count": 0,
+          "wallMs": 0,
+          "threadCpuMs": 0
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 93,
+          "wallMs": 21.429,
+          "threadCpuMs": 19.706000000000003
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 22,
+          "maxFrameMs": 66.80000305175781
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 21,
+          "maxFrameMs": 50.099998474121094
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 18,
+          "maxFrameMs": 50.099998474121094
+        }
+      ]
+    },
+    {
+      "condition": "ambient",
+      "surfaces": [
+        {
+          "kind": "ambient-canvas",
+          "backend": "webgl"
+        },
+        {
+          "kind": "festival-canvas",
+          "backend": "canvas2d"
+        }
+      ],
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 5.269000000000001,
+      "forcedStyleLayoutMaxMs": 1.507,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 53,
+          "wallMs": 49.004,
+          "threadCpuMs": 48.46299999999998
+        },
+        "Document::recalcStyle": {
+          "count": 53,
+          "wallMs": 46.536999999999985,
+          "threadCpuMs": 46.31099999999999
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 36,
+          "wallMs": 10.561000000000002,
+          "threadCpuMs": 8.502000000000002
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 40,
+          "wallMs": 59.396999999999984,
+          "threadCpuMs": 55.75399999999999
+        },
+        "Canvas2DBitmapProvider::Snapshot": {
+          "count": 0,
+          "wallMs": 0,
+          "threadCpuMs": 0
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 78,
+          "wallMs": 21.964,
+          "threadCpuMs": 20.737
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 22,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 29,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 24,
+          "maxFrameMs": 50.099998474121094
+        }
+      ]
+    },
+    {
+      "condition": "webgl",
+      "surfaces": [
+        {
+          "kind": "ambient-canvas",
+          "backend": "webgl"
+        },
+        {
+          "kind": "festival-canvas",
+          "backend": "webgl"
+        }
+      ],
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 4.976000000000001,
+      "forcedStyleLayoutMaxMs": 1.666,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 58,
+          "wallMs": 38.13199999999999,
+          "threadCpuMs": 37.81600000000002
+        },
+        "Document::recalcStyle": {
+          "count": 58,
+          "wallMs": 35.97899999999999,
+          "threadCpuMs": 35.996
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 41,
+          "wallMs": 10.277999999999997,
+          "threadCpuMs": 8.208
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 44,
+          "wallMs": 49.13800000000001,
+          "threadCpuMs": 47.42599999999999
+        },
+        "Canvas2DBitmapProvider::Snapshot": {
+          "count": 0,
+          "wallMs": 0,
+          "threadCpuMs": 0
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 83,
+          "wallMs": 19.105000000000008,
+          "threadCpuMs": 17.873
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 26,
+          "maxFrameMs": 83.4000015258789
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 27,
+          "maxFrameMs": 83.30000305175781
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 24,
+          "maxFrameMs": 50
+        }
+      ]
+    }
+  ]
+}

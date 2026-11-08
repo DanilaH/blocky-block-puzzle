@@ -1,0 +1,149 @@
+{
+  "scope": "Same deterministic particles and 10ms steps. Canvas2D against WebGL, DPR1.5 backing; rasterizer antialiasing differs. Images include atmosphere and festival; rear SVG implementation unchanged.",
+  "comparisons": [
+    {
+      "variant": 0,
+      "time": 350,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.055757088768229005,
+      "maxChannelDifference": 119,
+      "channelsOver25Fraction": 0.00022071137323430903
+    },
+    {
+      "variant": 0,
+      "time": 900,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.05347391250078013,
+      "maxChannelDifference": 116,
+      "channelsOver25Fraction": 0.00019535719486571388
+    },
+    {
+      "variant": 0,
+      "time": 1700,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.009497415174020678,
+      "maxChannelDifference": 99,
+      "channelsOver25Fraction": 0.000008776446358359857
+    },
+    {
+      "variant": 1,
+      "time": 350,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.05184799454950176,
+      "maxChannelDifference": 114,
+      "channelsOver25Fraction": 0.00018690580207618215
+    },
+    {
+      "variant": 1,
+      "time": 900,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.0664432248434542,
+      "maxChannelDifference": 111,
+      "channelsOver25Fraction": 0.0003052253011296262
+    },
+    {
+      "variant": 1,
+      "time": 1700,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.013276487965216667,
+      "maxChannelDifference": 38,
+      "channelsOver25Fraction": 0.00001007666063367243
+    },
+    {
+      "variant": 2,
+      "time": 350,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.05628432565686825,
+      "maxChannelDifference": 118,
+      "channelsOver25Fraction": 0.00018918117705797916
+    },
+    {
+      "variant": 2,
+      "time": 900,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.08517118621148766,
+      "maxChannelDifference": 117,
+      "channelsOver25Fraction": 0.0003292792652229087
+    },
+    {
+      "variant": 2,
+      "time": 1700,
+      "stateMatches": true,
+      "size": [
+        588,
+        1308
+      ],
+      "backend": [
+        "canvas2d",
+        "webgl"
+      ],
+      "meanChannelDifference": 0.059159099419584346,
+      "maxChannelDifference": 62,
+      "channelsOver25Fraction": 0.00012449551686117871
+    }
+  ]
+}
