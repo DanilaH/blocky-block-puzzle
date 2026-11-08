@@ -125,3 +125,10 @@ Android CI подготавливает точную версиюGradle из wra
 Source `1ba936c53d082107ba6ec0e630a367c858908553`; PR #1 run `42480304579`, artifact `13616968745`. 225 unit / 197 browser / Android unit+build прошли. APK versionCode 55 / versionName `0.55.0-preview`, package `com.danilah.blocky.dev`, debug. Подпись apksig v2 проверена и совпадает с 0.54: сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Все 89 production-файлов чистой сборки совпали побайтово.
 
 APK SHA-256: `2b930d150df0ca567a921e5c0fc78a7e14f775db30f342d16ad4e68630fc756e`. Устанавливать поверх 0.54 без удаления приложения. Проверка: Пауза → Ещё настройки → Диагностика → Проверить слои → Начать проверку; около 90 секунд, один `blocky-layer-result.zip`. Удержание экрана снимается при завершении, отмене и уходе в фон. Физический прогон 0.55 получен: все 18 эпизодов valid, reward DOM и смена оформления номинированы для дальнейшей работы. Устранение лагов пока не подтверждено. [Разбор](qa/PHONE_LAYER_FINDINGS_0.55_2026-11-08.md). [Протокол и хеши](qa/LAYER_DIAGNOSTICS_0.55_2026-11-08.md).
+
+
+### Preview 0.56: подготовленные награды
+
+Source `561b6efd846d728c53397f74171d1af495c12c0e`, PR-run `42489309707`, artifact `13621316250`. CI: 226 unit, 201 browser, Android unit/build — success. APK versionCode 56 / versionName `0.56.0-preview`, package `com.danilah.blocky.dev`. Подпись apksig v2 проверена, сертификат совпадает с 0.55: `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Все 89 production-файлов совпали с чистой сборкой. APK SHA-256: `1868b11a231f535bf22db1671ef6ef8a205c0b68bd688b8ce99691d6d0bc0c84`.
+
+Обновлять поверх 0.55 без удаления приложения. Пауза → Ещё настройки → Диагностика → Проверить слои: schema v2, 20 эпизодов, около 90 секунд, прямое сравнение прежнего и нового reward renderer. Физический результат и устранение лагов пока открыты. [Протокол и ограничения](qa/REWARD_RASTERS_0.56_2026-11-08.md).
