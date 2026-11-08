@@ -1,0 +1,354 @@
+{
+  "sourceCommit": "44bde185da1532d3b283de3a60f1fde5780b19b6",
+  "scope": "Linux Chromium/SwiftShader. Not a POCO FPS claim. Video captured separately.",
+  "sample": "24 measured plus 24 untraced warmup cycles; two passes in opposite order; n=2 per mode/scenario. Descriptive, no statistical significance claim.",
+  "precision": "Float32 RAF intervals can store 33.4 as 33.4000015. Raw >33.4 is preserved, with rounded-to-0.1ms and >34 sensitivity checks.",
+  "aggregate": {
+    "legacy": {
+      "episodes": 12,
+      "cpuMedianMs": 1613.0569999999545,
+      "cpuSumMs": 19558.261999999457,
+      "peakOneSecondCpuMedianMs": 355.5544999999995,
+      "windows": [
+        {
+          "afterCommitMs": [
+            0,
+            2400
+          ],
+          "cpuMedianMs": 745.7444999999955,
+          "over33RawTotal": 66,
+          "over33RoundedTotal": 9,
+          "over34Total": 9,
+          "over50Total": 2,
+          "maxFrameMs": 50.099998474121094,
+          "excess16_7MedianMs": 266.7500484466559
+        },
+        {
+          "afterCommitMs": [
+            2400,
+            8000
+          ],
+          "cpuMedianMs": 859.428499999984,
+          "over33RawTotal": 0,
+          "over33RoundedTotal": 0,
+          "over34Total": 0,
+          "over50Total": 0,
+          "maxFrameMs": 16.799999237060547,
+          "excess16_7MedianMs": 1.3501392364503442
+        },
+        {
+          "afterCommitMs": [
+            0,
+            8000
+          ],
+          "cpuMedianMs": 1603.4839999999547,
+          "over33RawTotal": 66,
+          "over33RoundedTotal": 9,
+          "over34Total": 9,
+          "over50Total": 2,
+          "maxFrameMs": 50.099998474121094,
+          "excess16_7MedianMs": 268.00019073486635
+        }
+      ]
+    },
+    "staged": {
+      "episodes": 12,
+      "cpuMedianMs": 1632.7734999999602,
+      "cpuSumMs": 19449.254999999484,
+      "peakOneSecondCpuMedianMs": 349.24599999999987,
+      "windows": [
+        {
+          "afterCommitMs": [
+            0,
+            2400
+          ],
+          "cpuMedianMs": 704.6594999999949,
+          "over33RawTotal": 52,
+          "over33RoundedTotal": 9,
+          "over34Total": 9,
+          "over50Total": 2,
+          "maxFrameMs": 50.099998474121094,
+          "excess16_7MedianMs": 241.6000480651862
+        },
+        {
+          "afterCommitMs": [
+            2400,
+            8000
+          ],
+          "cpuMedianMs": 908.0104999999814,
+          "over33RawTotal": 0,
+          "over33RoundedTotal": 0,
+          "over34Total": 0,
+          "over50Total": 0,
+          "maxFrameMs": 33.29999923706055,
+          "excess16_7MedianMs": 1.5001373291017117
+        },
+        {
+          "afterCommitMs": [
+            0,
+            8000
+          ],
+          "cpuMedianMs": 1621.8234999999602,
+          "over33RawTotal": 52,
+          "over33RoundedTotal": 9,
+          "over34Total": 9,
+          "over50Total": 2,
+          "maxFrameMs": 50.099998474121094,
+          "excess16_7MedianMs": 242.60019607544254
+        }
+      ]
+    }
+  },
+  "scenarios": [
+    {
+      "width": 392,
+      "variant": 0,
+      "legacy": {
+        "cpuMedianMs": 1556.8959999999593,
+        "peakOneSecondCpuMedianMs": 328.12699999999995,
+        "over34ByPass": [
+          2,
+          0
+        ],
+        "over33RawByPass": [
+          9,
+          7
+        ],
+        "over33RoundedByPass": [
+          2,
+          0
+        ],
+        "excess16_7MedianMs": 334.35018844604804
+      },
+      "staged": {
+        "cpuMedianMs": 1595.777999999959,
+        "peakOneSecondCpuMedianMs": 325.7545,
+        "over34ByPass": [
+          1,
+          2
+        ],
+        "over33RawByPass": [
+          6,
+          13
+        ],
+        "over33RoundedByPass": [
+          1,
+          2
+        ],
+        "excess16_7MedianMs": 359.9001777648956
+      },
+      "cpuChangePct": 2.497405093211169,
+      "peakChangePct": -0.7230432119270769
+    },
+    {
+      "width": 392,
+      "variant": 1,
+      "legacy": {
+        "cpuMedianMs": 1648.978999999958,
+        "peakOneSecondCpuMedianMs": 355.5544999999995,
+        "over34ByPass": [
+          2,
+          1
+        ],
+        "over33RawByPass": [
+          9,
+          7
+        ],
+        "over33RoundedByPass": [
+          2,
+          1
+        ],
+        "excess16_7MedianMs": 342.65018882751775
+      },
+      "staged": {
+        "cpuMedianMs": 1612.4724999999585,
+        "peakOneSecondCpuMedianMs": 332.8475000000001,
+        "over34ByPass": [
+          1,
+          1
+        ],
+        "over33RawByPass": [
+          3,
+          4
+        ],
+        "over33RoundedByPass": [
+          1,
+          1
+        ],
+        "excess16_7MedianMs": 259.25018959045724
+      },
+      "cpuChangePct": -2.2138850767657092,
+      "peakChangePct": -6.386362709514137
+    },
+    {
+      "width": 392,
+      "variant": 2,
+      "legacy": {
+        "cpuMedianMs": 1828.1429999999602,
+        "peakOneSecondCpuMedianMs": 416.7139999999998,
+        "over34ByPass": [
+          0,
+          0
+        ],
+        "over33RawByPass": [
+          8,
+          7
+        ],
+        "over33RoundedByPass": [
+          0,
+          0
+        ],
+        "excess16_7MedianMs": 268.1001914978058
+      },
+      "staged": {
+        "cpuMedianMs": 1741.2524999999623,
+        "peakOneSecondCpuMedianMs": 369.8489999999996,
+        "over34ByPass": [
+          0,
+          1
+        ],
+        "over33RawByPass": [
+          6,
+          5
+        ],
+        "over33RoundedByPass": [
+          0,
+          1
+        ],
+        "excess16_7MedianMs": 259.60018844604804
+      },
+      "cpuChangePct": -4.7529378172276315,
+      "peakChangePct": -11.246322417773403
+    },
+    {
+      "width": 872,
+      "variant": 0,
+      "legacy": {
+        "cpuMedianMs": 1526.6974999999493,
+        "peakOneSecondCpuMedianMs": 349.28149999999965,
+        "over34ByPass": [
+          0,
+          0
+        ],
+        "over33RawByPass": [
+          3,
+          1
+        ],
+        "over33RoundedByPass": [
+          0,
+          0
+        ],
+        "excess16_7MedianMs": 102.00018692016528
+      },
+      "staged": {
+        "cpuMedianMs": 1519.7444999999507,
+        "peakOneSecondCpuMedianMs": 323.6244999999999,
+        "over34ByPass": [
+          1,
+          0
+        ],
+        "over33RawByPass": [
+          2,
+          0
+        ],
+        "over33RoundedByPass": [
+          1,
+          0
+        ],
+        "excess16_7MedianMs": 77.2001842498772
+      },
+      "cpuChangePct": -0.45542748317848325,
+      "peakChangePct": -7.345651000697084
+    },
+    {
+      "width": 872,
+      "variant": 1,
+      "legacy": {
+        "cpuMedianMs": 1594.0499999999536,
+        "peakOneSecondCpuMedianMs": 346.31199999999956,
+        "over34ByPass": [
+          0,
+          1
+        ],
+        "over33RawByPass": [
+          2,
+          1
+        ],
+        "over33RoundedByPass": [
+          0,
+          1
+        ],
+        "excess16_7MedianMs": 94.25017280578543
+      },
+      "staged": {
+        "cpuMedianMs": 1573.858499999953,
+        "peakOneSecondCpuMedianMs": 355.615,
+        "over34ByPass": [
+          0,
+          1
+        ],
+        "over33RawByPass": [
+          2,
+          5
+        ],
+        "over33RoundedByPass": [
+          0,
+          1
+        ],
+        "excess16_7MedianMs": 184.75019149780573
+      },
+      "cpuChangePct": -1.2666792133246285,
+      "peakChangePct": 2.6863059899745023
+    },
+    {
+      "width": 872,
+      "variant": 2,
+      "legacy": {
+        "cpuMedianMs": 1624.365499999949,
+        "peakOneSecondCpuMedianMs": 384.35349999999937,
+        "over34ByPass": [
+          0,
+          3
+        ],
+        "over33RawByPass": [
+          5,
+          7
+        ],
+        "over33RoundedByPass": [
+          0,
+          3
+        ],
+        "excess16_7MedianMs": 243.65017623901664
+      },
+      "staged": {
+        "cpuMedianMs": 1681.5214999999587,
+        "peakOneSecondCpuMedianMs": 373.06699999999967,
+        "over34ByPass": [
+          0,
+          1
+        ],
+        "over33RawByPass": [
+          4,
+          2
+        ],
+        "over33RoundedByPass": [
+          0,
+          1
+        ],
+        "excess16_7MedianMs": 118.25019683838005
+      },
+      "cpuChangePct": 3.5186662115152867,
+      "peakChangePct": -2.936489455670299
+    }
+  ],
+  "themeStartMs": {
+    "min": 3070.5,
+    "median": 3091.75,
+    "max": 3289.2000000029802
+  },
+  "completeMs": {
+    "min": 5727.70000000298,
+    "median": 5747.14999999851,
+    "max": 5946.10000000149
+  }
+}

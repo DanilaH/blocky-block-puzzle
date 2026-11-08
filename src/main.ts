@@ -414,10 +414,9 @@ async function start() {
     rewardHoldUntil = 0;
     el("burst").textContent = "";
     scene.stopEffects();
-    if (restoreStagedTheme) {
-      render(false);
+    if (restoreStagedTheme) render(false);
+    if (clearPresentation)
       root.getAnimations({ subtree: true }).forEach((a) => a.cancel());
-    }
   }
   store.onBusyChange = syncSaving;
   const activity = new GameplayActivityCoordinator(

@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "44bde185da1532d3b283de3a60f1fde5780b19b6",
+  "sourceCi": {
+    "runId": 42513124511,
+    "status": "success",
+    "unit": 233,
+    "browser": 206,
+    "androidUnitAndBuild": "success",
+    "assets": "success"
+  },
+  "finalCleanup": {
+    "scope": "Cancel native material animations when interruption happens in theme phase; no change to uninterrupted episodes.",
+    "unit": 233,
+    "productionBuild": "success",
+    "productionFilesIdenticalToBeforeCleanup": 89,
+    "targetedBrowserScenarios": 11,
+    "execution": "Nine passed in full targeted run; two pause cases passed on rerun after excluding the newly opened dialog entrance from the immediate gameplay animation assertion. All late native animations are still required to be gone.",
+    "full209BrowserCi": "not run"
+  },
+  "measurement": {
+    "measured": 24,
+    "warmup": 24,
+    "eachMs": 8000,
+    "allOutputChecks": "passed",
+    "phone": "not tested",
+    "decision": "Not accepted as a performance fix; no diagnostic APK requested."
+  }
+}

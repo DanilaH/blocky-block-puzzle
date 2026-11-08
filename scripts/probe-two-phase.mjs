@@ -143,6 +143,11 @@ try {
           mode,
           errors,
           state: episode.state,
+          frameSamples: {
+            at: episode.sample.placements[0].at,
+            intervals: episode.sample.frames,
+            endTimes: episode.sample.frameTimes,
+          },
           wholeTasks,
           maxOneSecondCpuMs: Math.max(...rollingCpu),
           windows,

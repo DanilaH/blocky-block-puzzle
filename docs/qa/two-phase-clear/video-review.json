@@ -1,0 +1,147 @@
+{
+  "scope": "Silent qualitative browser video; sequential recordings, separately from the performance runs. Not physical POCO FPS or audio validation.",
+  "filename": "blocky-two-phase-comparison.mp4",
+  "bytes": 7133324,
+  "sha256": "052b7d516b55f972e03be8222acc6850742748e516d80bbb3d32c707d6e4c291",
+  "durationSeconds": 48,
+  "width": 960,
+  "height": 1080,
+  "sampleAspectRatio": "1:1",
+  "segments": 6,
+  "clips": [
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 0,
+      "mode": "legacy",
+      "filename": "392-0-legacy.webm",
+      "startPts": 3.64,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 0,
+      "mode": "staged",
+      "filename": "392-0-staged.webm",
+      "startPts": 3.36,
+      "completedAtMs": 5773
+    },
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 1,
+      "mode": "legacy",
+      "filename": "392-1-legacy.webm",
+      "startPts": 3.36,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 1,
+      "mode": "staged",
+      "filename": "392-1-staged.webm",
+      "startPts": 3.44,
+      "completedAtMs": 5741.79999999702
+    },
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 2,
+      "mode": "legacy",
+      "filename": "392-2-legacy.webm",
+      "startPts": 3.36,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "variant": 2,
+      "mode": "staged",
+      "filename": "392-2-staged.webm",
+      "startPts": 3.44,
+      "completedAtMs": 5923.79999999702
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 0,
+      "mode": "legacy",
+      "filename": "872-0-legacy.webm",
+      "startPts": 3.36,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 0,
+      "mode": "staged",
+      "filename": "872-0-staged.webm",
+      "startPts": 3.36,
+      "completedAtMs": 5740.39999999851
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 1,
+      "mode": "legacy",
+      "filename": "872-1-legacy.webm",
+      "startPts": 3.4,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 1,
+      "mode": "staged",
+      "filename": "872-1-staged.webm",
+      "startPts": 3.4,
+      "completedAtMs": 5737.89999999851
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 2,
+      "mode": "legacy",
+      "filename": "872-2-legacy.webm",
+      "startPts": 3.68,
+      "completedAtMs": null
+    },
+    {
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "variant": 2,
+      "mode": "staged",
+      "filename": "872-2-staged.webm",
+      "startPts": 3.32,
+      "completedAtMs": 5721.60000000149
+    }
+  ],
+  "alignment": "First video frame containing green pre-commit marker. Only the left 8 CSS-pixel columns are cropped; full vertical content is preserved. Current capture files have gray padding outside the viewport; composer crops to the known viewport. Future recorder uses viewport-sized output directly.",
+  "validation": "FFprobe duration/resolution/SAR checked; full H.264 decode with -xerror passed. Six scenario pairs visually inspected at 2s and 4.1s; final full-video portrait and landscape frames inspected after crop correction."
+}

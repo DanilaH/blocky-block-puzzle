@@ -116,6 +116,8 @@ export function frameMetrics(sample, low, high) {
   return {
     intervals: fs.length,
     over33: fs.filter((x) => x > 33.4).length,
+    over33Rounded: fs.filter((x) => Math.round(x * 10) / 10 > 33.4).length,
+    over34: fs.filter((x) => x > 34).length,
     over50: fs.filter((x) => x > 50).length,
     maxMs: Math.max(0, ...fs),
     p95Ms: sorted[Math.floor(sorted.length * 0.95)],

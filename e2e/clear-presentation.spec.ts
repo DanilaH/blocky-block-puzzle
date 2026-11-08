@@ -173,56 +173,79 @@ test("a second all-clear cancels stale output without losing or doubling pending
   ).toHaveLength(1);
 });
 
-for (const action of ["pause", "background", "new-game"])
-  test(`${action} discards the old presentation and leaves no delayed reward or theme request`, async ({
-    page,
-  }) => {
-    await open(page);
-    await begin(page);
-    await page.waitForTimeout(950);
-    if (action === "pause") await page.locator("#pause").click();
-    else if (action === "new-game")
-      await page.evaluate(async () =>
-        (window as any).__blockyClearLab.newGame(),
-      );
-    else
-      await page.evaluate(() => {
-        Object.defineProperty(document, "hidden", {
-          configurable: true,
-          value: true,
-        });
-        document.dispatchEvent(new Event("visibilitychange"));
-      });
-    await page.waitForTimeout(3500);
-    const state = await page.evaluate(() =>
-      (window as any).__blockyClearLab.state(),
-    );
-    checked(state);
-    expect(state.game.score).toBe(action === "new-game" ? 0 : 1574);
-    expect(
-      state.clearPresentation.events.some((e: any) => e.name === "theme-start"),
-    ).toBe(false);
-    await expect(page.locator(".reward-event,.hud-notice")).toHaveCount(0);
-    if (action === "pause") {
-      expect(
-        await page.evaluate(
+for (const phase of ["celebration", "theme"])
+  for (const action of ["pause", "background", "new-game"])
+    test(`${action} during ${phase} discards the old presentation and leaves no delayed reward or theme request`, async ({
+      page,
+    }) => {
+      await open(page);
+      await begin(page);
+      if (phase === "celebration") await page.waitForTimeout(950);
+      else
+        await page.waitForFunction(
           () =>
-            document.querySelector("#app")!.getAnimations({ subtree: true })
-              .length,
-        ),
-      ).toBe(0);
-      await page.locator("#resume").click();
-    } else if (action === "background")
-      await page.evaluate(() => {
-        Object.defineProperty(document, "hidden", {
-          configurable: true,
-          value: false,
+            (window as any).__blockyClearLab.state().clearPresentation.phase ===
+            "theme",
+        );
+      if (action === "pause") await page.locator("#pause").click();
+      else if (action === "new-game")
+        await page.evaluate(async () =>
+          (window as any).__blockyClearLab.newGame(),
+        );
+      else
+        await page.evaluate(() => {
+          Object.defineProperty(document, "hidden", {
+            configurable: true,
+            value: true,
+          });
+          document.dispatchEvent(new Event("visibilitychange"));
         });
-        document.dispatchEvent(new Event("visibilitychange"));
-      });
-    await page.waitForTimeout(300);
-    await expect(page.locator(".reward-event,.hud-notice")).toHaveCount(0);
-  });
+      if (action !== "new-game")
+        expect(
+          await page.evaluate(() =>
+            document
+              .querySelector("#app")!
+              .getAnimations({ subtree: true })
+              // The newly opened pause dialog has its own legitimate entrance.
+              .filter(
+                (a) =>
+                  !(a.effect as KeyframeEffect)?.target?.closest("#dialog"),
+              )
+              .map((a) => (a.effect as KeyframeEffect)?.target?.outerHTML),
+          ),
+        ).toEqual([]);
+      await page.waitForTimeout(3500);
+      const state = await page.evaluate(() =>
+        (window as any).__blockyClearLab.state(),
+      );
+      checked(state);
+      expect(state.game.score).toBe(action === "new-game" ? 0 : 1574);
+      expect(
+        state.clearPresentation.events.some(
+          (e: any) => e.name === "theme-start",
+        ),
+      ).toBe(phase === "theme");
+      await expect(page.locator(".reward-event,.hud-notice")).toHaveCount(0);
+      if (action === "pause") {
+        expect(
+          await page.evaluate(
+            () =>
+              document.querySelector("#app")!.getAnimations({ subtree: true })
+                .length,
+          ),
+        ).toBe(0);
+        await page.locator("#resume").click();
+      } else if (action === "background")
+        await page.evaluate(() => {
+          Object.defineProperty(document, "hidden", {
+            configurable: true,
+            value: false,
+          });
+          document.dispatchEvent(new Event("visibilitychange"));
+        });
+      await page.waitForTimeout(300);
+      await expect(page.locator(".reward-event,.hud-notice")).toHaveCount(0);
+    });
 
 test("rotation retains the accepted move and finishes in the current viewport", async ({
   page,
