@@ -672,4 +672,12 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Локальный кеш в Atmosphere/Festival, обновление resize/старт/возобновление; draw без viewport reads.
 - [x] 221 unit, build/assets;12 целевых browser-проверок; точное совпадение обоих canvas/SVG на пяти фазах.
 - [x]221unit/188browser на528b5cc; идентичность app/native/tests после build-repair подтверждена. Android42464938628, APK53/89файлов/подпись0.52 проверены.
-- [ ] Повторный короткий тест POCO: forced layout, untraced интервалы и native waits. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).
+- [x] Повторный тест POCO0.53: forced layout176→8; untraced max67.2→42.1мс, первый повтор75.7мс. Общая стоимость стилей не снизилась; native waits остаются. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).
+
+
+### Реальная0.53 и следующий источник style cost — 08.11.2026
+
+- [x] Физическая трасса полностью записана, одинаковые fixture/896²/WebView/Mali.
+- [x] Механизм viewport cache подтверждён; полное устранение лагов не принято.
+- [x] CSS-ablation общего наследуемого перехода цвета: Blink.Style.UpdateTime76→46–48мс в mobile-эмуляции, без изменения исходников игры.
+- [ ] Локализовать fades на видимых надписях с визуальной проверкой; отдельно проверить оставшиеся graphics waits. [Разбор](qa/PHONE_TRACE_FINDINGS_0.53_2026-11-08.md).

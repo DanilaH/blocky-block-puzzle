@@ -1,0 +1,603 @@
+{
+  "sameFixture": true,
+  "sameDeviceAndWebViewAndMainCanvas": true,
+  "versions": [
+    {
+      "version": "0.52.0-preview",
+      "completed": true,
+      "interrupted": false,
+      "native": {
+        "supported": true,
+        "ready": true,
+        "recording": false,
+        "flushing": false,
+        "bytes": 29145360,
+        "error": "",
+        "reason": "requested",
+        "categories": "ANDROID_WEBVIEW|JAVASCRIPT_AND_RENDERING|blink.user_timing",
+        "mode": "RECORD_UNTIL_FULL",
+        "maxDurationMs": 25000,
+        "maxOutputBytes": 33554432
+      },
+      "traceEventCount": 170126,
+      "markGapsMs": [
+        18.999,
+        2401.107
+      ],
+      "reportedLoss": {
+        "json_parser_failure": 0,
+        "traced_chunks_discarded": 0,
+        "previous_packet_dropped_missing_sequence_id": 0,
+        "track_event_dropped_packets_outside_of_range_of_interest": 0
+      },
+      "buffers": [
+        {
+          "bytes_overwritten": 0,
+          "chunks_discarded": 0,
+          "chunks_overwritten": 0,
+          "trace_writer_packet_loss": 0
+        },
+        {
+          "bytes_overwritten": 0,
+          "chunks_discarded": 0,
+          "chunks_overwritten": 0,
+          "trace_writer_packet_loss": 0
+        }
+      ],
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 175,
+          "over25": 19,
+          "over50": 2,
+          "maxIntervalMs": 67.3,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 0.40000009536743164,
+              "maxMs": 0.40000009536743164,
+              "meanMs": 0.40000009536743164
+            },
+            "boardDraw": {
+              "count": 137,
+              "totalMs": 65.89999997615814,
+              "maxMs": 2.5,
+              "meanMs": 0.4810218976361908
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 12.5,
+              "maxMs": 12.5,
+              "meanMs": 12.5
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 13,
+              "maxMs": 13,
+              "meanMs": 13
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 1.399999976158142,
+              "maxMs": 1.399999976158142,
+              "meanMs": 1.399999976158142
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 1,
+              "maxIntervalMs": 42
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 17,
+              "maxIntervalMs": 67.3
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 1,
+              "maxIntervalMs": 25.3
+            }
+          ]
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 155,
+          "over25": 25,
+          "over50": 1,
+          "maxIntervalMs": 67.2,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 1.100000023841858,
+              "maxMs": 1.100000023841858,
+              "meanMs": 1.100000023841858
+            },
+            "boardDraw": {
+              "count": 137,
+              "totalMs": 41.99999916553497,
+              "maxMs": 1.2000000476837158,
+              "meanMs": 0.30656933697470784
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 11.600000023841858,
+              "maxMs": 11.600000023841858,
+              "meanMs": 11.600000023841858
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 12.799999952316284,
+              "maxMs": 12.799999952316284,
+              "meanMs": 12.799999952316284
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 3.100000023841858,
+              "maxMs": 3.100000023841858,
+              "meanMs": 3.100000023841858
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 4,
+              "maxIntervalMs": 33.6
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 18,
+              "maxIntervalMs": 67.2
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 3,
+              "maxIntervalMs": 33.6
+            }
+          ]
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 168,
+          "over25": 18,
+          "over50": 4,
+          "maxIntervalMs": 58.9,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 0.30000007152557373,
+              "maxMs": 0.30000007152557373,
+              "meanMs": 0.30000007152557373
+            },
+            "boardDraw": {
+              "count": 136,
+              "totalMs": 37.60000002384186,
+              "maxMs": 1,
+              "meanMs": 0.2764705884106019
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 8.099999904632568,
+              "maxMs": 8.099999904632568,
+              "meanMs": 8.099999904632568
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 8.399999976158142,
+              "maxMs": 8.399999976158142,
+              "meanMs": 8.399999976158142
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 1.899999976158142,
+              "maxMs": 1.899999976158142,
+              "meanMs": 1.899999976158142
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 1,
+              "maxIntervalMs": 58.9
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 14,
+              "maxIntervalMs": 58.8
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 3,
+              "maxIntervalMs": 25.5
+            }
+          ]
+        }
+      ],
+      "traceWindow": {
+        "startMs": 320,
+        "endMs": 1400,
+        "relativeTo": "second performance.mark, mapped by controlled capture sequence; names filtered",
+        "metrics": {
+          "Blink.ForcedStyleAndLayout.UpdateTime": {
+            "count": 176,
+            "sumWallMs": 295.458,
+            "maxWallMs": 13.28,
+            "sumThreadCpuMs": 274.206
+          },
+          "Blink.Style.UpdateTime": {
+            "count": 105,
+            "sumWallMs": 325.499,
+            "maxWallMs": 12.898,
+            "sumThreadCpuMs": 303.813
+          },
+          "Document::recalcStyle": {
+            "count": 105,
+            "sumWallMs": 312.887,
+            "maxWallMs": 12.794,
+            "sumThreadCpuMs": 293.391
+          },
+          "Blink.Layout.UpdateTime": {
+            "count": 64,
+            "sumWallMs": 25.541,
+            "maxWallMs": 1.077,
+            "sumThreadCpuMs": 24.382
+          },
+          "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+            "count": 61,
+            "sumWallMs": 483.101,
+            "maxWallMs": 20.391,
+            "sumThreadCpuMs": 449.876
+          },
+          "DrawFn_DrawGL": {
+            "count": 66,
+            "sumWallMs": 853.968,
+            "maxWallMs": 53.071,
+            "sumThreadCpuMs": 276.383
+          },
+          "ScheduleOnVizAndBlock": {
+            "count": 131,
+            "sumWallMs": 776.695,
+            "maxWallMs": 42.838,
+            "sumThreadCpuMs": 249.37
+          },
+          "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken": {
+            "count": 54,
+            "sumWallMs": 312.169,
+            "maxWallMs": 27.412,
+            "sumThreadCpuMs": 2.713
+          }
+        }
+      }
+    },
+    {
+      "version": "0.53.0-preview",
+      "completed": true,
+      "interrupted": false,
+      "native": {
+        "supported": true,
+        "ready": true,
+        "recording": false,
+        "flushing": false,
+        "bytes": 30746372,
+        "error": "",
+        "reason": "requested",
+        "categories": "ANDROID_WEBVIEW|JAVASCRIPT_AND_RENDERING|blink.user_timing",
+        "mode": "RECORD_UNTIL_FULL",
+        "maxDurationMs": 25000,
+        "maxOutputBytes": 33554432
+      },
+      "traceEventCount": 179683,
+      "markGapsMs": [
+        16.963,
+        2401.698
+      ],
+      "reportedLoss": {
+        "json_parser_failure": 0,
+        "traced_chunks_discarded": 0,
+        "previous_packet_dropped_missing_sequence_id": 0,
+        "track_event_dropped_packets_outside_of_range_of_interest": 0
+      },
+      "buffers": [
+        {
+          "bytes_overwritten": 0,
+          "chunks_discarded": 0,
+          "chunks_overwritten": 0,
+          "trace_writer_packet_loss": 0
+        },
+        {
+          "bytes_overwritten": 0,
+          "chunks_discarded": 0,
+          "chunks_overwritten": 0,
+          "trace_writer_packet_loss": 0
+        }
+      ],
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 154,
+          "over25": 23,
+          "over50": 2,
+          "maxIntervalMs": 75.7,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 0.5999999046325684,
+              "maxMs": 0.5999999046325684,
+              "meanMs": 0.5999999046325684
+            },
+            "boardDraw": {
+              "count": 134,
+              "totalMs": 77.1999990940094,
+              "maxMs": 4.399999976158142,
+              "meanMs": 0.5761193962239507
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 9.899999976158142,
+              "maxMs": 9.899999976158142,
+              "meanMs": 9.899999976158142
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 10.699999928474426,
+              "maxMs": 10.699999928474426,
+              "meanMs": 10.699999928474426
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 2.299999952316284,
+              "maxMs": 2.299999952316284,
+              "meanMs": 2.299999952316284
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 2,
+              "maxIntervalMs": 25.1
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 19,
+              "maxIntervalMs": 75.7
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 2,
+              "maxIntervalMs": 33.6
+            }
+          ]
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 181,
+          "over25": 18,
+          "over50": 0,
+          "maxIntervalMs": 42.1,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 2.700000047683716,
+              "maxMs": 2.700000047683716,
+              "meanMs": 2.700000047683716
+            },
+            "boardDraw": {
+              "count": 139,
+              "totalMs": 43.09999990463257,
+              "maxMs": 1.399999976158142,
+              "meanMs": 0.3100719417599465
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 12.200000047683716,
+              "maxMs": 12.200000047683716,
+              "meanMs": 12.200000047683716
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 15.100000023841858,
+              "maxMs": 15.100000023841858,
+              "meanMs": 15.100000023841858
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 2.5,
+              "maxMs": 2.5,
+              "meanMs": 2.5
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 1,
+              "maxIntervalMs": 25.1
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 14,
+              "maxIntervalMs": 42.1
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 3,
+              "maxIntervalMs": 25.3
+            }
+          ]
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            896,
+            896
+          ],
+          "score": 1574,
+          "theme": 5,
+          "intervalCount": 196,
+          "over25": 18,
+          "over50": 0,
+          "maxIntervalMs": 42,
+          "phaseSummary": {
+            "moveCalculationWallTime": {
+              "count": 1,
+              "totalMs": 0.19999992847442627,
+              "maxMs": 0.19999992847442627,
+              "meanMs": 0.19999992847442627
+            },
+            "boardDraw": {
+              "count": 138,
+              "totalMs": 43.700000047683716,
+              "maxMs": 1.899999976158142,
+              "meanMs": 0.31666666701220086
+            },
+            "atomicSaveWallTime": {
+              "count": 1,
+              "totalMs": 7.300000071525574,
+              "maxMs": 7.300000071525574,
+              "meanMs": 7.300000071525574
+            },
+            "commitIncludingSaveWallTime": {
+              "count": 1,
+              "totalMs": 7.5,
+              "maxMs": 7.5,
+              "meanMs": 7.5
+            },
+            "placementRender": {
+              "count": 1,
+              "totalMs": 1.600000023841858,
+              "maxMs": 1.600000023841858,
+              "meanMs": 1.600000023841858
+            }
+          },
+          "windows": [
+            {
+              "startMs": 0,
+              "endMs": 320,
+              "over25": 0,
+              "maxIntervalMs": 16.9
+            },
+            {
+              "startMs": 320,
+              "endMs": 1400,
+              "over25": 16,
+              "maxIntervalMs": 42
+            },
+            {
+              "startMs": 1400,
+              "endMs": 2400,
+              "over25": 2,
+              "maxIntervalMs": 25.3
+            }
+          ]
+        }
+      ],
+      "traceWindow": {
+        "startMs": 320,
+        "endMs": 1400,
+        "relativeTo": "second performance.mark, mapped by controlled capture sequence; names filtered",
+        "metrics": {
+          "Blink.ForcedStyleAndLayout.UpdateTime": {
+            "count": 8,
+            "sumWallMs": 9.154,
+            "maxWallMs": 4.554,
+            "sumThreadCpuMs": 7.99
+          },
+          "Blink.Style.UpdateTime": {
+            "count": 71,
+            "sumWallMs": 327.074,
+            "maxWallMs": 12.428,
+            "sumThreadCpuMs": 305.364
+          },
+          "Document::recalcStyle": {
+            "count": 71,
+            "sumWallMs": 317.731,
+            "maxWallMs": 12.116,
+            "sumThreadCpuMs": 297.503
+          },
+          "Blink.Layout.UpdateTime": {
+            "count": 40,
+            "sumWallMs": 17.76,
+            "maxWallMs": 1.297,
+            "sumThreadCpuMs": 17.175
+          },
+          "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+            "count": 66,
+            "sumWallMs": 246.244,
+            "maxWallMs": 9.752,
+            "sumThreadCpuMs": 222.522
+          },
+          "DrawFn_DrawGL": {
+            "count": 74,
+            "sumWallMs": 865.458,
+            "maxWallMs": 36.208,
+            "sumThreadCpuMs": 283.216
+          },
+          "ScheduleOnVizAndBlock": {
+            "count": 147,
+            "sumWallMs": 811.408,
+            "maxWallMs": 34.83,
+            "sumThreadCpuMs": 255.259
+          },
+          "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken": {
+            "count": 59,
+            "sumWallMs": 364.126,
+            "maxWallMs": 28.169,
+            "sumThreadCpuMs": 2.887
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "One supplied capture per version, no randomized physical A/B, no device temperature or background load measurements.",
+    "Warmup still contains a75.7ms interval in0.53; do not call jank eliminated.",
+    "Traced episode timings are affected by tracing; compare untraced separately.",
+    "Trace and report do not expose an exact shared clock offset; no exact individual frame correlation claimed.",
+    "Do not sum nested slices across categories/threads. SyncToken waits are not direct GPU execution durations."
+  ]
+}
