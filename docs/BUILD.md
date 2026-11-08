@@ -100,3 +100,8 @@ Preview 0.49: отдельная страница автозамера очис�
 ### Preview 0.51: частичная оптимизация полной очистки
 
 Исходники `d78ac8c`, PR CI `42451698323`, artifact `13606321935`. VersionCode 51, versionName 0.51.0-preview. 221 unit, 181 browser, Android unit/build — success. V2-подпись совместима с выданной 0.50; все 86 production-файлов совпали. APK SHA-256 `47953355d8b79f122c8f5715e370b627d616706d0942f06ab64f13f0ae3b709a`. Classic/WebGL использует кеш рамки и flat-color заливку; игровые правила/разрешение/эффекты сохранены. Стендовые gates пройдены, ускорение на POCO ещё не подтверждено. [Протокол и данные](qa/PHONE_CLEAR_0.50_2026-11-08.md).
+
+
+### Preview0.52: диагностика без USB
+
+Исходники `362f9531c244a41cd14d7f8d09bfa8c12aa8cf70`, PR CI `42460033472`, artifact `13609328963`. VersionCode52, versionName0.52.0-preview, debug APK, прежний package. 221unit/186browser/Androidunit+build — success. V2-подпись совпадает с выданной0.51; все89 production-файлов совпали с чистым dist. APK SHA-256 `99e657f24d653b7190b480c537ae74e7849eb8c3e2c5a6a283f09502f4036896`. Обновлять поверх установленной игры. Пауза → Ещё настройки → Диагностика → Проверить очистку: короткий реальный игровой прогон и ZIP с WebView-трассой, без USB. Android tracing API28+/debug. Физический запуск и причина лага ещё не проверены. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).

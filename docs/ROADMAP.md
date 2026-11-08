@@ -655,5 +655,5 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Короткий scripted clear через реальные игровые commit/UI/reward paths, отдельная база сохранения.
 - [x] Нативный TracingController, ограничение записи, остановка в фоне, ZIP через share sheet.
 - [x] Локальные 221 unit, build/assets и14 browser-проверок.
-- [ ] Полный CI/Android unit/build и проверка подписанного APK0.52.
+- [x] CI42460033472:221 unit/186 browser,Android unit/build; APK0.52, подпись0.51 и89 production-файлов проверены.
 - [ ] Физический запуск/ZIP с POCO и установление причины лага. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).

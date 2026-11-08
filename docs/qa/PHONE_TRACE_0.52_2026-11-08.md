@@ -34,4 +34,8 @@ Preview/debug на AndroidAPI28+ использует встроенный `andr
 
 Визуальный smoke на392×872/DPR2.75: три принятых хода/тема5, ошибок браузера нет; проверены экран запуска и готовый результат, исправлен контраст вторичных кнопок. В этом web-окне обычный layout даёт canvas1024², а в нативном POCO0.51 было896²: фактические размеры входят в каждый отчёт, эквивалентность backing resolution без нового APK-замера не заявляется. [Сводка](phone-trace-052/browser-smoke.json).
 
-Полный CI, Android unit/build, APK/signer/dist: ожидаются. Физический лаг и реальная WebView-трасса: открыты.
+Полный [PR CI42460033472](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42460033472) — success:221 unit,186 browser,Android unit/build (134 tasks). Исходники `362f9531c244a41cd14d7f8d09bfa8c12aa8cf70`, artifact13609328963. Проверены debug flag, package/version52, v2-подпись с сертификатом выданной0.51 и все89 production-файлов. NativeDEX включает TracePlugin/BoundedTraceStream и имена экспортируемых файлов. [Машинная проверка](phone-trace-052/apk-verification-052.json).
+
+APK:11563665байт, SHA-256 `99e657f24d653b7190b480c537ae74e7849eb8c3e2c5a6a283f09502f4036896`. ZIP:10863189байт, SHA-256 `73ff43100b21436118484c3143c287d4b9caeccc94adf3228f1a07764e043b67`.
+
+Физическая установка, API tracing/share на POCO, реальная трасса и причина лага остаются открытыми. Ускорения не заявлено.
