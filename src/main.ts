@@ -1,5 +1,4 @@
 import { readRenderInfo } from "./platform/render-info";
-import { RewardLabels } from "./game/reward-label";
 import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
 import { presentReviveClock } from "./game/revive-clock";
@@ -98,6 +97,15 @@ async function start() {
   const phoneLayers = phoneTrace && traceRequest === "layers";
   let diagnosticLayer: ClearLayer | null = null;
   let diagnosticRewardDom = 0;
+  const freshRewardEffects = () => ({
+    captionAnimations: 0,
+    visibleEmblems: 0,
+    pointFlights: 0,
+    hudFlashes: 0,
+    themeNotices: 0,
+    themeImpulses: 0,
+  });
+  let diagnosticRewardEffects = freshRewardEffects();
   // A fixed separate database keeps all ordinary transaction/render paths real,
   // while the scripted diagnostic cannot modify the player's profile or backup.
   const adapter = new IndexedSave(
@@ -274,7 +282,6 @@ async function start() {
   let rewardHoldUntil = 0;
   let pendingPoints = 0;
   const rewards = new Map<HTMLElement, () => void>();
-  const rewardLabels = new RewardLabels();
   let resultTimer = 0,
     resultPending = false;
   let resultFeedbackTimer = 0;
@@ -288,53 +295,6 @@ async function start() {
   rewardAnchor.className = "board-reward";
   document.querySelector(".board-wrap")!.append(rewardAnchor);
   rewardAnchor.append(el("burst"));
-  let cancelRewardWarmup: (() => void) | null = null;
-  function queueRewardWarmup() {
-    if (cancelRewardWarmup) return;
-    const warm = () => {
-      cancelRewardWarmup = null;
-      if (!rendererReady || document.hidden) return;
-      if (movePending || drag || rewards.size) {
-        const timer = window.setTimeout(() => {
-          cancelRewardWarmup = null;
-          queueRewardWarmup();
-        }, 400);
-        cancelRewardWarmup = () => clearTimeout(timer);
-        return;
-      }
-      const board = rewardAnchor.getBoundingClientRect();
-      if (!board.width) return;
-      const node = document.createElement("span");
-      node.className = "reward-event";
-      node.dataset.tier = "all-clear";
-      node.style.visibility = "hidden";
-      node.setAttribute("aria-hidden", "true");
-      const label = document.createElement("span");
-      label.className = "reward-praise";
-      for (const [i, letter] of Array.from("Чистое поле!").entries()) {
-        const glyph = document.createElement("i");
-        glyph.textContent = letter;
-        glyph.style.setProperty("--letter", String(i));
-        label.append(glyph);
-      }
-      label.style.fontSize = `${Math.min(42, board.width * 0.13)}px`;
-      node.append(label);
-      el("burst").append(node);
-      const width = label.getBoundingClientRect().width,
-        max = Math.max(1, (board.width - 32) / 1.2);
-      if (width > max)
-        label.style.fontSize = `${(parseFloat(label.style.fontSize) * max) / width}px`;
-      rewardLabels.prepare(label, false)();
-      node.remove();
-    };
-    if (typeof window.requestIdleCallback === "function") {
-      const idle = window.requestIdleCallback(warm);
-      cancelRewardWarmup = () => window.cancelIdleCallback(idle);
-    } else {
-      const timer = window.setTimeout(warm, 100);
-      cancelRewardWarmup = () => clearTimeout(timer);
-    }
-  }
   function paintBest() {
     el("best").textContent = Math.max(
       visibleBestFloor,
@@ -419,7 +379,6 @@ async function start() {
       );
       performanceCapture.setActive(true);
       root.classList.remove("effects-paused");
-      queueRewardWarmup();
       haptics.setActive(
         store.state.settings.haptics !== false &&
           !store.state.settings.calm &&
@@ -518,7 +477,6 @@ async function start() {
       );
     scene.game.events.once("postrender", () => {
       rendererReady = true;
-      queueRewardWarmup();
       root.inert = ads.busy;
       root.removeAttribute("aria-busy");
       syncRenderer();
@@ -750,6 +708,7 @@ async function start() {
       later(() => {
         presentHudNotice("theme", THEMES[nextTheme]!.name.toUpperCase());
         atmosphere.impulse(1.5);
+        if (phoneLayers) diagnosticRewardEffects.themeImpulses++;
       }, 450);
     }
     if (themeGame !== g.gameId) {
@@ -1364,7 +1323,13 @@ async function start() {
     tier: "record" | "theme" | "series-end",
     text: string,
   ) {
-    if (phoneLayers && diagnosticLayer?.skipRewardDom) return;
+    if (
+      phoneLayers &&
+      (diagnosticLayer?.skipRewardDom ||
+        (tier === "theme" && diagnosticLayer?.skipThemeNotice))
+    )
+      return;
+    if (phoneLayers && tier === "theme") diagnosticRewardEffects.themeNotices++;
     if (phoneLayers) diagnosticRewardDom++;
     const host =
       tier === "record"
@@ -1509,13 +1474,6 @@ async function start() {
       node.dataset.signature = praise.startsWith("ПЕРЕКРЕСТИЕ")
         ? "cross"
         : "lanes";
-    const legacyText = phoneLayers && diagnosticLayer?.legacyRewardText;
-    const finishLabel = legacyText
-      ? () => {}
-      : rewardLabels.prepare(label, important && !scene.calm);
-    const finishAmount = legacyText
-      ? () => {}
-      : rewardLabels.prepare(amount, false);
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -1528,8 +1486,6 @@ async function start() {
     const finish = () => {
       timerIds.forEach(clearTimeout);
       settle();
-      finishLabel();
-      finishAmount();
       node.getAnimations({ subtree: true }).forEach((a) => a.cancel());
       node.remove();
       rewards.delete(node);
@@ -1542,21 +1498,38 @@ async function start() {
         rewards.keys().next().value;
       if (disposable) rewards.get(disposable)?.();
     }
-    const labelAnimation = animate(
-      label,
-      [
-        { opacity: 0, transform: "translateY(22px) rotate(-7deg) scale(.3)" },
-        {
-          opacity: 1,
-          transform: `translateY(-5px) rotate(3deg) scale(${important ? 1.2 : Math.min(1.16, 1.05 + development.step * 0.015)})`,
-          offset: 0.1,
-        },
-        { opacity: 1, transform: "none", offset: 0.7 },
-        { opacity: 0, transform: "translateY(-14px) scale(.96)" },
-      ],
-      duration,
-    );
+    if (phoneLayers) {
+      const emblem = node.querySelector(".reward-emblem");
+      if (
+        emblem &&
+        getComputedStyle(emblem).display !== "none" &&
+        getComputedStyle(emblem).visibility !== "hidden"
+      )
+        diagnosticRewardEffects.visibleEmblems++;
+    }
+    const labelAnimation =
+      phoneLayers && diagnosticLayer?.skipRewardDecoration
+        ? undefined
+        : animate(
+            label,
+            [
+              {
+                opacity: 0,
+                transform: "translateY(22px) rotate(-7deg) scale(.3)",
+              },
+              {
+                opacity: 1,
+                transform: `translateY(-5px) rotate(3deg) scale(${important ? 1.2 : Math.min(1.16, 1.05 + development.step * 0.015)})`,
+                offset: 0.1,
+              },
+              { opacity: 1, transform: "none", offset: 0.7 },
+              { opacity: 0, transform: "translateY(-14px) scale(.96)" },
+            ],
+            duration,
+          );
     labelAnimation?.effect?.updateTiming({ easing: "linear" });
+    if (phoneLayers && labelAnimation && praise)
+      diagnosticRewardEffects.captionAnimations++;
     animate(
       amount,
       [
@@ -1574,7 +1547,7 @@ async function start() {
               target = el("score").getBoundingClientRect();
             const dx = target.left + target.width / 2 - a.left - a.width / 2;
             const dy = target.top + target.height / 2 - a.top - a.height / 2;
-            animate(
+            const flight = animate(
               amount,
               [
                 { opacity: 1, transform: "translate(0,0) scale(1)" },
@@ -1589,7 +1562,9 @@ async function start() {
                 },
               ],
               300,
-            )?.effect?.updateTiming({ easing: "ease-in" });
+            );
+            flight?.effect?.updateTiming({ easing: "ease-in" });
+            if (phoneLayers && flight) diagnosticRewardEffects.pointFlights++;
             timerIds.push(
               window.setTimeout(() => {
                 settle();
@@ -1601,23 +1576,27 @@ async function start() {
                     points,
                     scene.intensity,
                   );
-                  animate(
-                    el("score"),
-                    [
-                      { textShadow: "0 0 18px #8edaff" },
-                      { textShadow: "0 2px 2px #00000026" },
-                    ],
-                    600,
-                  );
-                  animate(
-                    el("score"),
-                    [
-                      { transform: "scale(1)" },
-                      { transform: "scale(1.12)", offset: 0.3 },
-                      { transform: "scale(1)" },
-                    ],
-                    260,
-                  );
+                  if (!(phoneLayers && diagnosticLayer?.skipHudFlashes)) {
+                    const glow = animate(
+                      el("score"),
+                      [
+                        { textShadow: "0 0 18px #8edaff" },
+                        { textShadow: "0 2px 2px #00000026" },
+                      ],
+                      600,
+                    );
+                    const bump = animate(
+                      el("score"),
+                      [
+                        { transform: "scale(1)" },
+                        { transform: "scale(1.12)", offset: 0.3 },
+                        { transform: "scale(1)" },
+                      ],
+                      260,
+                    );
+                    if (phoneLayers && glow && bump)
+                      diagnosticRewardEffects.hudFlashes++;
+                  }
                 }
               }, 300),
             );
@@ -2235,7 +2214,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 90 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2871,6 +2850,13 @@ async function start() {
       context: () => readRenderInfo(phaser!),
       configure: (condition) => {
         diagnosticLayer = condition;
+        root.classList.toggle(
+          "diagnostic-no-reward-decoration",
+          condition.skipRewardDecoration,
+        );
+        atmosphere.setDiagnosticDomPalette(
+          condition.freezeDomPalette ? 1 : null,
+        );
         scene.setDiagnosticProfile({
           cachedBorder: true,
           hideInk: condition.hideInk,
@@ -2881,9 +2867,9 @@ async function start() {
         festival.setDiagnosticSeed(0x5120cafe);
       },
       beginSample: () => {
-        rewardLabels.beginSample();
         if (!phoneLayers) return;
         diagnosticRewardDom = 0;
+        diagnosticRewardEffects = freshRewardEffects();
         scene.beginDiagnosticSample();
         atmosphere.beginDiagnosticSample();
         festival.beginDiagnosticSample();
@@ -2910,7 +2896,7 @@ async function start() {
       state: () => ({
         game: currentGame(),
         wardrobe: store.state.wardrobe,
-        rewardRasters: rewardLabels.snapshot(),
+        rewardRenderer: "dom" as const,
         ...(phoneLayers
           ? {
               proof: {
@@ -2919,7 +2905,8 @@ async function start() {
                 score: currentGame().score,
                 boardEmpty: currentGame().board.every((n) => n === 0),
                 rewardDomCreated: diagnosticRewardDom,
-                rewardRasters: rewardLabels.snapshot(),
+                rewardEffects: { ...diagnosticRewardEffects },
+                rewardRenderer: "dom" as const,
                 shownScore: Math.round(scoreShown),
                 pendingPoints,
                 scene: scene.diagnosticSnapshot(),
@@ -2965,8 +2952,6 @@ async function start() {
     if (document.hidden && modal === "result") finishResultPresentation();
   });
   window.addEventListener("pagehide", () => {
-    cancelRewardWarmup?.();
-    cancelRewardWarmup = null;
     activity.setBlocked("pagehide", true);
     cancelDrag();
     cancelHint();
@@ -2975,8 +2960,6 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
-      cancelRewardWarmup?.();
-      cancelRewardWarmup = null;
       clearInterval(reviveTimer);
       stopReviveClock();
       analytics.dispose();

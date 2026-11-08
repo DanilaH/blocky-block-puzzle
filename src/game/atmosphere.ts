@@ -44,6 +44,11 @@ export class Atmosphere {
   private styleKey = "";
   private streak = 0;
   private diagnosticDisabled = false;
+  private diagnosticDomPalette: number | null = null;
+  private appliedDomPalette = 0;
+  setDiagnosticDomPalette(theme: number | null) {
+    this.diagnosticDomPalette = theme;
+  }
   private diagnosticDraws: number | null = null;
   setDiagnosticDisabled(disabled: boolean) {
     this.diagnosticDisabled = disabled;
@@ -63,6 +68,14 @@ export class Atmosphere {
   diagnosticSnapshot() {
     return {
       disabled: this.diagnosticDisabled,
+      theme: this.index,
+      domPaletteTheme: this.appliedDomPalette,
+      domPalette: {
+        bg: document.documentElement.style.getPropertyValue("--world-bg"),
+        ink: document.documentElement.style.getPropertyValue("--world-ink"),
+        accent:
+          document.documentElement.style.getPropertyValue("--world-accent"),
+      },
       draws: this.diagnosticDraws ?? 0,
       canvas: [this.canvas.width, this.canvas.height],
     };
@@ -115,21 +128,24 @@ export class Atmosphere {
     this.index = next;
     this.active = active;
     this.calm = calm;
-    const styleKey = `${next}:${themeAccent(streak)}:${calm}`;
+    const palette = this.diagnosticDomPalette ?? next;
+    const accent =
+      this.diagnosticDomPalette === null
+        ? themeAccent(streak)
+        : THEMES[palette]!.accent;
+    const styleKey = `${next}:${palette}:${accent}:${calm}`;
     if (styleKey !== this.styleKey) {
       this.styleKey = styleKey;
+      this.appliedDomPalette = palette;
       document.documentElement.style.setProperty(
         "--world-bg",
-        THEMES[next]!.bg,
+        THEMES[palette]!.bg,
       );
       document.documentElement.style.setProperty(
         "--world-ink",
-        THEMES[next]!.ink,
+        THEMES[palette]!.ink,
       );
-      document.documentElement.style.setProperty(
-        "--world-accent",
-        themeAccent(streak),
-      );
+      document.documentElement.style.setProperty("--world-accent", accent);
       document.documentElement.dataset.material = THEMES[next]!.material;
       const boardColor =
         "#" + THEMES[next]!.board.toString(16).padStart(6, "0");

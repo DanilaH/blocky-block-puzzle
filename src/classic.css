@@ -18,19 +18,12 @@
 :root[data-presentation="classic"] .world-background {
   background-image: none;
 }
-.reward-raster-letter {
-  animation: letter-dance 0.65s ease-in-out infinite alternate;
-  animation-delay: calc(var(--letter) * -45ms);
-  will-change: transform;
+/* A diagnostic retains reward geometry/point flights while omitting decoration. */
+#app.diagnostic-no-reward-decoration :is(.reward-praise, .reward-emblem) {
+  visibility: hidden;
 }
-.effects-paused .reward-raster-letter,
-.reward-event.yield-to-drag .reward-raster-letter {
+#app.diagnostic-no-reward-decoration .reward-praise i {
   animation: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .reward-raster-letter {
-    animation: none;
-  }
 }
 :root[data-presentation="classic"] {
   --enamel-ink: var(--world-ink);

@@ -30,12 +30,12 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
     timeout: 40000,
   });
   const r = await report(page);
-  expect(r.schema).toBe("blocky-phone-layers-v2");
+  expect(r.schema).toBe("blocky-phone-layers-v3");
   expect(r.completed).toBe(true);
   expect(r.interrupted).toBe(false);
-  expect(r.episodes).toHaveLength(20);
+  expect(r.episodes).toHaveLength(18);
   expect(r.episodes.filter((e: any) => e.phase === "comparison")).toHaveLength(
-    18,
+    16,
   );
   expect(r.protocol.functionalOnly).toBe(true);
   expect(r.summary.rows.every((e: any) => !e.investigate)).toBe(true);
@@ -44,8 +44,18 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
     expect(e.state.game.board.every((n: number) => n === 0)).toBe(true);
     expect(e.state.wardrobe.selected).toBe(5);
     expect(e.validation.errors).toEqual([]);
-    expect(e.state.proof.rewardRasters.prepared === 0).toBe(
-      e.condition.skipRewardDom || e.condition.legacyRewardText,
+    expect(e.state.proof.rewardRenderer).toBe("dom");
+    expect(e.state.proof.rewardEffects.pointFlights).toBe(
+      e.condition.skipRewardDom ? 0 : 2,
+    );
+    expect(e.state.proof.rewardEffects.captionAnimations).toBe(
+      e.condition.skipRewardDom || e.condition.skipRewardDecoration ? 0 : 2,
+    );
+    expect(e.state.proof.rewardEffects.hudFlashes).toBe(
+      e.condition.skipRewardDom || e.condition.skipHudFlashes ? 0 : 2,
+    );
+    expect(e.state.proof.atmosphere.domPaletteTheme).toBe(
+      e.condition.freezeTheme || e.condition.freezeDomPalette ? 1 : 5,
     );
   }
   expect(
@@ -81,6 +91,37 @@ test("full length layer study includes delayed rain, theme, scores and one consi
   test.setTimeout(130000);
   await page.goto("/?clearTrace=layers");
   await expect(page.locator("#phone-clear-start")).toBeEnabled();
+  await page.evaluate(() => {
+    const snapshots: any[] = [];
+    (window as any).__captionSnapshots = snapshots;
+    new MutationObserver((records) => {
+      for (const record of records)
+        for (const added of record.addedNodes) {
+          if (
+            !(added instanceof HTMLElement) ||
+            added.dataset.tier !== "all-clear"
+          )
+            continue;
+          const label = added.querySelector<HTMLElement>(".reward-praise")!;
+          const marks = performance
+            .getEntriesByType("mark")
+            .filter((m) => m.name.endsWith(":start"));
+          snapshots.push({
+            mark: marks.at(-1)!.name,
+            geometry: {
+              node: [added.offsetWidth, added.offsetHeight],
+              label: [label.offsetWidth, label.offsetHeight],
+              left: added.style.left,
+              top: added.style.top,
+            },
+            visibility: getComputedStyle(label).visibility,
+            motion: label.getAnimations({ subtree: true }).length,
+            letters: label.querySelectorAll("i").length,
+            canvases: added.querySelectorAll("canvas").length,
+          });
+        }
+    }).observe(document.querySelector("#burst")!, { childList: true });
+  });
   await page.locator("#phone-clear-start").click();
   await expect(page.locator("#phone-clear-export")).toBeEnabled({
     timeout: 110000,
@@ -88,12 +129,22 @@ test("full length layer study includes delayed rain, theme, scores and one consi
   const r = await report(page);
   expect(r.completed).toBe(true);
   expect(r.protocol.functionalOnly).toBe(false);
-  expect(r.episodes).toHaveLength(20);
+  expect(r.episodes).toHaveLength(18);
   const dimensions = JSON.stringify(r.episodes[0].sample.context.canvas);
   for (const e of r.episodes) {
     expect(e.validation.errors).toEqual([]);
-    expect(e.state.proof.rewardRasters.prepared === 0).toBe(
-      e.condition.skipRewardDom || e.condition.legacyRewardText,
+    expect(e.state.proof.rewardRenderer).toBe("dom");
+    expect(e.state.proof.rewardEffects.pointFlights).toBe(
+      e.condition.skipRewardDom ? 0 : 2,
+    );
+    expect(e.state.proof.rewardEffects.captionAnimations).toBe(
+      e.condition.skipRewardDom || e.condition.skipRewardDecoration ? 0 : 2,
+    );
+    expect(e.state.proof.rewardEffects.hudFlashes).toBe(
+      e.condition.skipRewardDom || e.condition.skipHudFlashes ? 0 : 2,
+    );
+    expect(e.state.proof.atmosphere.domPaletteTheme).toBe(
+      e.condition.freezeTheme || e.condition.freezeDomPalette ? 1 : 5,
     );
     expect(JSON.stringify(e.sample.context.canvas)).toBe(dimensions);
     expect(e.state.proof.pendingPoints).toBe(0);
@@ -101,6 +152,28 @@ test("full length layer study includes delayed rain, theme, scores and one consi
     if (e.condition.skipFestival)
       expect(e.state.proof.festival.spawned).toBe(0);
     else expect(e.state.proof.festival.spawned).toBe(148);
+  }
+  const captions = await page.evaluate(
+    () => (window as any).__captionSnapshots,
+  );
+  for (const round of [0, 1]) {
+    const series = r.episodes.filter(
+      (e: any) => e.phase === "comparison" && e.round === round,
+    );
+    const baseline = captions.find(
+      (c: any) => c.mark === `blocky-clear:${series[0].kind}:start`,
+    );
+    const omitted = series.find((e: any) => e.condition.skipRewardDecoration);
+    const hidden = captions.find(
+      (c: any) => c.mark === `blocky-clear:${omitted.kind}:start`,
+    );
+    expect(hidden.geometry).toEqual(baseline.geometry);
+    expect(hidden.visibility).toBe("hidden");
+    expect(hidden.motion).toBe(0);
+    expect(baseline.visibility).toBe("visible");
+    expect(baseline.motion).toBeGreaterThan(1);
+    expect(baseline.letters).toBeGreaterThan(1);
+    expect(baseline.canvases).toBe(0);
   }
   for (const row of r.summary.rows)
     expect(row.rounds.every((r: any) => r.comparable)).toBe(true);

@@ -7,17 +7,40 @@ import {
   validateLayer,
   type LayerProof,
 } from "../src/diagnostics/clear-layers";
-function proof(): LayerProof {
+function proof(
+  condition = BASELINE_LAYER as (typeof CLEAR_LAYERS)[number],
+): LayerProof {
+  const theme = condition.freezeTheme ? 1 : 5;
+  const palette = condition.freezeDomPalette ? 1 : theme;
+  const omit = condition.skipRewardDom;
+  const noNotice = omit || condition.skipThemeNotice || condition.freezeTheme;
   return {
-    renderedTheme: 5,
+    renderedTheme: theme,
     savedTheme: 5,
     score: 1574,
     boardEmpty: true,
-    rewardDomCreated: 3,
-    rewardRasters: { prepared: 4, fallbacks: 0 },
-    scene: { draws: 140, inkPeak: 48, vfxPeak: 90 },
-    atmosphere: { draws: 70, disabled: false },
-    festival: { draws: 140, bursts: 2, spawned: 148, disabled: false },
+    rewardDomCreated: omit ? 0 : noNotice ? 2 : 3,
+    rewardRenderer: "dom",
+    rewardEffects: {
+      captionAnimations: omit || condition.skipRewardDecoration ? 0 : 2,
+      visibleEmblems: 0,
+      pointFlights: omit ? 0 : 2,
+      hudFlashes: omit || condition.skipHudFlashes ? 0 : 2,
+      themeNotices: noNotice ? 0 : 1,
+      themeImpulses: condition.freezeTheme ? 0 : 1,
+    },
+    scene: { draws: 140, inkPeak: 48, vfxPeak: 90, theme },
+    atmosphere: {
+      draws: 70,
+      disabled: false,
+      theme,
+      domPaletteTheme: palette,
+      domPalette:
+        palette === 1
+          ? { bg: "#f4f3ee", ink: "#325376", accent: "#72a8ec" }
+          : { bg: "#233f57", ink: "#f2f4f7", accent: "#a5e8ef" },
+    },
+    festival: { draws: 140, bursts: 2, spawned: 148, disabled: false, theme },
   };
 }
 function sample(slow: number, max = 40) {
@@ -32,7 +55,7 @@ function sample(slow: number, max = 40) {
 describe("layer study protocol", () => {
   it("brackets both reversed orders and changes exactly one dimension", () => {
     const plan = layerPlan();
-    expect(plan).toHaveLength(18);
+    expect(plan).toHaveLength(16);
     const a = plan.filter((e) => e.round === 0),
       b = plan.filter((e) => e.round === 1);
     expect(a[0]!.condition.id).toBe("baseline");
@@ -52,39 +75,61 @@ describe("layer study protocol", () => {
       "skipAtmosphere",
       "skipRewardDom",
       "freezeTheme",
-      "legacyRewardText",
+      "skipHudFlashes",
+      "skipRewardDecoration",
+      "freezeDomPalette",
+      "skipThemeNotice",
     ] as const;
     for (const c of CLEAR_LAYERS.slice(1))
       expect(flags.filter((f) => c[f])).toHaveLength(1);
   });
-  it("does not mistake a disabled scene or wrong logical result for a valid condition", () => {
-    expect(validateLayer(BASELINE_LAYER, proof()).valid).toBe(true);
-    expect(validateLayer(CLEAR_LAYERS[1], proof()).errors).toContain(
-      "ink-output",
+  it("validates each actual output without freezing unrelated palettes or omitting flights", () => {
+    for (const condition of CLEAR_LAYERS)
+      expect(validateLayer(condition, proof(condition)).errors).toEqual([]);
+    const condition = CLEAR_LAYERS.find((c) => c.id === "no-dom-palette")!;
+    const p = proof(condition);
+    p.scene.theme = 1;
+    expect(validateLayer(condition, p).errors).toContain("presentation-theme");
+    p.scene.theme = 5;
+    p.atmosphere.domPalette.ink = "#f2f4f7";
+    expect(validateLayer(condition, p).errors).toContain("dom-palette");
+    const decoration = CLEAR_LAYERS.find(
+      (c) => c.id === "no-reward-decoration",
+    )!;
+    const q = proof(decoration);
+    q.rewardEffects.pointFlights = 0;
+    expect(validateLayer(decoration, q).errors).toContain(
+      "point-flight-output",
     );
-    const p = proof();
-    p.scene.inkPeak = 0;
-    expect(validateLayer(CLEAR_LAYERS[1], p).valid).toBe(true);
-    p.scene.vfxPeak = 0;
-    expect(validateLayer(CLEAR_LAYERS[1], p).errors).toContain("vfx-output");
-    const q = proof();
-    q.renderedTheme = 1;
-    expect(validateLayer(CLEAR_LAYERS[6], q).valid).toBe(true);
     q.savedTheme = 1;
-    expect(validateLayer(CLEAR_LAYERS[6], q).errors).toContain(
-      "logical-outcome",
-    );
+    expect(validateLayer(decoration, q).errors).toContain("logical-outcome");
   });
-  it("requires the selected reward renderer and rejects fallback results", () => {
+  it("rejects the old raster path, missing counters and accidental reward removal", () => {
     const p = proof();
-    expect(validateLayer(CLEAR_LAYERS[7], p).errors).toContain("renderer-path");
-    p.rewardRasters.prepared = 0;
-    expect(validateLayer(CLEAR_LAYERS[7], p).valid).toBe(true);
+    p.rewardRenderer = "raster" as "dom";
     expect(validateLayer(BASELINE_LAYER, p).errors).toContain("renderer-path");
-    p.rewardRasters = { prepared: 4, fallbacks: 1 };
-    expect(validateLayer(BASELINE_LAYER, p).errors).toContain("renderer-path");
-    p.rewardRasters.prepared = 0;
-    expect(validateLayer(CLEAR_LAYERS[7], p).errors).toContain("renderer-path");
+    p.rewardRenderer = "dom";
+    p.rewardEffects.captionAnimations = 0;
+    expect(validateLayer(BASELINE_LAYER, p).errors).toContain(
+      "reward-decoration-output",
+    );
+    const q = proof();
+    q.rewardEffects = undefined as unknown as LayerProof["rewardEffects"];
+    expect(validateLayer(BASELINE_LAYER, q).valid).toBe(false);
+  });
+  it("keeps the theme impulse when omitting only its notice and requires only two score flashes", () => {
+    const condition = CLEAR_LAYERS.find((c) => c.id === "no-theme-notice")!;
+    const p = proof(condition);
+    p.rewardEffects.themeImpulses = 0;
+    expect(validateLayer(condition, p).errors).toContain(
+      "theme-impulse-output",
+    );
+    const flashes = CLEAR_LAYERS.find((c) => c.id === "no-hud-flashes")!;
+    const q = proof(flashes);
+    q.rewardEffects.themeNotices = 0;
+    expect(validateLayer(flashes, q).errors).toContain("theme-notice-output");
+    q.rewardEffects.hudFlashes = 1;
+    expect(validateLayer(flashes, q).errors).toContain("hud-flash-output");
   });
   it("requires both comparable rounds and a stable maximum, excluding warmup/trace and functional runs", () => {
     const episodes = layerPlan().map((e) => ({
@@ -99,7 +144,7 @@ describe("layer study protocol", () => {
     expect(summary.rows.every((r) => r.investigate)).toBe(true);
     const bad = structuredClone(episodes);
     bad.find(
-      (e) => e.round === 1 && e.condition.id === "no-board-ink",
+      (e) => e.round === 1 && e.condition.id === "no-hud-flashes",
     )!.sample = sample(2, 90);
     expect(summarizeLayers(bad).rows[0]!.investigate).toBe(false);
     expect(

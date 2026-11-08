@@ -1,92 +1,36 @@
+import { THEMES } from "../game/themes";
+
+const defaults = {
+  hideInk: false,
+  hideVfx: false,
+  skipFestival: false,
+  skipAtmosphere: false,
+  skipRewardDom: false,
+  freezeTheme: false,
+  skipHudFlashes: false,
+  skipRewardDecoration: false,
+  freezeDomPalette: false,
+  skipThemeNotice: false,
+};
+function layer<const Id extends string>(
+  id: Id,
+  label: string,
+  flags: Partial<typeof defaults> = {},
+) {
+  return { ...defaults, ...flags, id, label };
+}
 export const CLEAR_LAYERS = [
-  {
-    id: "baseline",
-    label: "Все слои",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-board-ink",
-    label: "Без декора поля",
-    hideInk: true,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-board-vfx",
-    label: "Без частиц поля",
-    hideInk: false,
-    hideVfx: true,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-festival",
-    label: "Без внешнего праздника",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: true,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-atmosphere",
-    label: "Без фоновой анимации",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: true,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-reward-dom",
-    label: "Без надписей наград",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: true,
-    legacyRewardText: false,
-    freezeTheme: false,
-  },
-  {
-    id: "no-theme",
-    label: "Без смены оформления",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    legacyRewardText: false,
-    freezeTheme: true,
-  },
-  {
-    id: "legacy-reward-text",
-    label: "Прежняя отрисовка наград",
-    hideInk: false,
-    hideVfx: false,
-    skipFestival: false,
-    skipAtmosphere: false,
-    skipRewardDom: false,
-    freezeTheme: false,
-    legacyRewardText: true,
-  },
+  layer("baseline", "Все эффекты"),
+  layer("no-hud-flashes", "Без вспышек счёта", { skipHudFlashes: true }),
+  layer("no-reward-decoration", "Без подписи награды", {
+    skipRewardDecoration: true,
+  }),
+  layer("no-dom-palette", "Без смены цветов интерфейса", {
+    freezeDomPalette: true,
+  }),
+  layer("no-theme-notice", "Без плашки новой темы", { skipThemeNotice: true }),
+  layer("no-reward-dom", "Без всего блока наград", { skipRewardDom: true }),
+  layer("no-theme", "Без смены оформления", { freezeTheme: true }),
 ] as const;
 export type ClearLayer = (typeof CLEAR_LAYERS)[number];
 export const BASELINE_LAYER = CLEAR_LAYERS[0];
@@ -102,28 +46,59 @@ export function layerPlan() {
     })),
   );
 }
+export type RewardEffectProof = {
+  captionAnimations: number;
+  visibleEmblems: number;
+  pointFlights: number;
+  hudFlashes: number;
+  themeNotices: number;
+  themeImpulses: number;
+};
 export type LayerProof = {
   renderedTheme: number;
   savedTheme: number;
   score: number;
   boardEmpty: boolean;
   rewardDomCreated: number;
-  rewardRasters: { prepared: number; fallbacks: number };
-  scene: { draws: number; inkPeak: number; vfxPeak: number };
-  atmosphere: { draws: number; disabled: boolean };
+  rewardRenderer: "dom";
+  rewardEffects: RewardEffectProof;
+  scene: { draws: number; inkPeak: number; vfxPeak: number; theme: number };
+  atmosphere: {
+    draws: number;
+    disabled: boolean;
+    theme: number;
+    domPaletteTheme: number;
+    domPalette: { bg: string; ink: string; accent: string };
+  };
   festival: {
     draws: number;
     bursts: number;
     spawned: number;
     disabled: boolean;
+    theme: number;
   };
 };
 export function validateLayer(condition: ClearLayer, proof: LayerProof) {
   const errors: string[] = [];
   if (proof.score !== 1574 || !proof.boardEmpty || proof.savedTheme !== 5)
     errors.push("logical-outcome");
-  if (proof.renderedTheme !== (condition.freezeTheme ? 1 : 5))
+  const theme = condition.freezeTheme ? 1 : 5;
+  if (
+    proof.renderedTheme !== theme ||
+    proof.scene.theme !== theme ||
+    proof.atmosphere.theme !== theme ||
+    proof.festival.theme !== theme
+  )
     errors.push("presentation-theme");
+  const palette = condition.freezeDomPalette ? 1 : theme,
+    colors = THEMES[palette]!;
+  if (
+    proof.atmosphere.domPaletteTheme !== palette ||
+    proof.atmosphere.domPalette.bg !== colors.bg ||
+    proof.atmosphere.domPalette.ink !== colors.ink ||
+    proof.atmosphere.domPalette.accent !== colors.accent
+  )
+    errors.push("dom-palette");
   if (!proof.scene.draws) errors.push("board-not-rendered");
   if ((proof.scene.inkPeak === 0) !== condition.hideInk)
     errors.push("ink-output");
@@ -137,16 +112,34 @@ export function validateLayer(condition: ClearLayer, proof: LayerProof) {
   if (
     proof.festival.disabled !== condition.skipFestival ||
     (proof.festival.bursts === 0) !== condition.skipFestival ||
-    (proof.festival.draws === 0) !== condition.skipFestival
+    (proof.festival.draws === 0) !== condition.skipFestival ||
+    proof.festival.spawned !== (condition.skipFestival ? 0 : 148)
   )
     errors.push("festival-output");
-  if ((proof.rewardDomCreated === 0) !== condition.skipRewardDom)
+  const omit = condition.skipRewardDom,
+    noNotice = omit || condition.skipThemeNotice || condition.freezeTheme;
+  if (proof.rewardDomCreated !== (omit ? 0 : noNotice ? 2 : 3))
     errors.push("reward-dom-output");
-  const raster = proof.rewardRasters;
-  if (!raster || raster.fallbacks !== 0) errors.push("renderer-path");
-  else if (condition.skipRewardDom || condition.legacyRewardText) {
-    if (raster.prepared !== 0) errors.push("renderer-path");
-  } else if (raster.prepared < 4) errors.push("renderer-path");
+  if (proof.rewardRenderer !== "dom") errors.push("renderer-path");
+  const effects = proof.rewardEffects;
+  if (
+    !effects ||
+    effects.captionAnimations !==
+      (omit || condition.skipRewardDecoration ? 0 : 2) ||
+    effects.visibleEmblems !== 0
+  )
+    errors.push("reward-decoration-output");
+  if (!effects || effects.pointFlights !== (omit ? 0 : 2))
+    errors.push("point-flight-output");
+  if (
+    !effects ||
+    effects.hudFlashes !== (omit || condition.skipHudFlashes ? 0 : 2)
+  )
+    errors.push("hud-flash-output");
+  if (!effects || effects.themeNotices !== (noNotice ? 0 : 1))
+    errors.push("theme-notice-output");
+  if (!effects || effects.themeImpulses !== (condition.freezeTheme ? 0 : 1))
+    errors.push("theme-impulse-output");
   return { valid: errors.length === 0, errors };
 }
 type MeasuredEpisode = {

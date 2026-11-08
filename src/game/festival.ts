@@ -53,6 +53,7 @@ export class Festival {
       peakParticles: 0,
       ...this.diagnosticSample,
       disabled: this.diagnosticDisabled,
+      theme: this.theme,
       canvas: [this.canvas.width, this.canvas.height],
     };
   }

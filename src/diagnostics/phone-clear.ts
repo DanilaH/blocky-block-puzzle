@@ -100,14 +100,14 @@ export async function installPhoneClear(hooks: Hooks) {
     import.meta.env.DEV &&
     new URLSearchParams(location.search).get("test") === "fast";
   const settleMs = fast ? 60 : 1800;
-  const measurementMs = fast ? (layers ? 750 : 240) : 2400;
+  const measurementMs = fast ? (layers ? 1500 : 240) : 2400;
   const plan = layerPlan();
   const total = layers ? plan.length + 2 : 3;
   const panel = document.createElement("section");
   panel.id = "phone-clear-panel";
   panel.style.cssText =
     "position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;overflow-y:auto;background:rgba(8,15,30,.94);padding:20px;color:white;text-align:center";
-  panel.innerHTML = `<div style="max-width:360px;width:100%;margin:auto;flex-shrink:0"><h2>${layers ? "Проверка слоёв" : "Проверка очистки"}</h2><p id="phone-clear-status" role="status">${layers ? "Около 90 секунд. Игра сама сравнит слои эффектов в двух проходах. Оставьте экран открытым." : "Около 15 секунд. Игра сама повторит очистку три раза. Оставьте экран открытым."}</p><p id="phone-clear-help">Ваша партия сохранена. После проверки отправьте один файл с результатом.</p><button id="phone-clear-start" class="primary" disabled>Начать проверку</button><button id="phone-clear-export" class="secondary" disabled>Отправить результат</button><button id="phone-clear-return" class="secondary">Вернуться в игру</button></div><div id="phone-clear-progress" hidden style="position:fixed;left:12px;right:12px;bottom:max(8px,env(safe-area-inset-bottom));display:none;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border-radius:8px;background:#08152b;color:white;font:12px system-ui"><span id="phone-clear-step" role="status"></span><button id="phone-clear-cancel" style="min-height:36px;padding:4px 10px;color:white;background:#23456e;border:0;border-radius:6px">Прервать</button></div>`;
+  panel.innerHTML = `<div style="max-width:360px;width:100%;margin:auto;flex-shrink:0"><h2>${layers ? "Проверка слоёв" : "Проверка очистки"}</h2><p id="phone-clear-status" role="status">${layers ? "Около 80 секунд. Игра сама сравнит слои эффектов в двух проходах. Оставьте экран открытым." : "Около 15 секунд. Игра сама повторит очистку три раза. Оставьте экран открытым."}</p><p id="phone-clear-help">Ваша партия сохранена. После проверки отправьте один файл с результатом.</p><button id="phone-clear-start" class="primary" disabled>Начать проверку</button><button id="phone-clear-export" class="secondary" disabled>Отправить результат</button><button id="phone-clear-return" class="secondary">Вернуться в игру</button></div><div id="phone-clear-progress" hidden style="position:fixed;left:12px;right:12px;bottom:max(8px,env(safe-area-inset-bottom));display:none;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border-radius:8px;background:#08152b;color:white;font:12px system-ui"><span id="phone-clear-step" role="status"></span><button id="phone-clear-cancel" style="min-height:36px;padding:4px 10px;color:white;background:#23456e;border:0;border-radius:6px">Прервать</button></div>`;
   panel
     .querySelectorAll<HTMLButtonElement>(
       "#phone-clear-start,#phone-clear-export,#phone-clear-return",
@@ -214,7 +214,7 @@ export async function installPhoneClear(hooks: Hooks) {
     let captureId: string | undefined;
     start.disabled = share.disabled = true;
     report = {
-      schema: layers ? "blocky-phone-layers-v2" : "blocky-phone-clear-v1",
+      schema: layers ? "blocky-phone-layers-v3" : "blocky-phone-clear-v1",
       appVersion: APP_VERSION,
       startedAt: new Date().toISOString(),
       completed: false,
@@ -244,8 +244,8 @@ export async function installPhoneClear(hooks: Hooks) {
         ...(layers
           ? [
               "Local cosmetic seed and ambient animation reset per episode; original complete-session cosmetics are not replayed.",
-              "Ink/VFX submission is skipped at the primitive/stamp boundary; shared coordinate/age calculations still run. Ambient ablation omits its animated canvas but retains background/theme DOM. Reward ablation retains score arrival and HUD count-up; no-theme freezes all presentation palettes at1 while saved wardrobe still advances to5.",
-              "Former DOM reward lettering is also compared in both orders, with the same Classic surface settings. Renderer-path counters must validate before nomination.",
+              "Reward ablation retains score arrival and HUD count-up. No-theme freezes all presentation palettes at1 and omits its notice; DOM-palette-only retains the new board, particle and background palettes and the notice. No-notice retains the theme change and ambient impulse. Classic emblems already have display:none; caption decoration ablation retains their layout policy and point flights.",
+              "DOM reward text is the ordinary renderer again. Separate cases omit only score flashes, caption decoration, DOM palette changes or theme notices. Caption/flight/flash/notice counters and actual palette targets validate each case.",
               "Functional-only fast mode cannot nominate a performance candidate.",
             ]
           : []),

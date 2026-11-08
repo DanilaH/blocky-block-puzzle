@@ -67,7 +67,13 @@ export class BoardScene extends Phaser.Scene {
     this.diagnosticSample = { draws: 0, inkPeak: 0, vfxPeak: 0 };
   }
   diagnosticSnapshot() {
-    return { draws: 0, inkPeak: 0, vfxPeak: 0, ...this.diagnosticSample };
+    return {
+      draws: 0,
+      inkPeak: 0,
+      vfxPeak: 0,
+      ...this.diagnosticSample,
+      theme: this.theme,
+    };
   }
   /** Transient presentation-only controls for the separate preview benchmark. */
   setDiagnosticProfile(profile: Partial<typeof this.diagnostic> = {}) {
