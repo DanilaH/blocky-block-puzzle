@@ -77,6 +77,7 @@ export async function installPhoneClear(hooks: Hooks) {
   panel.querySelectorAll<HTMLButtonElement>("button").forEach((button) => {
     button.style.cssText =
       "display:block;width:100%;margin:10px 0;min-height:48px";
+    if (button.classList.contains("secondary")) button.style.color = "#f4f7ff";
   });
   document.body.append(panel);
   const status = panel.querySelector<HTMLElement>("#phone-clear-status")!;
