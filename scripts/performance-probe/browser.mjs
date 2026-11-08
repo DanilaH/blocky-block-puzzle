@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { PreparedReveal } from "./prepared-reveal.mjs";
 import { SpriteInk, prepareEnergyBorder } from "../../src/game/sprite-ink";
 // Diagnostic-only import, injected by the audit's Vite plugin. Never in the app build.
 export function installProbe({ BoardScene }) {
@@ -14,6 +15,8 @@ export function installProbe({ BoardScene }) {
       performance.mark(`probe:${name}`);
     },
   });
+  if (window.__probeOptions.preparedRevealStudy)
+    window.__preparedReveal = new PreparedReveal();
   const names = [
     "drawElements",
     "drawArrays",
@@ -26,6 +29,17 @@ export function installProbe({ BoardScene }) {
     "readPixels",
     "finish",
   ];
+  const setBlendMode = Phaser.GameObjects.Image.prototype.setBlendMode;
+  Phaser.GameObjects.Image.prototype.setBlendMode = function (mode) {
+    if (
+      mode === Phaser.BlendModes.ADD &&
+      this.scene.__properAdd !== undefined &&
+      (this.texture.key.startsWith("vfx-") ||
+        this.texture.key.startsWith("prepared-reveal-"))
+    )
+      return setBlendMode.call(this, this.scene.__properAdd);
+    return setBlendMode.call(this, mode);
+  };
   for (const proto of [
     window.WebGLRenderingContext?.prototype,
     window.WebGL2RenderingContext?.prototype,
@@ -166,6 +180,37 @@ export function installProbe({ BoardScene }) {
   BoardScene.prototype.create = function (...args) {
     const result = create.apply(this, args);
     probe.scene = this;
+    if (window.__probeOptions.properAdd) {
+      const gl = this.game.renderer.gl;
+      this.__properAdd = this.game.renderer.addBlendMode(
+        [gl.ONE, gl.ONE, gl.ONE, gl.ONE],
+        gl.FUNC_ADD,
+      );
+    }
+    if (window.__probeOptions.opaqueField) {
+      // Diagnostic only: put an opaque grid below WebGL effects, retaining an
+      // RGBA context. This changes destination alpha and is NOT a visual match.
+      const texture = this.textures.createCanvas(
+        "probe-opaque-field",
+        512,
+        512,
+      );
+      const ctx = texture.context;
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, 512, 512);
+      ctx.fillStyle = "#eeeeee";
+      for (let y = 0; y < 8; y++)
+        for (let x = 0; x < 8; x++) {
+          ctx.beginPath();
+          ctx.roundRect(x * 64 + 1, y * 64 + 1, 62, 62, 3);
+          ctx.fill();
+        }
+      texture.refresh();
+      this.__opaqueField = this.add
+        .image(0, 0, "probe-opaque-field")
+        .setOrigin(0)
+        .setDepth(-1);
+    }
     if (!window.__probeOptions.oldEnergyBorder) prepareEnergyBorder(this);
     if (window.__probeOptions.tightInk) {
       const texture = this.textures.get("board-primitives");
@@ -300,7 +345,10 @@ export function installProbe({ BoardScene }) {
         this.state?.moves !== args[0]?.moves
       )
         probe.mark("published-state", { moves: args[0].moves });
+      if (name === "draw") window.__preparedReveal?.hide();
       const result = original.apply(this, args);
+      if (name === "draw" && this.__opaqueField)
+        this.__opaqueField.setTint(this.bedColor);
       if (name === "draw" && window.__probeOptions.noInk)
         this.ink.setVisible(false);
       if (name === "draw" && window.__probeOptions.noVfx) this.vfx?.clear();
@@ -348,6 +396,8 @@ export function installProbe({ BoardScene }) {
         zoom: scene.cameras.main.zoom,
       },
       flatWashIntegrated: !!scene.ink.useFlatWash,
+      vfxBlendFunction:
+        renderer.blendModes[scene.__properAdd ?? Phaser.BlendModes.ADD],
       glAttributes: gl?.getContextAttributes(),
       glRenderer: gl?.getParameter(
         extension ? extension.UNMASKED_RENDERER_WEBGL : gl.RENDERER,

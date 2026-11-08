@@ -24,8 +24,8 @@ const plugin = {
   name: "diagnostic-probe-only",
   enforce: "pre",
   transform(source, id) {
-    if (id.split("?")[0] === path.join(root, "src/game/BoardScene.ts"))
-      return source
+    if (id.split("?")[0] === path.join(root, "src/game/BoardScene.ts")) {
+      let board = source
         .replace(
           "if (g instanceof SpriteInk && this.diagnostic.cachedBorder)",
           "if (g instanceof SpriteInk && !(window as any).__probeOptions?.oldEnergyBorder)",
@@ -42,6 +42,30 @@ const plugin = {
           'if (textured && this.presentation === "classic") prepareEnergyBorder(this);',
           'if (textured && this.presentation === "classic" && !(window as any).__probeOptions?.oldEnergyBorder) prepareEnergyBorder(this);',
         );
+      if (board.includes("const t = (age - 400) / 600;")) {
+        board = board.replace(
+          "const t = (age - 400) / 600;",
+          "const __handled = (window as any).__preparedReveal?.begin(this, e, age);\n        if (!__handled) {\n        const t = (age - 400) / 600;",
+        );
+        board = board.replace(
+          "g.fillStyle(0xffeb8a, Math.sin(t * Math.PI) * 0.12);",
+          "if (!(window as any).__preparedReveal?.normalActive) {\n        g.fillStyle(0xffeb8a, Math.sin(t * Math.PI) * 0.12);",
+        );
+        board = board.replace(
+          "g.fillRect(0, 0, 512, 512);",
+          "g.fillRect(0, 0, 512, 512);\n        }",
+        );
+        board = board.replace(
+          "g.lineStyle(3 + 3 * (1 - t), 0xffe2a0, Math.sin(t * Math.PI) * 0.85);",
+          "if (!(window as any).__preparedReveal?.normalActive) {\n        g.lineStyle(3 + 3 * (1 - t), 0xffe2a0, Math.sin(t * Math.PI) * 0.85);",
+        );
+        board = board.replace(
+          "        );\n      }\n      if (!this.calm && age < 420)",
+          "        );\n        }\n        }\n        (window as any).__preparedReveal?.end(this);\n      }\n      if (!this.calm && age < 420)",
+        );
+      }
+      return board;
+    }
     if (id.split("?")[0] !== path.join(root, "src/main.ts")) return;
     if (
       !source.includes("  if (import.meta.hot)") ||
@@ -88,6 +112,7 @@ const plugin = {
       const fixture = (window as any).__probeOptions.fixtures?.[(window as any).__probeOptions.fixtureIndex];
       for (const prior of fixture?.cosmeticHistory ?? [])
         (scene as any).celebration.add(prior.lines, performance.now() + prior.at);
+      (window as any).__resetCosmeticSeed?.(0x51beef);
       await commit(fixture?.move ?? {slot:0,x:0,y:0},currentGame().revision);
     }
   });
@@ -184,6 +209,16 @@ try {
       await page.addInitScript(
         (options) => {
           window.__probeOptions = options;
+          if (options.preparedRevealStudy || options.fixedCosmetics) {
+            let seed = 0x51beef;
+            window.__resetCosmeticSeed = (s) => {
+              seed = s >>> 0;
+            };
+            Math.random = () => {
+              seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+              return seed / 4294967296;
+            };
+          }
         },
         {
           ...condition,
@@ -201,6 +236,32 @@ try {
       );
       const cdp = await context.newCDPSession(page);
       await cdp.send("Performance.enable");
+      if (condition.preparedRevealStudy)
+        await page.evaluate(
+          async (options) => {
+            const p = window.__perfProbe;
+            p.preparedStats = await window.__preparedReveal.setup(
+              p.runtime,
+              options.size,
+              options.mode,
+            );
+            p.preparedQuality = await window.__preparedReveal.assess(p.runtime);
+          },
+          {
+            size: condition.bakeResolution ?? 256,
+            mode: condition.preparedLayerMode ?? "both",
+          },
+        );
+      if (condition.saveQualityFrames) {
+        const snapshots = await page.evaluate(
+          () => window.__preparedReveal.snapshots,
+        );
+        for (const [name, data] of Object.entries(snapshots ?? {}))
+          await fs.writeFile(
+            output.replace(/\.json$/, `-${name}.png`),
+            Buffer.from(data.split(",")[1], "base64"),
+          );
+      }
       for (let repeat = 0; repeat < repeats; repeat++) {
         await page.evaluate(async (condition) => {
           const p = window.__perfProbe;
@@ -226,6 +287,10 @@ try {
           condition === conditions[0]
         )
           await page.screenshot({ path: process.env.PROBE_SCREENSHOT });
+        await page.evaluate((condition) => {
+          if (window.__preparedReveal)
+            window.__preparedReveal.enabled = !!condition.usePrepared;
+        }, condition);
         if (trace)
           await cdp.send("Tracing.start", {
             categories:
@@ -240,6 +305,11 @@ try {
         );
         const after = (await cdp.send("Performance.getMetrics")).metrics;
         row.condition = condition;
+        if (condition.preparedRevealStudy)
+          row.prepared = await page.evaluate(() => ({
+            stats: window.__perfProbe.preparedStats,
+            quality: window.__perfProbe.preparedQuality,
+          }));
         row.round = round;
         row.repeat = repeat;
         row.cold = repeat === 0;
