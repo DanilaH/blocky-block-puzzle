@@ -24,7 +24,7 @@ cd android
 ./gradlew assembleDebug
 ```
 
-APK: android/app/build/outputs/apk/debug/app-debug.apk. Workflow `Preview checks and APK` сначала проверяет web/unit, затем собирает debug APK и сохраняет artifact на 14 дней. Это debug-подпись CI, не ключ выпуска. В 0.6 путь debug-keystore явно согласован между генерацией, Gradle и кешем CI. В прежних запусках кешируемый путь отсутствовал, ключи менялись. Новая 0.6 не обновляет выданную 0.5 из-за другой подписи; удаление старой версии удаляет её данные. Кеш не заменяет долговечный секрет: до широкой раздачи нужен постоянный ключ в защищённом хранилище.
+APK: android/app/build/outputs/apk/debug/app-debug.apk. Workflow `Preview checks and APK` параллельно проверяет web/unit и собирает debug APK и сохраняет artifact на 14 дней. Это debug-подпись CI, не ключ выпуска. В 0.6 путь debug-keystore явно согласован между генерацией, Gradle и кешем CI. В прежних запусках кешируемый путь отсутствовал, ключи менялись. Новая 0.6 не обновляет выданную 0.5 из-за другой подписи; удаление старой версии удаляет её данные. Кеш не заменяет долговечный секрет: до широкой раздачи нужен постоянный ключ в защищённом хранилище.
 
 Временный собственный package: com.danilah.blocky.dev. Production package и ключ подписи не выбирались. Встроен Capacitor App для Back/appStateChange. Сохранение пока через IndexedDB WebView; атомарность транзакций проверяется отдельно от сохранности на физических Android. Android backup выключен, облачного восстановления не обещаем.
 
@@ -113,3 +113,8 @@ APK из`bc549c32ee8d703ba9f35c92bad6313802bdb439`, PR Android CI42464938628/job
 
 
 Android CI подготавливает точную версиюGradle из wrapper properties через`scripts/prepare_gradle.py`: SHA256 обязательна, ZIP кешируется, executable заново извлекается из проверенного архива. Это обходит повторяющиеся HTTP504 в Java-wrapper download path; сторонние mirrors и смена версии сборщика не используются.
+
+
+### Preview0.54: локальные цветовые переходы
+
+Исходники `9f4c05c005df4620913e74bbb99566970344e719`, PR CI `42472074877`, Android job `128704954967`, artifact `13613951144`. Android unit/build — success. Web CI `42470731688` на `fc69c6fc8e5a4bdc394013b93b5cca1e78a34d9c` прошёл221unit/188browser/assets:check/build; исходники app/native/test идентичны, отличаются только wrapper, подготовка CI и документация. APK versionCode54/versionName0.54.0-preview, package`com.danilah.blocky.dev`; v2-подпись совпадает с выданной0.53. Все89 production-файлов совпали с чистым dist. APK SHA-256`b7909336bb979fba04a89a06477481c622f18c4f47beeb04d84e65d14bc2a76f`. Физическая установка и выигрыш на POCO0.54 ещё не проверены. [Протокол](qa/INK_FADES_0.54_2026-11-08.md).
