@@ -7,14 +7,22 @@ import { execFileSync } from "node:child_process";
 const original = Object.fromEntries(
   ["atmosphere", "festival"].map((name) => [
     name,
-    execFileSync("git", ["show", "78754efbd70932caf6462dc17d1241b84381c4cf:src/game/" + name + ".ts"], {
-      encoding: "utf8",
-    }),
+    execFileSync(
+      "git",
+      [
+        "show",
+        "78754efbd70932caf6462dc17d1241b84381c4cf:src/game/" + name + ".ts",
+      ],
+      {
+        encoding: "utf8",
+      },
+    ),
   ]),
 );
 const servers = [];
 for (const candidate of [false, true]) {
   const server = await createServer({
+    cacheDir: `/tmp/blocky-053-vite-${candidate ? "candidate" : "baseline"}`,
     server: { host: "127.0.0.1", port: candidate ? 5199 : 5198 },
     plugins: candidate
       ? []
@@ -37,7 +45,9 @@ for (const candidate of [false, true]) {
 const browser = await chromium.launch({ headless: true });
 const results = [];
 try {
-  for (const cached of [false, true, true, false]) {
+  for (const cached of JSON.parse(
+    process.env.PROBE_CONDITIONS || "[false,true,true,false]",
+  )) {
     const context = await browser.newContext({
       viewport: { width: 392, height: 872 },
       deviceScaleFactor: 2.75,
@@ -45,6 +55,7 @@ try {
       hasTouch: true,
     });
     const page = await context.newPage();
+    page.on("pageerror", (e) => console.error("pageerror", e.message));
     await page.goto(`http://127.0.0.1:${cached ? 5199 : 5198}/?clearTrace=1`);
     await page.waitForFunction(
       () => document.querySelector("#phone-clear-start")?.disabled === false,
@@ -91,6 +102,30 @@ try {
       forcedStyleLayoutTotalMs: layouts.reduce((a, e) => a + e.dur / 1000, 0),
       forcedStyleLayoutMaxMs: Math.max(0, ...layouts.map((e) => e.dur / 1000)),
     };
+    record.rendererMainMetrics = Object.fromEntries(
+      [
+        "Blink.Style.UpdateTime",
+        "Document::recalcStyle",
+        "Blink.Layout.UpdateTime",
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks",
+        ].map((name) => {
+        const spans = es.filter(
+          (e) =>
+            e.ph === "X" &&
+            e.tid === marks[0].tid &&
+            e.name === name &&
+            within(e),
+        );
+        return [
+          name,
+          {
+            count: spans.length,
+            wallMs: spans.reduce((n, e) => n + e.dur / 1000, 0),
+            threadCpuMs: spans.reduce((n, e) => n + (e.tdur || 0) / 1000, 0),
+          },
+        ];
+      }),
+    );
     const d = page.waitForEvent("download");
     await page.locator("#phone-clear-export").click();
     const report = JSON.parse(
@@ -110,7 +145,8 @@ try {
   }
   await fs.mkdir("docs/qa/viewport-053", { recursive: true });
   await fs.writeFile(
-    "docs/qa/viewport-053/integrated-comparison.json",
+    process.env.PROBE_OUTPUT ||
+      "docs/qa/viewport-053/integrated-comparison.json",
     JSON.stringify(
       {
         environment:

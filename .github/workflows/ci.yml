@@ -52,7 +52,6 @@ jobs:
   android:
     env:
       APPMETRICA_TEST_API_KEY: ${{ secrets.APPMETRICA_TEST_API_KEY }}
-    needs: verify
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4

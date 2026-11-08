@@ -1,0 +1,146 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "cdpTracingActiveAcrossAllEpisodes": true,
+  "scope": "Actual scoped Atmosphere/Festival cache versus original0.52 modules; no global overrides; not a physical speed claim",
+  "results": [
+    {
+      "candidate": false,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 177,
+      "forcedStyleLayoutTotalMs": 88.575,
+      "forcedStyleLayoutMaxMs": 3.467,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 99,
+          "wallMs": 86.78400000000006,
+          "threadCpuMs": 85.48799999999999
+        },
+        "Document::recalcStyle": {
+          "count": 99,
+          "wallMs": 83.17000000000006,
+          "threadCpuMs": 82.51800000000003
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 70,
+          "wallMs": 17.587999999999997,
+          "threadCpuMs": 12.336000000000002
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 50,
+          "wallMs": 140.831,
+          "threadCpuMs": 134.38299999999998
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 50
+        }
+      ]
+    },
+    {
+      "candidate": true,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 13,
+      "forcedStyleLayoutTotalMs": 6.686000000000001,
+      "forcedStyleLayoutMaxMs": 2.098,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 63,
+          "wallMs": 78.55100000000003,
+          "threadCpuMs": 78.14000000000001
+        },
+        "Document::recalcStyle": {
+          "count": 63,
+          "wallMs": 76.04600000000003,
+          "threadCpuMs": 76.018
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 45,
+          "wallMs": 14.762000000000002,
+          "threadCpuMs": 9.946999999999997
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 50,
+          "wallMs": 57.16100000000001,
+          "threadCpuMs": 52.112
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 24,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 29,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 18,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Metrics are separate nested spans, not additive independent costs.",
+    "ProxyMain category was not collected in this CDP configuration; no idle-work inference.",
+    "One additional pair only; not a robust whole-frame or physical FPS estimate."
+  ]
+}
