@@ -118,3 +118,10 @@ Android CI подготавливает точную версиюGradle из wra
 ### Preview0.54: локальные цветовые переходы
 
 Исходники `9f4c05c005df4620913e74bbb99566970344e719`, PR CI `42472074877`, Android job `128704954967`, artifact `13613951144`. Android unit/build — success. Web CI `42470731688` на `fc69c6fc8e5a4bdc394013b93b5cca1e78a34d9c` прошёл221unit/188browser/assets:check/build; исходники app/native/test идентичны, отличаются только wrapper, подготовка CI и документация. APK versionCode54/versionName0.54.0-preview, package`com.danilah.blocky.dev`; v2-подпись совпадает с выданной0.53. Все89 production-файлов совпали с чистым dist. APK SHA-256`b7909336bb979fba04a89a06477481c622f18c4f47beeb04d84e65d14bc2a76f`. Физическая установка и выигрыш на POCO0.54 ещё не проверены. [Протокол](qa/INK_FADES_0.54_2026-11-08.md).
+
+
+### Preview 0.55: автоматическая проверка слоёв
+
+Source `1ba936c53d082107ba6ec0e630a367c858908553`; PR #1 run `42480304579`, artifact `13616968745`. 225 unit / 197 browser / Android unit+build прошли. APK versionCode 55 / versionName `0.55.0-preview`, package `com.danilah.blocky.dev`, debug. Подпись apksig v2 проверена и совпадает с 0.54: сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Все 89 production-файлов чистой сборки совпали побайтово.
+
+APK SHA-256: `2b930d150df0ca567a921e5c0fc78a7e14f775db30f342d16ad4e68630fc756e`. Устанавливать поверх 0.54 без удаления приложения. Проверка: Пауза → Ещё настройки → Диагностика → Проверить слои → Начать проверку; около 90 секунд, один `blocky-layer-result.zip`. Удержание экрана снимается при завершении, отмене и уходе в фон. Физический прогон и устранение лагов ещё не подтверждены. [Протокол и хеши](qa/LAYER_DIAGNOSTICS_0.55_2026-11-08.md).

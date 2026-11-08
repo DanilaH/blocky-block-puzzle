@@ -697,7 +697,7 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x]Проверка фактических слоёв/числа частиц/счёта; seed и ambient phase сбрасываются.
 - [x]Основные сравнения без tracing, native baseline отдельно; защита от старой трассы при отмене.
 - [x]225unit и12 целевых browser, включая полный прогон, сохранения и provenance.
-- [ ]Финальные UI/полный CI/Android/APK/подпись и доставка.
+- [x]Финальные UI, CI 225 unit / 197 browser, Android unit/build, APK55, 89 production-файлов и подпись54; APK и ZIP подготовлены для выдачи.
 - [ ]Физический результат POCO и обоснованная адресная оптимизация.
 
 [Протокол](qa/LAYER_DIAGNOSTICS_0.55_2026-11-08.md).
