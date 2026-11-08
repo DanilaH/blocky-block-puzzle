@@ -18,6 +18,23 @@ type Spark = {
   floor: number;
 };
 export class Festival {
+  private idleWaiters = new Set<() => void>();
+  waitForIdle(signal: AbortSignal): Promise<void> {
+    if (signal.aborted || (!this.sparks.length && !this.reveals.length))
+      return Promise.resolve();
+    return new Promise((resolve) => {
+      const finish = () => {
+        this.idleWaiters.delete(finish);
+        signal.removeEventListener("abort", finish);
+        resolve();
+      };
+      this.idleWaiters.add(finish);
+      signal.addEventListener("abort", finish, { once: true });
+    });
+  }
+  private notifyIdle() {
+    for (const finish of this.idleWaiters) finish();
+  }
   private diagnosticDisabled = false;
   private diagnosticRandom: (() => number) | null = null;
   private diagnosticSample: {
@@ -54,6 +71,9 @@ export class Festival {
       ...this.diagnosticSample,
       disabled: this.diagnosticDisabled,
       theme: this.theme,
+      activeParticles: this.sparks.length,
+      activeReveals: this.reveals.length,
+      idleWaiters: this.idleWaiters.size,
       canvas: [this.canvas.width, this.canvas.height],
     };
   }
@@ -413,6 +433,7 @@ export class Festival {
     if (!this.sparks.length && !this.reveals.length) {
       this.frame?.();
       this.frame = null;
+      this.notifyIdle();
     }
     if (!this.frame) g.clearRect(0, 0, this.width, this.height);
   }
@@ -423,6 +444,7 @@ export class Festival {
     this.reveals = [];
     this.rear.replaceChildren();
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.notifyIdle();
   }
 }
 export class MusicalChain {

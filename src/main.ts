@@ -1,3 +1,8 @@
+import type {
+  ClearPresentation,
+  ClearRun,
+  PresentationEffect,
+} from "./game/clear-presentation";
 import { readRenderInfo } from "./platform/render-info";
 import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
@@ -94,7 +99,24 @@ async function start() {
   const phoneTrace =
     APP_VERSION.endsWith("-preview") &&
     (traceRequest === "1" || traceRequest === "layers");
-  const phoneLayers = phoneTrace && traceRequest === "layers";
+  const clearLab =
+    import.meta.env.DEV && new URLSearchParams(location.search).has("clearLab");
+  const stagedClears =
+    import.meta.env.DEV &&
+    new URLSearchParams(location.search).get("clearPresentation") === "staged";
+  const phoneLayers = phoneTrace && (traceRequest === "layers" || clearLab);
+  let clearPresentation: ClearPresentation | null = null;
+  function currentRevealVariant() {
+    return clearLab && new URLSearchParams(location.search).has("variant")
+      ? Math.max(
+          0,
+          Math.min(
+            2,
+            Number(new URLSearchParams(location.search).get("variant")) || 0,
+          ),
+        )
+      : (store.state.wardrobe?.discoveries ?? 1) % 3;
+  }
   let diagnosticLayer: ClearLayer | null = null;
   let diagnosticRewardDom = 0;
   const freshRewardEffects = () => ({
@@ -233,6 +255,8 @@ async function start() {
   let themeRevealGeneration = 0;
   function presentationTheme() {
     if (phoneLayers && diagnosticLayer?.freezeTheme) return 1;
+    if (clearPresentation?.heldTheme != null)
+      return clearPresentation.heldTheme;
     if (heldTheme !== null) return heldTheme;
     const params = new URLSearchParams(location.search);
     return import.meta.env.DEV && params.has("themeSeries")
@@ -282,6 +306,7 @@ async function start() {
   let rewardHoldUntil = 0;
   let pendingPoints = 0;
   const rewards = new Map<HTMLElement, () => void>();
+  const notices = new Map<HTMLElement, () => void>();
   let resultTimer = 0,
     resultPending = false;
   let resultFeedbackTimer = 0;
@@ -347,7 +372,25 @@ async function start() {
     a.onfinish = a.oncancel = () => cosmetic.delete(a);
     return a;
   }
+  if (stagedClears) {
+    const { ClearPresentation } = await import("./game/clear-presentation");
+    clearPresentation = new ClearPresentation({
+      gameId: () => currentGame().gameId,
+      blocked: () => !running || document.hidden,
+      busy: () => !!drag || movePending,
+      reveal: () => {
+        render(running);
+        audio.play("theme", currentRevealVariant());
+      },
+      changed: () => {
+        root.dataset.clearPhase = clearPresentation?.snapshot().phase ?? "idle";
+      },
+    });
+    (window as any).__blockyClearPresentation = clearPresentation;
+  }
   function stopCosmetics() {
+    const restoreStagedTheme = clearPresentation?.heldTheme != null;
+    clearPresentation?.cancel();
     finishResultPresentation();
     heldTheme = null;
     themeRevealGeneration++;
@@ -361,6 +404,8 @@ async function start() {
     scoreShown = scoreTarget;
     el("score").textContent = scoreTarget.toLocaleString("ru");
     paintBest();
+    notices.forEach((finish) => finish());
+    notices.clear();
     document.querySelectorAll(".hud-notice").forEach((n) => n.remove());
     cosmetic.forEach((a) => a.cancel());
     cosmetic.clear();
@@ -369,6 +414,10 @@ async function start() {
     rewardHoldUntil = 0;
     el("burst").textContent = "";
     scene.stopEffects();
+    if (restoreStagedTheme) {
+      render(false);
+      root.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+    }
   }
   store.onBusyChange = syncSaving;
   const activity = new GameplayActivityCoordinator(
@@ -698,18 +747,26 @@ async function start() {
       tileMaterialForTheme(nextTheme),
       tileTransitionDuration(scene.calm, nextTheme),
     );
-    festival.setPalette(nextTheme);
+    festival.setPalette(clearPresentation?.rewardTheme ?? nextTheme);
     if (
       themeGame === g.gameId &&
       themeKey !== nextKey &&
       running &&
       !inLesson()
     ) {
-      later(() => {
-        presentHudNotice("theme", THEMES[nextTheme]!.name.toUpperCase());
+      const showTheme = () => {
+        const effect = presentHudNotice(
+          "theme",
+          THEMES[nextTheme]!.name.toUpperCase(),
+        );
         atmosphere.impulse(1.5);
         if (phoneLayers) diagnosticRewardEffects.themeImpulses++;
-      }, 450);
+        return effect;
+      };
+      const themeRun = clearPresentation?.themeRun;
+      if (themeRun && themeRun.gameId === g.gameId)
+        themeRun.after(450, showTheme);
+      else later(showTheme, 450);
     }
     if (themeGame !== g.gameId) {
       lastPraiseMove = -5;
@@ -866,6 +923,7 @@ async function start() {
   function cancelDrag() {
     clearDragFrame();
     drag = null;
+    queueMicrotask(() => clearPresentation?.flush());
     currentMove = null;
     selected = null;
     floating.getAnimations().forEach((a) => a.cancel());
@@ -978,7 +1036,7 @@ async function start() {
       const event = outcome.result!;
       if (!practicing) playCapture.record(before, move, event.state);
       const signature = clearSignature(event.cells);
-      const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
+      const revealVariant = currentRevealVariant();
       const newRecord =
         !practicing &&
         !recordCelebrated &&
@@ -1015,7 +1073,14 @@ async function start() {
           : 0;
       atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
-      if (event.allClear && running && !scene.calm) {
+      let clearRun: ClearRun | null = null;
+      if (event.allClear && running && !scene.calm && clearPresentation) {
+        clearRun = clearPresentation.begin(
+          event.state.gameId,
+          previousTheme,
+          store.state.wardrobe?.selected ?? 0,
+        );
+      } else if (event.allClear && running && !scene.calm) {
         heldTheme = previousTheme;
         const generation = ++themeRevealGeneration;
         later(() => {
@@ -1219,7 +1284,7 @@ async function start() {
           presentReward("place", "", event.points - event.seriesBonus, anchor);
         else {
           const linePoints = event.breakdown.lines + event.breakdown.combo;
-          presentReward(
+          const lineEffect = presentReward(
             event.lines >= 2 ? "combo" : "line",
             `${lineName}${event.state.streak > 1 ? (event.state.scoringVersion ? ` ×${comboMultiplier(event.state.streak, event.state.scoringVersion === "festival-v4").toLocaleString("ru")}` : ` · Серия ${event.state.streak}`) : ""}`,
             linePoints,
@@ -1228,56 +1293,75 @@ async function start() {
             event.state.streak,
             event.state.gameId,
           );
+          clearRun?.track(lineEffect);
           if (event.allClear) {
-            later(
-              () => {
-                presentReward(
-                  "all-clear",
-                  "Чистое поле!",
-                  event.breakdown.empty,
-                  { x: 50, y: 52 },
-                  deferred ? event.breakdown.empty : 0,
-                  event.state.streak,
-                  event.state.gameId,
-                );
-                haptics.pulse(
-                  ["empty", "bloom", "rain"][
-                    (store.state.wardrobe?.discoveries ?? 1) % 3
-                  ]!,
-                );
-                audio.play("theme", revealVariant);
-                if (!scene.calm)
-                  festival.burst(
-                    canvasBox.getBoundingClientRect(),
-                    [],
-                    event.lines,
-                    true,
-                    false,
-                    undefined,
-                    110,
-                    revealVariant,
-                  );
-              },
-              scene.calm ? 0 : 650,
-            );
-          }
-        }
-        if (newRecord)
-          later(
-            () => {
-              presentHudNotice("record", "Новый рекорд!");
-              haptics.pulse("record");
+            const launchAllClear = (): PresentationEffect => {
+              clearRun?.celebrationStarted();
+              if (clearRun)
+                festival.setPalette(store.state.wardrobe?.selected ?? 0);
+              const caption = presentReward(
+                "all-clear",
+                "Чистое поле!",
+                event.breakdown.empty,
+                { x: 50, y: 52 },
+                deferred ? event.breakdown.empty : 0,
+                event.state.streak,
+                event.state.gameId,
+              );
+              haptics.pulse(["empty", "bloom", "rain"][revealVariant]!);
+              audio.play("theme", revealVariant);
               if (!scene.calm)
                 festival.burst(
                   canvasBox.getBoundingClientRect(),
-                  event.cells,
-                  1,
-                  false,
+                  [],
+                  event.lines,
                   true,
+                  false,
+                  undefined,
+                  110,
+                  revealVariant,
                 );
-            },
-            event.allClear ? 1400 : 600,
-          );
+              const finished = Promise.all([
+                caption?.finished ?? Promise.resolve(),
+                clearRun
+                  ? festival.waitForIdle(clearRun.signal)
+                  : Promise.resolve(),
+              ]).then(() => {});
+              return {
+                finished,
+                cancel: () => {
+                  caption?.cancel();
+                  if (clearRun) festival.stop();
+                },
+              };
+            };
+            if (clearRun)
+              clearRun.after(650, launchAllClear, () =>
+                settleRewardPoints(
+                  deferred ? event.breakdown.empty : 0,
+                  event.state.gameId,
+                ),
+              );
+            else later(launchAllClear, scene.calm ? 0 : 650);
+          }
+        }
+        if (newRecord) {
+          const showRecord = () => {
+            const effect = presentHudNotice("record", "Новый рекорд!");
+            haptics.pulse("record");
+            if (!scene.calm)
+              festival.burst(
+                canvasBox.getBoundingClientRect(),
+                event.cells,
+                1,
+                false,
+                true,
+              );
+            return effect;
+          };
+          if (clearRun) clearRun.after(1400, showRecord);
+          else later(showRecord, event.allClear ? 1400 : 600);
+        }
         if (newRecord || event.allClear)
           rewardHoldUntil = Math.max(
             rewardHoldUntil,
@@ -1307,7 +1391,9 @@ async function start() {
             ),
           );
       }
+      clearRun?.seal();
     } catch (error) {
+      clearPresentation?.cancel();
       await writeFailure(
         error,
         "Не удалось сохранить ход. Попробуйте ещё раз.",
@@ -1315,6 +1401,7 @@ async function start() {
       render();
     } finally {
       movePending = false;
+      clearPresentation?.flush();
       scene.pendingPlacement([]);
       canvasBox.removeAttribute("aria-busy");
     }
@@ -1322,7 +1409,7 @@ async function start() {
   function presentHudNotice(
     tier: "record" | "theme" | "series-end",
     text: string,
-  ) {
+  ): PresentationEffect | undefined {
     if (
       phoneLayers &&
       (diagnosticLayer?.skipRewardDom ||
@@ -1336,7 +1423,11 @@ async function start() {
         ? document.querySelector(".best")!
         : document.querySelector(".board-wrap")!;
     // One notice per destination; no queue grows during a long series.
-    host.querySelector(".hud-notice")?.remove();
+    const previous = host.querySelector<HTMLElement>(".hud-notice");
+    if (previous) {
+      notices.get(previous)?.();
+      previous.remove();
+    }
     const node = document.createElement("span");
     node.className = "hud-notice";
     node.dataset.tier = tier;
@@ -1354,7 +1445,20 @@ async function start() {
       ],
       duration,
     )?.effect?.updateTiming({ easing: "linear" });
-    later(() => node.remove(), duration);
+    let resolve!: () => void;
+    const finished = new Promise<void>((done) => {
+      resolve = done;
+    });
+    const finish = () => {
+      if (!notices.delete(node)) return;
+      clearTimeout(timer);
+      node.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      node.remove();
+      resolve();
+    };
+    notices.set(node, finish);
+    const timer = window.setTimeout(finish, duration);
+    return { finished, cancel: finish };
   }
   function settleRewardPoints(deferred: number, gameId: string) {
     if (gameId !== currentGame().gameId) return;
@@ -1370,7 +1474,7 @@ async function start() {
     deferred = 0,
     streak = 0,
     gameId = currentGame().gameId,
-  ) {
+  ): PresentationEffect | undefined {
     const important =
       tier === "record" || tier === "all-clear" || tier === "series";
     if (phoneLayers && diagnosticLayer?.skipRewardDom) {
@@ -1477,6 +1581,10 @@ async function start() {
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
+    let resolve!: () => void;
+    const finished = new Promise<void>((done) => {
+      resolve = done;
+    });
     let settled = false;
     const settle = () => {
       if (settled) return;
@@ -1484,11 +1592,13 @@ async function start() {
       settleRewardPoints(deferred, gameId);
     };
     const finish = () => {
+      if (!rewards.has(node)) return;
       timerIds.forEach(clearTimeout);
       settle();
       node.getAnimations({ subtree: true }).forEach((a) => a.cancel());
       node.remove();
       rewards.delete(node);
+      resolve();
     };
     rewards.set(node, finish);
     if (rewards.size > 3) {
@@ -1605,6 +1715,7 @@ async function start() {
         ),
       );
     timerIds.push(window.setTimeout(finish, duration));
+    return { finished, cancel: finish };
   }
   function locate(event: PointerEvent, slot: number, touch: boolean): Move {
     const rect = drag?.rect ?? canvasBox.getBoundingClientRect(),
@@ -1756,6 +1867,7 @@ async function start() {
       ) > 7;
     const move = locate(event, previous.slot, previous.touch);
     drag = null;
+    queueMicrotask(() => clearPresentation?.flush());
     floating.hidden = true;
     if (previous.moved) {
       selected = null;
@@ -2845,7 +2957,7 @@ async function start() {
   }
   render();
   if (traceModule) {
-    await traceModule.installPhoneClear({
+    const phoneHooks: Parameters<typeof traceModule.installPhoneClear>[0] = {
       ready: () => rendererReady,
       context: () => readRenderInfo(phaser!),
       configure: (condition) => {
@@ -2867,6 +2979,7 @@ async function start() {
         festival.setDiagnosticSeed(0x5120cafe);
       },
       beginSample: () => {
+        clearPresentation?.beginSample();
         if (!phoneLayers) return;
         diagnosticRewardDom = 0;
         diagnosticRewardEffects = freshRewardEffects();
@@ -2897,6 +3010,9 @@ async function start() {
         game: currentGame(),
         wardrobe: store.state.wardrobe,
         rewardRenderer: "dom" as const,
+        ...(clearPresentation
+          ? { clearPresentation: clearPresentation.snapshot() }
+          : {}),
         ...(phoneLayers
           ? {
               proof: {
@@ -2917,7 +3033,78 @@ async function start() {
           : {}),
       }),
       pause: (paused) => activity.setBlocked("clear-trace", paused),
-    });
+    };
+    await traceModule.installPhoneClear(phoneHooks);
+    if (clearLab) {
+      const { BASELINE_LAYER } = await import("./diagnostics/clear-layers");
+      phoneHooks.configure?.(BASELINE_LAYER);
+      (window as any).__blockyClearLab = {
+        async prepare(options: { record?: boolean } = {}) {
+          document.getElementById("phone-clear-panel")!.style.display = "none";
+          phoneHooks.pause(true);
+          await phoneHooks.reset();
+          if (options.record)
+            await store.update((p) => ({
+              ...p,
+              revision: p.revision + 1,
+              best: 140,
+              festivalBest: 140,
+              progressionBest: 140,
+            }));
+          visibleBestFloor = bestFor(store.state);
+          render();
+          phoneHooks.pause(false);
+        },
+        begin: () => {
+          phoneHooks.beginSample?.();
+          performanceCapture.start(phoneHooks.context());
+          performanceCapture.setActive(true);
+        },
+        commit: phoneHooks.commit,
+        state: () => ({
+          ...phoneHooks.state(),
+          context: phoneHooks.context(),
+          resources: {
+            rewards: rewards.size,
+            notices: notices.size,
+            animations: cosmetic.size,
+            timers: festivalTimers.size,
+            scoreFrame: !!scoreFrame,
+            nativeAnimations: root.getAnimations({ subtree: true }).length,
+          },
+        }),
+        stop: () => {
+          performanceCapture.setActive(false);
+          return performanceCapture.snapshot();
+        },
+        pause: phoneHooks.pause,
+        place: (move: Move) => commit(move, currentGame().revision),
+        async nextClear() {
+          await store.update((p) => ({
+            ...p,
+            revision: p.revision + 1,
+            game: {
+              ...structuredClone(traceModule.phoneFixture.before),
+              gameId: p.game.gameId,
+              revision: p.game.revision + 1,
+              score: p.game.score,
+              streak: p.game.streak,
+            },
+          }));
+          render();
+          await commit(traceModule.phoneFixture.move, currentGame().revision);
+        },
+        async newGame() {
+          stopCosmetics();
+          await store.update((p) => ({
+            ...p,
+            revision: p.revision + 1,
+            game: fresh(),
+          }));
+          render();
+        },
+      };
+    }
   }
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (
