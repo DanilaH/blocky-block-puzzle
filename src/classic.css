@@ -1,4 +1,9 @@
 /* Classic presentation. Campaign keeps its existing enamel surfaces and geometry. */
+/* Palette fades belong to the existing text/icon selectors, not every
+   descendant of the game tree (tiles, canvas and structural containers). */
+:root[data-presentation="classic"] #app {
+  transition: none;
+}
 :root[data-presentation="classic"] body::before {
   display: none;
 }

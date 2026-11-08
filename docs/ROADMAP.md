@@ -681,3 +681,10 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Механизм viewport cache подтверждён; полное устранение лагов не принято.
 - [x] CSS-ablation общего наследуемого перехода цвета: Blink.Style.UpdateTime76→46–48мс в mobile-эмуляции, без изменения исходников игры.
 - [ ] Локализовать fades на видимых надписях с визуальной проверкой; отдельно проверить оставшиеся graphics waits. [Разбор](qa/PHONE_TRACE_FINDINGS_0.53_2026-11-08.md).
+
+### Локальные цветовые переходы0.54 — 08.11.2026
+
+- [x] Classic root transition убран; локальные fades/Adventure сохранены. Native trace output cap64MiB.
+- [x]221unit/build/assets,11browser;20 сравнений видимых цветов/геометрии на5фазах и4экранах.
+- [ ] Полный CI/Android и проверка APK54/подписи53.
+- [ ] Физический POCO: общая стоимость стилей/кадры/native waits. [Протокол](qa/INK_FADES_0.54_2026-11-08.md).

@@ -43,7 +43,7 @@ public class BlockyTracePlugin extends Plugin {
     result.put("bytes", bytes); result.put("error", error); result.put("reason", reason);
     result.put("categories", "ANDROID_WEBVIEW|JAVASCRIPT_AND_RENDERING|blink.user_timing");
     result.put("mode", "RECORD_UNTIL_FULL"); result.put("maxDurationMs", 25000);
-    result.put("maxOutputBytes", 32 * 1024 * 1024);
+    result.put("maxOutputBytes", 64 * 1024 * 1024);
     return result;
   }
   @PluginMethod public void start(PluginCall call) { ui.post(() -> {
@@ -81,7 +81,7 @@ public class BlockyTracePlugin extends Plugin {
     if (!owned || Build.VERSION.SDK_INT < 28) return;
     owned = false; flushing = true; reason = why; ui.removeCallbacks(timeout);
     try {
-      BoundedTraceStream output = new BoundedTraceStream(new FileOutputStream(trace), 32L * 1024 * 1024) {
+      BoundedTraceStream output = new BoundedTraceStream(new FileOutputStream(trace), 64L * 1024 * 1024) {
         @Override public void close() throws IOException {
           String failure = "";
           try { super.close(); } catch (IOException e) { failure = "write-failed"; }
