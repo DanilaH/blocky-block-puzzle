@@ -44,12 +44,13 @@ def analyze(path):
     report = json.loads(parts['report.json'])
     native = json.loads(parts['native-status.json'])
     trace = json.loads(parts['webview-trace.json'])
-    assert report['schema'] == 'blocky-phone-layers-v2'
+    v3 = report['schema'] == 'blocky-phone-layers-v3'
+    assert report['schema'] in ['blocky-phone-layers-v2', 'blocky-phone-layers-v3']
     assert report['completed'] and not report['interrupted'] and report['screenAwake']
-    assert report['appVersion'] == '0.56.0-preview'
+    assert report['appVersion'] == ('0.57.0-preview' if v3 else '0.56.0-preview')
     assert not report['protocol']['functionalOnly']
     assert report['protocol']['measurementMs'] == 2400
-    assert len(report['episodes']) == 20
+    assert len(report['episodes']) == (18 if v3 else 20)
     assert native == report['trace'] and native['ready'] and not native['recording']
     assert native['error'] == '' and native['captureId']
     assert native['bytes'] == len(parts['webview-trace.json'])
@@ -58,7 +59,7 @@ def analyze(path):
     for episode in report['episodes']:
         condition = episode['condition']
         proof = episode['state']['proof']
-        raster = episode['state']['rewardRasters']
+        raster = episode['state'].get('rewardRasters')
         context = episode['sample']['context']
         measured = metrics(episode['sample'])
         assert episode['validation'] == {'valid': True, 'errors': []}
@@ -73,17 +74,40 @@ def analyze(path):
             assert (proof[name]['draws'] == 0) == condition[flag]
         assert proof['festival']['spawned'] == (0 if condition['skipFestival'] else 148)
         assert proof['festival']['bursts'] == (0 if condition['skipFestival'] else 2)
-        assert proof['rewardDomCreated'] == (0 if condition['skipRewardDom'] else 2 if condition['freezeTheme'] else 3)
-        assert raster == proof['rewardRasters'] and raster['fallbacks'] == 0
-        assert raster['prepared'] == (0 if condition['skipRewardDom'] or condition['legacyRewardText'] else 4)
-        assert raster['clockActive'] is False and raster['bytes'] <= 28 * 1024 * 1024
+        no_notice = condition['freezeTheme'] or (v3 and condition['skipThemeNotice'])
+        assert proof['rewardDomCreated'] == (0 if condition['skipRewardDom'] else 2 if no_notice else 3)
+        if not v3:
+            assert raster == proof['rewardRasters'] and raster['fallbacks'] == 0
+            assert raster['prepared'] == (0 if condition['skipRewardDom'] or condition['legacyRewardText'] else 4)
+            assert raster['clockActive'] is False and raster['bytes'] <= 28 * 1024 * 1024
+        else:
+            expected_flag = {'baseline': None, 'no-hud-flashes': 'skipHudFlashes',
+                             'no-reward-decoration': 'skipRewardDecoration', 'no-dom-palette': 'freezeDomPalette',
+                             'no-theme-notice': 'skipThemeNotice', 'no-reward-dom': 'skipRewardDom',
+                             'no-theme': 'freezeTheme'}[condition['id']]
+            assert {k for k, value in condition.items() if value is True} == ({expected_flag} if expected_flag else set())
+            assert raster is None and episode['state']['rewardRenderer'] == proof['rewardRenderer'] == 'dom'
+            theme = 1 if condition['freezeTheme'] else 5
+            palette = 1 if condition['freezeDomPalette'] else theme
+            assert all(proof[name]['theme'] == theme for name in ['scene', 'atmosphere', 'festival'])
+            assert proof['atmosphere']['domPaletteTheme'] == palette
+            colors = {1: dict(bg='#f4f3ee', ink='#325376', accent='#72a8ec'),
+                      5: dict(bg='#233f57', ink='#f2f4f7', accent='#a5e8ef')}
+            assert proof['atmosphere']['domPalette'] == colors[palette]
+            omit = condition['skipRewardDom']
+            assert proof['rewardEffects'] == dict(
+                captionAnimations=0 if omit or condition['skipRewardDecoration'] else 2,
+                visibleEmblems=0, pointFlights=0 if omit else 2,
+                hudFlashes=0 if omit or condition['skipHudFlashes'] else 2,
+                themeNotices=0 if omit or no_notice else 1,
+                themeImpulses=0 if condition['freezeTheme'] else 1)
         current_geometry = [context['canvas'], proof['festival']['canvas'], proof['atmosphere']['canvas']]
         if geometry is None:
             geometry = current_geometry
         assert geometry == current_geometry
         if episode['phase'] == 'comparison':
             assert not episode['traceActive']
-            if raster['prepared']:
+            if raster and raster['prepared']:
                 hot.append(raster)
         else:
             assert episode['traceActive'] == (episode['phase'] == 'trace')
@@ -98,7 +122,16 @@ def analyze(path):
                          renderedTheme=proof['renderedTheme'], savedTheme=proof['savedTheme'],
                          shownScore=proof['shownScore'], pendingPoints=proof['pendingPoints'],
                          spawnedFestival=proof['festival']['spawned'], valid=True))
+        if v3:
+            rows[-1].update(rewardRenderer=proof['rewardRenderer'], rewardEffects=proof['rewardEffects'],
+                            rendererTheme=proof['scene']['theme'], atmosphereTheme=proof['atmosphere']['theme'],
+                            festivalTheme=proof['festival']['theme'], domPalette=proof['atmosphere']['domPalette'],
+                            domPaletteTheme=proof['atmosphere']['domPaletteTheme'])
     comparisons = []
+    if v3:
+        series = [[e['condition'] for e in rows if e['phase'] == 'comparison' and e['round'] == r] for r in [0, 1]]
+        assert all(len(s) == 8 and s[0] == s[-1] == 'baseline' for s in series)
+        assert series[0][1:-1] == list(reversed(series[1][1:-1]))
     for entry in report['summary']['rows']:
         computed_rounds = []
         for round_index in [0, 1]:
@@ -146,7 +179,7 @@ def analyze(path):
                 if re.search(r'pars.*error|packet_loss|dataloss|lost|overwrit|discard|overrun|abi_violations|patches_failed|readaheads_failed', key)}
     assert len(counters) >= 25 and all(v == 0 for v in counters.values())
     clean_context = {k: v for k, v in report['episodes'][1]['sample']['context'].items() if k != 'userAgent'}
-    return dict(sourceVersion=report['appVersion'], sourceCommit='561b6efd846d728c53397f74171d1af495c12c0e',
+    return dict(sourceVersion=report['appVersion'], sourceCommit='585c4225f8e4355db2b7abb2950da64f6a84dcb4' if v3 else '561b6efd846d728c53397f74171d1af495c12c0e',
                 sourceCommitBasis='Delivered APK verification, not embedded in report',
                 inputZipSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                 memberSha256={k: hashlib.sha256(v).hexdigest() for k, v in parts.items()},
@@ -161,17 +194,17 @@ def analyze(path):
                                           maxSinglePrepareMs=max(r['maxPrepareMs'] for r in hot),
                                           copyMedianMs=statistics.median(r['copyMs'] for r in hot),
                                           peakEstimatedRgbaBytes=max(r['peakBytes'] for r in hot),
-                                          allCacheHits15Misses0=all(r['cacheHits'] == 15 and r['cacheMisses'] == 0 for r in hot)),
+                                          allCacheHits15Misses0=all(r['cacheHits'] == 15 and r['cacheMisses'] == 0 for r in hot)) if hot else None,
                 nativeTraceBytes=len(parts['webview-trace.json']), nativeTraceEvents=len(events),
                 currentCaptureConfirmed=True, genericMarkDeltasMs=deltas,
                 markMapping='Inferred start/committed/end from order/duration; names anonymized',
                 parserAndBufferLossCounters=counters, nativeWindows=windows,
-                conclusion='Reward raster optimization not accepted: no consistent same-capture advantage over legacy text',
+                conclusion='None of four narrow ablations meets target in both orders; broad reward/theme effects remain' if v3 else 'Reward raster optimization not accepted: no consistent same-capture advantage over legacy text',
                 limitations=['One device/capture, two reversed passes; no temperature/frequency telemetry',
-                             'Whole reward ablation includes emblem, label, flight, HUD notices and flashes',
-                             'No-theme freezes all presentation palettes and also omits the theme notice',
+                             'Whole reward ablation omits captions, flights, HUD notices and flashes; Classic emblems are already hidden' if v3 else 'Whole reward ablation includes emblem, label, flight, HUD notices and flashes',
+                             'No-theme freezes all presentation palettes and omits theme notice and impulse' if v3 else 'No-theme freezes all presentation palettes and also omits the theme notice',
                              'Native tracing is final baseline only; category wall spans overlap and cannot be added',
-                             'Comparison to 0.55 is cross-session; does not isolate the Classic CSS change'])
+                             'No standalone flight or theme-impulse ablation; interactions are not identified' if v3 else 'Comparison to 0.55 is cross-session; does not isolate the Classic CSS change'])
 
 
 if __name__ == '__main__':
