@@ -1,4 +1,5 @@
 import { performanceCapture } from "../platform/performance";
+import { BoardBackdrop } from "./board-backdrop";
 import { RasterInk, SpriteInk, prepareEnergyBorder } from "./sprite-ink";
 import { cacheTileURL } from "./tiles";
 import {
@@ -44,6 +45,7 @@ export class BoardScene extends Phaser.Scene {
   private bed?: Phaser.GameObjects.Graphics | RasterInk;
   private bedColor = -1;
   private bedKey = "";
+  private backdrop?: BoardBackdrop;
   private wells: Phaser.GameObjects.Image[] = [];
   private dirty = true;
   private ink!: Phaser.GameObjects.Graphics | SpriteInk;
@@ -93,10 +95,11 @@ export class BoardScene extends Phaser.Scene {
     this.accent = color;
     this.themeAt = performance.now();
     if (this.presentation === "classic" && this.game?.canvas) {
-      const board = this.game.canvas.parentElement!;
-      board.style.transition = `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
-      board.style.backgroundColor =
-        "#" + this.shade.toString(16).padStart(6, "0");
+      this.backdrop?.set(
+        this.fromShade,
+        this.shade,
+        tileTransitionDuration(this.calm, index),
+      );
     }
     this.study?.setMaterial(
       tileMaterialForTheme(index),
@@ -179,14 +182,8 @@ export class BoardScene extends Phaser.Scene {
     this.syncResolution();
     if (this.presentation === "classic") {
       const board = this.game.canvas.parentElement!;
-      board.dataset.staticBoard = "true";
-      this.events.once("shutdown", () => {
-        delete board.dataset.staticBoard;
-        board.style.removeProperty("background-color");
-        board.style.removeProperty("transition");
-      });
-      board.style.backgroundColor =
-        "#" + this.shade.toString(16).padStart(6, "0");
+      this.backdrop = new BoardBackdrop(board, this.shade);
+      this.events.once("shutdown", () => this.backdrop?.destroy());
     }
     this.vfx = new VfxSprites(this);
     this.events.once("shutdown", () => this.vfx?.destroy());
@@ -371,6 +368,7 @@ export class BoardScene extends Phaser.Scene {
     this.impacts = this.impacts.slice(-4);
   }
   stopEffects() {
+    this.backdrop?.finish();
     this.pending = [];
     this.praiseHit = null;
     this.previewEcho = null;

@@ -4,6 +4,25 @@
 :root[data-presentation="classic"] #app {
   transition: none;
 }
+/* Two cached opaque beds share the same repeating grid. Only opacity changes
+   during the fade; the live game canvas stays in front of both. */
+#board[data-composited-bed="true"] {
+  position: relative;
+  transition: none;
+}
+.board-previous-bed {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+#board[data-composited-bed="true"] canvas {
+  position: relative;
+}
 :root[data-presentation="classic"] body::before {
   display: none;
 }
@@ -139,5 +158,17 @@
   outline-offset: 2px;
 }
 
-.pause-tools {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
-.pause-tools a {display:flex;align-items:center;justify-content:center;text-decoration:none;min-height:48px;grid-column:1 / -1;}
+.pause-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+.pause-tools a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-height: 48px;
+  grid-column: 1 / -1;
+}
