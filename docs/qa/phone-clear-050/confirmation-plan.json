@@ -1,0 +1,25 @@
+{
+  "candidates": [
+    "cached border + flat wash",
+    "cached border + flat wash + VFX atlas"
+  ],
+  "fixtures": [
+    1574,
+    2298,
+    19470
+  ],
+  "knownAppearance": [
+    true,
+    false,
+    false
+  ],
+  "history": "Newest fixture includes preceding line-clear contribution to Celebration at recorded relative time. Other prior presentation history unavailable. Old fixtures use controlled 0\u21925 theme and reveal variant 2.",
+  "rounds": 3,
+  "repeats": 2,
+  "reverseOnOddRounds": true,
+  "gate": ">=10% reduction of median warm count >25ms on EACH fixture; paired warm count <=baseline+2 for each round; cold median <=baseline+2. Logical results unchanged. Pixel max<=3/255 and mean<0.05/255. Physical Android acceptance separate.",
+  "sourceHashes": {
+    "scripts/audit-performance-probe.mjs": "292db80c82b9dd58f4bcd2989ffedaa5ae2a22f3390e0d23a01ca4873e6959e3",
+    "scripts/performance-probe/browser.mjs": "051dddfa59bbc19bc6b94ac448ef6c4951deb93302e0a23de44f1d090ef67757"
+  }
+}

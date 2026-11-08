@@ -35,6 +35,13 @@ export function installProbe({ BoardScene }) {
       if (!Object.hasOwn(proto, name)) continue;
       const original = proto[name];
       proto[name] = function (...args) {
+        if (
+          name === "compileShader" &&
+          this.getShaderSource(args[0])?.includes(
+            "if (fragColor.a <= 0.0) discard;",
+          )
+        )
+          probe.discardShaderCompiled = true;
         const target = probe.current;
         const counts = target ? target.gl : probe.bootGL;
         counts[name] = (counts[name] || 0) + 1;
@@ -102,18 +109,30 @@ export function installProbe({ BoardScene }) {
   // with the same color/alpha/geometry and display-list position as its Image.
   const fillRect = SpriteInk.prototype.fillRect;
   SpriteInk.prototype.fillRect = function (x, y, w, h) {
-    const previous = this.imageCursor;
-    const result = fillRect.call(this, x, y, w, h);
     if (
-      window.__probeOptions.flatWash &&
+      window.__probeOptions.noWash &&
       x === 0 &&
       y === 0 &&
       w === 512 &&
-      h === 512 &&
+      h === 512
+    )
+      return this;
+    const previous = this.imageCursor;
+    const result = fillRect.call(this, x, y, w, h);
+    if (this.useFlatWash) return result;
+    if (
+      (window.__probeOptions.flatAll ||
+        (window.__probeOptions.flatWash &&
+          x === 0 &&
+          y === 0 &&
+          w === 512 &&
+          h === 512)) &&
       this.imageCursor > previous
     ) {
       const sprite = this.images[this.imageCursor - 1];
-      const wash = this.scene.__flatWash;
+      const wash = window.__probeOptions.flatAll
+        ? this.scene.__flatRects[this.imageCursor - 1]
+        : this.scene.__flatWash;
       if (wash) {
         sprite.setVisible(false);
         wash
@@ -132,16 +151,22 @@ export function installProbe({ BoardScene }) {
     }
     return result;
   };
+  const strokeRoundedRect = SpriteInk.prototype.strokeRoundedRect;
+  SpriteInk.prototype.strokeRoundedRect = function (x, y, w, h, r) {
+    if (window.__probeOptions.noPerimeters && w > 400 && h > 400) return this;
+    return strokeRoundedRect.call(this, x, y, w, h, r);
+  };
   const clearInk = SpriteInk.prototype.clear;
   SpriteInk.prototype.clear = function () {
     this.scene.__flatWash?.setVisible(false);
+    this.scene.__flatRects?.forEach((r) => r.setVisible(false));
     return clearInk.call(this);
   };
   const create = BoardScene.prototype.create;
   BoardScene.prototype.create = function (...args) {
     const result = create.apply(this, args);
     probe.scene = this;
-    prepareEnergyBorder(this);
+    if (!window.__probeOptions.oldEnergyBorder) prepareEnergyBorder(this);
     if (window.__probeOptions.tightInk) {
       const texture = this.textures.get("board-primitives");
       const canvas = texture.getSourceImage();
@@ -221,12 +246,20 @@ export function installProbe({ BoardScene }) {
       atlas.refresh();
       this.__vfxAtlas = true;
     }
-    if (window.__probeOptions.flatWash)
+    if (window.__probeOptions.flatWash && !this.ink.useFlatWash)
       this.__flatWash = this.add
         .rectangle(0, 0, 512, 512, 0xffffff)
         .setOrigin(0)
         .setDepth(1)
         .setVisible(false);
+    if (window.__probeOptions.flatAll)
+      this.__flatRects = Array.from({ length: 512 }, () =>
+        this.add
+          .rectangle(0, 0, 1, 1, 0xffffff)
+          .setOrigin(0)
+          .setDepth(1)
+          .setVisible(false),
+      );
     const game = this.game;
     if (window.__probeOptions.noRender)
       game.scene.render = function () {
@@ -309,6 +342,12 @@ export function installProbe({ BoardScene }) {
       maxTextures: renderer.maxTextures,
       maxParallelTextureUnits: renderer.renderNodes?.maxParallelTextureUnits,
       canvas: [game.canvas.width, game.canvas.height],
+      camera: {
+        width: scene.cameras.main.width,
+        height: scene.cameras.main.height,
+        zoom: scene.cameras.main.zoom,
+      },
+      flatWashIntegrated: !!scene.ink.useFlatWash,
       glAttributes: gl?.getContextAttributes(),
       glRenderer: gl?.getParameter(
         extension ? extension.UNMASKED_RENDERER_WEBGL : gl.RENDERER,
@@ -333,6 +372,7 @@ export function installProbe({ BoardScene }) {
       discardAdditionEnabled: !!renderer.renderNodes
         .getNode("BatchHandlerQuad")
         .programManager.getAddition("ProbeDiscardZero"),
+      discardShaderCompiled: !!probe.discardShaderCompiled,
     };
   };
   probe.run = async function (kind, duration = 2200) {
@@ -380,6 +420,13 @@ export function installProbe({ BoardScene }) {
 export function attachRuntime(runtime) {
   const probe = window.__perfProbe;
   probe.runtime = runtime;
+  if (window.__probeOptions.noDomMaterial) runtime.tileMaterials.set = () => {};
+  if (window.__probeOptions.noFieldTheme) runtime.scene.setTheme = () => {};
+  if (window.__probeOptions.noCssTransitions) {
+    const style = document.createElement("style");
+    style.textContent = "*,*::before,*::after{transition:none!important}";
+    document.head.append(style);
+  }
   if (window.__probeOptions.noFestival) runtime.festival.burst = () => {};
   if (window.__probeOptions.noAmbient)
     runtime.atmosphere.draw = function () {

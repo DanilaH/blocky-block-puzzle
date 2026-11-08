@@ -25,10 +25,23 @@ const plugin = {
   enforce: "pre",
   transform(source, id) {
     if (id.split("?")[0] === path.join(root, "src/game/BoardScene.ts"))
-      return source.replace(
-        "if (g instanceof SpriteInk && this.diagnostic.cachedBorder)",
-        "if (g instanceof SpriteInk && !(window as any).__probeOptions?.oldEnergyBorder)",
-      );
+      return source
+        .replace(
+          "if (g instanceof SpriteInk && this.diagnostic.cachedBorder)",
+          "if (g instanceof SpriteInk && !(window as any).__probeOptions?.oldEnergyBorder)",
+        )
+        .replace(
+          "if (energy > 0)",
+          "if (energy > 0 && !(window as any).__probeOptions?.noEnergyBorder)",
+        )
+        .replace(
+          'new SpriteInk(this, 1, this.presentation === "classic")',
+          "new SpriteInk(this, 1, !!(window as any).__probeOptions?.flatWash)",
+        )
+        .replace(
+          'if (textured && this.presentation === "classic") prepareEnergyBorder(this);',
+          'if (textured && this.presentation === "classic" && !(window as any).__probeOptions?.oldEnergyBorder) prepareEnergyBorder(this);',
+        );
     if (id.split("?")[0] !== path.join(root, "src/main.ts")) return;
     if (
       !source.includes("  if (import.meta.hot)") ||
@@ -54,7 +67,7 @@ const plugin = {
     code = code.replace(
       "  if (import.meta.hot)",
       `
-  attachRuntime({scene,store,festival,atmosphere,
+  attachRuntime({scene,store,festival,atmosphere,tileMaterials,
     state:()=>({game:store.state.game,wardrobe:store.state.wardrobe,shownTheme:presentationTheme()}),
     async reset(kind) {
       await store.waitIdle(); cancelDrag(); cancelHint(); stopPraise(); stopCosmetics();
@@ -66,13 +79,15 @@ const plugin = {
       } else {g.tray[0]={shapeId:'S1-0',color:2,used:false};}
       const fixture = (window as any).__probeOptions.fixtures?.[(window as any).__probeOptions.fixtureIndex];
       if(fixture) Object.assign(g,structuredClone(fixture.before),{gameId:'probe-'+crypto.randomUUID()});
-      await store.update(p=>({...p,revision:p.revision+1,tutorialStep:4,game:g,progressionBest:100000,best:100000,festivalBest:100000,wardrobe:{selected:0,unlocked:[0],discoveries:1},settings:{...p.settings,calm:false,sound:false,haptics:false,musicVolume:0,effectsVolume:0}}),'probe-reset');
+      await store.update(p=>({...p,revision:p.revision+1,tutorialStep:4,game:g,progressionBest:100000,best:100000,festivalBest:100000,wardrobe:fixture?.beforeWardrobe ?? {selected:0,unlocked:[0],discoveries:1},settings:{...p.settings,...fixture?.settings,calm:false,sound:false,haptics:false,musicVolume:0,effectsVolume:0}}),'probe-reset');
       scoreTarget=scoreShown=0; render(false);
     },
     async trigger(kind) {
       if(kind==='idle')return;
       if(kind==='theme') {await store.update(p=>({...p,revision:p.revision+1,wardrobe:{selected:5,unlocked:[0,5],discoveries:2}}),'probe-theme-only');render(true);return;}
       const fixture = (window as any).__probeOptions.fixtures?.[(window as any).__probeOptions.fixtureIndex];
+      for (const prior of fixture?.cosmeticHistory ?? [])
+        (scene as any).celebration.add(prior.lines, performance.now() + prior.at);
       await commit(fixture?.move ?? {slot:0,x:0,y:0},currentGame().revision);
     }
   });
@@ -144,7 +159,11 @@ try {
     });
     await server.listen();
   }
-  browser = await chromium.launch();
+  browser = await chromium.launch({
+    ...(process.env.PROBE_BROWSER_EXECUTABLE
+      ? { executablePath: process.env.PROBE_BROWSER_EXECUTABLE }
+      : {}),
+  });
   manifest.browserVersion = browser.version();
   for (let round = 0; round < rounds; round++) {
     const order = round % 2 ? [...conditions].reverse() : conditions;
@@ -192,6 +211,21 @@ try {
         }, condition);
         // Reset transitions finish outside the measurement. Context/GL pools survive.
         await page.waitForTimeout(2100);
+        if (condition.canvas)
+          await page.evaluate((size) => {
+            const scene = window.__perfProbe.scene;
+            scene.game.scale.resize(size, size);
+            scene.syncResolution();
+            if (scene.cameras.main.zoom !== size / 512)
+              throw Error("Fixture camera does not match backing pixels");
+          }, condition.canvas);
+        if (
+          process.env.PROBE_SCREENSHOT &&
+          round === 0 &&
+          repeat === 0 &&
+          condition === conditions[0]
+        )
+          await page.screenshot({ path: process.env.PROBE_SCREENSHOT });
         if (trace)
           await cdp.send("Tracing.start", {
             categories:
@@ -238,6 +272,18 @@ try {
         );
         if (errors.length) throw Error("Page errors: " + errors.join("; "));
         const humanFixture = fixtures?.[condition.fixtureIndex];
+        if (
+          condition.canvas &&
+          row.manifest.canvas.some((n) => n !== condition.canvas)
+        )
+          throw Error("Fixture canvas mismatch");
+        if (
+          condition.integrated &&
+          row.manifest.flatWashIntegrated !== !!condition.flatWash
+        )
+          throw Error("Integrated wash does not match the requested condition");
+        if (condition.discardZero && !row.manifest.discardShaderCompiled)
+          throw Error("Discard intervention did not compile into the shader");
         if (humanFixture && row.final.game.score !== humanFixture.expectedScore)
           throw Error("Human fixture score mismatch");
         if (
@@ -252,7 +298,10 @@ try {
           row.final.game.board.some(Boolean)
         )
           throw Error("Fixture did not clear board");
-        if (condition.kind === "allclear" && row.final.shownTheme !== 5)
+        if (
+          condition.kind === "allclear" &&
+          row.final.shownTheme !== (humanFixture?.afterTheme ?? 5)
+        )
           throw Error("Theme was not revealed");
         if (
           condition.kind === "allclear-no-theme" &&

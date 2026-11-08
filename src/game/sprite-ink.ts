@@ -158,9 +158,16 @@ export class SpriteInk {
   private strokeAlpha = 1;
   private width = 1;
   private visible = true;
+  private washes: Phaser.GameObjects.Rectangle[] = [];
+  private washCursor = 0;
+  private washSources = new WeakMap<
+    Phaser.GameObjects.Rectangle,
+    Phaser.GameObjects.Image
+  >();
   constructor(
     private scene: Phaser.Scene,
     private depth: number,
+    private useFlatWash = false,
   ) {
     prepareInk(scene);
     // Allocate common contour capacity at startup, not on the first multi-clear.
@@ -172,15 +179,31 @@ export class SpriteInk {
           .setDepth(depth)
           .setVisible(false),
       );
+    if (useFlatWash)
+      this.washes = Array.from({ length: 4 }, () =>
+        scene.add
+          .rectangle(0, 0, 512, 512, 0xffffff)
+          .setOrigin(0)
+          .setDepth(depth)
+          .setVisible(false),
+      );
   }
   clear() {
     this.imageCursor = 0;
+    this.washCursor = 0;
     for (const s of this.images) s.setVisible(false);
+    for (const s of this.washes) s.setVisible(false);
     return this;
   }
   setVisible(v: boolean) {
     this.visible = v;
     for (let i = 0; i < this.imageCursor; i++) this.images[i]!.setVisible(v);
+    // A wash keeps its original image slot only to preserve painter order.
+    for (let i = 0; i < this.washCursor; i++) {
+      const wash = this.washes[i]!;
+      this.washSources.get(wash)?.setVisible(false);
+      wash.setVisible(v);
+    }
     return this;
   }
   fillStyle(color: number, alpha = 1) {
@@ -314,7 +337,36 @@ export class SpriteInk {
     return this.lineStyle(14, 0xffd67b, energy * 0.09);
   }
   fillRect(x: number, y: number, w: number, h: number) {
-    return this.image("pixel", x, y, w, h, this.fillColor, this.fillAlpha);
+    const cursor = this.imageCursor;
+    this.image("pixel", x, y, w, h, this.fillColor, this.fillAlpha);
+    if (
+      this.useFlatWash &&
+      x === 0 &&
+      y === 0 &&
+      w === 512 &&
+      h === 512 &&
+      this.imageCursor > cursor
+    ) {
+      const source = this.images[cursor]!;
+      let wash = this.washes[this.washCursor++];
+      if (!wash) {
+        wash = this.scene.add
+          .rectangle(0, 0, 512, 512, 0xffffff)
+          .setOrigin(0)
+          .setDepth(this.depth)
+          .setVisible(false);
+        this.washes.push(wash);
+      }
+      source.setVisible(false);
+      wash
+        .setFillStyle(this.fillColor, this.fillAlpha)
+        .setVisible(this.visible);
+      if (this.washSources.get(wash) !== source) {
+        this.scene.children.moveTo(wash, this.scene.children.getIndex(source));
+        this.washSources.set(wash, source);
+      }
+    }
+    return this;
   }
   lineBetween(x: number, y: number, x2: number, y2: number) {
     const angle = Math.atan2(y2 - y, x2 - x);
@@ -349,7 +401,9 @@ export class SpriteInk {
   }
   destroy() {
     for (const s of this.images) s.destroy();
+    for (const s of this.washes) s.destroy();
     this.images = [];
+    this.washes = [];
   }
 }
 

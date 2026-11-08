@@ -1,5 +1,5 @@
 import { performanceCapture } from "../platform/performance";
-import { RasterInk, SpriteInk } from "./sprite-ink";
+import { RasterInk, SpriteInk, prepareEnergyBorder } from "./sprite-ink";
 import { cacheTileURL } from "./tiles";
 import {
   STUDY_BOARD,
@@ -147,6 +147,7 @@ export class BoardScene extends Phaser.Scene {
   }
   constructor(private presentation: "classic" | "enamel" = "enamel") {
     super("board");
+    this.diagnostic.cachedBorder = presentation === "classic";
     this.shade = this.fromShade =
       presentation === "classic" ? THEMES[0].board : 0xcce7f3;
   }
@@ -191,8 +192,9 @@ export class BoardScene extends Phaser.Scene {
     this.events.once("shutdown", () => this.vfx?.destroy());
     const textured = this.game.renderer.type === Phaser.WEBGL && !!TILE_STUDY;
     this.ink = textured
-      ? new SpriteInk(this, 1)
+      ? new SpriteInk(this, 1, this.presentation === "classic")
       : this.add.graphics().setDepth(1);
+    if (textured && this.presentation === "classic") prepareEnergyBorder(this);
     this.events.once("shutdown", () => {
       this.ink.destroy();
       this.bed?.destroy();
