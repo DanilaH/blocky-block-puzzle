@@ -12,15 +12,30 @@ export class Atmosphere {
   private time = 0;
   private energy = 0;
   private wave = 0;
+  private width = 0;
+  private height = 0;
+  private dpr = 1;
+  private syncViewport() {
+    this.width = innerWidth;
+    this.height = innerHeight;
+    this.dpr = Math.min(1.5, devicePixelRatio);
+    const width = Math.round(this.width * this.dpr);
+    const height = Math.round(this.height * this.dpr);
+    if (this.canvas.width !== width || this.canvas.height !== height) {
+      this.canvas.width = width;
+      this.canvas.height = height;
+    }
+  }
   private source = { x: 0.5, y: 0.4 };
   private prism = [146, 221, 237];
   origin(board: DOMRect, cells: number[]) {
+    this.syncViewport();
     const cell = cells[0] ?? 27;
     this.source = {
-      x: (board.left + (((cell % 8) + 0.5) * board.width) / 8) / innerWidth,
+      x: (board.left + (((cell % 8) + 0.5) * board.width) / 8) / this.width,
       y:
         (board.top + ((Math.floor(cell / 8) + 0.5) * board.height) / 8) /
-        innerHeight,
+        this.height,
     };
   }
   private active = false;
@@ -50,8 +65,12 @@ export class Atmosphere {
       this.canvas,
     );
     this.ctx = this.canvas.getContext("2d")!;
+    this.syncViewport();
+    window.addEventListener("resize", () => this.syncViewport());
   }
   set(streak: number, active: boolean, calm: boolean) {
+    // Resume can follow a background resize without a visible resize event.
+    if (active && !calm && (!this.active || this.calm)) this.syncViewport();
     const next = themeFor(streak);
     if (next !== this.index || !this.background.style.backgroundColor) {
       this.backgroundAnimation?.cancel();
@@ -129,16 +148,9 @@ export class Atmosphere {
           (1 - Math.exp(-dt / (this.index === 0 ? 450 : 250))),
     );
     this.energy *= Math.exp(-dt / 1100);
-    const w = innerWidth,
-      h = innerHeight,
-      dpr = Math.min(1.5, devicePixelRatio);
-    if (
-      this.canvas.width !== Math.round(w * dpr) ||
-      this.canvas.height !== Math.round(h * dpr)
-    ) {
-      this.canvas.width = Math.round(w * dpr);
-      this.canvas.height = Math.round(h * dpr);
-    }
+    const w = this.width,
+      h = this.height,
+      dpr = this.dpr;
     const c = this.ctx;
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     c.clearRect(0, 0, w, h);

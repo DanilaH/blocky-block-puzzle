@@ -27,8 +27,8 @@ android {
         applicationId "com.danilah.blocky.dev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 52
-        versionName "0.52.0-preview"
+        versionCode 53
+        versionName "0.53.0-preview"
         resValue "string", "appmetrica_api_key", validTestMetricaKey ? testMetricaKey : ""
         resValue "bool", "ads_test_mode", "true"
         resValue "string", "yandex_banner_id", ""

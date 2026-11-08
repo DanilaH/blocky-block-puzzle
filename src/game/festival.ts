@@ -35,6 +35,21 @@ export class Festival {
   private sparks: Spark[] = [];
   private frame: (() => void) | null = null;
   private last = 0;
+  private width = 0;
+  private height = 0;
+  private syncViewport() {
+    this.width = innerWidth;
+    this.height = innerHeight;
+    const dpr = Math.min(1.5, devicePixelRatio);
+    const width = Math.round(this.width * dpr);
+    const height = Math.round(this.height * dpr);
+    // Overlapping bursts keep the same backing store and existing particles.
+    if (this.canvas.width !== width || this.canvas.height !== height) {
+      this.canvas.width = width;
+      this.canvas.height = height;
+    }
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
   private chips = new Map<string, HTMLCanvasElement>();
   private flash: CanvasImageSource | null = null;
   setTextures(chip: CanvasImageSource, flash: CanvasImageSource) {
@@ -60,7 +75,11 @@ export class Festival {
     this.rear.setAttribute("aria-hidden", "true");
     document.body.append(this.rear, this.canvas);
     this.ctx = this.canvas.getContext("2d")!;
-    window.addEventListener("resize", () => this.stop());
+    this.syncViewport();
+    window.addEventListener("resize", () => {
+      this.stop();
+      this.syncViewport();
+    });
   }
   burst(
     board: DOMRect,
@@ -72,6 +91,7 @@ export class Festival {
     budget = 200,
     variant = 0,
   ) {
+    this.syncViewport();
     const signature = clearSignature(cells);
     const directional = !empty && !record && lines >= 2 && signature.count >= 2;
     const palette = Array.from(
@@ -119,16 +139,6 @@ export class Festival {
       budget,
       empty ? 110 : record ? 35 : Math.min(80, 10 + lines * 14),
     );
-    const dpr = Math.min(1.5, devicePixelRatio);
-    const width = Math.round(innerWidth * dpr);
-    const height = Math.round(innerHeight * dpr);
-    // A second burst can overlap the first. Do not reallocate/reset the full
-    // viewport backing store on every clear (including two bursts in one move).
-    if (this.canvas.width !== width || this.canvas.height !== height) {
-      this.canvas.width = width;
-      this.canvas.height = height;
-    }
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (let i = 0; i < count; i++) {
       const cell = cells[i % Math.max(1, cells.length)] ?? 27;
       let x = empty
@@ -205,7 +215,7 @@ export class Festival {
     const dt = Math.max(0, Math.min(40, now - this.last));
     this.last = now;
     const g = this.ctx;
-    g.clearRect(0, 0, innerWidth, innerHeight);
+    g.clearRect(0, 0, this.width, this.height);
     let live = 0;
     for (const spark of this.sparks)
       if (spark.age < spark.life) this.sparks[live++] = spark;
@@ -355,7 +365,7 @@ export class Festival {
       this.frame?.();
       this.frame = null;
     }
-    if (!this.frame) g.clearRect(0, 0, innerWidth, innerHeight);
+    if (!this.frame) g.clearRect(0, 0, this.width, this.height);
   }
   stop() {
     this.frame?.();
@@ -363,7 +373,7 @@ export class Festival {
     this.sparks = [];
     this.reveals = [];
     this.rear.replaceChildren();
-    this.ctx.clearRect(0, 0, innerWidth, innerHeight);
+    this.ctx.clearRect(0, 0, this.width, this.height);
   }
 }
 export class MusicalChain {

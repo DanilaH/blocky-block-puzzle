@@ -1,0 +1,105 @@
+{
+  "scope": "Deterministic atmosphere and rain reveal canvases plus SVG rear; original0.52 versus scoped cache; same viewport/DPR/RNG/timing",
+  "results": [
+    {
+      "phaseMs": 17,
+      "exactPixelsAndSvg": true,
+      "canvases": [
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "5a7748c2916b7ad9f192dde4b552e2170be4f47043297c0c343fc9507c48b934"
+        },
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "27f69d19b96bc1423a337f9fbd65e9e320ddc987e97a654dec8314f9137a9076"
+        }
+      ]
+    },
+    {
+      "phaseMs": 400,
+      "exactPixelsAndSvg": true,
+      "canvases": [
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "b23f48635f6945cb2a8abb6c8c68de1610f2ca38e8edc363bd3decbb2c50d39b"
+        },
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "44c6ffa48e4e4bb9a461f48dff0c8b5f25fec584bf1cb5699ff8a0a95c1cce05"
+        }
+      ]
+    },
+    {
+      "phaseMs": 650,
+      "exactPixelsAndSvg": true,
+      "canvases": [
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "825d608774e42f203e2879b79beee5362c840935ca0c61cd96196d4879dcc396"
+        },
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "8a5b8bdf94fac0fc30aae3fb712ac96ae047a21f89c8750ede59cdc7f742866d"
+        }
+      ]
+    },
+    {
+      "phaseMs": 1100,
+      "exactPixelsAndSvg": true,
+      "canvases": [
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "78740ba7c2d9b623856d39a8f2ecd726858199bbb31a0dfd14dc27075e7964b6"
+        },
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "1e2a356c86131ae5186bb827326ab5e28c114bb6cbd5df46260b31d51601646c"
+        }
+      ]
+    },
+    {
+      "phaseMs": 1800,
+      "exactPixelsAndSvg": true,
+      "canvases": [
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "b5df38135a0ef0f0daf8a00821622e49daee8f1b6a070b9de23edc58108d7209"
+        },
+        {
+          "size": [
+            588,
+            1308
+          ],
+          "sha256": "dd881df0d6c4493d8696763ef1976389b94bab91199683537fe6c624e93c3451"
+        }
+      ]
+    }
+  ]
+}
