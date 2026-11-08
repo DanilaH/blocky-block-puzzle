@@ -80,7 +80,15 @@ jobs:
           if [ ! -f "$HOME/.android/debug.keystore" ]; then
             keytool -genkeypair -keystore "$HOME/.android/debug.keystore" -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Blocky Preview,O=Development,C=RU"
           fi
-      - run: chmod +x android/gradlew && cd android && ./gradlew testDebugUnitTest assembleDebug --no-daemon
+      - uses: actions/cache@v4
+        with:
+          path: ~/.gradle/blocky-distributions
+          key: blocky-gradle-${{ runner.os }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Prepare checksum-pinned Gradle
+        id: gradle
+        run: python3 scripts/prepare_gradle.py
+      - name: Test and assemble Android
+        run: '"${{ steps.gradle.outputs.gradle-bin }}" --project-dir android testDebugUnitTest assembleDebug --no-daemon'
       - uses: actions/upload-artifact@v4
         with:
           name: blocky-preview-debug-apk

@@ -21,7 +21,7 @@ Native output cap трассы увеличен32→64MiB: последний ф
 
 Полный CI/Android/проверка подписанного APK: ожидаются. На физическом POCO0.54 ещё не проверена.
 
-Web CI42470731688 прошёл221unit/188browser. Первичная Android-попытка и один целевой повтор остановились до компиляции на HTTP504 в redirect/cache пути downloads.gradle.org→GitHub. Прямой официальный release URL с`?download=1` скачан полностью:137393837байт, SHA256`bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531`, ZIP integrity пройдена. Wrapper переключён на этот URL с прежней обязательной SHA256; версияGradle8.14.3 и исходники игры/Android не менялись. Повторная сборка ожидается.
+Web CI42470731688 прошёл221unit/188browser. Первичная Android-попытка и один целевой повтор остановились до компиляции на HTTP504 в redirect/cache пути downloads.gradle.org→GitHub. Прямой официальный release URL с`?download=1` скачан полностью:137393837байт, SHA256`bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531`, ZIP integrity пройдена. Wrapper переключён на этот URL с прежней обязательной SHA256; версияGradle8.14.3 и исходники игры/Android не менялись. Прямой URL в Java-wrapper на CI тоже вернул504. Добавлена отдельная подготовка pinned ZIP через Python (официальный release, API asset и distribution host — ограниченные fallback routes), обязательная SHA256, проверка ZIP и кеш; Gradle запускается из заново распакованного проверенного архива. Локально SHA/ZIP/подготовка/Gradle --version проверены. Новая Android-сборка ожидается.
 
 ## Следующий замер
 

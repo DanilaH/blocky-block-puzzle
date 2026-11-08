@@ -110,3 +110,6 @@ Preview 0.49: отдельная страница автозамера очис�
 ### Preview0.53: viewport cache и загрузка Gradle
 
 APK из`bc549c32ee8d703ba9f35c92bad6313802bdb439`, PR Android CI42464938628/job128682140016, artifact13611178067. VersionCode53/versionName0.53.0-preview. V2-подпись прежней0.52 и все89 production-файлов проверены. SHA-256 APK`e992249437feab308ff3da667a61fae623eb7ed770af90e6903f53a0806e6ff2`. Исходники игры прошли221unit/188browser в42463633024 на528b5cc; последующая правка только wrapper/CI/diagnostics/docs, app/native/test sources идентичны. Повторный web-job нового run ещё выполнялся при проверке APK. Три Android-попытки до build-repair падали на загрузкеGradle-all504/timeout; binary-only8.14.3 с официальной SHA256/timeout120сек успешно собрался. Android и web CI идут параллельно. Не считать наличие артефакта само по себе достаточным подтверждением новых игровых изменений: сверять соответствующие исходники и прошедшие проверки. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).
+
+
+Android CI подготавливает точную версиюGradle из wrapper properties через`scripts/prepare_gradle.py`: SHA256 обязательна, ZIP кешируется, executable заново извлекается из проверенного архива. Это обходит повторяющиеся HTTP504 в Java-wrapper download path; сторонние mirrors и смена версии сборщика не используются.
