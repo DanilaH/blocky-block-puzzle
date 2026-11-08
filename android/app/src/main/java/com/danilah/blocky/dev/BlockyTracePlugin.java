@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.WindowManager;
 import android.webkit.TracingConfig;
 import android.webkit.TracingController;
 import androidx.core.content.FileProvider;
@@ -28,7 +29,7 @@ public class BlockyTracePlugin extends Plugin {
   private final Handler ui = new Handler(Looper.getMainLooper());
   private final ExecutorService writer = Executors.newSingleThreadExecutor();
   private final ArrayList<PluginCall> waiting = new ArrayList<>();
-  private boolean owned, flushing, ready, destroyed;
+  private boolean owned, flushing, ready, destroyed, screenOnOwned;
   private long bytes;
   private String error = "not-started", reason = "";
   private String captureId = "";
@@ -38,6 +39,24 @@ public class BlockyTracePlugin extends Plugin {
     return Build.VERSION.SDK_INT >= 28 &&
       (getContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
   }
+  private void releaseScreen() {
+    if (screenOnOwned) {
+      getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+      screenOnOwned = false;
+    }
+  }
+  @PluginMethod public void setScreenOn(PluginCall call) { ui.post(() -> {
+    if (call.getBoolean("enabled", false)) {
+      if (destroyed || (getContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {
+        call.reject("Diagnostic screen hold unavailable"); return;
+      }
+      if ((getActivity().getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) == 0) {
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        screenOnOwned = true;
+      }
+    } else releaseScreen();
+    call.resolve();
+  }); }
   private JSObject status() {
     JSObject result = new JSObject();
     result.put("supported", supported()); result.put("ready", ready);
@@ -150,8 +169,8 @@ public class BlockyTracePlugin extends Plugin {
   private static void put(ZipOutputStream out, String name, byte[] content) throws IOException {
     out.putNextEntry(new ZipEntry(name)); out.write(content); out.closeEntry();
   }
-  @Override protected void handleOnPause() { ui.post(() -> stopOwned("background")); }
+  @Override protected void handleOnPause() { ui.post(() -> { releaseScreen(); stopOwned("background"); }); }
   @Override protected void handleOnDestroy() {
-    ui.post(() -> { destroyed = true; stopOwned("destroyed"); if (!flushing) writer.shutdown(); });
+    ui.post(() -> { destroyed = true; releaseScreen(); stopOwned("destroyed"); if (!flushing) writer.shutdown(); });
   }
 }

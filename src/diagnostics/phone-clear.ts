@@ -46,6 +46,7 @@ type TraceStatus = {
 };
 type TraceBridge = {
   reset(): Promise<TraceStatus>;
+  setScreenOn(p: { enabled: boolean }): Promise<void>;
   start(): Promise<TraceStatus>;
   stop(): Promise<TraceStatus>;
   share(p: {
@@ -136,6 +137,7 @@ export async function installPhoneClear(hooks: Hooks) {
     failure?: string;
     trace: TraceStatus;
     traceEpisode?: string;
+    screenAwake?: boolean;
     notes: string[];
     fixture: ClearFixture;
     episodes: Episode[];
@@ -252,6 +254,14 @@ export async function installPhoneClear(hooks: Hooks) {
     try {
       // Clear stale native output before any comparison or cancellation can occur.
       if (native) report.trace = await native.reset();
+      if (native) {
+        try {
+          await native.setScreenOn({ enabled: true });
+          report.screenAwake = true;
+        } catch {
+          report.screenAwake = false;
+        }
+      }
       await episode("warmup", "warmup", signal);
       if (layers) {
         for (const item of plan)
@@ -316,6 +326,7 @@ export async function installPhoneClear(hooks: Hooks) {
         } catch {
           report.trace = { error: "native-stop-failed" };
         }
+        await native.setScreenOn({ enabled: false }).catch(() => {});
       }
       hooks.pause(true);
       if (layers) {
@@ -361,7 +372,10 @@ export async function installPhoneClear(hooks: Hooks) {
   cancel.onclick = () => controller?.abort("cancelled");
   function leave() {
     controller?.abort("return");
-    if (native) void native.stop().catch(() => {});
+    if (native) {
+      void native.stop().catch(() => {});
+      void native.setScreenOn({ enabled: false }).catch(() => {});
+    }
     location.href = new URL("./", location.href).href;
   }
   back.onclick = leave;

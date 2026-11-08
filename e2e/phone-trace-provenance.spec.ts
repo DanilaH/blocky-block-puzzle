@@ -14,6 +14,9 @@ for (const mode of ["cancel", "complete", "mismatch"])
             (window as any).__nativeCalls.push("reset");
             return { ready: false, error: "not-started" };
           },
+          setScreenOn: async ({ enabled }: { enabled: boolean }) => {
+            (window as any).__nativeCalls.push(enabled ? "screen-on" : "screen-off");
+          },
           start: async () => {
             (window as any).__nativeCalls.push("start");
             return { ready: false, recording: true, captureId: "fresh" };
@@ -61,6 +64,9 @@ for (const mode of ["cancel", "complete", "mismatch"])
       r = JSON.parse(result.json);
     expect(result.includeTrace).toBe(mode === "complete");
     expect(r.trace.ready).toBe(mode === "complete");
+    expect(r.screenAwake).toBe(true);
+    const calls = await page.evaluate(() => (window as any).__nativeCalls);
+    expect(calls.filter((x: string) => x.startsWith("screen-"))).toEqual(["screen-on", "screen-off"]);
     expect((await page.evaluate(() => (window as any).__nativeCalls))[0]).toBe(
       "reset",
     );
