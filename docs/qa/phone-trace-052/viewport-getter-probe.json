@@ -1,0 +1,186 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "scope": "Global cached viewport getter diagnostic; no app change and no physical speed claim",
+  "results": [
+    {
+      "cached": false,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 175,
+      "forcedStyleLayoutTotalMs": 78.42600000000002,
+      "forcedStyleLayoutMaxMs": 2.494,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 22,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 50.099998474121094
+        }
+      ]
+    },
+    {
+      "cached": true,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 9,
+      "forcedStyleLayoutTotalMs": 6.661,
+      "forcedStyleLayoutMaxMs": 3.012,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 14,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 14,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "cached": true,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 7.079,
+      "forcedStyleLayoutMaxMs": 2.173,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 22,
+          "maxFrameMs": 50.099998474121094
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "cached": false,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 169,
+      "forcedStyleLayoutTotalMs": 80.74300000000001,
+      "forcedStyleLayoutMaxMs": 2.505,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 21,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 18,
+          "maxFrameMs": 50
+        }
+      ]
+    }
+  ]
+}

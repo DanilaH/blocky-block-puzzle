@@ -656,4 +656,13 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Нативный TracingController, ограничение записи, остановка в фоне, ZIP через share sheet.
 - [x] Локальные 221 unit, build/assets и14 browser-проверок.
 - [x] CI42460033472:221 unit/186 browser,Android unit/build; APK0.52, подпись0.51 и89 production-файлов проверены.
-- [ ] Физический запуск/ZIP с POCO и установление причины лага. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).
+- [x] Физический запуск/ZIP с POCO: трасса получена, лаг воспроизведён.
+- [ ] Полное установление причин и устранение лага. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).
+
+
+### Разбор реальной WebView-трассы0.52 — 08.11.2026
+
+- [x] Физический capture/share работает без USB; untraced max67.2мс.
+- [x] Выделены forced style/layout в rAF (max13.28мс) и native draw waits; GPU execution напрямую не измерен.
+- [x] Диагностический mobile-порядок baseline/cache/cache/baseline: viewport cache уменьшил принудительные пересчёты169–175→9–11. Код игры не менялся.
+- [ ] Локальный кеш размеров в эффектах, проверки resize/lifecycle и повторный замер POCO. [Разбор](qa/PHONE_TRACE_FINDINGS_0.52_2026-11-08.md).
