@@ -23,7 +23,11 @@
 
 Исходники игры прошли CI42463633024:221 unit/188 browser. Android job и его повтор прервались до компиляции при скачивании Gradle8.14.3-all (HTTP504/10сек timeout); push-run также получил504. Для сборки сохранена версия8.14.3, выбран официальный binary-only архив с downloads.gradle.org, checksum закреплён по официальному[реестру](https://gradle.org/release-checksums/), timeout120сек. Android job запускается параллельно verify, чтобы сбой загрузки обнаруживался сразу. Сама игра/тесты/native-код после188 успешных проверок не менялись. APK по-прежнему выдавать только после проверки совпадения dist и совместимой подписи.
 
-Android unit/build, APK/подпись/dist: ожидаются. Проверка0.53 на POCO: открыта.
+Android unit/build нового [PR run42464938628](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42464938628), job128682140016 — success:134 tasks. Новый повтор web-job ещё выполнялся при проверке APK.221/188 успешно проверены в [42463633024](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42463633024) на исходниках528b5cc; после этого изменились только wrapper/CI и диагностические скрипты/документы. Отдельный git diff подтвердил идентичность src/android-app/tests/e2e/packages/config к проверенной версии.
+
+APK из исходников`bc549c32ee8d703ba9f35c92bad6313802bdb439`, artifact13611178067: debug/version53/прежний package, v2-подпись совпала с выданной0.52, все89 production-файлов побайтно совпали с чистым dist. [Проверка](viewport-053/apk-verification-053.json). Размер11563793байт, SHA-256`e992249437feab308ff3da667a61fae623eb7ed770af90e6903f53a0806e6ff2`. ZIP10863288байт, SHA-256`f9c4c30d69a70673001fcd6689102b7ceea0478b53d19fed9dcb35eaada3b526`.
+
+Проверка0.53 на POCO, выигрыш плавности и оставшиеся native waits открыты.
 
 ## Следующий физический тест
 

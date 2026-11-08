@@ -105,3 +105,8 @@ Preview 0.49: отдельная страница автозамера очис�
 ### Preview0.52: диагностика без USB
 
 Исходники `362f9531c244a41cd14d7f8d09bfa8c12aa8cf70`, PR CI `42460033472`, artifact `13609328963`. VersionCode52, versionName0.52.0-preview, debug APK, прежний package. 221unit/186browser/Androidunit+build — success. V2-подпись совпадает с выданной0.51; все89 production-файлов совпали с чистым dist. APK SHA-256 `99e657f24d653b7190b480c537ae74e7849eb8c3e2c5a6a283f09502f4036896`. Обновлять поверх установленной игры. Пауза → Ещё настройки → Диагностика → Проверить очистку: короткий реальный игровой прогон и ZIP с WebView-трассой, без USB. Android tracing API28+/debug. Физический запуск и причина лага ещё не проверены. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).
+
+
+### Preview0.53: viewport cache и загрузка Gradle
+
+APK из`bc549c32ee8d703ba9f35c92bad6313802bdb439`, PR Android CI42464938628/job128682140016, artifact13611178067. VersionCode53/versionName0.53.0-preview. V2-подпись прежней0.52 и все89 production-файлов проверены. SHA-256 APK`e992249437feab308ff3da667a61fae623eb7ed770af90e6903f53a0806e6ff2`. Исходники игры прошли221unit/188browser в42463633024 на528b5cc; последующая правка только wrapper/CI/diagnostics/docs, app/native/test sources идентичны. Повторный web-job нового run ещё выполнялся при проверке APK. Три Android-попытки до build-repair падали на загрузкеGradle-all504/timeout; binary-only8.14.3 с официальной SHA256/timeout120сек успешно собрался. Android и web CI идут параллельно. Не считать наличие артефакта само по себе достаточным подтверждением новых игровых изменений: сверять соответствующие исходники и прошедшие проверки. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).

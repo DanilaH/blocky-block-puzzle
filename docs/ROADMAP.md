@@ -671,5 +671,5 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 
 - [x] Локальный кеш в Atmosphere/Festival, обновление resize/старт/возобновление; draw без viewport reads.
 - [x] 221 unit, build/assets;12 целевых browser-проверок; точное совпадение обоих canvas/SVG на пяти фазах.
-- [ ] Полный CI/Android и проверка APK/совместимой подписи0.52.
+- [x]221unit/188browser на528b5cc; идентичность app/native/tests после build-repair подтверждена. Android42464938628, APK53/89файлов/подпись0.52 проверены.
 - [ ] Повторный короткий тест POCO: forced layout, untraced интервалы и native waits. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).
