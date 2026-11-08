@@ -17,9 +17,9 @@ export interface SaveAdapter {
 // Current + last valid state are committed by ONE IndexedDB transaction. Never fall back silently to volatile memory.
 export class IndexedSave implements SaveAdapter {
   private db: Promise<IDBDatabase>;
-  constructor() {
+  constructor(databaseName = "blocky-classic") {
     this.db = new Promise((resolve, reject) => {
-      const req = indexedDB.open("blocky-classic", 1);
+      const req = indexedDB.open(databaseName, 1);
       req.onupgradeneeded = () => req.result.createObjectStore("save");
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);

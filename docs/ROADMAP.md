@@ -649,3 +649,11 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Подготовлен протокол короткого Performance profile реального WebView через USB, без новой APK.
 - [ ] Получить аппаратную трассу, установить реальную причину, подтвердить исправление на POCO. Доступа к телефону сейчас нет.
 - [Отчёт](qa/PREPARED_REVEAL_0.51_2026-11-08.md), [протокол трассы](qa/WEBVIEW_TRACE_PROTOCOL_2026-11-08.md).
+
+### Трасса внутри APK без USB — 08.11.2026
+
+- [x] Короткий scripted clear через реальные игровые commit/UI/reward paths, отдельная база сохранения.
+- [x] Нативный TracingController, ограничение записи, остановка в фоне, ZIP через share sheet.
+- [x] Локальные 221 unit, build/assets и14 browser-проверок.
+- [ ] Полный CI/Android unit/build и проверка подписанного APK0.52.
+- [ ] Физический запуск/ZIP с POCO и установление причины лага. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).

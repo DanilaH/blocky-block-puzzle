@@ -392,6 +392,13 @@ body {
 .diagnostics[open] summary::before {
   content: "−";
 }
+.diagnostics a.secondary {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-block: 8px;
+  text-align: center;
+}
 .diagnostics button {
   width: 100%;
   margin-block: 5px;

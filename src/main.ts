@@ -89,14 +89,26 @@ const fresh = (dealer: DealerVersion = "flow-v4") => ({
 });
 async function start() {
   document.documentElement.dataset.presentation = "classic";
-  const adapter = new IndexedSave();
+  const phoneTrace =
+    APP_VERSION.endsWith("-preview") &&
+    new URLSearchParams(location.search).get("clearTrace") === "1";
+  // A fixed separate database keeps all ordinary transaction/render paths real,
+  // while the scripted diagnostic cannot modify the player's profile or backup.
+  const adapter = new IndexedSave(
+    phoneTrace ? "blocky-clear-trace" : "blocky-classic",
+  );
   const loaded = await adapter.load();
-  const initial = loaded.profile ?? createProfile(fresh());
-  if (!loaded.profile) await adapter.write(initial);
+  const traceModule = phoneTrace
+    ? await import("./diagnostics/phone-clear")
+    : null;
+  const initial = traceModule
+    ? traceModule.fixtureProfile((loaded.profile?.revision ?? 0) + 1)
+    : (loaded.profile ?? createProfile(fresh()));
+  if (traceModule || !loaded.profile) await adapter.write(initial);
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene("classic");
-  const analytics = new ProductAnalytics(nativeAnalytics());
+  const analytics = new ProductAnalytics(phoneTrace ? null : nativeAnalytics());
   const playCapture = new PlayCapture();
   let exportedPlayEvents = 0;
   let performanceExported = false;
@@ -392,7 +404,7 @@ async function start() {
       syncRenderer();
     },
   );
-  const adBridge = nativeAds();
+  const adBridge = phoneTrace ? null : nativeAds();
   let bannerWatch: ReturnType<typeof watchBanner> | undefined;
   const ads = new AdsController(
     store,
@@ -2141,7 +2153,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2261,7 +2273,7 @@ async function start() {
           performanceExported = true;
         })
         .catch(() => toast("Не удалось выгрузить замер. Попробуйте ещё раз."));
-    el("clear-benchmark").onclick = (event) => {
+    const protectDiagnostic = (event: MouseEvent) => {
       const message =
         performanceCapture.enabled ||
         (!performanceExported && performanceCapture.snapshot().sampleCount > 0)
@@ -2276,6 +2288,8 @@ async function start() {
           message;
       }
     };
+    el("clear-benchmark").onclick = protectDiagnostic;
+    el("clear-trace").onclick = protectDiagnostic;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
@@ -2768,6 +2782,32 @@ async function start() {
       .catch(() => {});
   }
   render();
+  if (traceModule) {
+    await traceModule.installPhoneClear({
+      ready: () => rendererReady,
+      context: () => readRenderInfo(phaser!),
+      reset: async () => {
+        await store.waitIdle();
+        cancelDrag();
+        cancelHint();
+        stopPraise();
+        stopCosmetics();
+        await store.update((p) => traceModule.fixtureProfile(p.revision + 1));
+        recordCelebrated = false;
+        lastPraiseMove = -5;
+        themeGame = "";
+        themeKey = "";
+        render();
+      },
+      commit: async () => {
+        await commit(traceModule.phoneFixture.move, currentGame().revision);
+        if (currentGame().score !== traceModule.phoneFixture.expectedScore)
+          throw Error("Diagnostic move did not commit");
+      },
+      state: () => ({ game: currentGame(), wardrobe: store.state.wardrobe }),
+      pause: (paused) => activity.setBlocked("clear-trace", paused),
+    });
+  }
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (
     import.meta.env.DEV &&
