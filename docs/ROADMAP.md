@@ -698,6 +698,7 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x]Основные сравнения без tracing, native baseline отдельно; защита от старой трассы при отмене.
 - [x]225unit и12 целевых browser, включая полный прогон, сохранения и provenance.
 - [x]Финальные UI, CI 225 unit / 197 browser, Android unit/build, APK55, 89 production-файлов и подпись54; APK и ZIP подготовлены для выдачи.
-- [ ]Физический результат POCO и обоснованная адресная оптимизация.
+- [x]Физический POCO 0.55: 18/18 valid, два повторяемых направления — reward DOM и смена оформления. 16-страничная browser ablation уточнила лишнюю анимацию enamel-local. [Разбор](qa/PHONE_LAYER_FINDINGS_0.55_2026-11-08.md).
+- [ ]Адресное исправление: убрать лишние Classic surface transitions с проверкой промежуточной картинки; исследовать подготовку reward text/shadow один раз на событие и повторно проверить общий pipeline на телефоне.
 
 [Протокол](qa/LAYER_DIAGNOSTICS_0.55_2026-11-08.md).
