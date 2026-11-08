@@ -2,11 +2,13 @@
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
 const directory = process.argv[2] || "docs/qa/phone-clear-050";
-const names = ["screen", "ink", "flat", "confirm"];
+const names = ["screen", "ink", "flat", "confirm", "integrated"];
 const contexts = [],
   batches = [];
 for (const name of names) {
-  const bytes = await fs.readFile(`/tmp/blocky-phone050-${name}.json`);
+  const bytes = await fs.readFile(
+    `/tmp/blocky-phone${name === "integrated" ? "051" : "050"}-${name}.json`,
+  );
   const data = JSON.parse(bytes);
   if (!data.manifest.completed) throw Error(`Incomplete batch: ${name}`);
   const episodes = data.results.map((row) => {
@@ -47,51 +49,56 @@ for (const name of names) {
     episodes,
   });
 }
-const results = batches.find((b) => b.name === "confirm").episodes;
+
 const median = (values) =>
   [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
 const gates = [];
-for (const fixtureIndex of [0, 1, 2])
-  for (const atlas of [false, true]) {
-    const select = (old) =>
-      results.filter(
-        (r) =>
-          r.condition.fixtureIndex === fixtureIndex &&
-          r.condition.oldEnergyBorder === old &&
-          (old || !!r.condition.vfxAtlas === atlas),
+for (const stage of ["confirm", "integrated"]) {
+  const results = batches.find((b) => b.name === stage).episodes;
+  for (const fixtureIndex of [0, 1, 2])
+    for (const atlas of stage === "integrated" ? [false] : [false, true]) {
+      const select = (old) =>
+        results.filter(
+          (r) =>
+            r.condition.fixtureIndex === fixtureIndex &&
+            r.condition.oldEnergyBorder === old &&
+            (old || !!r.condition.vfxAtlas === atlas),
+        );
+      const base = select(true),
+        candidate = select(false);
+      const counts = (rows, repeat) =>
+        rows
+          .filter((r) => r.repeat === repeat)
+          .sort((a, b) => a.round - b.round)
+          .map((r) => r.summary.raf.over25);
+      const baselineWarm = counts(base, 1),
+        candidateWarm = counts(candidate, 1);
+      const baselineCold = counts(base, 0),
+        candidateCold = counts(candidate, 0);
+      if (baselineWarm.length !== 3 || candidateWarm.length !== 3)
+        throw Error("Missing repeats");
+      const reduction = 1 - median(candidateWarm) / median(baselineWarm);
+      const noWarmRegression = candidateWarm.every(
+        (n, i) => n <= baselineWarm[i] + 2,
       );
-    const base = select(true),
-      candidate = select(false);
-    const counts = (rows, repeat) =>
-      rows
-        .filter((r) => r.repeat === repeat)
-        .sort((a, b) => a.round - b.round)
-        .map((r) => r.summary.raf.over25);
-    const baselineWarm = counts(base, 1),
-      candidateWarm = counts(candidate, 1);
-    const baselineCold = counts(base, 0),
-      candidateCold = counts(candidate, 0);
-    if (baselineWarm.length !== 3 || candidateWarm.length !== 3)
-      throw Error("Missing repeats");
-    const reduction = 1 - median(candidateWarm) / median(baselineWarm);
-    const noWarmRegression = candidateWarm.every(
-      (n, i) => n <= baselineWarm[i] + 2,
-    );
-    const noColdRegression = median(candidateCold) <= median(baselineCold) + 2;
-    gates.push({
-      fixtureIndex,
-      atlas,
-      baselineWarm,
-      candidateWarm,
-      baselineCold,
-      candidateCold,
-      reduction,
-      noWarmRegression,
-      noColdRegression,
-      performancePassed:
-        reduction >= 0.1 && noWarmRegression && noColdRegression,
-    });
-  }
+      const noColdRegression =
+        median(candidateCold) <= median(baselineCold) + 2;
+      gates.push({
+        stage,
+        fixtureIndex,
+        atlas,
+        baselineWarm,
+        candidateWarm,
+        baselineCold,
+        candidateCold,
+        reduction,
+        noWarmRegression,
+        noColdRegression,
+        performancePassed:
+          reduction >= 0.1 && noWarmRegression && noColdRegression,
+      });
+    }
+}
 const invalid = await fs.readFile("/tmp/blocky-phone050-invalid-camera.json");
 await fs.mkdir(directory, { recursive: true });
 await fs.writeFile(
