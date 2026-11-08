@@ -1,4 +1,5 @@
 import { readRenderInfo } from "./platform/render-info";
+import { RewardLabels } from "./game/reward-label";
 import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
 import { presentReviveClock } from "./game/revive-clock";
@@ -273,6 +274,7 @@ async function start() {
   let rewardHoldUntil = 0;
   let pendingPoints = 0;
   const rewards = new Map<HTMLElement, () => void>();
+  const rewardLabels = new RewardLabels();
   let resultTimer = 0,
     resultPending = false;
   let resultFeedbackTimer = 0;
@@ -286,6 +288,53 @@ async function start() {
   rewardAnchor.className = "board-reward";
   document.querySelector(".board-wrap")!.append(rewardAnchor);
   rewardAnchor.append(el("burst"));
+  let cancelRewardWarmup: (() => void) | null = null;
+  function queueRewardWarmup() {
+    if (cancelRewardWarmup) return;
+    const warm = () => {
+      cancelRewardWarmup = null;
+      if (!rendererReady || document.hidden) return;
+      if (movePending || drag || rewards.size) {
+        const timer = window.setTimeout(() => {
+          cancelRewardWarmup = null;
+          queueRewardWarmup();
+        }, 400);
+        cancelRewardWarmup = () => clearTimeout(timer);
+        return;
+      }
+      const board = rewardAnchor.getBoundingClientRect();
+      if (!board.width) return;
+      const node = document.createElement("span");
+      node.className = "reward-event";
+      node.dataset.tier = "all-clear";
+      node.style.visibility = "hidden";
+      node.setAttribute("aria-hidden", "true");
+      const label = document.createElement("span");
+      label.className = "reward-praise";
+      for (const [i, letter] of Array.from("Чистое поле!").entries()) {
+        const glyph = document.createElement("i");
+        glyph.textContent = letter;
+        glyph.style.setProperty("--letter", String(i));
+        label.append(glyph);
+      }
+      label.style.fontSize = `${Math.min(42, board.width * 0.13)}px`;
+      node.append(label);
+      el("burst").append(node);
+      const width = label.getBoundingClientRect().width,
+        max = Math.max(1, (board.width - 32) / 1.2);
+      if (width > max)
+        label.style.fontSize = `${(parseFloat(label.style.fontSize) * max) / width}px`;
+      rewardLabels.prepare(label, false)();
+      node.remove();
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      const idle = window.requestIdleCallback(warm);
+      cancelRewardWarmup = () => window.cancelIdleCallback(idle);
+    } else {
+      const timer = window.setTimeout(warm, 100);
+      cancelRewardWarmup = () => clearTimeout(timer);
+    }
+  }
   function paintBest() {
     el("best").textContent = Math.max(
       visibleBestFloor,
@@ -370,6 +419,7 @@ async function start() {
       );
       performanceCapture.setActive(true);
       root.classList.remove("effects-paused");
+      queueRewardWarmup();
       haptics.setActive(
         store.state.settings.haptics !== false &&
           !store.state.settings.calm &&
@@ -468,6 +518,7 @@ async function start() {
       );
     scene.game.events.once("postrender", () => {
       rendererReady = true;
+      queueRewardWarmup();
       root.inert = ads.busy;
       root.removeAttribute("aria-busy");
       syncRenderer();
@@ -1458,6 +1509,8 @@ async function start() {
       node.dataset.signature = praise.startsWith("ПЕРЕКРЕСТИЕ")
         ? "cross"
         : "lanes";
+    const finishLabel = rewardLabels.prepare(label, important && !scene.calm);
+    const finishAmount = rewardLabels.prepare(amount, false);
     if (important)
       rewardHoldUntil = Math.max(rewardHoldUntil, performance.now() + duration);
     const timerIds: number[] = [];
@@ -1470,6 +1523,8 @@ async function start() {
     const finish = () => {
       timerIds.forEach(clearTimeout);
       settle();
+      finishLabel();
+      finishAmount();
       node.getAnimations({ subtree: true }).forEach((a) => a.cancel());
       node.remove();
       rewards.delete(node);
@@ -2821,6 +2876,7 @@ async function start() {
         festival.setDiagnosticSeed(0x5120cafe);
       },
       beginSample: () => {
+        rewardLabels.beginSample();
         if (!phoneLayers) return;
         diagnosticRewardDom = 0;
         scene.beginDiagnosticSample();
@@ -2849,6 +2905,7 @@ async function start() {
       state: () => ({
         game: currentGame(),
         wardrobe: store.state.wardrobe,
+        rewardRasters: rewardLabels.snapshot(),
         ...(phoneLayers
           ? {
               proof: {
@@ -2902,6 +2959,8 @@ async function start() {
     if (document.hidden && modal === "result") finishResultPresentation();
   });
   window.addEventListener("pagehide", () => {
+    cancelRewardWarmup?.();
+    cancelRewardWarmup = null;
     activity.setBlocked("pagehide", true);
     cancelDrag();
     cancelHint();
@@ -2910,6 +2969,8 @@ async function start() {
   });
   if (import.meta.hot)
     import.meta.hot.dispose(() => {
+      cancelRewardWarmup?.();
+      cancelRewardWarmup = null;
       clearInterval(reviveTimer);
       stopReviveClock();
       analytics.dispose();

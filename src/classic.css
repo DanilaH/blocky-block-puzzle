@@ -4,6 +4,14 @@
 :root[data-presentation="classic"] #app {
   transition: none;
 }
+/* These surfaces are flat in Classic. Keep ink fades without animating the
+   unused enamel custom property and its derived palette every frame. */
+:root[data-presentation="classic"] .best,
+:root[data-presentation="classic"] .icon,
+:root[data-presentation="classic"] .hint,
+:root[data-presentation="classic"] .secondary {
+  transition: color var(--world-duration);
+}
 :root[data-presentation="classic"] body::before {
   display: none;
 }
