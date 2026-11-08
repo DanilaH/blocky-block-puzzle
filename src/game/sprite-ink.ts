@@ -158,6 +158,14 @@ export class SpriteInk {
   private strokeAlpha = 1;
   private width = 1;
   private visible = true;
+  private diagnosticDisabled = false;
+  setDiagnosticDisabled(disabled: boolean) {
+    this.diagnosticDisabled = disabled;
+    if (disabled) this.clear();
+  }
+  diagnosticCount() {
+    return this.imageCursor;
+  }
   private washes: Phaser.GameObjects.Rectangle[] = [];
   private washCursor = 0;
   private washSources = new WeakMap<
@@ -226,7 +234,7 @@ export class SpriteInk {
     stroke: boolean,
   ) {
     const alpha = stroke ? this.strokeAlpha : this.fillAlpha;
-    if (alpha <= 0 || w <= 0 || h <= 0) return this;
+    if (this.diagnosticDisabled || alpha <= 0 || w <= 0 || h <= 0) return this;
     const radius = RADII.reduce((a, b) =>
       Math.abs(b - r) < Math.abs(a - r) ? b : a,
     );
@@ -286,7 +294,14 @@ export class SpriteInk {
     rotation = 0,
     key = KEY,
   ) {
-    if (alpha <= 0 || w <= 0 || h <= 0 || this.imageCursor >= 512) return this;
+    if (
+      this.diagnosticDisabled ||
+      alpha <= 0 ||
+      w <= 0 ||
+      h <= 0 ||
+      this.imageCursor >= 512
+    )
+      return this;
     let s = this.images[this.imageCursor++];
     if (!s) {
       s = this.scene.add
@@ -306,6 +321,7 @@ export class SpriteInk {
     return this;
   }
   energyBorder(energy: number) {
+    if (this.diagnosticDisabled) return this;
     prepareEnergyBorder(this.scene);
     const level = Math.max(
       0,

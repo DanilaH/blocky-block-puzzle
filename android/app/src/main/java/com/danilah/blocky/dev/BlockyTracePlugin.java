@@ -16,6 +16,7 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
@@ -30,6 +31,7 @@ public class BlockyTracePlugin extends Plugin {
   private boolean owned, flushing, ready, destroyed;
   private long bytes;
   private String error = "not-started", reason = "";
+  private String captureId = "";
   private File trace;
   private final Runnable timeout = () -> stopOwned("timeout");
   private boolean supported() {
@@ -41,15 +43,24 @@ public class BlockyTracePlugin extends Plugin {
     result.put("supported", supported()); result.put("ready", ready);
     result.put("recording", owned); result.put("flushing", flushing);
     result.put("bytes", bytes); result.put("error", error); result.put("reason", reason);
+    result.put("captureId", captureId);
     result.put("categories", "ANDROID_WEBVIEW|JAVASCRIPT_AND_RENDERING|blink.user_timing");
     result.put("mode", "RECORD_UNTIL_FULL"); result.put("maxDurationMs", 25000);
     result.put("maxOutputBytes", 64 * 1024 * 1024);
     return result;
   }
+  @PluginMethod public void reset(PluginCall call) { ui.post(() -> {
+    if (owned || flushing) { call.reject("Trace still active"); return; }
+    ready = false; bytes = 0; captureId = ""; error = "not-started"; reason = "";
+    File old = new File(getContext().getCacheDir(), "blocky-webview-trace.json");
+    if (old.exists() && !old.delete()) { error = "clear-failed"; call.reject("Cannot clear old trace"); return; }
+    trace = null;
+    call.resolve(status());
+  }); }
   @PluginMethod public void start(PluginCall call) { ui.post(() -> {
     if (!supported()) { error = "unsupported"; call.resolve(status()); return; }
     if (owned || flushing) { call.reject("Trace already active"); return; }
-    ready = false; bytes = 0; error = ""; reason = "";
+    ready = false; bytes = 0; error = ""; reason = ""; captureId = UUID.randomUUID().toString();
     try {
       TracingController controller = TracingController.getInstance();
       if (controller.isTracing()) { error = "external-trace-active"; call.resolve(status()); return; }
@@ -105,11 +116,12 @@ public class BlockyTracePlugin extends Plugin {
     if (owned || flushing || json.isEmpty() || json.length() > 1000000) {
       call.reject("Diagnostic not ready"); return;
     }
-    final boolean includeTrace = ready && trace != null && trace.isFile();
+    final boolean includeTrace = call.getBoolean("includeTrace", true) && ready && trace != null && trace.isFile();
+    final String bundleName = "layers".equals(call.getString("kind")) ? "blocky-layer-result.zip" : "blocky-clear-result.zip";
     final String nativeStatus = status().toString();
     writer.execute(() -> {
       try {
-        File bundle = new File(getContext().getCacheDir(), "blocky-clear-result.zip");
+        File bundle = new File(getContext().getCacheDir(), bundleName);
         try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(bundle))) {
           put(out, "report.json", json.getBytes(StandardCharsets.UTF_8));
           put(out, "native-status.json", nativeStatus.getBytes(StandardCharsets.UTF_8));

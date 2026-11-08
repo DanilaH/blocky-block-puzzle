@@ -58,6 +58,17 @@ export class BoardScene extends Phaser.Scene {
   private impacts: Impact[] = [];
   calm = false;
   private diagnostic = { cachedBorder: false, hideInk: false, hideVfx: false };
+  private diagnosticSample: {
+    draws: number;
+    inkPeak: number;
+    vfxPeak: number;
+  } | null = null;
+  beginDiagnosticSample() {
+    this.diagnosticSample = { draws: 0, inkPeak: 0, vfxPeak: 0 };
+  }
+  diagnosticSnapshot() {
+    return { draws: 0, inkPeak: 0, vfxPeak: 0, ...this.diagnosticSample };
+  }
   /** Transient presentation-only controls for the separate preview benchmark. */
   setDiagnosticProfile(profile: Partial<typeof this.diagnostic> = {}) {
     this.diagnostic = {
@@ -67,6 +78,9 @@ export class BoardScene extends Phaser.Scene {
       ...profile,
     };
     this.ink?.setVisible(!this.diagnostic.hideInk);
+    if (this.ink instanceof SpriteInk)
+      this.ink.setDiagnosticDisabled(this.diagnostic.hideInk);
+    this.vfx?.setDiagnosticDisabled(this.diagnostic.hideVfx);
     this.dirty = true;
   }
   private theme = 0;
@@ -911,6 +925,21 @@ export class BoardScene extends Phaser.Scene {
     fx.end();
     if (this.diagnostic.hideVfx) fx.clear();
     this.study?.end();
+    if (this.diagnosticSample) {
+      this.diagnosticSample.draws++;
+      this.diagnosticSample.inkPeak = Math.max(
+        this.diagnosticSample.inkPeak,
+        this.ink instanceof SpriteInk
+          ? this.ink.diagnosticCount()
+          : this.diagnostic.hideInk
+            ? 0
+            : 1,
+      );
+      this.diagnosticSample.vfxPeak = Math.max(
+        this.diagnosticSample.vfxPeak,
+        this.vfx?.diagnosticCount() ?? 0,
+      );
+    }
     if (this.mix() >= 1) this.themeAt = 0;
   }
 }

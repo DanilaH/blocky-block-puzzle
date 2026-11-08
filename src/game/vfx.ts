@@ -8,10 +8,19 @@ export const VFX_LIMIT = 220;
 export class VfxSprites {
   private pool: Phaser.GameObjects.Image[] = [];
   private cursor = 0;
+  private diagnosticDisabled = false;
+  setDiagnosticDisabled(disabled: boolean) {
+    this.diagnosticDisabled = disabled;
+    if (disabled) this.clear();
+  }
+  diagnosticCount() {
+    return this.cursor;
+  }
   constructor(private scene: Phaser.Scene) {
     // Allocate once before input unlock, not in the first large clear frame.
     this.pool = Array.from({ length: VFX_LIMIT }, () =>
-      scene.add.image(0, 0, "vfx-chip").setDepth(2).setVisible(false));
+      scene.add.image(0, 0, "vfx-chip").setDepth(2).setVisible(false),
+    );
   }
   begin() {
     this.cursor = 0;
@@ -28,6 +37,7 @@ export class VfxSprites {
     additive = true,
   ) {
     if (
+      this.diagnosticDisabled ||
       alpha <= 0 ||
       width <= 0 ||
       height <= 0 ||

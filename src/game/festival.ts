@@ -18,6 +18,44 @@ type Spark = {
   floor: number;
 };
 export class Festival {
+  private diagnosticDisabled = false;
+  private diagnosticRandom: (() => number) | null = null;
+  private diagnosticSample: {
+    draws: number;
+    bursts: number;
+    spawned: number;
+    peakParticles: number;
+  } | null = null;
+  setDiagnosticDisabled(disabled: boolean) {
+    this.diagnosticDisabled = disabled;
+    if (disabled) this.stop();
+  }
+  setDiagnosticSeed(seed: number) {
+    this.diagnosticRandom = () =>
+      (seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296;
+  }
+  private random() {
+    return this.diagnosticRandom ? this.diagnosticRandom() : Math.random();
+  }
+  beginDiagnosticSample() {
+    this.diagnosticSample = {
+      draws: 0,
+      bursts: 0,
+      spawned: 0,
+      peakParticles: 0,
+    };
+  }
+  diagnosticSnapshot() {
+    return {
+      draws: 0,
+      bursts: 0,
+      spawned: 0,
+      peakParticles: 0,
+      ...this.diagnosticSample,
+      disabled: this.diagnosticDisabled,
+      canvas: [this.canvas.width, this.canvas.height],
+    };
+  }
   private theme = 0;
   private reveals: {
     board: DOMRect;
@@ -91,6 +129,7 @@ export class Festival {
     budget = 200,
     variant = 0,
   ) {
+    if (this.diagnosticDisabled) return;
     this.syncViewport();
     const signature = clearSignature(cells);
     const directional = !empty && !record && lines >= 2 && signature.count >= 2;
@@ -148,17 +187,17 @@ export class Festival {
         ? board.bottom - 12
         : board.top + ((Math.floor(cell / 8) + 0.5) * board.height) / 8;
       let angle = empty
-        ? -Math.PI / 2 + (Math.random() - 0.5) * 1.6
-        : Math.random() * Math.PI * 2;
+        ? -Math.PI / 2 + (this.random() - 0.5) * 1.6
+        : this.random() * Math.PI * 2;
       const speed = empty
-        ? 280 + Math.random() * 310
-        : 90 + Math.random() * 210;
+        ? 280 + this.random() * 310
+        : 90 + this.random() * 210;
       if (empty && variant === 1) {
         x = board.left + board.width / 2;
         y = board.bottom;
       }
       if (empty && variant === 2) {
-        x = board.left + Math.random() * board.width;
+        x = board.left + this.random() * board.width;
         y = board.top - board.height * 0.2;
       }
       let delay = 0;
@@ -169,7 +208,7 @@ export class Festival {
         if (signature.kind === "cross") {
           x = board.left + ((signature.cols[0]! + 0.5) * board.width) / 8;
           y = board.top + ((signature.rows[0]! + 0.5) * board.height) / 8;
-          angle = ((i % 4) * Math.PI) / 2 + (Math.random() - 0.5) * 0.22;
+          angle = ((i % 4) * Math.PI) / 2 + (this.random() - 0.5) * 0.22;
           delay = 180;
         } else {
           const along = lines === 2 ? (lane === 0 ? 0.1 : 0.9) : (i % 8) / 8;
@@ -182,7 +221,7 @@ export class Festival {
           angle =
             (horizontal ? 0 : Math.PI / 2) +
             (lines === 2 && lane === 1 ? Math.PI : 0) +
-            (Math.random() - 0.5) * 0.65;
+            (this.random() - 0.5) * 0.65;
           delay = lane * (lines === 2 ? 160 : 120);
         }
       }
@@ -194,24 +233,33 @@ export class Festival {
         vx: empty && variant === 2 ? 0 : Math.cos(angle) * speed,
         vy:
           empty && variant === 2
-            ? 220 + Math.random() * 100
+            ? 220 + this.random() * 100
             : Math.sin(angle) * speed - (empty ? 0 : 80),
-        age: empty && variant === 2 ? -Math.random() * 650 : -delay,
-        life: empty ? 1500 + Math.random() * 500 : 550 + Math.random() * 550,
-        size: 9 + Math.random() * 9,
+        age: empty && variant === 2 ? -this.random() * 650 : -delay,
+        life: empty ? 1500 + this.random() * 500 : 550 + this.random() * 550,
+        size: 9 + this.random() * 9,
         color: palette[(sourceBoard?.[cell] || (i % palette.length) + 1) - 1]!,
-        spin: Math.random() * 8 - 4,
+        spin: this.random() * 8 - 4,
         star: i % 8 === 0,
       });
     }
     if (this.sparks.length > 260)
       this.sparks.splice(0, this.sparks.length - 260);
+    if (this.diagnosticSample) {
+      this.diagnosticSample.bursts++;
+      this.diagnosticSample.spawned += count;
+      this.diagnosticSample.peakParticles = Math.max(
+        this.diagnosticSample.peakParticles,
+        this.sparks.length,
+      );
+    }
     if (!this.frame) {
       this.last = performance.now();
       this.frame = visualClock.add((t) => this.draw(t));
     }
   }
   private draw(now: number) {
+    if (this.diagnosticSample) this.diagnosticSample.draws++;
     const dt = Math.max(0, Math.min(40, now - this.last));
     this.last = now;
     const g = this.ctx;

@@ -43,6 +43,30 @@ export class Atmosphere {
   private index = 0;
   private styleKey = "";
   private streak = 0;
+  private diagnosticDisabled = false;
+  private diagnosticDraws: number | null = null;
+  setDiagnosticDisabled(disabled: boolean) {
+    this.diagnosticDisabled = disabled;
+    if (disabled) {
+      this.frame?.();
+      this.frame = null;
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+  }
+  resetDiagnosticPresentation() {
+    this.time = this.energy = this.wave = 0;
+    this.weights = THEMES.map((_, i) => Number(i === this.index));
+  }
+  beginDiagnosticSample() {
+    this.diagnosticDraws = 0;
+  }
+  diagnosticSnapshot() {
+    return {
+      disabled: this.diagnosticDisabled,
+      draws: this.diagnosticDraws ?? 0,
+      canvas: [this.canvas.width, this.canvas.height],
+    };
+  }
   private weights: number[] = THEMES.map((_, i) => (i === 0 ? 1 : 0));
   private motes = Array.from({ length: 48 }, (_, i) => ({
     x: Math.random(),
@@ -119,11 +143,11 @@ export class Atmosphere {
         calm ? "250ms" : next === 0 ? "1800ms" : "1000ms",
       );
     }
-    if (active && !calm && !this.frame) {
+    if (active && !calm && !this.frame && !this.diagnosticDisabled) {
       this.last = performance.now();
       this.frame = visualClock.add((t) => this.draw(t), 30);
     }
-    if (!active || calm) {
+    if (!active || calm || this.diagnosticDisabled) {
       this.frame?.();
       this.frame = null;
       this.energy = 0;
@@ -132,12 +156,13 @@ export class Atmosphere {
     }
   }
   impulse(amount: number) {
-    if (this.active && !this.calm) {
+    if (this.active && !this.calm && !this.diagnosticDisabled) {
       this.energy = Math.min(3, this.energy + amount);
       if (amount >= 2.5) this.wave = performance.now();
     }
   }
   private draw(now: number) {
+    if (this.diagnosticDraws !== null) this.diagnosticDraws++;
     const dt = Math.max(0, Math.min(40, now - this.last));
     this.last = now;
     this.time += dt / 1000;

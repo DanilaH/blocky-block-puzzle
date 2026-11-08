@@ -6,6 +6,17 @@ export function readRenderInfo(game: Phaser.Game) {
     const base = {
       canvas: [game.canvas.width, game.canvas.height],
       userAgent: navigator.userAgent,
+      reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+      effectLayers: Array.from(
+        document.querySelectorAll<HTMLCanvasElement>(
+          ".ambient-canvas,.festival-canvas",
+        ),
+        (canvas) => ({
+          layer: canvas.className,
+          renderer: "canvas2d",
+          canvas: [canvas.width, canvas.height],
+        }),
+      ),
     };
     const gl = renderer.gl;
     if (!gl) return { ...base, type: "canvas" };

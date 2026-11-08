@@ -1,4 +1,5 @@
 import { readRenderInfo } from "./platform/render-info";
+import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
 import { presentReviveClock } from "./game/revive-clock";
 import { MoveCalculator } from "./game/move-calculator";
@@ -89,9 +90,13 @@ const fresh = (dealer: DealerVersion = "flow-v4") => ({
 });
 async function start() {
   document.documentElement.dataset.presentation = "classic";
+  const traceRequest = new URLSearchParams(location.search).get("clearTrace");
   const phoneTrace =
     APP_VERSION.endsWith("-preview") &&
-    new URLSearchParams(location.search).get("clearTrace") === "1";
+    (traceRequest === "1" || traceRequest === "layers");
+  const phoneLayers = phoneTrace && traceRequest === "layers";
+  let diagnosticLayer: ClearLayer | null = null;
+  let diagnosticRewardDom = 0;
   // A fixed separate database keeps all ordinary transaction/render paths real,
   // while the scripted diagnostic cannot modify the player's profile or backup.
   const adapter = new IndexedSave(
@@ -218,6 +223,7 @@ async function start() {
   let heldTheme: number | null = null;
   let themeRevealGeneration = 0;
   function presentationTheme() {
+    if (phoneLayers && diagnosticLayer?.freezeTheme) return 1;
     if (heldTheme !== null) return heldTheme;
     const params = new URLSearchParams(location.search);
     return import.meta.env.DEV && params.has("themeSeries")
@@ -1307,6 +1313,8 @@ async function start() {
     tier: "record" | "theme" | "series-end",
     text: string,
   ) {
+    if (phoneLayers && diagnosticLayer?.skipRewardDom) return;
+    if (phoneLayers) diagnosticRewardDom++;
     const host =
       tier === "record"
         ? document.querySelector(".best")!
@@ -1332,6 +1340,12 @@ async function start() {
     )?.effect?.updateTiming({ easing: "linear" });
     later(() => node.remove(), duration);
   }
+  function settleRewardPoints(deferred: number, gameId: string) {
+    if (gameId !== currentGame().gameId) return;
+    pendingPoints = Math.max(0, pendingPoints - deferred);
+    if (deferred)
+      updateScore(currentGame().score - pendingPoints, gameId, running);
+  }
   function presentReward(
     tier: string,
     praise: string,
@@ -1343,6 +1357,17 @@ async function start() {
   ) {
     const important =
       tier === "record" || tier === "all-clear" || tier === "series";
+    if (phoneLayers && diagnosticLayer?.skipRewardDom) {
+      // Keep score arrival and the HUD count-up, while omitting the floating
+      // reward DOM and its source/destination flashes. Mechanics already saved.
+      if (deferred)
+        later(
+          () => settleRewardPoints(deferred, gameId),
+          important ? 700 : 580,
+        );
+      return;
+    }
+    if (phoneLayers) diagnosticRewardDom++;
     if (tier !== "place")
       for (const old of rewards.keys()) old.classList.add("yield-to-drag");
     const node = document.createElement("span");
@@ -1440,10 +1465,7 @@ async function start() {
     const settle = () => {
       if (settled) return;
       settled = true;
-      if (gameId !== currentGame().gameId) return;
-      pendingPoints = Math.max(0, pendingPoints - deferred);
-      if (deferred)
-        updateScore(currentGame().score - pendingPoints, gameId, running);
+      settleRewardPoints(deferred, gameId);
     };
     const finish = () => {
       timerIds.forEach(clearTimeout);
@@ -2153,7 +2175,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 90 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2290,6 +2312,7 @@ async function start() {
     };
     el("clear-benchmark").onclick = protectDiagnostic;
     el("clear-trace").onclick = protectDiagnostic;
+    el("clear-layers").onclick = protectDiagnostic;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
@@ -2786,6 +2809,24 @@ async function start() {
     await traceModule.installPhoneClear({
       ready: () => rendererReady,
       context: () => readRenderInfo(phaser!),
+      configure: (condition) => {
+        diagnosticLayer = condition;
+        scene.setDiagnosticProfile({
+          cachedBorder: true,
+          hideInk: condition.hideInk,
+          hideVfx: condition.hideVfx,
+        });
+        atmosphere.setDiagnosticDisabled(condition.skipAtmosphere);
+        festival.setDiagnosticDisabled(condition.skipFestival);
+        festival.setDiagnosticSeed(0x5120cafe);
+      },
+      beginSample: () => {
+        if (!phoneLayers) return;
+        diagnosticRewardDom = 0;
+        scene.beginDiagnosticSample();
+        atmosphere.beginDiagnosticSample();
+        festival.beginDiagnosticSample();
+      },
       reset: async () => {
         await store.waitIdle();
         cancelDrag();
@@ -2798,13 +2839,33 @@ async function start() {
         themeGame = "";
         themeKey = "";
         render();
+        if (phoneLayers) atmosphere.resetDiagnosticPresentation();
       },
       commit: async () => {
         await commit(traceModule.phoneFixture.move, currentGame().revision);
         if (currentGame().score !== traceModule.phoneFixture.expectedScore)
           throw Error("Diagnostic move did not commit");
       },
-      state: () => ({ game: currentGame(), wardrobe: store.state.wardrobe }),
+      state: () => ({
+        game: currentGame(),
+        wardrobe: store.state.wardrobe,
+        ...(phoneLayers
+          ? {
+              proof: {
+                renderedTheme: presentationTheme(),
+                savedTheme: store.state.wardrobe?.selected ?? 0,
+                score: currentGame().score,
+                boardEmpty: currentGame().board.every((n) => n === 0),
+                rewardDomCreated: diagnosticRewardDom,
+                shownScore: Math.round(scoreShown),
+                pendingPoints,
+                scene: scene.diagnosticSnapshot(),
+                atmosphere: atmosphere.diagnosticSnapshot(),
+                festival: festival.diagnosticSnapshot(),
+              },
+            }
+          : {}),
+      }),
       pause: (paused) => activity.setBlocked("clear-trace", paused),
     });
   }
