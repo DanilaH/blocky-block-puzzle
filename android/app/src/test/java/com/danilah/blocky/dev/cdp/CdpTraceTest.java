@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -56,5 +57,22 @@ public class CdpTraceTest {
       fail("Must reject missing traceEvents");
     } catch (Exception expected) {
     }
+  }
+
+  @org.junit.Test
+  public void linksLayerAddressedAndroidPaintWithoutRequiringProbeNodeOnPaint() throws Exception {
+    JSONObject proof = new JSONObject("{\"paintBackendNodeIds\":[9],\"paintLayerIds\":[\"48\"]}");
+    JSONArray nodes =
+        new JSONArray(
+            "[{\"backendNodeId\":180,\"node\":{\"backendNodeId\":180,\"attributes\":[\"id\",\"blocky-cdp-probe\"]}}]");
+    JSONArray layers =
+        new JSONArray(
+            "[{\"method\":\"LayerTree.layerTreeDidChange\",\"params\":{\"layers\":[{\"layerId\":\"48\",\"backendNodeId\":180}]}},{\"method\":\"LayerTree.layerPainted\",\"params\":{\"layerId\":\"48\"}}]");
+    org.junit.Assert.assertTrue(CdpTrace.probeLinked(proof, nodes, layers));
+    proof.put("paintLayerIds", new JSONArray().put("99"));
+    org.junit.Assert.assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
+    proof.put("paintLayerIds", new JSONArray().put("48"));
+    layers.remove(1);
+    org.junit.Assert.assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
   }
 }

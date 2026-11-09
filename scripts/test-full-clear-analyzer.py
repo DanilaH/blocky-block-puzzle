@@ -48,6 +48,19 @@ def fixture():
                                             spawned=0 if flags['skipFestival'] else 148))),
                    sample=dict(frames=frames, frameTimes=times, placements=[dict(at=100.)]),
                    traceActive=phase == 'attribution')
+        proof = row['state']['proof']
+        proof['rewardRenderer'] = 'dom'
+        proof['rewardDomCreated'] = 0 if omitted else 2 if flags['skipThemeNotice'] or flags['freezeTheme'] else 3
+        palette = 1 if flags['freezeDomPalette'] else theme
+        proof['atmosphere']['domPaletteTheme'] = palette
+        proof['atmosphere']['domPalette'] = {
+            1: dict(bg='#f4f3ee', ink='#325376', accent='#72a8ec'),
+            5: dict(bg='#233f57', ink='#f2f4f7', accent='#a5e8ef')}[palette]
+        proof['scene']['draws'] = 1
+        proof['atmosphere']['draws'] = 0 if flags['skipAtmosphere'] else 1
+        proof['festival'].update(draws=0 if flags['skipFestival'] else 1,
+                                 bursts=0 if flags['skipFestival'] else 2,
+                                 activeParticles=0, activeReveals=0)
         row['metrics'] = analyzer.frame_metrics(row)
         if phase == 'attribution':
             directory, capture_id = f'{index:02}-{name}', f'synthetic-{index}'
@@ -118,6 +131,13 @@ class FullArchiveTest(unittest.TestCase):
     def test_logical_failure_not_accepted_from_valid_boolean(self):
         self.report['episodes'][0]['state']['proof']['shownScore'] = 121
         self.assertTrue(self.check()['issues'])
+
+    def test_palette_and_unfinished_effects_rejected(self):
+        self.report['episodes'][0]['state']['proof']['atmosphere']['domPalette']['bg'] = '#ffffff'
+        self.report['episodes'][0]['state']['proof']['festival']['activeParticles'] = 1
+        issues = self.check()['issues']
+        self.assertIn('dom-palette', issues[0])
+        self.assertIn('unfinished-festival', issues[0])
 
     def test_stale_capture_rejected(self):
         capture = self.report['episodes'][-1]['capture']

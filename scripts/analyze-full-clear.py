@@ -1,6 +1,6 @@
 """Verify one full diagnostic export, its comparison brackets and all CDP files."""
 from pathlib import Path, PurePosixPath
-import gzip, hashlib, io, json, math, statistics, sys, zipfile
+import gzip, hashlib, io, json, math, sys, zipfile
 
 FLAGS=['hideInk','hideVfx','skipFestival','skipAtmosphere','skipRewardDom','freezeTheme','skipHudFlashes','skipRewardDecoration','freezeDomPalette','skipThemeNotice','skipPointFlights','skipThemeImpulse']
 CASES={
@@ -55,7 +55,17 @@ def validate(path):
    if proof['festival']['spawned']!=(0 if flags['skipFestival'] else 148):errors.append('particle-count')
    if bool(proof['scene']['inkPeak']==0)!=flags['hideInk'] or bool(proof['scene']['vfxPeak']==0)!=flags['hideVfx']:errors.append('board-output')
    if proof['atmosphere']['disabled']!=flags['skipAtmosphere'] or proof['festival']['disabled']!=flags['skipFestival']:errors.append('external-layer-output')
+   if proof.get('rewardRenderer')!='dom' or proof.get('rewardDomCreated')!=(0 if omit else 2 if omit or flags['skipThemeNotice'] or flags['freezeTheme'] else 3):errors.append('reward-dom-path')
+   palette=1 if flags['freezeDomPalette'] else theme
+   colors={1:dict(bg='#f4f3ee',ink='#325376',accent='#72a8ec'),5:dict(bg='#233f57',ink='#f2f4f7',accent='#a5e8ef')}
+   if proof['atmosphere'].get('domPaletteTheme')!=palette or proof['atmosphere'].get('domPalette')!=colors[palette]:errors.append('dom-palette')
+   if not proof['scene'].get('draws') or (proof['atmosphere'].get('draws',0)==0)!=flags['skipAtmosphere'] or (proof['festival'].get('draws',0)==0)!=flags['skipFestival'] or proof['festival'].get('bursts')!=(0 if flags['skipFestival'] else 2):errors.append('renderer-not-drawn')
+   if not functional and (proof['festival'].get('activeParticles')!=0 or proof['festival'].get('activeReveals')!=0):errors.append('unfinished-festival')
    assert len(e['sample']['placements'])==1
+   frames=e['sample']['frames'];times=e['sample']['frameTimes']
+   assert len(frames)==len(times) and frames and all(math.isfinite(x) and x>0 for x in frames),'Invalid frame intervals'
+   assert all(math.isfinite(t) for t in times) and all(a<b for a,b in zip(times,times[1:])),'Invalid frame timestamps'
+   if not functional and times[-1]-e['sample']['placements'][0]['at']<7900:errors.append('measurement-window')
    m=frame_metrics(e,duration)
    for key,value in m.items():
     actual=e['metrics'][key];assert actual==value or isinstance(actual,(float,int)) and isinstance(value,(float,int)) and abs(actual-value)<1e-5, 'Metric mismatch: '+key

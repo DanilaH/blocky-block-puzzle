@@ -266,37 +266,7 @@ public final class CdpTrace implements Closeable {
       writer.write(mapping.toString());
     }
     JSONObject proof = inspect(trace);
-    boolean probeLinked = false;
-    Set<String> probeLayers = new HashSet<>();
-    Set<Long> paintedNodes = new HashSet<>();
-    JSONArray painted = proof.getJSONArray("paintBackendNodeIds");
-    for (int i = 0; i < painted.length(); i++) paintedNodes.add(painted.getLong(i));
-    for (int i = 0; i < nodeRecords.length(); i++) {
-      JSONObject row = nodeRecords.getJSONObject(i), n = row.optJSONObject("node");
-      if (n == null) continue;
-      JSONArray attrs = n.optJSONArray("attributes");
-      if (attrs == null) continue;
-      for (int j = 0; j + 1 < attrs.length(); j += 2)
-        if (attrs.getString(j).equals("id") && attrs.getString(j + 1).equals("blocky-cdp-probe")) {
-          long backend = n.getLong("backendNodeId");
-          for (int k = 0; k < layerEvents.length(); k++) {
-            JSONObject ev = layerEvents.getJSONObject(k);
-            JSONArray ls = ev.getJSONObject("params").optJSONArray("layers");
-            if (ls != null)
-              for (int z = 0; z < ls.length(); z++)
-                if (ls.getJSONObject(z).optLong("backendNodeId") == backend)
-                  probeLayers.add(ls.getJSONObject(z).getString("layerId"));
-          }
-          boolean layerPaint = false;
-          for (int k = 0; k < layerEvents.length(); k++) {
-            JSONObject ev = layerEvents.getJSONObject(k);
-            if (ev.optString("method").equals("LayerTree.layerPainted")
-                && probeLayers.contains(ev.getJSONObject("params").optString("layerId")))
-              layerPaint = true;
-          }
-          probeLinked = paintedNodes.contains(backend) && layerPaint;
-        }
-    }
+    boolean probeLinked = probeLinked(proof, nodeRecords, layerEvents);
     proof.put("probePaintLayerLinked", probeLinked);
     int successfulNodes = 0, successfulReasons = 0;
     for (int i = 0; i < nodeRecords.length(); i++)
@@ -337,6 +307,50 @@ public final class CdpTrace implements Closeable {
     return proof;
   }
 
+  /** Chromium emits either node-addressed Paint or layer-addressed Paint instants. */
+  public static boolean probeLinked(JSONObject proof, JSONArray nodeRecords, JSONArray layerEvents)
+      throws Exception {
+    boolean probeLinked = false;
+    Set<String> paintedLayers = new HashSet<>();
+    JSONArray layersPainted = proof.optJSONArray("paintLayerIds");
+    if (layersPainted != null)
+      for (int i = 0; i < layersPainted.length(); i++)
+        paintedLayers.add(layersPainted.getString(i));
+    Set<String> probeLayers = new HashSet<>();
+    Set<Long> paintedNodes = new HashSet<>();
+    JSONArray painted = proof.getJSONArray("paintBackendNodeIds");
+    for (int i = 0; i < painted.length(); i++) paintedNodes.add(painted.getLong(i));
+    for (int i = 0; i < nodeRecords.length(); i++) {
+      JSONObject row = nodeRecords.getJSONObject(i), n = row.optJSONObject("node");
+      if (n == null) continue;
+      JSONArray attrs = n.optJSONArray("attributes");
+      if (attrs == null) continue;
+      for (int j = 0; j + 1 < attrs.length(); j += 2)
+        if (attrs.getString(j).equals("id") && attrs.getString(j + 1).equals("blocky-cdp-probe")) {
+          long backend = n.getLong("backendNodeId");
+          for (int k = 0; k < layerEvents.length(); k++) {
+            JSONObject ev = layerEvents.getJSONObject(k);
+            JSONArray ls = ev.getJSONObject("params").optJSONArray("layers");
+            if (ls != null)
+              for (int z = 0; z < ls.length(); z++)
+                if (ls.getJSONObject(z).optLong("backendNodeId") == backend)
+                  probeLayers.add(ls.getJSONObject(z).getString("layerId"));
+          }
+          boolean layerPaint = false;
+          for (int k = 0; k < layerEvents.length(); k++) {
+            JSONObject ev = layerEvents.getJSONObject(k);
+            if (ev.optString("method").equals("LayerTree.layerPainted")
+                && probeLayers.contains(ev.getJSONObject("params").optString("layerId")))
+              layerPaint = true;
+          }
+          probeLinked =
+              (paintedNodes.contains(backend) || !Collections.disjoint(probeLayers, paintedLayers))
+                  && layerPaint;
+        }
+    }
+    return probeLinked;
+  }
+
   public static JSONObject inspect(File file) throws Exception {
     int events = 0,
         paint = 0,
@@ -347,6 +361,7 @@ public final class CdpTrace implements Closeable {
         nativeDraws = 0,
         syncWaits = 0;
     Set<Long> paintNodes = new TreeSet<>();
+    Set<String> paintLayers = new TreeSet<>();
     boolean root = false;
     try (Reader reader =
         new InputStreamReader(
@@ -373,6 +388,12 @@ public final class CdpTrace implements Closeable {
               paint++;
               if (hasIdentity(e.optJSONObject("args"))) paintWithNode++;
               collectNodeIds(e.optJSONObject("args"), paintNodes);
+              JSONObject data =
+                  e.optJSONObject("args") == null
+                      ? null
+                      : e.getJSONObject("args").optJSONObject("data");
+              if (data != null && data.has("layerId") && !data.optString("layerId").equals("0"))
+                paintLayers.add(data.get("layerId").toString());
             }
             if (name.startsWith("blocky-full:") || name.startsWith("blocky-cdp-preflight:"))
               marks++;
@@ -400,7 +421,8 @@ public final class CdpTrace implements Closeable {
         .put("flowEndpoints", flows)
         .put("nativeDraws", nativeDraws)
         .put("syncWaits", syncWaits)
-        .put("paintBackendNodeIds", new JSONArray(paintNodes));
+        .put("paintBackendNodeIds", new JSONArray(paintNodes))
+        .put("paintLayerIds", new JSONArray(paintLayers));
   }
 
   public void snapshot(String label) throws Exception {
