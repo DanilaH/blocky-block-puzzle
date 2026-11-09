@@ -11,6 +11,8 @@ const defaults = {
   skipRewardDecoration: false,
   freezeDomPalette: false,
   skipThemeNotice: false,
+  skipPointFlights: false,
+  skipThemeImpulse: false,
 };
 function layer<const Id extends string>(
   id: Id,
@@ -32,7 +34,7 @@ export const CLEAR_LAYERS = [
   layer("no-reward-dom", "Без всего блока наград", { skipRewardDom: true }),
   layer("no-theme", "Без смены оформления", { freezeTheme: true }),
 ] as const;
-export type ClearLayer = (typeof CLEAR_LAYERS)[number];
+export type ClearLayer = typeof defaults & { id: string; label: string };
 export const BASELINE_LAYER = CLEAR_LAYERS[0];
 export const LAYER_SEED = 0x5120cafe;
 export function layerPlan() {
@@ -129,7 +131,10 @@ export function validateLayer(condition: ClearLayer, proof: LayerProof) {
     effects.visibleEmblems !== 0
   )
     errors.push("reward-decoration-output");
-  if (!effects || effects.pointFlights !== (omit ? 0 : 2))
+  if (
+    !effects ||
+    effects.pointFlights !== (omit || condition.skipPointFlights ? 0 : 2)
+  )
     errors.push("point-flight-output");
   if (
     !effects ||
@@ -138,7 +143,11 @@ export function validateLayer(condition: ClearLayer, proof: LayerProof) {
     errors.push("hud-flash-output");
   if (!effects || effects.themeNotices !== (noNotice ? 0 : 1))
     errors.push("theme-notice-output");
-  if (!effects || effects.themeImpulses !== (condition.freezeTheme ? 0 : 1))
+  if (
+    !effects ||
+    effects.themeImpulses !==
+      (condition.freezeTheme || condition.skipThemeImpulse ? 0 : 1)
+  )
     errors.push("theme-impulse-output");
   return { valid: errors.length === 0, errors };
 }

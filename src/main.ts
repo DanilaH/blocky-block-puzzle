@@ -93,8 +93,11 @@ async function start() {
   const traceRequest = new URLSearchParams(location.search).get("clearTrace");
   const phoneTrace =
     APP_VERSION.endsWith("-preview") &&
-    (traceRequest === "1" || traceRequest === "layers");
-  const phoneLayers = phoneTrace && traceRequest === "layers";
+    (traceRequest === "1" ||
+      traceRequest === "layers" ||
+      traceRequest === "full");
+  const phoneLayers =
+    phoneTrace && (traceRequest === "layers" || traceRequest === "full");
   let diagnosticLayer: ClearLayer | null = null;
   let diagnosticRewardDom = 0;
   const freshRewardEffects = () => ({
@@ -707,8 +710,10 @@ async function start() {
     ) {
       later(() => {
         presentHudNotice("theme", THEMES[nextTheme]!.name.toUpperCase());
-        atmosphere.impulse(1.5);
-        if (phoneLayers) diagnosticRewardEffects.themeImpulses++;
+        if (!(phoneLayers && diagnosticLayer?.skipThemeImpulse)) {
+          atmosphere.impulse(1.5);
+          if (phoneLayers) diagnosticRewardEffects.themeImpulses++;
+        }
       }, 450);
     }
     if (themeGame !== g.gameId) {
@@ -1543,28 +1548,30 @@ async function start() {
       timerIds.push(
         window.setTimeout(
           () => {
-            const a = amount.getBoundingClientRect(),
-              target = el("score").getBoundingClientRect();
-            const dx = target.left + target.width / 2 - a.left - a.width / 2;
-            const dy = target.top + target.height / 2 - a.top - a.height / 2;
-            const flight = animate(
-              amount,
-              [
-                { opacity: 1, transform: "translate(0,0) scale(1)" },
-                {
-                  opacity: 1,
-                  transform: `translate(${dx * 0.3}px,${dy * 0.55 - 20}px) scale(.9)`,
-                  offset: 0.55,
-                },
-                {
-                  opacity: 0,
-                  transform: `translate(${dx}px,${dy}px) scale(.35)`,
-                },
-              ],
-              300,
-            );
-            flight?.effect?.updateTiming({ easing: "ease-in" });
-            if (phoneLayers && flight) diagnosticRewardEffects.pointFlights++;
+            if (!(phoneLayers && diagnosticLayer?.skipPointFlights)) {
+              const a = amount.getBoundingClientRect(),
+                target = el("score").getBoundingClientRect();
+              const dx = target.left + target.width / 2 - a.left - a.width / 2;
+              const dy = target.top + target.height / 2 - a.top - a.height / 2;
+              const flight = animate(
+                amount,
+                [
+                  { opacity: 1, transform: "translate(0,0) scale(1)" },
+                  {
+                    opacity: 1,
+                    transform: `translate(${dx * 0.3}px,${dy * 0.55 - 20}px) scale(.9)`,
+                    offset: 0.55,
+                  },
+                  {
+                    opacity: 0,
+                    transform: `translate(${dx}px,${dy}px) scale(.35)`,
+                  },
+                ],
+                300,
+              );
+              flight?.effect?.updateTiming({ easing: "ease-in" });
+              if (phoneLayers && flight) diagnosticRewardEffects.pointFlights++;
+            }
             timerIds.push(
               window.setTimeout(() => {
                 settle();
@@ -2214,7 +2221,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-full" href="?clearTrace=full">Полная диагностика очистки · около 10 минут</a><a class="secondary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2845,7 +2852,7 @@ async function start() {
   }
   render();
   if (traceModule) {
-    await traceModule.installPhoneClear({
+    const phoneHooks: Parameters<typeof traceModule.installPhoneClear>[0] = {
       ready: () => rendererReady,
       context: () => readRenderInfo(phaser!),
       configure: (condition) => {
@@ -2917,7 +2924,11 @@ async function start() {
           : {}),
       }),
       pause: (paused) => activity.setBlocked("clear-trace", paused),
-    });
+    };
+    if (traceRequest === "full") {
+      const { installFullClear } = await import("./diagnostics/full-clear");
+      await installFullClear(phoneHooks);
+    } else await traceModule.installPhoneClear(phoneHooks);
   }
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (

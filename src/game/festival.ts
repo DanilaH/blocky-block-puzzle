@@ -47,6 +47,8 @@ export class Festival {
   }
   diagnosticSnapshot() {
     return {
+      activeParticles: this.sparks.length,
+      activeReveals: this.reveals.length,
       draws: 0,
       bursts: 0,
       spawned: 0,

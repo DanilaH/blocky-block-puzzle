@@ -55,7 +55,7 @@ type TraceBridge = {
     includeTrace: boolean;
   }): Promise<void>;
 };
-type Hooks = {
+export type PhoneClearHooks = {
   ready(): boolean;
   context(): unknown;
   configure?(condition: ClearLayer): void;
@@ -72,7 +72,7 @@ type Episode = {
   condition?: ClearLayer;
   traceActive: boolean;
   sample: ReturnType<typeof performanceCapture.snapshot>;
-  state: ReturnType<Hooks["state"]>;
+  state: ReturnType<PhoneClearHooks["state"]>;
   validation?: ReturnType<typeof validateLayer>;
 };
 function sleep(ms: number, signal: AbortSignal) {
@@ -89,7 +89,7 @@ function sleep(ms: number, signal: AbortSignal) {
     if (signal.aborted) abort();
   });
 }
-export async function installPhoneClear(hooks: Hooks) {
+export async function installPhoneClear(hooks: PhoneClearHooks) {
   const layers =
     new URLSearchParams(location.search).get("clearTrace") === "layers";
   if (layers && !hooks.configure) throw Error("Layer diagnostic hooks missing");

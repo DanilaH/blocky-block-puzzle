@@ -27,8 +27,8 @@ android {
         applicationId "com.danilah.blocky.dev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 57
-        versionName "0.57.0-preview"
+        versionCode 58
+        versionName "0.58.0-preview"
         resValue "string", "appmetrica_api_key", validTestMetricaKey ? testMetricaKey : ""
         resValue "bool", "ads_test_mode", "true"
         resValue "string", "yandex_banner_id", ""
@@ -75,6 +75,7 @@ dependencies {
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.json:json:20240303"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
