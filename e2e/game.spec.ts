@@ -177,7 +177,7 @@ test("captures the working visual direction in portrait and landscape", async ({
   await page.screenshot({ path: "docs/qa/feel-0.8/preview-landscape.png" });
 });
 
-test("cross clear animates after save and accepts next move during particles", async ({
+test("cross clear settles after save and accepts the next move during the compact reward", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -220,7 +220,7 @@ test("cross clear animates after save and accepts next move during particles", a
   await page.reload();
   await page.locator("#tray button").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#burst")).toContainText("ПЕРЕКРЕСТИЕ · 2!");
+  await expect(page.locator("#burst")).toContainText("Двойная!");
   await page.screenshot({ path: "docs/qa/feel-0.8/preview-combo.png" });
   await page.locator("#tray button").nth(1).click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
