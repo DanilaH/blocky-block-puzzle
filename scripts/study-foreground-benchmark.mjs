@@ -14,6 +14,7 @@ const inputs = [
   "src/style.css",
   "src/diagnostics/studies/canvas-foreground.ts",
   "src/diagnostics/studies/theme-ink.ts",
+  "src/diagnostics/studies/sprite-gpu.ts",
   "scripts/study-foreground-server.mjs",
   "scripts/study-foreground-benchmark.mjs",
 ];
@@ -62,7 +63,7 @@ try {
       errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(
-      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${variant}&studyPixels=${variant === "original" ? "original" : "native"}`,
+      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${variant === "gpu" ? "rewards" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : "canvas"}&studyPixels=${variant === "original" ? "original" : "native"}`,
     );
     await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
     const measure = () =>
@@ -88,6 +89,12 @@ try {
       assert.deepEqual(x.study.ink.errors, []);
       assert.equal(x.study.active, 0);
       assert.equal(x.study.ink.active, 0);
+      if (x.study.gpu) {
+        assert.equal(x.study.gpu.contextLost, false);
+        assert.equal(x.study.gpu.glError, 0);
+        assert(x.study.gpu.uploads > 0);
+        assert(x.study.gpu.drawCalls > 0);
+      }
     };
     const warmups = [];
     for (let n = 0; n < 2; n++) {

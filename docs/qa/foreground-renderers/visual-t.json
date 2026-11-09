@@ -1,0 +1,38 @@
+[
+  {
+    "at": 0,
+    "meanChannelError": 0.15423499059862697,
+    "maxChannelError": 65,
+    "percentPixelsOver8": 0.2955341916380877
+  },
+  {
+    "at": 80,
+    "meanChannelError": 0.1101497348250595,
+    "maxChannelError": 47,
+    "percentPixelsOver8": 0.2739828713854688
+  },
+  {
+    "at": 180,
+    "meanChannelError": 0.16526926656796787,
+    "maxChannelError": 78,
+    "percentPixelsOver8": 0.4008545566987125
+  },
+  {
+    "at": 350,
+    "meanChannelError": 0.030438584984039528,
+    "maxChannelError": 103,
+    "percentPixelsOver8": 0.045351473922902494
+  },
+  {
+    "at": 550,
+    "meanChannelError": 0.04015417002429989,
+    "maxChannelError": 139,
+    "percentPixelsOver8": 0.04666329341654017
+  },
+  {
+    "at": 900,
+    "meanChannelError": 0.04401716609508817,
+    "maxChannelError": 161,
+    "percentPixelsOver8": 0.04760030734056708
+  }
+]

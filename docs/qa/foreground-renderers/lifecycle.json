@@ -1,0 +1,295 @@
+{
+  "results": [
+    {
+      "variant": "rewards",
+      "paused": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 11,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.700000002980232
+          ],
+          "errors": [],
+          "backing": [
+            1078,
+            2398
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "later": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 11,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.700000002980232
+          ],
+          "errors": [],
+          "backing": [
+            1078,
+            2398
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "variant": "both",
+      "paused": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 10,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.899999998509884
+          ],
+          "errors": [],
+          "backing": [
+            1078,
+            2398
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [
+              4.299999997019768
+            ],
+            "errors": []
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "later": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 10,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.899999998509884
+          ],
+          "errors": [],
+          "backing": [
+            1078,
+            2398
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [
+              4.299999997019768
+            ],
+            "errors": []
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "variant": "gpu",
+      "paused": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 11,
+          "cacheEntries": 2,
+          "preparationMs": [
+            12.600000001490116
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 11,
+            "initMs": 8.800000004470348,
+            "uploads": 1,
+            "uploadMs": 0.6999999955296516,
+            "drawCalls": 11,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1078,
+              2398
+            ],
+            "contextLost": false,
+            "glError": 0
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "later": {
+        "snapshot": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 11,
+          "cacheEntries": 2,
+          "preparationMs": [
+            12.600000001490116
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 11,
+            "initMs": 8.800000004470348,
+            "uploads": 1,
+            "uploadMs": 0.6999999955296516,
+            "drawCalls": 11,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1078,
+              2398
+            ],
+            "contextLost": false,
+            "glError": 0
+          }
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dialog": true,
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "variant": "gpu-cold-cancel",
+      "before": {
+        "active": 0,
+        "prepared": 1,
+        "draws": 0,
+        "cacheEntries": 11,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "gpu": {
+          "frames": 0,
+          "initMs": 9.899999998509884,
+          "uploads": 0,
+          "uploadMs": 0,
+          "drawCalls": 0,
+          "textures": 0,
+          "textureBytes": 0,
+          "backing": [
+            1078,
+            2398
+          ],
+          "contextLost": false,
+          "glError": 0
+        }
+      },
+      "after": {
+        "active": 0,
+        "prepared": 1,
+        "draws": 0,
+        "cacheEntries": 11,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "gpu": {
+          "frames": 0,
+          "initMs": 9.899999998509884,
+          "uploads": 0,
+          "uploadMs": 0,
+          "drawCalls": 0,
+          "textures": 0,
+          "textureBytes": 0,
+          "backing": [
+            1078,
+            2398
+          ],
+          "contextLost": false,
+          "glError": 0
+        }
+      },
+      "graphics": {
+        "vendor": "Google Inc. (Google)",
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      }
+    }
+  ]
+}

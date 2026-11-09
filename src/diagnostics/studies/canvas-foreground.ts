@@ -1,4 +1,5 @@
 import { ThemeInkStudy } from "./theme-ink";
+import { SpriteGpu } from "./sprite-gpu";
 // Experimental renderer, loaded only by scripts/study-foreground.mjs.
 // Gameplay, score arrival and effect lifetimes remain owned by main.ts.
 type Host = {
@@ -127,6 +128,7 @@ function transform(value: string, w: number, h: number) {
   return v;
 }
 export class CanvasForegroundStudy {
+  private gpu?: SpriteGpu;
   private host: Host;
   private ink: ThemeInkStudy;
   private items = new Map<HTMLElement, Item>();
@@ -147,13 +149,28 @@ export class CanvasForegroundStudy {
     theme = false,
   ) {
     this.host = host as Host;
+    if (
+      rewards &&
+      new URLSearchParams(location.search).get("studyRenderer") === "webgl"
+    ) {
+      if (theme) throw Error("GPU ink is outside this reward-only experiment");
+      this.gpu = new SpriteGpu(this.host.canvas);
+    }
     this.ink = new ThemeInkStudy(
       theme,
       () => this.host.studyWake(),
       nativePixels ? devicePixelRatio : 1.5,
     );
     if (rewards || theme) {
-      this.host.studyPaint = (g) => this.draw(g);
+      this.host.studyPaint = (g) => {
+        if (!this.gpu) return this.draw(g);
+        this.gpu.begin();
+        const active = this.draw(
+          this.gpu as unknown as CanvasRenderingContext2D,
+        );
+        this.gpu.end();
+        return active;
+      };
       this.host.studyStop = () => this.stop();
     }
     (window as any).__foregroundStudy = this;
@@ -169,6 +186,7 @@ export class CanvasForegroundStudy {
       backing: [this.host.canvas.width, this.host.canvas.height],
       nativePixels: this.nativePixels,
       ink: this.ink.snapshot(),
+      gpu: this.gpu?.snapshot(),
     };
   }
   beginSample() {
@@ -196,8 +214,14 @@ export class CanvasForegroundStudy {
         track.animation.pause();
         track.animation.currentTime = time;
       }
-    this.host.ctx.clearRect(0, 0, innerWidth, innerHeight);
-    this.draw(this.host.ctx);
+    if (this.gpu) {
+      this.gpu.begin();
+      this.draw(this.gpu as unknown as CanvasRenderingContext2D);
+      this.gpu.end();
+    } else {
+      this.host.ctx.clearRect(0, 0, innerWidth, innerHeight);
+      this.draw(this.host.ctx);
+    }
   }
   animate(
     target: Element,
@@ -231,6 +255,7 @@ export class CanvasForegroundStudy {
     this.items.delete(element);
   }
   stop() {
+    this.gpu?.clear();
     this.ink.stop();
     for (const e of [...this.items.keys()]) this.remove(e);
     for (const ts of this.tracks.values())

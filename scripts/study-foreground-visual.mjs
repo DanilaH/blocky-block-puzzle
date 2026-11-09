@@ -2,7 +2,9 @@ import { foregroundServer } from "./study-foreground-server.mjs";
 import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
 import sharp from "sharp";
-const output = "/workspace/scratch/03c53152a52e/foreground-study/visual";
+const output =
+  process.env.STUDY_OUTPUT ||
+  "/workspace/scratch/03c53152a52e/foreground-study/gpu-visual";
 await fs.mkdir(output, { recursive: true });
 const server = await foregroundServer(),
   browser = await chromium.launch();
@@ -17,7 +19,7 @@ try {
       });
       const page = await context.newPage();
       await page.goto(
-        `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant}&studyPixels=native`,
+        `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant}&studyPixels=native&studyRenderer=${process.env.STUDY_RENDERER || "canvas"}`,
       );
       await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
       await page.evaluate(() =>

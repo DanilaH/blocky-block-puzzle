@@ -24,7 +24,7 @@ export async function foregroundServer(port = 5199) {
             code = once(
               code,
               "Math.min(1.5, devicePixelRatio)",
-              `Math.min(new URLSearchParams(location.search).get('studyPixels')==='native'?3:1.5,devicePixelRatio)`,
+              `Math.min(new URLSearchParams(location.search).get('studyPixels')==='native'&&new URLSearchParams(location.search).get('studyRenderer')!=='webgl'?3:1.5,devicePixelRatio)`,
             );
             code = once(
               code,

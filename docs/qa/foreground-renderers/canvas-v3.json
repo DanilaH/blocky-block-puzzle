@@ -1,0 +1,638 @@
+{
+  "scope": "Linux Chromium software graphics; resource attribution in traced captures is separate from untraced RAF. Not physical POCO acceptance.",
+  "metadata": {
+    "createdAt": "2026-11-09T16:00:12.419Z",
+    "browser": "141.0.7390.37",
+    "viewport": [
+      392,
+      872
+    ],
+    "deviceScaleFactor": 2.75,
+    "sourceHashes": {
+      "src/main.ts": "ff45fc11c3e978c19db59c43f74962532f60d3257378146d726b6f3fa3aa4932",
+      "src/game/festival.ts": "1bc9432f76638a097f243f293fad1f4df4968556dbf96277ea1066a20e0704dd",
+      "src/style.css": "ca6e3b63a1dd3728a86b076341150ff204a817bc3828dc6ca7f365fb9023419b",
+      "src/diagnostics/studies/canvas-foreground.ts": "6f8e9c5d45454d5ad3485ef6818836ae1d5d98f5690490bbfc281477dce89d06",
+      "src/diagnostics/studies/theme-ink.ts": "0975669c68864131098805c2c231a8ccc1bb8181b85e5632654c7dd141d6f086",
+      "scripts/study-foreground-server.mjs": "3eb40f32ed29480528186485721a4865db24e1cee89465d7090b733a078c44a0",
+      "scripts/study-foreground-benchmark.mjs": "f3fc094b368c004dbc4d30298d2efc4bc448a942193b3901b7f3af9c4f64cbbe"
+    },
+    "scoreGlow": "legacy",
+    "themeInk": "direct",
+    "rewardShadow": "baked",
+    "rewardAtlas": true,
+    "warmupsPerCase": 2,
+    "untracedPerCase": 2,
+    "windowMs": 8000
+  },
+  "cases": [
+    {
+      "index": 0,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 453,
+          "over33Raw": 11,
+          "over33": 4,
+          "over34": 4,
+          "over50": 1,
+          "maxMs": 66.5999984741211,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.65938239276541,
+          "over25": 22,
+          "excessOver16_667Ms": 461.3668276468909
+        },
+        {
+          "intervals": 444,
+          "over33Raw": 15,
+          "over33": 11,
+          "over34": 10,
+          "over50": 3,
+          "maxMs": 66.69999694824219,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.05473025210269,
+          "over25": 24,
+          "excessOver16_667Ms": 626.9335072835282
+        }
+      ],
+      "layers": 58,
+      "rasterWallMs": 110.64500000000008,
+      "paintWallMs": 36.26500000000002,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": false,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    },
+    {
+      "index": 1,
+      "variant": "baseline",
+      "untraced": [
+        {
+          "intervals": 433,
+          "over33Raw": 12,
+          "over33": 7,
+          "over34": 6,
+          "over50": 4,
+          "maxMs": 133.3000030517578,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.47505824505319,
+          "over25": 28,
+          "excessOver16_667Ms": 793.5334943135576
+        },
+        {
+          "intervals": 455,
+          "over33Raw": 11,
+          "over33": 2,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 49.900001525878906,
+          "p95Ms": 33.20000076293945,
+          "meanMs": 17.545055494203673,
+          "over25": 23,
+          "excessOver16_667Ms": 410.83352406819625
+        }
+      ],
+      "layers": 58,
+      "rasterWallMs": 99.83300000000004,
+      "paintWallMs": 40.026000000000025,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    },
+    {
+      "index": 2,
+      "variant": "rewards",
+      "untraced": [
+        {
+          "intervals": 408,
+          "over33Raw": 22,
+          "over33": 12,
+          "over34": 12,
+          "over50": 9,
+          "maxMs": 183.39999389648438,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.647794601964016,
+          "over25": 40,
+          "excessOver16_667Ms": 1225.8668123881018
+        },
+        {
+          "intervals": 404,
+          "over33Raw": 28,
+          "over33": 11,
+          "over34": 11,
+          "over50": 9,
+          "maxMs": 99.9000015258789,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.801238121372638,
+          "over25": 55,
+          "excessOver16_667Ms": 1275.3334859212237
+        }
+      ],
+      "layers": 34,
+      "rasterWallMs": 87.56400000000001,
+      "paintWallMs": 28.50600000000001,
+      "study": {
+        "active": 0,
+        "prepared": 3,
+        "draws": 85,
+        "cacheEntries": 14,
+        "preparationMs": [
+          4.100000001490116,
+          4.700000002980232,
+          0.6999999955296516
+        ],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [
+        11,
+        31.19999999552965,
+        7.0999999940395355
+      ],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    },
+    {
+      "index": 3,
+      "variant": "theme",
+      "untraced": [
+        {
+          "intervals": 451,
+          "over33Raw": 8,
+          "over33": 2,
+          "over34": 2,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.737472741408254,
+          "over25": 27,
+          "excessOver16_667Ms": 494.5001411437985
+        },
+        {
+          "intervals": 452,
+          "over33Raw": 14,
+          "over33": 3,
+          "over34": 3,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.698451881915066,
+          "over25": 25,
+          "excessOver16_667Ms": 477.3001899719235
+        }
+      ],
+      "layers": 55,
+      "rasterWallMs": 94.14000000000004,
+      "paintWallMs": 36.055000000000035,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 39,
+          "fontCaches": 0,
+          "preparationMs": [
+            3
+          ],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [
+        5.5
+      ],
+      "errors": []
+    },
+    {
+      "index": 4,
+      "variant": "both",
+      "untraced": [
+        {
+          "intervals": 433,
+          "over33Raw": 23,
+          "over33": 3,
+          "over34": 3,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 18.513626398170242,
+          "over25": 45,
+          "excessOver16_667Ms": 810.0001754760739
+        },
+        {
+          "intervals": 428,
+          "over33Raw": 24,
+          "over33": 7,
+          "over34": 7,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 18.69088835136913,
+          "over25": 45,
+          "excessOver16_667Ms": 876.7668253580725
+        }
+      ],
+      "layers": 31,
+      "rasterWallMs": 69.602,
+      "paintWallMs": 30.000999999999994,
+      "study": {
+        "active": 0,
+        "prepared": 3,
+        "draws": 137,
+        "cacheEntries": 14,
+        "preparationMs": [
+          2.600000001490116,
+          4,
+          0.9000000059604645
+        ],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 34,
+          "fontCaches": 0,
+          "preparationMs": [
+            2.100000001490116
+          ],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [
+        10.600000001490116,
+        28,
+        5.399999998509884
+      ],
+      "firstWarmupInkPreparationMs": [
+        5
+      ],
+      "errors": []
+    },
+    {
+      "index": 5,
+      "variant": "both",
+      "untraced": [
+        {
+          "intervals": 434,
+          "over33Raw": 19,
+          "over33": 6,
+          "over34": 5,
+          "over50": 2,
+          "maxMs": 66.5999984741211,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.432488946870723,
+          "over25": 40,
+          "excessOver16_667Ms": 777.3668123881018
+        },
+        {
+          "intervals": 423,
+          "over33Raw": 22,
+          "over33": 7,
+          "over34": 7,
+          "over50": 2,
+          "maxMs": 66.69999694824219,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 18.911584371652445,
+          "over25": 49,
+          "excessOver16_667Ms": 959.9334653218584
+        }
+      ],
+      "layers": 31,
+      "rasterWallMs": 84.39599999999994,
+      "paintWallMs": 28.49199999999998,
+      "study": {
+        "active": 0,
+        "prepared": 3,
+        "draws": 128,
+        "cacheEntries": 14,
+        "preparationMs": [
+          1,
+          3.6999999955296516,
+          1
+        ],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 33,
+          "fontCaches": 0,
+          "preparationMs": [
+            2.5
+          ],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [
+        13.5,
+        32.20000000298023,
+        6.199999995529652
+      ],
+      "firstWarmupInkPreparationMs": [
+        7
+      ],
+      "errors": []
+    },
+    {
+      "index": 6,
+      "variant": "theme",
+      "untraced": [
+        {
+          "intervals": 456,
+          "over33Raw": 8,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.50679876093279,
+          "over25": 22,
+          "excessOver16_667Ms": 394.4001731872555
+        },
+        {
+          "intervals": 437,
+          "over33Raw": 19,
+          "over33": 5,
+          "over34": 4,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.30595018225349,
+          "over25": 39,
+          "excessOver16_667Ms": 726.8001747131344
+        }
+      ],
+      "layers": 54,
+      "rasterWallMs": 96.29100000000004,
+      "paintWallMs": 36.525999999999996,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 36,
+          "fontCaches": 0,
+          "preparationMs": [
+            2.2000000029802322
+          ],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [
+        9
+      ],
+      "errors": []
+    },
+    {
+      "index": 7,
+      "variant": "rewards",
+      "untraced": [
+        {
+          "intervals": 414,
+          "over33Raw": 21,
+          "over33": 11,
+          "over34": 11,
+          "over50": 3,
+          "maxMs": 99.9000015258789,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.323188873880728,
+          "over25": 52,
+          "excessOver16_667Ms": 1108.8001441955562
+        },
+        {
+          "intervals": 435,
+          "over33Raw": 18,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.38988556697451,
+          "over25": 44,
+          "excessOver16_667Ms": 759.900165557861
+        }
+      ],
+      "layers": 34,
+      "rasterWallMs": 85.70700000000005,
+      "paintWallMs": 37.466999999999985,
+      "study": {
+        "active": 0,
+        "prepared": 3,
+        "draws": 138,
+        "cacheEntries": 14,
+        "preparationMs": [
+          2.399999998509884,
+          4.299999997019768,
+          0.9000000059604645
+        ],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [
+        12.600000001490116,
+        41.399999998509884,
+        10.799999997019768
+      ],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    },
+    {
+      "index": 8,
+      "variant": "baseline",
+      "untraced": [
+        {
+          "intervals": 448,
+          "over33Raw": 7,
+          "over33": 2,
+          "over34": 2,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.85647368856839,
+          "over25": 30,
+          "excessOver16_667Ms": 543.766817728678
+        },
+        {
+          "intervals": 461,
+          "over33Raw": 8,
+          "over33": 0,
+          "over34": 0,
+          "over50": 0,
+          "maxMs": 33.400001525878906,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.316703328858747,
+          "over25": 18,
+          "excessOver16_667Ms": 311.7668368021644
+        }
+      ],
+      "layers": 58,
+      "rasterWallMs": 99.87899999999996,
+      "paintWallMs": 42.647999999999996,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          1078,
+          2398
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    },
+    {
+      "index": 9,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 452,
+          "over33Raw": 10,
+          "over33": 5,
+          "over34": 5,
+          "over50": 2,
+          "maxMs": 66.69999694824219,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.69845183549729,
+          "over25": 21,
+          "excessOver16_667Ms": 477.4668337504065
+        },
+        {
+          "intervals": 458,
+          "over33Raw": 8,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 49.900001525878906,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.430131549918496,
+          "over25": 20,
+          "excessOver16_667Ms": 360.866858164469
+        }
+      ],
+      "layers": 58,
+      "rasterWallMs": 104.20000000000016,
+      "paintWallMs": 45.69900000000001,
+      "study": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": false,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        }
+      },
+      "firstWarmupPreparationMs": [],
+      "firstWarmupInkPreparationMs": [],
+      "errors": []
+    }
+  ]
+}
