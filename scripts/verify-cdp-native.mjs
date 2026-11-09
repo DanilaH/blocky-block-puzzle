@@ -25,6 +25,24 @@ if (
   "3cf6cd6892e32e2b4c1c39e0f52f5248a2f5b37646fdfbb79a66b46b618414ed"
 )
   throw Error("JSON dependency checksum mismatch");
+const gson = process.env.BLOCKY_GSON_JAR || path.join(cache, "gson.jar");
+if (!process.env.BLOCKY_GSON_JAR)
+  execFileSync("curl", [
+    "-fLsS",
+    "--max-time",
+    "30",
+    "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.2/gson-2.13.2.jar",
+    "-o",
+    gson,
+  ]);
+if (
+  createHash("sha256")
+    .update(await fs.readFile(gson))
+    .digest("hex") !==
+  "dd0ce1b55a3ed2080cb70f9c655850cda86c206862310009dcb5e5c95265a5e0"
+)
+  throw Error("Gson dependency checksum mismatch");
+const dependencies = jar + path.delimiter + gson;
 const classes = path.join(cache, "classes");
 await fs.mkdir(classes);
 const source = path.join(
@@ -40,7 +58,7 @@ files.push(
     "android/app/src/test/java/com/danilah/blocky/dev/cdp/CdpHarness.java",
   ),
 );
-const compile = ["-proc:none", "-cp", jar, "-d", classes, ...files];
+const compile = ["-proc:none", "-cp", dependencies, "-d", classes, ...files];
 if (process.env.BLOCKY_ECJ_JAR)
   execFileSync(
     "java",
@@ -70,7 +88,7 @@ try {
       let stdout = "";
       const p = spawn("java", [
         "-cp",
-        classes + path.delimiter + jar,
+        classes + path.delimiter + dependencies,
         "com.danilah.blocky.dev.cdp.CdpHarness",
         "9224",
         path.join(output, mode),

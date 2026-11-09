@@ -196,6 +196,19 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       await hooks.commit();
       performance.mark(`blocky-full:${label}:committed`);
       await delay(measurementMs, signal);
+      if (phase === "warmup" && !functionalOnly) {
+        const deadline = performance.now() + 12000;
+        while (performance.now() < deadline) {
+          const proof = hooks.state().proof as any;
+          if (
+            !proof.festival.activeParticles &&
+            !proof.festival.activeReveals &&
+            !document.querySelector(".reward-event,.hud-notice")
+          )
+            break;
+          await delay(250, signal);
+        }
+      }
       const row = finish(condition, phase, round);
       performance.mark(`blocky-full:${label}:end`);
       hooks.pause(true);
@@ -247,6 +260,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       protocol: {
         settleMs,
         measurementMs,
+        warmupMaxMs: functionalOnly ? measurementMs : 20000,
         cosmeticSeed: LAYER_SEED,
         conditions: allConditions,
         comparisonOrder: fullPlan(),

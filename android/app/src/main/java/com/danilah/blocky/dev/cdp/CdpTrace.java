@@ -1,5 +1,8 @@
 package com.danilah.blocky.dev.cdp;
 
+import com.google.gson.Strictness;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -383,52 +386,59 @@ public final class CdpTrace implements Closeable {
             new ExpandedInput(
                 new GZIPInputStream(
                     new BufferedInputStream(new FileInputStream(file), 32768), 32768));
-        Reader reader = new InputStreamReader(expanded, StandardCharsets.UTF_8)) {
-      TraceChars t = new TraceChars(reader);
-      if (clean(t) != '{') throw new IOException("Trace root is not an object");
-      for (; ; ) {
-        int c = clean(t);
-        if (c == '}') break;
-        t.unread(c);
-        String key = (String) new JSONTokener(value(t)).nextValue();
-        if (clean(t) != ':') throw new IOException("Trace key");
-        if (key.equals("traceEvents")) {
-          root = true;
-          if (clean(t) != '[') throw new IOException("Trace events missing");
-          for (; ; ) {
-            c = clean(t);
-            if (c == ']') break;
-            t.unread(c);
-            JSONObject e = new JSONObject(value(t));
-            events++;
-            String name = e.optString("name"), cat = e.optString("cat"), ph = e.optString("ph");
-            if (name.equals("Paint")) {
-              paint++;
-              if (hasIdentity(e.optJSONObject("args"))) paintWithNode++;
-              collectNodeIds(e.optJSONObject("args"), paintNodes);
-              JSONObject data =
-                  e.optJSONObject("args") == null
-                      ? null
-                      : e.getJSONObject("args").optJSONObject("data");
-              if (data != null && data.has("layerId") && !data.optString("layerId").equals("0"))
-                paintLayers.add(data.get("layerId").toString());
+        JsonReader reader =
+            new JsonReader(new InputStreamReader(expanded, StandardCharsets.UTF_8))) {
+      reader.setStrictness(Strictness.STRICT);
+      reader.beginObject();
+      while (reader.hasNext()) {
+        if (!reader.nextName().equals("traceEvents")) {
+          reader.skipValue();
+          continue;
+        }
+        root = true;
+        reader.beginArray();
+        while (reader.hasNext()) {
+          String name = "", cat = "", ph = "";
+          PaintIdentity identity = new PaintIdentity();
+          reader.beginObject();
+          while (reader.hasNext()) {
+            String key = reader.nextName();
+            switch (key) {
+              case "name":
+                name = reader.nextString();
+                break;
+              case "cat":
+                cat = reader.nextString();
+                break;
+              case "ph":
+                ph = reader.nextString();
+                break;
+              case "args":
+                readPaintIdentity(reader, identity);
+                break;
+              default:
+                reader.skipValue();
             }
-            if (name.startsWith("blocky-full:") || name.startsWith("blocky-cdp-preflight:"))
-              marks++;
-            if (Arrays.asList(cat.split(",")).contains("gpu")) gpu++;
-            if (ph.equals("s") || ph.equals("f")) flows++;
-            if (name.startsWith("DrawFn_Draw")) nativeDraws++;
-            if (name.contains("RunAllTasks::WaitSyncToken")) syncWaits++;
-            c = clean(t);
-            if (c == ']') break;
-            if (c != ',') throw new IOException("Trace array separator");
           }
-        } else value(t);
-        c = clean(t);
-        if (c == '}') break;
-        if (c != ',') throw new IOException("Trace root separator");
+          reader.endObject();
+          events++;
+          if (name.equals("Paint")) {
+            paint++;
+            if (identity.present) paintWithNode++;
+            paintNodes.addAll(identity.nodes);
+            paintLayers.addAll(identity.layers);
+          }
+          if (name.startsWith("blocky-full:") || name.startsWith("blocky-cdp-preflight:")) marks++;
+          if (Arrays.asList(cat.split(",")).contains("gpu")) gpu++;
+          if (ph.equals("s") || ph.equals("f")) flows++;
+          if (name.startsWith("DrawFn_Draw")) nativeDraws++;
+          if (name.contains("RunAllTasks::WaitSyncToken")) syncWaits++;
+        }
+        reader.endArray();
       }
-      if (clean(t) != -1 || !root) throw new IOException("Incomplete trace JSON");
+      reader.endObject();
+      if (reader.peek() != JsonToken.END_DOCUMENT || !root)
+        throw new IOException("Incomplete trace JSON");
       rawBytes = expanded.count;
     }
     return new JSONObject()
@@ -443,6 +453,43 @@ public final class CdpTrace implements Closeable {
         .put("syncWaits", syncWaits)
         .put("paintBackendNodeIds", new JSONArray(paintNodes))
         .put("paintLayerIds", new JSONArray(paintLayers));
+  }
+
+  private static final class PaintIdentity {
+    boolean present;
+    final Set<Long> nodes = new TreeSet<>();
+    final Set<String> layers = new TreeSet<>();
+  }
+
+  /** Keep only the Paint identity fields; strict skipValue validates other argument syntax. */
+  private static void readPaintIdentity(JsonReader reader, PaintIdentity target)
+      throws IOException {
+    if (reader.peek() != JsonToken.BEGIN_OBJECT) {
+      reader.skipValue();
+      return;
+    }
+    reader.beginObject();
+    while (reader.hasNext()) {
+      String key = reader.nextName();
+      if (key.equals("data")) {
+        readPaintIdentity(reader, target);
+        continue;
+      }
+      if (key.equals("nodeId") || key.equals("backendNodeId")) {
+        if (reader.peek() == JsonToken.NUMBER) {
+          long id = reader.nextLong();
+          if (id > 0) {
+            target.present = true;
+            target.nodes.add(id);
+          }
+        } else reader.skipValue();
+      } else if (key.equals("layerId")
+          && (reader.peek() == JsonToken.STRING || reader.peek() == JsonToken.NUMBER)) {
+        String layer = reader.nextString();
+        if (!layer.equals("0")) target.layers.add(layer);
+      } else reader.skipValue();
+    }
+    reader.endObject();
   }
 
   public void snapshot(String label) throws Exception {
@@ -474,36 +521,6 @@ public final class CdpTrace implements Closeable {
     }
   }
 
-  /** Single-thread character cursor avoids a synchronized Reader call for every JSON character. */
-  private static final class TraceChars {
-    final Reader source;
-    final char[] buffer = new char[32768];
-    int cursor, limit, pushed = -2;
-
-    TraceChars(Reader source) {
-      this.source = source;
-    }
-
-    int read() throws IOException {
-      if (pushed != -2) {
-        int value = pushed;
-        pushed = -2;
-        return value;
-      }
-      if (cursor >= limit) {
-        limit = source.read(buffer);
-        cursor = 0;
-        if (limit < 0) return -1;
-      }
-      return buffer[cursor++];
-    }
-
-    void unread(int value) throws IOException {
-      if (pushed != -2) throw new IOException("Trace pushback overflow");
-      pushed = value;
-    }
-  }
-
   private static final class ExpandedInput extends FilterInputStream {
     long count;
 
@@ -529,98 +546,6 @@ public final class CdpTrace implements Closeable {
       counted(n);
       return n;
     }
-  }
-
-  private static int clean(TraceChars r) throws IOException {
-    int c;
-    do {
-      c = r.read();
-    } while (c >= 0 && c <= 32);
-    return c;
-  }
-
-  private static String value(TraceChars r) throws IOException {
-    int first = clean(r);
-    if (first < 0) throw new EOFException("Truncated trace value");
-    StringBuilder out = new StringBuilder();
-    out.append((char) first);
-    if (first != '{' && first != '[' && first != '"') {
-      for (; ; ) {
-        int c = r.read();
-        if (c < 0) break;
-        if (c == ',' || c == '}' || c == ']' || c <= 32) {
-          r.unread(c);
-          break;
-        }
-        out.append((char) c);
-        if (out.length() > 1000) throw new IOException("Primitive limit");
-      }
-      return out.toString();
-    }
-    int depth = (first == '{' || first == '[') ? 1 : 0;
-    boolean quoted = first == '"', escape = false;
-    boolean compound = depth > 0;
-    for (; ; ) {
-
-      int c = r.read();
-      if (c < 0) {
-        if (compound || quoted) throw new EOFException("Truncated trace value");
-        break;
-      }
-      if (!compound && !quoted && (c == ',' || c == '}' || c == ']' || c <= 32)) {
-        r.unread(c);
-        break;
-      }
-      out.append((char) c);
-      if (out.length() > 8 * 1024 * 1024) throw new IOException("Trace event limit");
-      if (quoted) {
-        if (escape) escape = false;
-        else if (c == '\\') escape = true;
-        else if (c == '"') {
-          quoted = false;
-          if (!compound) break;
-        }
-      } else if (c == '"') quoted = true;
-      else if (c == '{' || c == '[') depth++;
-      else if (c == '}' || c == ']') {
-        if (--depth == 0) break;
-      }
-    }
-    return out.toString();
-  }
-
-  private static void collectNodeIds(Object value, Set<Long> result) throws Exception {
-    if (value instanceof JSONObject) {
-      JSONObject o = (JSONObject) value;
-      for (Iterator<String> it = o.keys(); it.hasNext(); ) {
-        String key = it.next();
-        Object child = o.get(key);
-        if ((key.equals("nodeId") || key.equals("backendNodeId")) && child instanceof Number)
-          result.add(((Number) child).longValue());
-        else collectNodeIds(child, result);
-      }
-    } else if (value instanceof JSONArray) {
-      JSONArray a = (JSONArray) value;
-      for (int i = 0; i < a.length(); i++) collectNodeIds(a.get(i), result);
-    }
-  }
-
-  private static boolean hasIdentity(Object value) throws Exception {
-    if (value instanceof JSONObject) {
-      JSONObject o = (JSONObject) value;
-      for (java.util.Iterator<String> it = o.keys(); it.hasNext(); ) {
-        String key = it.next();
-        Object child = o.get(key);
-        if ((key.equals("nodeId") || key.equals("backendNodeId"))
-            && child instanceof Number
-            && ((Number) child).longValue() > 0) return true;
-        if (hasIdentity(child)) return true;
-      }
-    } else if (value instanceof JSONArray) {
-      JSONArray a = (JSONArray) value;
-      for (int i = 0; i < a.length(); i++) if (hasIdentity(a.get(i))) return true;
-    }
-    return false;
   }
 
   @Override
