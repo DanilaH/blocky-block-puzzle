@@ -1,11 +1,15 @@
 import Phaser from "phaser";
 import { SpriteGpu } from "./sprite-gpu";
+import { NativeMeshCanvas } from "./native-mesh-canvas";
 import type { BoardScene } from "../../game/BoardScene";
 
 // Study only. Reuses the actual game's renderer through Phaser's Extern contract.
 export class PhaserForeground {
   ready = false;
-  gpu?: SpriteGpu;
+  gpu?: SpriteGpu | NativeMeshCanvas;
+  private nativeMode =
+    new URLSearchParams(location.search).get("studyBatch") === "native";
+  private native?: NativeMeshCanvas;
   private ratio = 1;
   private viewport = { x: 0, y: 0, side: 512, cssSide: 512 };
   private extern?: Phaser.GameObjects.Extern;
@@ -42,6 +46,11 @@ export class PhaserForeground {
       }
       create() {
         manager.overlay = this;
+        if (manager.nativeMode) {
+          manager.ready = true;
+          manager.resize();
+          return;
+        }
         const extern = this.add.extern();
         extern.visible = false;
         manager.extern = extern;
@@ -56,9 +65,9 @@ export class PhaserForeground {
             gl: renderer.gl,
             pixelRatio: () => manager.ratio,
           });
-          manager.gpu.begin();
+          (manager.gpu as SpriteGpu).begin();
           manager.paint(manager.gpu as unknown as CanvasRenderingContext2D);
-          manager.gpu.end();
+          (manager.gpu as SpriteGpu).end();
         };
         manager.ready = true;
         manager.resize();
@@ -67,16 +76,24 @@ export class PhaserForeground {
     game.scene.add("study-shared-foreground", new Overlay(), true);
     game.events.on("prerender", this.beforeFrame, this);
     game.canvas.addEventListener("webglcontextlost", () => {
-      this.gpu = undefined;
+      if (!this.nativeMode) this.gpu = undefined;
     });
     game.canvas.addEventListener("webglcontextrestored", () => {
-      this.gpu = undefined;
+      if (!this.nativeMode) this.gpu = undefined;
     });
     this.resize();
   }
   private beforeFrame() {
     if (this.extern) this.extern.visible = this.active();
     this.applyViewport();
+    if (this.nativeMode && this.overlay && (this.native || this.active())) {
+      this.native ??= new NativeMeshCanvas(this.overlay, () => this.ratio);
+      this.gpu = this.native;
+      this.native.begin();
+      if (this.active())
+        this.paint(this.native as unknown as CanvasRenderingContext2D);
+      this.native.end();
+    }
   }
   private applyViewport() {
     const v = this.viewport,
@@ -140,6 +157,7 @@ export class PhaserForeground {
     const renderer = this.game.renderer as Phaser.Renderer.WebGL.WebGLRenderer;
     return {
       ready: this.ready,
+      nativeBatch: this.nativeMode,
       originalCanvas: this.originalCanvas,
       canvasIsGameCanvas: !this.gpu || this.gpu.canvas === this.game.canvas,
       sharedContext: true,

@@ -18,6 +18,7 @@ const inputs = [
   "src/diagnostics/studies/theme-ink.ts",
   "src/diagnostics/studies/sprite-gpu.ts",
   "src/diagnostics/studies/phaser-foreground.ts",
+  "src/diagnostics/studies/native-mesh-canvas.ts",
   "scripts/study-foreground-server.mjs",
   "scripts/study-foreground-benchmark.mjs",
 ];
@@ -87,7 +88,7 @@ try {
     });
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(
-      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${["gpu", "phaser"].includes(variant) ? "rewards" : variant === "viewport" ? "baseline" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : ["viewport", "phaser"].includes(variant) ? "phaser" : "canvas"}&studyPixels=${variant === "original" ? "original" : "native"}`,
+      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${["gpu", "phaser", "phaser-native"].includes(variant) ? "rewards" : ["viewport", "viewport-native"].includes(variant) ? "baseline" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : ["viewport", "phaser", "viewport-native", "phaser-native"].includes(variant) ? "phaser" : "canvas"}&studyBatch=${variant.endsWith("-native") ? "native" : "extern"}&studyPixels=${variant === "original" ? "original" : "native"}`,
     );
     await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
     const measure = () =>
@@ -121,11 +122,17 @@ try {
       }
       assert.equal(x.study.active, 0);
       assert.equal(x.study.ink.active, 0);
+      if (["phaser", "phaser-native"].includes(variant)) {
+        assert(x.study.gpu);
+        assert(x.study.draws > 0);
+        assert.equal(x.study.prepared, 3);
+      }
       if (x.study.gpu) {
         assert.equal(x.study.gpu.contextLost, false);
         assert.equal(x.study.gpu.glError, 0);
         assert(x.study.gpu.uploads > 0);
-        assert(x.study.gpu.drawCalls > 0);
+        if (x.study.gpu.nativeBatch) assert(x.study.gpu.submittedQuads > 0);
+        else assert(x.study.gpu.drawCalls > 0);
       }
     };
     const warmups = [];

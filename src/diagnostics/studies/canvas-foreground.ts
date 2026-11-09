@@ -136,6 +136,8 @@ export class CanvasForegroundStudy {
   private shared?: PhaserForeground;
   private sharedGame?: Phaser.Game;
   private boardShakes = 0;
+  private renderStart = 0;
+  private renderTimes: number[] = [];
   private gpu?: SpriteGpu;
   private host: Host;
   private ink: ThemeInkStudy;
@@ -200,9 +202,14 @@ export class CanvasForegroundStudy {
       gpu: this.gpu?.snapshot() ?? this.shared?.gpu?.snapshot(),
       shared: this.shared?.snapshot(),
       boardShakes: this.boardShakes,
+      phaserRenderTimes: [...this.renderTimes],
     };
   }
   attachGame(game: Phaser.Game, scene: BoardScene, board: HTMLElement) {
+    game.events.on("postrender", () => {
+      if (this.renderStart)
+        this.renderTimes.push(performance.now() - this.renderStart);
+    });
     if (!this.isShared) return;
     this.sharedGame = game;
     this.shared = new PhaserForeground(
@@ -248,6 +255,8 @@ export class CanvasForegroundStudy {
     return { x, y };
   }
   beginSample() {
+    this.renderTimes = [];
+    this.renderStart = performance.now();
     this.boardShakes = 0;
     this.draws = 0;
     this.prepared = 0;

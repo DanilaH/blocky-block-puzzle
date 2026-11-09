@@ -1,7 +1,9 @@
 import { foregroundServer } from "./study-foreground-server.mjs";
 import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
-const output = "/workspace/scratch/03c53152a52e/phaser-study/smoke";
+const output =
+  process.env.STUDY_OUTPUT ||
+  "/workspace/scratch/03c53152a52e/phaser-study/native-smoke";
 await fs.mkdir(output, { recursive: true });
 const server = await foregroundServer(),
   browser = await chromium.launch();
@@ -19,7 +21,7 @@ try {
       console.log("PAGEERROR", e.stack);
     });
     await p.goto(
-      `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant === "phaser" ? "rewards" : "baseline"}&studyPixels=native&studyRenderer=phaser`,
+      `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant === "phaser" ? "rewards" : "baseline"}&studyPixels=native&studyRenderer=phaser&studyBatch=${process.env.STUDY_BATCH || "extern"}`,
     );
     await p.waitForFunction(() => !!window.__blockyFullDiagnostic);
     await p.evaluate(() => window.__blockyFullDiagnostic.prepare("baseline"));

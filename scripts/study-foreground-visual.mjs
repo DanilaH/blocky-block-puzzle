@@ -19,7 +19,7 @@ try {
       });
       const page = await context.newPage();
       await page.goto(
-        `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant}&studyPixels=native&studyRenderer=${process.env.STUDY_RENDERER || "canvas"}`,
+        `http://127.0.0.1:5199/?clearTrace=full&foregroundStudy=${variant}&studyPixels=native&studyRenderer=${process.env.STUDY_RENDERER || "canvas"}&studyBatch=${process.env.STUDY_BATCH || "extern"}`,
       );
       await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
       await page.evaluate(() =>
