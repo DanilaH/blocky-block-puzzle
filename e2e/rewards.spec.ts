@@ -1,7 +1,8 @@
+// Historical renderer control. Default compact geometry/lifecycle is covered in compact-effects.spec.ts.
 import { test, expect, type Page } from "@playwright/test";
 test.use({ video: { mode: "on", size: { width: 390, height: 844 } } });
 async function setup(page: Page, kind = "record") {
-  await page.goto("/");
+  await page.goto("/?effectsStudy=legacy");
   await page.locator(".piece").first().waitFor();
   await page.evaluate(async (kind) => {
     const { newGame } = await import("/src/core/rules.ts");

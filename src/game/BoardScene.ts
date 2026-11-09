@@ -57,6 +57,7 @@ export class BoardScene extends Phaser.Scene {
   private pending: number[] = [];
   private impacts: Impact[] = [];
   calm = false;
+  compactEffects = false;
   private diagnostic = { cachedBorder: false, hideInk: false, hideVfx: false };
   private diagnosticSample: {
     draws: number;
@@ -73,6 +74,8 @@ export class BoardScene extends Phaser.Scene {
       vfxPeak: 0,
       ...this.diagnosticSample,
       theme: this.theme,
+      compactEffects: this.compactEffects,
+      activeImpacts: this.impacts.length,
     };
   }
   /** Transient presentation-only controls for the separate preview benchmark. */
@@ -114,14 +117,16 @@ export class BoardScene extends Phaser.Scene {
     this.themeAt = performance.now();
     if (this.presentation === "classic" && this.game?.canvas) {
       const board = this.game.canvas.parentElement!;
-      board.style.transition = `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
+      board.style.transition = this.compactEffects
+        ? "none"
+        : `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
       board.style.backgroundColor =
         "#" + this.shade.toString(16).padStart(6, "0");
     }
     this.study?.setMaterial(
       tileMaterialForTheme(index),
       this.themeAt,
-      tileTransitionDuration(this.calm, index),
+      tileTransitionDuration(this.calm, index, this.compactEffects),
     );
     this.sheen =
       index === 0
@@ -137,7 +142,7 @@ export class BoardScene extends Phaser.Scene {
     return Math.min(
       1,
       (performance.now() - this.themeAt) /
-        tileTransitionDuration(this.calm, this.theme),
+        tileTransitionDuration(this.calm, this.theme, this.compactEffects),
     );
   }
   private currentColor(a: number, b: number) {
@@ -163,7 +168,9 @@ export class BoardScene extends Phaser.Scene {
 
   private celebration = new Celebration();
   get intensity() {
-    return this.calm ? 0 : this.celebration.level(performance.now());
+    return this.calm || this.compactEffects
+      ? 0
+      : this.celebration.level(performance.now());
   }
   constructor(private presentation: "classic" | "enamel" = "enamel") {
     super("board");
@@ -367,7 +374,8 @@ export class BoardScene extends Phaser.Scene {
     lines: number,
     allClear = false,
   ) {
-    if (lines && !this.calm) this.celebration.add(lines, performance.now());
+    if (lines && !this.calm && !this.compactEffects)
+      this.celebration.add(lines, performance.now());
     this.impacts.push({
       energy: this.intensity,
       placed,
@@ -388,7 +396,7 @@ export class BoardScene extends Phaser.Scene {
       origins: waveOrigins(placed),
       started: performance.now(),
     });
-    this.impacts = this.impacts.slice(-4);
+    this.impacts = this.impacts.slice(this.compactEffects ? -2 : -4);
   }
   stopEffects() {
     this.pending = [];
@@ -469,7 +477,15 @@ export class BoardScene extends Phaser.Scene {
     this.vfx?.begin();
     if (this.praiseHit && now - this.praiseHit.at > 750) this.praiseHit = null;
     this.impacts = this.impacts.filter(
-      (e) => now - e.started < (this.calm ? 180 : e.allClear ? 1500 : 1250),
+      (e) =>
+        now - e.started <
+        (this.compactEffects
+          ? 240
+          : this.calm
+            ? 180
+            : e.allClear
+              ? 1500
+              : 1250),
     );
     for (let i = 0; i < 64; i++) {
       const x = (i % 8) * 64,
@@ -617,6 +633,33 @@ export class BoardScene extends Phaser.Scene {
     const accent = this.currentColor(this.fromAccent, this.accent);
     for (const e of this.impacts) {
       const age = now - e.started;
+      if (this.compactEffects) {
+        const t = Math.min(1, age / (this.calm ? 140 : 240));
+        for (const i of e.cleared) {
+          if (this.state?.board[i]) continue;
+          const x = (i % 8) * 64,
+            y = Math.floor(i / 8) * 64;
+          this.tile(x, y, COLORS[e.board[i] || 1]!, 1 - t, 1 - t * 0.65);
+          if (!this.calm) {
+            g.fillStyle(0xffffff, 0.25 * Math.sin(t * Math.PI));
+            g.fillRoundedRect(x + 5, y + 5, 54, 54, 4);
+          }
+        }
+        if (!this.calm && age < 130) {
+          for (const i of e.placed) {
+            if (!this.state?.board[i]) continue;
+            g.lineStyle(2, 0xffffff, 0.45 * (1 - age / 130));
+            g.strokeRoundedRect(
+              (i % 8) * 64 + 4,
+              Math.floor(i / 8) * 64 + 4,
+              56,
+              56,
+              4,
+            );
+          }
+        }
+        continue;
+      }
       if (!this.calm && e.lines >= 2 && age < 700) {
         const cross = e.rows.length > 0 && e.columns.length > 0;
         if (cross) {

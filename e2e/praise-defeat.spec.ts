@@ -71,7 +71,7 @@ test("losing placement keeps earned series bonus but never praises the fatal mov
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 5, y: 5 } });
   await expect(page.locator('.reward-event[data-tier="series"]')).toContainText(
-    "СЕРИЯ 19 ЗАВЕРШЕНА",
+    "Серия 19 завершена",
   );
   const saved = await page.evaluate(async () => {
     const { IndexedSave } = await import("/src/platform/save.ts");

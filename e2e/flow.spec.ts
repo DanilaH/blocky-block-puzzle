@@ -138,28 +138,16 @@ test("all-clear takes over the foreground after the line reward and points still
     .toBe(true);
 });
 
-test("rain reveal wraps the board and clears rear geometry on pause", async ({
+test("compact all-clear omits the rear reveal and cancels its one label on pause", async ({
   page,
 }) => {
   await fixture(page, 1);
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator(".festival-rear path")).toHaveCount(1);
-  await expect(page.locator(".festival-rear path")).toHaveAttribute("d", / A /);
-  const layers = await page.evaluate(() => ({
-    back: Number(
-      getComputedStyle(document.querySelector(".festival-rear")).zIndex,
-    ),
-    board: Number(getComputedStyle(document.querySelector("#app")).zIndex),
-    front: Number(
-      getComputedStyle(document.querySelector(".festival-canvas")).zIndex,
-    ),
-    pointers: getComputedStyle(document.querySelector(".festival-rear"))
-      .pointerEvents,
-  }));
-  expect(layers.back).toBeLessThan(layers.board);
-  expect(layers.front).toBeGreaterThan(layers.board);
-  expect(layers.pointers).toBe("none");
-  await page.locator("#pause").click();
   await expect(page.locator(".festival-rear path")).toHaveCount(0);
+  await expect(page.locator(".compact-reward")).toHaveCount(1);
+  await page.locator("#pause").click();
+  await expect(page.locator(".reward-event, .festival-rear path")).toHaveCount(
+    0,
+  );
 });

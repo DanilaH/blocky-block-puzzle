@@ -39,9 +39,7 @@ test("full clear unlocks a durable theme; preparation and reload preserve it", a
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("html")).toHaveAttribute("data-material", "amber");
   await expect(page.locator("#combo-title")).toHaveText("СЕРИЯ 6");
-  await expect(page.locator('.hud-notice[data-tier="theme"]')).toContainText(
-    "ФАРФОР",
-  );
+  await expect(page.locator('.hud-notice[data-tier="theme"]')).toHaveCount(0);
   await page.locator('[data-slot="1"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator("#combo-stock")).toHaveText("●○");

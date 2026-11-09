@@ -5,7 +5,10 @@ test("overlapping score glows restore the owned shadow only after the latest eff
 }) => {
   await page.goto("/");
   const result = await page.evaluate(async () => {
-    const { presentScoreGlow } = await import("/src/game/score-glow.ts");
+    const { presentScoreGlow, setDiagnosticScoreGlow } = await import(
+      "/src/game/score-glow.ts"
+    );
+    setDiagnosticScoreGlow("filter");
     const target = document.createElement("div");
     target.textContent = "1574";
     target.style.setProperty(

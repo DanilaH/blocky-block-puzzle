@@ -67,7 +67,9 @@ for (const ending of ["finish", "pause", "reload"])
     expect(saved.moves).toBe(3);
     expect(saved.streakMisses).toBe(0);
     if (ending === "finish") {
-      expect(await page.locator(".reward-event").count()).toBeGreaterThan(1);
+      expect(await page.locator(".reward-event").count()).toBeLessThanOrEqual(
+        1,
+      );
       await page.evaluate(() => {
         (window as any).overlapScores = [];
         const start = performance.now();
@@ -83,7 +85,7 @@ for (const ending of ["finish", "pause", "reload"])
       const samples: number[] = await page.evaluate(
         () => (window as any).overlapScores,
       );
-      expect(samples.some((v) => v > 0 && v < 28)).toBe(true);
+      expect(samples.every((v) => v === 28)).toBe(true);
       expect(samples.every((v, i) => i === 0 || v >= samples[i - 1])).toBe(
         true,
       );

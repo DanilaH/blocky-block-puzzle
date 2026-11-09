@@ -18,6 +18,10 @@ export type TileMaterial = (typeof TILE_MATERIALS)[number];
 export function tileMaterialForTheme(theme: number): TileMaterial {
   return theme >= 5 ? "chrome" : theme >= 1 ? "enamel" : "plastic";
 }
-export function tileTransitionDuration(calm: boolean, theme: number) {
-  return calm ? 250 : theme === 0 ? 1800 : 1000;
+export function tileTransitionDuration(
+  calm: boolean,
+  theme: number,
+  compact = false,
+) {
+  return compact ? (calm ? 1 : 160) : calm ? 250 : theme === 0 ? 1800 : 1000;
 }

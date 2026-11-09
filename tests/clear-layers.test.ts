@@ -188,3 +188,19 @@ describe("layer study protocol", () => {
     );
   });
 });
+
+it("validates the compact output contract and rejects a resurrected heavy effect", () => {
+  const p = proof();
+  p.effectProfile = "compact";
+  p.scene.vfxPeak = 0;
+  p.atmosphere.draws = 0;
+  p.festival.draws = p.festival.bursts = p.festival.spawned = 0;
+  p.rewardDomCreated = 1;
+  for (const key of Object.keys(
+    p.rewardEffects,
+  ) as (keyof typeof p.rewardEffects)[])
+    p.rewardEffects[key] = 0;
+  expect(validateLayer(BASELINE_LAYER, p)).toEqual({ valid: true, errors: [] });
+  p.festival.spawned = 1;
+  expect(validateLayer(BASELINE_LAYER, p).errors).toContain("festival-output");
+});

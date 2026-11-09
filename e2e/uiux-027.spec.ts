@@ -54,7 +54,7 @@ test("compact pause exposes settings and diagnostics is optional", async ({
   await expect(page.locator("#perf-start")).toBeVisible();
   await expect(page.locator(".dialog-actions > button")).toHaveCount(1);
 });
-test("compound reward preserves score, record and distinct destinations", async ({
+test("compact reward preserves the complete score and record in one destination", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -74,11 +74,12 @@ test("compound reward preserves score, record and distinct destinations", async 
   await page.locator("#board").click({ position: { x: 5, y: 5 } });
   await expect(page.locator("#burst")).toContainText("×5");
   await expect(page.locator("#burst")).toContainText("Чистое поле");
-  await expect(page.locator(".best .hud-notice")).toContainText("Новый рекорд");
+  await expect(page.locator(".compact-reward")).toContainText("Рекорд!");
+  await expect(page.locator(".reward-event")).toHaveCount(1);
   await expect(page.locator("#score")).toHaveText("2 921");
   await expect(page.locator("#best")).toHaveText("2 921");
   const samples = await page.evaluate(() => (window as any).scoreSamples);
-  expect(samples.length).toBeGreaterThan(2);
+  expect(samples.length).toBeGreaterThanOrEqual(1);
   expect(samples.every((s) => s.best === Math.max(500, s.score))).toBe(true);
   expect(await page.locator(".reward-event[data-tier=chain]").count()).toBe(0);
   await page.locator("#pause").click();
@@ -96,7 +97,7 @@ test("tap selection is explicit and series closure permits the next move", async
   );
   await expect(page.locator("#caption")).toContainText("левый верхний");
   await page.locator("#board").click({ position: { x: 5, y: 5 } });
-  await expect(page.locator('[data-tier="series-end"]')).toContainText(
+  await expect(page.locator('[data-tier="series"]')).toContainText(
     "Серия 5 завершена",
   );
   await page.locator(".piece").nth(1).click();

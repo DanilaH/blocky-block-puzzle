@@ -57,6 +57,7 @@ export type RewardEffectProof = {
   themeImpulses: number;
 };
 export type LayerProof = {
+  effectProfile?: "compact" | "legacy";
   renderedTheme: number;
   savedTheme: number;
   score: number;
@@ -83,6 +84,7 @@ export type LayerProof = {
 };
 export function validateLayer(condition: ClearLayer, proof: LayerProof) {
   const errors: string[] = [];
+  const compact = proof.effectProfile === "compact";
   if (proof.score !== 1574 || !proof.boardEmpty || proof.savedTheme !== 5)
     errors.push("logical-outcome");
   const theme = condition.freezeTheme ? 1 : 5;
@@ -105,49 +107,50 @@ export function validateLayer(condition: ClearLayer, proof: LayerProof) {
   if (!proof.scene.draws) errors.push("board-not-rendered");
   if ((proof.scene.inkPeak === 0) !== condition.hideInk)
     errors.push("ink-output");
-  if ((proof.scene.vfxPeak === 0) !== condition.hideVfx)
+  if ((proof.scene.vfxPeak === 0) !== (compact || condition.hideVfx))
     errors.push("vfx-output");
   if (
     proof.atmosphere.disabled !== condition.skipAtmosphere ||
-    (proof.atmosphere.draws === 0) !== condition.skipAtmosphere
+    (proof.atmosphere.draws === 0) !== (compact || condition.skipAtmosphere)
   )
     errors.push("atmosphere-output");
   if (
     proof.festival.disabled !== condition.skipFestival ||
-    (proof.festival.bursts === 0) !== condition.skipFestival ||
-    (proof.festival.draws === 0) !== condition.skipFestival ||
-    proof.festival.spawned !== (condition.skipFestival ? 0 : 148)
+    (proof.festival.bursts === 0) !== (compact || condition.skipFestival) ||
+    (proof.festival.draws === 0) !== (compact || condition.skipFestival) ||
+    proof.festival.spawned !== (compact || condition.skipFestival ? 0 : 148)
   )
     errors.push("festival-output");
   const omit = condition.skipRewardDom,
     noNotice = omit || condition.skipThemeNotice || condition.freezeTheme;
-  if (proof.rewardDomCreated !== (omit ? 0 : noNotice ? 2 : 3))
+  if (proof.rewardDomCreated !== (omit ? 0 : compact ? 1 : noNotice ? 2 : 3))
     errors.push("reward-dom-output");
   if (proof.rewardRenderer !== "dom") errors.push("renderer-path");
   const effects = proof.rewardEffects;
   if (
     !effects ||
     effects.captionAnimations !==
-      (omit || condition.skipRewardDecoration ? 0 : 2) ||
+      (compact || omit || condition.skipRewardDecoration ? 0 : 2) ||
     effects.visibleEmblems !== 0
   )
     errors.push("reward-decoration-output");
   if (
     !effects ||
-    effects.pointFlights !== (omit || condition.skipPointFlights ? 0 : 2)
+    effects.pointFlights !==
+      (compact || omit || condition.skipPointFlights ? 0 : 2)
   )
     errors.push("point-flight-output");
   if (
     !effects ||
-    effects.hudFlashes !== (omit || condition.skipHudFlashes ? 0 : 2)
+    effects.hudFlashes !== (compact || omit || condition.skipHudFlashes ? 0 : 2)
   )
     errors.push("hud-flash-output");
-  if (!effects || effects.themeNotices !== (noNotice ? 0 : 1))
+  if (!effects || effects.themeNotices !== (compact || noNotice ? 0 : 1))
     errors.push("theme-notice-output");
   if (
     !effects ||
     effects.themeImpulses !==
-      (condition.freezeTheme || condition.skipThemeImpulse ? 0 : 1)
+      (compact || condition.freezeTheme || condition.skipThemeImpulse ? 0 : 1)
   )
     errors.push("theme-impulse-output");
   return { valid: errors.length === 0, errors };

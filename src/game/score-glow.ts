@@ -17,7 +17,7 @@ export function setDiagnosticScoreGlow(mode: ScoreGlowMode | null) {
 export function presentScoreGlow(target: HTMLElement, animate: Animate) {
   const composited =
     document.documentElement.dataset.presentation === "classic" &&
-    diagnosticMode !== "legacy" &&
+    diagnosticMode === "filter" &&
     CSS.supports("filter", "drop-shadow(0 0 9px #8edaff)");
   if (!composited)
     return animate(

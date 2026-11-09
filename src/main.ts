@@ -1,3 +1,4 @@
+import { compactMoveReward } from "./game/compact-reward";
 import { readRenderInfo } from "./platform/render-info";
 import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
@@ -99,6 +100,16 @@ async function start() {
       traceRequest === "full");
   const phoneLayers =
     phoneTrace && (traceRequest === "layers" || traceRequest === "full");
+  // Historical diagnostic plans retain their former visual contract. Only a
+  // development benchmark can explicitly measure compact output through them.
+  const effectsStudy = import.meta.env.DEV
+    ? new URLSearchParams(location.search).get("effectsStudy")
+    : null;
+  const compactEffects =
+    effectsStudy !== "legacy" && (!phoneTrace || effectsStudy === "compact");
+  document.documentElement.dataset.effects = compactEffects
+    ? "compact"
+    : "legacy";
   let diagnosticLayer: ClearLayer | null = null;
   let diagnosticRewardDom = 0;
   let diagnosticScoreGlowProperties: string[] = [];
@@ -127,6 +138,7 @@ async function start() {
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
     scene = new BoardScene("classic");
+  scene.compactEffects = compactEffects;
   const analytics = new ProductAnalytics(phoneTrace ? null : nativeAnalytics());
   const playCapture = new PlayCapture();
   let exportedPlayEvents = 0;
@@ -277,7 +289,11 @@ async function start() {
   let rendererReady = false;
   function syncRenderer() {
     if (!phaser || !rendererReady) return;
-    atmosphere.set(THEMES[presentationTheme()]!.at, running, scene.calm);
+    atmosphere.set(
+      THEMES[presentationTheme()]!.at,
+      running && !compactEffects,
+      scene.calm,
+    );
     if (running) schedulePraise(currentGame());
     if (running) phaser.loop.wake();
     else phaser.loop.sleep();
@@ -319,7 +335,7 @@ async function start() {
       el("score").textContent = Math.round(n).toLocaleString("ru");
       paintBest();
     };
-    if (!smooth || scene.calm || !sameGame || value <= from) {
+    if (compactEffects || !smooth || scene.calm || !sameGame || value <= from) {
       paint(value);
       return;
     }
@@ -697,14 +713,19 @@ async function start() {
     const nextTheme = presentationTheme();
     const nextKey = String(nextTheme);
     audio.setSeries(g.streak);
-    atmosphere.set(THEMES[nextTheme]!.at, running, scene.calm);
+    atmosphere.set(
+      THEMES[nextTheme]!.at,
+      running && !compactEffects,
+      scene.calm,
+    );
     scene.setTheme(nextTheme, THEMES[nextTheme]!.accent);
     tileMaterials.set(
       tileMaterialForTheme(nextTheme),
-      tileTransitionDuration(scene.calm, nextTheme),
+      tileTransitionDuration(scene.calm, nextTheme, compactEffects),
     );
     festival.setPalette(nextTheme);
     if (
+      !compactEffects &&
       themeGame === g.gameId &&
       themeKey !== nextKey &&
       running &&
@@ -1015,14 +1036,14 @@ async function start() {
       );
       if (newRecord) recordCelebrated = true;
       const deferred =
-        running && !scene.calm
+        running && !scene.calm && !compactEffects
           ? event.lines
             ? event.points - placedCells.length
             : event.seriesBonus
           : 0;
       atmosphere.origin(canvasBox.getBoundingClientRect(), placedCells);
       pendingPoints += deferred;
-      if (event.allClear && running && !scene.calm) {
+      if (event.allClear && running && !scene.calm && !compactEffects) {
         heldTheme = previousTheme;
         const generation = ++themeRevealGeneration;
         later(() => {
@@ -1032,7 +1053,70 @@ async function start() {
         }, 320);
       }
       performanceCapture.measure("placementRender", () => render(running));
-      if (running) {
+      if (running && compactEffects) {
+        // One saved move, one bounded visual reward. No flights or deferred HUD.
+        for (const finish of rewards.values()) finish();
+        const reward = compactMoveReward({
+          points: event.points,
+          lines: event.lines,
+          allClear: event.allClear,
+          newRecord,
+          finishedStreak: event.finishedStreak,
+          seriesBonus: event.finishedStreak > 0,
+          multiplier: comboMultiplier(
+            event.state.streak,
+            event.state.scoringVersion === "festival-v4",
+          ),
+          praise: praise && event.state.status === "playing" ? praise : null,
+        });
+        if (reward)
+          presentCompactReward(
+            reward.tier,
+            reward.label,
+            reward.points,
+            event.state.streak,
+          );
+        scene.impact(
+          placedCells,
+          event.cells,
+          effectBoard,
+          event.lines,
+          event.allClear,
+        );
+        const kind = event.allClear
+          ? "allClear"
+          : newRecord
+            ? "record"
+            : signature.kind === "cross"
+              ? "cross"
+              : event.lines >= 3
+                ? "mega"
+                : event.lines > 1
+                  ? "combo"
+                  : event.lines
+                    ? "clear"
+                    : event.finishedStreak > 0
+                      ? "seriesEnd"
+                      : "place";
+        audio.play(kind, event.state.streak, event.points, scene.intensity);
+        haptics.pulse(
+          event.allClear
+            ? "empty"
+            : newRecord
+              ? "record"
+              : event.lines
+                ? signature.kind === "single"
+                  ? "clear"
+                  : signature.kind
+                : event.finishedStreak > 0
+                  ? "series"
+                  : "place",
+          clearHapticLevel(event.lines, event.state.streak),
+        );
+        if (praise && event.state.status === "playing")
+          lastPraiseMove = before.moves;
+        rewardHoldUntil = reward ? performance.now() + 900 : 0;
+      } else if (running) {
         if (event.finishedStreak > 0) {
           if (event.seriesBonus) {
             presentReward(
@@ -1309,7 +1393,13 @@ async function start() {
               if (running && resultPending && !dialog.open) beginDefeat();
             },
             Math.max(
-              scene.calm ? 220 : event.lines ? 1650 : 700,
+              compactEffects
+                ? 240
+                : scene.calm
+                  ? 220
+                  : event.lines
+                    ? 1650
+                    : 700,
               rewardHoldUntil - performance.now(),
             ),
           );
@@ -1369,6 +1459,44 @@ async function start() {
     if (deferred)
       updateScore(currentGame().score - pendingPoints, gameId, running);
   }
+  function presentCompactReward(
+    tier: string,
+    label: string,
+    points: number,
+    streak: number,
+  ) {
+    if (phoneLayers && diagnosticLayer?.skipRewardDom) return;
+    for (const finish of rewards.values()) finish();
+    const node = document.createElement("span");
+    node.className = "reward-event compact-reward";
+    node.dataset.tier = tier;
+    node.dataset.step = String(labelDevelopment(streak).step);
+    const amount = document.createElement("strong");
+    amount.textContent = `+${points.toLocaleString("ru")}`;
+    const caption = document.createElement("span");
+    caption.textContent = label;
+    node.append(amount, caption);
+    el("burst").append(node);
+    const finish = () => {
+      clearTimeout(timer);
+      node.getAnimations().forEach((a) => a.cancel());
+      node.remove();
+      rewards.delete(node);
+    };
+    const timer = window.setTimeout(finish, 900);
+    rewards.set(node, finish);
+    animate(
+      node,
+      [
+        { opacity: 0, translate: "0 6px" },
+        { opacity: 1, translate: "0 0", offset: 0.12 },
+        { opacity: 1, translate: "0 0", offset: 0.78 },
+        { opacity: 0, translate: "0 -4px" },
+      ],
+      900,
+    )?.effect?.updateTiming({ easing: "linear" });
+    if (phoneLayers) diagnosticRewardDom++;
+  }
   function presentReward(
     tier: string,
     praise: string,
@@ -1378,6 +1506,11 @@ async function start() {
     streak = 0,
     gameId = currentGame().gameId,
   ) {
+    if (compactEffects) {
+      settleRewardPoints(deferred, gameId);
+      presentCompactReward(tier, praise, points, streak);
+      return;
+    }
     const important =
       tier === "record" || tier === "all-clear" || tier === "series";
     if (phoneLayers && diagnosticLayer?.skipRewardDom) {
@@ -2918,6 +3051,7 @@ async function start() {
                 savedTheme: store.state.wardrobe?.selected ?? 0,
                 score: currentGame().score,
                 boardEmpty: currentGame().board.every((n) => n === 0),
+                effectProfile: compactEffects ? "compact" : "legacy",
                 rewardDomCreated: diagnosticRewardDom,
                 rewardEffects: { ...diagnosticRewardEffects },
                 scoreGlowProperties: [...diagnosticScoreGlowProperties],
@@ -2937,6 +3071,15 @@ async function start() {
       const { installFullClear } = await import("./diagnostics/full-clear");
       await installFullClear(phoneHooks);
     } else await traceModule.installPhoneClear(phoneHooks);
+    if (!compactEffects) {
+      const panel = document.querySelector(
+        "#full-clear-panel, #phone-clear-panel",
+      );
+      const note = document.createElement("p");
+      note.textContent =
+        "Здесь сравниваются прежние эффекты. В обычной игре используется сокращённый вариант.";
+      panel?.append(note);
+    }
   }
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (
