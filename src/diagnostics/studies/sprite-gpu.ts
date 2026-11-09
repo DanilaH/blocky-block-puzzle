@@ -3,8 +3,13 @@
 type Matrix = [number, number, number, number, number, number];
 type State = { matrix: Matrix; alpha: number };
 type Texture = { handle: WebGLTexture; width: number; height: number };
+type SharedContext = {
+  canvas: HTMLCanvasElement;
+  gl: WebGLRenderingContext;
+  pixelRatio: () => number;
+};
 export class SpriteGpu {
-  readonly canvas = document.createElement("canvas");
+  readonly canvas: HTMLCanvasElement;
   private gl: WebGLRenderingContext;
   private program: WebGLProgram;
   private buffer: WebGLBuffer;
@@ -19,20 +24,28 @@ export class SpriteGpu {
   uploadMs = 0;
   draws = 0;
   initMs = 0;
-  constructor(before: HTMLCanvasElement) {
+  constructor(
+    before: HTMLCanvasElement,
+    private shared?: SharedContext,
+  ) {
     const init = performance.now();
-    this.canvas.className = "study-gpu-rewards";
-    this.canvas.setAttribute("aria-hidden", "true");
-    this.canvas.style.cssText =
-      "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:19";
-    before.before(this.canvas);
-    const gl = this.canvas.getContext("webgl", {
-      alpha: true,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      premultipliedAlpha: true,
-    });
+    this.canvas = shared?.canvas ?? document.createElement("canvas");
+    if (!shared) {
+      this.canvas.className = "study-gpu-rewards";
+      this.canvas.setAttribute("aria-hidden", "true");
+      this.canvas.style.cssText =
+        "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:19";
+      before.before(this.canvas);
+    }
+    const gl =
+      shared?.gl ??
+      this.canvas.getContext("webgl", {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        premultipliedAlpha: true,
+      });
     if (!gl) throw Error("study-webgl-unavailable");
     this.gl = gl;
     const shader = (type: number, source: string) => {
@@ -87,6 +100,7 @@ export class SpriteGpu {
   snapshot() {
     return {
       frames: this.frames,
+      sharedContext: !!this.shared,
       initMs: this.initMs,
       uploads: this.uploads,
       uploadMs: this.uploadMs,
@@ -140,23 +154,32 @@ export class SpriteGpu {
     this.transform(Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r), 0, 0);
   }
   begin() {
-    const ratio = Math.min(3, devicePixelRatio),
-      w = Math.round(innerWidth * ratio),
-      h = Math.round(innerHeight * ratio);
-    if (this.canvas.width !== w || this.canvas.height !== h) {
-      this.canvas.width = w;
-      this.canvas.height = h;
+    if (!this.shared) {
+      const ratio = Math.min(3, devicePixelRatio),
+        w = Math.round(innerWidth * ratio),
+        h = Math.round(innerHeight * ratio);
+      if (this.canvas.width !== w || this.canvas.height !== h) {
+        this.canvas.width = w;
+        this.canvas.height = h;
+      }
+      this.gl.clear(this.gl.COLOR_BUFFER_BIT);
     }
     const gl = this.gl;
-    gl.viewport(0, 0, w, h);
-    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+    gl.disable(gl.SCISSOR_TEST);
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.STENCIL_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendEquation(gl.FUNC_ADD);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.activeTexture(gl.TEXTURE0);
     this.state = { matrix: [1, 0, 0, 1, 0, 0], alpha: 1 };
     this.stack = [];
     this.vertices = [];
     this.runs = [];
   }
   clear() {
-    this.begin();
+    if (!this.shared) this.begin();
   }
   drawImage(image: ImageBitmap, ...args: number[]) {
     const gl = this.gl;
@@ -217,8 +240,23 @@ export class SpriteGpu {
   end() {
     const gl = this.gl;
     gl.useProgram(this.program);
-    gl.uniform2f(this.size, innerWidth, innerHeight);
+    const ratio = this.shared?.pixelRatio();
+    gl.uniform2f(
+      this.size,
+      ratio ? this.canvas.width / ratio : innerWidth,
+      ratio ? this.canvas.height / ratio : innerHeight,
+    );
+    gl.uniform1i(gl.getUniformLocation(this.program, "image"), 0);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+    for (const [name, count, offset] of [
+      ["position", 2, 0],
+      ["uv", 2, 8],
+      ["alpha", 1, 16],
+    ] as const) {
+      const a = gl.getAttribLocation(this.program, name);
+      gl.enableVertexAttribArray(a);
+      gl.vertexAttribPointer(a, count, gl.FLOAT, false, 20, offset);
+    }
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array(this.vertices),

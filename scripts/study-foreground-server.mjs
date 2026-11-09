@@ -24,7 +24,7 @@ export async function foregroundServer(port = 5199) {
             code = once(
               code,
               "Math.min(1.5, devicePixelRatio)",
-              `Math.min(new URLSearchParams(location.search).get('studyPixels')==='native'&&new URLSearchParams(location.search).get('studyRenderer')!=='webgl'?3:1.5,devicePixelRatio)`,
+              `Math.min(new URLSearchParams(location.search).get('studyPixels')==='native'&&new URLSearchParams(location.search).get('studyRenderer')!=='webgl'&&new URLSearchParams(location.search).get('studyRenderer')!=='phaser'?3:1.5,devicePixelRatio)`,
             );
             code = once(
               code,
@@ -62,6 +62,21 @@ export async function foregroundServer(port = 5199) {
     el('score').animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.3},{transform:'scale(1)'}],{duration:260,easing:'cubic-bezier(.2,.8,.25,1)'});
   };
   const rewardAnchor = document.createElement("div");`,
+          );
+          code = once(
+            code,
+            "  const canvasResize = new ResizeObserver(() => {",
+            "  foregroundStudy.attachGame(phaser,scene,canvasBox);\n  const canvasResize = new ResizeObserver(() => {",
+          );
+          code = once(
+            code,
+            "      const size = boardResolution();",
+            "      if(foregroundStudy.isShared){foregroundStudy.resizeShared();phaser.scale.dirty=true;return;}\n      const size = boardResolution();",
+          );
+          code = once(
+            code,
+            "    scene.stopEffects();",
+            "    scene.stopEffects();\n    foregroundStudy.redrawShared();",
           );
           code = once(
             code,

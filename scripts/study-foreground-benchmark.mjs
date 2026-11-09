@@ -10,11 +10,14 @@ const output =
 await fs.mkdir(output, { recursive: true });
 const inputs = [
   "src/main.ts",
+  "src/game/BoardScene.ts",
+  "package-lock.json",
   "src/game/festival.ts",
   "src/style.css",
   "src/diagnostics/studies/canvas-foreground.ts",
   "src/diagnostics/studies/theme-ink.ts",
   "src/diagnostics/studies/sprite-gpu.ts",
+  "src/diagnostics/studies/phaser-foreground.ts",
   "scripts/study-foreground-server.mjs",
   "scripts/study-foreground-benchmark.mjs",
 ];
@@ -61,9 +64,30 @@ try {
       }),
       page = await context.newPage(),
       errors = [];
+    await page.addInitScript(() => {
+      const seen = new WeakSet();
+      const references = [];
+      window.__studyContexts = {
+        get created() {
+          return references.length;
+        },
+        get webgl() {
+          return references.filter((r) => r.deref()?.isConnected).length;
+        },
+      };
+      const original = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+        const result = original.call(this, type, ...args);
+        if (result && ["webgl", "webgl2"].includes(type) && !seen.has(this)) {
+          seen.add(this);
+          references.push(new WeakRef(this));
+        }
+        return result;
+      };
+    });
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(
-      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${variant === "gpu" ? "rewards" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : "canvas"}&studyPixels=${variant === "original" ? "original" : "native"}`,
+      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${["gpu", "phaser"].includes(variant) ? "rewards" : variant === "viewport" ? "baseline" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : ["viewport", "phaser"].includes(variant) ? "phaser" : "canvas"}&studyPixels=${variant === "original" ? "original" : "native"}`,
     );
     await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
     const measure = () =>
@@ -74,6 +98,7 @@ try {
           row,
           study: window.__foregroundStudy.snapshot(),
           shownScore: document.querySelector("#score").textContent,
+          contexts: window.__studyContexts,
         };
       });
     const validate = (x) => {
@@ -87,6 +112,13 @@ try {
       assert.equal(x.shownScore, "1\u00a0574");
       assert.deepEqual(x.study.errors, []);
       assert.deepEqual(x.study.ink.errors, []);
+      assert.equal(x.contexts.webgl, variant === "gpu" ? 2 : 1);
+      if (x.study.shared) {
+        assert(x.study.shared.ready);
+        assert.equal(x.study.boardShakes, 1);
+        assert(x.study.shared.canvasIsGameCanvas);
+        assert.deepEqual(x.study.shared.errors, []);
+      }
       assert.equal(x.study.active, 0);
       assert.equal(x.study.ink.active, 0);
       if (x.study.gpu) {
@@ -109,6 +141,7 @@ try {
       untraced.push({
         metrics: x.row.metrics,
         study: x.study,
+        contexts: x.contexts,
         proof: x.row.state.proof,
         sample: {
           frames: x.row.sample.frames,
@@ -140,6 +173,7 @@ try {
         row,
         study: window.__foregroundStudy.snapshot(),
         shownScore: document.querySelector("#score").textContent,
+        contexts: window.__studyContexts,
       };
     });
     validate(traceRow);

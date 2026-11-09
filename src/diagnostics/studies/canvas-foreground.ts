@@ -1,5 +1,8 @@
 import { ThemeInkStudy } from "./theme-ink";
 import { SpriteGpu } from "./sprite-gpu";
+import { PhaserForeground } from "./phaser-foreground";
+import type Phaser from "phaser";
+import type { BoardScene } from "../../game/BoardScene";
 // Experimental renderer, loaded only by scripts/study-foreground.mjs.
 // Gameplay, score arrival and effect lifetimes remain owned by main.ts.
 type Host = {
@@ -128,6 +131,11 @@ function transform(value: string, w: number, h: number) {
   return v;
 }
 export class CanvasForegroundStudy {
+  readonly isShared =
+    new URLSearchParams(location.search).get("studyRenderer") === "phaser";
+  private shared?: PhaserForeground;
+  private sharedGame?: Phaser.Game;
+  private boardShakes = 0;
   private gpu?: SpriteGpu;
   private host: Host;
   private ink: ThemeInkStudy;
@@ -149,6 +157,8 @@ export class CanvasForegroundStudy {
     theme = false,
   ) {
     this.host = host as Host;
+    if (this.isShared && theme)
+      throw Error("Shared ink study is outside this reward-only experiment");
     if (
       rewards &&
       new URLSearchParams(location.search).get("studyRenderer") === "webgl"
@@ -158,10 +168,10 @@ export class CanvasForegroundStudy {
     }
     this.ink = new ThemeInkStudy(
       theme,
-      () => this.host.studyWake(),
+      () => this.wake(),
       nativePixels ? devicePixelRatio : 1.5,
     );
-    if (rewards || theme) {
+    if ((rewards || theme) && !this.isShared) {
       this.host.studyPaint = (g) => {
         if (!this.gpu) return this.draw(g);
         this.gpu.begin();
@@ -173,6 +183,7 @@ export class CanvasForegroundStudy {
       };
       this.host.studyStop = () => this.stop();
     }
+    if (this.isShared) this.host.studyStop = () => this.stop();
     (window as any).__foregroundStudy = this;
   }
   snapshot() {
@@ -186,10 +197,58 @@ export class CanvasForegroundStudy {
       backing: [this.host.canvas.width, this.host.canvas.height],
       nativePixels: this.nativePixels,
       ink: this.ink.snapshot(),
-      gpu: this.gpu?.snapshot(),
+      gpu: this.gpu?.snapshot() ?? this.shared?.gpu?.snapshot(),
+      shared: this.shared?.snapshot(),
+      boardShakes: this.boardShakes,
     };
   }
+  attachGame(game: Phaser.Game, scene: BoardScene, board: HTMLElement) {
+    if (!this.isShared) return;
+    this.sharedGame = game;
+    this.shared = new PhaserForeground(
+      game,
+      scene,
+      board,
+      () => this.items.size > 0,
+      (g) => {
+        this.draw(g);
+      },
+      () => this.boardOffset(),
+    );
+  }
+  resizeShared() {
+    this.shared?.resize();
+  }
+  redrawShared() {
+    this.shared?.redraw();
+  }
+  private wake() {
+    if (!this.isShared) this.host.studyWake();
+  }
+  private boardOffset() {
+    let x = 0,
+      y = 0;
+    for (const track of this.tracks.get(this.sharedGame?.canvas!) ?? []) {
+      const p = track.animation.effect?.getComputedTiming().progress;
+      if (p === null || p === undefined) continue;
+      const frames = track.frames.filter((f) => "transform" in f);
+      let i = 0;
+      while (i < frames.length - 2 && p > frames[i + 1]!.computedOffset) i++;
+      const a = frames[i],
+        b = frames[i + 1];
+      if (!a || !b) continue;
+      const t =
+          (p - a.computedOffset) /
+          Math.max(0.000001, b.computedOffset - a.computedOffset),
+        from = transform(String(a.transform), 512, 512),
+        to = transform(String(b.transform), 512, 512);
+      x = from.x + (to.x - from.x) * t;
+      y = from.y + (to.y - from.y) * t;
+    }
+    return { x, y };
+  }
   beginSample() {
+    this.boardShakes = 0;
     this.draws = 0;
     this.prepared = 0;
     this.preparations = [];
@@ -214,7 +273,9 @@ export class CanvasForegroundStudy {
         track.animation.pause();
         track.animation.currentTime = time;
       }
-    if (this.gpu) {
+    if (this.isShared) {
+      this.shared?.redraw();
+    } else if (this.gpu) {
       this.gpu.begin();
       this.draw(this.gpu as unknown as CanvasRenderingContext2D);
       this.gpu.end();
@@ -229,7 +290,12 @@ export class CanvasForegroundStudy {
     duration: number,
     delay: number,
   ) {
-    if (!this.rewards || !target.closest(".reward-event,.hud-notice")) return;
+    if (
+      !(this.isShared && target === this.sharedGame?.canvas) &&
+      (!this.rewards || !target.closest(".reward-event,.hud-notice"))
+    )
+      return;
+    if (this.isShared && target === this.sharedGame?.canvas) this.boardShakes++;
     const effect = new KeyframeEffect(null, frames, {
       duration,
       delay,
@@ -396,10 +462,10 @@ export class CanvasForegroundStudy {
         if (this.items.get(element) !== item) return;
         item.ready = true;
         this.preparations.push(performance.now() - began);
-        this.host.studyWake();
+        this.wake();
       })
       .catch((e) => this.errors.push(String(e)));
-    this.host.studyWake();
+    this.wake();
   }
   private atlas(item: Item): Promise<void> {
     const sprites: Sprite[] = [];

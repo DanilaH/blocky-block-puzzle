@@ -25,6 +25,12 @@ try {
       await page.evaluate(() =>
         window.__blockyFullDiagnostic.prepare("baseline"),
       );
+      if (process.env.STUDY_RENDERER === "phaser") {
+        await page.waitForFunction(
+          () => window.__foregroundStudy.snapshot().shared?.ready,
+        );
+        await page.evaluate(() => window.__foregroundStudy.shared.hideBoard());
+      }
       await page.evaluate(
         (kind) =>
           window.__foregroundPresent(
@@ -42,7 +48,7 @@ try {
         );
       await page.addStyleTag({
         content:
-          "html,body{background:#223344!important}.ambient-canvas,.world-background,.festival-rear,#board canvas{visibility:hidden!important}#app{visibility:hidden}.board-reward{visibility:visible}#full-clear-panel{display:none!important}",
+          "html,body{background:#223344!important}.ambient-canvas,.world-background,.festival-rear,#board canvas{visibility:hidden!important}#app{visibility:hidden}#board canvas.study-shared-canvas{visibility:visible!important}.board-reward{visibility:visible}#full-clear-panel{display:none!important}",
       });
       const box = await page.locator(".board-wrap").boundingBox();
       for (const at of [0, 80, 180, 350, 550, 900, 1500]) {
