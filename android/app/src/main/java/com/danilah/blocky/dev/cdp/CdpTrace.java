@@ -346,13 +346,24 @@ public final class CdpTrace implements Closeable {
       for (int j = 0; j + 1 < attrs.length(); j += 2)
         if (attrs.getString(j).equals("id") && attrs.getString(j + 1).equals("blocky-cdp-probe")) {
           long backend = n.getLong("backendNodeId");
+          Map<String, Integer> lastPaintCounts = new HashMap<>();
+          Set<String> repaintedLayers = new HashSet<>();
           for (int k = 0; k < layerEvents.length(); k++) {
             JSONObject ev = layerEvents.getJSONObject(k);
             JSONArray ls = ev.getJSONObject("params").optJSONArray("layers");
             if (ls != null)
               for (int z = 0; z < ls.length(); z++)
-                if (ls.getJSONObject(z).optLong("backendNodeId") == backend)
-                  probeLayers.add(ls.getJSONObject(z).getString("layerId"));
+                if (ls.getJSONObject(z).optLong("backendNodeId") == backend) {
+                  JSONObject layer = ls.getJSONObject(z);
+                  String id = layer.getString("layerId");
+                  probeLayers.add(id);
+                  if (layer.optBoolean("drawsContent") && layer.has("paintCount")) {
+                    int count = layer.optInt("paintCount", -1);
+                    if (count < 0) continue;
+                    Integer previous = lastPaintCounts.put(id, count);
+                    if (previous != null && count > previous) repaintedLayers.add(id);
+                  }
+                }
           }
           boolean layerPaint = false;
           for (int k = 0; k < layerEvents.length(); k++) {
@@ -363,7 +374,7 @@ public final class CdpTrace implements Closeable {
           }
           probeLinked =
               (paintedNodes.contains(backend) || !Collections.disjoint(probeLayers, paintedLayers))
-                  && layerPaint;
+                  && (layerPaint || !repaintedLayers.isEmpty());
         }
     }
     return probeLinked;

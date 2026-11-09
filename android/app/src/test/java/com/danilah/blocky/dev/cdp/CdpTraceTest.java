@@ -77,6 +77,44 @@ public class CdpTraceTest {
   }
 
   @Test
+  public void linksChrome156NodePaintWithIncreasingPaintCountWithoutLayerPainted()
+      throws Exception {
+    JSONObject proof = new JSONObject("{\"paintBackendNodeIds\":[181],\"paintLayerIds\":[]}");
+    JSONArray nodes =
+        new JSONArray(
+            "[{\"node\":{\"backendNodeId\":181,\"attributes\":[\"id\",\"blocky-cdp-probe\"]}}]");
+    JSONArray layers = new JSONArray();
+    for (int count : new int[] {1, 6})
+      layers.put(
+          new JSONObject()
+              .put("method", "LayerTree.layerTreeDidChange")
+              .put(
+                  "params",
+                  new JSONObject()
+                      .put(
+                          "layers",
+                          new JSONArray()
+                              .put(
+                                  new JSONObject()
+                                      .put("layerId", "105")
+                                      .put("backendNodeId", 181)
+                                      .put("drawsContent", true)
+                                      .put("paintCount", count)))));
+    assertTrue(CdpTrace.probeLinked(proof, nodes, layers));
+    JSONObject last =
+        layers.getJSONObject(1).getJSONObject("params").getJSONArray("layers").getJSONObject(0);
+    last.put("paintCount", 1);
+    assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
+    last.put("paintCount", 0);
+    assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
+    last.put("paintCount", 6).put("backendNodeId", 999);
+    assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
+    last.put("backendNodeId", 181);
+    proof.put("paintBackendNodeIds", new JSONArray().put(999));
+    assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
+  }
+
+  @Test
   public void countsUtf8BytesAcrossCharacterBufferBoundary() throws Exception {
     String text =
         "{\"traceEvents\":[{\"name\":\"Paint\",\"args\":{\"data\":{\"nodeId\":7,\"text\":\""

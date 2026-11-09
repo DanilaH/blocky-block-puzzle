@@ -161,6 +161,33 @@ class FullArchiveTest(unittest.TestCase):
         with self.assertRaises(AssertionError):
             self.check()
 
+    def test_chrome156_requires_real_paint_and_increasing_known_layer_count(self):
+        self.report['appVersion'] = '0.59.0-preview'
+        raw = json.dumps(dict(traceEvents=[dict(name='Paint', args=dict(data=dict(nodeId=181))),
+                                          dict(name='DrawFn_DrawGL'), dict(name='flow', ph='s')])).encode()
+        self.report['preflight']['rawBytes'] = len(raw)
+        self.files['01-preflight/trace.json.gz'] = gzip.compress(raw)
+        self.files['01-preflight/capture.json'] = json.dumps(self.report['preflight']).encode()
+        mapping = dict(nodes=[dict(node=dict(backendNodeId=181, attributes=['id', 'blocky-cdp-probe']))],
+                       layers=[dict(method='LayerTree.layerTreeDidChange', params=dict(layers=[
+                           dict(layerId='105', backendNodeId=181, drawsContent=True, paintCount=count)])) for count in [1, 6]])
+        self.files['01-preflight/layers.json'] = json.dumps(mapping).encode()
+        self.assertEqual(self.check()['issues'], [])
+        last = mapping['layers'][1]['params']['layers'][0]
+        for change in [dict(paintCount=1), dict(paintCount=0), dict(paintCount=6,backendNodeId=999)]:
+            last.update(change)
+            self.files['01-preflight/layers.json'] = json.dumps(mapping).encode()
+            with self.assertRaisesRegex(AssertionError, 'Known probe not actually painted'):
+                self.check()
+        last.update(paintCount=6,backendNodeId=181)
+        self.files['01-preflight/layers.json'] = json.dumps(mapping).encode()
+        bad = json.dumps(dict(traceEvents=[dict(name='Paint', args=dict(data=dict(nodeId=999))),
+                                          dict(name='DrawFn_DrawGL'), dict(name='flow', ph='s')])).encode()
+        self.report['preflight']['rawBytes'] = len(bad)
+        self.files['01-preflight/trace.json.gz'] = gzip.compress(bad)
+        with self.assertRaisesRegex(AssertionError, 'Known probe not actually painted'):
+            self.check()
+
     def test_stale_capture_rejected(self):
         capture = self.report['episodes'][-1]['capture']
         old = copy.deepcopy(capture)

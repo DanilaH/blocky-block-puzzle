@@ -13,6 +13,25 @@ def frame_metrics(row,high=8000):
  s=row['sample'];at=s['placements'][0]['at'];fs=[x for x,t in zip(s['frames'],s['frameTimes']) if t>at and t-x<at+high]
  return dict(intervals=len(fs),over33Raw=sum(x>33.4 for x in fs),over33=sum(math.floor(x*10+.5)/10>33.4 for x in fs),over34=sum(x>34 for x in fs),over50=sum(x>50 for x in fs),maxMs=max(fs,default=0),p95Ms=sorted(fs)[math.floor(len(fs)*.95)] if fs else None)
 
+def probe_linked(events,mapping):
+ paints=[e.get('args',{}).get('data',{}) for e in events if e.get('name')=='Paint']
+ for record in mapping['nodes']:
+  node=record.get('node',{});attrs=node.get('attributes',[])
+  if not any(k=='id' and v=='blocky-cdp-probe' for k,v in zip(attrs[::2],attrs[1::2])):continue
+  backend=node['backendNodeId'];layers=set();previous={};repainted=set()
+  for e in mapping['layers']:
+   if e['method']!='LayerTree.layerTreeDidChange':continue
+   for layer in e['params'].get('layers',[]):
+    if layer.get('backendNodeId')!=backend:continue
+    lid=str(layer['layerId']);layers.add(lid);count=layer.get('paintCount')
+    if layer.get('drawsContent') and isinstance(count,int) and count>=0:
+     if lid in previous and count>previous[lid]:repainted.add(lid)
+     previous[lid]=count
+  painted={str(e['params']['layerId']) for e in mapping['layers'] if e['method']=='LayerTree.layerPainted'}
+  identified=any(p.get('nodeId')==backend or p.get('backendNodeId')==backend or str(p.get('layerId')) in layers for p in paints)
+  if identified and (layers & painted or repainted):return True
+ return False
+
 def validate(path):
  issues=[]
  with zipfile.ZipFile(path) as z:
@@ -25,7 +44,7 @@ def validate(path):
   for f in manifest['files']:
    raw=z.read(f['path']);assert len(raw)==f['bytes'] and hashlib.sha256(raw).hexdigest()==f['sha256'],'Manifest hash mismatch: '+f['path']
   r=json.loads(z.read('report.json'));assert r['schema']=='blocky-full-clear-v1'
-  assert r['appVersion']=='0.58.0-preview'
+  assert r['appVersion'] in ['0.58.0-preview','0.59.0-preview']
   functional=r['functionalOnly'];complete=r['completed'];episodes=r['episodes'];duration=r['protocol']['measurementMs']
   assert functional or (len(r['sourceCommit'])==40 and all(c in '0123456789abcdef' for c in r['sourceCommit'])),'Source identity'
   expected=[];candidates=list(CASES)[1:]
@@ -48,11 +67,7 @@ def validate(path):
     with gzip.GzipFile(fileobj=io.BytesIO(z.read(directory+'/trace.json.gz'))) as g:pre_raw=g.read(128*1024*1024+1)
     assert len(pre_raw)==pre['rawBytes'] and len(pre_raw)<=128*1024*1024
     pre_events=json.loads(pre_raw)['traceEvents'];mapping=json.loads(z.read(directory+'/layers.json'))
-    nodes={n['node']['backendNodeId'] for n in mapping['nodes'] if n.get('node') and 'blocky-cdp-probe' in n['node'].get('attributes',[])}
-    layers={str(l['layerId']) for e in mapping['layers'] for l in e['params'].get('layers',[]) if l.get('backendNodeId') in nodes}
-    painted_layers={str(e['params']['layerId']) for e in mapping['layers'] if e['method']=='LayerTree.layerPainted'}
-    paints=[e.get('args',{}).get('data',{}) for e in pre_events if e.get('name')=='Paint']
-    assert layers & painted_layers and any(p.get('nodeId') in nodes or str(p.get('layerId')) in layers for p in paints),'Known probe not actually painted'
+    assert probe_linked(pre_events,mapping),'Known probe not actually painted'
     assert any(e.get('name','').startswith('DrawFn_Draw') for e in pre_events) and any(e.get('ph') in ['s','f'] for e in pre_events),'Native preflight attribution missing'
   else:issues.append('incomplete-session:'+str(r.get('failure','one-or-more-invalid-episodes')))
   rows=[];captures=[]
