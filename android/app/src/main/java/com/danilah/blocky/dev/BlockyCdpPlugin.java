@@ -342,7 +342,12 @@ public class BlockyCdpPlugin extends Plugin {
                     .put("schema", "blocky-full-manifest-v1")
                     .put("files", files)
                     .toString());
-            File bundle = new File(getContext().getCacheDir(), "blocky-full-diagnostic.zip");
+            boolean scoreComparison =
+                "blocky-score-feedback-v1".equals(new JSONObject(json).optString("schema"));
+            File bundle =
+                new File(
+                    getContext().getCacheDir(),
+                    scoreComparison ? "blocky-score-feedback.zip" : "blocky-full-diagnostic.zip");
             try (ZipOutputStream out =
                 new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(bundle)))) {
               pack(out, session, "");
@@ -358,7 +363,12 @@ public class BlockyCdpPlugin extends Plugin {
                             getContext(), getContext().getPackageName() + ".fileprovider", bundle));
                     send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     getActivity()
-                        .startActivity(Intent.createChooser(send, "Отправить полную диагностику"));
+                        .startActivity(
+                            Intent.createChooser(
+                                send,
+                                scoreComparison
+                                    ? "Отправить сравнение"
+                                    : "Отправить полную диагностику"));
                     call.resolve(new JSObject().put("opened", true).put("bytes", bundle.length()));
                   } catch (Exception failure) {
                     call.reject("Cannot open diagnostic share sheet");

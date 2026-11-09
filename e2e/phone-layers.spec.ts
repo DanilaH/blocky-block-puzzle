@@ -195,7 +195,12 @@ test("full length layer study includes delayed rain, theme, scores and one consi
     }),
   });
 });
-for (const target of ["#clear-layers", "#clear-trace", "#clear-full"])
+for (const target of [
+  "#clear-layers",
+  "#clear-trace",
+  "#clear-full",
+  "#clear-score",
+])
   test(`diagnostic link ${target} protects an unexported capture`, async ({
     page,
   }) => {

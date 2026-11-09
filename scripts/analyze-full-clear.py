@@ -44,7 +44,7 @@ def validate(path):
   for f in manifest['files']:
    raw=z.read(f['path']);assert len(raw)==f['bytes'] and hashlib.sha256(raw).hexdigest()==f['sha256'],'Manifest hash mismatch: '+f['path']
   r=json.loads(z.read('report.json'));assert r['schema']=='blocky-full-clear-v1'
-  assert r['appVersion'] in ['0.58.0-preview','0.59.0-preview']
+  assert r['appVersion'] in ['0.58.0-preview','0.59.0-preview','0.60.0-preview']
   functional=r['functionalOnly'];complete=r['completed'];episodes=r['episodes'];duration=r['protocol']['measurementMs']
   assert functional or (len(r['sourceCommit'])==40 and all(c in '0123456789abcdef' for c in r['sourceCommit'])),'Source identity'
   expected=[];candidates=list(CASES)[1:]
@@ -80,6 +80,7 @@ def validate(path):
    if any(x!=theme for x in [proof['renderedTheme'],proof['scene']['theme'],proof['atmosphere']['theme'],proof['festival']['theme']]):errors.append('theme-target')
    effects=proof['rewardEffects'];expected_effects=dict(captionAnimations=0 if omit or flags['skipRewardDecoration'] else 2,visibleEmblems=0,pointFlights=0 if omit or flags['skipPointFlights'] else 2,hudFlashes=0 if omit or flags['skipHudFlashes'] else 2,themeNotices=0 if omit or flags['skipThemeNotice'] or flags['freezeTheme'] else 1,themeImpulses=0 if flags['freezeTheme'] or flags['skipThemeImpulse'] else 1)
    if effects!=expected_effects:errors.append('effect-output')
+   if r['appVersion']=='0.60.0-preview' and proof.get('scoreGlowProperties')!= ([] if omit or flags['skipHudFlashes'] else ['filter','filter']):errors.append('score-glow-path')
    if proof['festival']['spawned']!=(0 if flags['skipFestival'] else 148):errors.append('particle-count')
    if bool(proof['scene']['inkPeak']==0)!=flags['hideInk'] or bool(proof['scene']['vfxPeak']==0)!=flags['hideVfx']:errors.append('board-output')
    if proof['atmosphere']['disabled']!=flags['skipAtmosphere'] or proof['festival']['disabled']!=flags['skipFestival']:errors.append('external-layer-output')

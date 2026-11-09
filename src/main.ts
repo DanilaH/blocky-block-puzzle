@@ -1,6 +1,7 @@
 import { readRenderInfo } from "./platform/render-info";
 import type { ClearLayer } from "./diagnostics/clear-layers";
 import { APP_VERSION } from "./app-version";
+import { presentScoreGlow } from "./game/score-glow";
 import { presentReviveClock } from "./game/revive-clock";
 import { MoveCalculator } from "./game/move-calculator";
 import { PlayCapture } from "./platform/play-capture";
@@ -100,6 +101,7 @@ async function start() {
     phoneTrace && (traceRequest === "layers" || traceRequest === "full");
   let diagnosticLayer: ClearLayer | null = null;
   let diagnosticRewardDom = 0;
+  let diagnosticScoreGlowProperties: string[] = [];
   const freshRewardEffects = () => ({
     captionAnimations: 0,
     visibleEmblems: 0,
@@ -1584,14 +1586,16 @@ async function start() {
                     scene.intensity,
                   );
                   if (!(phoneLayers && diagnosticLayer?.skipHudFlashes)) {
-                    const glow = animate(
-                      el("score"),
-                      [
-                        { textShadow: "0 0 18px #8edaff" },
-                        { textShadow: "0 2px 2px #00000026" },
-                      ],
-                      600,
-                    );
+                    const glow = presentScoreGlow(el("score"), animate);
+                    if (phoneLayers && glow) {
+                      const first =
+                        glow.effect instanceof KeyframeEffect
+                          ? glow.effect.getKeyframes()[0]
+                          : undefined;
+                      diagnosticScoreGlowProperties.push(
+                        first && "filter" in first ? "filter" : "text-shadow",
+                      );
+                    }
                     const bump = animate(
                       el("score"),
                       [
@@ -2221,7 +2225,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-full" href="?clearTrace=full">Полная диагностика очистки · около 10 минут</a><a class="secondary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-score" href="?clearTrace=full&scoreFeedback=compare">Проверить оптимизацию · около 2 минут</a><a class="secondary" id="clear-full" href="?clearTrace=full">Полная диагностика очистки · около 10 минут</a><a class="secondary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2360,6 +2364,7 @@ async function start() {
     el("clear-trace").onclick = protectDiagnostic;
     el("clear-layers").onclick = protectDiagnostic;
     el("clear-full").onclick = protectDiagnostic;
+    el("clear-score").onclick = protectDiagnostic;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
@@ -2877,6 +2882,7 @@ async function start() {
       beginSample: () => {
         if (!phoneLayers) return;
         diagnosticRewardDom = 0;
+        diagnosticScoreGlowProperties = [];
         diagnosticRewardEffects = freshRewardEffects();
         scene.beginDiagnosticSample();
         atmosphere.beginDiagnosticSample();
@@ -2914,6 +2920,7 @@ async function start() {
                 boardEmpty: currentGame().board.every((n) => n === 0),
                 rewardDomCreated: diagnosticRewardDom,
                 rewardEffects: { ...diagnosticRewardEffects },
+                scoreGlowProperties: [...diagnosticScoreGlowProperties],
                 rewardRenderer: "dom" as const,
                 shownScore: Math.round(scoreShown),
                 pendingPoints,

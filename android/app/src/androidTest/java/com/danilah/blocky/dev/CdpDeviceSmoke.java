@@ -31,6 +31,66 @@ public class CdpDeviceSmoke {
   }
 
   @Test
+  public void scoreFeedbackComparisonExportsSmallUntracedArchive() throws Exception {
+    try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
+      long until = System.currentTimeMillis() + 45000;
+      while (System.currentTimeMillis() < until) {
+        if (js(scenario, "!!document.querySelector('#board canvas')").equals("true")) break;
+        Thread.sleep(200);
+      }
+      js(scenario, "location.href='https://localhost/?clearTrace=full&scoreFeedback=compare'");
+      until = System.currentTimeMillis() + 45000;
+      while (System.currentTimeMillis() < until) {
+        if (js(scenario, "!!document.querySelector('#full-start:not(:disabled)')").equals("true"))
+          break;
+        Thread.sleep(200);
+      }
+      assertEquals("true", js(scenario, "!!window.__blockyFullDiagnostic"));
+      js(scenario, "document.querySelector('#full-start').click()");
+      until = System.currentTimeMillis() + 4 * 60 * 1000;
+      while (System.currentTimeMillis() < until) {
+        if (js(scenario, "window.__blockyFullDiagnostic.running").equals("false")) break;
+        Thread.sleep(1000);
+      }
+      assertEquals("false", js(scenario, "window.__blockyFullDiagnostic.running"));
+      JSONObject report =
+          new JSONObject(
+              (String)
+                  new JSONTokener(
+                          js(scenario, "JSON.stringify(window.__blockyFullDiagnostic.report)"))
+                      .nextValue());
+      assertTrue(report.optString("failure"), report.getBoolean("completed"));
+      assertEquals("blocky-score-feedback-v1", report.getString("schema"));
+      assertEquals(10, report.getJSONArray("episodes").length());
+      assertFalse(report.getJSONObject("protocol").getBoolean("nativeTracesUsed"));
+      java.io.File bundle =
+          new java.io.File(
+              androidx.test.platform.app.InstrumentationRegistry.getInstrumentation()
+                  .getTargetContext()
+                  .getCacheDir(),
+              "blocky-score-feedback.zip");
+      if (bundle.exists()) assertTrue(bundle.delete());
+      js(scenario, "document.querySelector('#full-export').click()");
+      until = System.currentTimeMillis() + 30000;
+      boolean ready = false;
+      while (System.currentTimeMillis() < until && !ready) {
+        try (java.util.zip.ZipFile zip = new java.util.zip.ZipFile(bundle)) {
+          ready =
+              zip.size() == 2
+                  && zip.getEntry("report.json") != null
+                  && zip.getEntry("manifest.json") != null;
+        } catch (java.io.IOException writing) {
+          Thread.sleep(200);
+        }
+      }
+      assertTrue("Small comparison archive missing", ready);
+      assertTrue("Comparison unexpectedly contains large data", bundle.length() < 1024 * 1024);
+      System.out.println(
+          "BLOCKY_SCORE_COMPARISON_COMPLETED 10 episodes; archive=" + bundle.length());
+    }
+  }
+
+  @Test
   public void ownProcessCdpProducesLinkedPaintAndLayerData() throws Exception {
     try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
       long until = System.currentTimeMillis() + 45000;

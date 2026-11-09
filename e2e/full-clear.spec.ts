@@ -230,3 +230,66 @@ test("system reduced motion stops before a misleading long run", async ({
     await page.evaluate(() => (window as any).__fullMock.shared.failure),
   ).toBe("system-reduced-motion-enabled");
 });
+
+test("score comparison runs both real renderers without CDP and preserves the ordinary save", async ({
+  page,
+}) => {
+  test.setTimeout(90000);
+  await mock(page);
+  await page.goto("/");
+  await page.locator(".piece").first().waitFor();
+  const before = await saved(page);
+  await page.goto("/?clearTrace=full&scoreFeedback=compare&test=fast");
+  await expect(page.locator("#full-start")).toBeEnabled();
+  await expect(page.locator("#full-start")).toHaveText("Начать сравнение");
+  await page.locator("#full-start").click();
+  await expect(page.locator("#full-export")).toBeEnabled({ timeout: 75000 });
+  const r = await read(page);
+  expect(
+    r.completed,
+    JSON.stringify(
+      r.episodes.filter((e: any) => !e.valid).map((e: any) => e.validation),
+    ),
+  ).toBe(true);
+  expect(r.schema).toBe("blocky-score-feedback-v1");
+  expect(r.episodes).toHaveLength(10);
+  expect(r.episodes.slice(2).map((e: any) => e.scoreFeedback)).toEqual([
+    "legacy",
+    "filter",
+    "filter",
+    "legacy",
+    "legacy",
+    "filter",
+    "filter",
+    "legacy",
+  ]);
+  for (const e of r.episodes) {
+    expect(e.traceActive).toBe(false);
+    expect(e.state.proof.scoreGlowProperties).toEqual(
+      e.scoreFeedback === "legacy"
+        ? ["text-shadow", "text-shadow"]
+        : ["filter", "filter"],
+    );
+    expect(e.state.proof.pendingPoints).toBe(0);
+    expect(e.state.proof.shownScore).toBe(1574);
+  }
+  expect(r.summary.improved).toBe(false);
+  expect(
+    await page.evaluate(() =>
+      (window as any).__fullMock.calls.filter(
+        (x: string) =>
+          x === "preflight" || x.startsWith("start:") || x.startsWith("stop:"),
+      ),
+    ),
+  ).toEqual([]);
+  expect(
+    await page.evaluate(() => document.documentElement.dataset.scoreFeedback),
+  ).toBeUndefined();
+  await page.locator("#full-export").click();
+  expect(
+    await page.evaluate(() => (window as any).__fullMock.shared.schema),
+  ).toBe("blocky-score-feedback-v1");
+  await page.locator("#full-return").click();
+  await page.locator(".piece").first().waitFor();
+  expect(await saved(page)).toEqual(before);
+});

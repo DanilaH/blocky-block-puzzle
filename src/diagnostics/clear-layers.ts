@@ -64,6 +64,7 @@ export type LayerProof = {
   rewardDomCreated: number;
   rewardRenderer: "dom";
   rewardEffects: RewardEffectProof;
+  scoreGlowProperties?: string[];
   scene: { draws: number; inkPeak: number; vfxPeak: number; theme: number };
   atmosphere: {
     draws: number;

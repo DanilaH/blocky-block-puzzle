@@ -47,6 +47,9 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: -1px;
 }
+:root[data-presentation="classic"]:not([data-score-feedback="legacy"]) .score {
+  will-change: transform, filter;
+}
 :root[data-presentation="classic"] .best {
   background: transparent;
   box-shadow: none;

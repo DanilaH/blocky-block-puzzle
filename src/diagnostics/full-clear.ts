@@ -16,6 +16,11 @@ import {
   type FullRow,
 } from "./full-clear-plan";
 import type { PhoneClearHooks } from "./phone-clear";
+import { setDiagnosticScoreGlow, type ScoreGlowMode } from "../game/score-glow";
+import {
+  SCORE_FEEDBACK_PLAN,
+  summarizeScoreFeedback,
+} from "./score-feedback-plan";
 
 type Capture = {
   ready?: boolean;
@@ -52,6 +57,8 @@ export async function installFullClear(hooks: PhoneClearHooks) {
   const params = new URLSearchParams(location.search),
     fast = import.meta.env.DEV && params.get("test") === "fast";
   const functionalOnly = fast || !Capacitor.isNativePlatform();
+  const scoreOnly = params.get("scoreFeedback") === "compare";
+  const episodeCount = scoreOnly ? 10 : 57;
   const settleMs = fast ? 80 : 1800,
     measurementMs = fast ? 2600 : 8000;
   let bridge: FullBridge | null = Capacitor.isNativePlatform()
@@ -75,12 +82,32 @@ export async function installFullClear(hooks: PhoneClearHooks) {
     failure = element("full-error"),
     progress = element("full-progress"),
     step = element("full-step");
+  if (scoreOnly) {
+    panel.querySelector("h2")!.textContent = "Проверка оптимизации";
+    status.textContent =
+      "Около двух минут. Автоматически сравним прежний и новый вариант. Все эффекты сохраняются. Результат — один небольшой файл.";
+    start.textContent = "Начать сравнение";
+  }
   let controller: AbortController | null = null,
     report: any = null,
     lastCondition: ClearLayer = BASELINE_LAYER;
   while (!hooks.ready()) await new Promise((r) => setTimeout(r, 25));
   hooks.pause(true);
   const allConditions = [BASELINE_LAYER, ...FULL_CONDITIONS];
+  const comparisonPlan = scoreOnly
+    ? SCORE_FEEDBACK_PLAN.map((scoreFeedback, i) => ({
+        condition: BASELINE_LAYER,
+        round: Math.floor(i / 2),
+        scoreFeedback,
+      }))
+    : fullPlan().map((item) => ({ ...item, scoreFeedback: undefined }));
+  const summary = () =>
+    scoreOnly
+      ? summarizeScoreFeedback(
+          report.episodes,
+          functionalOnly || !report.completed,
+        )
+      : summarizeFull(report.episodes, functionalOnly || !report.completed);
   function visible(yes: boolean) {
     panel.style.background = yes ? "#08152bf5" : "transparent";
     panel.style.placeContent = yes ? "center" : "start";
@@ -108,6 +135,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
     condition: ClearLayer,
     phase: string,
     round?: number,
+    scoreFeedback?: ScoreGlowMode,
   ): FullRow {
     const sample = performanceCapture.snapshot(),
       state = structuredClone(hooks.state()),
@@ -145,10 +173,19 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       (sample.frameTimes.at(-1) ?? 0) - (placement ?? 0) < 7900
     )
       errors.push("measurement-window");
+    if (
+      scoreFeedback &&
+      proof.scoreGlowProperties?.join(",") !==
+        (scoreFeedback === "legacy"
+          ? "text-shadow,text-shadow"
+          : "filter,filter")
+    )
+      errors.push("score-glow-path");
     return {
       condition,
       phase,
       round,
+      scoreFeedback,
       valid: errors.length === 0,
       validation: { valid: errors.length === 0, errors },
       metrics,
@@ -177,12 +214,14 @@ export async function installFullClear(hooks: PhoneClearHooks) {
     phase: string,
     signal: AbortSignal,
     round?: number,
+    scoreFeedback?: ScoreGlowMode,
   ) {
     const index = report.episodes.length;
-    step.textContent = `Проверка ${index + 1} из 57`;
+    step.textContent = `Проверка ${index + 1} из ${episodeCount}`;
     const device = await bridge!.device();
     if (Number(device.thermalStatus) >= 4)
       throw Error("device-thermal-critical");
+    if (scoreFeedback) setDiagnosticScoreGlow(scoreFeedback);
     await prepare(condition, signal);
     let capture: Capture | undefined;
     const label = `${phase}-${index}-${condition.id}`;
@@ -210,7 +249,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
           await delay(250, signal);
         }
       }
-      const row = finish(condition, phase, round);
+      const row = finish(condition, phase, round, scoreFeedback);
       performance.mark(`blocky-full:${label}:end`);
       hooks.pause(true);
       if (capture) {
@@ -249,10 +288,10 @@ export async function installFullClear(hooks: PhoneClearHooks) {
     const began = performance.now(),
       deadline = setTimeout(
         () => controller?.abort("deadline"),
-        15 * 60 * 1000,
+        (scoreOnly ? 4 : 15) * 60 * 1000,
       );
     report = {
-      schema: "blocky-full-clear-v1",
+      schema: scoreOnly ? "blocky-score-feedback-v1" : "blocky-full-clear-v1",
       appVersion: APP_VERSION,
       sourceCommit,
       functionalOnly,
@@ -264,9 +303,10 @@ export async function installFullClear(hooks: PhoneClearHooks) {
         measurementMs,
         warmupMaxMs: functionalOnly ? measurementMs : 20000,
         cosmeticSeed: LAYER_SEED,
-        conditions: allConditions,
-        comparisonOrder: fullPlan(),
-        attributionOrder: allConditions,
+        conditions: scoreOnly ? [BASELINE_LAYER] : allConditions,
+        comparisonOrder: comparisonPlan,
+        attributionOrder: scoreOnly ? [] : allConditions,
+        nativeTracesUsed: !scoreOnly,
         primaryMetric:
           "RAF intervals >33.4ms after rounding to 0.1ms; full 8 seconds",
         tracedTimingUsedForPerformance: false,
@@ -280,6 +320,12 @@ export async function installFullClear(hooks: PhoneClearHooks) {
         "Audio, haptics, ads and native product analytics are disabled by the diagnostic entry. Orientation/context loss/background abort instead of mixing geometry.",
       ],
     };
+    if (scoreOnly)
+      report.notes = [
+        "Two warmups, then four adjacent old/new pairs in opposite directions (ABBAABBA); full 8 seconds each. No feature is disabled.",
+        "Legacy text-shadow and compositor drop-shadow are identified from real Animation keyframes. Native CDP traces are not recorded or used for this comparison.",
+        "Same separate blocky-clear-trace fixture, score 1574, ordinary save preserved; ads/audio/haptics disabled. RAF is not physical presentation or GPU execution time.",
+      ];
     start.disabled = share.disabled = true;
     failure.hidden = true;
     failure.textContent = "";
@@ -294,15 +340,23 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       if (report.environment?.reducedMotion)
         throw Error("system-reduced-motion-enabled");
       step.textContent = "Проверяем полноту записи";
-      stage = "проверка записи";
-      report.preflight = await bridge.preflight();
-      if (!report.preflight.ready)
-        throw Error(
-          `preflight:${report.preflight.error ?? "missing-identities"}`,
-        );
+      if (!scoreOnly) {
+        stage = "проверка записи";
+        report.preflight = await bridge.preflight();
+        if (!report.preflight.ready)
+          throw Error(
+            `preflight:${report.preflight.error ?? "missing-identities"}`,
+          );
+      }
       for (let i = 0; i < 2; i++) {
         stage = `прогрев ${i + 1} из 2`;
-        await episode(BASELINE_LAYER, "warmup", signal);
+        await episode(
+          BASELINE_LAYER,
+          "warmup",
+          signal,
+          undefined,
+          scoreOnly ? (i === 0 ? "legacy" : "filter") : undefined,
+        );
         const warmup = report.episodes.at(-1);
         if (!warmup.valid)
           throw Error(
@@ -310,15 +364,21 @@ export async function installFullClear(hooks: PhoneClearHooks) {
           );
       }
       stage = "сравнение эффектов";
-      for (const item of fullPlan())
-        await episode(item.condition, "comparison", signal, item.round);
+      for (const item of comparisonPlan)
+        await episode(
+          item.condition,
+          "comparison",
+          signal,
+          item.round,
+          item.scoreFeedback,
+        );
       stage = "запись трасс";
-      for (const condition of allConditions)
+      for (const condition of scoreOnly ? [] : allConditions)
         await episode(condition, "attribution", signal);
       report.completed =
-        report.episodes.length === 57 &&
+        report.episodes.length === episodeCount &&
         report.episodes.every((x: FullRow) => x.valid);
-      report.summary = summarizeFull(report.episodes, functionalOnly);
+      report.summary = summary();
       status.textContent = report.completed
         ? "Готово. Отправьте один файл с результатом."
         : "Сбор завершён с замечаниями. Отправьте результат для разбора.";
@@ -341,6 +401,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       performanceCapture.setActive(false);
       hooks.pause(true);
       hooks.configure!(BASELINE_LAYER);
+      if (scoreOnly) setDiagnosticScoreGlow(null);
       document
         .querySelector("#app")
         ?.getAnimations({ subtree: true })
@@ -349,15 +410,14 @@ export async function installFullClear(hooks: PhoneClearHooks) {
         await bridge.abort().catch(() => {});
         await bridge.setScreenOn({ enabled: false }).catch(() => {});
       }
-      report.summary = summarizeFull(
-        report.episodes,
-        functionalOnly || !report.completed,
-      );
+      report.summary = summary();
       report.elapsedMs = performance.now() - began;
       visible(true);
       controller = null;
       start.disabled = share.disabled = false;
-      start.textContent = "Повторить проверку";
+      start.textContent = scoreOnly
+        ? "Повторить сравнение"
+        : "Повторить проверку";
       if (!failure.hidden) failure.focus();
     }
   }
@@ -375,6 +435,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
   };
   element("full-cancel").onclick = () => controller?.abort("cancelled");
   const leave = () => {
+    if (scoreOnly) setDiagnosticScoreGlow(null);
     controller?.abort("return");
     void bridge?.abort().catch(() => {});
     void bridge?.setScreenOn({ enabled: false }).catch(() => {});

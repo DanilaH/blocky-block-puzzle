@@ -1,5 +1,6 @@
 """Run the production-length Android diagnostic in an isolated software-rendered emulator."""
 import subprocess
+import re
 import sys
 import threading
 from pathlib import Path
@@ -51,14 +52,15 @@ finally:
         logger.kill()
     log.close()
     for remote, local in [('cache/blocky-full-diagnostic.zip', 'cdp-emulator-full.zip'),
-                          ('cache/cdp-smoke-report.json', 'cdp-smoke-report.json')]:
+                          ('cache/cdp-smoke-report.json', 'cdp-smoke-report.json'),
+                          ('cache/blocky-score-feedback.zip', 'cdp-emulator-score.zip')]:
         try:
             with Path(local).open('wb') as output:
                 adb('exec-out', 'run-as', 'com.danilah.blocky.dev', 'cat', remote, stdout=output)
         except (subprocess.SubprocessError, OSError) as error:
             print('Artifact extraction failed:', local, type(error).__name__, flush=True)
     result_text = Path('cdp-emulator-result.txt').read_text(errors='replace')
-    passed = status == 0 and 'OK (1 test)' in result_text and 'FAILURES!!!' not in result_text
+    passed = status == 0 and bool(re.search(r'OK \(2 tests\)', result_text)) and 'FAILURES!!!' not in result_text
     if not passed:
         try:
             with Path('cdp-emulator-cache.tar').open('wb') as output:
@@ -70,3 +72,6 @@ if not passed:
     raise SystemExit('Android full diagnostic failed; see progress, logcat and checkpoint artifacts')
 subprocess.run([sys.executable, 'scripts/analyze-full-clear.py', 'cdp-emulator-full.zip',
                 'cdp-emulator-analysis.json'], check=True)
+
+subprocess.run([sys.executable, 'scripts/analyze-score-feedback.py', 'cdp-emulator-score.zip',
+                'cdp-emulator-score-analysis.json'], check=True)
