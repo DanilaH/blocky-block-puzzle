@@ -1,12 +1,13 @@
 name: Preview checks and APK
 on:
   push:
+    branches: [main, feat/classic-preview]
   pull_request:
   workflow_dispatch:
 env:
   VITE_SOURCE_COMMIT: ${{ github.sha }}
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}-${{ github.event.pull_request.base.ref || github.ref_name }}
   cancel-in-progress: true
 permissions:
   contents: read
@@ -22,6 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run assets:check
       - run: npm test
+      - run: python3 scripts/test-full-clear-analyzer.py
       - run: npm run build
       - uses: actions/cache@v4
         with:
