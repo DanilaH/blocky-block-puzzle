@@ -61,7 +61,7 @@ public class CdpDeviceSmoke {
               new JSONTokener(
                       js(
                           scenario,
-                          "JSON.stringify({completed:window.__blockyFullDiagnostic.report.completed,preflight:window.__blockyFullDiagnostic.report.preflight,failure:window.__blockyFullDiagnostic.report.failure,episodes:window.__blockyFullDiagnostic.report.episodes.map(e=>({condition:e.condition.id,phase:e.phase,valid:e.valid,errors:e.validation.errors,capture:e.capture}))})"))
+                          "JSON.stringify({completed:window.__blockyFullDiagnostic.report.completed,preflight:window.__blockyFullDiagnostic.report.preflight,session:window.__blockyFullDiagnostic.report.session,failure:window.__blockyFullDiagnostic.report.failure,episodes:window.__blockyFullDiagnostic.report.episodes.map(e=>({condition:e.condition.id,phase:e.phase,valid:e.valid,errors:e.validation.errors,capture:e.capture}))})"))
                   .nextValue();
       JSONObject full = new JSONObject(reportJson);
       System.out.println("BLOCKY_FULL_CDP_REPORT " + full);
@@ -86,6 +86,11 @@ public class CdpDeviceSmoke {
       assertTrue(bundle.length() > 10000);
       assertTrue(full.toString(), full.getBoolean("completed"));
       assertEquals(57, full.getJSONArray("episodes").length());
+      JSONObject ads = full.getJSONObject("session").getJSONObject("nativeAds");
+      assertTrue(ads.getBoolean("suspended"));
+      assertFalse(ads.getBoolean("bannerPresent"));
+      assertFalse(ads.getBoolean("loadingInterstitial"));
+      assertFalse(ads.getBoolean("loadingRewarded"));
       JSONObject proof = full.getJSONObject("preflight");
       assertTrue(proof.toString(), proof.getBoolean("ready"));
       assertTrue(proof.getBoolean("probePaintLayerLinked"));

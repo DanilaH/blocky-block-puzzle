@@ -46,6 +46,8 @@ public class BlockyAdsPlugin extends Plugin {
   private String showingKind, showingAttempt;
   private boolean shown;
   private boolean telemetryLive;
+  private boolean diagnosticSuspended;
+  private int loadGeneration;
   private JSONArray earlyEvents = new JSONArray();
   private int epoch=0;
   private Runnable showDeadline;
@@ -71,6 +73,7 @@ public class BlockyAdsPlugin extends Plugin {
   }
   private void event(String name,String kind) { event(name,kind,showingAttempt); }
   private void event(String name,String kind,String intentId) {
+    if (diagnosticSuspended) return;
     JSObject e=new JSObject().put("name",name).put("kind",kind);
     if ("rewarded".equals(kind) && intentId!=null) e.put("intentId",intentId);
     if (telemetryLive) notifyListeners("analytics",e);
@@ -80,7 +83,10 @@ public class BlockyAdsPlugin extends Plugin {
     try { return new JSONArray(prefs.getString("receipts", "[]")); } catch(Exception e) { throw new IllegalStateException("Damaged receipts",e); }
   }
   @PluginMethod public void initialize(PluginCall call) { getActivity().runOnUiThread(() -> {
+    boolean returningFromDiagnostic = diagnosticSuspended;
+    diagnosticSuspended = false;
     telemetryLive=true;
+    if (returningFromDiagnostic) preloadAds();
     call.resolve(new JSObject().put("enabled",enabled()).put("events",earlyEvents));
     earlyEvents=new JSONArray();
   }); }
@@ -95,24 +101,27 @@ public class BlockyAdsPlugin extends Plugin {
   });}
   @PluginMethod public void preload(PluginCall call) { getActivity().runOnUiThread(this::preloadAds); call.resolve(); }
   private void preloadAds() {
-    if (!initialized || destroyed || !enabled() || !resumed) return;
+    if (!initialized || destroyed || !enabled() || !resumed || diagnosticSuspended) return;
+    final int generation = loadGeneration;
     long now = SystemClock.elapsedRealtime();
     if (interstitial == null && !loadingInterstitial && (lastInterstitialRequest == 0 || now - lastInterstitialRequest >= RETRY)) {
       loadingInterstitial = true; lastInterstitialRequest = now; event("ad_request", "interstitial");
       interstitialLoader.loadAd(new AdRequest.Builder(unit("interstitial")).build(), new InterstitialAdLoadListener() {
         @Override public void onAdLoaded(@NonNull InterstitialAd ad) {
-          loadingInterstitial = false; if (!destroyed) { interstitial = ad; event("ad_loaded", "interstitial"); }
+          if (generation != loadGeneration) return;
+          loadingInterstitial = false; if (!destroyed && !diagnosticSuspended) { interstitial = ad; event("ad_loaded", "interstitial"); }
         }
-        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { loadingInterstitial = false; event("ad_load_error", "interstitial"); }
+        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; loadingInterstitial = false; event("ad_load_error", "interstitial"); }
       });
     }
     if (rewarded == null && !loadingRewarded && (lastRewardedRequest == 0 || now - lastRewardedRequest >= RETRY)) {
       loadingRewarded = true; lastRewardedRequest = now; event("ad_request", "rewarded");
       rewardedLoader.loadAd(new AdRequest.Builder(unit("rewarded")).build(), new RewardedAdLoadListener() {
         @Override public void onAdLoaded(@NonNull RewardedAd ad) {
-          loadingRewarded = false; if (!destroyed) { rewarded = ad; event("ad_loaded", "rewarded"); notifyListeners("ready",new JSObject(),true); }
+          if (generation != loadGeneration) return;
+          loadingRewarded = false; if (!destroyed && !diagnosticSuspended) { rewarded = ad; event("ad_loaded", "rewarded"); notifyListeners("ready",new JSObject(),true); }
         }
-        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { loadingRewarded = false; event("ad_load_error", "rewarded"); }
+        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; loadingRewarded = false; event("ad_load_error", "rewarded"); }
       });
     }
   }
@@ -120,7 +129,7 @@ public class BlockyAdsPlugin extends Plugin {
   private void showOnMain(PluginCall call) {
     String kind = call.getString("kind", "");
     if (!kind.equals("rewarded") && !kind.equals("interstitial")) { call.reject("Invalid format"); return; }
-    if (destroyed || !resumed || showing != null || !initialized || !enabled()) { call.resolve(new JSObject().put("status", "unavailable")); return; }
+    if (destroyed || diagnosticSuspended || !resumed || showing != null || !initialized || !enabled()) { call.resolve(new JSObject().put("status", "unavailable")); return; }
     if (kind.equals("interstitial") && interstitial == null) { call.resolve(new JSObject().put("status","unavailable"));preloadAds();return; }
     if (kind.equals("rewarded") && (rewarded == null || receipts().length()>0 || call.getString("intentId", "").isEmpty())) {
       call.resolve(new JSObject().put("status","unavailable").put("rewards",receipts()));preloadAds();return;
@@ -182,6 +191,22 @@ public class BlockyAdsPlugin extends Plugin {
     PluginCall call = showing; showing = null; showingAttempt = null; call.resolve(result);
     preloadAds();
   }
+  /** Main-thread-only pause for the preview diagnostic; receipts and user state are untouched. */
+  public JSONObject suspendForDiagnostics() throws Exception {
+    if (showing != null) throw new IllegalStateException("ad-showing-during-diagnostic");
+    diagnosticSuspended = true;
+    loadGeneration++;
+    if (interstitialLoader != null) interstitialLoader.cancelLoading();
+    if (rewardedLoader != null) rewardedLoader.cancelLoading();
+    loadingInterstitial = loadingRewarded = false;
+    if (interstitial != null) interstitial.setAdEventListener(null);
+    if (rewarded != null) rewarded.setAdEventListener(null);
+    interstitial = null;
+    rewarded = null;
+    lastInterstitialRequest = lastRewardedRequest = lastBannerRequest = 0;
+    clearBanner();
+    return new JSONObject().put("suspended", true).put("bannerPresent", false).put("loadingInterstitial", false).put("loadingRewarded", false);
+  }
   private void clearBanner() {
     if (banner != null) { banner.setBannerAdEventListener(null); banner.destroy(); banner = null; }
     if (bannerHost != null) { if (bannerHost.getParent() instanceof ViewGroup) ((ViewGroup)bannerHost.getParent()).removeView(bannerHost); bannerHost = null; }
@@ -212,7 +237,7 @@ public class BlockyAdsPlugin extends Plugin {
     call.resolve(new JSObject().put("geometry",geometry).put("epoch",epoch));
   });}
   @PluginMethod public void banner(PluginCall call) {getActivity().runOnUiThread(()->{
-    if(!call.getBoolean("visible",false)||!initialized||destroyed||!enabled()||showing!=null||!resumed||call.getInt("epoch",-1)!=epoch){if(bannerHost!=null)bannerHost.setVisibility(View.GONE);call.resolve();return;}
+    if(diagnosticSuspended||!call.getBoolean("visible",false)||!initialized||destroyed||!enabled()||showing!=null||!resumed||call.getInt("epoch",-1)!=epoch){if(bannerHost!=null)bannerHost.setVisibility(View.GONE);call.resolve();return;}
     FrameLayout root=getActivity().findViewById(android.R.id.content);
     int x=call.getInt("x",-1),y=call.getInt("y",-1),w=call.getInt("width",0),h=call.getInt("height",0);
     if(x<0||y<0||w<=0||h<=0||x+w>root.getWidth()||y+h>root.getHeight()){if(bannerHost!=null)bannerHost.setVisibility(View.GONE);call.resolve();return;}

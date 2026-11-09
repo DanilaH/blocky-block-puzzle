@@ -117,8 +117,22 @@ public class BlockyCdpPlugin extends Plugin {
           session = root;
           sequence = 0;
           preflight = new JSONObject();
+          CompletableFuture<JSONObject> quietAds = new CompletableFuture<>();
+          ui.post(
+              () -> {
+                try {
+                  PluginHandle ads = getBridge().getPlugin("BlockyAds");
+                  if (ads == null || !(ads.getInstance() instanceof BlockyAdsPlugin))
+                    throw new IOException("native-ad-diagnostic-unavailable");
+                  quietAds.complete(((BlockyAdsPlugin) ads.getInstance()).suspendForDiagnostics());
+                } catch (Exception error) {
+                  quietAds.completeExceptionally(error);
+                }
+              });
+          JSONObject nativeAds = quietAds.get(10, TimeUnit.SECONDS);
           return new JSONObject()
               .put("supported", true)
+              .put("nativeAds", nativeAds)
               .put("sessionId", UUID.randomUUID().toString());
         });
   }
