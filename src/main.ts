@@ -2359,6 +2359,7 @@ async function start() {
     el("clear-benchmark").onclick = protectDiagnostic;
     el("clear-trace").onclick = protectDiagnostic;
     el("clear-layers").onclick = protectDiagnostic;
+    el("clear-full").onclick = protectDiagnostic;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
