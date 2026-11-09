@@ -1,0 +1,56 @@
+{
+  "sourceCommit": "1188357987744a510d17ce65598afbc0409a4a90",
+  "headCommit": "cf8f7448855502e93dbd3e2b285776d4550c892b",
+  "ciRun": 42617776733,
+  "androidInstrumentationTestsPassed": 2,
+  "full": {
+    "completed": true,
+    "episodes": 57,
+    "validEpisodes": 57,
+    "comparisons": 40,
+    "attributionCaptures": 15,
+    "preflightReady": true,
+    "probeLinked": true,
+    "issues": [],
+    "elapsedMs": 638775.4,
+    "zipBytes": 67700507,
+    "zipSha256": "f993293a471fb4b1aee54228c9f54ba7a4906b828541de358b27f0198d060572"
+  },
+  "score": {
+    "completed": true,
+    "episodes": 10,
+    "validEpisodes": 10,
+    "comparisons": 8,
+    "warmups": 2,
+    "issues": [],
+    "elapsedMs": 99701.79999999993,
+    "zipBytes": 25520,
+    "zipSha256": "ce3a44ecf13303244a64d728212951c343191688093f77677e8452f8a372342c",
+    "zipMembers": [
+      "manifest.json",
+      "report.json"
+    ],
+    "nativeTracesUsed": false,
+    "allEffectsPreserved": true,
+    "actualKeyframesVerified": true,
+    "comparisonOrder": [
+      "legacy",
+      "filter",
+      "filter",
+      "legacy",
+      "legacy",
+      "filter",
+      "filter",
+      "legacy"
+    ],
+    "improvedOnEmulator": false
+  },
+  "nativeAds": {
+    "suspended": true,
+    "bannerPresent": false,
+    "loadingInterstitial": false,
+    "loadingRewarded": false
+  },
+  "physicalDeviceTested": false,
+  "scope": "Android software emulator verifies transport, complete game outputs, both renderer paths, lifecycle and export integrity. Emulator RAF is not used to accept POCO performance. Independent local re-analysis exactly matched both CI analyses."
+}
