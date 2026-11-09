@@ -202,6 +202,23 @@ export class CanvasForegroundStudy {
       gpu: this.gpu?.snapshot() ?? this.shared?.gpu?.snapshot(),
       shared: this.shared?.snapshot(),
       boardShakes: this.boardShakes,
+      composite: this.sharedGame?.isBooted
+        ? {
+            boardBacking: [
+              this.sharedGame.canvas.width,
+              this.sharedGame.canvas.height,
+            ],
+            bed: (
+              this.sharedGame.scene.getScene("board") as any
+            ).studyBed?.snapshot(),
+            glError: (
+              this.sharedGame.renderer as Phaser.Renderer.WebGL.WebGLRenderer
+            ).gl.getError(),
+            alpha: (
+              this.sharedGame.renderer as Phaser.Renderer.WebGL.WebGLRenderer
+            ).gl.getContextAttributes()?.alpha,
+          }
+        : undefined,
       phaserRenderTimes: [...this.renderTimes],
     };
   }
@@ -210,8 +227,8 @@ export class CanvasForegroundStudy {
       if (this.renderStart)
         this.renderTimes.push(performance.now() - this.renderStart);
     });
-    if (!this.isShared) return;
     this.sharedGame = game;
+    if (!this.isShared) return;
     this.shared = new PhaserForeground(
       game,
       scene,
@@ -226,8 +243,25 @@ export class CanvasForegroundStudy {
   resizeShared() {
     this.shared?.resize();
   }
+  observeAnimation(target: Element, animation: Animation) {
+    if (target === this.sharedGame?.canvas)
+      (
+        this.sharedGame.scene.getScene("board") as any
+      ).studyBed?.observeAnimation(animation);
+  }
   redrawShared() {
     this.shared?.redraw();
+    if (
+      new URLSearchParams(location.search).get("studyRenderer") ===
+        "gpu-bed-under" &&
+      this.sharedGame?.isBooted &&
+      !(this.sharedGame.renderer as Phaser.Renderer.WebGL.WebGLRenderer)
+        .contextLost
+    ) {
+      this.sharedGame.renderer.preRender();
+      this.sharedGame.scene.render(this.sharedGame.renderer);
+      this.sharedGame.renderer.postRender();
+    }
   }
   private wake() {
     if (!this.isShared) this.host.studyWake();
@@ -255,6 +289,7 @@ export class CanvasForegroundStudy {
     return { x, y };
   }
   beginSample() {
+    (this.sharedGame?.scene.getScene("board") as any)?.studyBed?.resetSample();
     this.renderTimes = [];
     this.renderStart = performance.now();
     this.boardShakes = 0;

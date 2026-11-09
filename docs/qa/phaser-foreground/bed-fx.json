@@ -1,0 +1,418 @@
+[
+  {
+    "mode": "original",
+    "at": 0,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 80,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 180,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 350,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 550,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 900,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 1200,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 1800,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 0,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": false,
+          "visible": false,
+          "maskVisible": false,
+          "frames": 0,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 80,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": false,
+          "visible": false,
+          "maskVisible": false,
+          "frames": 0,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 180,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": false,
+          "visible": false,
+          "maskVisible": false,
+          "frames": 0,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 350,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": true,
+          "visible": true,
+          "maskVisible": true,
+          "frames": 1,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 550,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": true,
+          "visible": true,
+          "maskVisible": true,
+          "frames": 2,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 900,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": true,
+          "owned": true,
+          "visible": true,
+          "maskVisible": true,
+          "frames": 3,
+          "activations": 1,
+          "completions": 0,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 1200,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": false,
+          "owned": false,
+          "visible": false,
+          "maskVisible": false,
+          "frames": 3,
+          "activations": 1,
+          "completions": 1,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 1800,
+    "actual": {
+      "coreScore": 1574,
+      "composite": {
+        "boardBacking": [
+          1024,
+          1024
+        ],
+        "bed": {
+          "enabled": true,
+          "active": false,
+          "owned": false,
+          "visible": false,
+          "maskVisible": false,
+          "frames": 3,
+          "activations": 1,
+          "completions": 1,
+          "handoffs": 0,
+          "initMs": 11.700000002980232,
+          "maskBytes": 4194304,
+          "blendMode": 28
+        },
+        "glError": 0,
+        "alpha": true
+      }
+    }
+  },
+  {
+    "at": 0,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  },
+  {
+    "at": 80,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  },
+  {
+    "at": 180,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  },
+  {
+    "at": 350,
+    "diff": {
+      "meanChannelError": 0.41539910893446247,
+      "maxChannelError": 20,
+      "percentPixelsOver8": 0.08397102336496276
+    }
+  },
+  {
+    "at": 550,
+    "diff": {
+      "meanChannelError": 0.6214927048260381,
+      "maxChannelError": 28,
+      "percentPixelsOver8": 0.10080604019997959
+    }
+  },
+  {
+    "at": 900,
+    "diff": {
+      "meanChannelError": 0.7291358024691358,
+      "maxChannelError": 49,
+      "percentPixelsOver8": 0.10529537802265075
+    }
+  },
+  {
+    "at": 1200,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  },
+  {
+    "at": 1800,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "kind": "combo",
+    "at": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0,
+    "percentPixelsOver8": 0
+  },
+  {
+    "kind": "combo",
+    "at": 80,
+    "meanChannelError": 0.23619188518178416,
+    "maxChannelError": 220,
+    "percentPixelsOver8": 0.7433935312723191
+  },
+  {
+    "kind": "combo",
+    "at": 180,
+    "meanChannelError": 0.45893922388871883,
+    "maxChannelError": 217,
+    "percentPixelsOver8": 1.364248546066728
+  },
+  {
+    "kind": "combo",
+    "at": 350,
+    "meanChannelError": 0.6781376050062918,
+    "maxChannelError": 219,
+    "percentPixelsOver8": 1.6291194776043258
+  },
+  {
+    "kind": "combo",
+    "at": 550,
+    "meanChannelError": 0.5105978981736558,
+    "maxChannelError": 219,
+    "percentPixelsOver8": 1.4587287011529437
+  },
+  {
+    "kind": "combo",
+    "at": 900,
+    "meanChannelError": 0.4503720708771214,
+    "maxChannelError": 219,
+    "percentPixelsOver8": 1.2892561983471074
+  },
+  {
+    "kind": "combo",
+    "at": 1500,
+    "meanChannelError": 0.4993497262184131,
+    "maxChannelError": 219,
+    "percentPixelsOver8": 1.2427303336394244
+  },
+  {
+    "kind": "all-clear",
+    "at": 0,
+    "meanChannelError": 0,
+    "maxChannelError": 0,
+    "percentPixelsOver8": 0
+  },
+  {
+    "kind": "all-clear",
+    "at": 80,
+    "meanChannelError": 0.27472434785566097,
+    "maxChannelError": 219,
+    "percentPixelsOver8": 1.1631466176920724
+  },
+  {
+    "kind": "all-clear",
+    "at": 180,
+    "meanChannelError": 0.8396684011835527,
+    "maxChannelError": 218,
+    "percentPixelsOver8": 3.300581573308846
+  },
+  {
+    "kind": "all-clear",
+    "at": 350,
+    "meanChannelError": 1.191717511818522,
+    "maxChannelError": 217,
+    "percentPixelsOver8": 4.0705030098969495
+  },
+  {
+    "kind": "all-clear",
+    "at": 550,
+    "meanChannelError": 1.3280542801754922,
+    "maxChannelError": 217,
+    "percentPixelsOver8": 4.207835935108662
+  },
+  {
+    "kind": "all-clear",
+    "at": 900,
+    "meanChannelError": 1.1831598816447302,
+    "maxChannelError": 217,
+    "percentPixelsOver8": 3.943169064381186
+  },
+  {
+    "kind": "all-clear",
+    "at": 1500,
+    "meanChannelError": 0.9372706866646261,
+    "maxChannelError": 218,
+    "percentPixelsOver8": 2.831955922865014
+  }
+]

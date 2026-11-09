@@ -43,7 +43,60 @@ export async function foregroundServer(port = 5199) {
             );
             return code;
           }
+          if (id.split("?")[0].endsWith("/src/game/BoardScene.ts")) {
+            code = once(
+              code,
+              "export class BoardScene",
+              "const LATE_BED_STUDY=new URLSearchParams(location.search).get('studyRenderer')==='gpu-bed-under';\nconst GPU_BED_STUDY=['gpu-bed','opaque-board','gpu-bed-under'].includes(new URLSearchParams(location.search).get('studyRenderer')||'');\nexport class BoardScene",
+            );
+            code = once(
+              code,
+              'if (this.presentation === "classic" && this.game?.canvas)',
+              'if (this.presentation === "classic" && this.game?.canvas && (!GPU_BED_STUDY || LATE_BED_STUDY))',
+            );
+            code = once(
+              code,
+              'if (this.presentation !== "classic")',
+              'if (this.presentation !== "classic" || (GPU_BED_STUDY && !LATE_BED_STUDY))',
+            );
+            code = once(
+              code,
+              'import Phaser from "phaser";',
+              'import Phaser from "phaser";\nimport {BoardBedStudy} from "../diagnostics/studies/board-bed";',
+            );
+            code = once(
+              code,
+              "  private draw() {",
+              "  private studyBed?:BoardBedStudy;\n  private draw() {",
+            );
+            code = once(
+              code,
+              "  create() {\n    this.syncResolution();",
+              "  create() {\n    this.syncResolution();\n    if(LATE_BED_STUDY && this.presentation==='classic')this.studyBed=new BoardBedStudy(this);",
+            );
+            code = once(
+              code,
+              "    this.themeAt = performance.now();",
+              "    this.themeAt = performance.now();\n    this.studyBed?.start(this.fromShade,tileTransitionDuration(this.calm,this.theme));",
+            );
+            code = once(
+              code,
+              "    const bedColor = this.currentColor(this.fromShade, this.shade);",
+              "    const bedColor = this.currentColor(this.fromShade, this.shade);\n    this.studyBed?.paint(bedColor,this.mix(),this.shade);",
+            );
+            code = once(
+              code,
+              "    // Pause can stop the loop immediately; clear cosmetic objects synchronously.\n    this.draw();",
+              "    // Pause can stop the loop immediately; clear cosmetic objects synchronously.\n    this.draw();\n    this.studyBed?.stopAt(this.currentColor(this.fromShade,this.shade));",
+            );
+            return code;
+          }
           if (!id.split("?")[0].endsWith("/src/main.ts")) return;
+          code = once(
+            code,
+            "    transparent: true,",
+            "    transparent: new URLSearchParams(location.search).get('studyRenderer')!=='opaque-board',\n    ...(new URLSearchParams(location.search).get('studyRenderer')==='opaque-board'?{backgroundColor:THEMES[presentationTheme()]!.board}:{}),",
+          );
           code = once(
             code,
             "import { presentScoreGlow }",
@@ -77,6 +130,11 @@ export async function foregroundServer(port = 5199) {
             code,
             "    scene.stopEffects();",
             "    scene.stopEffects();\n    foregroundStudy.redrawShared();",
+          );
+          code = once(
+            code,
+            "    cosmetic.add(a);",
+            "    foregroundStudy.observeAnimation(target,a);\n    cosmetic.add(a);",
           );
           code = once(
             code,

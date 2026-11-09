@@ -1,0 +1,1085 @@
+{
+  "scope": "Linux Chromium software graphics; resource attribution in traced captures is separate from untraced RAF. Not physical POCO acceptance.",
+  "metadata": {
+    "createdAt": "2026-11-09T18:36:48.849Z",
+    "browser": "141.0.7390.37",
+    "viewport": [
+      392,
+      872
+    ],
+    "deviceScaleFactor": 2.75,
+    "sourceHashes": {
+      "src/main.ts": "ff45fc11c3e978c19db59c43f74962532f60d3257378146d726b6f3fa3aa4932",
+      "src/game/BoardScene.ts": "849bda7f5c5aef100dc66fbb63aafcec14e01e644f9d846506778350bf0af4ba",
+      "package-lock.json": "26ce231829f0b97763e1bba44f543c8d5406e6640f133982e39f0f1e0e62b999",
+      "src/game/festival.ts": "1bc9432f76638a097f243f293fad1f4df4968556dbf96277ea1066a20e0704dd",
+      "src/style.css": "ca6e3b63a1dd3728a86b076341150ff204a817bc3828dc6ca7f365fb9023419b",
+      "src/arcade.css": "d18b92c6d5b6a512c6bb49d0b70eac5ab73a3bbeb4451d9a41ce90c70ba69380",
+      "src/classic.css": "62c51b9071987839d1386288f24c269c9f95a2d0309ab693777c4b95915086a1",
+      "src/game/tile-study-config.ts": "f8838e721088fc43ea32ef9c06934e130fe4521d6fdcd80104cbd3b1fe75b2bd",
+      "src/diagnostics/studies/board-bed.ts": "c203bd322379263c448afc1324ba6e767f7fd3464ee25fa491aec0211ad13ac9",
+      "src/diagnostics/studies/canvas-foreground.ts": "a00c910c76f5d8be53a3c6d3cfe1ff1cc9b5e625470f6150777216c8f8e8a02c",
+      "src/diagnostics/studies/theme-ink.ts": "0975669c68864131098805c2c231a8ccc1bb8181b85e5632654c7dd141d6f086",
+      "src/diagnostics/studies/sprite-gpu.ts": "6ada735499c508344d62d6806268fefe873acfefb09a17ae6c57df89333e7255",
+      "src/diagnostics/studies/phaser-foreground.ts": "42cbe6ea79e1a662232150a2b62d1058a137f41c4f74519a63b4551a6caa844b",
+      "src/diagnostics/studies/native-mesh-canvas.ts": "97a929d1a9ee01fbd873a7793f971d2b646e95a9c6e48b54f5b143779a2dbe63",
+      "scripts/study-foreground-server.mjs": "08dd4ffee86a31e27725206357316706dad9bbfa3bce6cec2569631b450e4a27",
+      "scripts/study-foreground-benchmark.mjs": "bbd31871bf48ab900fce9f64140361b0aa286e0d009d2e4b43168c40f5f62f7c"
+    },
+    "scoreGlow": "legacy",
+    "themeInk": "direct",
+    "rewardShadow": "baked",
+    "rewardAtlas": true,
+    "warmupsPerCase": 2,
+    "untracedPerCase": 2,
+    "windowMs": 8000
+  },
+  "independentChecks": {
+    "untracedRows": 8,
+    "protocolMetricsPerRow": 7,
+    "sourceFingerprintsChecked": true
+  },
+  "rendererClock": "Phaser postrender callbacks, not GPU execution or physical presentation",
+  "cases": [
+    {
+      "index": 0,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 458,
+          "over33Raw": 10,
+          "over33": 4,
+          "over34": 4,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.46659439619972,
+          "over25": 18,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 458,
+            "over33Raw": 5,
+            "over33": 5,
+            "over34": 5,
+            "over50": 2,
+            "maxMs": 63.5,
+            "p95Ms": 23.5,
+            "callbacks": 459,
+            "meanMs": 17.460262008727117,
+            "spanMs": 7996.79999999702,
+            "over25": 16
+          }
+        },
+        {
+          "intervals": 462,
+          "over33Raw": 9,
+          "over33": 0,
+          "over34": 0,
+          "over50": 0,
+          "maxMs": 33.400001525878906,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.351299207447926,
+          "over25": 19,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 462,
+            "over33Raw": 6,
+            "over33": 6,
+            "over34": 3,
+            "over50": 1,
+            "maxMs": 56.600000001490116,
+            "p95Ms": 22.299999997019768,
+            "callbacks": 463,
+            "meanMs": 17.350432900429674,
+            "spanMs": 8015.89999999851,
+            "over25": 18
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 452,
+            "over33Raw": 13,
+            "over33": 7,
+            "over34": 7,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 453
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 462,
+            "over33Raw": 7,
+            "over33": 0,
+            "over34": 0,
+            "over50": 0,
+            "maxMs": 33.400001525878906,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 463
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 107.70599999999993,
+        "paintWallMs": 47.543000000000006,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 149,
+            "inkPeak": 47,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 242,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 178,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 464
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 1,
+      "variant": "gpu-bed-under",
+      "untraced": [
+        {
+          "intervals": 447,
+          "over33Raw": 14,
+          "over33": 6,
+          "over34": 6,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.89642106126619,
+          "over25": 27,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 447,
+            "over33Raw": 16,
+            "over33": 16,
+            "over34": 16,
+            "over50": 0,
+            "maxMs": 47.5,
+            "p95Ms": 25.899999998509884,
+            "callbacks": 448,
+            "meanMs": 17.887695749434048,
+            "spanMs": 7995.79999999702,
+            "over25": 24
+          }
+        },
+        {
+          "intervals": 440,
+          "over33Raw": 12,
+          "over33": 10,
+          "over34": 10,
+          "over50": 7,
+          "maxMs": 83.4000015258789,
+          "p95Ms": 33.20000076293945,
+          "meanMs": 18.14318231669339,
+          "over25": 22,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 440,
+            "over33Raw": 12,
+            "over33": 12,
+            "over34": 12,
+            "over50": 7,
+            "maxMs": 80.0,
+            "p95Ms": 25.30000000447035,
+            "callbacks": 441,
+            "meanMs": 18.132499999993225,
+            "spanMs": 7978.29999999702,
+            "over25": 22
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 438,
+            "over33Raw": 19,
+            "over33": 12,
+            "over34": 11,
+            "over50": 4,
+            "maxMs": 100,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "bed": {
+                "enabled": true,
+                "active": false,
+                "owned": false,
+                "visible": false,
+                "maskVisible": false,
+                "frames": 27,
+                "activations": 1,
+                "completions": 1,
+                "handoffs": 0,
+                "initMs": 9.200000002980232,
+                "maskBytes": 4194304,
+                "blendMode": 28
+              },
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 440
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 442,
+            "over33Raw": 14,
+            "over33": 8,
+            "over34": 8,
+            "over50": 3,
+            "maxMs": 116.5999984741211,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "bed": {
+                "enabled": true,
+                "active": false,
+                "owned": false,
+                "visible": false,
+                "maskVisible": false,
+                "frames": 26,
+                "activations": 1,
+                "completions": 1,
+                "handoffs": 0,
+                "initMs": 9.200000002980232,
+                "maskBytes": 4194304,
+                "blendMode": 28
+              },
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 443
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 74.08800000000001,
+        "paintWallMs": 31.994000000000003,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 133,
+            "inkPeak": 47,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 236,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 164,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 147,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "bed": {
+              "enabled": true,
+              "active": false,
+              "owned": false,
+              "visible": false,
+              "maskVisible": false,
+              "frames": 28,
+              "activations": 1,
+              "completions": 1,
+              "handoffs": 0,
+              "initMs": 9.200000002980232,
+              "maskBytes": 4194304,
+              "blendMode": 28
+            },
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 445
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 2,
+      "variant": "gpu-bed-under",
+      "untraced": [
+        {
+          "intervals": 443,
+          "over33Raw": 14,
+          "over33": 9,
+          "over34": 9,
+          "over50": 3,
+          "maxMs": 66.5999984741211,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.058014049486975,
+          "over25": 27,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 443,
+            "over33Raw": 16,
+            "over33": 16,
+            "over34": 16,
+            "over50": 2,
+            "maxMs": 66.40000000596046,
+            "p95Ms": 26.100000001490116,
+            "callbacks": 444,
+            "meanMs": 18.051693002253973,
+            "spanMs": 7996.89999999851,
+            "over25": 28
+          }
+        },
+        {
+          "intervals": 441,
+          "over33Raw": 19,
+          "over33": 8,
+          "over34": 8,
+          "over50": 1,
+          "maxMs": 66.69999694824219,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.102041339658015,
+          "over25": 29,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 437,
+            "over33Raw": 21,
+            "over33": 21,
+            "over34": 21,
+            "over50": 2,
+            "maxMs": 68.70000000298023,
+            "p95Ms": 33.399999998509884,
+            "callbacks": 438,
+            "meanMs": 18.264530892434873,
+            "spanMs": 7981.5999999940395,
+            "over25": 30
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 427,
+            "over33Raw": 17,
+            "over33": 14,
+            "over34": 14,
+            "over50": 8,
+            "maxMs": 116.69999694824219,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "bed": {
+                "enabled": true,
+                "active": false,
+                "owned": false,
+                "visible": false,
+                "maskVisible": false,
+                "frames": 20,
+                "activations": 1,
+                "completions": 1,
+                "handoffs": 0,
+                "initMs": 9.400000005960464,
+                "maskBytes": 4194304,
+                "blendMode": 28
+              },
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 428
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 431,
+            "over33Raw": 17,
+            "over33": 12,
+            "over34": 12,
+            "over50": 4,
+            "maxMs": 250,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "bed": {
+                "enabled": true,
+                "active": false,
+                "owned": false,
+                "visible": false,
+                "maskVisible": false,
+                "frames": 22,
+                "activations": 1,
+                "completions": 1,
+                "handoffs": 0,
+                "initMs": 9.400000005960464,
+                "maskBytes": 4194304,
+                "blendMode": 28
+              },
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 432
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 81.10800000000006,
+        "paintWallMs": 28.117999999999974,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 132,
+            "inkPeak": 47,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 236,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 165,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 147,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "bed": {
+              "enabled": true,
+              "active": false,
+              "owned": false,
+              "visible": false,
+              "maskVisible": false,
+              "frames": 28,
+              "activations": 1,
+              "completions": 1,
+              "handoffs": 0,
+              "initMs": 9.400000005960464,
+              "maskBytes": 4194304,
+              "blendMode": 28
+            },
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 445
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 3,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 461,
+          "over33Raw": 7,
+          "over33": 2,
+          "over34": 2,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.316920270113005,
+          "over25": 16,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 461,
+            "over33Raw": 7,
+            "over33": 7,
+            "over34": 7,
+            "over50": 0,
+            "maxMs": 41.100000001490116,
+            "p95Ms": 20.799999997019768,
+            "callbacks": 462,
+            "meanMs": 17.31236442516269,
+            "spanMs": 7981,
+            "over25": 13
+          }
+        },
+        {
+          "intervals": 462,
+          "over33Raw": 4,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.3153684706915,
+          "over25": 17,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 462,
+            "over33Raw": 3,
+            "over33": 3,
+            "over34": 2,
+            "over50": 0,
+            "maxMs": 41.5,
+            "p95Ms": 22.100000001490116,
+            "callbacks": 463,
+            "meanMs": 17.310822510825737,
+            "spanMs": 7997.60000000149,
+            "over25": 17
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 447,
+            "over33Raw": 14,
+            "over33": 7,
+            "over34": 7,
+            "over50": 2,
+            "maxMs": 116.5999984741211,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 448
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 460,
+            "over33Raw": 9,
+            "over33": 2,
+            "over34": 1,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "composite": {
+              "boardBacking": [
+                1024,
+                1024
+              ],
+              "glError": 0,
+              "alpha": true
+            },
+            "phaserRenderCallbacks": 461
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 100.25999999999996,
+        "paintWallMs": 46.126000000000055,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 150,
+            "inkPeak": 47,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 241,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 179,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 463
+        }
+      },
+      "errors": []
+    }
+  ]
+}

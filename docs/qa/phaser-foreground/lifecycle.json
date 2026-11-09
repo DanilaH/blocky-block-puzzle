@@ -1,0 +1,754 @@
+{
+  "results": [
+    {
+      "mode": "phaser",
+      "kind": "pause",
+      "before": {
+        "study": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 12,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.100000001490116
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 12,
+            "sharedContext": true,
+            "initMs": 10,
+            "uploads": 1,
+            "uploadMs": 0.29999999701976776,
+            "drawCalls": 12,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": false,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 3,
+            "errors": [],
+            "gpu": {
+              "frames": 12,
+              "sharedContext": true,
+              "initMs": 10,
+              "uploads": 1,
+              "uploadMs": 0.29999999701976776,
+              "drawCalls": 12,
+              "textures": 1,
+              "textureBytes": 760984,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "composite": {
+            "boardBacking": [
+              1116,
+              2481
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 16
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "after": {
+        "study": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 12,
+          "cacheEntries": 2,
+          "preparationMs": [
+            11.100000001490116
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 12,
+            "sharedContext": true,
+            "initMs": 10,
+            "uploads": 1,
+            "uploadMs": 0.29999999701976776,
+            "drawCalls": 12,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": false,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 3,
+            "errors": [],
+            "gpu": {
+              "frames": 12,
+              "sharedContext": true,
+              "initMs": 10,
+              "uploads": 1,
+              "uploadMs": 0.29999999701976776,
+              "drawCalls": 12,
+              "textures": 1,
+              "textureBytes": 760984,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "composite": {
+            "boardBacking": [
+              1116,
+              2481
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 16
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "mode": "phaser-native",
+      "kind": "pause",
+      "before": {
+        "study": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 12,
+          "cacheEntries": 2,
+          "preparationMs": [
+            9.899999998509884
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "nativeBatch": true,
+            "sharedContext": true,
+            "frames": 13,
+            "submittedQuads": 20,
+            "activeQuads": 0,
+            "meshPool": 2,
+            "uploads": 1,
+            "preparationMs": 1.8999999985098839,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 3,
+            "errors": [],
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 13,
+              "submittedQuads": 20,
+              "activeQuads": 0,
+              "meshPool": 2,
+              "uploads": 1,
+              "preparationMs": 1.8999999985098839,
+              "textures": 1,
+              "textureBytes": 760984,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "composite": {
+            "boardBacking": [
+              1116,
+              2481
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 16
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "after": {
+        "study": {
+          "active": 0,
+          "prepared": 1,
+          "draws": 12,
+          "cacheEntries": 2,
+          "preparationMs": [
+            9.899999998509884
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "nativeBatch": true,
+            "sharedContext": true,
+            "frames": 13,
+            "submittedQuads": 20,
+            "activeQuads": 0,
+            "meshPool": 2,
+            "uploads": 1,
+            "preparationMs": 1.8999999985098839,
+            "textures": 1,
+            "textureBytes": 760984,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 3,
+            "errors": [],
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 13,
+              "submittedQuads": 20,
+              "activeQuads": 0,
+              "meshPool": 2,
+              "uploads": 1,
+              "preparationMs": 1.8999999985098839,
+              "textures": 1,
+              "textureBytes": 760984,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "composite": {
+            "boardBacking": [
+              1116,
+              2481
+            ],
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 16
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "mode": "gpu-bed-under",
+      "kind": "pause",
+      "before": {
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "bed": {
+              "enabled": true,
+              "active": true,
+              "owned": false,
+              "visible": false,
+              "maskVisible": false,
+              "frames": 12,
+              "activations": 1,
+              "completions": 0,
+              "handoffs": 1,
+              "initMs": 10.599999994039536,
+              "maskBytes": 4194304,
+              "blendMode": 28
+            },
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 22
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "after": {
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "bed": {
+              "enabled": true,
+              "active": true,
+              "owned": false,
+              "visible": false,
+              "maskVisible": false,
+              "frames": 12,
+              "activations": 1,
+              "completions": 0,
+              "handoffs": 1,
+              "initMs": 10.599999994039536,
+              "maskBytes": 4194304,
+              "blendMode": 28
+            },
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 22
+        },
+        "score": "1 574",
+        "visibility": "visible",
+        "dom": 0
+      },
+      "errors": []
+    },
+    {
+      "mode": "phaser-native",
+      "kind": "cold-cancel",
+      "before": {
+        "active": 0,
+        "prepared": 1,
+        "draws": 0,
+        "cacheEntries": 11,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "shared": {
+          "ready": true,
+          "nativeBatch": true,
+          "originalCanvas": [
+            1024,
+            1024
+          ],
+          "canvasIsGameCanvas": true,
+          "sharedContext": true,
+          "backing": [
+            1116,
+            2481
+          ],
+          "viewport": {
+            "x": 45.51111111111111,
+            "y": 503.4666666666667,
+            "side": 1024,
+            "cssSide": 360
+          },
+          "pixelRatio": 2.8444444444444446,
+          "redraws": 3,
+          "errors": []
+        },
+        "boardShakes": 0,
+        "composite": {
+          "boardBacking": [
+            1116,
+            2481
+          ],
+          "glError": 0,
+          "alpha": true
+        },
+        "phaserRenderCallbacks": 0
+      },
+      "after": {
+        "active": 0,
+        "prepared": 1,
+        "draws": 0,
+        "cacheEntries": 11,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": true,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "shared": {
+          "ready": true,
+          "nativeBatch": true,
+          "originalCanvas": [
+            1024,
+            1024
+          ],
+          "canvasIsGameCanvas": true,
+          "sharedContext": true,
+          "backing": [
+            1116,
+            2481
+          ],
+          "viewport": {
+            "x": 45.51111111111111,
+            "y": 503.4666666666667,
+            "side": 1024,
+            "cssSide": 360
+          },
+          "pixelRatio": 2.8444444444444446,
+          "redraws": 3,
+          "errors": []
+        },
+        "boardShakes": 0,
+        "composite": {
+          "boardBacking": [
+            1116,
+            2481
+          ],
+          "glError": 0,
+          "alpha": true
+        },
+        "phaserRenderCallbacks": 0
+      },
+      "errors": []
+    },
+    {
+      "mode": "gpu-bed-under",
+      "kind": "cold-cancel",
+      "before": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": false,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "boardShakes": 0,
+        "composite": {
+          "boardBacking": [
+            1024,
+            1024
+          ],
+          "bed": {
+            "enabled": true,
+            "active": true,
+            "owned": false,
+            "visible": false,
+            "maskVisible": false,
+            "frames": 1,
+            "activations": 1,
+            "completions": 0,
+            "handoffs": 1,
+            "initMs": 8.299999997019768,
+            "maskBytes": 4194304,
+            "blendMode": 28
+          },
+          "glError": 0,
+          "alpha": true
+        },
+        "phaserRenderCallbacks": 0
+      },
+      "after": {
+        "active": 0,
+        "prepared": 0,
+        "draws": 0,
+        "cacheEntries": 0,
+        "preparationMs": [],
+        "errors": [],
+        "backing": [
+          588,
+          1308
+        ],
+        "nativePixels": false,
+        "ink": {
+          "active": 0,
+          "draws": 0,
+          "fontCaches": 0,
+          "preparationMs": [],
+          "errors": []
+        },
+        "boardShakes": 0,
+        "composite": {
+          "boardBacking": [
+            1024,
+            1024
+          ],
+          "bed": {
+            "enabled": true,
+            "active": true,
+            "owned": false,
+            "visible": false,
+            "maskVisible": false,
+            "frames": 1,
+            "activations": 1,
+            "completions": 0,
+            "handoffs": 1,
+            "initMs": 8.299999997019768,
+            "maskBytes": 4194304,
+            "blendMode": 28
+          },
+          "glError": 0,
+          "alpha": true
+        },
+        "phaserRenderCallbacks": 0
+      },
+      "errors": []
+    },
+    {
+      "mode": "gpu-bed-under",
+      "kind": "context-restore",
+      "lost": {
+        "lost": true,
+        "error": 37442
+      },
+      "restored": {
+        "sameCanvas": true,
+        "sameContext": true,
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "composite": {
+            "boardBacking": [
+              1024,
+              1024
+            ],
+            "bed": {
+              "enabled": true,
+              "active": true,
+              "owned": true,
+              "visible": true,
+              "maskVisible": true,
+              "frames": 1,
+              "activations": 1,
+              "completions": 0,
+              "handoffs": 0,
+              "initMs": 9.599999994039536,
+              "maskBytes": 4194304,
+              "blendMode": 29
+            },
+            "glError": 0,
+            "alpha": true
+          },
+          "phaserRenderCallbacks": 15
+        }
+      },
+      "errors": []
+    }
+  ]
+}

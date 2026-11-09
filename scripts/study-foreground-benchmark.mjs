@@ -14,6 +14,10 @@ const inputs = [
   "package-lock.json",
   "src/game/festival.ts",
   "src/style.css",
+  "src/arcade.css",
+  "src/classic.css",
+  "src/game/tile-study-config.ts",
+  "src/diagnostics/studies/board-bed.ts",
   "src/diagnostics/studies/canvas-foreground.ts",
   "src/diagnostics/studies/theme-ink.ts",
   "src/diagnostics/studies/sprite-gpu.ts",
@@ -88,7 +92,7 @@ try {
     });
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(
-      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${["gpu", "phaser", "phaser-native"].includes(variant) ? "rewards" : ["viewport", "viewport-native"].includes(variant) ? "baseline" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : ["viewport", "phaser", "viewport-native", "phaser-native"].includes(variant) ? "phaser" : "canvas"}&studyBatch=${variant.endsWith("-native") ? "native" : "extern"}&studyPixels=${variant === "original" ? "original" : "native"}`,
+      `http://127.0.0.1:5201/?clearTrace=full&foregroundStudy=${["gpu", "phaser", "phaser-native"].includes(variant) ? "rewards" : ["viewport", "viewport-native"].includes(variant) ? "baseline" : variant}&studyRenderer=${variant === "gpu" ? "webgl" : ["viewport", "phaser", "viewport-native", "phaser-native"].includes(variant) ? "phaser" : ["gpu-bed", "opaque-board", "gpu-bed-under"].includes(variant) ? variant : "canvas"}&studyBatch=${variant.endsWith("-native") ? "native" : "extern"}&studyPixels=${["original", "gpu-bed", "opaque-board", "gpu-bed-under"].includes(variant) ? "original" : "native"}`,
     );
     await page.waitForFunction(() => !!window.__blockyFullDiagnostic);
     const measure = () =>
@@ -119,6 +123,27 @@ try {
         assert.equal(x.study.boardShakes, 1);
         assert(x.study.shared.canvasIsGameCanvas);
         assert.deepEqual(x.study.shared.errors, []);
+      }
+      if (
+        ["original", "gpu-bed", "opaque-board", "gpu-bed-under"].includes(
+          variant,
+        )
+      ) {
+        assert.equal(x.study.composite.alpha, variant !== "opaque-board");
+        assert.equal(
+          x.study.composite.boardBacking[0],
+          x.study.composite.boardBacking[1],
+        );
+      }
+      if (variant === "gpu-bed-under") {
+        const b = x.study.composite.bed;
+        assert(b?.enabled);
+        assert(b.activations > 0);
+        assert(b.frames > 0);
+        assert(b.completions > 0);
+        assert.equal(b.visible, false);
+        assert.equal(b.maskVisible, false);
+        assert.equal(x.study.composite.glError, 0);
       }
       assert.equal(x.study.active, 0);
       assert.equal(x.study.ink.active, 0);

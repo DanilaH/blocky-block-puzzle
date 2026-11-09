@@ -1,0 +1,737 @@
+[
+  {
+    "mode": "original",
+    "at": 0,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 80,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(191, 209, 222)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 180,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(177, 198, 211)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 350,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(155, 177, 193)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 550,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(129, 154, 171)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 900,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(83, 112, 133)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "original",
+    "at": 1200,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(70, 100, 122)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 0,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        188,
+        204,
+        216,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 80,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        177,
+        195,
+        207,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 180,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        165,
+        184,
+        197,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 350,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        145,
+        165,
+        179,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 550,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        119,
+        143,
+        160,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 900,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        77,
+        104,
+        123,
+        255
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 773,
+        "dst": 1
+      },
+      "css": "rgb(201, 219, 231)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 1200,
+    "duration": 1000,
+    "composite": {
+      "boardBacking": [
+        1024,
+        1024
+      ],
+      "alpha": true
+    },
+    "actual": {
+      "pixel": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "attrs": {
+        "alpha": true,
+        "antialias": false,
+        "depth": true,
+        "desynchronized": false,
+        "failIfMajorPerformanceCaveat": false,
+        "powerPreference": "default",
+        "premultipliedAlpha": true,
+        "preserveDrawingBuffer": false,
+        "stencil": true,
+        "xrCompatible": false
+      },
+      "blend": {
+        "src": 1,
+        "dst": 771
+      },
+      "css": "rgb(70, 100, 122)",
+      "camera": "rgba(0,0,0,0)",
+      "board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "top": 177,
+        "right": 376,
+        "bottom": 537,
+        "left": 16
+      }
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 0,
+    "diff": {
+      "meanChannelError": 0.11997245179063361,
+      "maxChannelError": 10,
+      "percentPixelsOver8": 0.0008162432404856647
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 80,
+    "diff": {
+      "meanChannelError": 0.42781620923035063,
+      "maxChannelError": 9,
+      "percentPixelsOver8": 0.0009182736455463728
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 180,
+    "diff": {
+      "meanChannelError": 0.364754616875829,
+      "maxChannelError": 10,
+      "percentPixelsOver8": 0.0006121824303642485
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 350,
+    "diff": {
+      "meanChannelError": 0.3502411318572935,
+      "maxChannelError": 17,
+      "percentPixelsOver8": 0.00020406081012141618
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 550,
+    "diff": {
+      "meanChannelError": 0.6379298030813182,
+      "maxChannelError": 25,
+      "percentPixelsOver8": 0.0006121824303642485
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 900,
+    "diff": {
+      "meanChannelError": 0.5696881270618644,
+      "maxChannelError": 38,
+      "percentPixelsOver8": 0.0009182736455463728
+    }
+  },
+  {
+    "mode": "gpu-bed-under",
+    "at": 1200,
+    "diff": {
+      "meanChannelError": 0,
+      "maxChannelError": 0,
+      "percentPixelsOver8": 0
+    }
+  }
+]

@@ -1,0 +1,1847 @@
+{
+  "scope": "Linux Chromium software graphics; resource attribution in traced captures is separate from untraced RAF. Not physical POCO acceptance.",
+  "metadata": {
+    "createdAt": "2026-11-09T17:50:54.457Z",
+    "browser": "141.0.7390.37",
+    "viewport": [
+      392,
+      872
+    ],
+    "deviceScaleFactor": 2.75,
+    "sourceHashes": {
+      "src/main.ts": "ff45fc11c3e978c19db59c43f74962532f60d3257378146d726b6f3fa3aa4932",
+      "src/game/BoardScene.ts": "849bda7f5c5aef100dc66fbb63aafcec14e01e644f9d846506778350bf0af4ba",
+      "package-lock.json": "26ce231829f0b97763e1bba44f543c8d5406e6640f133982e39f0f1e0e62b999",
+      "src/game/festival.ts": "1bc9432f76638a097f243f293fad1f4df4968556dbf96277ea1066a20e0704dd",
+      "src/style.css": "ca6e3b63a1dd3728a86b076341150ff204a817bc3828dc6ca7f365fb9023419b",
+      "src/diagnostics/studies/canvas-foreground.ts": "74cd1812aa9a4ef5eb9727bca51a1a31cca6b2e6191db3a4b92cbde7a87d9dcc",
+      "src/diagnostics/studies/theme-ink.ts": "0975669c68864131098805c2c231a8ccc1bb8181b85e5632654c7dd141d6f086",
+      "src/diagnostics/studies/sprite-gpu.ts": "6ada735499c508344d62d6806268fefe873acfefb09a17ae6c57df89333e7255",
+      "src/diagnostics/studies/phaser-foreground.ts": "42cbe6ea79e1a662232150a2b62d1058a137f41c4f74519a63b4551a6caa844b",
+      "src/diagnostics/studies/native-mesh-canvas.ts": "97a929d1a9ee01fbd873a7793f971d2b646e95a9c6e48b54f5b143779a2dbe63",
+      "scripts/study-foreground-server.mjs": "7a457dcb7765ea4b16711c9b9829ae565b335fb71c8f8f39b8aff43d9a363e98",
+      "scripts/study-foreground-benchmark.mjs": "ad02c2696a6ea57551c2d6c391b22cbe8b0ecd976b5d4221f85eff8f90c22ee5"
+    },
+    "scoreGlow": "legacy",
+    "themeInk": "direct",
+    "rewardShadow": "baked",
+    "rewardAtlas": true,
+    "warmupsPerCase": 2,
+    "untracedPerCase": 2,
+    "windowMs": 8000
+  },
+  "independentChecks": {
+    "untracedRows": 12,
+    "protocolMetricsPerRow": 7,
+    "sourceFingerprintsChecked": true
+  },
+  "rendererClock": "Phaser postrender callbacks, not GPU execution or physical presentation",
+  "cases": [
+    {
+      "index": 0,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 448,
+          "over33Raw": 11,
+          "over33": 5,
+          "over34": 5,
+          "over50": 2,
+          "maxMs": 100,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.819420184407914,
+          "over25": 22,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 448,
+            "over33Raw": 6,
+            "over33": 6,
+            "over34": 5,
+            "over50": 4,
+            "maxMs": 108.60000000149012,
+            "p95Ms": 22.799999997019768,
+            "callbacks": 449,
+            "meanMs": 17.813839285717613,
+            "spanMs": 7980.60000000149,
+            "over25": 20
+          }
+        },
+        {
+          "intervals": 454,
+          "over33Raw": 11,
+          "over33": 5,
+          "over34": 4,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.58370098668573,
+          "over25": 21,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 454,
+            "over33Raw": 10,
+            "over33": 10,
+            "over34": 9,
+            "over50": 1,
+            "maxMs": 52.599999994039536,
+            "p95Ms": 24.600000001490116,
+            "callbacks": 455,
+            "meanMs": 17.572246696028678,
+            "spanMs": 7977.79999999702,
+            "over25": 22
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 446,
+            "over33Raw": 11,
+            "over33": 7,
+            "over34": 7,
+            "over50": 2,
+            "maxMs": 83.4000015258789,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "phaserRenderCallbacks": 447
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 460,
+            "over33Raw": 12,
+            "over33": 1,
+            "over34": 1,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "phaserRenderCallbacks": 461
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 106.20500000000004,
+        "paintWallMs": 43.46600000000001,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 142,
+            "inkPeak": 47,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 241,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 173,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "phaserRenderCallbacks": 456
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 1,
+      "variant": "viewport-native",
+      "untraced": [
+        {
+          "intervals": 436,
+          "over33Raw": 19,
+          "over33": 5,
+          "over34": 5,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.38600970189506,
+          "over25": 40,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 437,
+            "over33Raw": 13,
+            "over33": 13,
+            "over34": 12,
+            "over50": 0,
+            "maxMs": 49.70000000298023,
+            "p95Ms": 29.599999994039536,
+            "callbacks": 438,
+            "meanMs": 18.387871853546912,
+            "spanMs": 8035.5,
+            "over25": 34
+          }
+        },
+        {
+          "intervals": 436,
+          "over33Raw": 19,
+          "over33": 4,
+          "over34": 4,
+          "over50": 2,
+          "maxMs": 66.5999984741211,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.34793628465145,
+          "over25": 39,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 440,
+            "over33Raw": 13,
+            "over33": 13,
+            "over34": 13,
+            "over50": 2,
+            "maxMs": 59.69999999552965,
+            "p95Ms": 27.0,
+            "callbacks": 441,
+            "meanMs": 18.331136363626204,
+            "spanMs": 8065.69999999553,
+            "over25": 29
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 437,
+            "over33Raw": 18,
+            "over33": 9,
+            "over34": 8,
+            "over50": 3,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": []
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 441
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 434,
+            "over33Raw": 11,
+            "over33": 4,
+            "over34": 4,
+            "over50": 2,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": []
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 435
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 84.94800000000005,
+        "paintWallMs": 32.76599999999998,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 121,
+            "inkPeak": 46,
+            "vfxPeak": 81,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 242,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 150,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": []
+          },
+          "boardShakes": 1,
+          "phaserRenderCallbacks": 437
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 2,
+      "variant": "phaser-native",
+      "untraced": [
+        {
+          "intervals": 414,
+          "over33Raw": 25,
+          "over33": 4,
+          "over34": 4,
+          "over50": 2,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.363043969380108,
+          "over25": 63,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 418,
+            "over33Raw": 14,
+            "over33": 14,
+            "over34": 13,
+            "over50": 0,
+            "maxMs": 45.20000000298023,
+            "p95Ms": 31.100000001490116,
+            "callbacks": 419,
+            "meanMs": 19.32224880383488,
+            "spanMs": 8076.70000000298,
+            "over25": 56
+          }
+        },
+        {
+          "intervals": 395,
+          "over33Raw": 32,
+          "over33": 12,
+          "over34": 12,
+          "over50": 6,
+          "maxMs": 133.39999389648438,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 20.210380187215684,
+          "over25": 62,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 395,
+            "over33Raw": 20,
+            "over33": 20,
+            "over34": 19,
+            "over50": 7,
+            "maxMs": 143.59999999403954,
+            "p95Ms": 33.5,
+            "callbacks": 396,
+            "meanMs": 20.22253164558471,
+            "spanMs": 7987.9000000059605,
+            "over25": 70
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 399,
+            "over33Raw": 28,
+            "over33": 15,
+            "over34": 15,
+            "over50": 6,
+            "maxMs": 100.0999984741211,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 106,
+            "cacheEntries": 14,
+            "preparationMs": [
+              9.800000004470348,
+              30.600000001490116,
+              5.5
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 400,
+              "submittedQuads": 1023,
+              "activeQuads": 0,
+              "meshPool": 14,
+              "uploads": 3,
+              "preparationMs": 7.299999997019768,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": [],
+              "gpu": {
+                "nativeBatch": true,
+                "sharedContext": true,
+                "frames": 400,
+                "submittedQuads": 1023,
+                "activeQuads": 0,
+                "meshPool": 14,
+                "uploads": 3,
+                "preparationMs": 7.299999997019768,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 402
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 409,
+            "over33Raw": 28,
+            "over33": 10,
+            "over34": 9,
+            "over50": 5,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 116,
+            "cacheEntries": 14,
+            "preparationMs": [
+              1.8000000044703484,
+              4.5,
+              3.2999999970197678
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 912,
+              "submittedQuads": 2110,
+              "activeQuads": 0,
+              "meshPool": 14,
+              "uploads": 3,
+              "preparationMs": 7.299999997019768,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": [],
+              "gpu": {
+                "nativeBatch": true,
+                "sharedContext": true,
+                "frames": 912,
+                "submittedQuads": 2110,
+                "activeQuads": 0,
+                "meshPool": 14,
+                "uploads": 3,
+                "preparationMs": 7.299999997019768,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 414
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 34,
+        "rasterWorkerWallMs": 76.80900000000005,
+        "paintWallMs": 28.27999999999998,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 98,
+            "inkPeak": 47,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 239,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 132,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 3,
+          "draws": 119,
+          "cacheEntries": 14,
+          "preparationMs": [
+            1.8000000044703484,
+            6.5,
+            2.399999998509884
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "nativeBatch": true,
+            "sharedContext": true,
+            "frames": 2425,
+            "submittedQuads": 5186,
+            "activeQuads": 0,
+            "meshPool": 15,
+            "uploads": 3,
+            "preparationMs": 7.299999997019768,
+            "textures": 3,
+            "textureBytes": 3183768,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": [],
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 2425,
+              "submittedQuads": 5186,
+              "activeQuads": 0,
+              "meshPool": 15,
+              "uploads": 3,
+              "preparationMs": 7.299999997019768,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "phaserRenderCallbacks": 413
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 3,
+      "variant": "phaser-native",
+      "untraced": [
+        {
+          "intervals": 406,
+          "over33Raw": 29,
+          "over33": 7,
+          "over34": 7,
+          "over50": 3,
+          "maxMs": 183.3000030517578,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.74482810203665,
+          "over25": 60,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 406,
+            "over33Raw": 14,
+            "over33": 14,
+            "over34": 14,
+            "over50": 1,
+            "maxMs": 180.0,
+            "p95Ms": 30.799999997019768,
+            "callbacks": 407,
+            "meanMs": 19.744088669954408,
+            "spanMs": 8016.10000000149,
+            "over25": 70
+          }
+        },
+        {
+          "intervals": 406,
+          "over33Raw": 28,
+          "over33": 7,
+          "over34": 6,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.703695076439768,
+          "over25": 68,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 410,
+            "over33Raw": 15,
+            "over33": 15,
+            "over34": 13,
+            "over50": 0,
+            "maxMs": 48.69999999552965,
+            "p95Ms": 32.79999999701977,
+            "callbacks": 411,
+            "meanMs": 19.663414634146342,
+            "spanMs": 8062.0,
+            "over25": 79
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 401,
+            "over33Raw": 36,
+            "over33": 13,
+            "over34": 13,
+            "over50": 5,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 110,
+            "cacheEntries": 14,
+            "preparationMs": [
+              10.699999995529652,
+              25.5,
+              5.299999997019768
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 403,
+              "submittedQuads": 1068,
+              "activeQuads": 0,
+              "meshPool": 14,
+              "uploads": 3,
+              "preparationMs": 7.0999999940395355,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": [],
+              "gpu": {
+                "nativeBatch": true,
+                "sharedContext": true,
+                "frames": 403,
+                "submittedQuads": 1068,
+                "activeQuads": 0,
+                "meshPool": 14,
+                "uploads": 3,
+                "preparationMs": 7.0999999940395355,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 406
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 412,
+            "over33Raw": 27,
+            "over33": 7,
+            "over34": 6,
+            "over50": 3,
+            "maxMs": 66.80000305175781,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 118,
+            "cacheEntries": 14,
+            "preparationMs": [
+              1.3000000044703484,
+              3.899999998509884,
+              0.6000000014901161
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 919,
+              "submittedQuads": 2138,
+              "activeQuads": 0,
+              "meshPool": 14,
+              "uploads": 3,
+              "preparationMs": 7.0999999940395355,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": [],
+              "gpu": {
+                "nativeBatch": true,
+                "sharedContext": true,
+                "frames": 919,
+                "submittedQuads": 2138,
+                "activeQuads": 0,
+                "meshPool": 14,
+                "uploads": 3,
+                "preparationMs": 7.0999999940395355,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 414
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 34,
+        "rasterWorkerWallMs": 69.57000000000004,
+        "paintWallMs": 24.523999999999976,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 104,
+            "inkPeak": 45,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 240,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 133,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 3,
+          "draws": 120,
+          "cacheEntries": 14,
+          "preparationMs": [
+            1.6999999955296516,
+            3.399999998509884,
+            0.8999999985098839
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "nativeBatch": true,
+            "sharedContext": true,
+            "frames": 2457,
+            "submittedQuads": 5287,
+            "activeQuads": 0,
+            "meshPool": 14,
+            "uploads": 3,
+            "preparationMs": 7.0999999940395355,
+            "textures": 3,
+            "textureBytes": 3183768,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": [],
+            "gpu": {
+              "nativeBatch": true,
+              "sharedContext": true,
+              "frames": 2457,
+              "submittedQuads": 5287,
+              "activeQuads": 0,
+              "meshPool": 14,
+              "uploads": 3,
+              "preparationMs": 7.0999999940395355,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1,
+          "phaserRenderCallbacks": 414
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 4,
+      "variant": "viewport-native",
+      "untraced": [
+        {
+          "intervals": 419,
+          "over33Raw": 25,
+          "over33": 8,
+          "over34": 8,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.13198142404488,
+          "over25": 54,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 423,
+            "over33Raw": 17,
+            "over33": 17,
+            "over34": 16,
+            "over50": 3,
+            "maxMs": 54.100000001490116,
+            "p95Ms": 30.399999998509884,
+            "callbacks": 424,
+            "meanMs": 19.101418439712788,
+            "spanMs": 8079.89999999851,
+            "over25": 40
+          }
+        },
+        {
+          "intervals": 446,
+          "over33Raw": 15,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 49.900001525878906,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.936323392551575,
+          "over25": 33,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 446,
+            "over33Raw": 11,
+            "over33": 11,
+            "over34": 10,
+            "over50": 0,
+            "maxMs": 42,
+            "p95Ms": 28.69999999552965,
+            "callbacks": 447,
+            "meanMs": 17.92578475335989,
+            "spanMs": 7994.89999999851,
+            "over25": 32
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 426,
+            "over33Raw": 20,
+            "over33": 10,
+            "over34": 10,
+            "over50": 3,
+            "maxMs": 116.5999984741211,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": []
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 431
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 430,
+            "over33Raw": 26,
+            "over33": 6,
+            "over34": 5,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "nativeBatch": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": []
+            },
+            "boardShakes": 1,
+            "phaserRenderCallbacks": 435
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 93.63499999999999,
+        "paintWallMs": 41.87100000000001,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 105,
+            "inkPeak": 47,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 236,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 134,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "shared": {
+            "ready": true,
+            "nativeBatch": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": []
+          },
+          "boardShakes": 1,
+          "phaserRenderCallbacks": 399
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 5,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 443,
+          "over33Raw": 10,
+          "over33": 5,
+          "over34": 5,
+          "over50": 3,
+          "maxMs": 150,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 18.05801407101461,
+          "over25": 21,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 443,
+            "over33Raw": 11,
+            "over33": 11,
+            "over34": 11,
+            "over50": 2,
+            "maxMs": 149.70000000298023,
+            "p95Ms": 24.19999999552965,
+            "callbacks": 444,
+            "meanMs": 18.035440180593636,
+            "spanMs": 7989.70000000298,
+            "over25": 22
+          }
+        },
+        {
+          "intervals": 461,
+          "over33Raw": 9,
+          "over33": 0,
+          "over34": 0,
+          "over50": 0,
+          "maxMs": 33.400001525878906,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.352928964279737,
+          "over25": 19,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          },
+          "phaserPostrender": {
+            "intervals": 461,
+            "over33Raw": 4,
+            "over33": 4,
+            "over34": 2,
+            "over50": 0,
+            "maxMs": 37.0,
+            "p95Ms": 23.19999999552965,
+            "callbacks": 462,
+            "meanMs": 17.343817787418654,
+            "spanMs": 7995.5,
+            "over25": 18
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 449,
+            "over33Raw": 8,
+            "over33": 6,
+            "over34": 6,
+            "over50": 5,
+            "maxMs": 83.4000015258789,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "phaserRenderCallbacks": 450
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 436,
+            "over33Raw": 6,
+            "over33": 2,
+            "over34": 2,
+            "over50": 2,
+            "maxMs": 316.6000061035156,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0,
+            "phaserRenderCallbacks": 437
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 89.72499999999998,
+        "paintWallMs": 38.80599999999998,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 144,
+            "inkPeak": 46,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 239,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 173,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 148,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0,
+          "phaserRenderCallbacks": 456
+        }
+      },
+      "errors": []
+    }
+  ]
+}

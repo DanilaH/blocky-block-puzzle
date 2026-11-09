@@ -1,0 +1,431 @@
+[
+  {
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "mode": "original",
+    "geometry": {
+      "#board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360
+      },
+      "#board canvas": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360,
+        "backing": [
+          1024,
+          1024
+        ]
+      },
+      ".board-wrap": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360
+      },
+      "#score": {
+        "x": 144.71875,
+        "y": 91,
+        "width": 102.546875,
+        "height": 52
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        588,
+        1308
+      ],
+      "nativePixels": false,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "mode": "viewport",
+    "geometry": {
+      "#board": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360
+      },
+      "#board canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 392.34375,
+        "height": 872.21875,
+        "backing": [
+          1116,
+          2481
+        ]
+      },
+      ".board-wrap": {
+        "x": 16,
+        "y": 177,
+        "width": 360,
+        "height": 360
+      },
+      "#score": {
+        "x": 144.71875,
+        "y": 91,
+        "width": 102.546875,
+        "height": 52
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        588,
+        1308
+      ],
+      "nativePixels": true,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      },
+      "shared": {
+        "ready": true,
+        "canvasIsGameCanvas": true,
+        "sharedContext": true,
+        "backing": [
+          1116,
+          2481
+        ],
+        "viewport": {
+          "x": 45.51111111111111,
+          "y": 503.4666666666667,
+          "side": 1024,
+          "cssSide": 360
+        },
+        "pixelRatio": 2.8444444444444446,
+        "redraws": 2,
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "diff": {
+      "meanChannelError": 0.8155688195082135,
+      "maxChannelError": 110,
+      "percentPixelsOver8": 3.368125701459035
+    }
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 568
+    },
+    "mode": "original",
+    "geometry": {
+      "#board": {
+        "x": 12,
+        "y": 123,
+        "width": 236,
+        "height": 236
+      },
+      "#board canvas": {
+        "x": 12,
+        "y": 123,
+        "width": 236,
+        "height": 236,
+        "backing": [
+          704,
+          704
+        ]
+      },
+      ".board-wrap": {
+        "x": 12,
+        "y": 123,
+        "width": 236,
+        "height": 236
+      },
+      "#score": {
+        "x": 137.9375,
+        "y": 44,
+        "width": 44.109375,
+        "height": 24
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        480,
+        852
+      ],
+      "nativePixels": false,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 568
+    },
+    "mode": "viewport",
+    "geometry": {
+      "#board": {
+        "x": 12,
+        "y": 123,
+        "width": 236,
+        "height": 236
+      },
+      "#board canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 320.140625,
+        "height": 568.203125,
+        "backing": [
+          955,
+          1695
+        ]
+      },
+      ".board-wrap": {
+        "x": 12,
+        "y": 123,
+        "width": 236,
+        "height": 236
+      },
+      "#score": {
+        "x": 137.9375,
+        "y": 44,
+        "width": 44.109375,
+        "height": 24
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        480,
+        852
+      ],
+      "nativePixels": true,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      },
+      "shared": {
+        "ready": true,
+        "canvasIsGameCanvas": true,
+        "sharedContext": true,
+        "backing": [
+          955,
+          1695
+        ],
+        "viewport": {
+          "x": 35.79661016949153,
+          "y": 366.91525423728814,
+          "side": 704,
+          "cssSide": 236
+        },
+        "pixelRatio": 2.983050847457627,
+        "redraws": 2,
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 320,
+      "height": 568
+    },
+    "diff": {
+      "meanChannelError": 0.5586248212452803,
+      "maxChannelError": 101,
+      "percentPixelsOver8": 2.2974779262157496
+    }
+  },
+  {
+    "viewport": {
+      "width": 872,
+      "height": 392
+    },
+    "mode": "original",
+    "geometry": {
+      "#board": {
+        "x": 84.9375,
+        "y": 32,
+        "width": 296,
+        "height": 296
+      },
+      "#board canvas": {
+        "x": 84.9375,
+        "y": 32,
+        "width": 296,
+        "height": 296,
+        "backing": [
+          832,
+          832
+        ]
+      },
+      ".board-wrap": {
+        "x": 84.9375,
+        "y": 32,
+        "width": 296,
+        "height": 296
+      },
+      "#score": {
+        "x": 634.71875,
+        "y": 87,
+        "width": 52.453125,
+        "height": 28
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        1308,
+        588
+      ],
+      "nativePixels": false,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 872,
+      "height": 392
+    },
+    "mode": "viewport",
+    "geometry": {
+      "#board": {
+        "x": 84.9375,
+        "y": 32,
+        "width": 296,
+        "height": 296
+      },
+      "#board canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 872.34375,
+        "height": 392.046875,
+        "backing": [
+          2452,
+          1102
+        ]
+      },
+      ".board-wrap": {
+        "x": 84.9375,
+        "y": 32,
+        "width": 296,
+        "height": 296
+      },
+      "#score": {
+        "x": 634.71875,
+        "y": 87,
+        "width": 52.453125,
+        "height": 28
+      }
+    },
+    "study": {
+      "active": 0,
+      "prepared": 0,
+      "draws": 0,
+      "cacheEntries": 0,
+      "preparationMs": [],
+      "errors": [],
+      "backing": [
+        1308,
+        588
+      ],
+      "nativePixels": true,
+      "ink": {
+        "active": 0,
+        "draws": 0,
+        "fontCaches": 0,
+        "preparationMs": [],
+        "errors": []
+      },
+      "shared": {
+        "ready": true,
+        "canvasIsGameCanvas": true,
+        "sharedContext": true,
+        "backing": [
+          2452,
+          1102
+        ],
+        "viewport": {
+          "x": 238.74324324324326,
+          "y": 89.94594594594595,
+          "side": 832,
+          "cssSide": 296
+        },
+        "pixelRatio": 2.810810810810811,
+        "redraws": 2,
+        "errors": []
+      }
+    }
+  },
+  {
+    "viewport": {
+      "width": 872,
+      "height": 392
+    },
+    "diff": {
+      "meanChannelError": 0.5498473680291862,
+      "maxChannelError": 66,
+      "percentPixelsOver8": 1.924702231827539
+    }
+  }
+]

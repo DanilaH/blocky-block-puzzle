@@ -1,0 +1,1636 @@
+{
+  "scope": "Linux Chromium software graphics; resource attribution in traced captures is separate from untraced RAF. Not physical POCO acceptance.",
+  "metadata": {
+    "createdAt": "2026-11-09T17:32:18.752Z",
+    "browser": "141.0.7390.37",
+    "viewport": [
+      392,
+      872
+    ],
+    "deviceScaleFactor": 2.75,
+    "sourceHashes": {
+      "src/main.ts": "ff45fc11c3e978c19db59c43f74962532f60d3257378146d726b6f3fa3aa4932",
+      "src/game/BoardScene.ts": "849bda7f5c5aef100dc66fbb63aafcec14e01e644f9d846506778350bf0af4ba",
+      "package-lock.json": "26ce231829f0b97763e1bba44f543c8d5406e6640f133982e39f0f1e0e62b999",
+      "src/game/festival.ts": "1bc9432f76638a097f243f293fad1f4df4968556dbf96277ea1066a20e0704dd",
+      "src/style.css": "ca6e3b63a1dd3728a86b076341150ff204a817bc3828dc6ca7f365fb9023419b",
+      "src/diagnostics/studies/canvas-foreground.ts": "da14de4bd535ae4b45dd3c9bcb111832f784b328a2c2acedc27600e095a98b12",
+      "src/diagnostics/studies/theme-ink.ts": "0975669c68864131098805c2c231a8ccc1bb8181b85e5632654c7dd141d6f086",
+      "src/diagnostics/studies/sprite-gpu.ts": "6ada735499c508344d62d6806268fefe873acfefb09a17ae6c57df89333e7255",
+      "src/diagnostics/studies/phaser-foreground.ts": "01d6557b596d2f2ce2948d224fd04e4ff8c3377342d3d0080c8f2ed1fb1621b4",
+      "scripts/study-foreground-server.mjs": "7a457dcb7765ea4b16711c9b9829ae565b335fb71c8f8f39b8aff43d9a363e98",
+      "scripts/study-foreground-benchmark.mjs": "f746c2f5cd42483e05440835ddc18deac328bf9f2444cdf0595a99530930ca90"
+    },
+    "scoreGlow": "legacy",
+    "themeInk": "direct",
+    "rewardShadow": "baked",
+    "rewardAtlas": true,
+    "warmupsPerCase": 2,
+    "untracedPerCase": 2,
+    "windowMs": 8000
+  },
+  "independentChecks": {
+    "untracedRows": 12,
+    "protocolMetricsPerRow": 7,
+    "sourceFingerprintsChecked": true
+  },
+  "rendererClock": "Phaser postrender callbacks, not GPU execution or physical presentation",
+  "cases": [
+    {
+      "index": 0,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 451,
+          "over33Raw": 12,
+          "over33": 6,
+          "over34": 6,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.737916252829812,
+          "over25": 23,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 461,
+          "over33Raw": 7,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 16.799999237060547,
+          "meanMs": 17.35271203130031,
+          "over25": 18,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 443,
+            "over33Raw": 12,
+            "over33": 8,
+            "over34": 8,
+            "over50": 3,
+            "maxMs": 216.6999969482422,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 455,
+            "over33Raw": 10,
+            "over33": 4,
+            "over34": 4,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 99.31800000000013,
+        "paintWallMs": 41.53400000000007,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 151,
+            "inkPeak": 47,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 240,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 179,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 1,
+      "variant": "viewport",
+      "untraced": [
+        {
+          "intervals": 448,
+          "over33Raw": 11,
+          "over33": 2,
+          "over34": 2,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.85669696331024,
+          "over25": 30,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 440,
+          "over33Raw": 20,
+          "over33": 8,
+          "over34": 7,
+          "over50": 2,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.18136415048079,
+          "over25": 33,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 429,
+            "over33Raw": 22,
+            "over33": 11,
+            "over34": 11,
+            "over50": 6,
+            "maxMs": 100,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": []
+            },
+            "boardShakes": 1
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 442,
+            "over33Raw": 17,
+            "over33": 4,
+            "over34": 4,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": []
+            },
+            "boardShakes": 1
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 60,
+        "rasterWorkerWallMs": 89.58900000000001,
+        "paintWallMs": 34.51400000000004,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 126,
+            "inkPeak": 47,
+            "vfxPeak": 79,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 241,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 156,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "shared": {
+            "ready": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": []
+          },
+          "boardShakes": 1
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 2,
+      "variant": "phaser",
+      "untraced": [
+        {
+          "intervals": 416,
+          "over33Raw": 28,
+          "over33": 7,
+          "over34": 7,
+          "over50": 1,
+          "maxMs": 83.4000015258789,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 19.230048610613895,
+          "over25": 55,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 399,
+          "over33Raw": 31,
+          "over33": 13,
+          "over34": 13,
+          "over50": 6,
+          "maxMs": 150,
+          "p95Ms": 33.400001525878906,
+          "meanMs": 20.091228556812258,
+          "over25": 59,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 407,
+            "over33Raw": 28,
+            "over33": 10,
+            "over34": 9,
+            "over50": 5,
+            "maxMs": 83.4000015258789,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 120,
+            "cacheEntries": 14,
+            "preparationMs": [
+              11.200000002980232,
+              30.200000002980232,
+              5.399999998509884
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "frames": 120,
+              "sharedContext": true,
+              "initMs": 9.799999997019768,
+              "uploads": 3,
+              "uploadMs": 2.0000000074505806,
+              "drawCalls": 207,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": [],
+              "gpu": {
+                "frames": 120,
+                "sharedContext": true,
+                "initMs": 9.799999997019768,
+                "uploads": 3,
+                "uploadMs": 2.0000000074505806,
+                "drawCalls": 207,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 365,
+            "over33Raw": 40,
+            "over33": 13,
+            "over34": 13,
+            "over50": 8,
+            "maxMs": 83.4000015258789,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 99,
+            "cacheEntries": 14,
+            "preparationMs": [
+              1.6000000014901161,
+              5.700000002980232,
+              1.8999999985098839
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "frames": 219,
+              "sharedContext": true,
+              "initMs": 9.799999997019768,
+              "uploads": 3,
+              "uploadMs": 2.0000000074505806,
+              "drawCalls": 378,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": [],
+              "gpu": {
+                "frames": 219,
+                "sharedContext": true,
+                "initMs": 9.799999997019768,
+                "uploads": 3,
+                "uploadMs": 2.0000000074505806,
+                "drawCalls": 378,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 34,
+        "rasterWorkerWallMs": 78.19699999999996,
+        "paintWallMs": 29.751,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 113,
+            "inkPeak": 47,
+            "vfxPeak": 81,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 240,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 143,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 3,
+          "draws": 130,
+          "cacheEntries": 14,
+          "preparationMs": [
+            1.7999999970197678,
+            3.7999999970197678,
+            0.8999999985098839
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 576,
+            "sharedContext": true,
+            "initMs": 9.799999997019768,
+            "uploads": 3,
+            "uploadMs": 2.0000000074505806,
+            "drawCalls": 982,
+            "textures": 3,
+            "textureBytes": 3183768,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": [],
+            "gpu": {
+              "frames": 576,
+              "sharedContext": true,
+              "initMs": 9.799999997019768,
+              "uploads": 3,
+              "uploadMs": 2.0000000074505806,
+              "drawCalls": 982,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 3,
+      "variant": "phaser",
+      "untraced": [
+        {
+          "intervals": 425,
+          "over33Raw": 20,
+          "over33": 4,
+          "over34": 4,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.8228240293615,
+          "over25": 51,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 427,
+          "over33Raw": 21,
+          "over33": 5,
+          "over34": 5,
+          "over50": 1,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.773770986731215,
+          "over25": 49,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 418,
+            "over33Raw": 25,
+            "over33": 10,
+            "over34": 10,
+            "over50": 3,
+            "maxMs": 100.0999984741211,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 122,
+            "cacheEntries": 14,
+            "preparationMs": [
+              10.5,
+              27.200000002980232,
+              6.299999997019768
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "frames": 122,
+              "sharedContext": true,
+              "initMs": 9,
+              "uploads": 3,
+              "uploadMs": 2.100000001490116,
+              "drawCalls": 214,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": [],
+              "gpu": {
+                "frames": 122,
+                "sharedContext": true,
+                "initMs": 9,
+                "uploads": 3,
+                "uploadMs": 2.100000001490116,
+                "drawCalls": 214,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 424,
+            "over33Raw": 25,
+            "over33": 4,
+            "over34": 4,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 33.400001525878906
+          },
+          "study": {
+            "active": 0,
+            "prepared": 3,
+            "draws": 132,
+            "cacheEntries": 14,
+            "preparationMs": [
+              1.2000000029802322,
+              3.600000001490116,
+              2.5
+            ],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "gpu": {
+              "frames": 254,
+              "sharedContext": true,
+              "initMs": 9,
+              "uploads": 3,
+              "uploadMs": 2.100000001490116,
+              "drawCalls": 438,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": [],
+              "gpu": {
+                "frames": 254,
+                "sharedContext": true,
+                "initMs": 9,
+                "uploads": 3,
+                "uploadMs": 2.100000001490116,
+                "drawCalls": 438,
+                "textures": 3,
+                "textureBytes": 3183768,
+                "backing": [
+                  1116,
+                  2481
+                ],
+                "contextLost": false,
+                "glError": 0
+              }
+            },
+            "boardShakes": 1
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 34,
+        "rasterWorkerWallMs": 80.59000000000006,
+        "paintWallMs": 30.787999999999975,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 105,
+            "inkPeak": 45,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 239,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 136,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 3,
+          "draws": 121,
+          "cacheEntries": 14,
+          "preparationMs": [
+            1.6999999955296516,
+            3.9000000059604645,
+            1.0999999940395355
+          ],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "gpu": {
+            "frames": 635,
+            "sharedContext": true,
+            "initMs": 9,
+            "uploads": 3,
+            "uploadMs": 2.100000001490116,
+            "drawCalls": 1082,
+            "textures": 3,
+            "textureBytes": 3183768,
+            "backing": [
+              1116,
+              2481
+            ],
+            "contextLost": false,
+            "glError": 0
+          },
+          "shared": {
+            "ready": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": [],
+            "gpu": {
+              "frames": 635,
+              "sharedContext": true,
+              "initMs": 9,
+              "uploads": 3,
+              "uploadMs": 2.100000001490116,
+              "drawCalls": 1082,
+              "textures": 3,
+              "textureBytes": 3183768,
+              "backing": [
+                1116,
+                2481
+              ],
+              "contextLost": false,
+              "glError": 0
+            }
+          },
+          "boardShakes": 1
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 4,
+      "variant": "viewport",
+      "untraced": [
+        {
+          "intervals": 443,
+          "over33Raw": 14,
+          "over33": 4,
+          "over34": 4,
+          "over50": 2,
+          "maxMs": 50.099998474121094,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.058014079625664,
+          "over25": 33,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 441,
+          "over33Raw": 18,
+          "over33": 2,
+          "over34": 2,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 18.139683085504302,
+          "over25": 37,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 431,
+            "over33Raw": 19,
+            "over33": 11,
+            "over34": 11,
+            "over50": 5,
+            "maxMs": 83.4000015258789,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 3,
+              "errors": []
+            },
+            "boardShakes": 1
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 444,
+            "over33Raw": 13,
+            "over33": 3,
+            "over34": 3,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": true,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "shared": {
+              "ready": true,
+              "originalCanvas": [
+                1024,
+                1024
+              ],
+              "canvasIsGameCanvas": true,
+              "sharedContext": true,
+              "backing": [
+                1116,
+                2481
+              ],
+              "viewport": {
+                "x": 45.51111111111111,
+                "y": 503.4666666666667,
+                "side": 1024,
+                "cssSide": 360
+              },
+              "pixelRatio": 2.8444444444444446,
+              "redraws": 5,
+              "errors": []
+            },
+            "boardShakes": 1
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 97.03200000000001,
+        "paintWallMs": 33.09499999999997,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 122,
+            "inkPeak": 47,
+            "vfxPeak": 81,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 243,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 152,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": true,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "shared": {
+            "ready": true,
+            "originalCanvas": [
+              1024,
+              1024
+            ],
+            "canvasIsGameCanvas": true,
+            "sharedContext": true,
+            "backing": [
+              1116,
+              2481
+            ],
+            "viewport": {
+              "x": 45.51111111111111,
+              "y": 503.4666666666667,
+              "side": 1024,
+              "cssSide": 360
+            },
+            "pixelRatio": 2.8444444444444446,
+            "redraws": 11,
+            "errors": []
+          },
+          "boardShakes": 1
+        }
+      },
+      "errors": []
+    },
+    {
+      "index": 5,
+      "variant": "original",
+      "untraced": [
+        {
+          "intervals": 444,
+          "over33Raw": 12,
+          "over33": 4,
+          "over34": 4,
+          "over50": 2,
+          "maxMs": 83.30000305175781,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.9795050234408,
+          "over25": 28,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        },
+        {
+          "intervals": 456,
+          "over33Raw": 7,
+          "over33": 1,
+          "over34": 1,
+          "over50": 0,
+          "maxMs": 50,
+          "p95Ms": 33.29999923706055,
+          "meanMs": 17.57960577596698,
+          "over25": 24,
+          "contexts": {
+            "created": 2,
+            "webgl": 1
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "metrics": {
+            "intervals": 450,
+            "over33Raw": 10,
+            "over33": 5,
+            "over34": 5,
+            "over50": 3,
+            "maxMs": 83.30000305175781,
+            "p95Ms": 16.799999237060547
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 427,
+            "over33Raw": 17,
+            "over33": 9,
+            "over34": 9,
+            "over50": 3,
+            "maxMs": 183.1999969482422,
+            "p95Ms": 33.29999923706055
+          },
+          "study": {
+            "active": 0,
+            "prepared": 0,
+            "draws": 0,
+            "cacheEntries": 0,
+            "preparationMs": [],
+            "errors": [],
+            "backing": [
+              588,
+              1308
+            ],
+            "nativePixels": false,
+            "ink": {
+              "active": 0,
+              "draws": 0,
+              "fontCaches": 0,
+              "preparationMs": [],
+              "errors": []
+            },
+            "boardShakes": 0
+          }
+        }
+      ],
+      "trace": {
+        "uniqueLayerIds": 58,
+        "rasterWorkerWallMs": 113.59700000000004,
+        "paintWallMs": 42.85800000000009,
+        "proof": {
+          "renderedTheme": 5,
+          "savedTheme": 5,
+          "score": 1574,
+          "boardEmpty": true,
+          "rewardDomCreated": 3,
+          "rewardEffects": {
+            "captionAnimations": 2,
+            "visibleEmblems": 0,
+            "pointFlights": 2,
+            "hudFlashes": 2,
+            "themeNotices": 1,
+            "themeImpulses": 1
+          },
+          "scoreGlowProperties": [
+            "text-shadow",
+            "text-shadow"
+          ],
+          "rewardRenderer": "dom",
+          "shownScore": 1574,
+          "pendingPoints": 0,
+          "scene": {
+            "draws": 141,
+            "inkPeak": 47,
+            "vfxPeak": 78,
+            "theme": 5
+          },
+          "atmosphere": {
+            "disabled": false,
+            "theme": 5,
+            "domPaletteTheme": 5,
+            "domPalette": {
+              "bg": "#233f57",
+              "ink": "#f2f4f7",
+              "accent": "#a5e8ef"
+            },
+            "draws": 241,
+            "canvas": [
+              588,
+              1308
+            ]
+          },
+          "festival": {
+            "activeParticles": 0,
+            "activeReveals": 0,
+            "draws": 171,
+            "bursts": 2,
+            "spawned": 148,
+            "peakParticles": 144,
+            "disabled": false,
+            "theme": 5,
+            "canvas": [
+              588,
+              1308
+            ]
+          }
+        },
+        "study": {
+          "active": 0,
+          "prepared": 0,
+          "draws": 0,
+          "cacheEntries": 0,
+          "preparationMs": [],
+          "errors": [],
+          "backing": [
+            588,
+            1308
+          ],
+          "nativePixels": false,
+          "ink": {
+            "active": 0,
+            "draws": 0,
+            "fontCaches": 0,
+            "preparationMs": [],
+            "errors": []
+          },
+          "boardShakes": 0
+        }
+      },
+      "errors": []
+    }
+  ]
+}
