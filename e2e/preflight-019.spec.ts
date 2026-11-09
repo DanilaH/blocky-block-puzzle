@@ -64,6 +64,12 @@ for (const mode of ["background", "next-move"] as const) {
     if (mode === "background") {
       await page.evaluate(() => window.dispatchEvent(new Event("blur")));
       const calls = await page.evaluate(() => window.hapticCalls.length);
+      const delivered = await page.evaluate(
+        () =>
+          window.hapticCalls.filter((p) =>
+            ["empty", "bloom", "rain"].includes(p.kind),
+          ).length,
+      );
       await page.clock.runFor(4000);
       expect(await page.evaluate(() => window.hapticCalls.length)).toBe(calls);
       expect(await page.locator(".reward-event").count()).toBe(0);
@@ -76,7 +82,7 @@ for (const mode of ["background", "next-move"] as const) {
               ["empty", "bloom", "rain"].includes(p.kind),
             ).length,
         ),
-      ).toBe(0);
+      ).toBe(delivered);
     } else {
       await place(page, 1, 30, 30);
       await expect.poll(async () => (await saved(page)).game.score).toBe(1902);

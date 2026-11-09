@@ -28,18 +28,24 @@ for (const calm of [false, true])
     await page.evaluate(() => {
       (window as any).scoreSamples = [];
       // Start at the actual input, not before Playwright waits for a moving board.
-      document.querySelector("#board")!.addEventListener("pointerup", () => {
-      const start = performance.now();
-      const sample = () => {
-        (window as any).scoreSamples.push(
-          Number(
-            document.querySelector("#score")!.textContent!.replace(/\s/g, ""),
-          ),
-        );
-        if (performance.now() - start < 1000) requestAnimationFrame(sample);
-      };
-      sample();
-      }, { once: true });
+      document.querySelector("#board")!.addEventListener(
+        "pointerup",
+        () => {
+          const start = performance.now();
+          const sample = () => {
+            (window as any).scoreSamples.push(
+              Number(
+                document
+                  .querySelector("#score")!
+                  .textContent!.replace(/\s/g, ""),
+              ),
+            );
+            if (performance.now() - start < 1000) requestAnimationFrame(sample);
+          };
+          sample();
+        },
+        { once: true },
+      );
     });
     const b = (await page.locator("#board").boundingBox())!;
     await page
@@ -50,8 +56,7 @@ for (const calm of [false, true])
       () => (window as any).scoreSamples as number[],
     );
     expect(samples.every((v, i) => i === 0 || v >= samples[i - 1])).toBe(true);
-    if (!calm) expect(samples.some((v) => v > 0 && v < 111)).toBe(true);
-    else expect(samples.every((v) => v === 0 || v === 111)).toBe(true);
+    expect(samples.every((v) => v === 0 || v === 111)).toBe(true);
     await page.locator(".piece").nth(1).click();
     await page
       .locator("#board")

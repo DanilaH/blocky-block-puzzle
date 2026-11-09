@@ -139,3 +139,12 @@ Source `561b6efd846d728c53397f74171d1af495c12c0e`, PR-run `42489309707`, artifac
 Source `585c4225f8e4355db2b7abb2950da64f6a84dcb4`, PR-run `42496962267`, artifact `13623512980`. 227 unit / 198 browser / Android unit+build / build/assets — success. APK versionCode 57 / versionName `0.57.0-preview`, package `com.danilah.blocky.dev`. Полная apksig v2 проверка пройдена, сертификат совпадает с выданной 0.56 (`e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`). Все 89 production-файлов совпали с чистым dist. APK SHA-256 `df098f60cb061800f2332e19798e61fc60513a455f92a15bad9a96e00d01e131`.
 
 Кеширование текста/idle prewarm удалены, обычные DOM-награды восстановлены. Пауза → Ещё настройки → Диагностика → Проверить слои → Начать проверку. Schema v3: 18 эпизодов около 80 секунд, один ZIP результата. Отдельно сравниваются вспышки счёта, подпись, DOM-палитра и плашка новой темы; палитры поля, фона и частиц сохраняются в соответствующих условиях. Устанавливать поверх 0.56 без удаления игры. Физический результат 0.57 получен: 18/18 valid, четыре узких условия порог в обоих порядках не прошли. Устранение рывков остаётся открытым. [Разбор](qa/PHONE_LAYER_FINDINGS_0.57_2026-11-08.md). [Протокол и доказательства](qa/REWARD_ISOLATION_0.57_2026-11-08.md).
+
+
+## Preview0.61 — сокращённый Classic,10.11.2026
+
+APK source `80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53` (PR merge, tree равен head `89f48bde81b714526cf9eb83a408379d7e4ccb91`), PR-run `42685305455`, artifact `13704491712`. После этого renderer не менялся: следуют только тестовые поправки, capture helper и документы. Локально236 unit /215 browser / build/assets /8+4 analyzer прошли, Android unit/build success. Серверная проверка финальных тестов и CDP smoke имеет отдельный статус.
+
+VersionCode61 / versionName `0.61.0-preview`, package `com.danilah.blocky.dev`, debug. APK11715444байт, SHA-256 `1327275fc0ecf35dfa54ea2bd058adf07a8289ed556cffa1635bc33da410f4e5`. Apksig v2 verified, сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` совпал с выданной0.60. Все93 production-файла совпали побайтово с чистым dist при `VITE_SOURCE_COMMIT=80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53`.
+
+Ставить поверх0.60 без удаления приложения. Сокращённая подача включена в обычной игре автоматически, отдельный диагностический запуск не требуется. Физическое улучшение POCO не объявляется. [Изменения и полный протокол](qa/COMPACT_EFFECTS_0.61_2026-11-10.md), [проверка APK](qa/compact-effects/apk-verification.json).

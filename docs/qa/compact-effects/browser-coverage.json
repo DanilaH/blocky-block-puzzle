@@ -1,0 +1,214 @@
+{
+  "expected": 215,
+  "passedDistinct": 215,
+  "files": 51,
+  "missing": [],
+  "method": "Successful test-title union across sequential batches; interrupted full run completed with targeted files, all changed presentation assertions rerun. Skipped tests not counted.",
+  "caseListSha256": "6653a72ac3fb939504d2d5782bfa7d43974ad04c440703501159c664a3132951",
+  "perFile": [
+    {
+      "file": "e2e/additive-alpha.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/ads.spec.ts",
+      "passed": 12
+    },
+    {
+      "file": "e2e/adventure.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/analytics.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/audio-focus.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/celebration.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/classic-presentation.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/clear-benchmark.spec.ts",
+      "passed": 6
+    },
+    {
+      "file": "e2e/clear-wash.spec.ts",
+      "passed": 9
+    },
+    {
+      "file": "e2e/compact-effects.spec.ts",
+      "passed": 7
+    },
+    {
+      "file": "e2e/contact.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/dealer.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/effect-viewport.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/enamel.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/energy-border.spec.ts",
+      "passed": 18
+    },
+    {
+      "file": "e2e/evolution.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/feel.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/feel40.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/festival.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/flow.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/full-clear.spec.ts",
+      "passed": 6
+    },
+    {
+      "file": "e2e/game.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/hint-recovery.spec.ts",
+      "passed": 12
+    },
+    {
+      "file": "e2e/initial-background.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/insets-touch.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/move-recovery.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/music.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/phone-clear.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/phone-layers.spec.ts",
+      "passed": 8
+    },
+    {
+      "file": "e2e/phone-trace-provenance.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/placement-performance.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/plastic.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/play-capture.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/polish.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/praise-defeat.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/preflight-019.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/progression.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/readability.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/recovery.spec.ts",
+      "passed": 10
+    },
+    {
+      "file": "e2e/result-motion.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/reward-dom.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/rewards.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/save-atomicity.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/score-glow.spec.ts",
+      "passed": 2
+    },
+    {
+      "file": "e2e/stability.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/static-board.spec.ts",
+      "passed": 1
+    },
+    {
+      "file": "e2e/tile-material.spec.ts",
+      "passed": 3
+    },
+    {
+      "file": "e2e/uiux-027.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/upgrade.spec.ts",
+      "passed": 4
+    },
+    {
+      "file": "e2e/usability.spec.ts",
+      "passed": 5
+    },
+    {
+      "file": "e2e/vfx.spec.ts",
+      "passed": 3
+    }
+  ]
+}
