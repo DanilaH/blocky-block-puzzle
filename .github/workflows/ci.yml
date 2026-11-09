@@ -143,7 +143,7 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_6
-          disable-animations: true
+          disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -memory 3072 -noaudio -no-boot-anim -camera-back none
           script: python3 scripts/run-cdp-device-smoke.py
       - name: Retain emulator failure logs

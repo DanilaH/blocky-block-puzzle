@@ -115,12 +115,10 @@ test("complete matrix preserves independent outputs, tracing order, failure-free
   expect(
     await page.evaluate(() => (window as any).__fullMock.shared.completed),
   ).toBe(true);
-  await test
-    .info()
-    .attach("full-diagnostic-report", {
-      body: JSON.stringify(r),
-      contentType: "application/json",
-    });
+  await test.info().attach("full-diagnostic-report", {
+    body: JSON.stringify(r),
+    contentType: "application/json",
+  });
   await page.locator("#full-return").click();
   await page.locator(".piece").first().waitFor();
   expect(await saved(page)).toEqual(before);
@@ -164,4 +162,30 @@ test("cancellation clears the active capture and retry gets a fresh report", asy
     false,
   );
   expect(r.summary.some((x: any) => x.investigate)).toBe(false);
+});
+
+test("system reduced motion stops before a misleading long run", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/?clearTrace=full&test=fast");
+  await expect(page.locator("#full-start")).toBeEnabled();
+  await page.locator("#full-start").click();
+  await expect(page.locator("#full-export")).toBeEnabled();
+  const r = await read(page);
+  expect(r.failure).toBe("system-reduced-motion-enabled");
+  expect(r.episodes).toHaveLength(0);
+  expect(
+    await page.evaluate(() =>
+      (window as any).__fullMock.calls.includes("preflight"),
+    ),
+  ).toBe(false);
+  expect(await page.evaluate(() => (window as any).__fullMock.screen)).toBe(
+    false,
+  );
+  await page.locator("#full-export").click();
+  expect(
+    await page.evaluate(() => (window as any).__fullMock.shared.failure),
+  ).toBe("system-reduced-motion-enabled");
 });

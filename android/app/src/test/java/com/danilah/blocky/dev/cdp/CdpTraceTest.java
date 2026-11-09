@@ -75,4 +75,15 @@ public class CdpTraceTest {
     layers.remove(1);
     org.junit.Assert.assertFalse(CdpTrace.probeLinked(proof, nodes, layers));
   }
+
+  @Test
+  public void countsUtf8BytesAcrossCharacterBufferBoundary() throws Exception {
+    String text =
+        "{\"traceEvents\":[{\"name\":\"Paint\",\"args\":{\"data\":{\"nodeId\":7,\"text\":\""
+            + "x".repeat(32761)
+            + " Кириллица \\\" } ] 😀\"}}}]}";
+    JSONObject proof = CdpTrace.inspect(file(text));
+    assertEquals(text.getBytes(StandardCharsets.UTF_8).length, proof.getLong("rawBytes"));
+    assertEquals(1, proof.getInt("paintWithNode"));
+  }
 }

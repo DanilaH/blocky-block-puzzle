@@ -198,6 +198,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       await delay(measurementMs, signal);
       const row = finish(condition, phase, round);
       performance.mark(`blocky-full:${label}:end`);
+      hooks.pause(true);
       if (capture) {
         row.capture = { ...capture, ready: false };
         try {
@@ -271,14 +272,23 @@ export async function installFullClear(hooks: PhoneClearHooks) {
         throw Error("source-identity-missing");
       report.session = await bridge.reset();
       await bridge.setScreenOn({ enabled: true });
+      report.environment = hooks.context();
+      if (report.environment?.reducedMotion)
+        throw Error("system-reduced-motion-enabled");
       step.textContent = "Проверяем полноту записи";
       report.preflight = await bridge.preflight();
       if (!report.preflight.ready)
         throw Error(
           `preflight:${report.preflight.error ?? "missing-identities"}`,
         );
-      for (let i = 0; i < 2; i++)
+      for (let i = 0; i < 2; i++) {
         await episode(BASELINE_LAYER, "warmup", signal);
+        const warmup = report.episodes.at(-1);
+        if (!warmup.valid)
+          throw Error(
+            `warmup-validation:${warmup.validation.errors.join(",")}`,
+          );
+      }
       for (const item of fullPlan())
         await episode(item.condition, "comparison", signal, item.round);
       for (const condition of allConditions)

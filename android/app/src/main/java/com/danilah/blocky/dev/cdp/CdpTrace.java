@@ -195,6 +195,7 @@ public final class CdpTrace implements Closeable {
         new JSONObject()
             .put("traceConfig", config)
             .put("transferMode", "ReturnAsStream")
+            .put("streamCompression", "gzip")
             .put("bufferUsageReportingInterval", 1000));
     ownsTrace = true;
     evaluate("performance.mark(" + JSONObject.quote("blocky-full:" + label + ":trace-start") + ")");
@@ -219,16 +220,20 @@ public final class CdpTrace implements Closeable {
     JSONObject completion = finished.get(15, TimeUnit.SECONDS);
     collecting = false;
     String stream = completion.getString("stream");
-    long rawBytes = 0;
+    long streamBytes = 0;
+    boolean remoteGzip = "gzip".equals(completion.optString("streamCompression", "none"));
     long flushStarted = System.nanoTime();
     File trace = new File(directory, "trace.json.gz");
     long flushDeadline = System.currentTimeMillis() + 45000;
+    OutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(trace), 32768);
     try (OutputStream output =
-        new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(trace), 32768), 32768) {
-          {
-            def.setLevel(Deflater.BEST_SPEED);
-          }
-        }) {
+        remoteGzip
+            ? fileOutput
+            : new GZIPOutputStream(fileOutput, 32768) {
+              {
+                def.setLevel(Deflater.BEST_SPEED);
+              }
+            }) {
       for (; ; ) {
         if (System.currentTimeMillis() > flushDeadline)
           throw new IOException("trace-flush-timeout");
@@ -239,8 +244,8 @@ public final class CdpTrace implements Closeable {
             r.optBoolean("base64Encoded")
                 ? Base64.getDecoder().decode(data)
                 : data.getBytes(StandardCharsets.UTF_8);
-        rawBytes += bytes.length;
-        if (rawBytes > 128L * 1024 * 1024) throw new IOException("trace-uncompressed-limit");
+        streamBytes += bytes.length;
+        if (streamBytes > 128L * 1024 * 1024) throw new IOException("trace-uncompressed-limit");
         output.write(bytes);
         if (r.optBoolean("eof")) break;
       }
@@ -288,7 +293,8 @@ public final class CdpTrace implements Closeable {
         .put("domSnapshots", domSnapshots.length());
     proof
         .put("captureId", captureId)
-        .put("rawBytes", rawBytes)
+        .put("streamBytes", streamBytes)
+        .put("streamCompression", remoteGzip ? "gzip" : "none")
         .put("compressedBytes", trace.length())
         .put("maxBufferUsage", maxBuffer)
         .put("nodeRecords", nodeRecords.length())
@@ -372,10 +378,13 @@ public final class CdpTrace implements Closeable {
     Set<Long> paintNodes = new TreeSet<>();
     Set<String> paintLayers = new TreeSet<>();
     boolean root = false;
-    try (Reader reader =
-        new InputStreamReader(
-            new GZIPInputStream(new FileInputStream(file)), StandardCharsets.UTF_8)) {
-      PushbackReader t = new PushbackReader(new BufferedReader(reader, 32768), 1);
+    long rawBytes;
+    try (ExpandedInput expanded =
+            new ExpandedInput(
+                new GZIPInputStream(
+                    new BufferedInputStream(new FileInputStream(file), 32768), 32768));
+        Reader reader = new InputStreamReader(expanded, StandardCharsets.UTF_8)) {
+      TraceChars t = new TraceChars(reader);
       if (clean(t) != '{') throw new IOException("Trace root is not an object");
       for (; ; ) {
         int c = clean(t);
@@ -420,8 +429,10 @@ public final class CdpTrace implements Closeable {
         if (c != ',') throw new IOException("Trace root separator");
       }
       if (clean(t) != -1 || !root) throw new IOException("Incomplete trace JSON");
+      rawBytes = expanded.count;
     }
     return new JSONObject()
+        .put("rawBytes", rawBytes)
         .put("events", events)
         .put("paint", paint)
         .put("paintWithNode", paintWithNode)
@@ -463,7 +474,64 @@ public final class CdpTrace implements Closeable {
     }
   }
 
-  private static int clean(PushbackReader r) throws IOException {
+  /** Single-thread character cursor avoids a synchronized Reader call for every JSON character. */
+  private static final class TraceChars {
+    final Reader source;
+    final char[] buffer = new char[32768];
+    int cursor, limit, pushed = -2;
+
+    TraceChars(Reader source) {
+      this.source = source;
+    }
+
+    int read() throws IOException {
+      if (pushed != -2) {
+        int value = pushed;
+        pushed = -2;
+        return value;
+      }
+      if (cursor >= limit) {
+        limit = source.read(buffer);
+        cursor = 0;
+        if (limit < 0) return -1;
+      }
+      return buffer[cursor++];
+    }
+
+    void unread(int value) throws IOException {
+      if (pushed != -2) throw new IOException("Trace pushback overflow");
+      pushed = value;
+    }
+  }
+
+  private static final class ExpandedInput extends FilterInputStream {
+    long count;
+
+    ExpandedInput(InputStream source) {
+      super(source);
+    }
+
+    void counted(int bytes) throws IOException {
+      if (bytes > 0) count += bytes;
+      if (count > 128L * 1024 * 1024) throw new IOException("trace-uncompressed-limit");
+    }
+
+    @Override
+    public int read() throws IOException {
+      int value = in.read();
+      counted(value < 0 ? 0 : 1);
+      return value;
+    }
+
+    @Override
+    public int read(byte[] buffer, int offset, int length) throws IOException {
+      int n = in.read(buffer, offset, length);
+      counted(n);
+      return n;
+    }
+  }
+
+  private static int clean(TraceChars r) throws IOException {
     int c;
     do {
       c = r.read();
@@ -471,7 +539,7 @@ public final class CdpTrace implements Closeable {
     return c;
   }
 
-  private static String value(PushbackReader r) throws IOException {
+  private static String value(TraceChars r) throws IOException {
     int first = clean(r);
     if (first < 0) throw new EOFException("Truncated trace value");
     StringBuilder out = new StringBuilder();

@@ -16,6 +16,8 @@ adb('shell', 'svc', 'data', 'disable')
 adb('shell', 'pm', 'disable-user', '--user', '0', 'com.google.android.apps.messaging', check=False)
 adb('shell', 'wm', 'size', '540x1200')
 adb('shell', 'wm', 'density', '210')
+for scale in ['animator_duration_scale', 'window_animation_scale', 'transition_animation_scale']:
+    adb('shell', 'settings', 'put', 'global', scale, '1.0')
 adb('install', '-r', 'diagnostic-app/app-debug.apk')
 adb('install', '-r', '-t', 'diagnostic-test/app-debug-androidTest.apk')
 log = Path('cdp-emulator-logcat.txt').open('wb')
