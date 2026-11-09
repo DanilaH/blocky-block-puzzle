@@ -114,3 +114,24 @@ test("a prepared next move immediately replaces the old reward and remains saved
     "1577",
   );
 });
+
+for (const [width, height] of [
+  [320, 568],
+  [568, 320],
+  [392, 872],
+]) {
+  test(`compact reward stays inside the board at ${width}x${height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height });
+    await fixture(page);
+    const b = (await page.locator("#board").boundingBox())!;
+    const r = (await page.locator(".compact-reward").boundingBox())!;
+    expect(r.x).toBeGreaterThanOrEqual(b.x);
+    expect(r.x + r.width).toBeLessThanOrEqual(b.x + b.width);
+    expect(r.y).toBeGreaterThanOrEqual(b.y);
+    expect(r.y + r.height).toBeLessThanOrEqual(b.y + b.height);
+    await page.clock.runFor(1200);
+    await expect(page.locator(".reward-event")).toHaveCount(0);
+  });
+}

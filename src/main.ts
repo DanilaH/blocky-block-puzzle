@@ -1062,11 +1062,12 @@ async function start() {
           allClear: event.allClear,
           newRecord,
           finishedStreak: event.finishedStreak,
-          seriesBonus: event.finishedStreak > 0,
-          multiplier: comboMultiplier(
-            event.state.streak,
-            event.state.scoringVersion === "festival-v4",
-          ),
+          multiplier: event.state.scoringVersion
+            ? comboMultiplier(
+                event.state.streak,
+                event.state.scoringVersion === "festival-v4",
+              )
+            : 1,
           praise: praise && event.state.status === "playing" ? praise : null,
         });
         if (reward)

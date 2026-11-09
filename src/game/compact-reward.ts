@@ -5,7 +5,6 @@ export function compactMoveReward(move: {
   allClear: boolean;
   newRecord: boolean;
   finishedStreak: number;
-  seriesBonus: number;
   multiplier: number;
   praise: "excellent" | "good" | null;
 }) {

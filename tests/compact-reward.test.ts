@@ -7,7 +7,6 @@ const move = {
   allClear: true,
   newRecord: true,
   finishedStreak: 0,
-  seriesBonus: 0,
   multiplier: 1.5,
   praise: null,
 } as const;
@@ -27,7 +26,6 @@ describe("compact move reward", () => {
         lines: 0,
         allClear: false,
         finishedStreak: 8,
-        seriesBonus: 400,
         points: 404,
       }),
     ).toEqual({
