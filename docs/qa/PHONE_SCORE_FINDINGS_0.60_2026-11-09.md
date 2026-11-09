@@ -1,5 +1,7 @@
 # Физический результат0.60 —09.11.2026
 
+Обновление: предложенный ниже ручной режим60Гц отклонён владельцем и снят с плана. Вместо него выполнено [архитектурное сравнение](https://github.com/DanilaH/blocky-block-puzzle/blob/62736dd511ba5e9a5a561a1bb181dc35689e19d1/docs/qa/FOREGROUND_RENDERERS_2026-11-09.md); исходные физические результаты не изменяются.
+
 Архив blocky-score-feedback.zip принят как корректное сравнение:10/10 valid,8 сравнений после двух прогревов,98.848сек,76 740байт. Manifest SHA/размеры, source выданного APK, фактические legacy/filter keyframes, все эффекты/частицы/тема/счёт1574, исходные RAF и сводки проверены независимым parser, issues[]. Android15/WebView156/Mali-G57MC2, board896×896; native ads suspended. Температура сравнений32.2→33.1°C, thermalStatus0.
 
 ## Результат
