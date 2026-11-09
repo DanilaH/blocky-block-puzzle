@@ -100,7 +100,7 @@ export async function installPhoneClear(hooks: PhoneClearHooks) {
     import.meta.env.DEV &&
     new URLSearchParams(location.search).get("test") === "fast";
   const settleMs = fast ? 60 : 1800;
-  const measurementMs = fast ? (layers ? 1500 : 240) : 2400;
+  const measurementMs = fast ? (layers ? 2400 : 240) : 2400;
   const plan = layerPlan();
   const total = layers ? plan.length + 2 : 3;
   const panel = document.createElement("section");

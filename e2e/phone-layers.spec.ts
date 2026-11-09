@@ -27,7 +27,7 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
   await page.locator("#phone-clear-start").click();
   await expect(page.locator("#phone-clear-progress")).toBeVisible();
   await expect(page.locator("#phone-clear-export")).toBeEnabled({
-    timeout: 40000,
+    timeout: 55000,
   });
   const r = await report(page);
   expect(r.schema).toBe("blocky-phone-layers-v3");
@@ -43,7 +43,7 @@ test("layer run brackets reversed real clears, proves every ablation and keeps t
     expect(e.state.game.score).toBe(1574);
     expect(e.state.game.board.every((n: number) => n === 0)).toBe(true);
     expect(e.state.wardrobe.selected).toBe(5);
-    expect(e.validation.errors).toEqual([]);
+    expect(e.validation.errors, `${e.phase}:${e.condition.id}`).toEqual([]);
     expect(e.state.proof.rewardRenderer).toBe("dom");
     expect(e.state.proof.rewardEffects.pointFlights).toBe(
       e.condition.skipRewardDom ? 0 : 2,
@@ -81,7 +81,7 @@ test("cancel exports an incomplete study with no winning rows, and retry resets 
   expect(r.summary.rows.every((e: any) => !e.investigate)).toBe(true);
   await page.locator("#phone-clear-start").click();
   await expect(page.locator("#phone-clear-export")).toBeEnabled({
-    timeout: 40000,
+    timeout: 55000,
   });
   expect((await report(page)).completed).toBe(true);
 });

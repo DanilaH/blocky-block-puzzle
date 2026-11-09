@@ -51,11 +51,40 @@ public class CdpDeviceSmoke {
       assertEquals("true", js(scenario, "!!window.__blockyFullDiagnostic"));
       js(scenario, "document.querySelector('#full-start').click()");
       until = System.currentTimeMillis() + 15 * 60 * 1000;
+      int lastCount = -1;
       while (System.currentTimeMillis() < until) {
+        int count =
+            Integer.parseInt(
+                js(scenario, "window.__blockyFullDiagnostic.report?.episodes.length ?? 0"));
+        if (count != lastCount) {
+          lastCount = count;
+          android.os.Bundle progress = new android.os.Bundle();
+          progress.putString("stream", "BLOCKY_FULL_STEP " + count + " / 57\n");
+          androidx.test.platform.app.InstrumentationRegistry.getInstrumentation()
+              .sendStatus(0, progress);
+          String checkpoint =
+              (String)
+                  new JSONTokener(
+                          js(scenario, "JSON.stringify(window.__blockyFullDiagnostic.report)"))
+                      .nextValue();
+          java.io.File output =
+              new java.io.File(
+                  androidx.test.platform.app.InstrumentationRegistry.getInstrumentation()
+                      .getTargetContext()
+                      .getCacheDir(),
+                  "cdp-smoke-report.json");
+          try (java.io.FileOutputStream stream = new java.io.FileOutputStream(output)) {
+            stream.write(checkpoint.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+          }
+        }
         String running = js(scenario, "window.__blockyFullDiagnostic.running");
         if (running.equals("false")) break;
         Thread.sleep(1000);
       }
+      assertEquals(
+          "Full run exceeded device-test deadline",
+          "false",
+          js(scenario, "window.__blockyFullDiagnostic.running"));
       String reportJson =
           (String)
               new JSONTokener(
@@ -72,7 +101,7 @@ public class CdpDeviceSmoke {
                   .getTargetContext()
                   .getCacheDir(),
               "blocky-full-diagnostic.zip");
-      until = System.currentTimeMillis() + 30000;
+      until = System.currentTimeMillis() + 60000;
       boolean completeZip = false;
       while (System.currentTimeMillis() < until && !completeZip) {
         try (java.util.zip.ZipFile zip = new java.util.zip.ZipFile(bundle)) {

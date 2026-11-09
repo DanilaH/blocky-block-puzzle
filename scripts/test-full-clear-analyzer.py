@@ -81,6 +81,17 @@ def fixture():
     report = dict(schema='blocky-full-clear-v1', appVersion='0.58.0-preview', sourceCommit='a' * 40,
                   functionalOnly=False, completed=True, protocol=dict(measurementMs=8000),
                   preflight=dict(ready=True, probePaintLayerLinked=True), episodes=episodes)
+    report['session'] = dict(nativeAds=dict(suspended=True, bannerPresent=False, loadingInterstitial=False, loadingRewarded=False))
+    probe_events = [dict(name='Paint', args=dict(data=dict(layerId=48))),
+                    dict(name='DrawFn_DrawGL'), dict(name='flow', ph='s')]
+    raw = json.dumps(dict(traceEvents=probe_events)).encode()
+    report['preflight'].update(directory='01-preflight', captureId='synthetic-probe', rawBytes=len(raw))
+    mapping = dict(nodes=[dict(node=dict(backendNodeId=180, attributes=['id', 'blocky-cdp-probe']))],
+                   layers=[dict(method='LayerTree.layerTreeDidChange', params=dict(layers=[dict(layerId='48', backendNodeId=180)])),
+                           dict(method='LayerTree.layerPainted', params=dict(layerId='48'))])
+    files['01-preflight/trace.json.gz'] = gzip.compress(raw)
+    files['01-preflight/capture.json'] = json.dumps(report['preflight']).encode()
+    files['01-preflight/layers.json'] = json.dumps(mapping).encode()
     return report, files
 
 
@@ -138,6 +149,17 @@ class FullArchiveTest(unittest.TestCase):
         issues = self.check()['issues']
         self.assertIn('dom-palette', issues[0])
         self.assertIn('unfinished-festival', issues[0])
+
+    def test_probe_and_native_ad_claims_need_evidence(self):
+        self.report['session']['nativeAds']['loadingRewarded'] = True
+        with self.assertRaisesRegex(AssertionError, 'Native ads not suspended'):
+            self.check()
+        self.report, self.files = fixture()
+        raw = json.dumps(dict(traceEvents=[dict(name='Paint', args=dict(data=dict(layerId=99))),
+                                          dict(name='DrawFn_DrawGL'), dict(name='flow', ph='s')])).encode()
+        self.files['01-preflight/trace.json.gz'] = gzip.compress(raw)
+        with self.assertRaises(AssertionError):
+            self.check()
 
     def test_stale_capture_rejected(self):
         capture = self.report['episodes'][-1]['capture']

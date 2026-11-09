@@ -144,16 +144,8 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            adb install -r diagnostic-app/app-debug.apk
-            adb install -r -t diagnostic-test/app-debug-androidTest.apk
-            adb shell am instrument -w -r -e class com.danilah.blocky.dev.CdpDeviceSmoke com.danilah.blocky.dev.test/androidx.test.runner.AndroidJUnitRunner | tee cdp-emulator-result.txt
-            timeout 15s adb logcat -d -t 2500 > cdp-emulator-logcat.txt || true
-            adb exec-out run-as com.danilah.blocky.dev cat cache/blocky-full-diagnostic.zip > cdp-emulator-full.zip || true
-            python3 scripts/analyze-full-clear.py cdp-emulator-full.zip cdp-emulator-analysis.json
-            ! grep -q 'FAILURES!!!\|INSTRUMENTATION_FAILED\|Process crashed' cdp-emulator-result.txt
-            grep -q 'OK (1 test)' cdp-emulator-result.txt
+          emulator-options: -no-window -gpu swiftshader_indirect -memory 3072 -noaudio -no-boot-anim -camera-back none
+          script: python3 scripts/run-cdp-device-smoke.py
       - name: Retain emulator failure logs
         if: always()
         run: test -s cdp-emulator-logcat.txt || timeout 15s adb logcat -d -t 1500 > cdp-emulator-logcat.txt || true
@@ -166,3 +158,5 @@ jobs:
             cdp-emulator-logcat.txt
             cdp-emulator-full.zip
             cdp-emulator-analysis.json
+            cdp-smoke-report.json
+            cdp-emulator-cache.tar

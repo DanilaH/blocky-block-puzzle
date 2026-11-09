@@ -220,9 +220,15 @@ public final class CdpTrace implements Closeable {
     collecting = false;
     String stream = completion.getString("stream");
     long rawBytes = 0;
+    long flushStarted = System.nanoTime();
     File trace = new File(directory, "trace.json.gz");
     long flushDeadline = System.currentTimeMillis() + 45000;
-    try (OutputStream output = new GZIPOutputStream(new FileOutputStream(trace))) {
+    try (OutputStream output =
+        new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(trace), 32768), 32768) {
+          {
+            def.setLevel(Deflater.BEST_SPEED);
+          }
+        }) {
       for (; ; ) {
         if (System.currentTimeMillis() > flushDeadline)
           throw new IOException("trace-flush-timeout");
@@ -265,7 +271,10 @@ public final class CdpTrace implements Closeable {
             new FileOutputStream(new File(directory, "layers.json")), StandardCharsets.UTF_8)) {
       writer.write(mapping.toString());
     }
+    long inspectStarted = System.nanoTime();
     JSONObject proof = inspect(trace);
+    proof.put("inspectMs", (System.nanoTime() - inspectStarted) / 1000000.0);
+    proof.put("streamAndMetadataMs", (inspectStarted - flushStarted) / 1000000.0);
     boolean probeLinked = probeLinked(proof, nodeRecords, layerEvents);
     proof.put("probePaintLayerLinked", probeLinked);
     int successfulNodes = 0, successfulReasons = 0;
@@ -366,7 +375,7 @@ public final class CdpTrace implements Closeable {
     try (Reader reader =
         new InputStreamReader(
             new GZIPInputStream(new FileInputStream(file)), StandardCharsets.UTF_8)) {
-      PushbackReader t = new PushbackReader(reader, 1);
+      PushbackReader t = new PushbackReader(new BufferedReader(reader, 32768), 1);
       if (clean(t) != '{') throw new IOException("Trace root is not an object");
       for (; ; ) {
         int c = clean(t);

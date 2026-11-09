@@ -378,6 +378,7 @@ public class BlockyCdpPlugin extends Plugin {
       String name = prefix + child.getName();
       if (child.isDirectory()) pack(out, child, name + "/");
       else {
+        out.setLevel(name.endsWith(".gz") ? Deflater.NO_COMPRESSION : Deflater.BEST_SPEED);
         out.putNextEntry(new ZipEntry(name));
         try (InputStream in = new FileInputStream(child)) {
           byte[] buffer = new byte[32768];

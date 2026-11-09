@@ -41,6 +41,19 @@ def validate(path):
    assert [e['condition']['id'] for e in episodes if e['phase']=='attribution']==list(CASES)
    assert all(e['valid'] for e in episodes),'Complete report contains invalid episodes'
    assert r['preflight']['ready'] and r['preflight']['probePaintLayerLinked']
+   if not functional:
+    ads=r['session']['nativeAds'];assert ads['suspended'] and not any(ads[k] for k in ['bannerPresent','loadingInterstitial','loadingRewarded']),'Native ads not suspended'
+    pre=r['preflight'];directory=pre['directory'];assert '/' not in directory and directory not in ['.','..']
+    saved=json.loads(z.read(directory+'/capture.json'));assert saved['captureId']==pre['captureId'] and saved['ready'],'Stale preflight'
+    with gzip.GzipFile(fileobj=io.BytesIO(z.read(directory+'/trace.json.gz'))) as g:pre_raw=g.read(128*1024*1024+1)
+    assert len(pre_raw)==pre['rawBytes'] and len(pre_raw)<=128*1024*1024
+    pre_events=json.loads(pre_raw)['traceEvents'];mapping=json.loads(z.read(directory+'/layers.json'))
+    nodes={n['node']['backendNodeId'] for n in mapping['nodes'] if n.get('node') and 'blocky-cdp-probe' in n['node'].get('attributes',[])}
+    layers={str(l['layerId']) for e in mapping['layers'] for l in e['params'].get('layers',[]) if l.get('backendNodeId') in nodes}
+    painted_layers={str(e['params']['layerId']) for e in mapping['layers'] if e['method']=='LayerTree.layerPainted'}
+    paints=[e.get('args',{}).get('data',{}) for e in pre_events if e.get('name')=='Paint']
+    assert layers & painted_layers and any(p.get('nodeId') in nodes or str(p.get('layerId')) in layers for p in paints),'Known probe not actually painted'
+    assert any(e.get('name','').startswith('DrawFn_Draw') for e in pre_events) and any(e.get('ph') in ['s','f'] for e in pre_events),'Native preflight attribution missing'
   else:issues.append('incomplete-session:'+str(r.get('failure','one-or-more-invalid-episodes')))
   rows=[];captures=[]
   for index,e in enumerate(episodes):
