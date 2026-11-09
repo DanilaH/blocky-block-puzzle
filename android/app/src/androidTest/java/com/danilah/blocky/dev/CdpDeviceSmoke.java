@@ -49,27 +49,6 @@ public class CdpDeviceSmoke {
         Thread.sleep(200);
       }
       assertEquals("true", js(scenario, "!!window.__blockyFullDiagnostic"));
-      js(
-          scenario,
-          "window.__cdpSmoke={running:true};Capacitor.nativePromise('BlockyCdp','reset',{}).then(()=>Capacitor.nativePromise('BlockyCdp','preflight',{})).then(proof=>window.__cdpSmoke={proof},error=>window.__cdpSmoke={error:String(error)})");
-      until = System.currentTimeMillis() + 90000;
-      String data = "null";
-      while (System.currentTimeMillis() < until) {
-        data = js(scenario, "JSON.stringify(window.__cdpSmoke)");
-        if (!data.contains("running")) break;
-        Thread.sleep(300);
-      }
-      String decoded = (String) new JSONTokener(data).nextValue();
-      JSONObject result = new JSONObject(decoded);
-      assertFalse(result.toString(), result.has("error"));
-      JSONObject proof = result.getJSONObject("proof");
-      assertTrue(proof.toString(), proof.getBoolean("ready"));
-      assertTrue(proof.getBoolean("probePaintLayerLinked"));
-      assertTrue(proof.getInt("nativeDraws") > 0);
-      assertTrue(proof.getInt("paintWithNode") > 0);
-      assertTrue(proof.getInt("nodeRecords") > 0);
-      assertTrue(proof.getBoolean("lossStatusKnownClean"));
-      System.out.println("BLOCKY_CDP_SMOKE " + proof);
       js(scenario, "document.querySelector('#full-start').click()");
       until = System.currentTimeMillis() + 15 * 60 * 1000;
       while (System.currentTimeMillis() < until) {
@@ -82,11 +61,10 @@ public class CdpDeviceSmoke {
               new JSONTokener(
                       js(
                           scenario,
-                          "JSON.stringify({completed:window.__blockyFullDiagnostic.report.completed,failure:window.__blockyFullDiagnostic.report.failure,episodes:window.__blockyFullDiagnostic.report.episodes.map(e=>({condition:e.condition.id,phase:e.phase,valid:e.valid,errors:e.validation.errors,capture:e.capture}))})"))
+                          "JSON.stringify({completed:window.__blockyFullDiagnostic.report.completed,preflight:window.__blockyFullDiagnostic.report.preflight,failure:window.__blockyFullDiagnostic.report.failure,episodes:window.__blockyFullDiagnostic.report.episodes.map(e=>({condition:e.condition.id,phase:e.phase,valid:e.valid,errors:e.validation.errors,capture:e.capture}))})"))
                   .nextValue();
       JSONObject full = new JSONObject(reportJson);
-      assertTrue(full.toString(), full.getBoolean("completed"));
-      assertEquals(57, full.getJSONArray("episodes").length());
+      System.out.println("BLOCKY_FULL_CDP_REPORT " + full);
       js(scenario, "document.querySelector('#full-export').click()");
       java.io.File bundle =
           new java.io.File(
@@ -106,6 +84,16 @@ public class CdpDeviceSmoke {
       }
       assertTrue("Export did not produce a complete ZIP", completeZip);
       assertTrue(bundle.length() > 10000);
+      assertTrue(full.toString(), full.getBoolean("completed"));
+      assertEquals(57, full.getJSONArray("episodes").length());
+      JSONObject proof = full.getJSONObject("preflight");
+      assertTrue(proof.toString(), proof.getBoolean("ready"));
+      assertTrue(proof.getBoolean("probePaintLayerLinked"));
+      assertTrue(proof.getInt("nativeDraws") > 0);
+      assertTrue(proof.getInt("paintWithNode") > 0);
+      assertTrue(proof.getInt("nodeRecords") > 0);
+      assertTrue(proof.getBoolean("lossStatusKnownClean"));
+      System.out.println("BLOCKY_CDP_SMOKE " + proof);
       System.out.println("BLOCKY_FULL_CDP_COMPLETED 57 episodes; archive=" + bundle.length());
     }
   }
