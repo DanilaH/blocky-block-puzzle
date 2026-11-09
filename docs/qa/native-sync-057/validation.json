@@ -1,0 +1,13 @@
+{
+  "sourceTraceSha256": "f4659252d06609b90ba40aba0f4a265e5e77c745582343850b7bafcce71490d0",
+  "scriptSha256": "04ffe5fd3f898aa93a41e3546328000123d2764df592309462ec350154d1b33a",
+  "analysisSha256": "8833d69ea0edb5e6b07f0d9a682262215450b62019cf70e4de90e452211b91a9",
+  "deterministicRepeat": true,
+  "wrongCaptureRejectedBeforeAnalysis": true,
+  "explicitFlowPairs": 9727,
+  "zeroLossCounters": 49,
+  "independentRawRecordAssertions": "Passed in separate calculation: callback indices 72323/70609/74997, expected draw durations, flows 5249/5064/5527 and releases 73240/71551/75922; window/identity checks passed.",
+  "appSourceChanges": false,
+  "appBuildOrApkIssued": false,
+  "physicalPerformanceFixClaimed": false
+}

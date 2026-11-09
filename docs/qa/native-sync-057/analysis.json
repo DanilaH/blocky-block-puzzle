@@ -1,0 +1,522 @@
+{
+  "sourceVersion": "0.57.0-preview",
+  "sourceCommit": "585c4225f8e4355db2b7abb2950da64f6a84dcb4",
+  "sourceTraceSha256": "f4659252d06609b90ba40aba0f4a265e5e77c745582343850b7bafcce71490d0",
+  "sourceTraceBytes": 30178272,
+  "events": 173268,
+  "flowPairs": 9727,
+  "validatedLossCounters": 49,
+  "clockAlignment": "Three generic marks inferred by order and 24/2403ms gaps. No per-RAF association claimed.",
+  "measuredWindowMs": 2402.96,
+  "selection": "Three longest DrawFn_DrawGL slices STARTING inside inferred committed/end marks; pre-clear work excluded.",
+  "cpuClockCaveat": {
+    "tdurExceedsWallByOver50us": 175,
+    "rule": "Reported tdur retained as data only; no clipped CPU attribution, CPU utilization or hardware GPU timing inferred."
+  },
+  "draws": [
+    {
+      "draw": {
+        "index": 72323,
+        "name": "DrawFn_DrawGL",
+        "pid": 30687,
+        "tid": 30719,
+        "thread": "name not exported",
+        "afterInferredCommitMs": 747.895,
+        "wallMs": 47.719,
+        "reportedThreadCpuMs": 6.717
+      },
+      "totalSyncWaitMs": 39.048,
+      "totalSyncWaitShare": 0.8182904084326997,
+      "waits": [
+        {
+          "wait": {
+            "index": 72420,
+            "name": "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken",
+            "pid": 30687,
+            "tid": 30719,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 750.245,
+            "wallMs": 31.253,
+            "reportedThreadCpuMs": 0.598
+          },
+          "flowId": 5249,
+          "waitRegistrationGapUs": 2,
+          "release": {
+            "index": 73240,
+            "name": "SyncToken::Release",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 781.339,
+            "wallMs": 0.042,
+            "reportedThreadCpuMs": 0.042
+          },
+          "producer": {
+            "index": 73211,
+            "name": "CommandBuffer::Flush",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 776.114,
+            "wallMs": 5.294,
+            "reportedThreadCpuMs": 5.151
+          },
+          "producerTaskKind": "raster-commands",
+          "producerCommandsBeforeRelease": {
+            "RasterDecoderImpl::DoBeginRasterCHROMIUM": 5,
+            "RasterDecoderImpl::DoRasterCHROMIUM": 5,
+            "RasterDecoderImpl::DoEndRasterCHROMIUM": 5
+          },
+          "submission": {
+            "flowId": 5247,
+            "event": {
+              "index": 141988,
+              "name": "GpuChannel::Flush",
+              "pid": 30742,
+              "tid": 30793,
+              "thread": "Compositor",
+              "afterInferredCommitMs": 742.524,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "context": [
+              "MainFrame.Draw"
+            ],
+            "submissionToProducerStartMs": 33.59
+          },
+          "readiness": {
+            "flowId": 5246,
+            "event": {
+              "index": 141986,
+              "name": "Scheduler::SequenceUnblocked",
+              "pid": 30687,
+              "tid": 30779,
+              "thread": "name not exported",
+              "afterInferredCommitMs": 776.052,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "enclosingTask": {
+              "index": 73200,
+              "name": "ThreadControllerImpl::RunTask",
+              "pid": 30687,
+              "tid": 30779,
+              "thread": "name not exported",
+              "afterInferredCommitMs": 774.831,
+              "wallMs": 1.242,
+              "reportedThreadCpuMs": 0.43
+            },
+            "enclosingTaskKind": "shared-image-create",
+            "submissionToReadyMs": 33.528,
+            "readyToRunMs": 0.04,
+            "observedUnderRelease": true
+          },
+          "waitBeforeProducerMs": 25.869,
+          "producerUntilSignalMs": 5.225,
+          "signalToResumeMs": 0.159,
+          "precedingServiceTasks": {
+            "raster-commands": {
+              "tasks": 7,
+              "clippedWallMs": 13.844999999999999
+            },
+            "shared-image-create": {
+              "tasks": 7,
+              "clippedWallMs": 11.895
+            }
+          },
+          "precedingServiceCoveredWallMs": 25.74,
+          "precedingServiceUncoveredWallMs": 0.129
+        },
+        {
+          "wait": {
+            "index": 73260,
+            "name": "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken",
+            "pid": 30687,
+            "tid": 30719,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 782.985,
+            "wallMs": 7.795,
+            "reportedThreadCpuMs": 0.295
+          },
+          "flowId": 5268,
+          "waitRegistrationGapUs": 6,
+          "release": {
+            "index": 73305,
+            "name": "SyncToken::Release",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 790.492,
+            "wallMs": 0.037,
+            "reportedThreadCpuMs": 0.039
+          },
+          "producer": {
+            "index": 73296,
+            "name": "CommandBuffer::Flush",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 788.983,
+            "wallMs": 1.563,
+            "reportedThreadCpuMs": 1.557
+          },
+          "producerTaskKind": "raster-commands",
+          "producerCommandsBeforeRelease": {
+            "RasterDecoderImpl::DoBeginRasterCHROMIUM": 1,
+            "RasterDecoderImpl::DoRasterCHROMIUM": 1,
+            "RasterDecoderImpl::DoEndRasterCHROMIUM": 1
+          },
+          "submission": {
+            "flowId": 5266,
+            "event": {
+              "index": 142026,
+              "name": "GpuChannel::Flush",
+              "pid": 30742,
+              "tid": 30793,
+              "thread": "Compositor",
+              "afterInferredCommitMs": 728.96,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "context": [],
+            "submissionToProducerStartMs": 60.023
+          },
+          "readiness": null,
+          "waitBeforeProducerMs": 5.998,
+          "producerUntilSignalMs": 1.509,
+          "signalToResumeMs": 0.288,
+          "precedingServiceTasks": {
+            "raster-commands": {
+              "tasks": 3,
+              "clippedWallMs": 1.878
+            },
+            "other": {
+              "tasks": 1,
+              "clippedWallMs": 4.076
+            }
+          },
+          "precedingServiceCoveredWallMs": 5.954,
+          "precedingServiceUncoveredWallMs": 0.044
+        }
+      ]
+    },
+    {
+      "draw": {
+        "index": 70609,
+        "name": "DrawFn_DrawGL",
+        "pid": 30687,
+        "tid": 30719,
+        "thread": "name not exported",
+        "afterInferredCommitMs": 695.205,
+        "wallMs": 38.324,
+        "reportedThreadCpuMs": 7.551
+      },
+      "totalSyncWaitMs": 22.568,
+      "totalSyncWaitShare": 0.5888738127544098,
+      "waits": [
+        {
+          "wait": {
+            "index": 70936,
+            "name": "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken",
+            "pid": 30687,
+            "tid": 30719,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 702.379,
+            "wallMs": 22.568,
+            "reportedThreadCpuMs": 0.046
+          },
+          "flowId": 5064,
+          "waitRegistrationGapUs": 3,
+          "release": {
+            "index": 71551,
+            "name": "SyncToken::Release",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 724.891,
+            "wallMs": 0.015,
+            "reportedThreadCpuMs": 0.014
+          },
+          "producer": {
+            "index": 71054,
+            "name": "CommandBuffer::Flush",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 706.13,
+            "wallMs": 21.857,
+            "reportedThreadCpuMs": 19.063
+          },
+          "producerTaskKind": "raster-commands",
+          "producerCommandsBeforeRelease": {
+            "RasterDecoderImpl::DoBeginRasterCHROMIUM": 19,
+            "RasterDecoderImpl::DoRasterCHROMIUM": 19,
+            "RasterDecoderImpl::DoEndRasterCHROMIUM": 19
+          },
+          "submission": {
+            "flowId": 5034,
+            "event": {
+              "index": 141562,
+              "name": "GpuChannel::Flush",
+              "pid": 30742,
+              "tid": 30793,
+              "thread": "Compositor",
+              "afterInferredCommitMs": 697.359,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "context": [
+              "MainFrame.Draw"
+            ],
+            "submissionToProducerStartMs": 8.771
+          },
+          "readiness": null,
+          "waitBeforeProducerMs": 3.751,
+          "producerUntilSignalMs": 18.761,
+          "signalToResumeMs": 0.056,
+          "precedingServiceTasks": {
+            "shared-image-create": {
+              "tasks": 1,
+              "clippedWallMs": 0.902
+            },
+            "raster-commands": {
+              "tasks": 2,
+              "clippedWallMs": 2.825
+            }
+          },
+          "precedingServiceCoveredWallMs": 3.727,
+          "precedingServiceUncoveredWallMs": 0.024
+        }
+      ]
+    },
+    {
+      "draw": {
+        "index": 74997,
+        "name": "DrawFn_DrawGL",
+        "pid": 30687,
+        "tid": 30719,
+        "thread": "name not exported",
+        "afterInferredCommitMs": 853.668,
+        "wallMs": 36.29,
+        "reportedThreadCpuMs": 9.06
+      },
+      "totalSyncWaitMs": 20.739,
+      "totalSyncWaitShare": 0.5714797464866355,
+      "waits": [
+        {
+          "wait": {
+            "index": 75277,
+            "name": "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken",
+            "pid": 30687,
+            "tid": 30719,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 861.909,
+            "wallMs": 15.791,
+            "reportedThreadCpuMs": 0.028
+          },
+          "flowId": 5527,
+          "waitRegistrationGapUs": 2,
+          "release": {
+            "index": 75922,
+            "name": "SyncToken::Release",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 877.643,
+            "wallMs": 0.012,
+            "reportedThreadCpuMs": 0.012
+          },
+          "producer": {
+            "index": 75901,
+            "name": "CommandBuffer::Flush",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 875.436,
+            "wallMs": 2.23,
+            "reportedThreadCpuMs": 2.217
+          },
+          "producerTaskKind": "raster-commands",
+          "producerCommandsBeforeRelease": {
+            "RasterDecoderImpl::DoBeginRasterCHROMIUM": 2,
+            "RasterDecoderImpl::DoRasterCHROMIUM": 2,
+            "RasterDecoderImpl::DoEndRasterCHROMIUM": 2
+          },
+          "submission": {
+            "flowId": 5525,
+            "event": {
+              "index": 142544,
+              "name": "GpuChannel::Flush",
+              "pid": 30742,
+              "tid": 30793,
+              "thread": "Compositor",
+              "afterInferredCommitMs": 853.186,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "context": [
+              "MainFrame.Draw"
+            ],
+            "submissionToProducerStartMs": 22.25
+          },
+          "readiness": {
+            "flowId": 5524,
+            "event": {
+              "index": 142542,
+              "name": "Scheduler::SequenceUnblocked",
+              "pid": 30687,
+              "tid": 30779,
+              "thread": "name not exported",
+              "afterInferredCommitMs": 875.388,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "enclosingTask": {
+              "index": 75869,
+              "name": "ThreadControllerImpl::RunTask",
+              "pid": 30687,
+              "tid": 30779,
+              "thread": "name not exported",
+              "afterInferredCommitMs": 874.78,
+              "wallMs": 0.626,
+              "reportedThreadCpuMs": 0.291
+            },
+            "enclosingTaskKind": "shared-image-create",
+            "submissionToReadyMs": 22.202,
+            "readyToRunMs": 0.031,
+            "observedUnderRelease": true
+          },
+          "waitBeforeProducerMs": 13.527,
+          "producerUntilSignalMs": 2.207,
+          "signalToResumeMs": 0.057,
+          "precedingServiceTasks": {
+            "raster-commands": {
+              "tasks": 3,
+              "clippedWallMs": 11.583
+            },
+            "other": {
+              "tasks": 2,
+              "clippedWallMs": 0.191
+            },
+            "shared-image-create": {
+              "tasks": 2,
+              "clippedWallMs": 1.7080000000000002
+            }
+          },
+          "precedingServiceCoveredWallMs": 13.482,
+          "precedingServiceUncoveredWallMs": 0.045
+        },
+        {
+          "wait": {
+            "index": 75933,
+            "name": "BlockingSequenceRunner::Sequence::RunAllTasks::WaitSyncToken",
+            "pid": 30687,
+            "tid": 30719,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 877.739,
+            "wallMs": 4.948,
+            "reportedThreadCpuMs": 0.061
+          },
+          "flowId": 5542,
+          "waitRegistrationGapUs": 4,
+          "release": {
+            "index": 75966,
+            "name": "SyncToken::Release",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 882.596,
+            "wallMs": 0.011,
+            "reportedThreadCpuMs": 0.011
+          },
+          "producer": {
+            "index": 75957,
+            "name": "CommandBuffer::Flush",
+            "pid": 30687,
+            "tid": 30779,
+            "thread": "name not exported",
+            "afterInferredCommitMs": 880.98,
+            "wallMs": 1.639,
+            "reportedThreadCpuMs": 1.627
+          },
+          "producerTaskKind": "raster-commands",
+          "producerCommandsBeforeRelease": {
+            "RasterDecoderImpl::DoBeginRasterCHROMIUM": 1,
+            "RasterDecoderImpl::DoRasterCHROMIUM": 1,
+            "RasterDecoderImpl::DoEndRasterCHROMIUM": 1
+          },
+          "submission": {
+            "flowId": 5540,
+            "event": {
+              "index": 142574,
+              "name": "GpuChannel::Flush",
+              "pid": 30742,
+              "tid": 30793,
+              "thread": "Compositor",
+              "afterInferredCommitMs": 838.919,
+              "wallMs": 0.0,
+              "reportedThreadCpuMs": 0.0
+            },
+            "context": [],
+            "submissionToProducerStartMs": 42.061
+          },
+          "readiness": null,
+          "waitBeforeProducerMs": 3.241,
+          "producerUntilSignalMs": 1.616,
+          "signalToResumeMs": 0.091,
+          "precedingServiceTasks": {
+            "raster-commands": {
+              "tasks": 2,
+              "clippedWallMs": 0.799
+            },
+            "other": {
+              "tasks": 1,
+              "clippedWallMs": 2.417
+            }
+          },
+          "precedingServiceCoveredWallMs": 3.216,
+          "precedingServiceUncoveredWallMs": 0.025
+        }
+      ]
+    }
+  ],
+  "identityAvailability": {
+    "argumentKeys": {
+      "layer_id": 0,
+      "layerId": 0,
+      "backendNodeId": 0,
+      "nodeId": 0,
+      "tile_id": 0,
+      "resource_id": 0,
+      "command_buffer_id": 0
+    },
+    "arguments": {
+      "RasterTask": {
+        "events": 428,
+        "nonemptyArgs": 0
+      },
+      "RasterDecoderImpl::DoRasterCHROMIUM": {
+        "events": 694,
+        "nonemptyArgs": 0
+      },
+      "SharedImageStub::OnCreateSharedImage": {
+        "events": 86,
+        "nonemptyArgs": 0
+      },
+      "CanvasRenderingContext2D::FinalizeFrame": {
+        "events": 265,
+        "nonemptyArgs": 0
+      }
+    },
+    "paintEvents": 0,
+    "filteredNames": 717
+  },
+  "conclusion": "Explicit wait/release flows lead to raster command processing; In callbacks #1 and #3, the longest-wait producer becomes runnable under a release in a shared-image creation task. Exact app effect or DOM/Canvas identity is absent from this export.",
+  "limitations": [
+    "Overlapping queued work is not automatically a prerequisite.",
+    "A GpuChannel flush can submit accumulated work; MainFrame.Draw origin does not identify every raster source.",
+    "Sync token release is a CPU-side ordering signal, not hardware GPU completion.",
+    "Native capture covers only the final baseline, not the successful broad ablations.",
+    "No app code changed and no phone performance improvement established."
+  ]
+}
