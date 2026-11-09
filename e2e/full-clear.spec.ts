@@ -135,6 +135,14 @@ test("missing identities stop before any comparison and export the preflight fai
   expect(r.completed).toBe(false);
   expect(r.episodes).toHaveLength(0);
   expect(r.failure).toContain("preflight");
+  expect(r.failureStage).toBe("проверка записи");
+  await expect(page.getByRole("alert")).toHaveText(
+    "Причина: preflight:missing-identities",
+  );
+  await expect(page.locator("#full-status")).toContainText(
+    "Отправить результат",
+  );
+  await expect(page.locator("#full-start")).toHaveText("Повторить проверку");
   expect(r.summary.some((x: any) => x.investigate)).toBe(false);
   expect(await page.evaluate(() => (window as any).__fullMock.screen)).toBe(
     false,
@@ -143,6 +151,39 @@ test("missing identities stop before any comparison and export the preflight fai
   expect(
     await page.evaluate(() => (window as any).__fullMock.shared.failure),
   ).toContain("missing-identities");
+});
+test("native preflight exception removes the probe and exposes the original error for export", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.goto("/?clearTrace=full&test=fast");
+  await expect(page.locator("#full-start")).toBeEnabled();
+  await page.evaluate(() => {
+    (window as any).__blockyCdpTest.preflight = async () => {
+      const probe = document.createElement("div");
+      probe.id = "blocky-cdp-probe";
+      probe.textContent = "Проверка записи";
+      document.body.append(probe);
+      throw { message: "IO.read: trace stream closed" };
+    };
+  });
+  await page.locator("#full-start").click();
+  await expect(page.locator("#full-export")).toBeEnabled();
+  await expect(page.locator("#blocky-cdp-probe")).toHaveCount(0);
+  await expect(page.getByRole("alert")).toHaveText(
+    "Причина: IO.read: trace stream closed",
+  );
+  const r = await read(page);
+  expect(r.episodes).toHaveLength(0);
+  expect(r.failureStage).toBe("проверка записи");
+  expect(r.failure).toBe("IO.read: trace stream closed");
+  expect(await page.evaluate(() => (window as any).__fullMock.screen)).toBe(
+    false,
+  );
+  await page.locator("#full-export").click();
+  expect(
+    await page.evaluate(() => (window as any).__fullMock.shared.failure),
+  ).toBe("IO.read: trace stream closed");
 });
 test("cancellation clears the active capture and retry gets a fresh report", async ({
   page,

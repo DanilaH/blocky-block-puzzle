@@ -737,6 +737,6 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x]Потоковый own-process CDP, probe Paint↔node↔layer, DOM/layout/Animation/compositing reasons, gzip, capture IDs, SHA manifest и единый экспорт.
 - [x]230 unit/build и 4 целевых browser; матрица, сохранения и отказ при reduced motion прошли.
 - [x]CI 42594948856: 230 unit / 203 browser / 17 Android unit + app/test build; emulator 57/57 valid, 15 traces, export/parser без ошибок. APK58, подпись57 и 92 production-файла проверены; файл подготовлен для выдачи.
-- [ ]Физический результат POCO и исправление лага.
+- [ ]Физический запуск 0.58: владелец сообщил остановку на CDP-preflight до матрицы; точная причина ожидается из ZIP текущего запуска. В исходниках исправлены видимая ошибка/этап и удаление probe при исключении. Совместимость записи на телефоне, физический результат POCO и исправление лага остаются открытыми.
 
 [Протокол](qa/FULL_CLEAR_0.58_2026-11-09.md).

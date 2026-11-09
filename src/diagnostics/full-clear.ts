@@ -65,13 +65,14 @@ export async function installFullClear(hooks: PhoneClearHooks) {
   panel.style.cssText =
     "position:fixed;inset:0;z-index:1000;background:#08152bf5;color:white;padding:20px;overflow:auto;display:grid;place-content:center;gap:14px;text-align:center";
   panel.innerHTML =
-    '<h2>Полная диагностика очистки</h2><p id="full-status" role="status">Около 10 минут. Проверка пройдёт автоматически. Оставьте приложение открытым.</p><p>Ваша партия сохранена. После завершения отправьте один файл.</p><button id="full-start" class="primary" disabled>Начать полную проверку</button><button id="full-export" class="secondary" disabled>Отправить результат</button><button id="full-return" class="secondary">Вернуться в игру</button><div id="full-progress" hidden style="position:fixed;bottom:10px;left:10px;right:10px;background:#08152b;padding:8px;display:none"><span id="full-step"></span><button id="full-cancel" class="secondary">Прервать</button></div>';
+    '<h2>Полная диагностика очистки</h2><p id="full-status" role="status">Около 10 минут. Проверка пройдёт автоматически. Оставьте приложение открытым.</p><p id="full-error" role="alert" hidden style="color:#ffb9a8;overflow-wrap:anywhere;max-height:25vh;overflow:auto" tabindex="-1"></p><p>Ваша партия сохранена. После завершения отправьте один файл.</p><button id="full-start" class="primary" disabled>Начать полную проверку</button><button id="full-export" class="secondary" disabled>Отправить результат</button><button id="full-return" class="secondary">Вернуться в игру</button><div id="full-progress" hidden style="position:fixed;bottom:10px;left:10px;right:10px;background:#08152b;padding:8px;display:none"><span id="full-step"></span><button id="full-cancel" class="secondary">Прервать</button></div>';
   document.body.append(panel);
   const element = <T extends HTMLElement>(id: string) =>
     document.getElementById(id) as T;
   const start = element<HTMLButtonElement>("full-start"),
     share = element<HTMLButtonElement>("full-export"),
     status = element("full-status"),
+    failure = element("full-error"),
     progress = element("full-progress"),
     step = element("full-step");
   let controller: AbortController | null = null,
@@ -244,6 +245,7 @@ export async function installFullClear(hooks: PhoneClearHooks) {
     if (controller) return;
     controller = new AbortController();
     const signal = controller.signal;
+    let stage = "подготовка";
     const began = performance.now(),
       deadline = setTimeout(
         () => controller?.abort("deadline"),
@@ -279,6 +281,8 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       ],
     };
     start.disabled = share.disabled = true;
+    failure.hidden = true;
+    failure.textContent = "";
     visible(false);
     try {
       if (!bridge) throw Error("native-cdp-unavailable");
@@ -290,12 +294,14 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       if (report.environment?.reducedMotion)
         throw Error("system-reduced-motion-enabled");
       step.textContent = "Проверяем полноту записи";
+      stage = "проверка записи";
       report.preflight = await bridge.preflight();
       if (!report.preflight.ready)
         throw Error(
           `preflight:${report.preflight.error ?? "missing-identities"}`,
         );
       for (let i = 0; i < 2; i++) {
+        stage = `прогрев ${i + 1} из 2`;
         await episode(BASELINE_LAYER, "warmup", signal);
         const warmup = report.episodes.at(-1);
         if (!warmup.valid)
@@ -303,8 +309,10 @@ export async function installFullClear(hooks: PhoneClearHooks) {
             `warmup-validation:${warmup.validation.errors.join(",")}`,
           );
       }
+      stage = "сравнение эффектов";
       for (const item of fullPlan())
         await episode(item.condition, "comparison", signal, item.round);
+      stage = "запись трасс";
       for (const condition of allConditions)
         await episode(condition, "attribution", signal);
       report.completed =
@@ -320,12 +328,16 @@ export async function installFullClear(hooks: PhoneClearHooks) {
         ? String(signal.reason)
         : error instanceof Error
           ? error.message
-          : "unknown";
-      status.textContent = report.episodes.length
-        ? "Проверка остановлена. Отправьте сохранённый результат."
-        : "Проверка записи не пройдена. Отправьте файл с причиной остановки.";
+          : typeof error === "object" && error && "message" in error
+            ? String(error.message)
+            : String(error);
+      report.failureStage = stage;
+      status.textContent = `Проверка остановлена: ${stage}. Нажмите «Отправить результат» — причина остановки сохранена в файле.`;
+      failure.textContent = `Причина: ${report.failure}`;
+      failure.hidden = false;
     } finally {
       clearTimeout(deadline);
+      document.getElementById("blocky-cdp-probe")?.remove();
       performanceCapture.setActive(false);
       hooks.pause(true);
       hooks.configure!(BASELINE_LAYER);
@@ -345,6 +357,8 @@ export async function installFullClear(hooks: PhoneClearHooks) {
       visible(true);
       controller = null;
       start.disabled = share.disabled = false;
+      start.textContent = "Повторить проверку";
+      if (!failure.hidden) failure.focus();
     }
   }
   start.onclick = () => void run();
