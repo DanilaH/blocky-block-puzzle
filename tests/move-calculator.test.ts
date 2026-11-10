@@ -154,3 +154,10 @@ it('runs the goal-cycle refill in the worker with its complete goal state',async
   h.workers[0]!.reply(expected);expect(await result).toEqual(expected);
   expect(expected!.state.goalDirector!.deals).toBe(g.goalDirector!.deals+1);
 });
+
+it('runs a mixed-cycle refill in the worker with its saved spacing and gift state',async()=>{
+  const h=harness(),g=newGame(42,'mixed-worker','director-v3');g.tray[0]!.used=g.tray[1]!.used=true;
+  const expected=applyMove(g,move,g.revision),result=h.calculator.calculate(g,move,g.revision);
+  expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});h.workers[0]!.reply(expected);
+  expect(await result).toEqual(expected);expect(expected!.state.mixedDirector!.deals).toBe(g.mixedDirector!.deals+1);
+});
