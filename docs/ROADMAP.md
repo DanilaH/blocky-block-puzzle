@@ -831,3 +831,16 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] APK62 with compatible0.61 v2 signer and99 byte-matched production files; verified GitHub ZIP retained for delivery. Exact hashes/source in [protocol](qa/PREPARED_BACKGROUNDS_0.62_2026-11-10.md).
 - [ ] Full232 browser regression remains running at delivery; do not report it as passed.
 - [ ] Physical POCO performance and human visual acceptance. The Android software emulator provides functional evidence; its long-interval means did not improve in this final run.
+
+### Директор: защищённые альтернативы и отдельный старт —10.11.2026
+
+- [x] Восстановить обе старые записи и строго воспроизвести820 ходов; новые телефонные данные не понадобились.
+- [x] Защищённый архив до512 классов без изменения исходного перебора/RNG:271 позиция,6 локальных замен; CPU p95×1.542 не прошёл gate.
+- [x] Доказать каталогом единственность O3+O3+R6 при24 клетках и R6+R6+R6 при18/максимуме6.
+- [x] Отдельный вариативный старт:160 новых партий/23 255 ходов,16 составов на16 seed; complete replay и независимый пересчёт метрик/вердикта.
+- [x]251 unit прошла; после облегчения тестовой фикстуры7 новых unit повторно прошли.
+- [x] Отклонить оба кандидата по заранее заданным gates, сохранить точные причины и отрицательные результаты.
+- [ ] Генератор цели и короткой последовательности задач: совместная достижимость ранней награды и разнообразие, ограниченный бюджет и явный unknown. Новые фигуры/численные компромиссы этим этапом не утверждены.
+- [ ] Продуктовый директор, отдельная версия выдачи, человеческая приёмка и APK. Production flow-v4 остаётся.
+
+[Протокол и данные](qa/DIRECTOR_REWARD_FRONTIER_2026-11-10.md).
