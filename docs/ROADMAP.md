@@ -820,3 +820,14 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 ### Готовые фоны в обычной игре — Preview0.62,10.11.2026
 
 По разрешению владельца D68 доводится до одной APK: полный праздник возвращён, готовые слои/два generated фона включены по умолчанию, ошибки загрузки имеют ограниченный fallback. Короткое прямое old/new сравнение без CDP хранит проверяемые интервалы и не меняет обычную партию. Проверены242 unit/build/assets,6 analyzer, первый полный10/10 browser-прогон, pause/decode/resize/context recovery. Финальная регрессия и Android-проверки фиксируются в протоколе; физический POCO gate открыт. [Протокол D69](qa/PREPARED_BACKGROUNDS_0.62_2026-11-10.md).
+
+
+### Preview0.62: delivered candidate verification —10.11.2026
+
+- [x] Full celebration restored; prepared board/page opacity surfaces and two generated backgrounds enabled in ordinary play, with bounded preload/fallback and lifecycle recovery.
+- [x] Both texture/background input-readiness barriers fixed and covered; recorded-frame boundary prevents premature diagnostic completion without shortening8s measurement windows.
+- [x] Source `ea78628dd9ca0ed36b4ba2a5b1c8c803428c35ce`:244 unit/build/assets,7 surface-analyzer cases and25 focused browser scenarios passed.
+- [x] PR CI42802898179: Android build/unit,2 production WebView tests,10/10 valid comparison episodes, ordinary saves unchanged, small JSON export and independent analyzer passed.
+- [x] APK62 with compatible0.61 v2 signer and99 byte-matched production files; verified GitHub ZIP retained for delivery. Exact hashes/source in [protocol](qa/PREPARED_BACKGROUNDS_0.62_2026-11-10.md).
+- [ ] Full232 browser regression remains running at delivery; do not report it as passed.
+- [ ] Physical POCO performance and human visual acceptance. The Android software emulator provides functional evidence; its long-interval means did not improve in this final run.

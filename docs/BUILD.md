@@ -148,3 +148,11 @@ APK source `80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53` (PR merge, tree равен
 VersionCode61 / versionName `0.61.0-preview`, package `com.danilah.blocky.dev`, debug. APK11715444байт, SHA-256 `1327275fc0ecf35dfa54ea2bd058adf07a8289ed556cffa1635bc33da410f4e5`. Apksig v2 verified, сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` совпал с выданной0.60. Все93 production-файла совпали побайтово с чистым dist при `VITE_SOURCE_COMMIT=80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53`.
 
 Ставить поверх0.60 без удаления приложения. Сокращённая подача включена в обычной игре автоматически, отдельный диагностический запуск не требуется. Физическое улучшение POCO не объявляется. [Изменения и полный протокол](qa/COMPACT_EFFECTS_0.61_2026-11-10.md), [проверка APK](qa/compact-effects/apk-verification.json).
+
+
+## Preview0.62 — complete celebration and prepared surfaces
+Source `ea78628dd9ca0ed36b4ba2a5b1c8c803428c35ce`, PR build `2d37098b507c7d49d1565300be0061af8d7e5bcf`. Full celebration is restored by default; prepared board/page opacity surfaces and two predecoded generated backgrounds are enabled in ordinary play with bounded original-renderer fallback.
+
+244 unit,25 focused browser scenarios, build/assets,7 independent surface-analyzer cases, Android unit/build and2 native WebView tests passed. Native run completed all10 episodes, protected ordinary saves, exported JSON below900KB and passed independent metric recomputation. Full232 browser regression remains in progress at delivery. The emulator supplied no speedup evidence; physical POCO performance and human acceptance remain open.
+
+APK62 /0.62.0-preview, `com.danilah.blocky.dev`,11,743,560 bytes, SHA-256 `e3416ccd39c59b5b9d8b2bdfc7a4802e8fb9f59238b1fc2702f69f715a6627c7`. V2 signer matches0.61: `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`; all99 packaged production files byte-match dist. GitHub artifact13757287496 is the11,042,834-byte ZIP containing `app-debug.apk`. Extract before installation. [Protocol and exact evidence](qa/PREPARED_BACKGROUNDS_0.62_2026-11-10.md).

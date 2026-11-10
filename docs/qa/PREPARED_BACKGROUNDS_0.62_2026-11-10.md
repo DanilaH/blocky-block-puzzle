@@ -56,3 +56,20 @@ The first native cold software-GPU warmup produced only36 RAF intervals in8 seco
 
 ## Recorded-frame boundary
 The final Android WebView run exposed a timer/RAF race: an8s timer returned with the last recorded RAF at7866.6ms, so a correct generated episode was rejected as `measurement-window`. This was not an effect-contract failure. Capture now establishes its RAF anchor before the move and waits, with cancellation and a2s bound, for the recorder itself to cross the closing boundary. Exact8s interval selection, original/candidate order and acceptance thresholds are unchanged. The closing interval, including any stall, remains in the exported metrics. Unit checks cover the delayed-recording case, missing-frame timeout and background cancellation.
+
+## Delivered preview verification — 10 November 2026
+
+Source head: `ea78628dd9ca0ed36b4ba2a5b1c8c803428c35ce`; PR build merge: `2d37098b507c7d49d1565300be0061af8d7e5bcf`; source tree: `01bcfe1e77f9d26a7856a6ae6cb458fce44e43e3`. [CI run42802898179](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42802898179).
+
+- 244 unit checks, build/assets checks and7 independent surface-analyzer cases passed.
+- All25 focused browser scenarios passed on this head, including the complete eight-second comparison, both startup barriers, restored celebration, lifecycle recovery, failed/late images and one game canvas.
+- Android unit/build and production WebView instrumentation passed:2 tests, all10 old/new episodes valid, cancellation explicit, ordinary save records unchanged, actual exported JSON below900KB. The independent analyzer recomputed every metric and returned valid/completed with no errors.
+- The retained full232-scenario browser regression is still running at delivery. It has no final success claim here. The prior1bf run was superseded/cancelled after its native timing-race finding.
+- The Android35/WebView124 software emulator is a functional check. Its descriptive long-interval means were89→96.5 in original-first and101.5→104 in generated-first; this run supplies no acceleration evidence. It is explicitly marked nonphysical and cannot pass the physical verdict. The earlier isolated prototype's faster timings are not the result of this APK.
+- Physical POCO performance and visual acceptance remain open.
+
+The signed APK is11,743,560 bytes, SHA-256 `e3416ccd39c59b5b9d8b2bdfc7a4802e8fb9f59238b1fc2702f69f715a6627c7`. Package `com.danilah.blocky.dev`, version62 /0.62.0-preview. APK v2 signing verified; certificate `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` matches0.61. All99 production files byte-match the build output; only the known Cordova bridge extras are additional. [Machine-readable verification](prepared-backgrounds/apk-verification.json).
+
+Delivery: `blocky-0.62-preview.zip`,11,042,834 bytes, contains one `app-debug.apk`. Extract and install over0.61. The local execution host became unavailable; the exact verified GitHub artifact was retained for delivery instead of relabelling ZIP bytes as an APK.
+
+Run once: **Пауза → Диагностика → Проверить переход фона → Начать сравнение**. Typically around100seconds, cold warmup may take about2minutes. Then **Отправить результат** exports the bounded JSON. No system-setting changes, CDP preflight or large recording.
