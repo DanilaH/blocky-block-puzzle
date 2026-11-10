@@ -182,3 +182,65 @@ it("keeps exact clear fixtures immutable and removes their game identifier", asy
     vi.unstubAllGlobals();
   }
 });
+
+it("waits for a recorded frame across the measurement boundary, not timer completion", async () => {
+  vi.useFakeTimers();
+  let callback: FrameRequestCallback = () => {};
+  vi.stubGlobal("requestAnimationFrame", (fn: FrameRequestCallback) => {
+    callback = fn;
+    return 1;
+  });
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+  vi.stubGlobal("innerWidth", 390);
+  vi.stubGlobal("innerHeight", 844);
+  vi.stubGlobal("devicePixelRatio", 2);
+  const capture = new PerformanceCapture();
+  try {
+    capture.start();
+    capture.setActive(true);
+    callback(16);
+    callback(7866.6);
+    let completed = false;
+    const waiting = capture.waitForFrame(8000, new AbortController().signal)
+      .then(() => { completed = true; });
+    await vi.advanceTimersByTimeAsync(32);
+    expect(completed).toBe(false);
+    callback(8016.6);
+    await vi.advanceTimersByTimeAsync(16);
+    await waiting;
+    expect(completed).toBe(true);
+    expect(capture.snapshot().frameTimes.at(-1)).toBe(8016.6);
+    expect(capture.snapshot().frames.at(-1)).toBe(150);
+  } finally {
+    capture.setActive(false);
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+  }
+});
+
+it("bounds missing recorder frames and promptly cancels a pending boundary", async () => {
+  vi.useFakeTimers();
+  vi.stubGlobal("requestAnimationFrame", () => 1);
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+  const capture = new PerformanceCapture();
+  try {
+    capture.start();
+    capture.setActive(true);
+    const timedOut = expect(
+      capture.waitForFrame(8000, new AbortController().signal),
+    ).rejects.toThrow("capture-frame-timeout");
+    await vi.advanceTimersByTimeAsync(2016);
+    await timedOut;
+    const controller = new AbortController();
+    const cancelled = expect(
+      capture.waitForFrame(8000, controller.signal),
+    ).rejects.toThrow("background");
+    controller.abort("background");
+    await cancelled;
+    expect(vi.getTimerCount()).toBe(0);
+  } finally {
+    capture.setActive(false);
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+  }
+});

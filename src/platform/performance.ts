@@ -134,6 +134,28 @@ export class PerformanceCapture {
     this.last = now;
     this.frame = requestAnimationFrame(this.tick);
   };
+  /** Wait for the recorder itself, not a timer or a separately queued RAF. */
+  async waitForFrame(at: number, signal: AbortSignal) {
+    const deadline = performance.now() + 2000;
+    while (this.last < at) {
+      if (signal.aborted) throw Error(String(signal.reason ?? "interrupted"));
+      if (!this.enabled || !this.active) throw Error("capture-inactive");
+      if (performance.now() >= deadline) throw Error("capture-frame-timeout");
+      await new Promise<void>((resolve, reject) => {
+        const abort = () => {
+          clearTimeout(timer);
+          reject(Error(String(signal.reason ?? "interrupted")));
+        };
+        const timer = setTimeout(() => {
+          signal.removeEventListener("abort", abort);
+          resolve();
+        }, 16);
+        signal.addEventListener("abort", abort, { once: true });
+        if (signal.aborted) abort();
+      });
+    }
+    if (signal.aborted) throw Error(String(signal.reason ?? "interrupted"));
+  }
   measure<T>(name: string, operation: () => T): T {
     if (!this.enabled) return operation();
     const at = performance.now();

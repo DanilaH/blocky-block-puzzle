@@ -123,8 +123,15 @@ export async function installSurfaceComparison(
     performanceCapture.setActive(true);
     const episodeStartedAt = performance.now();
     try {
+      // Establish a recorded RAF anchor before the move, including cold stalls
+      // in the first interval rather than starting the clock after them.
+      await performanceCapture.waitForFrame(performance.now(), signal);
       await hooks.commit();
+      const measurementEnd = performance.now() + measurementMs;
       await delay(measurementMs, signal);
+      // WebView may run the timer before its delayed RAF callback. Keep the
+      // recorder alive through the closing interval; metrics still select 8s.
+      await performanceCapture.waitForFrame(measurementEnd, signal);
       // Warmup is not a performance sample: cold WebView/software shaders can
       // stall enough that capped particle simulation has not drained at 8s.
       // Only warmup may wait longer; all eight comparisons retain their 8s window.
