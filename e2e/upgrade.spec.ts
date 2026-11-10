@@ -100,7 +100,7 @@ test("availability updates after a clear; streak label is not a multiplier", asy
   await expect(page.locator(".piece.unavailable")).toHaveCount(0);
   await expect(page.locator("#streak")).toContainText("Серия 3");
   await expect(
-    page.locator('.compact-reward[data-tier="all-clear"]'),
+    page.locator('.reward-event[data-tier="all-clear"]'),
   ).toHaveCount(1);
 });
 

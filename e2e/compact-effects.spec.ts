@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 async function fixture(page: Page, calm = false) {
-  await page.goto("/");
+  await page.goto("/?effectsStudy=compact");
   await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
   await page.evaluate(async (calm) => {
     const { IndexedSave } = await import("/src/platform/save.ts");
@@ -33,7 +33,7 @@ async function fixture(page: Page, calm = false) {
 }
 
 for (const calm of [false, true]) {
-  test(`default compact clear settles once and survives reload; calm=${calm}`, async ({
+  test(`explicit compact control clear settles once and survives reload; calm=${calm}`, async ({
     page,
   }) => {
     const errors: string[] = [];

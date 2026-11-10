@@ -105,7 +105,7 @@ export class BoardScene extends Phaser.Scene {
   private defeatSoft = false;
   private praiseHit: { cells: number[]; at: number; strong: boolean } | null =
     null;
-  setTheme(index: number, accent: string) {
+  setTheme(index: number, accent: string, immediate = false) {
     const color = parseInt(accent.slice(1), 16);
     if (index === this.theme && color === this.accent) return;
     this.fromShade = this.currentColor(this.fromShade, this.shade);
@@ -115,24 +115,31 @@ export class BoardScene extends Phaser.Scene {
     this.study?.setPalette(this.presentation === "classic" ? index : 0);
     this.shade = THEMES[index]!.board;
     this.accent = color;
-    this.themeAt = performance.now();
+    this.themeAt =
+      performance.now() -
+      (immediate
+        ? tileTransitionDuration(this.calm, index, this.compactEffects)
+        : 0);
     if (this.preparedBackground) {
       this.preparedBackground(
         index,
-        this.calm ? 0 : tileTransitionDuration(false, index),
+        this.calm || immediate ? 0 : tileTransitionDuration(false, index),
       );
     } else if (this.presentation === "classic" && this.game?.canvas) {
       const board = this.game.canvas.parentElement!;
-      board.style.transition = this.compactEffects
-        ? "none"
-        : `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
+      board.style.transition =
+        this.compactEffects || immediate
+          ? "none"
+          : `background-color ${tileTransitionDuration(this.calm, index)}ms linear`;
       board.style.backgroundColor =
         "#" + this.shade.toString(16).padStart(6, "0");
     }
     this.study?.setMaterial(
       tileMaterialForTheme(index),
       this.themeAt,
-      tileTransitionDuration(this.calm, index, this.compactEffects),
+      immediate
+        ? 0
+        : tileTransitionDuration(this.calm, index, this.compactEffects),
     );
     this.sheen =
       index === 0

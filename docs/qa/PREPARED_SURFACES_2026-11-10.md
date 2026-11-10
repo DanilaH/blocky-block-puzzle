@@ -50,3 +50,6 @@ npm run dev
 ```
 
 Promotion remains open: phone acceptance, final visual approval, all-theme cache/residency policy, image decode failure fallback, context loss/recovery, lifecycle integration and reduced-motion coverage. Do not expand eleven full-screen art decodes or ship a new APK just from a software-rendered win.
+
+## Subsequent integration
+This is a frozen study of commit `2b7991d7e5cb3783be7d05d8832f7b1c5e173087`; source hashes refer to that commit. The owner later approved the separate [0.62 candidate](PREPARED_BACKGROUNDS_0.62_2026-11-10.md). Its runtime/lifecycle changes require their own checks and physical acceptance.

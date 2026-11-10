@@ -177,7 +177,7 @@ test("captures the working visual direction in portrait and landscape", async ({
   await page.screenshot({ path: "docs/qa/feel-0.8/preview-landscape.png" });
 });
 
-test("cross clear settles after save and accepts the next move during the compact reward", async ({
+test("cross clear settles after save and accepts the next move during the reward", async ({
   page,
 }) => {
   const errors: string[] = [];

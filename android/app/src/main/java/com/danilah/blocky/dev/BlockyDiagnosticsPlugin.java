@@ -16,7 +16,8 @@ public class BlockyDiagnosticsPlugin extends Plugin {
     String json = call.getString("json", "");
     if (json.isEmpty() || json.length() > 1000000) { call.reject("Invalid diagnostics"); return; }
     try {
-      String name = "play".equals(call.getString("kind", "")) ? "blocky-play.json" : "blocky-performance.json";
+      String kind = call.getString("kind", "");
+      String name = "play".equals(kind) ? "blocky-play.json" : "surfaces".equals(kind) ? "blocky-surfaces.json" : "blocky-performance.json";
       File file = new File(getContext().getCacheDir(), name);
       try (FileOutputStream out = new FileOutputStream(file)) { out.write(json.getBytes(StandardCharsets.UTF_8)); }
       Intent send = new Intent(Intent.ACTION_SEND);

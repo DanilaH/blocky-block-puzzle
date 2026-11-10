@@ -93,20 +93,22 @@ const fresh = (dealer: DealerVersion = "flow-v4") => ({
 async function start() {
   document.documentElement.dataset.presentation = "classic";
   const traceRequest = new URLSearchParams(location.search).get("clearTrace");
+  const surfaceComparison = traceRequest === "surfaces";
   const phoneTrace =
     APP_VERSION.endsWith("-preview") &&
     (traceRequest === "1" ||
       traceRequest === "layers" ||
-      traceRequest === "full");
+      traceRequest === "full" ||
+      surfaceComparison);
   const phoneLayers =
-    phoneTrace && (traceRequest === "layers" || traceRequest === "full");
-  // Historical diagnostic plans retain their former visual contract. Only a
-  // development benchmark can explicitly measure compact output through them.
+    phoneTrace &&
+    (traceRequest === "layers" || traceRequest === "full" || surfaceComparison);
+  // Full celebration is restored. Compact remains an explicit DEV control;
+  // old diagnostic URLs retain their original background renderer.
   const effectsStudy = import.meta.env.DEV
     ? new URLSearchParams(location.search).get("effectsStudy")
     : null;
-  const compactEffects =
-    effectsStudy !== "legacy" && (!phoneTrace || effectsStudy === "compact");
+  const compactEffects = effectsStudy === "compact";
   document.documentElement.dataset.effects = compactEffects
     ? "compact"
     : "legacy";
@@ -437,6 +439,9 @@ async function start() {
       cancelHint();
       audio.stop();
       stopCosmetics();
+      // A suspended all-clear may still hold the old theme for its reveal.
+      // Resolve that saved target now, rather than waiting for another move.
+      render(false);
       syncRenderer();
     },
   );
@@ -718,10 +723,10 @@ async function start() {
       running && !compactEffects,
       scene.calm,
     );
-    scene.setTheme(nextTheme, THEMES[nextTheme]!.accent);
+    scene.setTheme(nextTheme, THEMES[nextTheme]!.accent, !running);
     tileMaterials.set(
       tileMaterialForTheme(nextTheme),
-      tileTransitionDuration(scene.calm, nextTheme, compactEffects),
+      tileTransitionDuration(scene.calm || !running, nextTheme, compactEffects),
     );
     festival.setPalette(nextTheme);
     if (
@@ -2298,6 +2303,7 @@ async function start() {
         })))
       )
         return;
+      preparedSurfaces?.dispose();
       clearInterval(reviveTimer);
       stopReviveClock();
       dialog.close();
@@ -2359,7 +2365,7 @@ async function start() {
       return;
     }
     open(
-      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-score" href="?clearTrace=full&scoreFeedback=compare">Проверить оптимизацию · около 2 минут</a><a class="secondary" id="clear-full" href="?clearTrace=full">Полная диагностика очистки · около 10 минут</a><a class="secondary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
+      `<h2 id="dialog-title">Пауза</h2><p id="save-status" role="status">Партия сохранена</p><label class="setting">Звуковые эффекты<input id="sound" type="checkbox" ${store.state.settings.sound ? "checked" : ""}></label><label class="setting audio-level">Музыка<input id="musicVolume" type="range" min="0" max="100" step="5" aria-label="Громкость музыки" value="${Math.round((store.state.settings.musicVolume ?? (store.state.settings.sound ? 0.35 : 0)) * 100)}"></label><label class="setting audio-level">Громкость эффектов<input id="effectsVolume" type="range" min="0" max="100" step="5" aria-label="Громкость эффектов" value="${Math.round((store.state.settings.effectsVolume ?? 1) * 100)}"></label><label class="setting">Вибрация<input id="haptics" type="checkbox" ${store.state.settings.haptics !== false ? "checked" : ""}></label><label class="setting">Спокойные эффекты<small>Без вибрации и активных анимаций</small><input id="calm" type="checkbox" ${store.state.settings.calm ? "checked" : ""}></label><button class="primary" id="resume">Продолжить</button><div class="pause-tools"><button class="secondary" id="menu-hint">Подсказка</button><button class="secondary" id="themes">Оформление</button><a class="secondary" href="?mode=adventure">Приключение</a></div><div class="pause-links"><button class="secondary" id="rules">Как играть</button><button class="secondary" id="restart">Новая партия</button></div><details class="diagnostics"><summary>Диагностика</summary><p>В замер входят плавность, оформление и расположение фигур при полной очистке.</p><button class="secondary" id="perf-start">${performanceCapture.enabled ? "Начать замер заново" : "Записать плавность игры"}</button><button class="secondary" id="perf-export">Выгрузить замер</button><a class="primary" id="clear-surfaces" href="?clearTrace=surfaces">Проверить переход фона · около 100 секунд</a><a class="secondary" id="clear-score" href="?clearTrace=full&scoreFeedback=compare">Прежняя проверка свечения · около 2 минут</a><a class="secondary" id="clear-full" href="?clearTrace=full">Полная диагностика очистки · около 10 минут</a><a class="secondary" id="clear-layers" href="?clearTrace=layers">Проверить слои · около 80 секунд</a><a class="secondary" id="clear-trace" href="?clearTrace=1">Проверить очистку · около 15 секунд</a><a class="secondary" id="clear-benchmark" href="diagnostics/clear.html">Автозамер очистки · около 70 секунд</a></details><div>${savedReviveButton()}</div>`,
       "pause",
     );
     const body = dialog.querySelector(".dialog-body")!;
@@ -2991,17 +2997,32 @@ async function start() {
       .catch(() => {});
   }
   render();
-  if (import.meta.env.DEV) {
-    const mode = new URLSearchParams(location.search).get("themeSurfaces");
-    if (mode === "flat" || mode === "generated") {
+  let preparedSurfaces:
+    | import("./game/prepared-surfaces").PreparedSurfaces
+    | null = null;
+  const surfaceRequest = import.meta.env.DEV
+    ? new URLSearchParams(location.search).get("themeSurfaces")
+    : null;
+  if (
+    (!phoneTrace && !compactEffects && surfaceRequest !== "original") ||
+    surfaceComparison ||
+    surfaceRequest === "flat" ||
+    surfaceRequest === "generated"
+  ) {
+    activity.setBlocked("surface-assets", true);
+    try {
       const { installPreparedSurfaces } = await import(
-        "./diagnostics/prepared-surfaces"
+        "./game/prepared-surfaces"
       );
-      (window as any).__themeSurfaces = await installPreparedSurfaces(
+      preparedSurfaces = await installPreparedSurfaces(
         atmosphere,
         scene,
-        mode,
+        surfaceRequest === "flat" ? "flat" : "generated",
       );
+      if (import.meta.env.DEV)
+        (window as any).__themeSurfaces = preparedSurfaces;
+    } finally {
+      activity.setBlocked("surface-assets", false);
     }
   }
   if (traceModule) {
@@ -3081,19 +3102,15 @@ async function start() {
       }),
       pause: (paused) => activity.setBlocked("clear-trace", paused),
     };
-    if (traceRequest === "full") {
+    if (surfaceComparison && preparedSurfaces) {
+      const { installSurfaceComparison } = await import(
+        "./diagnostics/surface-comparison"
+      );
+      await installSurfaceComparison(phoneHooks, preparedSurfaces);
+    } else if (traceRequest === "full") {
       const { installFullClear } = await import("./diagnostics/full-clear");
       await installFullClear(phoneHooks);
     } else await traceModule.installPhoneClear(phoneHooks);
-    if (!compactEffects) {
-      const panel = document.querySelector(
-        "#full-clear-panel, #phone-clear-panel",
-      );
-      const note = document.createElement("p");
-      note.textContent =
-        "Здесь сравниваются прежние эффекты. В обычной игре используется сокращённый вариант.";
-      panel?.append(note);
-    }
   }
   if (loaded.recovered) toast("Восстановлена предыдущая целая копия партии.");
   if (

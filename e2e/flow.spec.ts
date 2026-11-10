@@ -138,14 +138,16 @@ test("all-clear takes over the foreground after the line reward and points still
     .toBe(true);
 });
 
-test("compact all-clear omits the rear reveal and cancels its one label on pause", async ({
+test("full all-clear presents its reward and cancels it on pause", async ({
   page,
 }) => {
   await fixture(page, 1);
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
   await expect(page.locator(".festival-rear path")).toHaveCount(0);
-  await expect(page.locator(".compact-reward")).toHaveCount(1);
+  await expect(
+    page.locator('.reward-event[data-tier="all-clear"]'),
+  ).toHaveCount(1);
   await page.locator("#pause").click();
   await expect(page.locator(".reward-event, .festival-rear path")).toHaveCount(
     0,
