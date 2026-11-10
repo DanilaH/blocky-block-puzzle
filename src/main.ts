@@ -2505,6 +2505,7 @@ async function start() {
     el("clear-layers").onclick = protectDiagnostic;
     el("clear-full").onclick = protectDiagnostic;
     el("clear-score").onclick = protectDiagnostic;
+    el("clear-surfaces").onclick = protectDiagnostic;
     el("rules").onclick = showRules;
     el("restart").onclick = confirmRestart;
     wireSavedRevive();
@@ -3010,6 +3011,8 @@ async function start() {
     surfaceRequest === "generated"
   ) {
     activity.setBlocked("surface-assets", true);
+    root.inert = true;
+    root.setAttribute("aria-busy", "true");
     try {
       const { installPreparedSurfaces } = await import(
         "./game/prepared-surfaces"
@@ -3022,6 +3025,8 @@ async function start() {
       if (import.meta.env.DEV)
         (window as any).__themeSurfaces = preparedSurfaces;
     } finally {
+      root.inert = ads.busy;
+      root.setAttribute("aria-busy", String(store.busy));
       activity.setBlocked("surface-assets", false);
     }
   }

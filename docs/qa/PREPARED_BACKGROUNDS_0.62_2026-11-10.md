@@ -4,6 +4,8 @@ The owner approved an ordinary-game candidate with the complete celebration rest
 
 ## Ordinary game
 
+Boot keeps gameplay inert until the bounded asset preparation finishes, so the first input is accepted only after readiness. Diagnostic navigation also protects an unexported play capture.
+
 Full Festival, ambient movement, reward captions, points flights, score count-up, theme reveal and haptics return to the ordinary default. The 0.61 compact path remains an explicit DEV control for regression/study only. There is no new user-facing effect-profile setting.
 
 The prepared background controller now lives in `src/game/prepared-surfaces.ts`, not a DEV-only diagnostic import. Two generated page images (Porcelain / Polar Night) are decoded once before activation. Two reusable board siblings contain complete fills and the static well grid; the old layer fades and hides. The other nine themes retain flat color backgrounds. Existing cached tile materials remain separate.
@@ -14,7 +16,7 @@ Pause/background settles the saved theme, including interruption during the 320m
 
 ## One short comparison
 
-Pause → Diagnostics → **Check background transition** (`?clearTrace=surfaces`). About 100 seconds: two full 8-second warmups, then eight full 8-second measurements; 1.8 seconds setup per episode. Order: original/generated, generated/original, original/generated, generated/original. Both original-first and generated-first therefore have two independent repetitions.
+Pause → Diagnostics → **Check background transition** (`?clearTrace=surfaces`). About 100 seconds: two full 8-second warmups, then eight full 8-second measurements; 1.8 seconds setup per episode. Order: original/generated, generated/original, original/generated, generated/original. Both original-first and generated-first therefore have two repetitions.
 
 Only page/board rendering changes. Every episode uses the same actual move/store/reward path, cosmetic seed, full legacy celebration and legacy score glow. The original branch detaches both prepared hooks and art nodes; generated reuses the predecoded pair and verifies both layer transitions actually ran. It does not compare reduced celebration against complete celebration.
 

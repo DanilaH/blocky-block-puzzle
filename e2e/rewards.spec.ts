@@ -186,7 +186,7 @@ test("two important events overlap; background clears presentation", async ({
   await expect(page.locator(".best")).toContainText("Новый рекорд");
   await put(page, 1, 0, 7);
   await expect(page.locator(".best")).toContainText("Новый рекорд");
-  await expect(page.locator("#burst")).toContainText("Чистое поле");
+  await expect(page.locator("#burst")).toContainText(/чистое поле/i);
   // Labels now follow a short sequence; correctness does not require exactly two simultaneous nodes.
   expect(await page.locator(".reward-event").count()).toBeLessThanOrEqual(6);
   await expect(page.locator("#score")).toHaveText("127");

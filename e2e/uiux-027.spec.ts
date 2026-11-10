@@ -73,9 +73,9 @@ test("full reward preserves score arrival and shows a single record notice", asy
   await page.locator(".piece").first().click();
   await page.locator("#board").click({ position: { x: 5, y: 5 } });
   await expect(page.locator("#burst")).toContainText("×5");
-  await expect(page.locator("#burst")).toContainText("Чистое поле");
+  await expect(page.locator("#burst")).toContainText(/чистое поле/i);
   await expect(page.locator('.hud-notice[data-tier="record"]')).toContainText(
-    "Рекорд!",
+    /рекорд!/i,
   );
   await expect(page.locator('.hud-notice[data-tier="record"]')).toHaveCount(1);
   await expect(page.locator("#score")).toHaveText("2 921");

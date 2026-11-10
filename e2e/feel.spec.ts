@@ -115,11 +115,11 @@ test("record survives recent combo and drag source returns after cancel", async 
   const b = (await page.locator("#board").boundingBox())!;
   await page.locator(".piece").first().click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#burst")).toContainText("Двойная!");
+  await expect(page.locator("#burst")).toContainText(/двойная!/i);
   await page.locator(".piece").nth(1).click();
   await page
     .locator("#board")
-    .click({ position: { x: 4, y: b.width / 4 + 4 } });
+    .click({ position: { x: b.width / 16, y: (b.width * 2.5) / 8 } });
   await expect(page.locator('.hud-notice[data-tier="record"]')).toContainText(
     /[Рр]екорд/,
   );

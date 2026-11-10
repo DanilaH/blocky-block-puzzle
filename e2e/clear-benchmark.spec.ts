@@ -90,6 +90,9 @@ test("opening the standalone comparison cannot discard an unexported play record
   await diagnostics(page);
   await page.getByText("Запись партии для разбора", { exact: true }).click();
   await page.locator("#play-capture-toggle").click();
+  await page.locator("#clear-surfaces").click();
+  await expect(page).not.toHaveURL(/clearTrace=surfaces/);
+  await expect(page.locator(".dialog-status")).toContainText("выгрузите");
   await page.locator("#clear-benchmark").click();
   await expect(page).not.toHaveURL(/diagnostics\/clear/);
   await expect(page.locator(".dialog-status")).toContainText("выгрузите");

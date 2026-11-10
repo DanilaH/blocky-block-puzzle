@@ -277,3 +277,21 @@ test("real WebGL context loss and recovery retain the saved theme and accept ano
     .toBe(6);
   expect(errors).toEqual([]);
 });
+test("background preload keeps the game inert until the first tap can be accepted", async ({
+  page,
+}) => {
+  await fixture(page);
+  await page.route("**/backgrounds/*.webp", async (route) => {
+    await new Promise((r) => setTimeout(r, 500));
+    await route.continue();
+  });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(page.locator("#app")).toHaveJSProperty("inert", true);
+  await expect(page.locator("#app")).toHaveAttribute("aria-busy", "true");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme-surfaces",
+    "generated",
+  );
+  await expect(page.locator("#app")).toHaveJSProperty("inert", false);
+  await clear(page);
+});
