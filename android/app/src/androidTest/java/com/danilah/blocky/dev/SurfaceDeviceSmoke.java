@@ -26,7 +26,7 @@ public class SurfaceDeviceSmoke {
     fail("WebView condition timed out: "+expression+"; "+js(scenario,"document.body.innerText"));
   }
   private void open(ActivityScenario<MainActivity> scenario)throws Exception {
-    waitFor(scenario,"document.documentElement.dataset.themeSurfaces==='generated'&&!document.querySelector('#app').inert",45000);
+    waitFor(scenario,"['generated','original'].includes(document.documentElement.dataset.themeSurfaces)&&!document.querySelector('#app').inert",45000);
     js(scenario,"location.href='https://localhost/?clearTrace=surfaces'");
     waitFor(scenario,"!!window.__blockySurfaceComparison&&!document.querySelector('#surface-start').disabled",45000);
   }
@@ -43,7 +43,7 @@ public class SurfaceDeviceSmoke {
   }
   @Test public void fullShortComparisonExportsSmallJsonAndKeepsOrdinarySaves()throws Exception {
     try(ActivityScenario<MainActivity> scenario=ActivityScenario.launch(MainActivity.class)){
-      waitFor(scenario,"document.documentElement.dataset.themeSurfaces==='generated'&&!document.querySelector('#app').inert",45000);
+      waitFor(scenario,"['generated','original'].includes(document.documentElement.dataset.themeSurfaces)&&!document.querySelector('#app').inert",45000);
       js(scenario,"window.__ordinary=null;{const r=indexedDB.open('blocky-classic');r.onsuccess=()=>{const db=r.result;const tx=db.transaction('save');const s=tx.objectStore('save');const a=s.getAll(),b=s.getAllKeys();tx.oncomplete=()=>{window.__ordinary=JSON.stringify([b.result,a.result]);db.close();};};}");
       waitFor(scenario,"typeof window.__ordinary==='string'",10000);String before=js(scenario,"window.__ordinary");
       js(scenario,"location.href='https://localhost/?clearTrace=surfaces'");

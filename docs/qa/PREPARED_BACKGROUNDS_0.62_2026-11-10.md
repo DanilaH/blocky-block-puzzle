@@ -16,7 +16,7 @@ Pause/background settles the saved theme, including interruption during the 320m
 
 ## One short comparison
 
-Pause → Diagnostics → **Check background transition** (`?clearTrace=surfaces`). About 100 seconds: two full 8-second warmups, then eight full 8-second measurements; 1.8 seconds setup per episode. Order: original/generated, generated/original, original/generated, generated/original. Both original-first and generated-first therefore have two repetitions.
+Pause → Diagnostics → **Check background transition** (`?clearTrace=surfaces`). About 100 seconds: two warmups of at least8 seconds (bounded drain up to20 seconds each), then eight full 8-second measurements; 1.8 seconds setup per episode. Order: original/generated, generated/original, original/generated, generated/original. Both original-first and generated-first therefore have two repetitions.
 
 Only page/board rendering changes. Every episode uses the same actual move/store/reward path, cosmetic seed, full legacy celebration and legacy score glow. The original branch detaches both prepared hooks and art nodes; generated reuses the predecoded pair and verifies both layer transitions actually ran. It does not compare reduced celebration against complete celebration.
 
@@ -51,3 +51,5 @@ python3 scripts/test-surface-comparison-analyzer.py
 Hidden startup skips presentation refresh until the renderer exists; otherwise the inactivity handler could touch not-yet-initialized UI. The existing hidden-startup scenario reproduced that failure and now passes. Native device metadata explicitly marks emulators, which cannot receive a physical-win verdict. The short diagnostic has its own production WebView instrumentation covering background cancellation, all10 full episodes, unchanged ordinary database contents and actual small JSON sharing. CI selects this surface-specific native smoke; the original57+10 CDP runner remains available without `--surfaces`.
 
 The historical score/filter browser comparison now uses the full production8-second window rather than its2.6-second functional shortcut: that shortcut intermittently sampled before both score-flight/glow callbacks. Its test deadline reflects ten full episodes; no production timing, acceptance threshold or animation duration was extended.
+
+The first native cold software-GPU warmup produced only36 RAF intervals in8 seconds, with ~1.4s stalls; all148 particles spawned but their capped simulation had not drained. Warmups now may wait for actual effect completion up to20s, matching the prior diagnostic warmup policy. The eight measured windows remain8s; warmup completion time is exported separately. Ordinary boot may validly choose the documented original-renderer fallback after its2s image timeout, so the native fixture accepts either ready ordinary renderer before opening the explicit art comparison.

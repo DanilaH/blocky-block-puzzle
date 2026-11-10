@@ -121,9 +121,27 @@ export async function installSurfaceComparison(
     hooks.beginSample?.();
     performanceCapture.start(hooks.context());
     performanceCapture.setActive(true);
+    const episodeStartedAt = performance.now();
     try {
       await hooks.commit();
       await delay(measurementMs, signal);
+      // Warmup is not a performance sample: cold WebView/software shaders can
+      // stall enough that capped particle simulation has not drained at 8s.
+      // Only warmup may wait longer; all eight comparisons retain their 8s window.
+      if (phase === "warmup" && !fast) {
+        const until = episodeStartedAt + 20000;
+        while (performance.now() < until) {
+          const p = hooks.state().proof as any;
+          if (
+            p?.festival?.activeParticles === 0 &&
+            p?.festival?.activeReveals === 0 &&
+            p?.pendingPoints === 0 &&
+            !document.querySelector(".reward-event,.hud-notice")
+          )
+            break;
+          await delay(200, signal);
+        }
+      }
       const sample = performanceCapture.snapshot(),
         state = structuredClone(hooks.state()),
         proof = state.proof!;
@@ -193,6 +211,7 @@ export async function installSurfaceComparison(
           sample.frameTimes[i]! - v < at + measurementMs,
       );
       const row: SurfaceRow = {
+        proofAfterCommitMs: performance.now() - at,
         mode,
         phase,
         valid: errors.length === 0,
@@ -230,6 +249,7 @@ export async function installSurfaceComparison(
       protocol: {
         measurementMs,
         settleMs,
+        warmupMaxMs: fast ? measurementMs : 20000,
         cosmeticSeed: LAYER_SEED,
         warmups: SURFACE_WARMUPS,
         order: SURFACE_ORDER,

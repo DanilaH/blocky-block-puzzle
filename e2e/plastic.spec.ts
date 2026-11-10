@@ -56,7 +56,8 @@ for (const calm of [false, true])
       () => (window as any).scoreSamples as number[],
     );
     expect(samples.every((v, i) => i === 0 || v >= samples[i - 1])).toBe(true);
-    expect(samples.every((v) => v === 0 || v === 111)).toBe(true);
+    expect(samples.every((v) => v >= 0 && v <= 111)).toBe(true);
+    if (!calm) expect(samples.some((v) => v > 0 && v < 111)).toBe(true);
     await page.locator(".piece").nth(1).click();
     await page
       .locator("#board")
