@@ -1,7 +1,7 @@
 {
   "date": "2026-11-10",
   "appVersion": "0.63.0-preview",
-  "status": "local gates passed; full CI and APK pending",
+  "status": "all technical preview gates passed; APK delivered; human feel and physical performance open",
   "unit": {
     "passed": 278,
     "files": 42,
@@ -88,7 +88,52 @@
   },
   "dataSha256": {
     "docs/qa/director-goal-cycle/analysis.json": "96d594939425671e9210c8091a4aaea2d515156535cc24b6a192641feef53819",
+    "docs/qa/director-goal-cycle/apk-ci-proof.json": "eec7036225c35d0d758325b3144f4a98ec5077b4fde5cccf2e40177d0fc1fe9b",
+    "docs/qa/director-goal-cycle/apk-local-audit.json": "8f7c1f85ddd435f68e419c4e924f2034cb3e57680e6261e68eb67f497290c08e",
+    "docs/qa/director-goal-cycle/ci-summary.json": "89edd0ae75518be1515863ccf77be60c6597f285ab19f37664f89fa9cc11cb36",
+    "docs/qa/director-goal-cycle/native-surface.json": "ef6a8bffd474fee70532738a42a7acd68421830dcbd7a92052b754cb23f47995",
     "docs/qa/director-goal-cycle/replay-audit.json": "e0a86d115e5c6cc64c294707d4630a673c9c68603e21b6c85880f58ee2af2528",
     "docs/qa/director-goal-cycle/results.json.gz": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+  },
+  "ci": {
+    "runId": 42845500290,
+    "url": "https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42845500290",
+    "event": "pull_request",
+    "head": "5d48018acc56ef5e7c651de880bde9b1cdcf8afc",
+    "mergeCommit": "b2038b52a38fee35434886b438955319e2f596e8",
+    "runAttempt": 2,
+    "conclusion": "success",
+    "lockedInstall": true,
+    "unit": {
+      "passed": 264,
+      "files": 38
+    },
+    "browser": {
+      "passed": 236
+    },
+    "focusedEffects": {
+      "passed": 25
+    },
+    "android": {
+      "unitAndBuild": "passed",
+      "signatureAndProductionFiles": "passed"
+    },
+    "emulator": {
+      "tests": 2,
+      "episodes": 10,
+      "physical": false,
+      "functionalOnly": true,
+      "result": "passed",
+      "initialFailureBeforeApkInstall": "Android phone service unavailable during svc data disable; retried same job against exact same APK"
+    },
+    "apk": {
+      "sha256": "b83ab374ed6dff6b7eabf335b6e6e705286f040b465f569d5fb84f54991d4ab9",
+      "version": "0.63.0-preview",
+      "versionCode": 63,
+      "package": "com.danilah.blocky.dev",
+      "productionFilesMatched": 99,
+      "compatibleWith062": true
+    },
+    "research": "36f08978dd6089926799f2dab159bdad6a6a7285"
   }
 }

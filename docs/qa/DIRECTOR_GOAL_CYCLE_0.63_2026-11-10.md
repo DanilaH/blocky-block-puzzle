@@ -2,7 +2,7 @@
 
 ## Статус
 
-`director-v2` прошёл замороженный поведенческий пилот и независимую техническую проверку. Подготовлен перенос в preview0.63 для человеческой пробы. Локально278 unit, production build и15 уникальных browser-сценариев прошли, включая36 настоящих постановок через UI/worker/сохранение. Android/полная CI-регрессия и финальная APK фиксируются отдельным сборочным протоколом после завершения; до этого APK не считается готовой.
+`director-v2` прошёл замороженный поведенческий пилот и независимую техническую проверку. Подготовлен перенос в preview0.63 для человеческой пробы. Локально278 unit, production build и15 уникальных browser-сценариев прошли, включая36 настоящих постановок через UI/worker/сохранение. **APK0.63 готова:** полная CI-регрессия, Android и функциональная native-проверка завершены. Подпись совместима с0.62;99 production-файлов проверены. Человеческий feel и физическая плавность остаются открытыми.
 
 Новая партия в0.63 выбирает `director-v2`. Незавершённые старые партии продолжаются с прежней версией. **После обновления для пробы директора нужно начать новую партию**. При отказе/ошибке сохранения перезапуск не меняет прежнюю игру. Меню позволяет выбрать прежнюю flow-v4 для сравнения.
 
@@ -86,3 +86,14 @@ npx playwright test e2e/goal-director.spec.ts e2e/dealer.spec.ts e2e/move-recove
 [Результаты и raw timings](director-goal-cycle/results.json.gz), [независимые метрики](director-goal-cycle/analysis.json), [replay](director-goal-cycle/replay-audit.json), [локальная проверка и SHA](director-goal-cycle/validation.json).
 
 Release-sized1000 seed на пару policy/player и человеческая приёмка из ТЗ остаются открытыми. Прохождение пилота разрешает preview для пробы; «директор точно интересный и идеально сбалансирован» из этих данных не следует.
+
+
+## Финальная сборка и APK
+
+[CI42845500290](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42845500290), head `5d48018acc56ef5e7c651de880bde9b1cdcf8afc`, merge/source marker `b2038b52a38fee35434886b438955319e2f596e8`:264 unit/38 файлов,236 browser,25 focused effects, Android unit/assemble/signature и2 native-теста/10 функциональных эпизодов прошли. Разница с локальными278 — дополнительные исследовательские тесты spike, которые не переносились в preview. Dependencies установлены через npm ci; assets:check и3 analyzer suites прошли.
+
+Первый emulator attempt остановился до установки APK: системная служба phone ещё отсутствовала при svc data disable. После завершения browser run повторён только этот job с той же APK; итог run attempt2 — success. Это инфраструктурный отказ, не отрицательный игровой результат. Функциональный отчёт явно physical=false/functionalOnly=true; deviceStable=false не используется как доказательство ускорения телефона.
+
+APK: `com.danilah.blocky.dev`, code63, версия0.63.0-preview,11754952 байта. SHA256 `b83ab374ed6dff6b7eabf335b6e6e705286f040b465f569d5fb84f54991d4ab9`. Сертификат SHA256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`, тот же, что у0.62. У всех99 web production-файлов совпали размер/SHA с CI dist; два добавленных Capacitor Cordova stub побайтно совпали с0.62. Маркеры версии, source commit и director-v2 в APK подтверждены. ZIP-обёртка в выдачу владельцу не входит.
+
+[CI summary](director-goal-cycle/ci-summary.json), [CI APK proof](director-goal-cycle/apk-ci-proof.json), [локальная проверка APK](director-goal-cycle/apk-local-audit.json), [native functional report](director-goal-cycle/native-surface.json).
