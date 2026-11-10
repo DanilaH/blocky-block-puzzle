@@ -85,7 +85,7 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "flow-v4") => ({
+const fresh = (dealer: DealerVersion = "director-v2") => ({
   ...newGame(seed(), crypto.randomUUID(), dealer),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
@@ -2653,17 +2653,17 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="flow-v4">Новая выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Новая выдача подбирает сочетания фигур для последовательных очисток. Обычная и умеренная оставлены для сравнения.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="director-v2">С задачами и нагрузкой</option><option value="flow-v4">Прежняя выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Подготовка и зачистки чередуются с крупными фигурами. Тройку можно разложить целиком, если подобрать порядок и места.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el<HTMLSelectElement>("dealer-choice").value = "flow-v4";
+    el<HTMLSelectElement>("dealer-choice").value = "director-v2";
     el("new-game").onclick = () =>
       void restart(
         el<HTMLSelectElement>("dealer-choice").value as DealerVersion,
       );
     el("keep-game").onclick = close;
   }
-  async function restart(dealer: DealerVersion = "flow-v4") {
+  async function restart(dealer: DealerVersion = "director-v2") {
     if (ads.busy || store.busy || movePending) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";

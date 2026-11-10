@@ -38,6 +38,7 @@ import { flowDealV2 } from "./flow-dealer-v2";
 import { initialRhythm, advanceRhythm, type RhythmState } from "./rhythm";
 import { flowDeal } from "./flow-dealer";
 import {orderDirectorDeal,initialOrderDirector,observeOrderDirector,type OrderDirectorState} from './order-director';
+import {goalDirectorDeal,initialGoalDirector,observeGoalDirector,type GoalDirectorState} from './goal-director';
 import catalog from "./shapes.json";
 export type Cell = readonly [number, number];
 export interface Shape {
@@ -74,7 +75,8 @@ export type DealerVersion =
   | "flow-v2"
   | "flow-v3"
   | "flow-v4"
-  | "director-v1";
+  | "director-v1"
+  | "director-v2";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -90,6 +92,7 @@ export interface GameState {
   dealerVersion: DealerVersion;
   rhythm?: RhythmState;
   director?: OrderDirectorState;
+  goalDirector?: GoalDirectorState;
   seriesBonusVersion?: 1;
   reviveOffer?: { deadline: number; accepted: boolean; expired: boolean };
   status: "playing" | "over";
@@ -228,14 +231,20 @@ export function deal(
   previous = "",
   rhythm?: RhythmState,
   director?: OrderDirectorState,
+  goalDirector?: GoalDirectorState,
 ): {
   tray: Slot[];
   rngState: number;
   fallback: boolean;
   witness: Move[] | null;
   director?: OrderDirectorState;
+  goalDirector?: GoalDirectorState;
 } {
   if(version==='director-v1')return orderDirectorDeal(board,rngState,moves,rhythm,director);
+  if(version==='director-v2'){
+    const {director:next,...rest}=goalDirectorDeal(board,rngState,moves,rhythm,goalDirector);
+    return {...rest,goalDirector:next};
+  }
   if (
     version === "flow-v1" ||
     version === "flow-v2" ||
@@ -394,7 +403,7 @@ export function newGame(
     dealerVersion,
     ...(dealerVersion === "flow-v3"
       ? { rhythm: initialRhythm() }
-      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1'
+      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1' || dealerVersion==='director-v2'
         ? {
             rhythm: {
               ...initialRhythmV4(),
@@ -408,6 +417,7 @@ export function newGame(
           }
         : {}),
     ...(dealerVersion==='director-v1'?{director:d.director??initialOrderDirector()}:{}),
+    ...(dealerVersion==='director-v2'?{goalDirector:d.goalDirector??initialGoalDirector()}:{}),
     status: "playing",
     reviveUsed: false,
     assisted: false,
@@ -462,7 +472,7 @@ export function applyMove(
     rngState = state.rngState,
     dealerFallbacks = state.dealerFallbacks;
   let rhythm =
-    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1'
+    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1' || state.dealerVersion==='director-v2'
       ? advanceRhythmV4(
           state.rhythm ?? initialRhythmV4(),
           placed.board,
@@ -479,6 +489,7 @@ export function applyMove(
           )
         : undefined;
   let director=state.dealerVersion==='director-v1'?observeOrderDirector(state.director??initialOrderDirector(),allClear):undefined;
+  let goalDirector=state.dealerVersion==='director-v2'?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
   if (tray.every((s) => s.used)) {
     const d = deal(
       placed.board,
@@ -491,13 +502,14 @@ export function applyMove(
         .join(","),
       rhythm,
       director,
+      goalDirector,
     );
     if (rhythm)
       rhythm = {
         ...rhythm,
         recoveryDeals: Math.max(0, rhythm.recoveryDeals - 1),
       };
-    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1'))
+    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1' || state.dealerVersion==='director-v2'))
       rhythm = {
         ...rhythm,
         encoreDeals: Math.max(0, (rhythm.encoreDeals ?? 0) - 1),
@@ -511,6 +523,7 @@ export function applyMove(
       };
     tray = d.tray;
     if(state.dealerVersion==='director-v1')director=d.director;
+    if(state.dealerVersion==='director-v2')goalDirector=d.goalDirector;
     rngState = d.rngState;
     dealerFallbacks += Number(d.fallback);
   }
@@ -537,6 +550,7 @@ export function applyMove(
       dealerFallbacks,
       ...(rhythm ? { rhythm } : {}),
       ...(director ? {director} : {}),
+      ...(goalDirector ? {goalDirector} : {}),
       score: state.score + points + seriesBonus,
       streak,
       streakMisses: streak ? misses : 0,

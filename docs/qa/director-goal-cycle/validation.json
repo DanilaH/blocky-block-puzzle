@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-10",
+  "appVersion": "0.63.0-preview",
+  "status": "local gates passed; full CI and APK pending",
+  "unit": {
+    "passed": 278,
+    "files": 42,
+    "seconds": 29.44
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "browser": {
+    "uniquePassed": 15,
+    "realUiMoves": 36,
+    "refills": 12
+  },
+  "environment": {
+    "node": "24.22.1",
+    "vite": "8.2.2",
+    "vitest": "4.1.11",
+    "typescript": "7.0.2",
+    "@playwright/test": "1.56.1",
+    "phaser": "4.2.1"
+  },
+  "replay": {
+    "valid": true,
+    "runs": 96,
+    "moves": 20889,
+    "proofs": 3519,
+    "maxWork": 23488,
+    "certificates": {
+      "slot-order": 88,
+      "placement": 85,
+      "reward-choice": 428
+    },
+    "allInitiallyAvailable": 539,
+    "availability": {
+      "reward-choice": {
+        "3": 428
+      },
+      "slot-order": {
+        "1": 9,
+        "2": 53,
+        "3": 26
+      },
+      "placement": {
+        "3": 85
+      }
+    },
+    "oldRuns": 96,
+    "oldMoves": 16211,
+    "resultsSha256": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+  },
+  "behaviorGate": true,
+  "limitations": [
+    "Runtime-provided dependencies differ from lockfile; dependency files unchanged",
+    "68 public assets restored unchanged from verified APK0.62",
+    "Pilot does not prove human balance, retention or physical performance",
+    "Human and release-sized comparison gates remain open"
+  ],
+  "sourceSha256": {
+    "src/core/goal-director.ts": "6f73e1c87a45427c3b538c1a27e7bb9548af800d8d5830e26651522e27b159f0",
+    "src/core/director-search.ts": "345d27175f0443c4a1f0aa7100989e57b4e40f4b4ce134781c842987c301be61",
+    "src/core/order-director.ts": "407b86795c3532e3c156924298eb433de3133eb6f349811feab6697b8ea33ef3",
+    "src/core/rules.ts": "7f149bd3dc630b0c975660203295e66067460d30c73203f699aa46633b23ecfb",
+    "src/core/profile.ts": "b4a681946a30672830cb6eb68514da3e7f4776344dca62bccb9f6e4d9b2a8624",
+    "src/core/monetization.ts": "f9a3d64d71567ec0ed11063f47ec6c519f075bc59605c4d1880037f6dffedf98",
+    "src/core/rhythm.ts": "786630735b1039babc8761cab312884c38f653d6a7f3fe1e7a4b63cea8349f2a",
+    "src/core/shapes.json": "2ed1a34a2c3b7e069127d3d81c1ad6e0a20569053a4984d902339c299bd5b53e",
+    "src/game/move-calculator.ts": "42fef2ad09bb69d0f8516aacf0d4133de149d5db057f03b7e553c623c05c2c13",
+    "src/main.ts": "ca26251510d5a92128a9046dcb294697a78e6dc7d3fc26eb5b93985808d714cf",
+    "src/app-version.ts": "8c311f48ed6d963bd16bdd5c4c821cac5b5679ae65730bed2df1066e58404593",
+    "android/app/build.gradle": "d4e81cc951241af7df369305b9aec9bd6c3ca76b059b16b0fdf368eeda4fb3e9",
+    "tests/goal-director.test.ts": "8d8cb8102a18941d9c992d2c6657b3b726310da1961f57c42696976f5ec8394e",
+    "tests/move-calculator.test.ts": "292ab550d4ef24f017ba6933bfe6eed2493117fba6b7141a40dbf0003f833b3a",
+    "tests/fixtures/goal-decisions.json": "d6dd2a1ac87cec6954fd0b99795eb0d594a1a474ac584b727ba4502e709a4ecd",
+    "e2e/goal-director.spec.ts": "7b2f834c3e25a83ea58cb4826eae5ae455c11c060512236be8b9711a9efb7d75",
+    "e2e/dealer.spec.ts": "1d7033b602a541dece48650f42728ffab9bb07c5aa4716fc8bbaf145540fa534",
+    "e2e/move-recovery.spec.ts": "2a9c2f2ebe7c2623e92134dcb59314af7ee3d0a7f4f4a58a825445d67e27223e",
+    "scripts/director/goal-runtime.mjs": "a70868537d62b37b0e0691fd8782ae67d711a861e99f7fd3e3d95332db53832d",
+    "scripts/director/goal-benchmark.mjs": "be991985ac872f397e37bf7d855483dcda2d503afda0f5e84a46c65c161e7a71",
+    "scripts/director/goal-certificates.ts": "984000afdb8ef90fae79b1e00018014a7bd36dbaee5c479baeb1bae7b72cceef",
+    "scripts/director/verify-goal.mjs": "c8ff12166b17e3dffb90829597f61b4cfc08470aab4049d23df8c417ffe974ca",
+    "scripts/director/analyze-goal.py": "005ca053fe6babfa522ffa0962c6d5766e9005d8aa39da8a649fc22d3fe64698",
+    "scripts/director/goal-fixtures.mjs": "23f0abfec4da3439dd7d4735c52b7a474ad656160848725ba7b965a75e65310a",
+    "scripts/director/goal-probe.mjs": "8f76cc0b775af27359551d959bf588736b52355eec370131bc617f9bb306bfc0",
+    "docs/qa/director-goal-cycle/protocol.md": "750c12418f5ec53530a68a9f13cf754e943842d934c7f01514839cb472d62d90"
+  },
+  "dataSha256": {
+    "docs/qa/director-goal-cycle/analysis.json": "96d594939425671e9210c8091a4aaea2d515156535cc24b6a192641feef53819",
+    "docs/qa/director-goal-cycle/replay-audit.json": "e0a86d115e5c6cc64c294707d4630a673c9c68603e21b6c85880f58ee2af2528",
+    "docs/qa/director-goal-cycle/results.json.gz": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+  }
+}

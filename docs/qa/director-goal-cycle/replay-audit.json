@@ -1,0 +1,29 @@
+{
+  "valid": true,
+  "runs": 96,
+  "moves": 20889,
+  "proofs": 3519,
+  "maxWork": 23488,
+  "certificates": {
+    "slot-order": 88,
+    "placement": 85,
+    "reward-choice": 428
+  },
+  "allInitiallyAvailable": 539,
+  "availability": {
+    "reward-choice": {
+      "3": 428
+    },
+    "slot-order": {
+      "1": 9,
+      "2": 53,
+      "3": 26
+    },
+    "placement": {
+      "3": 85
+    }
+  },
+  "oldRuns": 96,
+  "oldMoves": 16211,
+  "resultsSha256": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+}
