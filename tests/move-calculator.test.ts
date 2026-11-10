@@ -134,3 +134,23 @@ it("ordinary moves keep the synchronous rules path without starting a worker", a
   ).toEqual(applyMove(g, { ...move, slot: 0 }, g.revision));
   expect(h.factory).not.toHaveBeenCalled();
 });
+
+it('runs a director refill in the worker and preserves its persisted history',async()=>{
+  const h=harness(),g=newGame(42,'director-worker','director-v1');
+  g.tray[0]!.used=g.tray[1]!.used=true;
+  const expected=applyMove(g,move,g.revision);
+  const result=h.calculator.calculate(g,move,g.revision);
+  expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});
+  h.workers[0]!.reply(expected);
+  expect(await result).toEqual(expected);
+  expect(expected!.state.director!.deals).toBe(g.director!.deals+1);
+});
+
+it('runs the goal-cycle refill in the worker with its complete goal state',async()=>{
+  const h=harness(),g=newGame(42,'goal-worker','director-v2');
+  g.tray[0]!.used=g.tray[1]!.used=true;
+  const expected=applyMove(g,move,g.revision),result=h.calculator.calculate(g,move,g.revision);
+  expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});
+  h.workers[0]!.reply(expected);expect(await result).toEqual(expected);
+  expect(expected!.state.goalDirector!.deals).toBe(g.goalDirector!.deals+1);
+});

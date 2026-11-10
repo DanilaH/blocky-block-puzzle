@@ -1,26 +1,26 @@
 import { test, expect } from "@playwright/test";
 
-for (const failure of ["timeout", "crash"] as const) {
-  test(`third-piece ${failure} preserves the save and a different retry commits once`, async ({
+for (const dealer of ['flow-v4','director-v2'] as const) for (const failure of ["timeout", "crash"] as const) {
+  test(`${dealer} third-piece ${failure} preserves the save and a different retry commits once`, async ({
     page,
   }) => {
     await page.goto("/");
     await expect(page.locator("#app")).not.toHaveAttribute("aria-busy", "true");
-    await page.evaluate(async () => {
+    await page.evaluate(async (dealer) => {
       const { IndexedSave } = await import("/src/platform/save.ts");
       const { newGame } = await import("/src/core/rules.ts");
       const save = new IndexedSave(),
         p = (await save.load()).profile!;
       p.revision++;
       p.tutorialStep = 4;
-      p.game = newGame(77, "worker-retry", "flow-v4");
+      p.game = newGame(77, "worker-retry", dealer);
       p.game.tray = [0, 1, 2].map((i) => ({
         shapeId: "S1-0",
         color: i + 1,
         used: i < 2,
       }));
       await save.write(p);
-    });
+    },dealer);
     await page.addInitScript((failure) => {
       const NativeWorker = window.Worker;
       let failed = false;
