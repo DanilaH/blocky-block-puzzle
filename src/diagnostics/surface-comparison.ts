@@ -283,6 +283,11 @@ export async function installSurfaceComparison(
       setDiagnosticScoreGlow(null);
       await boundedNative(native?.setScreenOn({ enabled: false }), undefined);
       report.deviceEnd = await boundedNative(device?.device(), null);
+      const emulated =
+        report.deviceStart?.emulator === true ||
+        report.deviceEnd?.emulator === true;
+      report.physical = physical && !emulated;
+      report.functionalOnly = report.functionalOnly || emulated;
       report.deviceStable = surfaceDeviceStable(
         report.deviceStart,
         report.deviceEnd,

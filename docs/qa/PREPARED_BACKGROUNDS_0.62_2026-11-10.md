@@ -30,7 +30,7 @@ Background, resize, context loss, Back or Cancel explicitly interrupt comparison
 
 ## Verification
 
-Implementation checks:242 unit tests, TypeScript/Vite build, existing image checks,6 independent Python analyzer tests. First complete browser comparison:10/10 valid, every metric recomputed by the independent Python analyzer, ordinary save/backup unchanged, browser result explicitly not physical. Ordinary full celebration, calm/reduced motion, failed/late image decode, pause/background, delayed theme hold and real WebGL context loss/recovery are covered by browser checks.
+Implementation checks:242 unit tests, TypeScript/Vite build, existing image checks,7 independent Python analyzer tests. First complete browser comparison:10/10 valid, every metric recomputed by the independent Python analyzer, ordinary save/backup unchanged, browser result explicitly not physical. Ordinary full celebration, calm/reduced motion, failed/late image decode, pause/background, delayed theme hold and real WebGL context loss/recovery are covered by browser checks.
 
 Final browser regression, production-byte replay and Android signing/content verification are recorded below when complete. Physical POCO performance and human visual acceptance remain open. No phone smoothness or universal GPU fix is asserted from browser tests.
 
@@ -46,3 +46,8 @@ node scripts/verify-prepared-production.mjs
 python3 scripts/analyze-surface-comparison.py /tmp/blocky062-production/comparison.json
 python3 scripts/test-surface-comparison-analyzer.py
 ```
+
+## Final regression hardening
+Hidden startup skips presentation refresh until the renderer exists; otherwise the inactivity handler could touch not-yet-initialized UI. The existing hidden-startup scenario reproduced that failure and now passes. Native device metadata explicitly marks emulators, which cannot receive a physical-win verdict. The short diagnostic has its own production WebView instrumentation covering background cancellation, all10 full episodes, unchanged ordinary database contents and actual small JSON sharing. CI selects this surface-specific native smoke; the original57+10 CDP runner remains available without `--surfaces`.
+
+The historical score/filter browser comparison now uses the full production8-second window rather than its2.6-second functional shortcut: that shortcut intermittently sampled before both score-flight/glow callbacks. Its test deadline reflects ten full episodes; no production timing, acceptance threshold or animation duration was extended.

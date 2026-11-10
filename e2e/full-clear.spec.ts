@@ -234,16 +234,16 @@ test("system reduced motion stops before a misleading long run", async ({
 test("score comparison runs both real renderers without CDP and preserves the ordinary save", async ({
   page,
 }) => {
-  test.setTimeout(90000);
+  test.setTimeout(150000);
   await mock(page);
   await page.goto("/");
   await page.locator(".piece").first().waitFor();
   const before = await saved(page);
-  await page.goto("/?clearTrace=full&scoreFeedback=compare&test=fast");
+  await page.goto("/?clearTrace=full&scoreFeedback=compare");
   await expect(page.locator("#full-start")).toBeEnabled();
   await expect(page.locator("#full-start")).toHaveText("Начать сравнение");
   await page.locator("#full-start").click();
-  await expect(page.locator("#full-export")).toBeEnabled({ timeout: 75000 });
+  await expect(page.locator("#full-export")).toBeEnabled({ timeout: 125000 });
   const r = await read(page);
   expect(
     r.completed,

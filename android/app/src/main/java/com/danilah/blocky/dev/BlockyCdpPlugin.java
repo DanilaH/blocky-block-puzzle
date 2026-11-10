@@ -242,6 +242,7 @@ public class BlockyCdpPlugin extends Plugin {
           JSONObject state =
               new JSONObject()
                   .put("sdk", Build.VERSION.SDK_INT)
+                  .put("emulator", Build.FINGERPRINT.startsWith("generic") || Build.MODEL.contains("sdk_gphone") || Build.MODEL.contains("google_sdk") || Build.HARDWARE.contains("ranchu") || Build.HARDWARE.contains("goldfish"))
                   .put("elapsedRealtimeMs", SystemClock.elapsedRealtime());
           Intent battery =
               getContext().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));

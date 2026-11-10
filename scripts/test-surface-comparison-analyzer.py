@@ -27,6 +27,8 @@ class AnalyzerTests(unittest.TestCase):
         r=fixture();r['episodes'].pop();self.assertFalse(mod.analyze(r)['valid'])
     def test_browser_cannot_be_physical_win(self):
         r=fixture();r.update(physical=False,functionalOnly=True);r['summary']=mod.analyze(r)['summary'];a=mod.analyze(r);self.assertTrue(a['valid']);self.assertFalse(a['summary']['improved'])
+    def test_emulator_cannot_be_a_physical_win(self):
+        r=fixture();r.update(physical=False,functionalOnly=True,deviceStable=False);r["deviceStart"]["emulator"]=r["deviceEnd"]["emulator"]=True;r["summary"]=mod.analyze(r)["summary"];a=mod.analyze(r);self.assertTrue(a["valid"]);self.assertFalse(a["summary"]["improved"])
     def test_tail_regression(self):
         r=fixture();row=r['episodes'][3];row['frameIntervals'].append(100.);row['metrics']=mod.metrics(row['frameIntervals']);r['summary']=mod.analyze(r)['summary'];a=mod.analyze(r);self.assertTrue(a['valid']);self.assertFalse(a['summary']['improved'])
 

@@ -441,7 +441,7 @@ async function start() {
       stopCosmetics();
       // A suspended all-clear may still hold the old theme for its reveal.
       // Resolve that saved target now, rather than waiting for another move.
-      render(false);
+      if (rendererReady) render(false);
       syncRenderer();
     },
   );

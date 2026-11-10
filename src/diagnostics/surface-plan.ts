@@ -69,6 +69,7 @@ export function summarizeSurfaces(
   };
 }
 export type SurfaceDevice = {
+  emulator?: boolean;
   sdk?: number;
   webViewVersion?: string;
   thermalStatus?: number;
@@ -81,6 +82,8 @@ export function surfaceDeviceStable(
   return (
     !!before &&
     !!after &&
+    before.emulator !== true &&
+    after.emulator !== true &&
     typeof before.sdk === "number" &&
     before.sdk === after.sdk &&
     (before.sdk < 26 ||

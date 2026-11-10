@@ -49,7 +49,7 @@ def analyze(report):
                 if x.get('active') is not False or x.get('target') != '5' or x.get('visibleLayers') != 1: errors.append(prefix + ':' + layer)
     before_device, after_device = report.get("deviceStart") or {}, report.get("deviceEnd") or {}
     sdk=before_device.get("sdk")
-    device_stable=(isinstance(sdk,int) and sdk==after_device.get("sdk") and (sdk<26 or isinstance(before_device.get("webViewVersion"),str) and before_device.get("webViewVersion")==after_device.get("webViewVersion")) and (sdk<29 or before_device.get("thermalStatus")==0 and after_device.get("thermalStatus")==0))
+    device_stable=(before_device.get("emulator") is not True and after_device.get("emulator") is not True and isinstance(sdk,int) and sdk==after_device.get("sdk") and (sdk<26 or isinstance(before_device.get("webViewVersion"),str) and before_device.get("webViewVersion")==after_device.get("webViewVersion")) and (sdk<29 or before_device.get("thermalStatus")==0 and after_device.get("thermalStatus")==0))
     if "deviceStable" in report and device_stable is not report["deviceStable"]: errors.append("device-stability")
     samples = rows[2:]
     orders=[]

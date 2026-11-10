@@ -55,6 +55,9 @@ it("requires known unchanged device/WebView and cool thermal state for a native 
   );
   const d = { sdk: 35, webViewVersion: "156", thermalStatus: 0 };
   expect(surfaceDeviceStable(d, { ...d })).toBe(true);
+  expect(
+    surfaceDeviceStable({ ...d, emulator: true }, { ...d, emulator: true }),
+  ).toBe(false);
   expect(surfaceDeviceStable(d, { ...d, thermalStatus: 2 })).toBe(false);
   expect(surfaceDeviceStable(d, null)).toBe(false);
   expect(surfaceDeviceStable(d, { ...d, webViewVersion: "157" })).toBe(false);
