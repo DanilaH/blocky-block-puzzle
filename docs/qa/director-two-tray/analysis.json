@@ -1,0 +1,84 @@
+{
+  "valid": true,
+  "metricsRecomputed": true,
+  "runs": 160,
+  "moves": 23585,
+  "gate": false,
+  "sourceSha256": "b430f99c413a918a3a1527d308b64c0d929294cde1cb8881c90c01a621fd35b7",
+  "failedGroups": [
+    {
+      "split": "development",
+      "style": "clear",
+      "gates": [
+        "survival",
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "development",
+      "style": "space",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "development",
+      "style": "two",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "development",
+      "style": "three",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "development",
+      "style": "plausible",
+      "gates": [
+        "survival",
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "confirmation",
+      "style": "clear",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "confirmation",
+      "style": "space",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "confirmation",
+      "style": "two",
+      "gates": [
+        "firstClear",
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "confirmation",
+      "style": "three",
+      "gates": [
+        "actualPayoff"
+      ]
+    },
+    {
+      "split": "confirmation",
+      "style": "plausible",
+      "gates": [
+        "lines",
+        "actualPayoff"
+      ]
+    }
+  ]
+}
