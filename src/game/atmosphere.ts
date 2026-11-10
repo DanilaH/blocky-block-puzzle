@@ -2,6 +2,7 @@ import { visualClock } from "./visual-clock";
 import { THEMES, themeFor, themeAccent } from "./themes";
 // Cosmetic RNG is isolated from saved game RNG. One bounded RAF, suspended with gameplay.
 export class Atmosphere {
+  preparedBackground?: (index: number, duration: number) => void;
   private canvas = document.createElement("canvas");
   private background = document.createElement("div");
   private previousBackground = document.createElement("div");
@@ -109,7 +110,14 @@ export class Atmosphere {
     // Resume can follow a background resize without a visible resize event.
     if (active && !calm && (!this.active || this.calm)) this.syncViewport();
     const next = themeFor(streak);
-    if (next !== this.index || !this.background.style.backgroundColor) {
+    if (this.preparedBackground) {
+      this.backgroundAnimation?.cancel();
+      this.backgroundAnimation = null;
+      this.preparedBackground(
+        next,
+        active && !calm ? (next === 0 ? 1800 : 1000) : 0,
+      );
+    } else if (next !== this.index || !this.background.style.backgroundColor) {
       this.backgroundAnimation?.cancel();
       this.previousBackground.style.backgroundColor = THEMES[this.index]!.bg;
       this.background.style.backgroundColor = THEMES[next]!.bg;

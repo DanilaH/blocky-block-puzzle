@@ -14,3 +14,6 @@
 
 ## 0.42: original reward emblems
 Две самостоятельные generated эмблемы — полная очистка и завершение серии 10+. [Мастера, происхождение и обработка](../assets-src/rewards/README.md). Runtime WebP: 45,394 bytes total, 722,304 decoded RGBA. Сохранены alpha/trim metadata; проверка входит в assets:check. Фоны, кнопки и кольцо остаются кодовыми, текст не запекается в картинки.
+
+## D68: два фона для изолированной DEV-пробы
+Собственные generated Porcelain / Polar Night, без внешних референсов. Runtime — два opaque WebP793×1983, вместе19,304байта и12,580,152 estimated RGBA bytes. Остальные темы имеют плоский fallback, все одиннадцать картинок не предзагружаются. [Запросы и бюджет](../assets-src/theme-surfaces/README.md).

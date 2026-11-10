@@ -1,0 +1,25 @@
+{
+  "scope": "Two backgrounds for a DEV-only theme transition study, not all eleven themes.",
+  "assets": [
+    {
+      "path": "public/backgrounds/porcelain-v1.webp",
+      "sha256": "a6bf3ca382b1b4b2c5a28ba116335c1d0751eea4083e8ebd9762c52f50a6fc66",
+      "bytes": 9160,
+      "width": 793,
+      "height": 1983,
+      "opaque": true,
+      "estimatedRgbaBytes": 6290076
+    },
+    {
+      "path": "public/backgrounds/polar-night-v1.webp",
+      "sha256": "3ce40488e72b69452132444dfa780a04a852fb4f872bbd932c7f3cc6b24e9f60",
+      "bytes": 10144,
+      "width": 793,
+      "height": 1983,
+      "opaque": true,
+      "estimatedRgbaBytes": 6290076
+    }
+  ],
+  "encodedBytes": 19304,
+  "estimatedRgbaBytes": 12580152
+}

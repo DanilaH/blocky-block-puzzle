@@ -39,6 +39,7 @@ type Impact = {
 };
 export class BoardScene extends Phaser.Scene {
   onTexturesReady = () => {};
+  preparedBackground?: (index: number, duration: number) => void;
   private vfx?: VfxSprites;
   private study?: TileStudySprites;
   private bed?: Phaser.GameObjects.Graphics | RasterInk;
@@ -115,7 +116,12 @@ export class BoardScene extends Phaser.Scene {
     this.shade = THEMES[index]!.board;
     this.accent = color;
     this.themeAt = performance.now();
-    if (this.presentation === "classic" && this.game?.canvas) {
+    if (this.preparedBackground) {
+      this.preparedBackground(
+        index,
+        this.calm ? 0 : tileTransitionDuration(false, index),
+      );
+    } else if (this.presentation === "classic" && this.game?.canvas) {
       const board = this.game.canvas.parentElement!;
       board.style.transition = this.compactEffects
         ? "none"
@@ -399,6 +405,7 @@ export class BoardScene extends Phaser.Scene {
     this.impacts = this.impacts.slice(this.compactEffects ? -2 : -4);
   }
   stopEffects() {
+    if (this.preparedBackground) this.preparedBackground(this.theme, 0);
     this.pending = [];
     this.praiseHit = null;
     this.previewEcho = null;

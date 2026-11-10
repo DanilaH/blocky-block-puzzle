@@ -2991,6 +2991,19 @@ async function start() {
       .catch(() => {});
   }
   render();
+  if (import.meta.env.DEV) {
+    const mode = new URLSearchParams(location.search).get("themeSurfaces");
+    if (mode === "flat" || mode === "generated") {
+      const { installPreparedSurfaces } = await import(
+        "./diagnostics/prepared-surfaces"
+      );
+      (window as any).__themeSurfaces = await installPreparedSurfaces(
+        atmosphere,
+        scene,
+        mode,
+      );
+    }
+  }
   if (traceModule) {
     const phoneHooks: Parameters<typeof traceModule.installPhoneClear>[0] = {
       ready: () => rendererReady,
