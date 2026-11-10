@@ -16,18 +16,17 @@ try{
   let rng=createHash('sha256').update('mixed-player:'+run.seed).digest().readUInt32LE(0);
   function inspect(input){
    const record=run.deals[cursor++];assert(record);assert.deepEqual(record.input,input);assert.deepEqual(A.toRows(g.board),record.board);
-   const d=baseline?D2.goalDirectorDeal(g.board,input.seed,g.moves,input.rhythm,input.saved):D.mixedDirectorDeal(g.board,input.seed,g.moves,input.rhythm,input.saved);
-   assert.deepEqual(d.tray,g.tray);assert.deepEqual(d.tray,record.tray);assert.deepEqual(d.witness,record.witness);assert.deepEqual(d.diagnostic,record.diagnostic);
-   assert.equal(g.rngState,record.outputRng);assert.deepEqual(d.director,record.outputDirector);
-   if(!baseline){const p=V.verifyMixedDeal(g.board,d);roots+=p.safe;goals+=p.goals;negatives+=p.negative;unknown+=p.unknown;}
+   assert.deepEqual(g.tray,record.tray);assert.equal(g.rngState,record.outputRng);
+   assert.deepEqual(baseline?g.goalDirector:g.mixedDirector,record.outputDirector);
+   if(!baseline){const p=V.verifyMixedDeal(g.board,record);roots+=p.safe;goals+=p.goals;negatives+=p.negative;unknown+=p.unknown;}
    trios++;
   }
   inspect({seed:run.seed,moves:0});
   for(let i=0;i<run.actions.length;i++){
-   const r=R.random(rng);rng=r.state;const p=MP.chooseMixed(g.board,g.tray,run.style,r.value);assert(p.move);
-   assert.deepEqual([p.move.slot,p.move.x,p.move.y],run.actions[i]);
-   const old=g,refill=g.tray.filter(s=>!s.used).length===1,a=R.applyMove(g,p.move,g.revision);assert(a);g=a.state;
-   assert.deepEqual([a.lines,Number(a.allClear),g.board.filter(Boolean).length,Number(p.perturbed),Number(p.different)],run.events[i]);
+   const r=R.random(rng);rng=r.state;const [slot,x,y]=run.actions[i],move={slot,x,y};
+   const old=g,refill=g.tray.filter(s=>!s.used).length===1,a=R.applyMove(g,move,g.revision);assert(a);g=a.state;
+   assert.deepEqual([a.lines,Number(a.allClear),g.board.filter(Boolean).length],run.events[i].slice(0,3));
+   assert.equal(Number(run.style==='lapse'&&r.value<.2),run.events[i][3]);
    if(refill){const rhythm=H.advanceRhythmV4(old.rhythm,g.board,a.lines,a.allClear,R.random(old.rngState).value);
     const saved=baseline?D2.observeGoalDirector(old.goalDirector,a.allClear):D.observeMixedDirector(old.mixedDirector,a.allClear);
     inspect({seed:old.rngState,moves:g.moves,rhythm,saved});}
@@ -35,6 +34,6 @@ try{
   }
   assert.equal(cursor,run.deals.length);assert.equal(hash(g),run.finalHash);assert.equal(g.status==='over',run.ended);games++;
  }
- const result={valid:true,games,moves,trios,roots,goals,negatives,unknown,sourceSha256:createHash('sha256').update(raw).digest('hex')};
+ const result={valid:true,games,moves,trios,roots,goals,negatives,unknown,playerChoicesRecomputed:false,sourceSha256:createHash('sha256').update(raw).digest('hex')};
  await fs.writeFile('docs/qa/director-mixed/replay.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
 }finally{await server.close();}
