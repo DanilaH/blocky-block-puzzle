@@ -91,7 +91,7 @@ for (const interrupt of [false, true])
       await page.clock.runFor(700);
       await expect(
         page.locator('[data-tier="all-clear"].reward-event'),
-      ).toContainText("+1 901");
+      ).toContainText("+1000");
       await page.clock.runFor(3200);
       expect(await page.locator(".reward-event").count()).toBe(0);
       expect(

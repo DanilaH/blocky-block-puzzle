@@ -61,6 +61,35 @@ jobs:
             docs/qa/feel-0.15/*.png
             docs/qa/dealer-0.16/*.png
             docs/qa/ads-0.17/*.png
+  focused-effects:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Use primary Ubuntu package mirror
+        run: |
+          for source_file in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$source_file" ]; then
+              sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$source_file"
+            fi
+          done
+      - run: npx playwright install --with-deps --only-shell chromium
+        timeout-minutes: 5
+      - name: Verify restored effects and both startup barriers
+        run: npx playwright test e2e/celebration.spec.ts e2e/festival.spec.ts e2e/uiux-027.spec.ts e2e/vfx.spec.ts e2e/initial-background.spec.ts e2e/surface-release.spec.ts e2e/static-board.spec.ts --workers=1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: focused-effects-review
+          path: test-results/
   android:
     env:
       APPMETRICA_TEST_API_KEY: ${{ secrets.APPMETRICA_TEST_API_KEY }}

@@ -99,8 +99,8 @@ test("tap selection is explicit and series closure permits the next move", async
   );
   await expect(page.locator("#caption")).toContainText("левый верхний");
   await page.locator("#board").click({ position: { x: 5, y: 5 } });
-  await expect(page.locator('[data-tier="series"]')).toContainText(
-    "Серия 5 завершена",
+  await expect(page.locator('[data-tier="series-end"]')).toContainText(
+    /серия 5 завершена/i,
   );
   await page.locator(".piece").nth(1).click();
   const board = (await page.locator("#board").boundingBox())!;

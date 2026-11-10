@@ -109,6 +109,9 @@ async function start() {
     ? new URLSearchParams(location.search).get("effectsStudy")
     : null;
   const compactEffects = effectsStudy === "compact";
+  const surfaceRequest = import.meta.env.DEV ? new URLSearchParams(location.search).get("themeSurfaces") : null;
+  const needPreparedSurfaces = (!phoneTrace && !compactEffects && surfaceRequest !== "original") || surfaceComparison || surfaceRequest === "flat" || surfaceRequest === "generated";
+  let backgroundsReady = !needPreparedSurfaces;
   document.documentElement.dataset.effects = compactEffects
     ? "compact"
     : "legacy";
@@ -289,6 +292,12 @@ async function start() {
   let running = false;
   let phaser: Phaser.Game | null = null;
   let rendererReady = false;
+  function syncInputReadiness(blockedByAd: boolean) {
+    const ready = rendererReady && backgroundsReady;
+    root.inert = blockedByAd || !ready;
+    if (ready) root.removeAttribute("aria-busy");
+    else root.setAttribute("aria-busy", "true");
+  }
   function syncRenderer() {
     if (!phaser || !rendererReady) return;
     atmosphere.set(
@@ -451,7 +460,7 @@ async function start() {
     store,
     adBridge,
     (blocked) => {
-      root.inert = blocked;
+      syncInputReadiness(blocked);
       dialog.inert = blocked;
       activity.setBlocked("ad", blocked);
       if (blocked) {
@@ -493,8 +502,7 @@ async function start() {
   });
   activity.setGameplayDesired(true);
   installDocumentVisibilityBlocker(activity);
-  root.inert = true;
-  root.setAttribute("aria-busy", "true");
+  syncInputReadiness(ads.busy);
   scene.onTexturesReady = () => {
     if (scene.textures.exists("vfx-chip") && scene.textures.exists("vfx-flash"))
       festival.setTextures(
@@ -503,8 +511,7 @@ async function start() {
       );
     scene.game.events.once("postrender", () => {
       rendererReady = true;
-      root.inert = ads.busy;
-      root.removeAttribute("aria-busy");
+      syncInputReadiness(ads.busy);
       syncRenderer();
       if (!inLesson() && currentGame().status === "over" && !dialog.open)
         void showResult();
@@ -3001,18 +3008,9 @@ async function start() {
   let preparedSurfaces:
     | import("./game/prepared-surfaces").PreparedSurfaces
     | null = null;
-  const surfaceRequest = import.meta.env.DEV
-    ? new URLSearchParams(location.search).get("themeSurfaces")
-    : null;
-  if (
-    (!phoneTrace && !compactEffects && surfaceRequest !== "original") ||
-    surfaceComparison ||
-    surfaceRequest === "flat" ||
-    surfaceRequest === "generated"
-  ) {
+  if (needPreparedSurfaces) {
     activity.setBlocked("surface-assets", true);
-    root.inert = true;
-    root.setAttribute("aria-busy", "true");
+    syncInputReadiness(ads.busy);
     try {
       const { installPreparedSurfaces } = await import(
         "./game/prepared-surfaces"
@@ -3025,8 +3023,8 @@ async function start() {
       if (import.meta.env.DEV)
         (window as any).__themeSurfaces = preparedSurfaces;
     } finally {
-      root.inert = ads.busy;
-      root.setAttribute("aria-busy", String(store.busy));
+      backgroundsReady = true;
+      syncInputReadiness(ads.busy);
       activity.setBlocked("surface-assets", false);
     }
   }

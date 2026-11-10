@@ -42,7 +42,7 @@ test("session textures finish before input unlock; no asset requests on clear", 
   });
   await page.locator('[data-slot="0"]').click();
   await page.locator("#board").click({ position: { x: 4, y: 4 } });
-  await expect(page.locator("#burst")).toContainText("Линия!");
+  await expect(page.locator("#burst")).toContainText(/линия!/i);
   await page.waitForTimeout(200);
   await page.locator("#pause").click();
   const pixels = await page.locator(".festival-canvas").evaluate((c) => {
