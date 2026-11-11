@@ -9,6 +9,7 @@ const permutations = [
   [2, 0, 1],
   [2, 1, 0],
 ];
+const extendedRewardOrders=new Map<number,number[][]>();
 export type DirectorNode = {
   rows: Rows;
   path: Operation[];
@@ -238,6 +239,74 @@ export function finishGoal(rows: Rows, meter: WorkBudget, rank: number[], allowe
     )
       return answer;
     if (exhausted) break;
+  }
+  return null;
+}
+
+/** v4: an exact cover may pay off in ONE or TWO moves, with the rest of the
+ * tray filled afterwards. A bounded miss never certifies impossibility. */
+export function shortReward(rows:Rows,meter:WorkBudget,rank:number[],maxPieces=3,minPieces=1):Operation[]|null {
+  if(!Number.isInteger(maxPieces)||maxPieces<1||maxPieces>6||!Number.isInteger(minPieces)||minPieces<1||minPieces>maxPieces)throw Error('Invalid reward horizon');
+  if(!occupied(rows))return null;
+  const priority=new Map(rank.map((id,i)=>[id,i]));
+  const covering=goalCovering().map(ops=>[...ops].sort((a,b)=>priority.get(a.shape)!-priority.get(b.shape)!));
+  function orders(n:number):number[][] {
+    if(n===1)return [[0]];if(n===2)return [[0,1],[1,0]];if(n===3)return permutations;
+    const cached=extendedRewardOrders.get(n);if(cached)return cached;
+    const result:number[][]=[];
+    const visit=(prefix:number[],left:number[])=>{if(!left.length){result.push(prefix);return;}for(const i of left)visit([...prefix,i],left.filter(j=>j!==i));};
+    visit([],Array.from({length:n},(_,i)=>i));extendedRewardOrders.set(n,result);return result;
+  }
+  const envelopes=new Map<string,{rows:Rows;area:number}>();
+  // Minimal line envelopes in both orientations; unlike finishGoal this is
+  // deliberately an incomplete class, so a miss remains unknown. Indexing it
+  // avoids scanning thousands of unrelated four-line targets per endpoint.
+  for(let transposed=0;transposed<2;transposed++)for(let selected=0;selected<256;selected++){
+    if(!meter.spend())return null;
+    let other=0;
+    for(let y=0;y<8;y++)for(let x=0;x<8;x++)if(rows[y]!&(1<<x)){
+      const a=transposed?x:y,b=transposed?y:x;if(!(selected&(1<<a)))other|=1<<b;
+    }
+    const r=transposed?other:selected,c=transposed?selected:other;
+    const target=Array.from({length:8},(_,y)=>r&(1<<y)?255:c),area=occupied(target);
+    if(area>occupied(rows)&&area-occupied(rows)<=maxPieces*9)envelopes.set(target.join(),{rows:target,area});
+  }
+  const targets=[...envelopes.values()].sort((a,b)=>a.area-b.area);
+  let answer:Operation[]|null=null,exhausted=false;
+  function visit(missing:Rows,path:Operation[],pieces:number):boolean {
+    const left=occupied(missing),remaining=pieces-path.length;
+    if(!left){
+      if(remaining)return false;
+      for(const order of orders(pieces)){
+        let b=rows;const route:Operation[]=[];let valid=true;
+        for(const i of order){
+          const op=path[i]!,fits=canPlace(b,op,meter);
+          if(fits===null){exhausted=true;return false;}if(!fits){valid=false;break;}
+          const next=transition(b,op,meter);if(!next){exhausted=true;return false;}b=next.rows;route.push(op);
+        }
+        if(valid&&!occupied(b)){answer=route;return true;}
+      }
+      return false;
+    }
+    if(!remaining||left<remaining||left>remaining*9)return false;
+    const y=missing.findIndex(r=>r!==0),x=31-Math.clz32(missing[y]!&-missing[y]!);
+    for(const op of covering[y*8+x]!){
+      if(!meter.spend()){exhausted=true;return false;}
+      const size=SHAPES[op.shape]!.cells.length;
+      if(size>left-(remaining-1)||left-size>(remaining-1)*9||op.rows.some((r,y)=>(r&missing[y]!)!==r))continue;
+      if(visit(missing.map((r,y)=>r&~op.rows[y]!),[...path,op],pieces))return true;
+      if(exhausted)return false;
+    }
+    return false;
+  }
+  // Try the shortest class first; a target requiring three exact placements
+  // cannot consume the allowance before an obvious one-piece completion.
+  for(let pieces=minPieces;pieces<=maxPieces;pieces++)for(const target of targets){
+    if(!meter.spend())return null;
+    const deficit=target.area-occupied(rows);
+    if(deficit<pieces||deficit>pieces*9||rows.some((r,y)=>(r&target.rows[y]!)!==r))continue;
+    if(visit(target.rows.map((r,y)=>r&~rows[y]!),[],pieces))return answer;
+    if(exhausted)return null;
   }
   return null;
 }

@@ -1,6 +1,7 @@
 import { validRhythm, validRhythmV4 } from "./rhythm";
 import {validOrderDirector} from './order-director';
 import {validGoalDirector} from './goal-director';
+import {validForgivingDirector} from './forgiving-director';
 import {validMixedDirector} from './mixed-director';
 import { validCampaign } from "../adventure/save";
 import type { Campaign } from "../adventure/core";
@@ -168,12 +169,14 @@ export function validProfile(value: unknown): value is Profile {
         "director-v1",
         "director-v2",
         "director-v3",
+        "director-v4",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
       (g.dealerVersion === 'director-v1' && (!validRhythmV4(g.rhythm)||!validOrderDirector(g.director))) ||
       (g.dealerVersion === 'director-v2' && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
       (g.dealerVersion === 'director-v3' && (!validRhythmV4(g.rhythm)||!validMixedDirector(g.mixedDirector))) ||
+      (g.dealerVersion === 'director-v4' && (!validRhythmV4(g.rhythm)||!validForgivingDirector(g.forgivingDirector))) ||
       (g.seriesBonusVersion !== undefined && g.seriesBonusVersion !== 1) ||
       (g.reviveOffer !== undefined &&
         (!integer(g.reviveOffer.deadline) ||
