@@ -25,6 +25,7 @@ import {
   remapRobustness,
   type Robustness,
 } from "./director-robustness";
+import { constructRewardCandidates } from "./reward-construction";
 
 export type RewardKind =
   | "gentle"
@@ -42,7 +43,7 @@ export interface RewardSetup {
   route: { shape: number; x: number; y: number }[];
 }
 export interface RewardDirectorState {
-  version: 5;
+  version: 5 | 6;
   deals: number;
   sinceLoad: number;
   nextLoad: number;
@@ -50,8 +51,10 @@ export interface RewardDirectorState {
   last: RewardKind;
   prepared: RewardSetup[];
 }
-export const initialRewardDirector = (): RewardDirectorState => ({
-  version: 5,
+export const initialRewardDirector = (
+  version: 5 | 6 = 5,
+): RewardDirectorState => ({
+  version,
   deals: 0,
   sinceLoad: 0,
   nextLoad: 4,
@@ -59,12 +62,15 @@ export const initialRewardDirector = (): RewardDirectorState => ({
   last: "gentle",
   prepared: [],
 });
-export function validRewardDirector(s: RewardDirectorState | undefined) {
+export function validRewardDirector(
+  s: RewardDirectorState | undefined,
+  version: 5 | 6 = 5,
+) {
   const integer = (n: number, max: number) =>
     Number.isInteger(n) && n >= 0 && n <= max;
   return (
     !!s &&
-    s.version === 5 &&
+    s.version === version &&
     integer(s.deals, 1000000) &&
     integer(s.sinceLoad, 32) &&
     integer(s.nextLoad, 5) &&
@@ -116,6 +122,7 @@ export function rewardDirectorDeal(
   rhythm: RhythmState = initialRhythmV4(),
   saved = initialRewardDirector(),
   budget = 24000,
+  version: 5 | 6 = 5,
 ) {
   const meter = new WorkBudget(budget),
     rows = toRows(board),
@@ -169,7 +176,9 @@ export function rewardDirectorDeal(
     requested === "rest" || requested === "friendly"
       ? 4
       : support
-        ? 6
+        ? version === 6
+          ? 9
+          : 6
         : moves < 12
           ? 6
           : 9;
@@ -344,16 +353,30 @@ export function rewardDirectorDeal(
         });
     }
   }
+  let construction: ReturnType<typeof constructRewardCandidates> = [];
+  if (version === 6 && soft && requested !== "rest" && count && cycle >= 3) {
+    construction = constructRewardCandidates(rows, meter, rank, reverse);
+    for (const c of construction) {
+      const goal = requested === "gift" && c.earned;
+      candidates.push({
+        path: c.path,
+        value: goal ? 100000 : 20000 + c.value,
+        goal,
+        source: "branch-built",
+      });
+      goalConstructed ||= goal;
+    }
+  }
   const frontier =
     requested === "rest" || requested === "friendly"
       ? []
-      : plausibleBeam({
+      : (version === 6 ? directorBeam : plausibleBeam)({
           rows,
           meter,
           rank,
           reverse,
           width: 3,
-          work: 7500,
+          work: version === 6 ? 4000 : 7500,
           allow: (id, depth) => {
             const n = SHAPES[id]!.cells.length;
             return requested === "load"
@@ -362,7 +385,24 @@ export function rewardDirectorDeal(
                 : n >= 2 && n <= 4
               : n <= maxSize;
           },
-          score,
+          score:
+            version === 6 && soft
+              ? (node, depth) => {
+                  const g = boardGeometry(node.rows);
+                  return (
+                    node.clears * (requested === "gift" ? 8000 : 1000) +
+                    node.lines * 500 +
+                    g.fullness -
+                    g.holes * 65 -
+                    g.edges * 2 -
+                    g.occupied * 4 +
+                    (depth === 2 &&
+                    !(rhythm.recentBags ?? []).includes(bag(node.path))
+                      ? 60
+                      : 0)
+                  );
+                }
+              : score,
           key: (node) => node.rows.join(",") + ":" + bag(node.path),
         });
   const known = new Set(candidates.map((c) => bag(c.path)));
@@ -409,6 +449,7 @@ export function rewardDirectorDeal(
           rows: Rows;
           value: number;
           clear: boolean;
+          lines: number;
         }[] = [];
         const seen = new Set<string>();
         for (const slot of slots)
@@ -426,6 +467,7 @@ export function rewardDirectorDeal(
               move: { slot, x: op.x, y: op.y },
               rows: n.rows,
               clear: n.clear,
+              lines: n.lines,
               value: n.lines * 180 - g.holes * 25 - g.edges - g.occupied * 2,
             });
           }
@@ -435,13 +477,15 @@ export function rewardDirectorDeal(
         rows: Rows;
         via: { slot: number; x: number; y: number }[];
         earned: boolean;
+        lines?: number;
       }[] = [];
       // Every sampled final placement is evaluated, rather than the solver's
       // first legal witness. The sample is board-only and never reads players.
       for (const root of assessment.roots.slice(0, 3))
         for (const second of root.seconds?.choices.slice(0, 3) ?? []) {
           let b = rows,
-            earned = false;
+            earned = false,
+            lines = 0;
           for (const m of [root.move, second.move]) {
             const op = catalog()[c.path[m.slot]!.shape]!.find(
               (o) => o.x === m.x && o.y === m.y,
@@ -450,6 +494,7 @@ export function rewardDirectorDeal(
             if (!n) return [];
             b = n.rows;
             earned ||= n.clear;
+            lines += n.lines;
           }
           const left = [0, 1, 2].filter(
             (i) => i !== root.move.slot && i !== second.move.slot,
@@ -461,6 +506,7 @@ export function rewardDirectorDeal(
               rows: option.rows,
               via: [root.move, second.move, option.move],
               earned: earned || option.clear,
+              ...(version === 6 ? { lines: lines + option.lines } : {}),
             });
         }
       const unique = [...new Map(ends.map((e) => [e.rows.join(), e])).values()];
@@ -485,6 +531,7 @@ export function rewardDirectorDeal(
           ).reduce((a, b) => a + b, 0),
         );
         totalValue +=
+          (version === 6 ? (e.lines ?? 0) * 500 : 0) +
           (e.earned ? 8000 : 0) -
           (span * 8 - g.occupied) * 80 -
           g.holes * 30 -
@@ -708,7 +755,7 @@ export function rewardDirectorDeal(
       .map((x) => x.i),
     packaged = packagePath(chosen.candidate.path, permutation);
   const director: RewardDirectorState = {
-    version: 5,
+    version,
     deals: Math.min(1000000, saved.deals + 1),
     sinceLoad: actual === "load" ? 0 : Math.min(32, saved.sinceLoad + 1),
     nextLoad: actual === "load" ? 3 + Math.floor(roll() * 3) : saved.nextLoad,
@@ -722,6 +769,7 @@ export function rewardDirectorDeal(
     fallback: actual === "emergency",
     director,
     diagnostic: {
+      ...(version === 6 ? { construction } : {}),
       requested,
       actual,
       source: chosen.candidate.source,
