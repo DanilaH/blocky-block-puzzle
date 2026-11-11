@@ -311,6 +311,72 @@ export function shortReward(rows:Rows,meter:WorkBudget,rank:number[],maxPieces=3
   return null;
 }
 
+/** A deliberately small reward class for evaluating many plausible endpoints.
+ * Fill the occupied rows or occupied columns in at most three placements.
+ * Failure means this class was not found, never that all-clear is impossible.
+ * The target, exact cover and replay all share the caller's work meter. */
+let exactRewardPieces: Map<string, Operation> | undefined;
+export function compactReward(rows: Rows, meter: WorkBudget, rank: number[]): Operation[] | null {
+  if (!occupied(rows)) return null;
+  let columns = 0;
+  for (const r of rows) columns |= r;
+  const targets = [rows.map(r => r ? 255 : 0), Array<number>(8).fill(columns)]
+    .map(target => target.map((r, y) => r & ~rows[y]!))
+    .filter(missing => occupied(missing) > 0 && occupied(missing) <= 27)
+    .sort((a, b) => occupied(a) - occupied(b));
+  const priority = new Map(rank.map((id, i) => [id, i]));
+  const byCell = goalCovering();
+  exactRewardPieces ??= new Map(catalog().flat().map(op => [op.rows.join(), op]));
+  let answer: Operation[] | null = null, exhausted = false;
+  function replay(path: Operation[]) {
+    const orders = path.length === 1 ? [[0]] : path.length === 2 ? [[0, 1], [1, 0]] : permutations;
+    for (const order of orders) {
+      let b = rows, valid = true;
+      const route: Operation[] = [];
+      for (const i of order) {
+        const op = path[i]!, fits = canPlace(b, op, meter);
+        if (fits === null) { exhausted = true; return false; }
+        if (!fits) { valid = false; break; }
+        const next = transition(b, op, meter);
+        if (!next) { exhausted = true; return false; }
+        b = next.rows; route.push(op);
+      }
+      if (valid && !occupied(b)) { answer = route; return true; }
+    }
+    return false;
+  }
+  function visit(missing: Rows, path: Operation[], pieces: number): boolean {
+    const left = occupied(missing), remaining = pieces - path.length;
+    if (!left) return remaining === 0 && replay(path);
+    if (!remaining || left < remaining || left > remaining * 9) return false;
+    if (remaining === 1) {
+      if (!meter.spend()) { exhausted = true; return false; }
+      const op = exactRewardPieces!.get(missing.join());
+      return !!op && replay([...path, op]);
+    }
+    const y = missing.findIndex(r => r !== 0), x = 31 - Math.clz32(missing[y]! & -missing[y]!);
+    const options = byCell[y * 8 + x]!.filter(op => {
+      // Charge every candidate considered, including geometric rejections.
+      if (!meter.spend()) { exhausted = true; return false; }
+      const size = SHAPES[op.shape]!.cells.length;
+      return size <= left - remaining + 1 && left - size <= (remaining - 1) * 9 &&
+        op.rows.every((r, i) => (r & missing[i]!) === r);
+    }).sort((a, b) => priority.get(a.shape)! - priority.get(b.shape)!);
+    if (exhausted) return false;
+    for (const op of options) {
+      if (visit(missing.map((r, i) => r & ~op.rows[i]!), [...path, op], pieces)) return true;
+      if (exhausted) return false;
+    }
+    return false;
+  }
+  for (let pieces = 1; pieces <= 3; pieces++) for (const missing of targets) {
+    if (!meter.spend()) return null;
+    if (visit(missing, [], pieces)) return answer;
+    if (exhausted) return null;
+  }
+  return null;
+}
+
 export type DecisionCertificate =
   | { kind: "slot-order"; forbiddenOrder: number[] }
   | { kind: "placement" | "reward-choice"; badFirst: Move; goodFirst: Move };

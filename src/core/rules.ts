@@ -40,6 +40,7 @@ import { flowDeal } from "./flow-dealer";
 import {orderDirectorDeal,initialOrderDirector,observeOrderDirector,type OrderDirectorState} from './order-director';
 import {goalDirectorDeal,initialGoalDirector,observeGoalDirector,type GoalDirectorState} from './goal-director';
 import {mixedDirectorDeal,initialMixedDirector,observeMixedDirector,type MixedDirectorState} from './mixed-director';
+import {rewardDirectorDeal,initialRewardDirector,observeRewardDirector,type RewardDirectorState} from "./reward-director";
 import {forgivingDirectorDeal,initialForgivingDirector,observeForgivingDirector,type ForgivingDirectorState} from './forgiving-director';
 import catalog from "./shapes.json";
 export type Cell = readonly [number, number];
@@ -80,7 +81,8 @@ export type DealerVersion =
   | "director-v1"
   | "director-v2"
   | "director-v3"
-  | "director-v4";
+  | "director-v4"
+  | "director-v5";
 export interface GameState {
   gameId: string;
   revision: number;
@@ -99,6 +101,7 @@ export interface GameState {
   goalDirector?: GoalDirectorState;
   mixedDirector?: MixedDirectorState;
   forgivingDirector?: ForgivingDirectorState;
+  rewardDirector?: RewardDirectorState;
   seriesBonusVersion?: 1;
   reviveOffer?: { deadline: number; accepted: boolean; expired: boolean };
   status: "playing" | "over";
@@ -240,6 +243,7 @@ export function deal(
   goalDirector?: GoalDirectorState,
   mixedDirector?: MixedDirectorState,
   forgivingDirector?: ForgivingDirectorState,
+  rewardDirector?: RewardDirectorState,
 ): {
   tray: Slot[];
   rngState: number;
@@ -249,11 +253,16 @@ export function deal(
   goalDirector?: GoalDirectorState;
   mixedDirector?: MixedDirectorState;
   forgivingDirector?: ForgivingDirectorState;
+  rewardDirector?: RewardDirectorState;
 } {
   if(version==='director-v1')return orderDirectorDeal(board,rngState,moves,rhythm,director);
   if(version==='director-v2'){
     const {director:next,...rest}=goalDirectorDeal(board,rngState,moves,rhythm,goalDirector);
     return {...rest,goalDirector:next};
+  }
+  if(version==='director-v5'){
+    const {director:next,...rest}=rewardDirectorDeal(board,rngState,moves,rhythm,rewardDirector);
+    return {...rest,rewardDirector:next};
   }
   if(version==='director-v4'){
     const {director:next,...rest}=forgivingDirectorDeal(board,rngState,moves,rhythm,forgivingDirector);
@@ -421,7 +430,7 @@ export function newGame(
     dealerVersion,
     ...(dealerVersion === "flow-v3"
       ? { rhythm: initialRhythm() }
-      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1' || dealerVersion==='director-v2' || dealerVersion==='director-v3' || dealerVersion==='director-v4'
+      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1' || dealerVersion==='director-v2' || dealerVersion==='director-v3' || dealerVersion==='director-v4' || dealerVersion==='director-v5'
         ? {
             rhythm: {
               ...initialRhythmV4(),
@@ -437,6 +446,7 @@ export function newGame(
     ...(dealerVersion==='director-v1'?{director:d.director??initialOrderDirector()}:{}),
     ...(dealerVersion==='director-v2'?{goalDirector:d.goalDirector??initialGoalDirector()}:{}),
     ...(dealerVersion==='director-v3'?{mixedDirector:d.mixedDirector??initialMixedDirector()}:{}),
+    ...(dealerVersion==='director-v5'?{rewardDirector:d.rewardDirector??initialRewardDirector()}:{}),
     ...(dealerVersion==='director-v4'?{forgivingDirector:d.forgivingDirector??initialForgivingDirector()}:{}),
     status: "playing",
     reviveUsed: false,
@@ -492,7 +502,7 @@ export function applyMove(
     rngState = state.rngState,
     dealerFallbacks = state.dealerFallbacks;
   let rhythm =
-    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1' || state.dealerVersion==='director-v2' || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4'
+    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1' || state.dealerVersion==='director-v2' || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || state.dealerVersion==='director-v5'
       ? advanceRhythmV4(
           state.rhythm ?? initialRhythmV4(),
           placed.board,
@@ -511,6 +521,7 @@ export function applyMove(
   let director=state.dealerVersion==='director-v1'?observeOrderDirector(state.director??initialOrderDirector(),allClear):undefined;
   let goalDirector=state.dealerVersion==='director-v2'?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
   let mixedDirector=state.dealerVersion==='director-v3'?observeMixedDirector(state.mixedDirector??initialMixedDirector(),allClear):undefined;
+  let rewardDirector=state.dealerVersion==='director-v5'?observeRewardDirector(state.rewardDirector??initialRewardDirector(),allClear):undefined;
   let forgivingDirector=state.dealerVersion==='director-v4'?observeForgivingDirector(state.forgivingDirector??initialForgivingDirector(),allClear):undefined;
   if (tray.every((s) => s.used)) {
     const d = deal(
@@ -527,13 +538,14 @@ export function applyMove(
       goalDirector,
       mixedDirector,
       forgivingDirector,
+      rewardDirector,
     );
     if (rhythm)
       rhythm = {
         ...rhythm,
         recoveryDeals: Math.max(0, rhythm.recoveryDeals - 1),
       };
-    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1' || state.dealerVersion==='director-v2' || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4'))
+    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1' || state.dealerVersion==='director-v2' || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || state.dealerVersion==='director-v5'))
       rhythm = {
         ...rhythm,
         encoreDeals: Math.max(0, (rhythm.encoreDeals ?? 0) - 1),
@@ -549,6 +561,7 @@ export function applyMove(
     if(state.dealerVersion==='director-v1')director=d.director;
     if(state.dealerVersion==='director-v2')goalDirector=d.goalDirector;
     if(state.dealerVersion==='director-v3')mixedDirector=d.mixedDirector;
+    if(state.dealerVersion==='director-v5')rewardDirector=d.rewardDirector;
     if(state.dealerVersion==='director-v4')forgivingDirector=d.forgivingDirector;
     rngState = d.rngState;
     dealerFallbacks += Number(d.fallback);
@@ -578,6 +591,7 @@ export function applyMove(
       ...(director ? {director} : {}),
       ...(goalDirector ? {goalDirector} : {}),
       ...(mixedDirector ? {mixedDirector} : {}),
+      ...(rewardDirector ? {rewardDirector} : {}),
       ...(forgivingDirector ? {forgivingDirector} : {}),
       score: state.score + points + seriesBonus,
       streak,
