@@ -1,0 +1,9 @@
+{
+  "assignments": 864,
+  "positiveProofs": 787,
+  "negativeProofs": 77,
+  "actions": 29109,
+  "permutations": 18,
+  "dataSha256": "3f729ab5ff6ef9c8225029b639e06980eee4336e75d0222da27256c13cf788f5",
+  "verifierSha256": "1d86b256f3cf67803cf3dfba6d500c226f1d0190dac61299828dde76afdecdc1"
+}
