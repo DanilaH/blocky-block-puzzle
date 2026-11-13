@@ -1,0 +1,12 @@
+{
+  "valid": true,
+  "games": 160,
+  "moves": 31346,
+  "trios": 10546,
+  "roots": 18463,
+  "seconds": 45900,
+  "preparations": 1301,
+  "negative": 45,
+  "playerChoicesRecomputed": true,
+  "sourceSha256": "68e321479291e85d2932e0ba1fc4e351084d581d5724ecf6e776db5b9d0959c7"
+}

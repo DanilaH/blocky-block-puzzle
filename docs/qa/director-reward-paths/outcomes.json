@@ -1,0 +1,681 @@
+{
+  "sourceSha256": "68e321479291e85d2932e0ba1fc4e351084d581d5724ecf6e776db5b9d0959c7",
+  "groups": {
+    "development:clear": {
+      "sampledDeals": 536,
+      "completedSampledDeals": 536,
+      "actualEndpointInSample": 535,
+      "actualEndpointWithRewardProof": 161,
+      "storedPreparations": 8,
+      "storedEndpoints": 73,
+      "matchedPreparedBoard": 2,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 8
+    },
+    "development:three": {
+      "sampledDeals": 573,
+      "completedSampledDeals": 573,
+      "actualEndpointInSample": 465,
+      "actualEndpointWithRewardProof": 279,
+      "storedPreparations": 34,
+      "storedEndpoints": 361,
+      "matchedPreparedBoard": 9,
+      "replannedPayoffs": 1,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 31
+    },
+    "development:plausible": {
+      "sampledDeals": 109,
+      "completedSampledDeals": 105,
+      "actualEndpointInSample": 41,
+      "actualEndpointWithRewardProof": 1,
+      "storedPreparations": 1,
+      "storedEndpoints": 10,
+      "matchedPreparedBoard": 0,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 1,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 0
+    },
+    "development:bounded": {
+      "sampledDeals": 186,
+      "completedSampledDeals": 185,
+      "actualEndpointInSample": 107,
+      "actualEndpointWithRewardProof": 4,
+      "storedPreparations": 1,
+      "storedEndpoints": 12,
+      "matchedPreparedBoard": 1,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 0
+    },
+    "development:lapse": {
+      "sampledDeals": 599,
+      "completedSampledDeals": 599,
+      "actualEndpointInSample": 414,
+      "actualEndpointWithRewardProof": 172,
+      "storedPreparations": 21,
+      "storedEndpoints": 216,
+      "matchedPreparedBoard": 5,
+      "replannedPayoffs": 3,
+      "lostPayoffs": 1,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 17
+    },
+    "confirmation:clear": {
+      "sampledDeals": 577,
+      "completedSampledDeals": 577,
+      "actualEndpointInSample": 574,
+      "actualEndpointWithRewardProof": 170,
+      "storedPreparations": 14,
+      "storedEndpoints": 147,
+      "matchedPreparedBoard": 6,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 11
+    },
+    "confirmation:three": {
+      "sampledDeals": 577,
+      "completedSampledDeals": 577,
+      "actualEndpointInSample": 452,
+      "actualEndpointWithRewardProof": 262,
+      "storedPreparations": 32,
+      "storedEndpoints": 318,
+      "matchedPreparedBoard": 8,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 28
+    },
+    "confirmation:plausible": {
+      "sampledDeals": 97,
+      "completedSampledDeals": 96,
+      "actualEndpointInSample": 23,
+      "actualEndpointWithRewardProof": 1,
+      "storedPreparations": 0,
+      "storedEndpoints": 0,
+      "matchedPreparedBoard": 0,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 0
+    },
+    "confirmation:bounded": {
+      "sampledDeals": 273,
+      "completedSampledDeals": 272,
+      "actualEndpointInSample": 171,
+      "actualEndpointWithRewardProof": 16,
+      "storedPreparations": 1,
+      "storedEndpoints": 8,
+      "matchedPreparedBoard": 0,
+      "replannedPayoffs": 0,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 1
+    },
+    "confirmation:lapse": {
+      "sampledDeals": 508,
+      "completedSampledDeals": 505,
+      "actualEndpointInSample": 367,
+      "actualEndpointWithRewardProof": 136,
+      "storedPreparations": 15,
+      "storedEndpoints": 156,
+      "matchedPreparedBoard": 6,
+      "replannedPayoffs": 1,
+      "lostPayoffs": 0,
+      "preparedOpportunitySuperseded": 0,
+      "earnedWithinTwoTrays": 11
+    }
+  },
+  "examples": [
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 12,
+      "board": [
+        44,
+        44,
+        28,
+        24,
+        56,
+        56,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "O2-0",
+          "color": 4,
+          "used": false
+        },
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "L3-2",
+          "color": 2,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          3,
+          6
+        ],
+        [
+          2,
+          3,
+          0
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "actualEndpoint": [
+        40,
+        32,
+        0,
+        0,
+        32,
+        32,
+        0,
+        0
+      ],
+      "sampleCount": 23,
+      "actualInSample": true,
+      "coverage": {
+        "sampled": 23,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "prepare"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 15,
+      "board": [
+        40,
+        32,
+        0,
+        0,
+        32,
+        32,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "L3-2",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "L3-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          1,
+          4,
+          4
+        ],
+        [
+          0,
+          6,
+          1
+        ],
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "actualEndpoint": [
+        46,
+        226,
+        128,
+        0,
+        48,
+        48,
+        0,
+        0
+      ],
+      "sampleCount": 24,
+      "actualInSample": false,
+      "coverage": {
+        "sampled": 24,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "load"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 21,
+      "board": [
+        62,
+        242,
+        254,
+        126,
+        62,
+        48,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "R6-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          4,
+          6
+        ],
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "actualEndpoint": [
+        8,
+        194,
+        200,
+        72,
+        8,
+        0,
+        64,
+        64
+      ],
+      "sampleCount": 15,
+      "actualInSample": true,
+      "coverage": {
+        "sampled": 15,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "prepare"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 24,
+      "board": [
+        8,
+        194,
+        200,
+        72,
+        8,
+        0,
+        64,
+        64
+      ],
+      "tray": [
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "T4-1",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "SZ4-3",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          6,
+          0
+        ],
+        [
+          2,
+          5,
+          4
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "actualEndpoint": [
+        136,
+        134,
+        142,
+        12,
+        8,
+        32,
+        32,
+        0
+      ],
+      "sampleCount": 22,
+      "actualInSample": true,
+      "coverage": {
+        "sampled": 22,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "prepare"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 27,
+      "board": [
+        136,
+        134,
+        142,
+        12,
+        8,
+        32,
+        32,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          7,
+          3
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          0,
+          7,
+          2
+        ]
+      ],
+      "actualEndpoint": [
+        8,
+        6,
+        142,
+        140,
+        142,
+        160,
+        160,
+        0
+      ],
+      "sampleCount": 16,
+      "actualInSample": false,
+      "coverage": {
+        "sampled": 16,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "load"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 33,
+      "board": [
+        0,
+        118,
+        134,
+        164,
+        246,
+        166,
+        166,
+        6
+      ],
+      "tray": [
+        {
+          "shapeId": "L3-2",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "L3-2",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          1,
+          6,
+          0
+        ],
+        [
+          2,
+          6,
+          7
+        ]
+      ],
+      "actualEndpoint": [
+        72,
+        122,
+        2,
+        32,
+        114,
+        34,
+        34,
+        66
+      ],
+      "sampleCount": 18,
+      "actualInSample": false,
+      "coverage": {
+        "sampled": 18,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "prepare"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 36,
+      "board": [
+        72,
+        122,
+        2,
+        32,
+        114,
+        34,
+        34,
+        66
+      ],
+      "tray": [
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "L3-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "T4-0",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          0,
+          3,
+          3
+        ]
+      ],
+      "actualEndpoint": [
+        64,
+        114,
+        51,
+        51,
+        114,
+        34,
+        34,
+        66
+      ],
+      "sampleCount": 21,
+      "actualInSample": true,
+      "coverage": {
+        "sampled": 21,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "prepare"
+    },
+    {
+      "split": "development",
+      "seed": 1441001,
+      "move": 39,
+      "board": [
+        64,
+        114,
+        51,
+        51,
+        114,
+        34,
+        34,
+        66
+      ],
+      "tray": [
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "L3-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          6,
+          2
+        ],
+        [
+          1,
+          6,
+          5
+        ]
+      ],
+      "actualEndpoint": [
+        1,
+        49,
+        49,
+        49,
+        48,
+        32,
+        32,
+        0
+      ],
+      "sampleCount": 14,
+      "actualInSample": true,
+      "coverage": {
+        "sampled": 14,
+        "reachable": 0,
+        "coverage": 0
+      },
+      "stored": [],
+      "followingPhase": "build"
+    }
+  ]
+}

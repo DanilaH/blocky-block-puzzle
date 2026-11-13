@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "b7fcc3728e47a4ab5e474c98c438ae8c4260944d",
+  "appVersion": "0.64.0-preview",
+  "unit": {
+    "files": 53,
+    "tests": 332,
+    "status": "pass",
+    "lastAffectedRechecks": "19 revive/funnel/experiment/performance; 2 kill-switch tests; tsc pass"
+  },
+  "browser": {
+    "focused": 27,
+    "newScenariosFinalRecheck": 2,
+    "status": "pass",
+    "sdk": "mocked; no physical/native delivery claim"
+  },
+  "pythonMetricsTests": 5,
+  "jvmParserTests": 3,
+  "androidBridgeCompile": "not run: SDK/signing/test configuration unavailable",
+  "apk": "not built",
+  "cabinet": "not inspected",
+  "physicalPhone": "not tested",
+  "candidate": "engineering gates pass; balance HOLD; default v2; rollout OFF",
+  "generatorNodeOnlyMs": {
+    "p50": 6.21496500000012,
+    "p95": 11.68723399999999,
+    "max": 21.678444000000127
+  },
+  "rawPrivateRecordingsInGit": false,
+  "kitChanged": false,
+  "outboundGit": "dry-run rejected by auto-review; no push; no bypass"
+}

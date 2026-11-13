@@ -4,6 +4,7 @@ import { MusicalChain } from "./festival";
 // Original synthesized SFX: shared solid-tile contact and bounded reward tails.
 export class GameAudio {
   menuOnly = false;
+  resources() { return { voices: this.voices.size }; }
   private soundEnabled = true;
   private musicVolume = 0;
   private series = 0;

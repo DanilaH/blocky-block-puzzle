@@ -1,9 +1,13 @@
+import {validExperiment, type ExperimentState} from "./experiment";
+import {validRewardDirector} from "./reward-director";
 import { validRhythm, validRhythmV4 } from "./rhythm";
 import {validOrderDirector} from './order-director';
 import {validGoalDirector} from './goal-director';
+import {validForgivingDirector} from './forgiving-director';
+import {validMixedDirector} from './mixed-director';
 import { validCampaign } from "../adventure/save";
 import type { Campaign } from "../adventure/core";
-import { type AdsState, validRevivePlan } from "./monetization";
+import { type AdsState, validRevivePlan, validReviveSelection } from "./monetization";
 import { fits, hasMove, shapeById, type GameState, type Move } from "./rules";
 export interface HintReceipt {
   gameId: string;
@@ -14,6 +18,7 @@ export interface HintReceipt {
 }
 export interface Profile {
   schemaVersion: 1;
+  experiment?: ExperimentState;
   campaign?: Campaign;
   wardrobe?: { selected: number; unlocked: number[]; discoveries: number };
   metrics?: {
@@ -22,6 +27,10 @@ export interface Profile {
     maxStreak: number;
     started: boolean;
     durationComplete: boolean;
+    failureIndex?: number;
+    closed?: boolean;
+    episode?: number;
+    reviveProgress?: { intentId:string; offerId:string; startMoves:number; oldTrayEnd:number; activeAt:number; flags:number };
   };
   ads?: AdsState;
   tutorialStep?: number;
@@ -103,6 +112,7 @@ export function validProfile(value: unknown): value is Profile {
       g = p.game;
     if (
       p.schemaVersion !== 1 ||
+      !validExperiment(p.experiment) ||
       (p.campaign !== undefined && !validCampaign(p.campaign)) ||
       (p.tutorialStep !== undefined &&
         (!integer(p.tutorialStep) || p.tutorialStep > 4)) ||
@@ -138,6 +148,7 @@ export function validProfile(value: unknown): value is Profile {
       return false;
     if (
       !g ||
+      (g.comparisonMode!==undefined&&!["default","manual","audience"].includes(g.comparisonMode)) ||
       typeof g.gameId !== "string" ||
       !g.gameId ||
       !integer(g.revision) ||
@@ -152,6 +163,7 @@ export function validProfile(value: unknown): value is Profile {
         (!integer(g.streakMisses) ||
           g.streakMisses > 2 ||
           (!g.streak && g.streakMisses !== 0))) ||
+      (g.dealerDiagnostic!==undefined&&(g.dealerVersion!=="composition-v1"||!integer(g.dealerDiagnostic.checks)||g.dealerDiagnostic.checks>12000||g.dealerDiagnostic.limit!==12000||!["already-diverse","no-equal-area-slot","budget","equal-area-proven","no-role-proof"].includes(g.dealerDiagnostic.reason))) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -166,14 +178,28 @@ export function validProfile(value: unknown): value is Profile {
         "flow-v4",
         "director-v1",
         "director-v2",
+        "director-v3",
+        "director-v4",
+        "director-v5",
+        "director-v6",
+        "composition-v1",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
       (g.dealerVersion === 'director-v1' && (!validRhythmV4(g.rhythm)||!validOrderDirector(g.director))) ||
-      (g.dealerVersion === 'director-v2' && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
+      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
+      (g.dealerVersion === 'director-v3' && (!validRhythmV4(g.rhythm)||!validMixedDirector(g.mixedDirector))) ||
+      (g.dealerVersion === 'director-v6' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector,6))) ||
+      (g.dealerVersion === 'director-v5' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector))) ||
+      (g.dealerVersion === 'director-v4' && (!validRhythmV4(g.rhythm)||!validForgivingDirector(g.forgivingDirector))) ||
       (g.seriesBonusVersion !== undefined && g.seriesBonusVersion !== 1) ||
       (g.reviveOffer !== undefined &&
         (!integer(g.reviveOffer.deadline) ||
+          (g.reviveOffer.selection !== undefined && !validReviveSelection(g.reviveOffer.selection)) ||
+          (g.reviveOffer.id !== undefined && (typeof g.reviveOffer.id !== "string" || !g.reviveOffer.id)) ||
+          (g.reviveOffer.readyState!==undefined&&!["ready","not_ready","unknown"].includes(g.reviveOffer.readyState)) ||
+          (g.reviveOffer.shown !== undefined && typeof g.reviveOffer.shown !== "boolean") ||
+          (g.reviveOffer.decision !== undefined && !["accept", "explicit_decline", "back", "expired"].includes(g.reviveOffer.decision)) ||
           typeof g.reviveOffer.accepted !== "boolean" ||
           typeof g.reviveOffer.expired !== "boolean" ||
           (g.reviveOffer.accepted && g.reviveOffer.expired))) ||
@@ -225,7 +251,11 @@ export function validProfile(value: unknown): value is Profile {
         !integer(p.metrics.activeMs) ||
         !integer(p.metrics.maxStreak) ||
         typeof p.metrics.started !== "boolean" ||
-        typeof p.metrics.durationComplete !== "boolean")
+        typeof p.metrics.durationComplete !== "boolean" ||
+        (p.metrics.failureIndex !== undefined && !integer(p.metrics.failureIndex)) ||
+        (p.metrics.closed !== undefined && typeof p.metrics.closed !== "boolean") ||
+        (p.metrics.episode !== undefined && (!integer(p.metrics.episode) || p.metrics.episode<1)) ||
+        (p.metrics.reviveProgress !== undefined && (!p.metrics.reviveProgress || typeof p.metrics.reviveProgress.intentId!=="string" || typeof p.metrics.reviveProgress.offerId!=="string" || !integer(p.metrics.reviveProgress.startMoves) || !integer(p.metrics.reviveProgress.oldTrayEnd) || !integer(p.metrics.reviveProgress.activeAt) || !integer(p.metrics.reviveProgress.flags) || p.metrics.reviveProgress.flags>15)))
     )
       return false;
     if (p.ads !== undefined) {
@@ -238,6 +268,8 @@ export function validProfile(value: unknown): value is Profile {
         a.lastFullscreenMs > a.activeMs ||
         !Array.isArray(a.interstitials) ||
         !a.interstitials.every(integer) ||
+        (a.eligibility!==undefined&&(!Array.isArray(a.eligibility)||a.eligibility.length>32||!a.eligibility.every(d=>d&&typeof d.key==="string"&&Array.isArray(d.reasons)&&d.reasons.every(r=>typeof r==="string")&&(d.ready===null||typeof d.ready==="boolean")&&typeof d.result==="string"))) ||
+        (a.closedEpisodes!==undefined&&(!Array.isArray(a.closedEpisodes)||!a.closedEpisodes.every(x=>typeof x==="string"))) ||
         !Array.isArray(a.completed) ||
         !a.completed.every((v) => typeof v === "string") ||
         !Array.isArray(a.receipts) ||
@@ -249,6 +281,7 @@ export function validProfile(value: unknown): value is Profile {
       for (const i of a.intents) {
         if (
           !i ||
+          (i.context!==undefined&&(!i.context||typeof i.context!=="object"||Array.isArray(i.context)||Object.entries(i.context).length>24||!Object.entries(i.context).every(([k,v])=>k.length<=64&&((typeof v==="string"&&v.length<=256)||typeof v==="boolean"||(typeof v==="number"&&Number.isFinite(v)))))) ||
           typeof i.id !== "string" ||
           !i.id ||
           ids.has(i.id) ||

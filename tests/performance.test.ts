@@ -2,6 +2,20 @@ import { expect, it, vi } from "vitest";
 import { PerformanceCapture } from "../src/platform/performance";
 import { APP_VERSION } from "../src/app-version";
 
+it("retains the first resource sample and early window during bounded long-session collection",()=>{
+  let tick:FrameRequestCallback=()=>{};
+  vi.stubGlobal("requestAnimationFrame",(fn:FrameRequestCallback)=>{tick=fn;return 1;});vi.stubGlobal("cancelAnimationFrame",()=>{});
+  vi.stubGlobal("innerWidth",390);vi.stubGlobal("innerHeight",844);vi.stubGlobal("devicePixelRatio",1);
+  const now=vi.spyOn(performance,"now").mockReturnValue(0);
+  try {
+    const c=new PerformanceCapture();let resources=0;c.setResourceProbe(()=>({resources:resources++}));c.start();c.setActive(true);
+    for(let i=1;i<=500;i++){now.mockReturnValue(i*60000);tick(i*60000);c.record("save",i);}
+    const s=c.snapshot();expect(s.resources).toHaveLength(128);expect(s.resources[0]!.values.resources).toBe(0);expect(s.resources.at(-1)!.values.resources).toBe(499);
+    expect(s.minuteWindows.length).toBeLessThanOrEqual(32);expect(s.minuteWindows[0]!.minute).toBe(1);expect(s.minuteWindows.at(-1)!.minute).toBe(500);
+    c.setActive(false);
+  }finally{now.mockRestore();vi.unstubAllGlobals();}
+});
+
 it("bounds capture storage and excludes inactive gaps", () => {
   let callback: FrameRequestCallback = () => {};
   vi.stubGlobal("requestAnimationFrame", (fn: FrameRequestCallback) => {

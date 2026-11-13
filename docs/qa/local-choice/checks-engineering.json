@@ -1,0 +1,13 @@
+{
+  "games": 48,
+  "actions": 6272,
+  "trays": 2126,
+  "poolTrays": 2777,
+  "sampledPaths": 10781,
+  "broadPaths": 18221,
+  "negativeLasts": 278,
+  "matchedAblations": 32,
+  "budgetCases": 24,
+  "dataSha256": "200c225a8b3dd2a7263ff634b94735cf6478210b49f497a781a591031b6f0ebd",
+  "verifierSha256": "3f62b0b0ca5eed0762a4771f8578bd0d8f4b9e6bc2521f73b8060111256b27e5"
+}

@@ -1,0 +1,16 @@
+{
+  "valid": true,
+  "runs": 160,
+  "verifiedMoves": 23255,
+  "metricsRecomputed": true,
+  "behaviorGate": false,
+  "resultsSha256": "bd887ec62fa4f219f28ef622a870b89c115c7f37fb65d5a0c411c088afec9dc2",
+  "catalogCertificate": {
+    "area24": [
+      "O3,O3,R6"
+    ],
+    "area18Max6": [
+      "R6,R6,R6"
+    ]
+  }
+}

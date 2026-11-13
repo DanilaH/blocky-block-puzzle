@@ -1,0 +1,533 @@
+{
+  "schema": "blocky-branch-preparation-analysis-v1",
+  "resultSha256": "21e76ce7e4f15d032b2a83dccf6c031fd94fa8911a1c819608fbccb5c0c4ceef",
+  "cohorts": {
+    "engineering": {
+      "inputs": 31,
+      "firstTreeLeaves": 447,
+      "firstTreesSafe": 31,
+      "firstTreesEveryPathClears": 30,
+      "prepare": {
+        "episodes": 155,
+        "statuses": {
+          "reward": 2,
+          "horizon": 153
+        },
+        "rewardInputs": 2,
+        "twoOrMoreRewardInputs": 0,
+        "allSampledRewardInputs": 0,
+        "rewardsByInput": {
+          "0": 1,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 0,
+          "16": 0,
+          "17": 0,
+          "18": 0,
+          "19": 0,
+          "20": 0,
+          "21": 0,
+          "22": 0,
+          "23": 1,
+          "24": 0,
+          "25": 0,
+          "26": 0,
+          "27": 0,
+          "28": 0,
+          "29": 0,
+          "30": 0
+        },
+        "moves": 1393,
+        "lines": 881,
+        "rewardAt": {
+          "9": 1,
+          "7": 1
+        },
+        "clearingMoves": 838,
+        "maxDryGap": 4,
+        "firstMoves": 465,
+        "firstClearingMoves": 386,
+        "firstClearingFrequency": 0.8301075268817204,
+        "weakIssuedTrays": 50,
+        "consecutiveBags": 310,
+        "repeatedConsecutiveBags": 7,
+        "issuedShapes": {
+          "I5-1": 148,
+          "I3-0": 71,
+          "L3-3": 20,
+          "I4-0": 89,
+          "I5-0": 157,
+          "O2-0": 23,
+          "I2-0": 99,
+          "T4-0": 19,
+          "O3-0": 15,
+          "L52": 8,
+          "L50": 13,
+          "I4-1": 146,
+          "I3-1": 75,
+          "S1-0": 163,
+          "T4-1": 2,
+          "L3-1": 56,
+          "I2-1": 92,
+          "T4-3": 22,
+          "R6-0": 25,
+          "D3a": 2,
+          "R6-1": 36,
+          "SZ4-2": 12,
+          "SZ4-0": 7,
+          "L3-2": 28,
+          "L53": 3,
+          "SZ4-1": 5,
+          "D3b": 8,
+          "L51": 15,
+          "L3-0": 23,
+          "T4-2": 13
+        },
+        "issuedFamilies": {
+          "I5": 305,
+          "I3": 146,
+          "L3": 127,
+          "I4": 235,
+          "O2": 23,
+          "I2": 191,
+          "T4": 56,
+          "O3": 15,
+          "L5": 39,
+          "S1": 163,
+          "R6": 61,
+          "D3": 10,
+          "SZ4": 24
+        },
+        "meanIssuedArea": 3.560573476702509
+      },
+      "d81": {
+        "episodes": 155,
+        "statuses": {
+          "reward": 11,
+          "construction-unknown": 103,
+          "short-impossible": 26,
+          "dead": 7,
+          "horizon": 8
+        },
+        "rewardInputs": 8,
+        "twoOrMoreRewardInputs": 3,
+        "allSampledRewardInputs": 0,
+        "rewardsByInput": {
+          "0": 1,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 1,
+          "12": 0,
+          "13": 0,
+          "14": 0,
+          "15": 2,
+          "16": 0,
+          "17": 0,
+          "18": 0,
+          "19": 0,
+          "20": 0,
+          "21": 1,
+          "22": 1,
+          "23": 2,
+          "24": 0,
+          "25": 0,
+          "26": 0,
+          "27": 2,
+          "28": 1,
+          "29": 0,
+          "30": 0
+        },
+        "moves": 605,
+        "lines": 354,
+        "rewardAt": {
+          "8": 1,
+          "9": 4,
+          "5": 1,
+          "7": 2,
+          "6": 3
+        },
+        "clearingMoves": 318,
+        "maxDryGap": 4,
+        "firstMoves": 429,
+        "firstClearingMoves": 221,
+        "firstClearingFrequency": 0.5151515151515151,
+        "weakIssuedTrays": null,
+        "consecutiveBags": 61,
+        "repeatedConsecutiveBags": 0,
+        "issuedShapes": {
+          "I5-1": 61,
+          "O2-0": 62,
+          "O3-0": 36,
+          "S1-0": 37,
+          "T4-2": 29,
+          "R6-1": 40,
+          "I2-1": 22,
+          "I3-1": 28,
+          "L3-2": 1,
+          "I3-0": 15,
+          "I4-0": 38,
+          "L53": 22,
+          "L3-0": 5,
+          "L3-3": 6,
+          "SZ4-0": 10,
+          "L3-1": 26,
+          "R6-0": 36,
+          "I4-1": 25,
+          "I5-0": 35,
+          "SZ4-2": 15,
+          "I2-0": 34,
+          "L51": 11,
+          "L52": 7,
+          "T4-0": 2,
+          "SZ4-3": 2,
+          "SZ4-1": 7,
+          "L50": 1,
+          "T4-1": 5
+        },
+        "issuedFamilies": {
+          "I5": 96,
+          "O2": 62,
+          "O3": 36,
+          "S1": 37,
+          "T4": 36,
+          "R6": 76,
+          "I2": 56,
+          "I3": 43,
+          "L3": 38,
+          "I4": 63,
+          "L5": 41,
+          "SZ4": 34
+        },
+        "meanIssuedArea": 4.266990291262136
+      },
+      "pairedFirstExposure": {
+        "movesPerCondition": 429,
+        "prepareClearingMoves": 350,
+        "d81ClearingMoves": 221
+      }
+    },
+    "new-v2": {
+      "inputs": 13,
+      "firstTreeLeaves": 234,
+      "firstTreesSafe": 13,
+      "firstTreesEveryPathClears": 11,
+      "prepare": {
+        "episodes": 130,
+        "statuses": {
+          "horizon": 118,
+          "reward": 12
+        },
+        "rewardInputs": 2,
+        "twoOrMoreRewardInputs": 2,
+        "allSampledRewardInputs": 1,
+        "rewardsByInput": {
+          "31": 0,
+          "32": 0,
+          "33": 10,
+          "34": 0,
+          "35": 0,
+          "36": 0,
+          "38": 0,
+          "39": 0,
+          "40": 2,
+          "41": 0,
+          "42": 0,
+          "43": 0,
+          "44": 0
+        },
+        "moves": 1098,
+        "lines": 698,
+        "rewardAt": {
+          "3": 12
+        },
+        "clearingMoves": 631,
+        "maxDryGap": 4,
+        "firstMoves": 390,
+        "firstClearingMoves": 291,
+        "firstClearingFrequency": 0.7461538461538462,
+        "weakIssuedTrays": 52,
+        "consecutiveBags": 236,
+        "repeatedConsecutiveBags": 2,
+        "issuedShapes": {
+          "R6-0": 30,
+          "S1-0": 131,
+          "I4-0": 74,
+          "I4-1": 162,
+          "L3-3": 9,
+          "I3-1": 77,
+          "I2-0": 40,
+          "L52": 15,
+          "O3-0": 41,
+          "I5-0": 86,
+          "I3-0": 80,
+          "SZ4-0": 1,
+          "O2-0": 3,
+          "R6-1": 59,
+          "I5-1": 156,
+          "L51": 15,
+          "T4-3": 14,
+          "L53": 10,
+          "L50": 29,
+          "SZ4-1": 6,
+          "L3-1": 8,
+          "I2-1": 28,
+          "L3-2": 2,
+          "T4-0": 1,
+          "L3-0": 19,
+          "T4-2": 2
+        },
+        "issuedFamilies": {
+          "R6": 89,
+          "S1": 131,
+          "I4": 236,
+          "L3": 38,
+          "I3": 157,
+          "I2": 68,
+          "L5": 69,
+          "O3": 41,
+          "I5": 242,
+          "SZ4": 7,
+          "O2": 3,
+          "T4": 17
+        },
+        "meanIssuedArea": 3.9726775956284155
+      },
+      "d81": {
+        "episodes": 130,
+        "statuses": {
+          "short-impossible": 52,
+          "construction-unknown": 51,
+          "reward": 18,
+          "horizon": 9
+        },
+        "rewardInputs": 4,
+        "twoOrMoreRewardInputs": 3,
+        "allSampledRewardInputs": 1,
+        "rewardsByInput": {
+          "31": 0,
+          "32": 0,
+          "33": 10,
+          "34": 0,
+          "35": 5,
+          "36": 0,
+          "38": 0,
+          "39": 0,
+          "40": 2,
+          "41": 0,
+          "42": 1,
+          "43": 0,
+          "44": 0
+        },
+        "moves": 603,
+        "lines": 339,
+        "rewardAt": {
+          "2": 10,
+          "4": 4,
+          "6": 1,
+          "3": 2,
+          "9": 1
+        },
+        "clearingMoves": 272,
+        "maxDryGap": 5,
+        "firstMoves": 380,
+        "firstClearingMoves": 160,
+        "firstClearingFrequency": 0.42105263157894735,
+        "weakIssuedTrays": null,
+        "consecutiveBags": 77,
+        "repeatedConsecutiveBags": 4,
+        "issuedShapes": {
+          "O2-0": 32,
+          "O3-0": 47,
+          "I4-0": 36,
+          "I3-1": 49,
+          "R6-1": 54,
+          "L50": 6,
+          "T4-0": 1,
+          "R6-0": 58,
+          "L51": 5,
+          "L53": 15,
+          "I2-0": 49,
+          "I5-0": 32,
+          "I4-1": 59,
+          "L3-0": 14,
+          "S1-0": 41,
+          "I5-1": 52,
+          "I2-1": 14,
+          "I3-0": 35,
+          "L52": 1,
+          "T4-2": 1,
+          "SZ4-0": 1,
+          "L3-2": 3,
+          "T4-3": 1,
+          "SZ4-1": 14,
+          "L3-1": 1
+        },
+        "issuedFamilies": {
+          "O2": 32,
+          "O3": 47,
+          "I4": 95,
+          "I3": 84,
+          "R6": 112,
+          "L5": 27,
+          "T4": 3,
+          "I2": 63,
+          "I5": 84,
+          "L3": 18,
+          "S1": 41,
+          "SZ4": 15
+        },
+        "meanIssuedArea": 4.352657004830918
+      },
+      "pairedFirstExposure": {
+        "movesPerCondition": 380,
+        "prepareClearingMoves": 281,
+        "d81ClearingMoves": 160
+      }
+    }
+  },
+  "missing": [
+    {
+      "seed": 3171005,
+      "move": 24,
+      "reason": "game-ended-before-snapshot"
+    },
+    {
+      "seed": 3171008,
+      "move": 24,
+      "reason": "game-ended-before-snapshot"
+    }
+  ],
+  "emptyInputs": [
+    37
+  ],
+  "gates": {
+    "zeroDeadFirstTrees": true,
+    "everyFirstPathClears": false,
+    "twoSuccessesOnHalfInputs": false,
+    "moreRewardsThanD81": false,
+    "noLowerFirstClearingFrequency": true
+  },
+  "decision": "REJECT",
+  "nativePreparationQueries": 369,
+  "nativeReachQueries": 483,
+  "totalMultisets": 2013264,
+  "fitChecks": 2527582769,
+  "opportunities": [
+    {
+      "input": 31,
+      "leaves": 3,
+      "statuses": {
+        "found": 3
+      }
+    },
+    {
+      "input": 32,
+      "leaves": 2,
+      "statuses": {
+        "found": 2
+      }
+    },
+    {
+      "input": 33,
+      "leaves": 6,
+      "statuses": {
+        "already-reward": 6
+      }
+    },
+    {
+      "input": 34,
+      "leaves": 2,
+      "statuses": {
+        "found": 1,
+        "unknown": 1
+      }
+    },
+    {
+      "input": 35,
+      "leaves": 4,
+      "statuses": {
+        "found": 4
+      }
+    },
+    {
+      "input": 36,
+      "leaves": 20,
+      "statuses": {
+        "found": 20
+      }
+    },
+    {
+      "input": 38,
+      "leaves": 10,
+      "statuses": {
+        "found": 10
+      }
+    },
+    {
+      "input": 39,
+      "leaves": 54,
+      "statuses": {
+        "unknown": 29,
+        "found": 25
+      }
+    },
+    {
+      "input": 40,
+      "leaves": 42,
+      "statuses": {
+        "found": 40,
+        "already-reward": 2
+      }
+    },
+    {
+      "input": 41,
+      "leaves": 20,
+      "statuses": {
+        "unknown": 9,
+        "found": 11
+      }
+    },
+    {
+      "input": 42,
+      "leaves": 12,
+      "statuses": {
+        "found": 12
+      }
+    },
+    {
+      "input": 43,
+      "leaves": 56,
+      "statuses": {
+        "found": 12,
+        "unknown": 44
+      }
+    },
+    {
+      "input": 44,
+      "leaves": 3,
+      "statuses": {
+        "found": 3
+      }
+    }
+  ]
+}

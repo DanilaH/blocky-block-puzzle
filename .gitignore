@@ -11,3 +11,10 @@ android/**/build/
 *.keystore
 
 artifacts/
+
+# Private owner play recordings / implementation handoff inputs
+private-inputs/
+blocky-agent-handoff*.zip
+
+__pycache__/
+*.pyc

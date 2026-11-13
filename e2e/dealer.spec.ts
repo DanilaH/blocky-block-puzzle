@@ -18,6 +18,9 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   await setup(page);
   const initial = await saved(page);
   await page.locator("#dealer-choice").selectOption("assist-v1");
+  await expect(page.locator(".dealer-note")).toContainText(
+    "Помощь срабатывает не каждый раз",
+  );
   await page.locator("#keep-game").click();
   expect((await saved(page)).game).toEqual(initial.game);
   await page.locator("#pause").click();
@@ -40,6 +43,9 @@ test("dealer choice only commits with a new game; survives reload; cancel keeps 
   await page.getByText("Экспериментальная выдача", { exact: true }).click();
   await expect(page.locator("#dealer-choice")).toHaveValue("director-v2");
   await page.locator("#dealer-choice").selectOption("initial-v1");
+  await expect(page.locator(".dealer-note")).toContainText(
+    "вся тройка может не поместиться",
+  );
   await page.locator("#new-game").click();
   await expect
     .poll(async () => (await saved(page)).game.dealerVersion)

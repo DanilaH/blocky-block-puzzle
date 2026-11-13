@@ -1,0 +1,13 @@
+{
+  "schema": "blocky-committed-rollout-cell-check-v1",
+  "resultSha256": "17cede610ef8afa783f07471c25326af20f45c87753efff3b4f57fff411042d1",
+  "verifierSha256": "01f01e754f477190c6d609efa31a05917b3bb40f08094ea032e7d56e4aec050b",
+  "counts": {
+    "proofMoves": 42783,
+    "forecastMoves": 111265,
+    "sourceMoves": 96,
+    "regressionMoves": 471,
+    "actualMoves": 6077,
+    "forkMoves": 22996
+  }
+}

@@ -50,6 +50,8 @@ export class PlayCapture {
   private hinted = false;
   private events: PlayEvent[] = [];
   private bytes = 0;
+  private contentRevision = 0;
+  private exportedRevision = 0;
   private completeGameStart = false;
   private stopped = "not-started";
   constructor(
@@ -74,6 +76,16 @@ export class PlayCapture {
   }
   get hasData() {
     return this.events.length > 0;
+  }
+  get revision() {
+    return this.contentRevision;
+  }
+  get hasUnexportedData() {
+    return this.hasData && this.contentRevision !== this.exportedRevision;
+  }
+  markExported(revision: number) {
+    // A completed share may belong to a cleared or subsequently extended record.
+    if (revision === this.contentRevision) this.exportedRevision = revision;
   }
   get status() {
     return this.stopped;
@@ -100,6 +112,7 @@ export class PlayCapture {
   clear() {
     this.stop();
     this.events = [];
+    this.contentRevision++;
     this.bytes = 0;
     this.lastHash = "";
     this.stopped = "not-started";
@@ -111,6 +124,7 @@ export class PlayCapture {
       return false;
     }
     this.events.push(e);
+    this.contentRevision++;
     this.bytes += bytes;
     return true;
   }

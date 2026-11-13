@@ -9,13 +9,18 @@ type MoveWorker = Pick<
 export class MoveCalculator {
   private worker: MoveWorker | null = null;
   private pending = false;
+  private cancelPending: (() => void) | null = null;
+  cancel() {
+    if (this.cancelPending) this.cancelPending();
+    else { this.worker?.terminate(); this.worker = null; }
+  }
 
   constructor(private createWorker: () => MoveWorker) {}
 
   async calculate(state: GameState, move: Move, revision: number) {
     if (this.pending) throw new Error("Move search already pending");
     if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2"].includes(
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1"].includes(
         state.dealerVersion,
       ) ||
       state.tray.filter((s) => s.used).length !== 2
@@ -32,6 +37,7 @@ export class MoveCalculator {
         clearTimeout(timeout);
         worker.onmessage = worker.onerror = worker.onmessageerror = null;
         this.pending = false;
+        this.cancelPending = null;
         if (error) {
           worker.terminate();
           this.worker = null;
@@ -42,6 +48,7 @@ export class MoveCalculator {
         () => finish(new Error("Move search timed out")),
         5000,
       );
+      this.cancelPending = () => finish(new Error("Move search cancelled"));
       worker.onmessage = (event) =>
         event.data.error
           ? finish(new Error("Move search failed"))

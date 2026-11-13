@@ -1,0 +1,11 @@
+{
+  "valid": true,
+  "runs": 160,
+  "moves": 23585,
+  "witnesses": 199,
+  "maxInitialObserved": 46784,
+  "maxPayoffChecks": 12000,
+  "earlyGoalsCancelled": 6,
+  "resultsSha256": "b430f99c413a918a3a1527d308b64c0d929294cde1cb8881c90c01a621fd35b7",
+  "note": "Frozen first-policy replay; feedback cancellation is checked separately and is not retroactively applied to its results. Initial counter includes independently audited legacy opening proof work for these runs."
+}

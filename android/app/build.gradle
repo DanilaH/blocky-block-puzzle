@@ -4,6 +4,9 @@ def metricaKey = System.getenv('APPMETRICA_API_KEY') ?: ''
 def validMetricaKey = metricaKey ==~ /[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}/
 def testMetricaKey = System.getenv('APPMETRICA_TEST_API_KEY') ?: ''
 def validTestMetricaKey = testMetricaKey ==~ /[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}/
+// Owner playtests need demo ads, but do not require an analytics account.
+// Sending analytics is an explicit opt-in to a separate test project.
+def previewAnalytics = System.getenv('BLOCKY_PREVIEW_ANALYTICS') ?: 'off'
 
 def liveAdIds = [
     banner: System.getenv('YANDEX_BANNER_AD_UNIT_ID') ?: '',
@@ -12,6 +15,13 @@ def liveAdIds = [
 ]
 def validAdIds = liveAdIds.values().every { it ==~ /R-M-[0-9]+-[0-9]+/ }
 gradle.taskGraph.whenReady { graph ->
+    def previewPackaging = graph.allTasks.any { it.name == 'packageDebug' || it.name == 'assembleDebug' }
+    if (previewPackaging && !(previewAnalytics in ['off', 'test'])) {
+        throw new GradleException('BLOCKY_PREVIEW_ANALYTICS must be off or test')
+    }
+    if (previewPackaging && previewAnalytics == 'test' && (!validTestMetricaKey || (validMetricaKey && testMetricaKey == metricaKey))) {
+        throw new GradleException('Test APK requires a separate valid APPMETRICA_TEST_API_KEY; never use the production key')
+    }
     if (graph.allTasks.any { it.name.toLowerCase().contains('release') } && !validMetricaKey) {
         throw new GradleException('Release requires APPMETRICA_API_KEY')
     }
@@ -21,15 +31,16 @@ gradle.taskGraph.whenReady { graph ->
 }
 
 android {
+    buildFeatures { buildConfig true }
     namespace = "com.danilah.blocky.dev"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.danilah.blocky.dev"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 63
-        versionName "0.63.0-preview"
-        resValue "string", "appmetrica_api_key", validTestMetricaKey ? testMetricaKey : ""
+        versionCode 64
+        versionName "0.64.0-preview"
+        resValue "string", "appmetrica_api_key", previewAnalytics == 'test' && validTestMetricaKey ? testMetricaKey : ""
         resValue "bool", "ads_test_mode", "true"
         resValue "string", "yandex_banner_id", ""
         resValue "string", "yandex_interstitial_id", ""

@@ -5,6 +5,70 @@ async function panel(page: Page) {
   await page.locator(".advanced-settings > summary").click();
   await page.getByText("Запись партии для разбора", { exact: true }).click();
 }
+test("clearing an exported record does not let an equally long fresh record leave unsaved", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.locator("#lesson-skip").click();
+  await panel(page);
+  await page.locator("#play-capture-toggle").click();
+  const download = page.waitForEvent("download");
+  await page.locator("#play-capture-export").click();
+  await download;
+  await page.locator("#play-capture-clear").click();
+  await page.locator("#play-capture-toggle").click();
+  await page.getByText("Диагностика", { exact: true }).click();
+  await page.locator("#clear-trace").click();
+  await expect(page.locator(".dialog-status")).toHaveText(
+    "Сначала выгрузите или удалите запись партии",
+  );
+  await expect(page).toHaveURL(/\/$/);
+  const secondDownload = page.waitForEvent("download");
+  await page.locator("#play-capture-export").click();
+  await secondDownload;
+  await page.locator("#clear-trace").click();
+  await expect(page).toHaveURL(/clearTrace=1/);
+});
+
+for (const [policy, label] of [
+  ["director-v2", "С задачами и нагрузкой"],
+  ["flow-v4", "Прежняя выдача"],
+]) {
+  test(`recording label and exported replay retain ${policy} after reload`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+    await page.locator("#lesson-skip").click();
+    await page.locator("#pause").click();
+    await page.locator("#restart").click();
+    await page.getByText("Экспериментальная выдача", { exact: true }).click();
+    await page.locator("#dealer-choice").selectOption(policy!);
+    await page.locator("#new-game").click();
+    await expect(page.locator("dialog")).not.toBeVisible();
+    await page.reload();
+    await panel(page);
+    await expect(page.locator("#play-capture-policy")).toHaveText(
+      `Текущая выдача: ${label}`,
+    );
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(390);
+    await page.locator("#play-capture-toggle").click();
+    const download = page.waitForEvent("download");
+    await page.locator("#play-capture-export").click();
+    const path = testInfo.outputPath("play.json");
+    await (await download).saveAs(path);
+    const data = JSON.parse(await fs.readFile(path, "utf8"));
+    const result = await page.evaluate(async (data) => {
+      const { replayRecord } = await import("/scripts/calibration/replay.ts");
+      return replayRecord(data).final!.dealerVersion;
+    }, data);
+    expect(result).toBe(policy);
+    await page.screenshot({ path: testInfo.outputPath("capture.png") });
+  });
+}
+
 test("opt-in recording exports real committed UI moves and replays exactly", async ({
   page,
 }) => {

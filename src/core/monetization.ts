@@ -1,7 +1,24 @@
 import { recoveryRhythm } from "./rhythm";
-import { hasMove, placements, shapeById, type GameState } from "./rules";
+import { SHAPES, hasMove, type Move, type GameState } from "./rules";
 import type { Profile } from "./profile";
+import { WorkBudget, catalog, canPlace, proveIds, toRows } from "./director-search";
+export interface ReviveSelection {
+  version: 2;
+  x: number;
+  y: number;
+  result: "baseline-found" | "alternative-found" | "baseline-unknown" | "no-proven-alternative";
+  checks: number;
+  witness: Move[];
+}
+export function validReviveSelection(s: ReviveSelection | undefined): boolean {
+  return !!s && s.version === 2 && Number.isInteger(s.x) && s.x >= 0 && s.x <= 5 &&
+    Number.isInteger(s.y) && s.y >= 0 && s.y <= 5 && Number.isInteger(s.checks) &&
+    s.checks >= 0 && s.checks <= 24000 && ["baseline-found", "alternative-found", "baseline-unknown", "no-proven-alternative"].includes(s.result) &&
+    Array.isArray(s.witness) && s.witness.length <= 3 && s.witness.every(m =>
+      Number.isInteger(m.slot) && m.slot >= 0 && m.slot < 3 && Number.isInteger(m.x) && m.x >= 0 && m.x < 8 && Number.isInteger(m.y) && m.y >= 0 && m.y < 8);
+}
 export interface RevivePlan {
+  selection?: ReviveSelection;
   x: number;
   y: number;
   cells: number[];
@@ -15,10 +32,13 @@ export interface RewardIntent {
   snapshot?: GameState;
   compact?: true;
   plan?: RevivePlan;
+  context?: Record<string,string|number|boolean>;
   status: "pending" | "applied" | "available" | "claimed";
 }
 export interface AdsState {
   ledgerVersion?: 2;
+  closedEpisodes?: string[];
+  eligibility?: {key:string;reasons:string[];ready:boolean|null;sdkAvailable?:boolean;requestState?:string;result:string}[];
   activeMs: number;
   lastFullscreenMs: number;
   interstitials: number[];
@@ -34,56 +54,71 @@ export const emptyAds = (): AdsState => ({
   intents: [],
   receipts: [],
 });
-export function revivePlan(g: GameState): RevivePlan | null {
-  if (g.status !== "over" || g.reviveUsed || g.reviveOffer?.expired)
-    return null;
-  let best: RevivePlan | null = null,
-    bestMoves = -1,
-    bestCells = -1;
-  for (let y = 0; y <= 5; y++)
-    for (let x = 0; x <= 5; x++) {
-      const board = g.board.slice(),
-        cells: number[] = [];
-      for (let dy = 0; dy < 3; dy++)
-        for (let dx = 0; dx < 3; dx++) {
-          const i = (y + dy) * 8 + x + dx;
-          if (board[i]) cells.push(i);
-          board[i] = 0;
-        }
-      const moves = g.tray.reduce(
-        (n, s) =>
-          n + (s.used ? 0 : placements(board, shapeById(s.shapeId)).length),
-        0,
-      );
-      if (
-        !moves ||
-        moves < bestMoves ||
-        (moves === bestMoves && cells.length <= bestCells)
-      )
-        continue;
-      bestMoves = moves;
-      bestCells = cells.length;
-      best = {
-        x,
-        y,
-        cells,
-        game: {
-          ...structuredClone(g),
-          board,
-          revision: g.revision + 1,
-          status: "playing",
-          reviveUsed: true,
+const reviveAllowed = (g: GameState) =>
+  g.status === "over" && !g.reviveUsed && !g.reviveOffer?.expired;
+function reviveEffect(g: GameState, x: number, y: number, selection?: ReviveSelection): RevivePlan {
+  const board = [...g.board], cells: number[] = [];
+  for (let dy = 0; dy < 3; dy++) for (let dx = 0; dx < 3; dx++) {
+    const i = (y + dy) * 8 + x + dx;
+    if (board[i]) cells.push(i);
+    board[i] = 0;
+  }
+  return { x, y, cells, ...(selection ? { selection } : {}), game: {
+    ...structuredClone(g), board, revision: g.revision + 1,
+    status: "playing", reviveUsed: true,
           ...(g.dealerVersion === "flow-v3"
             ? { rhythm: recoveryRhythm() }
-            : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || g.dealerVersion==='director-v2'
+            : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
               ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
               : {}),
-          streak: 0,
-          streakMisses: 0,
-        },
-      };
+    streak: 0, streakMisses: 0,
+  }};
+}
+/** One shared 24k work ceiling, including all baseline placement tests and proofs.
+ * proofBudget=0 is the supported diagnostic fallback, never an impossibility verdict. */
+export function revivePlan(g: GameState, proofBudget = 16000): RevivePlan | null {
+  if (!reviveAllowed(g)) return null;
+  const frozen = g.reviveOffer?.selection;
+  if (frozen) return reviveEffect(g, frozen.x, frozen.y, frozen);
+  const meter = new WorkBudget(24000);
+  meter.ceiling = meter.limit;
+  const zones: (RevivePlan & { moves: number })[] = [];
+  for (let y = 0; y <= 5; y++) for (let x = 0; x <= 5; x++) {
+    const plan = reviveEffect(g, x, y), rows = toRows(plan.game.board);
+    meter.spend(); // bounded board-copy/clear/ranking operation
+    let moves = 0;
+    for (const slot of g.tray) if (!slot.used) {
+      const id = SHAPES.findIndex((s) => s.id === slot.shapeId);
+      for (const op of catalog()[id]!) if (canPlace(rows, op, meter)) moves++;
     }
-  return best;
+    if (moves) zones.push({ ...plan, moves });
+  }
+  zones.sort((a, b) => b.moves - a.moves || b.cells.length - a.cells.length || a.y - b.y || a.x - b.x);
+  const baseline = zones[0];
+  if (!baseline) return null;
+  meter.ceiling = Math.min(meter.limit, meter.used + (Number.isFinite(proofBudget) ? Math.floor(Math.max(0, Math.min(16000, proofBudget))) : 0));
+  const remaining = g.tray.map((s, slot) => ({ s, slot })).filter(({ s }) => !s.used);
+  const ids = remaining.map(({ s }) => SHAPES.findIndex((piece) => piece.id === s.shapeId));
+  let unknown = false;
+  for (let index = 0; index < zones.length; index++) {
+    const zone = zones[index]!, proof = proveIds(toRows(zone.game.board), ids, meter);
+    unknown ||= proof.status === "unknown";
+    if (proof.path) {
+      const unused = [...remaining];
+      const witness = proof.path.map((op) => {
+        const at = unused.findIndex(({ s }) => s.shapeId === SHAPES[op.shape]!.id);
+        const { slot } = unused.splice(at, 1)[0]!;
+        return { slot: slot!, x: op.x, y: op.y };
+      });
+      const selection: ReviveSelection = { version: 2, x: zone.x, y: zone.y,
+        result: index === 0 ? "baseline-found" : "alternative-found", checks: meter.used, witness };
+      return reviveEffect(g, zone.x, zone.y, selection);
+    }
+    if (meter.used >= meter.ceiling) break;
+  }
+  const selection: ReviveSelection = { version: 2, x: baseline.x, y: baseline.y,
+    result: unknown ? "baseline-unknown" : "no-proven-alternative", checks: meter.used, witness: [] };
+  return reviveEffect(g, baseline.x, baseline.y, selection);
 }
 // Validate a persisted prepared effect without re-running the best-zone search on every save.
 export function validRevivePlan(
@@ -92,6 +127,7 @@ export function validRevivePlan(
 ): boolean {
   if (
     !plan ||
+    (plan.selection!==undefined&&(!validReviveSelection(plan.selection)||plan.selection.x!==plan.x||plan.selection.y!==plan.y)) ||
     g.status !== "over" ||
     g.reviveUsed ||
     !Number.isInteger(plan.x) ||
@@ -118,7 +154,7 @@ export function validRevivePlan(
     reviveUsed: true,
     ...(g.dealerVersion === "flow-v3"
       ? { rhythm: recoveryRhythm() }
-      : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || g.dealerVersion==='director-v2'
+      : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
         ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
         : {}),
     streak: 0,
@@ -233,13 +269,25 @@ export function claimRevive(p: Profile, id: string): Profile {
   };
 }
 export function finishAttempt(p: Profile): Profile {
-  const a = p.ads ?? emptyAds();
-  if (p.game.status !== "over" || a.completed.includes(p.game.gameId)) return p;
-  return {
-    ...p,
-    revision: p.revision + 1,
-    ads: { ...a, completed: [...a.completed, p.game.gameId] },
-  };
+  const a = p.ads ?? emptyAds(), key = `${p.game.gameId}:${p.metrics?.episode??1}`;
+  if (p.game.status !== "over" || a.closedEpisodes?.includes(key)) return p;
+  return { ...p, revision:p.revision+1, ads:{...a,
+    completed:a.completed.includes(p.game.gameId)?a.completed:[...a.completed,p.game.gameId],
+    closedEpisodes:[...(a.closedEpisodes??[]),key],
+  }};
+}
+export function interstitialReasons(p:Profile, state:{enabled:boolean;busy:boolean;ready:boolean|null;statusError?:boolean}) {
+  const a=p.ads??emptyAds(), reasons:string[]=[];
+  if (p.tutorialStep!==4) reasons.push("tutorial");
+  if (p.game.status!=="over") reasons.push("not_final");
+  if (a.completed.length<2) reasons.push("too_few_finished_runs");
+  if (a.activeMs-a.lastFullscreenMs<180000) reasons.push("cooldown");
+  if (a.interstitials.filter(t=>a.activeMs-t<3600000).length>=3) reasons.push("hourly_cap");
+  if (!state.enabled) reasons.push("unavailable");
+  if (state.busy) reasons.push("busy");
+  if (state.statusError) reasons.push("status_error");
+  if (state.ready===false) reasons.push("not_ready");
+  return reasons;
 }
 export function canInterstitial(p: Profile, _now?: number): boolean {
   const a = p.ads ?? emptyAds();

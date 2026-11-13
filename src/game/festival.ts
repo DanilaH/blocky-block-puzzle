@@ -74,6 +74,7 @@ export class Festival {
   private rear = document.createElement("div");
   private ctx: CanvasRenderingContext2D;
   private sparks: Spark[] = [];
+  resources() { return { sparks: this.sparks.length, reveals: this.reveals.length }; }
   private frame: (() => void) | null = null;
   private last = 0;
   private width = 0;

@@ -73,7 +73,3 @@ The signed APK is11,743,560 bytes, SHA-256 `e3416ccd39c59b5b9d8b2bdfc7a4802e8fb9
 Delivery: `blocky-0.62-preview.zip`,11,042,834 bytes, contains one `app-debug.apk`. Extract and install over0.61. The local execution host became unavailable; the exact verified GitHub artifact was retained for delivery instead of relabelling ZIP bytes as an APK.
 
 Run once: **Пауза → Диагностика → Проверить переход фона → Начать сравнение**. Typically around100seconds, cold warmup may take about2minutes. Then **Отправить результат** exports the bounded JSON. No system-setting changes, CDP preflight or large recording.
-
-## Completed full regression
-
-CI42802898179 subsequently completed successfully on the exact delivered source ea78628:244 unit checks,232/232 browser scenarios (21.3min),25 focused cases, Android build/signature/content verification and the2-test/10-episode production WebView comparison. The APK hash/source above is unchanged. Physical POCO smoothness and human visual acceptance remain open.

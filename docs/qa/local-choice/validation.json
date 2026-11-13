@@ -1,0 +1,25 @@
+{
+  "baseline": "c31a49e915ab5692edcc2b573c764501ebff9bea",
+  "runtimeByteIdenticalFiles": 86,
+  "unit": {
+    "passed": 313,
+    "files": 49
+  },
+  "productionBuild": "passed",
+  "offlineTypes": "passed",
+  "runtimeIntegrated": false,
+  "newBrowserRun": false,
+  "newNativeRun": false,
+  "humanPlaytest": false,
+  "apk": "0.63",
+  "decision": "REJECT",
+  "gamesVerified": 432,
+  "actionsVerified": 90111,
+  "issuedWitness": 30309,
+  "poolTrays": 41734,
+  "sampledPaths": 162253,
+  "externalPaths": 262146,
+  "negativeLasts": 4940,
+  "matchedPlaysVerified": 5760,
+  "node": "v24.22.1"
+}

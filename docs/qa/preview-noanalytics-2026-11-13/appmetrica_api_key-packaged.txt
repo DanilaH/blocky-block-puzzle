@@ -1,0 +1,2 @@
+/appmetrica_api_key
+      () ""

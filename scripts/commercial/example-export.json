@@ -1,0 +1,98 @@
+{
+  "as_of": 1800777600,
+  "assignments": [
+    {
+      "installation_id": "install-0",
+      "assignment_id": "a-0",
+      "assigned_at": 1800000000,
+      "variant": "control",
+      "cohort": "new",
+      "mode": "audience",
+      "test_mode": false
+    },
+    {
+      "installation_id": "install-1",
+      "assignment_id": "a-1",
+      "assigned_at": 1800000000,
+      "variant": "control",
+      "cohort": "new",
+      "mode": "audience",
+      "test_mode": false
+    },
+    {
+      "installation_id": "install-2",
+      "assignment_id": "a-2",
+      "assigned_at": 1800000000,
+      "variant": "candidate",
+      "cohort": "new",
+      "mode": "audience",
+      "test_mode": false
+    },
+    {
+      "installation_id": "install-3",
+      "assignment_id": "a-3",
+      "assigned_at": 1800000000,
+      "variant": "candidate",
+      "cohort": "new",
+      "mode": "audience",
+      "test_mode": false
+    }
+  ],
+  "impressions": [
+    {
+      "installation_id": "install-0",
+      "timestamp": 1800000001,
+      "impression_id": "i-zero",
+      "source": "blocky_ilrd_v1"
+    },
+    {
+      "installation_id": "install-2",
+      "timestamp": 1800000002,
+      "impression_id": "i-paid",
+      "source": "blocky_ilrd_v1"
+    },
+    {
+      "installation_id": "install-3",
+      "timestamp": 1800000003,
+      "impression_id": "i-unknown",
+      "source": "blocky_ilrd_v1"
+    }
+  ],
+  "revenue": [
+    {
+      "installation_id": "install-0",
+      "timestamp": 1800000001,
+      "impression_id": "i-zero",
+      "source": "blocky_ilrd_v1",
+      "currency": "USD",
+      "amount": "0",
+      "precision": "estimated"
+    },
+    {
+      "installation_id": "install-2",
+      "timestamp": 1800000002,
+      "impression_id": "i-paid",
+      "source": "blocky_ilrd_v1",
+      "currency": "USD",
+      "amount": "0.012345678901234567",
+      "precision": "publisher_defined"
+    }
+  ],
+  "events": [
+    {
+      "installation_id": "install-2",
+      "timestamp": 1800086400,
+      "event_id": "s1",
+      "name": "session_started",
+      "params": {}
+    },
+    {
+      "installation_id": "install-0",
+      "timestamp": 1800604800,
+      "event_id": "s7",
+      "name": "session_started",
+      "params": {}
+    }
+  ],
+  "synthetic": true
+}

@@ -59,8 +59,7 @@
     },
     "fullBrowser": {
       "planned": 232,
-      "passed": 232,
-      "status": "passed",
+      "status": "in_progress",
       "job": 129784802634
     }
   },
@@ -86,8 +85,7 @@
   "delivery": {
     "libraryFileId": "libfile_389fe51a053c819194d25ce48000eba9",
     "version": 4,
-    "archiveContains": "app-debug.apk",
-    "directApkLibraryFileId": "libfile_43334d3c936c81918f02009885eae1ef"
+    "archiveContains": "app-debug.apk"
   },
   "physicalPocoAcceptance": "open",
   "humanVisualAcceptance": "open",

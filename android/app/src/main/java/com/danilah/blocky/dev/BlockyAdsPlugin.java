@@ -27,6 +27,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.graphics.Insets;
 import java.util.UUID;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
 
 @CapacitorPlugin(name = "BlockyAds")
 public class BlockyAdsPlugin extends Plugin {
@@ -45,6 +48,16 @@ public class BlockyAdsPlugin extends Plugin {
   private PluginCall showing;
   private String showingKind, showingAttempt;
   private boolean shown;
+  private Map<String,String> appContext = new HashMap<>(), showingContext = new HashMap<>();
+  private String interstitialLoadState="never_requested", rewardedLoadState="never_requested";
+  private Map<String,String> contextSnapshot(JSONObject input) {
+    Map<String,String> result=new HashMap<>();
+    if(input!=null) {Iterator<String> keys=input.keys();while(keys.hasNext()&&result.size()<24){String key=keys.next();Object value=input.opt(key);if(key.length()<64&&(value instanceof String||value instanceof Number||value instanceof Boolean)&&String.valueOf(value).length()<256)result.put(key,String.valueOf(value));}}
+    result.put("testMode",String.valueOf(getContext().getResources().getBoolean(R.bool.ads_test_mode)));
+    result.put("appVersion",BuildConfig.VERSION_NAME);
+    return result;
+  }
+  @PluginMethod public void context(PluginCall call) {getActivity().runOnUiThread(()->{appContext=contextSnapshot(call.getObject("context"));call.resolve();});}
   private boolean telemetryLive;
   private boolean diagnosticSuspended;
   private int loadGeneration;
@@ -73,9 +86,13 @@ public class BlockyAdsPlugin extends Plugin {
   }
   private void event(String name,String kind) { event(name,kind,showingAttempt); }
   private void event(String name,String kind,String intentId) {
+    event(name,kind,intentId,showing!=null?showingContext:appContext);
+  }
+  private void event(String name,String kind,String intentId,Map<String,String> context) {
     if (diagnosticSuspended) return;
     JSObject e=new JSObject().put("name",name).put("kind",kind);
     if ("rewarded".equals(kind) && intentId!=null) e.put("intentId",intentId);
+    e.put("context",new JSONObject(context));
     if (telemetryLive) notifyListeners("analytics",e);
     else if (earlyEvents.length()<64) earlyEvents.put(e);
   }
@@ -90,7 +107,7 @@ public class BlockyAdsPlugin extends Plugin {
     call.resolve(new JSObject().put("enabled",enabled()).put("events",earlyEvents));
     earlyEvents=new JSONArray();
   }); }
-  @PluginMethod public void status(PluginCall call) {getActivity().runOnUiThread(()->{try{call.resolve(new JSObject().put("rewarded",rewarded!=null && receipts().length()==0 && showing==null).put("interstitial",interstitial!=null && showing==null));}catch(Exception e){call.reject("Ad state unavailable");}});}
+  @PluginMethod public void status(PluginCall call) {getActivity().runOnUiThread(()->{try{call.resolve(new JSObject().put("rewarded",rewarded!=null && receipts().length()==0 && showing==null).put("interstitial",interstitial!=null && showing==null).put("busy",showing!=null).put("initialized",initialized).put("interstitialLoad",interstitialLoadState).put("rewardedLoad",rewardedLoadState));}catch(Exception e){call.reject("Ad state unavailable");}});}
   @PluginMethod public void pending(PluginCall call) { getActivity().runOnUiThread(()->{try{call.resolve(new JSObject().put("rewards",receipts()));}catch(Exception e){call.reject("Cannot read receipts");}}); }
   @PluginMethod public void acknowledge(PluginCall call) {getActivity().runOnUiThread(()->{
     try {JSONArray next=new JSONArray(), all=receipts();String id=call.getString("id","");
@@ -105,23 +122,23 @@ public class BlockyAdsPlugin extends Plugin {
     final int generation = loadGeneration;
     long now = SystemClock.elapsedRealtime();
     if (interstitial == null && !loadingInterstitial && (lastInterstitialRequest == 0 || now - lastInterstitialRequest >= RETRY)) {
-      loadingInterstitial = true; lastInterstitialRequest = now; event("ad_request", "interstitial");
+      interstitialLoadState="loading"; loadingInterstitial = true; lastInterstitialRequest = now; event("ad_request", "interstitial");
       interstitialLoader.loadAd(new AdRequest.Builder(unit("interstitial")).build(), new InterstitialAdLoadListener() {
         @Override public void onAdLoaded(@NonNull InterstitialAd ad) {
           if (generation != loadGeneration) return;
-          loadingInterstitial = false; if (!destroyed && !diagnosticSuspended) { interstitial = ad; event("ad_loaded", "interstitial"); }
+          loadingInterstitial = false; if (!destroyed && !diagnosticSuspended) { interstitialLoadState="loaded"; interstitial = ad; event("ad_loaded", "interstitial"); }
         }
-        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; loadingInterstitial = false; event("ad_load_error", "interstitial"); }
+        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; interstitialLoadState="load_error:"+error.getCode(); loadingInterstitial = false; event("ad_load_error", "interstitial"); }
       });
     }
     if (rewarded == null && !loadingRewarded && (lastRewardedRequest == 0 || now - lastRewardedRequest >= RETRY)) {
-      loadingRewarded = true; lastRewardedRequest = now; event("ad_request", "rewarded");
+      rewardedLoadState="loading"; loadingRewarded = true; lastRewardedRequest = now; event("ad_request", "rewarded");
       rewardedLoader.loadAd(new AdRequest.Builder(unit("rewarded")).build(), new RewardedAdLoadListener() {
         @Override public void onAdLoaded(@NonNull RewardedAd ad) {
           if (generation != loadGeneration) return;
-          loadingRewarded = false; if (!destroyed && !diagnosticSuspended) { rewarded = ad; event("ad_loaded", "rewarded"); notifyListeners("ready",new JSObject(),true); }
+          loadingRewarded = false; if (!destroyed && !diagnosticSuspended) { rewardedLoadState="loaded"; rewarded = ad; event("ad_loaded", "rewarded"); notifyListeners("ready",new JSObject(),true); }
         }
-        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; loadingRewarded = false; event("ad_load_error", "rewarded"); }
+        @Override public void onAdFailedToLoad(@NonNull AdRequestError error) { if (generation != loadGeneration) return; rewardedLoadState="load_error:"+error.getCode(); loadingRewarded = false; event("ad_load_error", "rewarded"); }
       });
     }
   }
@@ -134,6 +151,11 @@ public class BlockyAdsPlugin extends Plugin {
     if (kind.equals("rewarded") && (rewarded == null || receipts().length()>0 || call.getString("intentId", "").isEmpty())) {
       call.resolve(new JSObject().put("status","unavailable").put("rewards",receipts()));preloadAds();return;
     }
+    final Map<String,String> frozen=contextSnapshot(call.getObject("context"));
+    frozen.put("showAttemptId",UUID.randomUUID().toString());
+    if(kind.equals("rewarded"))frozen.put("intentId",call.getString("intentId",""));
+    showingContext=new HashMap<>(frozen);
+    final boolean[] impressionRecorded={false};
     showing = call; showingKind = kind; showingAttempt = call.getString("intentId", ""); shown = false;
     if (bannerHost != null) bannerHost.setVisibility(View.GONE);
     // A missing pre-show callback must not leave the game blocked indefinitely.
@@ -145,8 +167,8 @@ public class BlockyAdsPlugin extends Plugin {
           @Override public void onAdShown() { if (showing == call) didShow(); }
           @Override public void onAdDismissed() { if (showing == call) finish("closed"); }
           @Override public void onAdFailedToShow(@NonNull AdError e) { if (showing == call) finish("error"); }
-          @Override public void onAdClicked() { event("ad_clicked", "interstitial"); }
-          @Override public void onAdImpression(@Nullable ImpressionData data) { event("ad_impression", "interstitial"); }
+          @Override public void onAdClicked() { event("ad_clicked", "interstitial",null,frozen); }
+          @Override public void onAdImpression(@Nullable ImpressionData data) { if(!impressionRecorded[0]){impressionRecorded[0]=true;NativeRevenue.impression(data==null?null:data.getRawData(),"interstitial",frozen);event("ad_impression", "interstitial",null,frozen);} }
         });
         interstitial.show(getActivity());
       } else {
@@ -156,8 +178,8 @@ public class BlockyAdsPlugin extends Plugin {
           @Override public void onAdShown() { if (showing == call) didShow(); }
           @Override public void onAdDismissed() { if (showing == call) finish("closed"); }
           @Override public void onAdFailedToShow(@NonNull AdError e) { if (showing == call) finish("error"); }
-          @Override public void onAdClicked() { event("ad_clicked", "rewarded", intentId); }
-          @Override public void onAdImpression(@Nullable ImpressionData data) { event("ad_impression", "rewarded", intentId); }
+          @Override public void onAdClicked() { event("ad_clicked", "rewarded", intentId,frozen); }
+          @Override public void onAdImpression(@Nullable ImpressionData data) { if(!impressionRecorded[0]){impressionRecorded[0]=true;NativeRevenue.impression(data==null?null:data.getRawData(),"rewarded",frozen);event("ad_impression", "rewarded", intentId,frozen);} }
           @Override public void onRewarded(@NonNull Reward reward) {
             if (issued || destroyed) return;
             try {
@@ -165,7 +187,7 @@ public class BlockyAdsPlugin extends Plugin {
               JSObject receipt=new JSObject().put("id",UUID.randomUUID().toString()).put("intentId",intentId);
               all.put(receipt);
               if(prefs.edit().putString("receipts",all.toString()).commit()) {
-                issued=true;event("ad_reward_earned","rewarded",intentId);notifyListeners("reward",receipt,true);
+                issued=true;event("ad_reward_earned","rewarded",intentId,frozen);notifyListeners("reward",receipt,true);
               } else notifyListeners("receiptError",new JSObject(),true);
             } catch(Exception e) {notifyListeners("receiptError",new JSObject(),true);}
 
@@ -255,7 +277,7 @@ public class BlockyAdsPlugin extends Plugin {
         @Override public void onAdLoaded(){if(banner==current)event("ad_loaded","banner");}
         @Override public void onAdFailedToLoad(@NonNull AdRequestError e){if(banner==current){clearBanner();event("ad_load_error","banner");}}
         @Override public void onAdClicked(){event("ad_clicked","banner");}
-        @Override public void onImpression(@Nullable ImpressionData d){event("ad_impression","banner");}
+        @Override public void onImpression(@Nullable ImpressionData d){NativeRevenue.impression(d==null?null:d.getRawData(),"banner",new HashMap<>(appContext));event("ad_impression","banner",null,appContext);}
       });
       banner.loadAd(new AdRequest.Builder(unit("banner")).build());
     }

@@ -1,0 +1,41 @@
+{
+  "runId": 42845500290,
+  "url": "https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42845500290",
+  "event": "pull_request",
+  "head": "5d48018acc56ef5e7c651de880bde9b1cdcf8afc",
+  "mergeCommit": "b2038b52a38fee35434886b438955319e2f596e8",
+  "runAttempt": 2,
+  "conclusion": "success",
+  "lockedInstall": true,
+  "unit": {
+    "passed": 264,
+    "files": 38
+  },
+  "browser": {
+    "passed": 236
+  },
+  "focusedEffects": {
+    "passed": 25
+  },
+  "android": {
+    "unitAndBuild": "passed",
+    "signatureAndProductionFiles": "passed"
+  },
+  "emulator": {
+    "tests": 2,
+    "episodes": 10,
+    "physical": false,
+    "functionalOnly": true,
+    "result": "passed",
+    "initialFailureBeforeApkInstall": "Android phone service unavailable during svc data disable; retried same job against exact same APK"
+  },
+  "apk": {
+    "sha256": "b83ab374ed6dff6b7eabf335b6e6e705286f040b465f569d5fb84f54991d4ab9",
+    "version": "0.63.0-preview",
+    "versionCode": 63,
+    "package": "com.danilah.blocky.dev",
+    "productionFilesMatched": 99,
+    "compatibleWith062": true
+  },
+  "research": "36f08978dd6089926799f2dab159bdad6a6a7285"
+}

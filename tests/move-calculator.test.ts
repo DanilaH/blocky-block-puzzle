@@ -32,6 +32,18 @@ function harness() {
 }
 afterEach(() => vi.useRealTimers());
 
+it("terminates cancelled candidate work and ignores its stale response", async()=>{
+  const h=harness(),g=state();g.dealerVersion="composition-v1";
+  const pending=h.calculator.calculate(g,move,g.revision);
+  const rejection=expect(pending).rejects.toThrow("cancelled");
+  const stale=h.workers[0]!.onmessage!;
+  h.calculator.cancel();await rejection;
+  expect(h.workers[0]!.terminate).toHaveBeenCalledOnce();
+  const next=h.calculator.calculate(g,move,g.revision);
+  stale.call(h.workers[0]! as unknown as Worker,{data:{result:{stale:true}}} as MessageEvent);
+  h.workers[1]!.reply(null);expect(await next).toBeNull();
+});
+
 it("isolates a retry from a late response to a timed-out move", async () => {
   vi.useFakeTimers();
   const h = harness(),
@@ -153,4 +165,18 @@ it('runs the goal-cycle refill in the worker with its complete goal state',async
   expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});
   h.workers[0]!.reply(expected);expect(await result).toEqual(expected);
   expect(expected!.state.goalDirector!.deals).toBe(g.goalDirector!.deals+1);
+});
+
+it('runs a mixed-cycle refill in the worker with its saved spacing and gift state',async()=>{
+  const h=harness(),g=newGame(42,'mixed-worker','director-v3');g.tray[0]!.used=g.tray[1]!.used=true;
+  const expected=applyMove(g,move,g.revision),result=h.calculator.calculate(g,move,g.revision);
+  expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});h.workers[0]!.reply(expected);
+  expect(await result).toEqual(expected);expect(expected!.state.mixedDirector!.deals).toBe(g.mixedDirector!.deals+1);
+});
+
+it('runs a forgiving refill in the worker with its preparation proofs',async()=>{
+  const h=harness(),g=newGame(42,'forgiving-worker','director-v4');g.tray[0]!.used=g.tray[1]!.used=true;
+  const expected=applyMove(g,move,g.revision),result=h.calculator.calculate(g,move,g.revision);
+  expect(h.workers[0]!.postMessage).toHaveBeenCalledWith({state:g,move,revision:g.revision});h.workers[0]!.reply(expected);
+  expect(await result).toEqual(expected);expect(expected!.state.forgivingDirector!.deals).toBe(g.forgivingDirector!.deals+1);
 });

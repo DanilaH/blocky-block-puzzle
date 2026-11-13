@@ -1,9 +1,11 @@
 import type { ProductAnalytics } from "./analytics";
+import { experimentContext } from "../core/experiment";
 import type { GameState } from "../core/rules";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import {
   applyReceipt,
   canInterstitial,
+  interstitialReasons,
   emptyAds,
   finishAttempt,
   prepareReward,
@@ -21,6 +23,7 @@ export interface Receipt {
   intentId: string;
 }
 export interface AdBridge {
+  context?(p:{context:Record<string,string|number|boolean>}):Promise<void>;
   initialize(): Promise<{
     enabled: boolean;
     events?: { name: string; kind: string; intentId?: string }[];
@@ -32,6 +35,7 @@ export interface AdBridge {
   show(p: {
     kind: "rewarded" | "interstitial";
     intentId?: string;
+    context?: Record<string,string|number|boolean>;
   }): Promise<{ status: string; shown?: boolean; rewards?: Receipt[] }>;
   geometry(p: { width: number; viewportWidth: number }): Promise<{
     geometry: Omit<NativeBannerPlacementInput, "slot" | "viewport">;
@@ -58,6 +62,7 @@ export function nativeAds(): AdBridge | null {
 export class AdsController {
   busy = false;
   enabled = false;
+  readyState: "ready" | "not_ready" | "unknown" = "unknown";
   private queue: DurableReceiptQueue<Receipt>;
   private active = false;
   private tick = performance.now();
@@ -81,15 +86,17 @@ export class AdsController {
           (i) => i.id === r.intentId,
         );
         const firstGrant = intent?.status === "pending";
+        if (firstGrant) this.analytics?.track("reward_earned",{...intent?.context,intentId:r.intentId,gameId:intent!.gameId,kind:intent!.kind},`reward_earned:${r.intentId}`);
         if (!(await store.update((p) => applyReceipt(this.stamp(p), r))))
           throw Error("Save busy");
         if (firstGrant)
           this.analytics?.track(
-            "reward_applied",
+            store.state.ads!.intents.find(i=>i.id===r.intentId)!.status === "available" ? "reward_available" : "reward_applied",
             {
               intentId: r.intentId,
               gameId: intent!.gameId,
               kind: intent!.kind,
+              ...intent!.context,
             },
             `reward_applied:${r.intentId}`,
           );
@@ -152,10 +159,15 @@ export class AdsController {
           this.problem("Не удалось сохранить подтверждение награды."),
         ),
       );
-      const event = (e: { name: string; kind: string; intentId?: string }) => {
+      const event = (e: { name: string; kind: string; intentId?: string; context?:Record<string,string|number|boolean> }) => {
+        if (e.kind==="rewarded") {
+          if(e.name==="ad_loaded") this.readyState="ready";
+          if(["ad_request","ad_shown","ad_load_error","ad_show_error"].includes(e.name)) this.readyState="not_ready";
+        }
         if (/^ad_[a-z_]+$/.test(e.name))
           this.analytics?.track(e.name, {
             format: e.kind,
+            ...e.context,
             ...(e.intentId ? { intentId: e.intentId } : {}),
           });
       };
@@ -174,11 +186,14 @@ export class AdsController {
       // Native readiness is false while an unacknowledged receipt exists.
       // Retry its durable application before asking for another advertisement.
       await this.recover();
-      return (await this.bridge.status()).rewarded;
+      const ready=(await this.bridge.status()).rewarded;
+      this.readyState=ready?"ready":"not_ready";
+      return ready;
     } catch {
       return false;
     }
   }
+  syncContext(p:Profile) { void this.bridge?.context?.({context:{...experimentContext(p),gameId:p.game.gameId,placement:"gameplay_banner"}}).catch(()=>{}); }
   preload() {
     void this.bridge?.preload().catch(() => {});
   }
@@ -222,11 +237,16 @@ export class AdsController {
                   lastFullscreenMs: current.ads!.activeMs,
                 },
               }
-            : prepareReward(current, id, kind);
+            : (() => {
+              const next=prepareReward(current,id,kind);
+              next.ads!.intents.find(i=>i.id===id)!.context={...experimentContext(current),gameId:g.gameId,placement:kind,offerId:g.reviveOffer?.id??"",failureIndex:current.metrics?.failureIndex??0,runActiveMs:current.metrics?.activeMs??0,runMaxStreak:current.metrics?.maxStreak??g.streak,runDurationComplete:current.metrics?.durationComplete??false};
+              return next;
+            })();
         }))
       )
         return "error";
-      const result = await this.bridge.show({ kind: "rewarded", intentId: id });
+      const context=this.store.state.ads!.intents.find(i=>i.id===id)!.context;
+      const result = await this.bridge.show({ kind: "rewarded", intentId: id, context });
       for (const r of result.rewards ?? []) await this.receive(r);
       return this.store.state.ads?.intents.find((i) => i.id === id)?.status !==
         "pending"
@@ -248,18 +268,27 @@ export class AdsController {
       await this.store.waitIdle();
       const original = this.store.state.game;
       if (original.status !== "over") return false;
-      if (this.store.state.ads?.completed.includes(original.gameId))
-        return true;
+      const closeKey=`${original.gameId}:${this.store.state.metrics?.episode??1}`;
+      if (this.store.state.ads?.closedEpisodes?.includes(closeKey)) return true;
+      let ready:boolean|null=null, statusError=false, nativeBusy=false, sdkAvailable=this.enabled&&!!this.bridge, requestState="unknown";
+      if (this.bridge && this.enabled) try {
+        const status=await this.bridge.status() as {interstitial:boolean;busy?:boolean;initialized?:boolean;interstitialLoad?:string};
+        ready=status.interstitial; nativeBusy=!!status.busy; sdkAvailable=status.initialized!==false; requestState=status.interstitialLoad??"unknown";
+      } catch {statusError=true;}
+      let reasons:string[]=[];
       let eligible = false;
       const saved = await this.store.update((current) => {
+        if(current.game.gameId!==original.gameId || current.game.revision!==original.revision || current.game.status!=="over") return null;
         const next = finishAttempt(this.stamp(current)),
           a = next.ads!;
+        reasons=interstitialReasons(next,{enabled:sdkAvailable,busy:nativeBusy,ready,statusError});
         eligible = this.enabled && !!this.bridge && canInterstitial(next);
         return {
           ...next,
           revision: current.revision + 1,
           ads: {
             ...a,
+            eligibility:[...(a.eligibility??[]),{key:closeKey,reasons,ready,sdkAvailable,requestState,result:"evaluated"}].slice(-32),
             ...(eligible
               ? {
                   lastFullscreenMs: a.activeMs,
@@ -273,18 +302,22 @@ export class AdsController {
         };
       });
       if (!saved) return false;
-      if (eligible) {
+      this.analytics?.track("interstitial_eligibility",{...experimentContext(this.store.state),gameId:original.gameId,closeKey,reasons:reasons.join(","),sdkAvailable,requestState,readyState:ready===null?"unknown":String(ready)},`interstitial_eligibility:${closeKey}`);
+      let requestResult=eligible?"not_ready":"ineligible";
+      if (eligible && this.store.state.game.gameId===original.gameId && this.store.state.game.status==="over") {
         this.analytics?.track("ad_opportunity", {
           format: "interstitial",
           gameId: original.gameId,
         });
         try {
-          if ((await this.bridge!.status()).interstitial)
-            await this.bridge!.show({ kind: "interstitial" });
+          if (ready) requestResult=(await this.bridge!.show({ kind: "interstitial",context:{...experimentContext(this.store.state),gameId:original.gameId,placement:"run_closed",closeKey} })).status;
         } catch {
-          /* The completed decision is durable; no retry on reload. */
+          requestResult="error";
         }
       }
+      await this.store.waitIdle();
+      await this.store.update(p=>({...p,revision:p.revision+1,ads:{...p.ads!,eligibility:p.ads!.eligibility?.map(d=>d.key===closeKey?{...d,result:requestResult}:d)}}));
+      this.analytics?.track("interstitial_outcome",{gameId:original.gameId,closeKey,result:requestResult},`interstitial_outcome:${closeKey}`);
       return true;
     } finally {
       this.busy = false;

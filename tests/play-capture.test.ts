@@ -23,6 +23,43 @@ const nextUnused = (g: ReturnType<typeof game>) => {
   return { move, result: applyMove(g, move, g.revision)! };
 };
 
+it("a fresh record of the same length still needs its own export", () => {
+  const c = new PlayCapture(() => 0),
+    g = game();
+  expect(c.hasUnexportedData).toBe(false);
+  c.start(g);
+  c.stop();
+  const old = c.snapshot();
+  c.markExported(c.revision);
+  expect(c.hasUnexportedData).toBe(false);
+  c.clear();
+  expect(c.hasUnexportedData).toBe(false);
+  c.start(g);
+  expect(c.snapshot().events).toHaveLength(old.events.length);
+  expect(c.hasUnexportedData).toBe(true);
+});
+
+it("a late export cannot acknowledge newly appended or replacement content", () => {
+  const c = new PlayCapture(() => 0),
+    g = game(),
+    a = next(g);
+  c.start(g);
+  c.stop();
+  const pending = c.revision;
+  c.start(g);
+  c.record(g, a.move, a.result.state);
+  c.markExported(pending);
+  expect(c.hasUnexportedData).toBe(true);
+  c.clear();
+  c.start(g);
+  c.markExported(pending);
+  expect(c.hasUnexportedData).toBe(true);
+  c.markExported(c.revision);
+  expect(c.hasUnexportedData).toBe(false);
+  c.markExported(pending);
+  expect(c.hasUnexportedData).toBe(false);
+});
+
 it("replays a recording started at nonzero score without changing its state", () => {
   const first = next(game()).result.state;
   const c = new PlayCapture(() => 0),

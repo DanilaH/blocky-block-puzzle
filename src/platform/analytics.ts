@@ -1,4 +1,5 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
+import { experimentContext } from "../core/experiment";
 import { APP_VERSION } from "../app-version";
 import type { Profile } from "../core/profile";
 
@@ -43,7 +44,7 @@ export class ProductAnalytics {
     } catch {
       this.enabled = false;
     }
-    if (this.enabled) this.schedule();
+    if (this.enabled) await this.flush();
   }
   track(name: string, params: Params = {}, id: string = crypto.randomUUID()) {
     if (this.disposed) return;
@@ -54,7 +55,7 @@ export class ProductAnalytics {
         eventId: id,
         sessionId: this.sessionId,
         appVersion: APP_VERSION,
-        eventSchema: 1,
+        eventSchema: 2,
       },
     };
     this.history.push(event);
@@ -124,26 +125,45 @@ export class ProductAnalytics {
     this.accumulate();
     const old = this.stats(before);
     const same = next.game.gameId === before.game.gameId;
+    const activeMs = old.activeMs + Math.floor(this.elapsed - this.savedElapsed);
+    const previousProgress = before.metrics?.reviveProgress;
+    const justRevived = next.game.reviveUsed && (!same || !before.game.reviveUsed);
+    const intent = justRevived ? next.ads?.intents.find(i=>i.gameId===next.game.gameId&&i.kind==="revive"&&["applied","claimed"].includes(i.status)) : undefined;
+    const restoredActive=justRevived&&!same?Number(intent?.context?.runActiveMs??0):0;
+    const progress = justRevived && intent ? { intentId:intent.id, offerId:intent.snapshot?.reviveOffer?.id??`legacy:${intent.id}`, startMoves:next.game.moves, oldTrayEnd:next.game.moves+next.game.tray.filter(s=>!s.used).length, activeAt:same?activeMs:restoredActive, flags:0 } : same&&previousProgress?{...previousProgress}:undefined;
+    if (progress) {
+      const delta=next.game.moves-progress.startMoves;
+      progress.flags |= Number(delta>0) | (Number(next.game.moves>=progress.oldTrayEnd)<<1) | (Number(next.game.moves>=progress.oldTrayEnd+3)<<2) | (Number(next.game.status==="over"&&delta>0)<<3);
+    }
     return {
       ...next,
       metrics: same
         ? {
             ...old,
-            activeMs:
-              old.activeMs + Math.floor(this.elapsed - this.savedElapsed),
+            activeMs,
+            failureIndex: (before.metrics?.failureIndex??0)+Number(before.game.status==="playing"&&next.game.status==="over"),
+            closed: justRevived ? false : !!before.metrics?.closed || !!next.ads?.closedEpisodes?.includes(`${next.game.gameId}:${before.metrics?.episode??1}`),
+            episode: justRevived&&before.metrics?.closed?(before.metrics.episode??1)+1:before.metrics?.episode??1,
+            ...(progress?{reviveProgress:progress}:{}),
             maxStreak: Math.max(old.maxStreak, next.game.streak),
             started: old.started || next.game.moves > 0,
           }
         : {
             gameId: next.game.gameId,
-            activeMs: 0,
-            maxStreak: next.game.streak,
+            activeMs: restoredActive,
+            maxStreak: Math.max(next.game.streak,Number(intent?.context?.runMaxStreak??0)),
             started: next.game.moves > 0,
-            durationComplete: next.game.moves === 0,
+            durationComplete: next.game.moves === 0 || intent?.context?.runDurationComplete===true,
+            failureIndex: Number(intent?.context?.failureIndex??0), closed: false,
+            episode: next.game.reviveUsed&&next.ads?.completed.includes(next.game.gameId)?2:1,
+            ...(progress?{reviveProgress:progress}:{}),
           },
     };
   }
   boot(p: Profile, fresh: boolean, recovered: boolean) {
+    this.track("session_started",experimentContext(p),`session:${this.sessionId}`);
+    const assignment=p.experiment?.assignment;
+    if (assignment) this.track("experiment_assigned",{...experimentContext(p),assignedAt:assignment.assignedAt,installationId:p.experiment!.installationId},`assignment:${assignment.id}`);
     if (fresh) {
       this.track("first_open", {}, "first_open");
       this.track("tutorial_start", { step: p.tutorialStep ?? 0 });
@@ -151,12 +171,14 @@ export class ProductAnalytics {
     if (recovered) this.track("save_recovered", { reason: "backup" });
   }
   committed(before: Profile, next: Profile, reason?: string) {
+    const assignment=next.experiment?.assignment;
+    if (assignment && assignment.id!==before.experiment?.assignment?.id) this.track("experiment_assigned",{...experimentContext(next),assignedAt:assignment.assignedAt,installationId:next.experiment!.installationId},`assignment:${assignment.id}`);
     const g = next.game,
       prev = before.game;
     const oldStats = this.stats(before);
     const elapsed = Math.floor(this.elapsed - this.savedElapsed);
     this.savedElapsed = this.elapsed;
-    const context = { gameId: g.gameId };
+    const context = { ...experimentContext(next), gameId: g.gameId, episodeIndex:next.metrics?.episode??1 };
     const emit = (name: string, params: Params = {}) =>
       this.track(
         name,
@@ -176,6 +198,7 @@ export class ProductAnalytics {
     }
     if (same && !oldStats.started && g.moves > 0 && lessonAfter === 4) {
       emit("game_start", { dealerVersion: g.dealerVersion });
+      emit("run_started");
       this.resumedGame = g.gameId;
     }
     if (
@@ -198,8 +221,22 @@ export class ProductAnalytics {
         `game_end:${prev.gameId}:${same ? g.revision : prev.revision}`,
       );
     }
-    if ((!same && g.reviveUsed) || (same && !prev.reviveUsed && g.reviveUsed))
-      emit("revive_applied", { restored: !same });
+    const failure = same && prev.status === "playing" && g.status === "over";
+    if (failure) emit("run_failed",{failureIndex:next.metrics?.failureIndex??1,revision:g.revision,moves:g.moves,score:g.score,reviveCount:Number(g.reviveUsed)});
+    if ((same && !before.metrics?.closed && next.metrics?.closed) || (!same && oldStats.started && !before.metrics?.closed))
+      this.track("run_closed",{...experimentContext(before),gameId:prev.gameId,episodeIndex:before.metrics?.episode??1,reason:same?"final_result":"restart",moves:same?g.moves:prev.moves,score:same?g.score:prev.score,activeMs:oldStats.activeMs+elapsed},`run_closed:${prev.gameId}:${before.metrics?.episode??1}`);
+    if (g.reviveUsed && ((!same) || (!prev.reviveUsed && before.metrics?.closed))) emit("run_reopened",{intentId:next.metrics?.reviveProgress?.intentId??"legacy"});
+    const offer=g.reviveOffer;
+    if (same && offer?.shown && !prev.reviveOffer?.shown) emit("revive_offer_shown",{offerId:offer.id??`legacy:${g.gameId}`,failureIndex:next.metrics?.failureIndex??1,deadline:offer.deadline,readyState:offer.readyState??"unknown"});
+    if (same && offer?.decision && !prev.reviveOffer?.decision) emit("revive_offer_decided",{offerId:offer.id??`legacy:${g.gameId}`,decision:offer.decision,readyState:offer.readyState??"unknown"});
+    const progress=next.metrics?.reviveProgress, priorFlags=progress && before.metrics?.reviveProgress?.intentId===progress.intentId?before.metrics!.reviveProgress!.flags:0;
+    if (progress) for (const [i,milestone] of ["first_move","old_tray_completed","next_tray_completed","failed_again"].entries())
+      if ((progress.flags&(1<<i)) && !(priorFlags&(1<<i))) this.track("post_revive_checkpoint",{...context,intentId:progress.intentId,offerId:progress.offerId,milestone,additionalMoves:g.moves-progress.startMoves,additionalActiveMs:(next.metrics?.activeMs??0)-progress.activeAt},`post_revive_checkpoint:${progress.intentId}:${milestone}`);
+    if ((!same && g.reviveUsed) || (same && !prev.reviveUsed && g.reviveUsed)) {
+      const intent=next.ads?.intents.find(i=>i.gameId===g.gameId&&i.kind==="revive"&&["applied","claimed"].includes(i.status));
+      emit("revive_applied", { restored: !same,intentId:intent?.id??"legacy" });
+      if (intent?.status==="claimed") this.track("reward_applied",{...context,intentId:intent.id,kind:"revive",offerId:intent.snapshot?.reviveOffer?.id??"legacy"},`reward_applied:${intent.id}`);
+    }
     if (same && g.streak > prev.streak)
       emit("clear", { streak: g.streak, points: g.score - prev.score });
     if (next.hint && next.hint.hintId !== before.hint?.hintId)

@@ -48,6 +48,20 @@ export class PerformanceCapture {
   private activeSince = 0;
   private longTaskSupported = false;
   private context: unknown = null;
+  private startedAt = 0;
+  private nextResourceAt = 0;
+  private probe: (() => Record<string, number>) | null = null;
+  private resourceSamples: { at: number; values: Record<string, number> }[] = [];
+  private windows = new Map<number, { frames: number; totalMs: number; maxMs: number; over50: number; phases: Record<string, Summary> }>();
+  setResourceProbe(probe: () => Record<string, number>) { this.probe = probe; }
+  private window(at: number) {
+    const minute = Math.max(0, Math.floor((at - this.startedAt) / 60000));
+    if (!this.windows.has(minute)) {
+      if (this.windows.size >= 32) this.windows.delete([...this.windows.keys()][1]!);
+      this.windows.set(minute, { frames: 0, totalMs: 0, maxMs: 0, over50: 0, phases: {} });
+    }
+    return this.windows.get(minute)!;
+  }
   markPlacement(
     lines: number,
     streak: number,
@@ -85,6 +99,8 @@ export class PerformanceCapture {
   }
   start(context: unknown = null) {
     this.context = structuredClone(context);
+    this.startedAt = performance.now(); this.nextResourceAt = this.startedAt;
+    this.resourceSamples = []; this.windows.clear();
     this.observer?.disconnect();
     this.observer = null;
     this.markers = [];
@@ -126,10 +142,20 @@ export class PerformanceCapture {
   }
   private tick = (now: number) => {
     if (this.last) {
-      this.frames[this.cursor] = now - this.last;
+      const ms = now - this.last, w = this.window(now);
+      w.frames++; w.totalMs += ms; w.maxMs = Math.max(w.maxMs, ms); w.over50 += Number(ms > 50);
+      this.frames[this.cursor] = ms;
       this.frameTimes[this.cursor] = now;
       this.cursor = (this.cursor + 1) % this.frames.length;
       this.count = Math.min(this.frames.length, this.count + 1);
+    }
+    if (this.probe && now >= this.nextResourceAt) {
+      this.nextResourceAt = now + 5000;
+      try {
+        const values = Object.fromEntries(Object.entries(this.probe()).slice(0, 24).filter(([,v])=>Number.isFinite(v)));
+        if (this.resourceSamples.length >= 128) this.resourceSamples.splice(1, 1);
+        this.resourceSamples.push({at: now, values});
+      } catch { /* Diagnostics cannot break rendering. */ }
     }
     this.last = now;
     this.frame = requestAnimationFrame(this.tick);
@@ -175,6 +201,9 @@ export class PerformanceCapture {
       summary = { count: 0, totalMs: 0, maxMs: 0 };
       this.summaries.set(name, summary);
     }
+    const w = this.window(performance.now());
+    const local = w.phases[name] ??= { count: 0, totalMs: 0, maxMs: 0 };
+    local.count++; local.totalMs += ms; local.maxMs = Math.max(local.maxMs, ms);
     summary.count++;
     summary.totalMs += ms;
     summary.maxMs = Math.max(summary.maxMs, ms);
@@ -195,6 +224,10 @@ export class PerformanceCapture {
       version: APP_VERSION,
       schemaVersion: 4,
       context: structuredClone(this.context),
+      captureStartedAt: this.startedAt,
+      minuteWindows: structuredClone([...this.windows].map(([minute,value])=>({minute,...value}))),
+      resources: structuredClone(this.resourceSamples),
+      windowClock: "elapsed wall minutes since opt-in start; inactive periods produce no frames",
       timestampClock:
         "performance.now milliseconds; frame timestamps mark interval end",
       phaseUnits:

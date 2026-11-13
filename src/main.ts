@@ -1,3 +1,4 @@
+import { ensureExperiment, assignedDealer, enabledDealer, COMPOSITION_EXPERIMENT } from "./core/experiment";
 import { compactMoveReward } from "./game/compact-reward";
 import { readRenderInfo } from "./platform/render-info";
 import type { ClearLayer } from "./diagnostics/clear-layers";
@@ -90,6 +91,33 @@ const fresh = (dealer: DealerVersion = "director-v2") => ({
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
 });
+const dealerChoices = [
+  { version: "composition-v1", label: "Разнообразные формы · проба", note: "Пробная выдача на основе «С задачами и нагрузкой». Сравнивайте в новой партии; баланс ещё не принят." },
+  {
+    version: "director-v2",
+    label: "С задачами и нагрузкой",
+    note: "Подготовка и зачистки чередуются с крупными фигурами. Тройку можно разложить целиком, если подобрать порядок и места.",
+  },
+  {
+    version: "flow-v4",
+    label: "Прежняя выдача",
+    note: "Прежний ритм выдачи для сравнения ощущений с новой версией.",
+  },
+  {
+    version: "initial-v1",
+    label: "Обычная",
+    note: "Случайные фигуры. При выдаче есть хотя бы один доступный ход, но вся тройка может не поместиться.",
+  },
+  {
+    version: "assist-v1",
+    label: "С умеренной помощью",
+    note: "Обычная выдача с дополнительными возможностями очистки. Помощь срабатывает не каждый раз.",
+  },
+] as const satisfies readonly {
+  version: DealerVersion;
+  label: string;
+  note: string;
+}[];
 async function start() {
   document.documentElement.dataset.presentation = "classic";
   const traceRequest = new URLSearchParams(location.search).get("clearTrace");
@@ -136,9 +164,17 @@ async function start() {
   const traceModule = phoneTrace
     ? await import("./diagnostics/phone-clear")
     : null;
-  const initial = traceModule
+  let initial = traceModule
     ? traceModule.fixtureProfile((loaded.profile?.revision ?? 0) + 1)
     : (loaded.profile ?? createProfile(fresh()));
+  if (!traceModule) {
+    const initialized=ensureExperiment(initial,Date.now(),!loaded.profile,crypto.randomUUID(),{...COMPOSITION_EXPERIMENT,enabled:COMPOSITION_EXPERIMENT.enabled&&!loaded.profile});
+    if (initialized!==initial) {
+      initial={...initialized,revision:initial.revision+1};
+      if (!loaded.profile && COMPOSITION_EXPERIMENT.enabled) initial.game={...fresh(assignedDealer(initial)),comparisonMode:"audience"};
+      await adapter.write(initial);
+    }
+  }
   if (traceModule || !loaded.profile) await adapter.write(initial);
   const store = new ProfileStore(initial, adapter),
     audio = new GameAudio(),
@@ -146,13 +182,14 @@ async function start() {
   scene.compactEffects = compactEffects;
   const analytics = new ProductAnalytics(phoneTrace ? null : nativeAnalytics());
   const playCapture = new PlayCapture();
-  let exportedPlayEvents = 0;
   let performanceExported = false;
+  let syncAdContext = (_p:Profile) => {};
   store.observer = {
     prepare: (before, next) => analytics.prepare(before, next),
     committed: (before, next, reason) => {
       playCapture.committed(before, next);
       analytics.committed(before, next, reason);
+      syncAdContext(next);
     },
     saveFailed: () => analytics.saveFailed(),
   };
@@ -169,6 +206,7 @@ async function start() {
         type: "module",
       }),
   );
+  window.addEventListener("pagehide", () => moveCalculator.cancel());
   let praiseWorker: Worker | null = null;
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
@@ -363,6 +401,13 @@ async function start() {
     scoreFrame = requestAnimationFrame(tick);
   }
   const cosmetic = new Set<Animation>();
+  performanceCapture.setResourceProbe(() => ({
+    elements: document.getElementsByTagName("*").length,
+    animations: document.getAnimations().length, cosmetic: cosmetic.size,
+    timers: festivalTimers.size, rewards: rewards.size,
+    voices: audio.resources().voices, ...festival.resources(),
+    heapBytes: (performance as Performance & {memory?:{usedJSHeapSize:number}}).memory?.usedJSHeapSize ?? -1,
+  }));
   function animate(
     target: Element,
     frames: Keyframe[],
@@ -486,6 +531,8 @@ async function start() {
     (message) => toast(message, 6000),
     analytics,
   );
+  syncAdContext=(p)=>ads.syncContext(p);
+  syncAdContext(store.state);
   bannerWatch = watchBanner(
     adBridge,
     el("ad-slot"),
@@ -2189,7 +2236,7 @@ async function start() {
     if (dialog.open) {
       if (modal === "result") return;
       if (modal === "revive") {
-        void declineRevive();
+        void declineRevive("back");
         return;
       }
       if (modal === "rules" || modal === "restart") {
@@ -2292,7 +2339,7 @@ async function start() {
     el("reward-back").onclick = close;
     rewardButton("hints");
   }
-  async function declineRevive() {
+  async function declineRevive(decision: "back" | "explicit_decline" = "explicit_decline") {
     if (ads.busy || store.busy) return;
     try {
       if (
@@ -2302,6 +2349,8 @@ async function start() {
           game: {
             ...p.game,
             reviveOffer: {
+              ...p.game.reviveOffer,
+              decision,
               deadline: p.game.reviveOffer?.deadline ?? Date.now(),
               accepted: false,
               expired: true,
@@ -2353,6 +2402,7 @@ async function start() {
       "revive",
     );
     positionRevive();
+    if (!store.state.game.reviveOffer?.shown) void store.update(p=>p.game.reviveOffer?{...p,revision:p.revision+1,game:{...p.game,reviveOffer:{...p.game.reviveOffer,shown:true,readyState:ads.readyState}}}:p).catch(error=>writeFailure(error,"Не удалось сохранить показ предложения."));
     stopReviveClock();
     if (!accepted)
       stopReviveClock = presentReviveClock(
@@ -2418,9 +2468,14 @@ async function start() {
     body.append(details);
     const captureUI = document.createElement("details");
     captureUI.className = "diagnostics";
-    captureUI.innerHTML = `<summary>Запись партии для разбора</summary><p>Только ходы и время активной игры. Ничего не отправляется автоматически. Выгрузите запись до закрытия игры.</p><p id="play-capture-status" role="status"></p><button id="play-capture-toggle" class="secondary"></button><button id="play-capture-export" class="secondary">Выгрузить запись партии</button><button id="play-capture-clear" class="secondary">Удалить запись</button>`;
+    captureUI.innerHTML = `<summary>Запись партии для разбора</summary><p>Только ходы и время активной игры. Ничего не отправляется автоматически. Выгрузите запись до закрытия игры.</p><p id="play-capture-policy"></p><p id="play-capture-status" role="status"></p><button id="play-capture-toggle" class="secondary"></button><button id="play-capture-export" class="secondary">Выгрузить запись партии</button><button id="play-capture-clear" class="secondary">Удалить запись</button>`;
     details.append(captureUI);
     const updateCapture = () => {
+      const choice = dealerChoices.find(
+        (choice) => choice.version === currentGame().dealerVersion,
+      );
+      el("play-capture-policy").textContent =
+        `Текущая выдача: ${choice?.label ?? "Сохранённая выдача"}`;
       el("play-capture-status").textContent =
         `${playCapture.enabled ? "Запись идёт" : playCapture.status === "limit" ? "Достигнут лимит записи" : playCapture.hasData ? "Запись остановлена" : "Запись выключена"} · ходов: ${playCapture.count}`;
       el("play-capture-toggle").textContent = playCapture.enabled
@@ -2449,9 +2504,10 @@ async function start() {
       playCapture.stop();
       updateCapture();
       const record = playCapture.snapshot();
+      const revision = playCapture.revision;
       void sharePlayRecord(record)
         .then(() => {
-          exportedPlayEvents = record.events.length;
+          playCapture.markExported(revision);
         })
         .catch(() =>
           toast(
@@ -2497,8 +2553,7 @@ async function start() {
         performanceCapture.enabled ||
         (!performanceExported && performanceCapture.snapshot().sampleCount > 0)
           ? "Сначала выгрузите текущий замер плавности"
-          : playCapture.hasData &&
-              playCapture.snapshot().events.length !== exportedPlayEvents
+          : playCapture.hasUnexportedData
             ? "Сначала выгрузите или удалите запись партии"
             : "";
       if (message) {
@@ -2653,22 +2708,34 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice"><option value="director-v2">С задачами и нагрузкой</option><option value="flow-v4">Прежняя выдача</option><option value="initial-v1">Обычная</option><option value="assist-v1">С умеренной помощью</option></select></label><p class="dealer-note">Подготовка и зачистки чередуются с крупными фигурами. Тройку можно разложить целиком, если подобрать порядок и места.</p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice">${dealerChoices.map((choice) => `<option value="${choice.version}">${choice.label}</option>`).join("")}</select></label><p class="dealer-note"></p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
-    el<HTMLSelectElement>("dealer-choice").value = "director-v2";
+    const choice = el<HTMLSelectElement>("dealer-choice");
+    const updateNote = () => {
+      dialog.querySelector<HTMLElement>(".dealer-note")!.textContent =
+        dealerChoices.find((item) => item.version === choice.value)!.note;
+    };
+    choice.value = store.state.experiment?.assignment ? assignedDealer(store.state) : "director-v2";
+    choice.disabled = !!store.state.experiment?.assignment;
+    choice.onchange = updateNote;
+    updateNote();
     el("new-game").onclick = () =>
       void restart(
-        el<HTMLSelectElement>("dealer-choice").value as DealerVersion,
+        el<HTMLSelectElement>("dealer-choice").value as DealerVersion, !store.state.experiment?.assignment,
       );
     el("keep-game").onclick = close;
   }
-  async function restart(dealer: DealerVersion = "director-v2") {
+  async function restart(dealer?: DealerVersion, manual = false) {
     if (ads.busy || store.busy || movePending) return;
     const status = dialog.querySelector<HTMLElement>(".dialog-status");
     if (status) status.textContent = "";
     try {
-      const nextGame = fresh(dealer);
+      if (!manual && COMPOSITION_EXPERIMENT.enabled && !store.state.experiment?.assignment) {
+        await store.update(p=>ensureExperiment({...p,revision:p.revision+1},Date.now(),false,crypto.randomUUID()));
+      }
+      const actualDealer=enabledDealer(dealer??assignedDealer(store.state));
+      const nextGame = {...fresh(actualDealer),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
       const changed =
         store.state.game.status === "over"
           ? await ads.betweenGames(nextGame)
@@ -2676,10 +2743,12 @@ async function start() {
               ...ads.stamp(p),
               revision: p.revision + 1,
               game: nextGame,
+              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
+        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);
@@ -2749,14 +2818,17 @@ async function start() {
     openingResult = true;
     try {
       const game = store.state.game;
-      if (revivePlan(game) && !game.reviveOffer) {
+      const reviveStarted = performance.now();
+      const preparedRevive = revivePlan(game);
+      performanceCapture.record("reviveSelection", performance.now() - reviveStarted);
+      if (preparedRevive && !game.reviveOffer) {
         await store.update((p) =>
-          p.game.gameId !== game.gameId
+          (p.game.gameId !== game.gameId || p.game.revision !== game.revision || p.game.status !== "over")
             ? p
             : {
                 ...p,
                 revision: p.revision + 1,
-                game: startReviveOffer(p.game, Date.now()),
+                game: startReviveOffer(p.game, Date.now(), preparedRevive),
               },
         );
       }
@@ -2847,7 +2919,7 @@ async function start() {
       const changed = await store.update((p) => ({
         ...p,
         revision: p.revision + 1,
-        game: acceptReviveOffer(p.game, now),
+        game: acceptReviveOffer({...p.game,reviveOffer:p.game.reviveOffer?{...p.game.reviveOffer,readyState:ads.readyState}:undefined}, now),
       }));
       if (!changed) return;
       if (store.state.game.reviveOffer?.accepted) {
