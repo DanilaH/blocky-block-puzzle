@@ -1156,3 +1156,21 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   игровой плейтест. Human/balance/default и остальные gates D87 открыты.
 
 [Протокол сборки](qa/PREVIEW_WITHOUT_ANALYTICS_2026-11-13.md).
+
+## D89 — подписанный игровой preview0.64, 14.11.2026
+
+- [x] Разрешённая владельцем API-публикация целого дерева, обе истории
+  сохранены, preview fast-forward без force; main не менялся.
+- [x] Прежний signer реально восстановлен в PR1; APK64/0.64 собрана.
+  Независимо сверены подпись, manifest,99 web-файлов и packaged demo/off config.
+- [x] 332 unit,21 native,25 focused browser,2 emulator tests PASS.
+- [x] Общий browser243/244; оставшаяся race в старом тесте наград воспроизведена
+  (2/5 FAIL), исправлена (10/10 + весь reward-file4/4 PASS). Runtime не менялся.
+  Полный244 после test-only fix не повторялся; глобальный green не заявляется.
+- [x] Инструкция сравнения v2/composition-v1 и диагностики телефона готова.
+- [ ] Физический телефон: demo show/reward/return, обновление сохранений,
+  длинная сессия/лаг и оценка двух выдач. Candidate/default/rollout gate открыт.
+- [ ] AppMetrica cabinet/export/delivery отложены владельцем.
+
+[APK-проверки](qa/PREVIEW_PUBLICATION_2026-11-14.md),
+[плейтест](qa/PLAYTEST_0.64_RU.txt).

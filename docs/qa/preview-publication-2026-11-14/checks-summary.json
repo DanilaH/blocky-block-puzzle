@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "ca1e4a1b5e90e4531a282a32ebde2a951ea01864",
+  "prMergeCommit": "3316a25fb810af9c7dac7bf7ea2e80375f997429",
+  "runId": 43492083673,
+  "unit": {
+    "passed": 332,
+    "files": 53
+  },
+  "commercialPython": {
+    "passed": 5
+  },
+  "androidUnit": {
+    "passed": 21
+  },
+  "focusedEffectsBrowser": {
+    "passed": 25
+  },
+  "androidEmulator": {
+    "passed": 2,
+    "physicalPhone": false,
+    "realAdsTested": false
+  },
+  "fullBrowserBeforeTestFix": {
+    "passed": 243,
+    "failed": 1,
+    "total": 244,
+    "durationMinutes": 20.5,
+    "failure": "e2e/rewards.spec.ts: two important events overlap; second input before first transaction accepted"
+  },
+  "testRaceBefore": {
+    "passed": 3,
+    "failed": 2,
+    "repeats": 5
+  },
+  "testRaceAfter": {
+    "passed": 10,
+    "failed": 0
+  },
+  "affectedRewardFileAfter": {
+    "passed": 4,
+    "failed": 0
+  },
+  "gameAndAndroidCodeChangedAfterApk": false,
+  "full244RerunAfterTestOnlyFix": false,
+  "apkInstallableDelivered": true,
+  "phoneAndHumanAssessment": "open",
+  "analyticsCabinet": "deferred by owner"
+}

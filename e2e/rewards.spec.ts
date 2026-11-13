@@ -45,6 +45,13 @@ async function setup(page: Page, kind = "record") {
 async function put(page: Page, slot: number, x: number, y: number) {
   // Exercise rapid input while celebration transforms are still running.
   // locator.click waits for visual stability, which can outlive the reward.
+  // Wait for the accepted gameplay transaction, not the cosmetic animation.
+  const savedMoves = () => page.evaluate(async () => {
+    const { IndexedSave } = await import("/src/platform/save.ts");
+    return (await new IndexedSave().load()).profile.game.moves;
+  });
+  await expect(page.locator("#board")).not.toHaveAttribute("aria-busy", "true");
+  const before = await savedMoves();
   const piece = page.locator(".piece").nth(slot);
   await expect(piece).toBeVisible();
   await expect(piece).toBeEnabled();
@@ -62,6 +69,8 @@ async function put(page: Page, slot: number, x: number, y: number) {
     b.x + ((x + 0.3) * b.width) / 8,
     b.y + ((y + 0.3) * b.height) / 8,
   );
+  await expect.poll(savedMoves).toBe(before + 1);
+  await expect(page.locator("#board")).not.toHaveAttribute("aria-busy", "true");
 }
 test("important reward survives rapid moves with converging score; pause clears it", async ({
   page,

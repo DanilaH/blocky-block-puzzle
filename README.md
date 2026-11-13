@@ -1,3 +1,5 @@
+D89 / APK0.64 собрана: прежняя подпись подтверждена, реклама тестовая, AppMetrica выключена. Все99 web-файлов APK независимо сверены. Основной director-v2, composition-v1 — отдельная ручная проба; rollout OFF. [Проверки](docs/qa/PREVIEW_PUBLICATION_2026-11-14.md), [как сравнить](docs/qa/PLAYTEST_0.64_RU.txt).
+
 D88 / исходники0.64: AppMetrica выключена по умолчанию для плейтеста, тестовый ключ больше не нужен. SDK36/JDK21 установлены, 21 Android unit и 332 web/core unit прошли, unsigned APK упакована и все99 web-файлов сверены. Для устанавливаемой APK нужен прежний signer из Actions; отправку ветки отклонила автоматическая проверка публикации. [Проверка сборки](docs/qa/PREVIEW_WITHOUT_ANALYTICS_2026-11-13.md).
 
 D87: исправлен revive, добавлен отдельный composition-v1 (default v2, rollout OFF), schema2 funnel/native ILRD/расчёт R7. 27 browser/5 Python и10мин desktop soak. [Реализация и открытые проверки](docs/qa/COMMERCIAL_ITERATION_0.64_2026-11-13.md).

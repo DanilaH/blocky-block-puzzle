@@ -1,18 +1,42 @@
 # Точка продолжения — D89, 14.11.2026
 
-Владелец явно разрешил публикацию готовых изменений и Actions, затем разрешил
-использовать подключённый GitHub API после ошибки обычного git push
-`could not read Username`. Разовое исключение внесено в AGENTS. Повторно
-разрешение на публикацию этой поставки не запрашивать.
+APK0.64.0-preview собрана в PR1 Actions run43492083673, Android job132115588003.
+Публикация и разовый API-путь явно разрешены владельцем. Новых разрешений
+для текущей поставки не запрашивать. Git CLI без credential; использован
+подключённый GitHub create_tree с целыми UTF-8 файлами одним деревом,
+без blob API/base64 и force. Обе удалённые истории сохранены.
 
-Для сборки использовать прежнюю feat/classic-preview/PR1: там ранее
-восстанавливался исходный signer. Подготовить merge commit с родителями
-c31a49e (исследовательская база) и8894c8a (текущий preview), актуальным игровым
-деревом D88 и fast-forward существующего preview без force. Полная локальная
-история D79–D88 сохранена в bundle. Тяжёлые новые generated QA data остаются
-в полном пакете; все runtime/native/tests/scripts сохраняются побайтно.
-APK/реальный новый cache restore пока не подтверждены.
-[Протокол публикации](qa/PREVIEW_PUBLICATION_2026-11-14.md).
+Удалённый source commitca1e4a1b5e90e4531a282a32ebde2a951ea01864,
+родители8894c8a (preview) иc31a49e (исследования). Tree
+ da469c11261e82db1a0e421c6aff176ca66fa101. APK checkout/source marker
+3316a25fb810af9c7dac7bf7ea2e80375f997429 — merge ref PR1 с тем же tree.
+Ветки work/blocky-commercial-iteration-2026-11-13 иfeat/classic-preview
+передвинуты наsource commit; main не менялся.
+
+APK11788980 bytes, SHA256
+ eb0adbff6cd1161cd927dd6fffd20909ba43dd6b6f66dac732ba660d0f7a7529.
+Сертификат e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13:
+совместима по подписи иversionCode с0.63; не удалять старую игру.
+Независимо проверены v2 signature, manifest64/0.64, все99 web-файлов по
+CI proof, packaged analytics key пустой, ads_test_mode=true, live ad IDs пусты.
+Native data sending отключается; demo ads. Не выдавать это за проверку
+показа рекламы или физического телефона.
+
+Локальная полная история D79–D88 сохранена в D88 bundle. Public runtime,
+Android, tests/e2e/scripts/settings побайтно совпадают; отличаются только9
+новых тяжёлых generated QA files, оставленных в полном пакете.
+
+Итоги:332 unit,21 native,25 focused browser,2 Android-emulator PASS.
+Полный browser CI243/244, один старый test-race принятия первого хода.
+В e2e/rewards.spec.ts добавлен observable commit barrier: до исправления2/5
+падали, после10/10 и весь затронутый файл4/4 PASS. Runtime/native/package
+файлы после APK не менялись. Полный244 повторно не прогонялся; не заявлять
+глобально зелёный CI. Для следующей поставки сохранять этот test fix.
+
+[Текущие проверки](qa/PREVIEW_PUBLICATION_2026-11-14.md),
+[инструкция владельцу](qa/PLAYTEST_0.64_RU.txt).
+Следующее: human v2/composition-v1, revive с demo на телефоне, лаги с замером.
+AppMetrica cabinet/export отложены владельцем, rollout OFF/default v2.
 
 ## Предыдущая точка D88
 

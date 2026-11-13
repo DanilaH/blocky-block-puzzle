@@ -1,0 +1,106 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[2m[WebServer] [22m(node:32) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+[2m[WebServer] [22mnpm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[2m[WebServer] [22m(node:45) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:80) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:80) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation (10.7s)
+(node:180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation (9.9s)
+(node:278) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:278) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation (12.0s)
+(node:378) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:378) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation (9.5s)
+(node:479) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:479) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation (11.2s)
+
+
+  1) e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation ──────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#score')
+    Expected: [32m"1[7m27[27m"[39m
+    Received: [31m"1[7m1[27m"[39m
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toHaveText" with timeout 5000ms[22m
+    [2m  - waiting for locator('#score')[22m
+    [2m    4 × locator resolved to <div id="score" class="score">1</div>[22m
+    [2m      - unexpected value "1"[22m
+    [2m    5 × locator resolved to <div id="score" class="score">11</div>[22m
+    [2m      - unexpected value "11"[22m
+
+
+      194 |   await put(page, 0, 0, 0);
+      195 |   await put(page, 1, 0, 7);
+    > 196 |   await expect(page.locator("#score")).toHaveText("127");
+          |                                        ^
+      197 |   await page.evaluate(() => window.dispatchEvent(new Event("blur")));
+      198 |   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+      199 |   await page.waitForTimeout(1300);
+        at /workspace/scratch/e16d12cc7fef/blocky-block-puzzle/e2e/rewards.spec.ts:196:40
+
+    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/rewards-two-important-even-5c4ec-kground-clears-presentation-repeat2/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/rewards-two-important-even-5c4ec-kground-clears-presentation-repeat2/error-context.md
+
+  2) e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation ──────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('#score')
+    Expected: [32m"1[7m27[27m"[39m
+    Received: [31m"1[7m1[27m"[39m
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toHaveText" with timeout 5000ms[22m
+    [2m  - waiting for locator('#score')[22m
+    [2m    4 × locator resolved to <div id="score" class="score">1</div>[22m
+    [2m      - unexpected value "1"[22m
+    [2m    5 × locator resolved to <div id="score" class="score">11</div>[22m
+    [2m      - unexpected value "11"[22m
+
+
+      194 |   await put(page, 0, 0, 0);
+      195 |   await put(page, 1, 0, 7);
+    > 196 |   await expect(page.locator("#score")).toHaveText("127");
+          |                                        ^
+      197 |   await page.evaluate(() => window.dispatchEvent(new Event("blur")));
+      198 |   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+      199 |   await page.waitForTimeout(1300);
+        at /workspace/scratch/e16d12cc7fef/blocky-block-puzzle/e2e/rewards.spec.ts:196:40
+
+    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/rewards-two-important-even-5c4ec-kground-clears-presentation-repeat4/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/rewards-two-important-even-5c4ec-kground-clears-presentation-repeat4/error-context.md
+
+  2 failed
+    e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation ───────
+    e2e/rewards.spec.ts:179:1 › two important events overlap; background clears presentation ───────
+  3 passed (57.6s)

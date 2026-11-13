@@ -1,0 +1,15 @@
+{
+  "apk": "blocky-0.64-preview.apk",
+  "bytes": 11788980,
+  "sha256": "eb0adbff6cd1161cd927dd6fffd20909ba43dd6b6f66dac732ba660d0f7a7529",
+  "sourceCommit": "3316a25fb810af9c7dac7bf7ea2e80375f997429",
+  "sourceTree": "da469c11261e82db1a0e421c6aff176ca66fa101",
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "v2Verified": true,
+  "sameSignerAs063": true,
+  "webFilesIndependentlyMatched": 99,
+  "analyticsKeyEmpty": true,
+  "adsTestMode": true,
+  "liveAdUnitStringsEmpty": true,
+  "physicalPhoneTested": false
+}
