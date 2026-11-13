@@ -1,0 +1,2693 @@
+{
+  "environment": "Linux Chromium mobile emulation / software graphics; not POCO performance",
+  "windowMs": [
+    320,
+    1400
+  ],
+  "allEpisodesCdpTraced": true,
+  "results": [
+    {
+      "condition": "baseline",
+      "index": 0,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 55,
+              "wallMs": 46.011,
+              "threadCpuMs": 45.69900000000002,
+              "maxMs": 1.366
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 10.991000000000001,
+              "threadCpuMs": 3.753,
+              "maxMs": 4.199
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 20.398000000000007,
+              "threadCpuMs": 10.821,
+              "maxMs": 3.606
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 23.225,
+              "threadCpuMs": 21.816000000000006,
+              "maxMs": 0.82
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 73.77600000000002,
+              "threadCpuMs": 67.93100000000001,
+              "maxMs": 3.919
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 45.53400000000001,
+              "threadCpuMs": 45.224999999999994,
+              "maxMs": 1.565
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.224,
+              "threadCpuMs": 3.1959999999999997,
+              "maxMs": 2.278
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 38,
+              "wallMs": 12.824,
+              "threadCpuMs": 8.17,
+              "maxMs": 2.11
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 21.588,
+              "threadCpuMs": 19.730999999999998,
+              "maxMs": 0.981
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 60.72600000000001,
+              "threadCpuMs": 56.461,
+              "maxMs": 3.53
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 48.351,
+              "threadCpuMs": 48.03300000000001,
+              "maxMs": 2.065
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 10.244000000000002,
+              "threadCpuMs": 3.5240000000000005,
+              "maxMs": 5.859
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 16.545,
+              "threadCpuMs": 9.708000000000002,
+              "maxMs": 5.678
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 26.81300000000001,
+              "threadCpuMs": 25.476000000000006,
+              "maxMs": 2.604
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 61.912000000000006,
+              "threadCpuMs": 57.519,
+              "maxMs": 5.664
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-theme-notice",
+      "index": 1,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 52,
+              "wallMs": 43.839,
+              "threadCpuMs": 45.769999999999996,
+              "maxMs": 2.51
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.354999999999999,
+              "threadCpuMs": 3.938,
+              "maxMs": 3.711
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 38,
+              "wallMs": 14.328999999999999,
+              "threadCpuMs": 9.145,
+              "maxMs": 2.332
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 77,
+              "wallMs": 25.498,
+              "threadCpuMs": 24.198000000000004,
+              "maxMs": 3.321
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 39,
+              "wallMs": 69.55000000000003,
+              "threadCpuMs": 62.29499999999998,
+              "maxMs": 4.121
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 42.468,
+              "threadCpuMs": 42.184000000000005,
+              "maxMs": 1.747
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.5840000000000005,
+              "threadCpuMs": 3.5140000000000002,
+              "maxMs": 2.166
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 11.554000000000004,
+              "threadCpuMs": 8.373,
+              "maxMs": 1.711
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 20.238,
+              "threadCpuMs": 18.926999999999996,
+              "maxMs": 0.71
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 57.906,
+              "threadCpuMs": 57.16399999999999,
+              "maxMs": 2.431
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 45.17599999999999,
+              "threadCpuMs": 44.79099999999998,
+              "maxMs": 2.065
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.766000000000001,
+              "threadCpuMs": 3.077,
+              "maxMs": 1.409
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 38,
+              "wallMs": 9.928,
+              "threadCpuMs": 8.126999999999999,
+              "maxMs": 1.23
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 88,
+              "wallMs": 21.43,
+              "threadCpuMs": 19.979000000000006,
+              "maxMs": 0.842
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 50.343,
+              "threadCpuMs": 44.98000000000001,
+              "maxMs": 2.29
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-letters",
+      "index": 2,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 41.524,
+              "threadCpuMs": 41.214,
+              "maxMs": 1.246
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 10.272000000000002,
+              "threadCpuMs": 4.573999999999999,
+              "maxMs": 3.533
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 17.022,
+              "threadCpuMs": 10.098000000000003,
+              "maxMs": 2.7
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 20.048999999999992,
+              "threadCpuMs": 18.722999999999992,
+              "maxMs": 0.941
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 68.51399999999997,
+              "threadCpuMs": 61.644999999999996,
+              "maxMs": 4.368
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 42.13100000000001,
+              "threadCpuMs": 41.73500000000001,
+              "maxMs": 1.351
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.552999999999999,
+              "threadCpuMs": 3.2929999999999997,
+              "maxMs": 1.924
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 10.769,
+              "threadCpuMs": 8.37,
+              "maxMs": 1.555
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 92,
+              "wallMs": 20.296,
+              "threadCpuMs": 18.924000000000007,
+              "maxMs": 0.717
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 54.705,
+              "threadCpuMs": 50.223000000000006,
+              "maxMs": 1.687
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 40.676999999999985,
+              "threadCpuMs": 40.340999999999994,
+              "maxMs": 1.171
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.31,
+              "threadCpuMs": 3.08,
+              "maxMs": 2.011
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 10.548000000000002,
+              "threadCpuMs": 8.187,
+              "maxMs": 1.868
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 20.752999999999993,
+              "threadCpuMs": 19.37600000000001,
+              "maxMs": 1.695
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 49.31,
+              "threadCpuMs": 47.35500000000001,
+              "maxMs": 1.538
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-reward-filter",
+      "index": 3,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 53,
+              "wallMs": 45.471,
+              "threadCpuMs": 43.47399999999998,
+              "maxMs": 2.948
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 11.415999999999999,
+              "threadCpuMs": 3.8230000000000004,
+              "maxMs": 4.052
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 25.731999999999992,
+              "threadCpuMs": 9.424,
+              "maxMs": 9.238
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 77,
+              "wallMs": 20.338000000000005,
+              "threadCpuMs": 19.142000000000003,
+              "maxMs": 1.057
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 39,
+              "wallMs": 66.42899999999999,
+              "threadCpuMs": 62.50899999999999,
+              "maxMs": 5.372
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 53,
+              "wallMs": 39.11,
+              "threadCpuMs": 38.050000000000004,
+              "maxMs": 1.146
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 4.37,
+              "threadCpuMs": 2.784,
+              "maxMs": 1.296
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 36,
+              "wallMs": 11.205999999999998,
+              "threadCpuMs": 8.526,
+              "maxMs": 1.238
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 81,
+              "wallMs": 20.073000000000004,
+              "threadCpuMs": 18.79500000000001,
+              "maxMs": 0.868
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 43,
+              "wallMs": 95.043,
+              "threadCpuMs": 89.17700000000005,
+              "maxMs": 40.062
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 55,
+              "wallMs": 44.338,
+              "threadCpuMs": 46.314,
+              "maxMs": 1.63
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 7.526999999999999,
+              "threadCpuMs": 3.453,
+              "maxMs": 2.527
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.712000000000002,
+              "threadCpuMs": 9.153,
+              "maxMs": 1.938
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 81,
+              "wallMs": 20.859000000000012,
+              "threadCpuMs": 19.605000000000008,
+              "maxMs": 0.845
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 42,
+              "wallMs": 49.099999999999994,
+              "threadCpuMs": 45.163999999999994,
+              "maxMs": 1.76
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-score-glow",
+      "index": 4,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 42.788,
+              "threadCpuMs": 42.32799999999999,
+              "maxMs": 1.343
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 15.617,
+              "threadCpuMs": 3.9859999999999998,
+              "maxMs": 9.157
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 22.022,
+              "threadCpuMs": 9.169999999999998,
+              "maxMs": 8.725
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 20.457000000000004,
+              "threadCpuMs": 19.048,
+              "maxMs": 0.791
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 43,
+              "wallMs": 69.898,
+              "threadCpuMs": 60.67900000000002,
+              "maxMs": 4.268
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 45.120000000000005,
+              "threadCpuMs": 44.77700000000001,
+              "maxMs": 1.788
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 7.101,
+              "threadCpuMs": 3.502,
+              "maxMs": 2.507
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 14.234000000000002,
+              "threadCpuMs": 9.418999999999999,
+              "maxMs": 1.988
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 22.019000000000002,
+              "threadCpuMs": 20.257000000000005,
+              "maxMs": 0.998
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 61.033999999999985,
+              "threadCpuMs": 56.339,
+              "maxMs": 3.512
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 44.99100000000001,
+              "threadCpuMs": 44.66799999999999,
+              "maxMs": 1.445
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.9700000000000015,
+              "threadCpuMs": 2.813,
+              "maxMs": 1.736
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 10.979,
+              "threadCpuMs": 8.706,
+              "maxMs": 1.586
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 21.619000000000003,
+              "threadCpuMs": 20.10000000000001,
+              "maxMs": 0.803
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 53.087,
+              "threadCpuMs": 48.82799999999999,
+              "maxMs": 1.648
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-enamel-local",
+      "index": 5,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 36.87799999999999,
+              "threadCpuMs": 36.344,
+              "maxMs": 1.36
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 8.739,
+              "threadCpuMs": 3.873,
+              "maxMs": 3.398
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 45,
+              "wallMs": 18.391000000000005,
+              "threadCpuMs": 9.894000000000002,
+              "maxMs": 3.718
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 21.68100000000001,
+              "threadCpuMs": 20.16000000000001,
+              "maxMs": 0.731
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 71.053,
+              "threadCpuMs": 63.45600000000001,
+              "maxMs": 3.694
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 36.080999999999996,
+              "threadCpuMs": 35.726000000000006,
+              "maxMs": 1.159
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 5.760000000000001,
+              "threadCpuMs": 3.331,
+              "maxMs": 1.522
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 12.656,
+              "threadCpuMs": 8.713000000000001,
+              "maxMs": 1.784
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 94,
+              "wallMs": 21.110000000000007,
+              "threadCpuMs": 19.720000000000002,
+              "maxMs": 0.877
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 59.085,
+              "threadCpuMs": 54.984,
+              "maxMs": 1.955
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 36.33699999999999,
+              "threadCpuMs": 35.866,
+              "maxMs": 1.363
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 7.4270000000000005,
+              "threadCpuMs": 3.5060000000000002,
+              "maxMs": 2.369
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.512,
+              "threadCpuMs": 8.969,
+              "maxMs": 1.896
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 21.434000000000008,
+              "threadCpuMs": 20.142999999999997,
+              "maxMs": 0.93
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 44,
+              "wallMs": 53.875000000000014,
+              "threadCpuMs": 50.81199999999999,
+              "maxMs": 3.545
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-color-fades",
+      "index": 6,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 28.012000000000008,
+              "threadCpuMs": 27.673999999999992,
+              "maxMs": 1.585
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.322000000000001,
+              "threadCpuMs": 4.096,
+              "maxMs": 3.514
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 16.384000000000007,
+              "threadCpuMs": 9.316,
+              "maxMs": 2.537
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 92,
+              "wallMs": 19.591,
+              "threadCpuMs": 22.216,
+              "maxMs": 0.708
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 74.09800000000003,
+              "threadCpuMs": 68.42899999999999,
+              "maxMs": 3.94
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 27.235999999999997,
+              "threadCpuMs": 26.899,
+              "maxMs": 0.913
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.765000000000001,
+              "threadCpuMs": 3.237,
+              "maxMs": 1.443
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.509,
+              "threadCpuMs": 8.836000000000002,
+              "maxMs": 1.488
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 18.807000000000006,
+              "threadCpuMs": 17.565000000000005,
+              "maxMs": 0.659
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 60.529999999999994,
+              "threadCpuMs": 55.443,
+              "maxMs": 1.821
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 29.927,
+              "threadCpuMs": 32.46,
+              "maxMs": 1.418
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.262,
+              "threadCpuMs": 7.0649999999999995,
+              "maxMs": 2.063
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.876000000000001,
+              "threadCpuMs": 8.834,
+              "maxMs": 1.623
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 20.293000000000006,
+              "threadCpuMs": 18.963000000000005,
+              "maxMs": 0.798
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 53.985,
+              "threadCpuMs": 53.700999999999986,
+              "maxMs": 1.973
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "baseline",
+      "index": 7,
+      "round": 0,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 49.92,
+              "threadCpuMs": 48.82000000000001,
+              "maxMs": 2.713
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 9.417,
+              "threadCpuMs": 4.162,
+              "maxMs": 3.992
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 17.384,
+              "threadCpuMs": 10.573,
+              "maxMs": 2.453
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 22.681000000000015,
+              "threadCpuMs": 20.952000000000005,
+              "maxMs": 0.9
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 81.60000000000001,
+              "threadCpuMs": 70.616,
+              "maxMs": 4.843
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 48.93300000000001,
+              "threadCpuMs": 48.59600000000002,
+              "maxMs": 2.252
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.082999999999998,
+              "threadCpuMs": 4.213999999999999,
+              "maxMs": 4.938
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 16.315000000000005,
+              "threadCpuMs": 9.846000000000002,
+              "maxMs": 4.491
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 21.773000000000003,
+              "threadCpuMs": 20.449000000000005,
+              "maxMs": 0.819
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 62.032999999999994,
+              "threadCpuMs": 63.09400000000001,
+              "maxMs": 2.461
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 50.07899999999999,
+              "threadCpuMs": 49.76799999999999,
+              "maxMs": 4.437
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 8.938,
+              "threadCpuMs": 5.771,
+              "maxMs": 2.449
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.491,
+              "threadCpuMs": 9.206999999999999,
+              "maxMs": 1.835
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 84,
+              "wallMs": 19.743000000000013,
+              "threadCpuMs": 18.460000000000004,
+              "maxMs": 1.006
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 43,
+              "wallMs": 52.51600000000001,
+              "threadCpuMs": 52.683,
+              "maxMs": 3.07
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "baseline",
+      "index": 8,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 42.901,
+              "threadCpuMs": 48.245999999999995,
+              "maxMs": 1.329
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 10.089,
+              "threadCpuMs": 4.4879999999999995,
+              "maxMs": 3.567
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 18.055000000000003,
+              "threadCpuMs": 10.041,
+              "maxMs": 2.826
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 86,
+              "wallMs": 20.788999999999987,
+              "threadCpuMs": 19.442000000000014,
+              "maxMs": 0.822
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 44,
+              "wallMs": 69.51600000000002,
+              "threadCpuMs": 61.60899999999999,
+              "maxMs": 2.932
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 44.43499999999999,
+              "threadCpuMs": 47.15199999999999,
+              "maxMs": 2.829
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.296,
+              "threadCpuMs": 3.1090000000000004,
+              "maxMs": 1.487
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 13.122,
+              "threadCpuMs": 8.971000000000002,
+              "maxMs": 2.209
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 20.333999999999993,
+              "threadCpuMs": 18.909000000000013,
+              "maxMs": 0.678
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 59.73100000000001,
+              "threadCpuMs": 59.55100000000001,
+              "maxMs": 5.229
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 41.66900000000001,
+              "threadCpuMs": 41.272999999999996,
+              "maxMs": 1.333
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.265999999999999,
+              "threadCpuMs": 3.2840000000000003,
+              "maxMs": 1.778
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.508,
+              "threadCpuMs": 8.354000000000001,
+              "maxMs": 1.612
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 20.318,
+              "threadCpuMs": 18.594999999999995,
+              "maxMs": 0.951
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 48.071999999999996,
+              "threadCpuMs": 47.679,
+              "maxMs": 1.577
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-color-fades",
+      "index": 9,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 29.447999999999993,
+              "threadCpuMs": 29.102,
+              "maxMs": 1.61
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 10,
+              "wallMs": 10.911000000000001,
+              "threadCpuMs": 4.141000000000001,
+              "maxMs": 4.075
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 17.773000000000003,
+              "threadCpuMs": 9.263,
+              "maxMs": 3.131
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 19.448000000000008,
+              "threadCpuMs": 18.247000000000007,
+              "maxMs": 0.893
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 74.076,
+              "threadCpuMs": 68.062,
+              "maxMs": 3.072
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 28.461,
+              "threadCpuMs": 27.753000000000004,
+              "maxMs": 1.083
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.757000000000001,
+              "threadCpuMs": 3.02,
+              "maxMs": 1.989
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 13.066000000000003,
+              "threadCpuMs": 9.267,
+              "maxMs": 1.573
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 20.688000000000006,
+              "threadCpuMs": 19.340000000000003,
+              "maxMs": 1.054
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 59.36300000000002,
+              "threadCpuMs": 53.832,
+              "maxMs": 2.328
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 27.842000000000002,
+              "threadCpuMs": 30.982000000000006,
+              "maxMs": 0.947
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.657,
+              "threadCpuMs": 2.75,
+              "maxMs": 1.827
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 12.718000000000002,
+              "threadCpuMs": 8.471,
+              "maxMs": 1.595
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 99,
+              "wallMs": 18.931000000000008,
+              "threadCpuMs": 17.612999999999996,
+              "maxMs": 0.662
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 54.05399999999999,
+              "threadCpuMs": 49.75500000000001,
+              "maxMs": 1.615
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-enamel-local",
+      "index": 10,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 56,
+              "wallMs": 34.279,
+              "threadCpuMs": 33.981,
+              "maxMs": 1.094
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 6.888999999999999,
+              "threadCpuMs": 3.245,
+              "maxMs": 2.719
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 13.606999999999998,
+              "threadCpuMs": 8.842,
+              "maxMs": 1.844
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 87,
+              "wallMs": 21.816999999999993,
+              "threadCpuMs": 25.762,
+              "maxMs": 0.983
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 66.55700000000002,
+              "threadCpuMs": 61.364000000000004,
+              "maxMs": 2.944
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 58,
+              "wallMs": 33.93399999999999,
+              "threadCpuMs": 33.624,
+              "maxMs": 1.436
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.294999999999998,
+              "threadCpuMs": 2.967,
+              "maxMs": 4.178
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 15.156000000000002,
+              "threadCpuMs": 7.989000000000001,
+              "maxMs": 3.993
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 87,
+              "wallMs": 19.238999999999994,
+              "threadCpuMs": 21.598000000000006,
+              "maxMs": 0.647
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 51.757999999999996,
+              "threadCpuMs": 47.86899999999998,
+              "maxMs": 1.551
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 58,
+              "wallMs": 39.138,
+              "threadCpuMs": 38.830000000000005,
+              "maxMs": 1.995
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.755000000000002,
+              "threadCpuMs": 2.8930000000000002,
+              "maxMs": 1.855
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 12.361000000000002,
+              "threadCpuMs": 8,
+              "maxMs": 1.805
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 87,
+              "wallMs": 24.034000000000002,
+              "threadCpuMs": 22.710000000000008,
+              "maxMs": 2.247
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 50.922999999999995,
+              "threadCpuMs": 46.80599999999998,
+              "maxMs": 1.683
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-score-glow",
+      "index": 11,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 50.967,
+              "threadCpuMs": 50.025000000000006,
+              "maxMs": 2.969
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 10.849000000000002,
+              "threadCpuMs": 4.653,
+              "maxMs": 4.157
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 21.712999999999997,
+              "threadCpuMs": 10.764000000000003,
+              "maxMs": 3.601
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 92,
+              "wallMs": 22.696000000000012,
+              "threadCpuMs": 21.30400000000001,
+              "maxMs": 0.918
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 74.13900000000001,
+              "threadCpuMs": 65.939,
+              "maxMs": 3.734
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 48.634,
+              "threadCpuMs": 48.293,
+              "maxMs": 1.592
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 10.280999999999999,
+              "threadCpuMs": 4.0889999999999995,
+              "maxMs": 3.546
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 17.646,
+              "threadCpuMs": 9.850999999999997,
+              "maxMs": 3.239
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 22.738000000000007,
+              "threadCpuMs": 21.287999999999997,
+              "maxMs": 0.819
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 62.20200000000001,
+              "threadCpuMs": 57.56499999999999,
+              "maxMs": 3.42
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 49.45499999999999,
+              "threadCpuMs": 52.57599999999999,
+              "maxMs": 1.389
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.775000000000001,
+              "threadCpuMs": 2.841,
+              "maxMs": 1.603
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 11.694000000000006,
+              "threadCpuMs": 9.612,
+              "maxMs": 1.437
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 22.731,
+              "threadCpuMs": 21.275000000000002,
+              "maxMs": 0.852
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 61.107,
+              "threadCpuMs": 56.494000000000014,
+              "maxMs": 4.013
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-reward-filter",
+      "index": 12,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 54,
+              "wallMs": 56.857999999999976,
+              "threadCpuMs": 59.488,
+              "maxMs": 13.852
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 10.757000000000001,
+              "threadCpuMs": 3.5650000000000004,
+              "maxMs": 5.713
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 38,
+              "wallMs": 18.017,
+              "threadCpuMs": 9.060999999999998,
+              "maxMs": 4.677
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 22.686999999999998,
+              "threadCpuMs": 26.335000000000004,
+              "maxMs": 0.817
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 85.81900000000002,
+              "threadCpuMs": 80.298,
+              "maxMs": 13.707
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 46.95199999999999,
+              "threadCpuMs": 46.538999999999994,
+              "maxMs": 1.598
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.130000000000001,
+              "threadCpuMs": 3.6620000000000004,
+              "maxMs": 1.607
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 13.198999999999996,
+              "threadCpuMs": 9.278,
+              "maxMs": 1.666
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 23.802,
+              "threadCpuMs": 22.315000000000005,
+              "maxMs": 1.152
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 66.36400000000002,
+              "threadCpuMs": 61.538000000000004,
+              "maxMs": 2.08
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 44.557999999999986,
+              "threadCpuMs": 44.120000000000005,
+              "maxMs": 1.388
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.837,
+              "threadCpuMs": 3.3550000000000004,
+              "maxMs": 2.024
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.034,
+              "threadCpuMs": 9.252000000000002,
+              "maxMs": 1.673
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 20.505000000000006,
+              "threadCpuMs": 19.060000000000006,
+              "maxMs": 0.767
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 53.384999999999984,
+              "threadCpuMs": 48.93399999999998,
+              "maxMs": 2.769
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-letters",
+      "index": 13,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 46.99399999999999,
+              "threadCpuMs": 46.65700000000001,
+              "maxMs": 2.411
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.065000000000001,
+              "threadCpuMs": 3.864,
+              "maxMs": 3.82
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 17.305,
+              "threadCpuMs": 10.783,
+              "maxMs": 3.034
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 21.433999999999997,
+              "threadCpuMs": 20.026000000000007,
+              "maxMs": 1.128
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 76.02600000000001,
+              "threadCpuMs": 70.294,
+              "maxMs": 3.867
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 43.351000000000006,
+              "threadCpuMs": 42.94699999999998,
+              "maxMs": 1.353
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.569999999999999,
+              "threadCpuMs": 2.797,
+              "maxMs": 1.531
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 10.331000000000001,
+              "threadCpuMs": 8.437999999999999,
+              "maxMs": 1.396
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 20.093999999999998,
+              "threadCpuMs": 18.655,
+              "maxMs": 0.646
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 61.213,
+              "threadCpuMs": 57.33200000000001,
+              "maxMs": 1.625
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 65,
+              "wallMs": 44.07300000000001,
+              "threadCpuMs": 47.516000000000005,
+              "maxMs": 1.332
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.971,
+              "threadCpuMs": 3.5349999999999997,
+              "maxMs": 3.231
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 45,
+              "wallMs": 13.184000000000001,
+              "threadCpuMs": 9.574,
+              "maxMs": 3.001
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 20.571000000000005,
+              "threadCpuMs": 19.081,
+              "maxMs": 0.927
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 56.06900000000002,
+              "threadCpuMs": 51.63999999999999,
+              "maxMs": 1.473
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "no-theme-notice",
+      "index": 14,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 55,
+              "wallMs": 49.23500000000001,
+              "threadCpuMs": 48.93000000000001,
+              "maxMs": 4.205
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 19.814,
+              "threadCpuMs": 5.117999999999999,
+              "maxMs": 8.387
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 38,
+              "wallMs": 25.215999999999998,
+              "threadCpuMs": 10.437,
+              "maxMs": 7.521
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 81,
+              "wallMs": 23.87000000000001,
+              "threadCpuMs": 22.591,
+              "maxMs": 1.705
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 42,
+              "wallMs": 80.26999999999998,
+              "threadCpuMs": 74.60500000000003,
+              "maxMs": 9.208
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 58,
+              "wallMs": 45.83299999999999,
+              "threadCpuMs": 48.501000000000005,
+              "maxMs": 2.518
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.983000000000001,
+              "threadCpuMs": 3.3729999999999998,
+              "maxMs": 1.708
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 13.087,
+              "threadCpuMs": 10.363000000000001,
+              "maxMs": 1.847
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 21.631000000000007,
+              "threadCpuMs": 20.245000000000005,
+              "maxMs": 0.734
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 46,
+              "wallMs": 61.879,
+              "threadCpuMs": 57.94599999999999,
+              "maxMs": 2.342
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 47.050999999999995,
+              "threadCpuMs": 46.266000000000005,
+              "maxMs": 3.027
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.86,
+              "threadCpuMs": 3.633,
+              "maxMs": 2.272
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 12.292,
+              "threadCpuMs": 8.751999999999999,
+              "maxMs": 1.761
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 28.215000000000014,
+              "threadCpuMs": 26.708,
+              "maxMs": 5.954
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 60.697999999999986,
+              "threadCpuMs": 53.891,
+              "maxMs": 3.83
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "condition": "baseline",
+      "index": 15,
+      "round": 1,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 51,
+              "wallMs": 47.37400000000001,
+              "threadCpuMs": 46.919,
+              "maxMs": 2.82
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.443,
+              "threadCpuMs": 3.5829999999999997,
+              "maxMs": 3.305
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 36,
+              "wallMs": 16.314000000000004,
+              "threadCpuMs": 9.687,
+              "maxMs": 2.339
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 74,
+              "wallMs": 26.83400000000001,
+              "threadCpuMs": 25.542000000000012,
+              "maxMs": 2.767
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 38,
+              "wallMs": 71.33699999999999,
+              "threadCpuMs": 69.415,
+              "maxMs": 4.565
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 52.775999999999996,
+              "threadCpuMs": 52.435,
+              "maxMs": 3.457
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 3.5129999999999995,
+              "threadCpuMs": 3.3619999999999997,
+              "maxMs": 1.193
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 9.430000000000003,
+              "threadCpuMs": 9.156999999999998,
+              "maxMs": 0.67
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 94,
+              "wallMs": 23.578,
+              "threadCpuMs": 22.085000000000015,
+              "maxMs": 0.945
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 67.40500000000002,
+              "threadCpuMs": 65.18000000000002,
+              "maxMs": 4.066
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 47.391,
+              "threadCpuMs": 47.05499999999999,
+              "maxMs": 1.413
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.8260000000000005,
+              "threadCpuMs": 2.986,
+              "maxMs": 1.847
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 12.894,
+              "threadCpuMs": 8.820999999999998,
+              "maxMs": 1.472
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 22.805,
+              "threadCpuMs": 21.32900000000001,
+              "maxMs": 1.025
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 53.51400000000001,
+              "threadCpuMs": 48.62199999999999,
+              "maxMs": 1.807
+            }
+          }
+        }
+      ],
+      "nodes": [
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        },
+        {
+          "class": "reward-event",
+          "tier": "combo",
+          "text": "+450ДВОЙНАЯ! ×1,5"
+        },
+        {
+          "class": "reward-event",
+          "tier": "all-clear",
+          "text": "+1000Чистое поле!"
+        },
+        {
+          "class": "hud-notice",
+          "tier": "theme",
+          "text": "ПОЛЯРНАЯ НОЧЬ"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "summary": [
+    {
+      "condition": "baseline",
+      "measuredEpisodes": 8,
+      "styleMedianMs": 47.870999999999995,
+      "paintMedianMs": 21.680500000000002,
+      "styleReductionVsPooledControls": 0.0
+    },
+    {
+      "condition": "no-theme-notice",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 45.50449999999999,
+      "paintMedianMs": 21.530500000000004,
+      "styleReductionVsPooledControls": 0.049434939733868144
+    },
+    {
+      "condition": "no-letters",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 42.74100000000001,
+      "paintMedianMs": 20.433500000000002,
+      "styleReductionVsPooledControls": 0.10716300056401551
+    },
+    {
+      "condition": "no-reward-filter",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 44.44799999999999,
+      "paintMedianMs": 20.68200000000001,
+      "styleReductionVsPooledControls": 0.07150466879739303
+    },
+    {
+      "condition": "no-score-glow",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 46.877,
+      "paintMedianMs": 22.375,
+      "styleReductionVsPooledControls": 0.02076413695139001
+    },
+    {
+      "condition": "no-enamel-local",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 36.20899999999999,
+      "paintMedianMs": 21.272000000000006,
+      "styleReductionVsPooledControls": 0.24361304338743728
+    },
+    {
+      "condition": "no-color-fades",
+      "measuredEpisodes": 4,
+      "styleMedianMs": 28.1515,
+      "paintMedianMs": 19.61200000000001,
+      "styleReductionVsPooledControls": 0.41192997848384194
+    }
+  ],
+  "limitations": [
+    "Software graphics and CDP instrumentation; does not establish a POCO FPS improvement",
+    "Only the post-warmup ordinary and traced-named episodes are pooled. Every episode has CDP tracing; names do not designate trace-free samples",
+    "Removing letter motion/color fades/filter/glow changes presentation and is only a diagnostic ablation",
+    "No-enamel-local retains color fades and every reward node; its pixel parity is not yet established"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "identical": true,
+  "excluded": [
+    "selectMs (wall clock)",
+    "scriptSha256 (formatting only)"
+  ],
+  "positions": 90,
+  "replays": 2700,
+  "dataSha256": "286968caf55081bc35de0b7abcf7590eee74aebeedb6f2d29b634ad2ef9fd43e",
+  "unitTests": 201
+}

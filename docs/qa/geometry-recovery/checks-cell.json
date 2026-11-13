@@ -1,0 +1,12 @@
+{
+  "schema": "blocky-geometry-recovery-cell-check-v1",
+  "resultSha256": "f7e020553be8ebac6d82f64d6f64ade66d243480b2e2d44ab4168f65004c308f",
+  "verifierSha256": "a241136f6e0542bdbb4dbe39f8fcf8874793aec9757da34c04a2b36266f358ad",
+  "queryCount": 201,
+  "nativeReplays": 201,
+  "cellWitnessMoves": 715,
+  "cellActualMoves": 1831,
+  "exactShortCases": 41,
+  "directLeafChecks": 7711662170,
+  "tinyExhaustiveCases": 24
+}

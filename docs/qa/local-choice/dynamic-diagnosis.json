@@ -1,0 +1,260 @@
+{
+  "schema": "blocky-local-dynamic-postmortem-v1",
+  "inputSha256": "d76992584f17e4bcb74795e5835957404255e9b62d7537307ce9a12b2a030f69",
+  "scriptSha256": "8372ebedfba1d92f843e186ba3155dfd874cd3e632410c44d80bd1aa27ae7eb9",
+  "note": "One width8 bounded current-tray beam allowing intermediate clears; no future preparation. A miss is unknown. Diagnostic on engineering only; not a new gameplay candidate.",
+  "cases": [
+    {
+      "seed": 2441001,
+      "move": 24,
+      "board": [
+        88,
+        0,
+        215,
+        220,
+        222,
+        22,
+        19,
+        1
+      ],
+      "minCover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 223
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441001,
+      "move": 54,
+      "board": [
+        200,
+        254,
+        167,
+        240,
+        0,
+        135,
+        231,
+        201
+      ],
+      "minCover": {
+        "lines": 7,
+        "rowMask": 239,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441002,
+      "move": 18,
+      "board": [
+        3,
+        5,
+        200,
+        0,
+        0,
+        224,
+        240,
+        48
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 231,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441001,
+      "move": 33,
+      "board": [
+        78,
+        126,
+        6,
+        204,
+        0,
+        0,
+        7,
+        201
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 207,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441003,
+      "move": 15,
+      "board": [
+        28,
+        24,
+        131,
+        0,
+        128,
+        184,
+        160,
+        166
+      ],
+      "minCover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 191
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441003,
+      "move": 21,
+      "board": [
+        252,
+        0,
+        231,
+        7,
+        0,
+        24,
+        124,
+        6
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 237,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441001,
+      "move": 15,
+      "board": [
+        24,
+        56,
+        216,
+        200,
+        192,
+        224,
+        225,
+        225
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 0,
+        "colMask": 249
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441004,
+      "move": 15,
+      "board": [
+        32,
+        238,
+        254,
+        242,
+        32,
+        128,
+        128,
+        128
+      ],
+      "minCover": {
+        "lines": 5,
+        "rowMask": 14,
+        "colMask": 160
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441003,
+      "move": 24,
+      "board": [
+        252,
+        0,
+        224,
+        7,
+        0,
+        31,
+        124,
+        6
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 237,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441003,
+      "move": 30,
+      "board": [
+        252,
+        0,
+        244,
+        12,
+        0,
+        179,
+        16,
+        230
+      ],
+      "minCover": {
+        "lines": 6,
+        "rowMask": 173,
+        "colMask": 16
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441001,
+      "move": 36,
+      "board": [
+        78,
+        126,
+        6,
+        204,
+        0,
+        0,
+        0,
+        201
+      ],
+      "minCover": {
+        "lines": 5,
+        "rowMask": 143,
+        "colMask": 0
+      },
+      "status": "unknown",
+      "checks": 24000
+    },
+    {
+      "seed": 2441004,
+      "move": 18,
+      "board": [
+        0,
+        238,
+        254,
+        242,
+        32,
+        242,
+        212,
+        216
+      ],
+      "minCover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 254
+      },
+      "status": "unknown",
+      "checks": 24000
+    }
+  ]
+}

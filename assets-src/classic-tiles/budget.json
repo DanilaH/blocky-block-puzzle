@@ -1,0 +1,26 @@
+{
+  "count": 18,
+  "encodedBytes": 46994,
+  "pixels": 294912,
+  "estimatedRgbaBytes": 1179648,
+  "categories": {
+    "plastic": {
+      "count": 6,
+      "encodedBytes": 16054,
+      "pixels": 98304,
+      "estimatedRgbaBytes": 393216
+    },
+    "enamel": {
+      "count": 6,
+      "encodedBytes": 14904,
+      "pixels": 98304,
+      "estimatedRgbaBytes": 393216
+    },
+    "chrome": {
+      "count": 6,
+      "encodedBytes": 16036,
+      "pixels": 98304,
+      "estimatedRgbaBytes": 393216
+    }
+  }
+}

@@ -1,0 +1,568 @@
+{
+  "engineering-c1.jsonl": {
+    "sha256": "5f1429385b44eeb2e7ccb37b76ee2d26f5e1dbd878e1679bbcc4a4d5230bc7b1",
+    "groups": {
+      "bounded": {
+        "games": 4,
+        "moves": 299,
+        "lengths": [
+          53,
+          131,
+          68,
+          47
+        ],
+        "ended": 4,
+        "clears": 3,
+        "clearBy60": 2,
+        "clearAfter12": 0,
+        "linesPerMove": 0.4080267558528428,
+        "preparedEndpoints": 0
+      },
+      "clear": {
+        "games": 4,
+        "moves": 480,
+        "lengths": [
+          180,
+          128,
+          68,
+          104
+        ],
+        "ended": 3,
+        "clears": 5,
+        "clearBy60": 3,
+        "clearAfter12": 1,
+        "linesPerMove": 0.4666666666666667,
+        "preparedEndpoints": 0
+      },
+      "lapse": {
+        "games": 4,
+        "moves": 502,
+        "lengths": [
+          180,
+          98,
+          180,
+          44
+        ],
+        "ended": 2,
+        "clears": 13,
+        "clearBy60": 4,
+        "clearAfter12": 4,
+        "linesPerMove": 0.5139442231075697,
+        "preparedEndpoints": 31
+      },
+      "three": {
+        "games": 4,
+        "moves": 720,
+        "lengths": [
+          180,
+          180,
+          180,
+          180
+        ],
+        "ended": 0,
+        "clears": 25,
+        "clearBy60": 3,
+        "clearAfter12": 4,
+        "linesPerMove": 0.5430555555555555,
+        "preparedEndpoints": 44
+      }
+    }
+  },
+  "engineering-c2-sha.jsonl": {
+    "sha256": "4c36a2d7c372dcf7a1e753058d3b047080c4ed6135350f3e3965e6f140a39588",
+    "groups": {
+      "bounded": {
+        "games": 8,
+        "moves": 700,
+        "lengths": [
+          188,
+          134,
+          98,
+          107,
+          20,
+          77,
+          47,
+          29
+        ],
+        "ended": 8,
+        "clears": 3,
+        "clearBy60": 3,
+        "clearAfter12": 0,
+        "linesPerMove": 0.54,
+        "preparedEndpoints": 7
+      },
+      "clear": {
+        "games": 8,
+        "moves": 2474,
+        "lengths": [
+          248,
+          161,
+          296,
+          360,
+          329,
+          360,
+          360,
+          360
+        ],
+        "ended": 4,
+        "clears": 53,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.6208569118835894,
+        "preparedEndpoints": 76
+      },
+      "lapse": {
+        "games": 8,
+        "moves": 1849,
+        "lengths": [
+          360,
+          164,
+          50,
+          360,
+          56,
+          290,
+          209,
+          360
+        ],
+        "ended": 5,
+        "clears": 23,
+        "clearBy60": 7,
+        "clearAfter12": 6,
+        "linesPerMove": 0.6176311519740401,
+        "preparedEndpoints": 74
+      },
+      "plausible": {
+        "games": 8,
+        "moves": 261,
+        "lengths": [
+          32,
+          41,
+          26,
+          11,
+          26,
+          61,
+          44,
+          20
+        ],
+        "ended": 8,
+        "clears": 1,
+        "clearBy60": 1,
+        "clearAfter12": 0,
+        "linesPerMove": 0.41379310344827586,
+        "preparedEndpoints": 9
+      },
+      "three": {
+        "games": 8,
+        "moves": 2880,
+        "lengths": [
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "ended": 0,
+        "clears": 128,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.6288194444444445,
+        "preparedEndpoints": 188
+      }
+    }
+  },
+  "engineering-c2-xor.jsonl": {
+    "sha256": "14d1b372a12fe36c62570d59e4e06b88911a58801e70180b8e3002315b9a4d94",
+    "groups": {
+      "bounded": {
+        "games": 6,
+        "moves": 566,
+        "lengths": [
+          173,
+          95,
+          137,
+          55,
+          56,
+          50
+        ],
+        "ended": 6,
+        "clears": 6,
+        "clearBy60": 4,
+        "clearAfter12": 2,
+        "linesPerMove": 0.5159010600706714,
+        "preparedEndpoints": 0
+      },
+      "clear": {
+        "games": 6,
+        "moves": 1061,
+        "lengths": [
+          180,
+          161,
+          180,
+          180,
+          180,
+          180
+        ],
+        "ended": 1,
+        "clears": 27,
+        "clearBy60": 6,
+        "clearAfter12": 6,
+        "linesPerMove": 0.6145146088595664,
+        "preparedEndpoints": 20
+      },
+      "lapse": {
+        "games": 6,
+        "moves": 907,
+        "lengths": [
+          180,
+          180,
+          110,
+          77,
+          180,
+          180
+        ],
+        "ended": 2,
+        "clears": 16,
+        "clearBy60": 4,
+        "clearAfter12": 5,
+        "linesPerMove": 0.61742006615215,
+        "preparedEndpoints": 10
+      },
+      "three": {
+        "games": 6,
+        "moves": 1080,
+        "lengths": [
+          180,
+          180,
+          180,
+          180,
+          180,
+          180
+        ],
+        "ended": 0,
+        "clears": 41,
+        "clearBy60": 6,
+        "clearAfter12": 6,
+        "linesPerMove": 0.6148148148148148,
+        "preparedEndpoints": 24
+      }
+    }
+  },
+  "engineering-c3-sha.jsonl": {
+    "sha256": "eb5f866d1424adf7bd121b251315f6f2db4c04316065e1cdb05876ce5b385f91",
+    "groups": {
+      "bounded": {
+        "games": 8,
+        "moves": 643,
+        "lengths": [
+          38,
+          104,
+          131,
+          47,
+          47,
+          152,
+          59,
+          65
+        ],
+        "ended": 8,
+        "clears": 4,
+        "clearBy60": 4,
+        "clearAfter12": 1,
+        "linesPerMove": 0.4976671850699845,
+        "preparedEndpoints": 32
+      },
+      "clear": {
+        "games": 8,
+        "moves": 2813,
+        "lengths": [
+          360,
+          360,
+          293,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "ended": 1,
+        "clears": 87,
+        "clearBy60": 7,
+        "clearAfter12": 8,
+        "linesPerMove": 0.5606114468538926,
+        "preparedEndpoints": 335
+      },
+      "lapse": {
+        "games": 8,
+        "moves": 2301,
+        "lengths": [
+          359,
+          360,
+          360,
+          360,
+          47,
+          360,
+          95,
+          360
+        ],
+        "ended": 3,
+        "clears": 51,
+        "clearBy60": 7,
+        "clearAfter12": 7,
+        "linesPerMove": 0.5545415036940461,
+        "preparedEndpoints": 287
+      },
+      "plausible": {
+        "games": 8,
+        "moves": 427,
+        "lengths": [
+          23,
+          50,
+          80,
+          50,
+          35,
+          107,
+          47,
+          35
+        ],
+        "ended": 8,
+        "clears": 1,
+        "clearBy60": 1,
+        "clearAfter12": 0,
+        "linesPerMove": 0.4215456674473068,
+        "preparedEndpoints": 0
+      },
+      "three": {
+        "games": 8,
+        "moves": 2880,
+        "lengths": [
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "ended": 0,
+        "clears": 162,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.5493055555555556,
+        "preparedEndpoints": 770
+      }
+    }
+  },
+  "engineering-c4-sha.jsonl": {
+    "sha256": "b26201bbcc38aeafda258248ec8989701e849fa67fe37c1e4a0e7fa94f8c24a0",
+    "groups": {
+      "bounded": {
+        "games": 8,
+        "moves": 884,
+        "lengths": [
+          50,
+          101,
+          122,
+          62,
+          32,
+          125,
+          32,
+          360
+        ],
+        "ended": 7,
+        "clears": 7,
+        "clearBy60": 4,
+        "clearAfter12": 1,
+        "linesPerMove": 0.35407239819004527,
+        "preparedEndpoints": 102
+      },
+      "clear": {
+        "games": 8,
+        "moves": 2347,
+        "lengths": [
+          360,
+          360,
+          131,
+          360,
+          360,
+          360,
+          360,
+          56
+        ],
+        "ended": 2,
+        "clears": 62,
+        "clearBy60": 7,
+        "clearAfter12": 8,
+        "linesPerMove": 0.4175543246697912,
+        "preparedEndpoints": 500
+      },
+      "lapse": {
+        "games": 8,
+        "moves": 2753,
+        "lengths": [
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          233
+        ],
+        "ended": 1,
+        "clears": 64,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.426080639302579,
+        "preparedEndpoints": 738
+      },
+      "plausible": {
+        "games": 8,
+        "moves": 595,
+        "lengths": [
+          131,
+          68,
+          152,
+          35,
+          47,
+          89,
+          32,
+          41
+        ],
+        "ended": 8,
+        "clears": 2,
+        "clearBy60": 2,
+        "clearAfter12": 1,
+        "linesPerMove": 0.292436974789916,
+        "preparedEndpoints": 70
+      },
+      "three": {
+        "games": 8,
+        "moves": 2880,
+        "lengths": [
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "ended": 0,
+        "clears": 146,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.4388888888888889,
+        "preparedEndpoints": 1545
+      }
+    }
+  },
+  "engineering-c5-sha.jsonl": {
+    "sha256": "99613881ddead60517cd886daa7890431ded88a26b054f779ff0d953a7b950a2",
+    "groups": {
+      "bounded": {
+        "games": 8,
+        "moves": 646,
+        "lengths": [
+          71,
+          38,
+          206,
+          56,
+          35,
+          77,
+          131,
+          32
+        ],
+        "ended": 8,
+        "clears": 4,
+        "clearBy60": 4,
+        "clearAfter12": 0,
+        "linesPerMove": 0.43653250773993807,
+        "preparedEndpoints": 11
+      },
+      "clear": {
+        "games": 8,
+        "moves": 1490,
+        "lengths": [
+          71,
+          176,
+          360,
+          113,
+          260,
+          341,
+          74,
+          95
+        ],
+        "ended": 7,
+        "clears": 26,
+        "clearBy60": 7,
+        "clearAfter12": 4,
+        "linesPerMove": 0.5295302013422819,
+        "preparedEndpoints": 42
+      },
+      "lapse": {
+        "games": 8,
+        "moves": 2221,
+        "lengths": [
+          360,
+          101,
+          360,
+          299,
+          74,
+          335,
+          360,
+          332
+        ],
+        "ended": 5,
+        "clears": 51,
+        "clearBy60": 6,
+        "clearAfter12": 6,
+        "linesPerMove": 0.5529040972534894,
+        "preparedEndpoints": 21
+      },
+      "plausible": {
+        "games": 8,
+        "moves": 673,
+        "lengths": [
+          74,
+          20,
+          284,
+          104,
+          89,
+          32,
+          14,
+          56
+        ],
+        "ended": 8,
+        "clears": 0,
+        "clearBy60": 0,
+        "clearAfter12": 0,
+        "linesPerMove": 0.362555720653789,
+        "preparedEndpoints": 9
+      },
+      "three": {
+        "games": 8,
+        "moves": 2880,
+        "lengths": [
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360,
+          360
+        ],
+        "ended": 0,
+        "clears": 155,
+        "clearBy60": 8,
+        "clearAfter12": 8,
+        "linesPerMove": 0.5982638888888889,
+        "preparedEndpoints": 89
+      }
+    }
+  }
+}

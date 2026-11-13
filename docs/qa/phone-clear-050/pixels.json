@@ -1,0 +1,212 @@
+{
+  "passed": 27,
+  "cases": [
+    {
+      "resolution": 512,
+      "energy": 0.12,
+      "washAlpha": 0,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.038521766662597656
+    },
+    {
+      "resolution": 512,
+      "energy": 0.493,
+      "washAlpha": 0.06,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.038130760192871094
+    },
+    {
+      "resolution": 512,
+      "energy": 1,
+      "washAlpha": 0.12,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.03628253936767578
+    },
+    {
+      "resolution": 896,
+      "energy": 0.12,
+      "washAlpha": 0,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.036797971141581634
+    },
+    {
+      "resolution": 896,
+      "energy": 0.493,
+      "washAlpha": 0.06,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.030530345683195154
+    },
+    {
+      "resolution": 896,
+      "energy": 1,
+      "washAlpha": 0.12,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.03486602160395408
+    },
+    {
+      "resolution": 1024,
+      "energy": 0.12,
+      "washAlpha": 0,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.040349483489990234
+    },
+    {
+      "resolution": 1024,
+      "energy": 0.493,
+      "washAlpha": 0.06,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.03165769577026367
+    },
+    {
+      "resolution": 1024,
+      "energy": 1,
+      "washAlpha": 0.12,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.03293943405151367
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 0.007,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "changedChannelFraction": 0
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 0.12,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.04583740234375,
+      "changedChannelFraction": 0.04200935363769531
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 0.257,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.02305316925048828,
+      "changedChannelFraction": 0.023003578186035156
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 0.493,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.03818035125732422,
+      "changedChannelFraction": 0.030577659606933594
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 0.789,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.01943683624267578,
+      "changedChannelFraction": 0.019354820251464844
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 512,
+      "energy": 1,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.038199424743652344,
+      "changedChannelFraction": 0.038177490234375
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 0.007,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "changedChannelFraction": 0
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 0.12,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.04676365852355957,
+      "changedChannelFraction": 0.04270505905151367
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 0.257,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.024417638778686523,
+      "changedChannelFraction": 0.022492408752441406
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 0.493,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.03195309638977051,
+      "changedChannelFraction": 0.0281527042388916
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 0.789,
+      "maxChannelDelta": 3,
+      "meanChannelDelta": 0.027907848358154297,
+      "changedChannelFraction": 0.0240938663482666
+    },
+    {
+      "renderer": "webgl",
+      "resolution": 1024,
+      "energy": 1,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.038565635681152344,
+      "changedChannelFraction": 0.03853321075439453
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 0.007,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0,
+      "changedChannelFraction": 0
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 0.12,
+      "maxChannelDelta": 1,
+      "meanChannelDelta": 0.015401840209960938,
+      "changedChannelFraction": 0.015401840209960938
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 0.257,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.01929473876953125,
+      "changedChannelFraction": 0.015481948852539062
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 0.493,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.03440666198730469,
+      "changedChannelFraction": 0.034397125244140625
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 0.789,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.0079193115234375,
+      "changedChannelFraction": 0.007890701293945312
+    },
+    {
+      "renderer": "canvas",
+      "resolution": 512,
+      "energy": 1,
+      "maxChannelDelta": 2,
+      "meanChannelDelta": 0.019239425659179688,
+      "changedChannelFraction": 0.019235610961914062
+    }
+  ]
+}

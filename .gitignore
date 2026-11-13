@@ -1,0 +1,20 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.local
+.env
+android/.gradle/
+android/local.properties
+android/**/build/
+*.jks
+*.keystore
+
+artifacts/
+
+# Private owner play recordings / implementation handoff inputs
+private-inputs/
+blocky-agent-handoff*.zip
+
+__pycache__/
+*.pyc

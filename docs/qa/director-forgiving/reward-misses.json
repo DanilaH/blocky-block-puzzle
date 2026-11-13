@@ -1,0 +1,957 @@
+{
+  "counts": {
+    "constructed": 16,
+    "matchedNext": 0,
+    "replannedNext": 1,
+    "lostNext": 10,
+    "superseded": 5,
+    "endedBeforeNext": 0,
+    "earnedWithinTwoTrays": 1
+  },
+  "examples": [
+    {
+      "split": "development",
+      "seed": 1341004,
+      "move": 30,
+      "setup": {
+        "board": [
+          128,
+          222,
+          0,
+          0,
+          0,
+          248,
+          0,
+          0
+        ],
+        "tray": [
+          {
+            "shapeId": "L3-1",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "L3-1",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "slot": 2,
+            "x": 2,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 5,
+            "y": 0
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              248,
+              0,
+              0
+            ],
+            "route": [
+              {
+                "shape": 3,
+                "x": 0,
+                "y": 5
+              },
+              {
+                "shape": 1,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 2,
+                "x": 2,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 5
+          },
+          {
+            "slot": 0,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "rows": [
+          227,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "gift",
+        "planStatus": "replanned",
+        "goalFound": true,
+        "goalConstructed": true
+      }
+    },
+    {
+      "split": "development",
+      "seed": 1341006,
+      "move": 81,
+      "setup": {
+        "board": [
+          2,
+          128,
+          128,
+          128,
+          194,
+          194,
+          194,
+          2
+        ],
+        "tray": [
+          {
+            "shapeId": "I3-1",
+            "color": 5,
+            "used": false
+          },
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I4-1",
+            "color": 1,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 2,
+            "x": 6,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 7,
+            "y": 0
+          },
+          {
+            "slot": 0,
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              192,
+              192,
+              192,
+              192,
+              192,
+              192,
+              192,
+              0
+            ],
+            "route": [
+              {
+                "shape": 1,
+                "x": 6,
+                "y": 7
+              },
+              {
+                "shape": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 1,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 0,
+            "x": 1,
+            "y": 1
+          },
+          {
+            "slot": 1,
+            "x": 6,
+            "y": 1
+          },
+          {
+            "slot": 2,
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "rows": [
+          0,
+          192,
+          128,
+          160,
+          224,
+          224,
+          224,
+          0
+        ]
+      },
+      "next": {
+        "requested": "load",
+        "actual": "load",
+        "planStatus": "none",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "development",
+      "seed": 1341006,
+      "move": 108,
+      "setup": {
+        "board": [
+          28,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          24
+        ],
+        "tray": [
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          },
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          },
+          {
+            "shapeId": "I2-0",
+            "color": 2,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "slot": 0,
+            "x": 0,
+            "y": 7
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              31
+            ],
+            "route": [
+              {
+                "shape": 3,
+                "x": 5,
+                "y": 7
+              },
+              {
+                "shape": 1,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 2,
+                "x": 2,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 2,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "slot": 0,
+            "x": 2,
+            "y": 1
+          },
+          {
+            "slot": 1,
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "rows": [
+          124,
+          28,
+          0,
+          0,
+          0,
+          0,
+          56,
+          24
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "prepare",
+        "planStatus": "lost",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "development",
+      "seed": 1341006,
+      "move": 123,
+      "setup": {
+        "board": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          235,
+          232
+        ],
+        "tray": [
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 0,
+            "x": 2,
+            "y": 6
+          },
+          {
+            "slot": 1,
+            "x": 4,
+            "y": 6
+          },
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 7
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              239
+            ],
+            "route": [
+              {
+                "shape": 0,
+                "x": 4,
+                "y": 7
+              },
+              {
+                "shape": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 1,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 0,
+            "x": 4,
+            "y": 7
+          },
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 7
+          },
+          {
+            "slot": 1,
+            "x": 7,
+            "y": 0
+          }
+        ],
+        "rows": [
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          235,
+          0
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "prepare",
+        "planStatus": "lost",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "development",
+      "seed": 1341006,
+      "move": 126,
+      "setup": {
+        "board": [
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          235,
+          0
+        ],
+        "tray": [
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          },
+          {
+            "shapeId": "I4-0",
+            "color": 6,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "slot": 2,
+            "x": 3,
+            "y": 0
+          },
+          {
+            "slot": 0,
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              239,
+              0
+            ],
+            "route": [
+              {
+                "shape": 0,
+                "x": 4,
+                "y": 6
+              },
+              {
+                "shape": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 1,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 0,
+            "x": 2,
+            "y": 6
+          },
+          {
+            "slot": 1,
+            "x": 5,
+            "y": 5
+          },
+          {
+            "slot": 2,
+            "x": 1,
+            "y": 5
+          }
+        ],
+        "rows": [
+          128,
+          0,
+          0,
+          0,
+          0,
+          254,
+          239,
+          0
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "prepare",
+        "planStatus": "lost",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "development",
+      "seed": 1341006,
+      "move": 129,
+      "setup": {
+        "board": [
+          128,
+          0,
+          0,
+          0,
+          0,
+          254,
+          239,
+          0
+        ],
+        "tray": [
+          {
+            "shapeId": "I4-0",
+            "color": 6,
+            "used": false
+          },
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I3-0",
+            "color": 4,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "slot": 0,
+            "x": 3,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              239,
+              0
+            ],
+            "route": [
+              {
+                "shape": 0,
+                "x": 4,
+                "y": 6
+              },
+              {
+                "shape": 2,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 1,
+            "x": 4,
+            "y": 6
+          },
+          {
+            "slot": 2,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "slot": 0,
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "rows": [
+          128,
+          0,
+          0,
+          0,
+          28,
+          254,
+          120,
+          0
+        ]
+      },
+      "next": {
+        "requested": "load",
+        "actual": "load",
+        "planStatus": "none",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "confirmation",
+      "seed": 1361002,
+      "move": 9,
+      "setup": {
+        "board": [
+          0,
+          0,
+          254,
+          0,
+          0,
+          0,
+          28,
+          0
+        ],
+        "tray": [
+          {
+            "shapeId": "I2-0",
+            "color": 2,
+            "used": false
+          },
+          {
+            "shapeId": "I2-0",
+            "color": 2,
+            "used": false
+          },
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "slot": 0,
+            "x": 0,
+            "y": 6
+          },
+          {
+            "slot": 1,
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              127,
+              0
+            ],
+            "route": [
+              {
+                "shape": 0,
+                "x": 7,
+                "y": 6
+              },
+              {
+                "shape": 2,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 1,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "slot": 0,
+            "x": 2,
+            "y": 5
+          },
+          {
+            "slot": 1,
+            "x": 3,
+            "y": 7
+          }
+        ],
+        "rows": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          12,
+          28,
+          24
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "prepare",
+        "planStatus": "lost",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    },
+    {
+      "split": "confirmation",
+      "seed": 1361004,
+      "move": 27,
+      "setup": {
+        "board": [
+          0,
+          0,
+          32,
+          0,
+          0,
+          64,
+          0,
+          0
+        ],
+        "tray": [
+          {
+            "shapeId": "S1-0",
+            "color": 1,
+            "used": false
+          },
+          {
+            "shapeId": "I2-1",
+            "color": 3,
+            "used": false
+          },
+          {
+            "shapeId": "I5-0",
+            "color": 2,
+            "used": false
+          }
+        ],
+        "witness": [
+          {
+            "slot": 2,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "slot": 0,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "slot": 1,
+            "x": 6,
+            "y": 6
+          }
+        ],
+        "prepared": [
+          {
+            "rows": [
+              0,
+              0,
+              191,
+              0,
+              0,
+              64,
+              64,
+              64
+            ],
+            "route": [
+              {
+                "shape": 8,
+                "x": 6,
+                "y": 0
+              },
+              {
+                "shape": 1,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "shape": 2,
+                "x": 2,
+                "y": 0
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "actions": [
+          {
+            "slot": 0,
+            "x": 6,
+            "y": 2
+          },
+          {
+            "slot": 1,
+            "x": 7,
+            "y": 4
+          },
+          {
+            "slot": 2,
+            "x": 1,
+            "y": 0
+          }
+        ],
+        "rows": [
+          62,
+          0,
+          96,
+          0,
+          128,
+          192,
+          0,
+          0
+        ]
+      },
+      "next": {
+        "requested": "gift",
+        "actual": "prepare",
+        "planStatus": "lost",
+        "goalFound": false,
+        "goalConstructed": false
+      }
+    }
+  ]
+}

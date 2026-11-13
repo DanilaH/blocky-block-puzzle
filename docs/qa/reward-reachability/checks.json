@@ -1,0 +1,266 @@
+{
+  "schema": "blocky-exact-reward-independent-check-v1",
+  "resultSha256": "af535189f4eb81ec3594cf08e9d4fd3acd8fa36421b525dc42b5f819a71ef03a",
+  "sources": {
+    "scripts/director/verify-reward-reachability.cpp": "e3b5ed1f381b48379b47172713e16d1446f94c21bf7d47f948c517fd0c28ffb1",
+    "scripts/director/verify-reward-reachability.py": "741a19c45ff6cf37569ad2c66d511ae691bc4a4bb61907edcf3e5f62d005331b"
+  },
+  "forwardBoards": 31,
+  "forwardSeconds": 8.736270449000585,
+  "forwardLeafChecks": 3050202592,
+  "forward": [
+    {
+      "minimumPlacements": null,
+      "firstUnique": 780,
+      "secondUnique": 216438,
+      "fitChecks": 289552927,
+      "leafChecks": 288511854
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 498,
+      "secondUnique": 84432,
+      "fitChecks": 113213023,
+      "leafChecks": 112547856
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 356,
+      "secondUnique": 50343,
+      "fitChecks": 67583100,
+      "leafChecks": 67107219
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 217,
+      "secondUnique": 17475,
+      "fitChecks": 23584769,
+      "leafChecks": 23294175
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 241,
+      "secondUnique": 21777,
+      "fitChecks": 29351327,
+      "leafChecks": 29028741
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 138,
+      "secondUnique": 10440,
+      "fitChecks": 14101807,
+      "leafChecks": 13916520
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 329,
+      "secondUnique": 40089,
+      "fitChecks": 53878527,
+      "leafChecks": 53438637
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 429,
+      "secondUnique": 60137,
+      "fitChecks": 80735811,
+      "leafChecks": 80162621
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 542,
+      "secondUnique": 99693,
+      "fitChecks": 133614588,
+      "leafChecks": 132890769
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 525,
+      "secondUnique": 92929,
+      "fitChecks": 124575515,
+      "leafChecks": 123874357
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 79,
+      "secondUnique": 4818,
+      "fitChecks": 6529034,
+      "leafChecks": 6422394
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 263,
+      "secondUnique": 27981,
+      "fitChecks": 37650585,
+      "leafChecks": 37298673
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 341,
+      "secondUnique": 37386,
+      "fitChecks": 50291424,
+      "leafChecks": 49835538
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 372,
+      "secondUnique": 46632,
+      "fitChecks": 62657665,
+      "leafChecks": 62160456
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 203,
+      "secondUnique": 14464,
+      "fitChecks": 19552444,
+      "leafChecks": 19280512
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 824,
+      "secondUnique": 247454,
+      "fitChecks": 330955907,
+      "leafChecks": 329856182
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 272,
+      "secondUnique": 32407,
+      "fitChecks": 43562440,
+      "leafChecks": 43198531
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 660,
+      "secondUnique": 158088,
+      "fitChecks": 211612417,
+      "leafChecks": 210731304
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 372,
+      "secondUnique": 53014,
+      "fitChecks": 71164871,
+      "leafChecks": 70667662
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 398,
+      "secondUnique": 56121,
+      "fitChecks": 75341160,
+      "leafChecks": 74809293
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 517,
+      "secondUnique": 95896,
+      "fitChecks": 128519862,
+      "leafChecks": 127829368
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 873,
+      "secondUnique": 293993,
+      "fitChecks": 393057711,
+      "leafChecks": 391892669
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 341,
+      "secondUnique": 46226,
+      "fitChecks": 62075144,
+      "leafChecks": 61619258
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 345,
+      "secondUnique": 43983,
+      "fitChecks": 59090557,
+      "leafChecks": 58629339
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 394,
+      "secondUnique": 51056,
+      "fitChecks": 68584183,
+      "leafChecks": 68057648
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 292,
+      "secondUnique": 33102,
+      "fitChecks": 44515535,
+      "leafChecks": 44124966
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 443,
+      "secondUnique": 72241,
+      "fitChecks": 96889105,
+      "leafChecks": 96297253
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 674,
+      "secondUnique": 160584,
+      "fitChecks": 214958247,
+      "leafChecks": 214058472
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 487,
+      "secondUnique": 77677,
+      "fitChecks": 104193945,
+      "leafChecks": 103543441
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 166,
+      "secondUnique": 11275,
+      "fitChecks": 15252186,
+      "leafChecks": 15029575
+    },
+    {
+      "minimumPlacements": null,
+      "firstUnique": 277,
+      "secondUnique": 30073,
+      "fitChecks": 40457883,
+      "leafChecks": 40087309
+    }
+  ],
+  "tinyCellOracleCases": 31,
+  "tinyMinimumPlacements": [
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "positiveRealCatalogueCases": 7,
+  "positiveCellWitnesses": 155
+}

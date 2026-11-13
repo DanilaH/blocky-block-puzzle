@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "totalPositions": 192,
+  "totalEvaluations": 826,
+  "totalSimulatedMoves": 12848,
+  "totalCollectionGames": 87,
+  "novelHoldoutCandidates": 467,
+  "removedDuplicates": 83,
+  "novelHoldoutBins": [
+    {
+      "label": "narrow",
+      "n": 24,
+      "success": {
+        "clear": 20,
+        "space": 20,
+        "combo": 23,
+        "two": 23,
+        "three": 24,
+        "plausible": 6
+      }
+    },
+    {
+      "label": "middle",
+      "n": 49,
+      "success": {
+        "clear": 44,
+        "space": 44,
+        "combo": 48,
+        "two": 48,
+        "three": 49,
+        "plausible": 28
+      }
+    },
+    {
+      "label": "wide",
+      "n": 280,
+      "success": {
+        "clear": 279,
+        "space": 279,
+        "combo": 280,
+        "two": 280,
+        "three": 280,
+        "plausible": 276
+      }
+    }
+  ],
+  "pairedHoldoutBoards": 40,
+  "paired": {
+    "clear": {
+      "easyOnly": 4,
+      "hardOnly": 0,
+      "both": 35,
+      "neither": 1
+    },
+    "space": {
+      "easyOnly": 4,
+      "hardOnly": 0,
+      "both": 35,
+      "neither": 1
+    },
+    "combo": {
+      "easyOnly": 1,
+      "hardOnly": 0,
+      "both": 39,
+      "neither": 0
+    },
+    "two": {
+      "easyOnly": 1,
+      "hardOnly": 0,
+      "both": 39,
+      "neither": 0
+    },
+    "three": {
+      "easyOnly": 0,
+      "hardOnly": 0,
+      "both": 40,
+      "neither": 0
+    },
+    "plausible": {
+      "easyOnly": 20,
+      "hardOnly": 0,
+      "both": 17,
+      "neither": 3
+    }
+  },
+  "limitations": [
+    "Positions are stratified and dependent within sessions; rates are diagnostic, not population estimates.",
+    "Catalog controls are uniform orientation samples, not proposed production generation.",
+    "No human difficulty or engagement calibration.",
+    "Narrow safe-first ratio does not imply difficult full-tray search.",
+    "Paired extremes are chosen by the metric, not outcomes; not independent from the bin analysis."
+  ]
+}

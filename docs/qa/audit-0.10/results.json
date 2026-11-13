@@ -1,0 +1,802 @@
+{
+  "logic": {
+    "seeds": [
+      1001,
+      1200
+    ],
+    "games": 200,
+    "moveComparisons": 3072,
+    "ended": 200,
+    "failures": [],
+    "hintSamples": [
+      {
+        "nodes": 5958,
+        "checks": 4367105,
+        "cacheHits": 1909,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 12,
+        "checks": 13444,
+        "cacheHits": 0,
+        "elapsedMs": 1,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 1180,
+        "checks": 635134,
+        "cacheHits": 565,
+        "elapsedMs": 33.100000001490116,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 9486,
+        "checks": 1901856,
+        "cacheHits": 6729,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 19,
+        "checks": 21272,
+        "cacheHits": 0,
+        "elapsedMs": 1,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 4958,
+        "checks": 3286529,
+        "cacheHits": 1901,
+        "elapsedMs": 180.10000000149012,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 26,
+        "checks": 29091,
+        "cacheHits": 0,
+        "elapsedMs": 1.199999999254942,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 32,
+        "checks": 15046,
+        "cacheHits": 10,
+        "elapsedMs": 1.1000000014901161,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 6008,
+        "checks": 4195329,
+        "cacheHits": 2046,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 23,
+        "checks": 25739,
+        "cacheHits": 0,
+        "elapsedMs": 1.1000000014901161,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 133,
+        "checks": 75721,
+        "cacheHits": 49,
+        "elapsedMs": 4.5,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 6836,
+        "checks": 5252481,
+        "cacheHits": 1977,
+        "elapsedMs": 180.09999999962747,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 19,
+        "checks": 21272,
+        "cacheHits": 0,
+        "elapsedMs": 0.7000000011175871,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 65,
+        "checks": 33079,
+        "cacheHits": 25,
+        "elapsedMs": 1.300000000745058,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 8372,
+        "checks": 5608705,
+        "cacheHits": 2642,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 7256,
+        "checks": 5607425,
+        "cacheHits": 2046,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 10,
+        "checks": 11206,
+        "cacheHits": 0,
+        "elapsedMs": 0.30000000074505806,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 5,
+        "checks": 5885,
+        "cacheHits": 0,
+        "elapsedMs": 0.2000000011175871,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 7201,
+        "checks": 5445889,
+        "cacheHits": 2046,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 18,
+        "checks": 20146,
+        "cacheHits": 0,
+        "elapsedMs": 0.599999999627471,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 24,
+        "checks": 18262,
+        "cacheHits": 4,
+        "elapsedMs": 0.5,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 7124,
+        "checks": 5204865,
+        "cacheHits": 2168,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 11,
+        "checks": 12327,
+        "cacheHits": 0,
+        "elapsedMs": 0.30000000074505806,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 56,
+        "checks": 31792,
+        "cacheHits": 19,
+        "elapsedMs": 1.099999999627471,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 6684,
+        "checks": 4888321,
+        "cacheHits": 2046,
+        "elapsedMs": 180.10000000149012,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 14,
+        "checks": 15680,
+        "cacheHits": 0,
+        "elapsedMs": 0.40000000037252903,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 104,
+        "checks": 51139,
+        "cacheHits": 44,
+        "elapsedMs": 1.8999999985098839,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 7095,
+        "checks": 5412012,
+        "cacheHits": 2046,
+        "elapsedMs": 180.09999999962747,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 13,
+        "checks": 14563,
+        "cacheHits": 0,
+        "elapsedMs": 1,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 48,
+        "checks": 25180,
+        "cacheHits": 15,
+        "elapsedMs": 0.900000000372529,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 877,
+        "checks": 222855,
+        "cacheHits": 591,
+        "elapsedMs": 18.59999999962747,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 7210,
+        "checks": 5528193,
+        "cacheHits": 2046,
+        "elapsedMs": 180,
+        "cutoff": true,
+        "legal": true
+      },
+      {
+        "nodes": 22,
+        "checks": 24623,
+        "cacheHits": 0,
+        "elapsedMs": 0.599999999627471,
+        "cutoff": false,
+        "legal": true
+      },
+      {
+        "nodes": 121,
+        "checks": 57996,
+        "cacheHits": 53,
+        "elapsedMs": 2.199999999254942,
+        "cutoff": false,
+        "legal": true
+      }
+    ]
+  },
+  "layouts": [
+    {
+      "width": 320,
+      "height": 480,
+      "geo": {
+        "#board": {
+          "x": 84,
+          "y": 107,
+          "width": 152,
+          "height": 152,
+          "right": 236,
+          "bottom": 259
+        },
+        "#tray": {
+          "x": 12,
+          "y": 283,
+          "width": 296,
+          "height": 90,
+          "right": 308,
+          "bottom": 373
+        },
+        "#hint": {
+          "x": 132.5,
+          "y": 375,
+          "width": 55,
+          "height": 48,
+          "right": 187.5,
+          "bottom": 423
+        },
+        "#pause": {
+          "x": 260,
+          "y": 4,
+          "width": 48,
+          "height": 48,
+          "right": 308,
+          "bottom": 52
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 428,
+          "width": 320,
+          "height": 52,
+          "right": 320,
+          "bottom": 480
+        },
+        "#score": {
+          "x": 147.65625,
+          "y": 29,
+          "width": 24.671875,
+          "height": 34,
+          "right": 172.328125,
+          "bottom": 63
+        },
+        ".best": {
+          "x": 12,
+          "y": 7,
+          "width": 86.234375,
+          "height": 26,
+          "right": 98.234375,
+          "bottom": 33
+        }
+      }
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "geo": {
+        "#board": {
+          "x": 40,
+          "y": 107,
+          "width": 240,
+          "height": 240,
+          "right": 280,
+          "bottom": 347
+        },
+        "#tray": {
+          "x": 12,
+          "y": 371,
+          "width": 296,
+          "height": 90,
+          "right": 308,
+          "bottom": 461
+        },
+        "#hint": {
+          "x": 132.5,
+          "y": 463,
+          "width": 55,
+          "height": 48,
+          "right": 187.5,
+          "bottom": 511
+        },
+        "#pause": {
+          "x": 260,
+          "y": 4,
+          "width": 48,
+          "height": 48,
+          "right": 308,
+          "bottom": 52
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 516,
+          "width": 320,
+          "height": 52,
+          "right": 320,
+          "bottom": 568
+        },
+        "#score": {
+          "x": 147.65625,
+          "y": 29,
+          "width": 24.671875,
+          "height": 34,
+          "right": 172.328125,
+          "bottom": 63
+        },
+        ".best": {
+          "x": 12,
+          "y": 7,
+          "width": 86.234375,
+          "height": 26,
+          "right": 98.234375,
+          "bottom": 33
+        }
+      }
+    },
+    {
+      "width": 360,
+      "height": 640,
+      "geo": {
+        "#board": {
+          "x": 24,
+          "y": 107,
+          "width": 312,
+          "height": 312,
+          "right": 336,
+          "bottom": 419
+        },
+        "#tray": {
+          "x": 12,
+          "y": 443,
+          "width": 336,
+          "height": 90,
+          "right": 348,
+          "bottom": 533
+        },
+        "#hint": {
+          "x": 152.5,
+          "y": 535,
+          "width": 55,
+          "height": 48,
+          "right": 207.5,
+          "bottom": 583
+        },
+        "#pause": {
+          "x": 300,
+          "y": 4,
+          "width": 48,
+          "height": 48,
+          "right": 348,
+          "bottom": 52
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 588,
+          "width": 360,
+          "height": 52,
+          "right": 360,
+          "bottom": 640
+        },
+        "#score": {
+          "x": 167.65625,
+          "y": 29,
+          "width": 24.671875,
+          "height": 34,
+          "right": 192.328125,
+          "bottom": 63
+        },
+        ".best": {
+          "x": 12,
+          "y": 7,
+          "width": 86.234375,
+          "height": 26,
+          "right": 98.234375,
+          "bottom": 33
+        }
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "geo": {
+        "#board": {
+          "x": 16,
+          "y": 169,
+          "width": 358,
+          "height": 358,
+          "right": 374,
+          "bottom": 527
+        },
+        "#tray": {
+          "x": 16,
+          "y": 565,
+          "width": 358,
+          "height": 150,
+          "right": 374,
+          "bottom": 715
+        },
+        "#hint": {
+          "x": 167.5,
+          "y": 727,
+          "width": 55,
+          "height": 48,
+          "right": 222.5,
+          "bottom": 775
+        },
+        "#pause": {
+          "x": 330,
+          "y": 16,
+          "width": 48,
+          "height": 48,
+          "right": 378,
+          "bottom": 64
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 792,
+          "width": 390,
+          "height": 52,
+          "right": 390,
+          "bottom": 844
+        },
+        "#score": {
+          "x": 176.40625,
+          "y": 55,
+          "width": 37.1875,
+          "height": 52,
+          "right": 213.59375,
+          "bottom": 107
+        },
+        ".best": {
+          "x": 16,
+          "y": 27,
+          "width": 95.640625,
+          "height": 26,
+          "right": 111.640625,
+          "bottom": 53
+        }
+      }
+    },
+    {
+      "width": 568,
+      "height": 320,
+      "geo": {
+        "#board": {
+          "x": 30.9375,
+          "y": 12,
+          "width": 244,
+          "height": 244,
+          "right": 274.9375,
+          "bottom": 256
+        },
+        "#tray": {
+          "x": 303.890625,
+          "y": 92,
+          "width": 250.109375,
+          "height": 96,
+          "right": 554,
+          "bottom": 188
+        },
+        "#hint": {
+          "x": 401.4375,
+          "y": 188,
+          "width": 55,
+          "height": 48,
+          "right": 456.4375,
+          "bottom": 236
+        },
+        "#pause": {
+          "x": 508,
+          "y": 8,
+          "width": 48,
+          "height": 48,
+          "right": 556,
+          "bottom": 56
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 268,
+          "width": 568,
+          "height": 52,
+          "right": 568,
+          "bottom": 320
+        },
+        "#score": {
+          "x": 418.703125,
+          "y": 26,
+          "width": 20.484375,
+          "height": 28,
+          "right": 439.1875,
+          "bottom": 54
+        },
+        ".best": {
+          "x": 303.890625,
+          "y": 6,
+          "width": 73.984375,
+          "height": 20,
+          "right": 377.875,
+          "bottom": 26
+        }
+      }
+    },
+    {
+      "width": 640,
+      "height": 360,
+      "geo": {
+        "#board": {
+          "x": 29.890625,
+          "y": 12,
+          "width": 284,
+          "height": 284,
+          "right": 313.890625,
+          "bottom": 296
+        },
+        "#tray": {
+          "x": 341.78125,
+          "y": 112,
+          "width": 284.21875,
+          "height": 96,
+          "right": 626,
+          "bottom": 208
+        },
+        "#hint": {
+          "x": 456.390625,
+          "y": 208,
+          "width": 55,
+          "height": 48,
+          "right": 511.390625,
+          "bottom": 256
+        },
+        "#pause": {
+          "x": 580,
+          "y": 8,
+          "width": 48,
+          "height": 48,
+          "right": 628,
+          "bottom": 56
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 308,
+          "width": 640,
+          "height": 52,
+          "right": 640,
+          "bottom": 360
+        },
+        "#score": {
+          "x": 473.640625,
+          "y": 46,
+          "width": 20.484375,
+          "height": 28,
+          "right": 494.125,
+          "bottom": 74
+        },
+        ".best": {
+          "x": 341.78125,
+          "y": 26,
+          "width": 73.984375,
+          "height": 20,
+          "right": 415.765625,
+          "bottom": 46
+        }
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "geo": {
+        "#board": {
+          "x": 68.578125,
+          "y": 12,
+          "width": 314,
+          "height": 314,
+          "right": 382.578125,
+          "bottom": 326
+        },
+        "#tray": {
+          "x": 449.15625,
+          "y": 127,
+          "width": 380.84375,
+          "height": 96,
+          "right": 830,
+          "bottom": 223
+        },
+        "#hint": {
+          "x": 612.078125,
+          "y": 223,
+          "width": 55,
+          "height": 48,
+          "right": 667.078125,
+          "bottom": 271
+        },
+        "#pause": {
+          "x": 784,
+          "y": 8,
+          "width": 48,
+          "height": 48,
+          "right": 832,
+          "bottom": 56
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 338,
+          "width": 844,
+          "height": 52,
+          "right": 844,
+          "bottom": 390
+        },
+        "#score": {
+          "x": 629.328125,
+          "y": 61,
+          "width": 20.484375,
+          "height": 28,
+          "right": 649.8125,
+          "bottom": 89
+        },
+        ".best": {
+          "x": 449.15625,
+          "y": 41,
+          "width": 73.984375,
+          "height": 20,
+          "right": 523.140625,
+          "bottom": 61
+        }
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "geo": {
+        "#board": {
+          "x": 132,
+          "y": 182,
+          "width": 504,
+          "height": 504,
+          "right": 636,
+          "bottom": 686
+        },
+        "#tray": {
+          "x": 100,
+          "y": 730,
+          "width": 568,
+          "height": 160,
+          "right": 668,
+          "bottom": 890
+        },
+        "#hint": {
+          "x": 356.5,
+          "y": 908,
+          "width": 55,
+          "height": 48,
+          "right": 411.5,
+          "bottom": 956
+        },
+        "#pause": {
+          "x": 624,
+          "y": 16,
+          "width": 48,
+          "height": 48,
+          "right": 672,
+          "bottom": 64
+        },
+        "#ad-slot": {
+          "x": 0,
+          "y": 972,
+          "width": 768,
+          "height": 52,
+          "right": 768,
+          "bottom": 1024
+        },
+        "#score": {
+          "x": 365.40625,
+          "y": 58,
+          "width": 37.1875,
+          "height": 52,
+          "right": 402.59375,
+          "bottom": 110
+        },
+        ".best": {
+          "x": 100,
+          "y": 26,
+          "width": 95.640625,
+          "height": 26,
+          "right": 195.640625,
+          "bottom": 52
+        }
+      }
+    }
+  ],
+  "pausePending": "Пауза\n\nПартия сохранена\n\nЗвуковые эффекты\nСпокойные эффекты\nПродолжить\nКак играть\nНовая партия",
+  "restartPending": {
+    "dialog": "Начать заново?\n\nТекущая партия завершится. Рекорд и оставшиеся подсказки сохранятся.\n\nНовая партия\nПродолжить текущую",
+    "status": ""
+  },
+  "failedStatus": "Не удалось сохранить ход. Попробуйте ещё раз.",
+  "conflict": {
+    "staleScore": "0",
+    "message": "Не удалось сохранить ход. Попробуйте ещё раз.",
+    "reloadedScore": "1"
+  },
+  "storage": {
+    "backupRecovered": true,
+    "backupScore": 0,
+    "bothBadError": "Damaged save",
+    "bootText": "Не удалось открыть игру\n\nДанные не удалены. Закройте другие вкладки игры и попробуйте снова.\n\nПовторить"
+  },
+  "errors": []
+}

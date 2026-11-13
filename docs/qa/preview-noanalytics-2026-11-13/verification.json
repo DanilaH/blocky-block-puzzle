@@ -1,0 +1,52 @@
+{
+  "androidCompilation": "pass",
+  "nativeTestCount": 21,
+  "nativeSuites": [
+    {
+      "name": "com.danilah.blocky.dev.BoundedTraceStreamTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.danilah.blocky.dev.HapticPatternTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.danilah.blocky.dev.IlrdPayloadTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.danilah.blocky.dev.cdp.CdpTraceTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0"
+    },
+    {
+      "name": "com.danilah.blocky.dev.cdp.CdpWireTest",
+      "tests": "3",
+      "failures": "0",
+      "errors": "0"
+    }
+  ],
+  "debugResources": {
+    "appmetricaKeyEmpty": true,
+    "adsTestMode": true,
+    "generatedXmlSha256": "cb3531bdf5b6edfe35c190acdcb4d4f06c7f56870f6d38b79a635f5949b5a90c"
+  },
+  "packagingTaskGraph": {
+    "offWithoutKey": "pass",
+    "testWithoutKey": "rejected as required"
+  },
+  "unitTests": 332,
+  "webBuild": "pass",
+  "physicalPhoneTested": false,
+  "newApkBuilt": true,
+  "unsignedApkBuilt": true,
+  "signedApkBuilt": false,
+  "gitPush": "blocked by automatic approval review: explicit public publication authorization required"
+}

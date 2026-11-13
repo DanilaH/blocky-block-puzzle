@@ -1,0 +1,259 @@
+{
+  "schema": "blocky-score-feedback-analysis-v1",
+  "sourceCommit": "1188357987744a510d17ce65598afbc0409a4a90",
+  "inputZipSha256": "6f71e2d30aa39d66f600a98ebee7904f38400d5924ed318827d09a2eebd80e92",
+  "completed": true,
+  "functionalOnly": false,
+  "episodes": 10,
+  "issues": [],
+  "rows": [
+    {
+      "phase": "warmup",
+      "variant": "legacy",
+      "valid": true,
+      "metrics": {
+        "intervals": 786,
+        "over33Raw": 15,
+        "over33": 15,
+        "over34": 10,
+        "over50": 3,
+        "maxMs": 75.5999984741211,
+        "p95Ms": 16.899999618530273
+      }
+    },
+    {
+      "phase": "warmup",
+      "variant": "filter",
+      "valid": true,
+      "metrics": {
+        "intervals": 810,
+        "over33Raw": 11,
+        "over33": 11,
+        "over34": 5,
+        "over50": 2,
+        "maxMs": 75.69999694824219,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "legacy",
+      "valid": true,
+      "metrics": {
+        "intervals": 827,
+        "over33Raw": 10,
+        "over33": 10,
+        "over34": 5,
+        "over50": 3,
+        "maxMs": 50.5,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "filter",
+      "valid": true,
+      "metrics": {
+        "intervals": 818,
+        "over33Raw": 6,
+        "over33": 6,
+        "over34": 6,
+        "over50": 4,
+        "maxMs": 75.69999694824219,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "filter",
+      "valid": true,
+      "metrics": {
+        "intervals": 832,
+        "over33Raw": 7,
+        "over33": 7,
+        "over34": 3,
+        "over50": 2,
+        "maxMs": 50.5,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "legacy",
+      "valid": true,
+      "metrics": {
+        "intervals": 826,
+        "over33Raw": 8,
+        "over33": 8,
+        "over34": 6,
+        "over50": 2,
+        "maxMs": 50.5,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "legacy",
+      "valid": true,
+      "metrics": {
+        "intervals": 847,
+        "over33Raw": 5,
+        "over33": 5,
+        "over34": 3,
+        "over50": 2,
+        "maxMs": 50.5,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "filter",
+      "valid": true,
+      "metrics": {
+        "intervals": 837,
+        "over33Raw": 5,
+        "over33": 5,
+        "over34": 1,
+        "over50": 1,
+        "maxMs": 50.400001525878906,
+        "p95Ms": 16.799999237060547
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "filter",
+      "valid": true,
+      "metrics": {
+        "intervals": 824,
+        "over33Raw": 7,
+        "over33": 7,
+        "over34": 3,
+        "over50": 1,
+        "maxMs": 50.5,
+        "p95Ms": 16.899999618530273
+      }
+    },
+    {
+      "phase": "comparison",
+      "variant": "legacy",
+      "valid": true,
+      "metrics": {
+        "intervals": 827,
+        "over33Raw": 7,
+        "over33": 7,
+        "over34": 3,
+        "over50": 2,
+        "maxMs": 50.5,
+        "p95Ms": 16.799999237060547
+      }
+    }
+  ],
+  "orders": [
+    {
+      "direction": 0,
+      "comparable": true,
+      "baselineStable": false,
+      "beforeMean": 7.5,
+      "candidateMean": 5.5,
+      "meetsTarget": false
+    },
+    {
+      "direction": 1,
+      "comparable": true,
+      "baselineStable": true,
+      "beforeMean": 7.5,
+      "candidateMean": 7.0,
+      "meetsTarget": false
+    }
+  ],
+  "improved": false,
+  "scope": "RAF comparison of legacy and compositor score feedback; no native tracing. This does not measure physical presentation or GPU execution time.",
+  "appVersion": "0.60.0-preview",
+  "zipBytes": 76740,
+  "elapsedMs": 98848.10000002384,
+  "environment": {
+    "renderer": "Mali-G57 MC2",
+    "canvas": [
+      896,
+      896
+    ],
+    "webViewVersion": "156.0.8078.47",
+    "androidSdk": 35
+  },
+  "batteryTemperatureRangeC": [
+    32.2,
+    33.1
+  ],
+  "thermalStatuses": [
+    0
+  ],
+  "modeSummary": {
+    "legacy": {
+      "over33": [
+        10,
+        8,
+        5,
+        7
+      ],
+      "totalOver33": 30,
+      "maxMs": 50.5,
+      "under10msPercent": 89.15915915915916,
+      "mostCommonIntervals": [
+        [
+          8.4,
+          1955
+        ],
+        [
+          8.5,
+          590
+        ],
+        [
+          8.3,
+          418
+        ],
+        [
+          16.8,
+          204
+        ],
+        [
+          16.9,
+          71
+        ]
+      ]
+    },
+    "filter": {
+      "over33": [
+        6,
+        7,
+        5,
+        7
+      ],
+      "totalOver33": 25,
+      "maxMs": 75.69999694824219,
+      "under10msPercent": 88.72135102533173,
+      "mostCommonIntervals": [
+        [
+          8.4,
+          1948
+        ],
+        [
+          8.5,
+          592
+        ],
+        [
+          8.3,
+          396
+        ],
+        [
+          16.8,
+          199
+        ],
+        [
+          16.9,
+          67
+        ]
+      ]
+    }
+  },
+  "acceptedOptimization": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "blocky-played-rollout-cell-check-v1",
+  "resultSha256": "c06c469371df6fbcb41ebd4578c2734975ccdb3504607b424b0dce16c96e2ab6",
+  "scriptSha256": "9384373220f607c371b979d7da3f4d31994ddd7ff24552648a24cd8ddeee1225",
+  "policyAuditSha256": "3574dfd4e68d0d53edd523789d5b465b68ba7c8de91036a83de741c54d0324aa",
+  "proofMoves": 16689,
+  "forecastMoves": 93207,
+  "actualMoves": 5006,
+  "sourceMoves": 144,
+  "heldAuditMoves": 471
+}

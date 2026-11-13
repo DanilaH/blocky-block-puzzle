@@ -1,0 +1,137 @@
+{
+  "scope": "Frozen CSS/raster lettering at identical phases. Images visually inspected separately; not pixel-identical text antialiasing",
+  "phases": [
+    0,
+    325,
+    650,
+    975
+  ],
+  "results": [
+    {
+      "raster": false,
+      "geometry": {
+        "before": [
+          [
+            40.7109375,
+            155,
+            310.578125,
+            40
+          ],
+          [
+            49.765625,
+            410,
+            292.46875,
+            40
+          ],
+          [
+            94.765625,
+            665,
+            202.46875,
+            40
+          ]
+        ],
+        "after": [
+          [
+            40.7109375,
+            155,
+            310.578125,
+            40
+          ],
+          [
+            49.765625,
+            410,
+            292.46875,
+            40
+          ],
+          [
+            94.765625,
+            665,
+            202.46875,
+            40
+          ]
+        ],
+        "stats": {
+          "prepared": 0,
+          "cacheHits": 0,
+          "cacheMisses": 0,
+          "maxPrepareMs": 0,
+          "initialCachedBytes": 0,
+          "fallbacks": 0,
+          "prepareMs": 0,
+          "copyMs": 0,
+          "rasterCopies": 0,
+          "peakBytes": 0,
+          "active": 0,
+          "bytes": 0,
+          "activeBytes": 0,
+          "cachedBytes": 0,
+          "clockActive": false
+        }
+      },
+      "errors": []
+    },
+    {
+      "raster": true,
+      "geometry": {
+        "before": [
+          [
+            40.7109375,
+            155,
+            310.578125,
+            40
+          ],
+          [
+            49.765625,
+            410,
+            292.46875,
+            40
+          ],
+          [
+            94.765625,
+            665,
+            202.46875,
+            40
+          ]
+        ],
+        "after": [
+          [
+            40.7109375,
+            155,
+            310.578125,
+            40
+          ],
+          [
+            49.765625,
+            410,
+            292.46875,
+            40
+          ],
+          [
+            94.765625,
+            665,
+            202.46875,
+            40
+          ]
+        ],
+        "stats": {
+          "prepared": 3,
+          "cacheHits": 2,
+          "cacheMisses": 20,
+          "maxPrepareMs": 6.5,
+          "initialCachedBytes": 0,
+          "fallbacks": 0,
+          "prepareMs": 11.5,
+          "copyMs": 4.9000000059604645,
+          "rasterCopies": 22,
+          "peakBytes": 7075944,
+          "active": 3,
+          "bytes": 7075944,
+          "activeBytes": 3680948,
+          "cachedBytes": 3394996,
+          "clockActive": false
+        }
+      },
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,1349 @@
+[
+  {
+    "strategy": "greedy",
+    "pairs": 16,
+    "bonusDeaths": 0,
+    "controlDeaths": 0,
+    "bonusMoves": 384,
+    "controlMoves": 384,
+    "bonusAllClears": 1,
+    "controlAllClears": 7,
+    "longer": 0,
+    "shorter": 0,
+    "games": [
+      {
+        "seed": 71083554,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 2
+          }
+        }
+      },
+      {
+        "seed": 71088885,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71095993,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71097770,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71099547,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71111986,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71120871,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 1
+          }
+        }
+      },
+      {
+        "seed": 71126202,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71129756,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71143972,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71151080,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 1,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 1
+          }
+        }
+      },
+      {
+        "seed": 71167073,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71184843,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71225714,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71254146,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71255923,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "strategy": "imperfect",
+    "pairs": 42,
+    "bonusDeaths": 3,
+    "controlDeaths": 3,
+    "bonusMoves": 963,
+    "controlMoves": 960,
+    "bonusAllClears": 0,
+    "controlAllClears": 0,
+    "longer": 1,
+    "shorter": 1,
+    "games": [
+      {
+        "seed": 71081777,
+        "recovery": {
+          "moves": 12,
+          "dead": true,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0
+          ],
+          "control": {
+            "moves": 12,
+            "dead": true,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71085331,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71087108,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71088885,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71090662,
+        "recovery": {
+          "moves": 9,
+          "dead": true,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71092439,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71095993,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71097770,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71099547,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71101324,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71103101,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71106655,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71110209,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71113763,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71119094,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71122648,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71124425,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71126202,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71133310,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71140418,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71149303,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71151080,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71152857,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71156411,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71158188,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71159965,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71161742,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71163519,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71165296,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71175958,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 6,
+            "dead": true,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71179512,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71184843,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71190174,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71195505,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71202613,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71211498,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71229268,
+        "recovery": {
+          "moves": 6,
+          "dead": true,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2
+          ],
+          "control": {
+            "moves": 6,
+            "dead": true,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71231045,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71241707,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71245261,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71248815,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      },
+      {
+        "seed": 71257700,
+        "recovery": {
+          "moves": 24,
+          "dead": false,
+          "clears": 0,
+          "dealSupport": [
+            3,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": {
+            "moves": 24,
+            "dead": false,
+            "clears": 0
+          }
+        }
+      }
+    ]
+  }
+]

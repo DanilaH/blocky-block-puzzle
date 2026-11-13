@@ -1,0 +1,13 @@
+{
+  "appVersion": "0.50.0-preview",
+  "completed": true,
+  "interrupted": false,
+  "episodes": 14,
+  "warmupPresent": true,
+  "settleMs": 2100,
+  "measurementMs": 2400,
+  "bytes": 180604,
+  "pageAndAssetErrors": [],
+  "environment": "Chromium 141, Linux, SwiftShader; not physical Android",
+  "purpose": "Production-route export smoke; performance acceptance remains open"
+}

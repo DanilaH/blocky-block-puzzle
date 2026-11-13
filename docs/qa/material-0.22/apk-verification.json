@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "020bcea83f8baa11d97e1547f7ad24e476cfda4f",
+  "ciRun": 41087267032,
+  "package": "com.danilah.blocky.dev",
+  "versionCode": 22,
+  "versionName": "0.22.0-preview",
+  "bytes": 9955419,
+  "sha256": "d79bc8a21508a0bf8e973b1865bfc89ecc00ee41cceddca313e32b4d44f84eac",
+  "matchingProductionFiles": [
+    "assets/public/index.html",
+    "assets/public/assets/praise.worker-keudRoz7.js",
+    "assets/public/assets/hint.worker-BBQAON7F.js",
+    "assets/public/assets/index-79ln_3GS.css",
+    "assets/public/assets/phaser-B_vcVLyb.js",
+    "assets/public/assets/index-CuBistLj.js",
+    "assets/public/assets/vfx/chip.webp",
+    "assets/public/assets/vfx/flash.webp",
+    "assets/public/assets/vfx/streak.webp",
+    "assets/public/assets/vfx/ring.webp",
+    "assets/public/assets/tile-study/plastic-2.webp",
+    "assets/public/assets/tile-study/plastic-3.webp",
+    "assets/public/assets/tile-study/plastic-1.webp",
+    "assets/public/assets/tile-study/plastic-6.webp",
+    "assets/public/assets/tile-study/plastic-5.webp",
+    "assets/public/assets/tile-study/plastic-4.webp"
+  ],
+  "signatureVerified": true,
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "certificateMatches021": true,
+  "physicalDeviceTested": false
+}

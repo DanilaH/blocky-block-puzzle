@@ -1,0 +1,36 @@
+{
+  "recordedBeforeRunAt": "2026-11-07T18:13:41.040513+00:00",
+  "candidate": "Precomposed energy border plus native trimming of only its cached nine-slice frames; original primitive atlas unchanged.",
+  "sourceSha256": {
+    "src/game/sprite-ink.ts": "2c7b208ecfaefe0390ec5c94dbbe5332e7b76ba06677ba6de8a45fe18c93e91b",
+    "src/game/BoardScene.ts": "e9e68d3bf3148fed74cf780f5de9fe72c2052eba6aba38729bfc04e98d3093cd",
+    "scripts/audit-performance-probe.mjs": "653b7078b0f4e8e182490bf6d4620711df2fe8bc68158ff1669421b962331818",
+    "scripts/performance-probe/browser.mjs": "90b82554d5fd4531b80748d5add47d866f844d218621a524ac7cec2c79e9930b"
+  },
+  "conditions": {
+    "fixtures": [
+      0,
+      1,
+      2
+    ],
+    "androidUA": true,
+    "dpr": 2.75,
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "rounds": 3,
+    "repeats": 2,
+    "windowMs": 2200
+  },
+  "gate": "Same gate: each fixture warm median over25 decreases >=10%; no paired warm count grows >30% allowing 1 interval; cold median no growth >15% allowing 1 interval; exact outcome; image max channel delta<=3, MAE<0.05 at 512 and 1024 logical backing pixels.",
+  "limits": [
+    "Engineering gate, not population statistics.",
+    "SwiftShader with Android UA is not the physical phone GPU.",
+    "Control retains allocated cache but draws the original four border strokes.",
+    "Original field clarity, timing, particle count and theme progression unchanged."
+  ],
+  "harnessCorrectionBeforeValidRunAt": "2026-11-07T18:07:18.370332+00:00",
+  "harnessCorrection": "Prototype image wrapper omitted new optional texture key. Previous energy-screen and energy-confirm results are invalid for performance acceptance and retained only as invalid evidence. Wrapper now forwards the key and fails on a missing frame. Same gate, new run.",
+  "previousCandidateDecision": "Untrimmed energy cache failed the >=10% warm median gate at fixture1 (18->17), despite 12% and 21% at other fixtures. Not accepted."
+}

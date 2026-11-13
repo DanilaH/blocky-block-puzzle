@@ -1,0 +1,335 @@
+/* Approved 0.43 presentation. Last in the cascade; no gameplay geometry changes. */
+:root[data-presentation="classic"] {
+  --enamel-ink: var(--world-ink);
+  --arcade-gold: #ffca38;
+  font-family: Arial, sans-serif;
+  font-synthesis: style weight;
+}
+:root[data-presentation="classic"] .world-background {
+  background-image: repeating-linear-gradient(
+    135deg,
+    #ffffff02 0 1px,
+    transparent 1px 4px
+  );
+}
+:root[data-presentation="classic"][data-material="plastic"] .world-background {
+  background-image:
+    radial-gradient(ellipse at 50% 60%, #2875e31c, #000a2440),
+    repeating-linear-gradient(135deg, #ffffff02 0 1px, transparent 1px 4px);
+}
+:root[data-presentation="classic"] .board-wrap {
+  border-radius: 5px;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--world-ink) 20%, transparent),
+    0 2px 0 #00000035;
+}
+:root[data-presentation="classic"] #board {
+  border-radius: 5px;
+}
+:root[data-presentation="classic"] .score {
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-shadow: 0 2px 2px #00000026;
+}
+:root[data-presentation="classic"] .best {
+  color: var(--world-ink);
+  font-weight: 800;
+}
+:root[data-presentation="classic"][data-material="plastic"] .best {
+  color: #ffca38;
+}
+:root[data-presentation="classic"] #pause {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  color: var(--world-ink);
+  opacity: 0.85;
+}
+:root[data-presentation="classic"] #combo-title,
+:root[data-presentation="classic"] #combo-stock {
+  opacity: 0.78;
+}
+:root[data-presentation="classic"] .combo-hud.urgent #combo-title {
+  color: var(--world-ink);
+  opacity: 1;
+}
+:root[data-presentation="classic"] .reward-emblem {
+  display: none;
+}
+
+/* Quiet navy surfaces share the game's visual language, with a single green action. */
+:root[data-presentation="classic"]
+  #dialog:not([data-kind="revive"]):not([data-kind="result"]) {
+  background: linear-gradient(150deg, #133e83, #082659);
+  border: 1px solid #698eca66;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px #000b2e66;
+  color: #f5f8ff;
+}
+:root[data-presentation="classic"] #dialog h2 {
+  color: #ffca38;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: none;
+}
+:root[data-presentation="classic"] #dialog p,
+:root[data-presentation="classic"] #dialog .setting,
+:root[data-presentation="classic"] #dialog summary,
+:root[data-presentation="classic"] #dialog .dialog-status {
+  color: #c6dbf8;
+}
+:root[data-presentation="classic"] #dialog .dialog-actions {
+  background: transparent;
+  border-color: #87ace233;
+  box-shadow: none;
+}
+:root[data-presentation="classic"] #dialog .secondary {
+  background: #ffffff0c;
+  color: #eef5ff;
+  border: 1px solid #89aee04d;
+  border-radius: 6px;
+  box-shadow: none;
+  font-weight: 600;
+}
+:root[data-presentation="classic"] #dialog .primary,
+#dialog[data-kind="revive"] #watch-reward,
+#dialog[data-kind="result"] #again {
+  background: linear-gradient(#45bf19, #209a08);
+  border: 1px solid #8ae449;
+  border-radius: 7px;
+  color: white;
+  font-weight: 800;
+  text-shadow: 0 1px 1px #136900;
+  box-shadow:
+    inset 0 1px 0 #c5ff8433,
+    0 3px 0 #126908,
+    0 5px 9px #000a2633;
+}
+:root[data-presentation="classic"] #dialog .quick-setting {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+:root[data-presentation="classic"] #dialog input[type="checkbox"] {
+  background: #47628b;
+  border-color: #7694be;
+}
+:root[data-presentation="classic"] #dialog input[type="checkbox"]:checked {
+  background: #329f1b;
+  border-color: #71cb51;
+}
+:root[data-presentation="classic"] #dialog input[type="range"] {
+  accent-color: #69d442;
+}
+#dialog[data-kind="result"] {
+  background: radial-gradient(ellipse at 50% 60%, #124ca5, #08225e);
+  gap: 36px;
+}
+#dialog[data-kind="result"] .result-heading {
+  color: #ffca38 !important;
+  font-size: clamp(32px, 9vw, 44px);
+  font-weight: 900;
+  margin-bottom: 44px;
+  text-shadow: 0 2px 0 #173f7c;
+}
+#dialog[data-kind="result"] strong.result-score {
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+#dialog[data-kind="result"] .result-total > span,
+#dialog[data-kind="result"] .result-record > span {
+  color: #b9d7ff;
+  letter-spacing: 0.3px;
+}
+#dialog[data-kind="result"] .result-record strong {
+  color: #ffca38;
+}
+#dialog[data-kind="revive"] .revive-clock {
+  background: none;
+}
+#dialog[data-kind="revive"] .revive-clock strong {
+  text-shadow: 0 2px 3px #00133980;
+  font-weight: 900;
+}
+.clock-track {
+  stroke: #bad5ff77;
+  stroke-width: 7;
+}
+.clock-progress {
+  stroke: #79ee16;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+#dialog .theme-collection {
+  gap: 12px;
+}
+#dialog .theme-collection button {
+  padding: 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.theme-preview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  padding: 4px;
+  border-radius: 3px;
+  aspect-ratio: 4 / 3;
+}
+.theme-preview i {
+  display: block;
+  border-radius: 2px;
+  background: #ffffff09;
+}
+.theme-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.theme-name {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+}
+#dialog .theme-collection [aria-pressed="true"] {
+  outline: 2px solid #ffce45;
+  outline-offset: 2px;
+}
+@media (max-height: 500px) {
+  #dialog[data-kind="result"] {
+    gap: 12px;
+  }
+  #dialog[data-kind="result"] .result-heading {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+}
+:root[data-presentation="classic"] .lesson-heading,
+:root[data-presentation="classic"] #lesson-text,
+:root[data-presentation="classic"] .lesson-skip {
+  color: var(--world-ink);
+}
+:root[data-presentation="classic"] #dialog::backdrop {
+  background: #020d279e;
+  backdrop-filter: none;
+}
+/* Reward hierarchy: shapes differ, rather than increasing one particle cloud. */
+.reward-event[data-tier="combo"] .reward-praise {
+  color: #fff2b5;
+}
+.reward-event[data-signature="cross"] .reward-praise {
+  color: #bff5ff;
+}
+.reward-event[data-tier="all-clear"] .reward-praise {
+  text-shadow:
+    0 2px 0 #694a13,
+    0 0 18px #fff3a477;
+}
+#dialog.result-celebrate .result-record {
+  animation: result-record-44 650ms ease-out;
+}
+@keyframes result-record-44 {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.1);
+    text-shadow: 0 0 18px #ffd340;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #dialog.result-celebrate .result-record {
+    animation: none;
+  }
+}
+.reward-event[data-tier="all-clear"]::before,
+.reward-event[data-tier="series"]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  z-index: -1;
+  background: linear-gradient(
+    45deg,
+    #fff0a600,
+    #ffdc4970,
+    #ffffffa0,
+    #ffdc4900
+  );
+  clip-path: polygon(
+    50% 0,
+    60% 35%,
+    85% 15%,
+    65% 40%,
+    100% 50%,
+    65% 60%,
+    85% 85%,
+    60% 65%,
+    50% 100%,
+    40% 65%,
+    15% 85%,
+    35% 60%,
+    0 50%,
+    35% 40%,
+    15% 15%,
+    40% 35%
+  );
+  animation: reward-motif-44 1800ms ease-out both;
+}
+.reward-event[data-tier="series"]::before {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(45deg, #45caff22, #b6f6ff99, #45caff00);
+  clip-path: polygon(
+    50% 0,
+    100% 50%,
+    50% 100%,
+    0 50%,
+    50% 0,
+    50% 12%,
+    12% 50%,
+    50% 88%,
+    88% 50%,
+    50% 12%
+  );
+}
+.reward-event.yield-to-drag::before {
+  display: none;
+}
+@keyframes reward-motif-44 {
+  0% {
+    transform: translate(-50%, -50%) scale(0.25) rotate(-25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  60% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.65) rotate(25deg);
+    opacity: 0;
+  }
+}
+.calm .reward-event::before {
+  display: none;
+}
+
+/* Static wells stay sharp at device density without joining every WebGL frame. */
+:root[data-presentation="classic"] #board[data-static-board="true"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect x='1' y='1' width='62' height='62' rx='3' fill='black' fill-opacity='.066666667'/%3E%3C/svg%3E");
+  background-size: 12.5% 12.5%;
+}

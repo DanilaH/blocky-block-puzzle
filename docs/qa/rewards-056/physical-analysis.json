@@ -1,0 +1,1260 @@
+{
+  "sourceVersion": "0.56.0-preview",
+  "sourceCommit": "561b6efd846d728c53397f74171d1af495c12c0e",
+  "sourceCommitBasis": "Delivered APK verification, not embedded in report",
+  "inputZipSha256": "d8b7b9b0496f7329a729772b6acfb171917ad7c50ad6d4e776472fe3996fb2a0",
+  "memberSha256": {
+    "report.json": "32c178d98f45bbd6afe997c3de98fdf6901d210cf6c7072edf5f20218908c068",
+    "native-status.json": "ca858ff6cb90ba859b8ad4f24e5bad5982520162cd23b9910d5a60ea55417640",
+    "webview-trace.json": "201f41177ec89c224fbedb9f35aa7e53875b16be1790aa10e5525f6eb3a27719"
+  },
+  "completed": true,
+  "interrupted": false,
+  "validEpisodes": 20,
+  "elapsedMs": 88964.60000002384,
+  "screenAwake": true,
+  "context": {
+    "canvas": [
+      896,
+      896
+    ],
+    "reducedMotion": false,
+    "effectLayers": [
+      {
+        "layer": "ambient-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      },
+      {
+        "layer": "festival-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      }
+    ],
+    "type": "webgl",
+    "renderer": "Mali-G57 MC2",
+    "vendor": "ARM",
+    "maxTextureUnits": 16,
+    "phaserTextureUnits": 1
+  },
+  "geometry": [
+    [
+      896,
+      896
+    ],
+    [
+      588,
+      1308
+    ],
+    [
+      588,
+      1308
+    ]
+  ],
+  "frameWindowMs": 2400,
+  "metricRule": "Intervals overlapping [placement, placement+2400ms); RAF, not presentation/GPU timing",
+  "episodes": [
+    {
+      "kind": "warmup",
+      "phase": "warmup",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 131,
+      "over33": 14,
+      "over50": 7,
+      "maxMs": 159.6999969482422,
+      "p95Ms": 50.400001525878906,
+      "over33ByEndWindow": [
+        2,
+        10,
+        2
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 2,
+        "cacheMisses": 13,
+        "maxPrepareMs": 34.299999952316284,
+        "initialCachedBytes": 1254600,
+        "fallbacks": 0,
+        "prepareMs": 49.800000071525574,
+        "copyMs": 10.800000071525574,
+        "rasterCopies": 15,
+        "peakBytes": 5338152,
+        "active": 2,
+        "bytes": 4822112,
+        "activeBytes": 1656580,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-0-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 181,
+      "over33": 5,
+      "over50": 2,
+      "maxMs": 67.30000305175781,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        5,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 7.399999976158142,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 15.200000047683716,
+        "copyMs": 5.200000047683716,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-1-no-board-ink",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-board-ink",
+      "intervals": 160,
+      "over33": 12,
+      "over50": 3,
+      "maxMs": 67.4000015258789,
+      "p95Ms": 33.70000076293945,
+      "over33ByEndWindow": [
+        0,
+        10,
+        2
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 14,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 23.899999976158142,
+        "copyMs": 9.00000011920929,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-2-no-board-vfx",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-board-vfx",
+      "intervals": 172,
+      "over33": 8,
+      "over50": 1,
+      "maxMs": 58.900001525878906,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        0,
+        8,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 12.100000023841858,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 19.899999976158142,
+        "copyMs": 8.099999904632568,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-3-no-festival",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-festival",
+      "intervals": 183,
+      "over33": 11,
+      "over50": 2,
+      "maxMs": 75.69999694824219,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        0,
+        11,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 7.699999928474426,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 15.300000071525574,
+        "copyMs": 5.099999904632568,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 0,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-4-no-atmosphere",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-atmosphere",
+      "intervals": 172,
+      "over33": 7,
+      "over50": 3,
+      "maxMs": 58.79999923706055,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        0,
+        7,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 14.399999976158142,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 22.5,
+        "copyMs": 12.799999952316284,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-5-no-reward-dom",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-reward-dom",
+      "intervals": 210,
+      "over33": 1,
+      "over50": 0,
+      "maxMs": 33.599998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        1,
+        0
+      ],
+      "rewardDomCreated": 0,
+      "rewardRasters": {
+        "prepared": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "maxPrepareMs": 0,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 0,
+        "copyMs": 0,
+        "rasterCopies": 0,
+        "peakBytes": 3165532,
+        "active": 0,
+        "bytes": 3165532,
+        "activeBytes": 0,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-6-no-theme",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-theme",
+      "intervals": 209,
+      "over33": 2,
+      "over50": 1,
+      "maxMs": 50.400001525878906,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        2,
+        0
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 8.600000023841858,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 16.600000023841858,
+        "copyMs": 5.800000071525574,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-7-legacy-reward-text",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "legacy-reward-text",
+      "intervals": 170,
+      "over33": 9,
+      "over50": 3,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        0,
+        9,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "maxPrepareMs": 0,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 0,
+        "copyMs": 0,
+        "rasterCopies": 0,
+        "peakBytes": 3165532,
+        "active": 0,
+        "bytes": 3165532,
+        "activeBytes": 0,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-8-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 167,
+      "over33": 8,
+      "over50": 3,
+      "maxMs": 75.69999694824219,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        7,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 6.599999904632568,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 13.49999988079071,
+        "copyMs": 4.200000047683716,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-0-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 169,
+      "over33": 13,
+      "over50": 1,
+      "maxMs": 50.400001525878906,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        1,
+        11,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 8.199999928474426,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 15.299999952316284,
+        "copyMs": 6.200000047683716,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-1-legacy-reward-text",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "legacy-reward-text",
+      "intervals": 157,
+      "over33": 10,
+      "over50": 4,
+      "maxMs": 58.79999923706055,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        0,
+        8,
+        2
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "maxPrepareMs": 0,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 0,
+        "copyMs": 0,
+        "rasterCopies": 0,
+        "peakBytes": 3165532,
+        "active": 0,
+        "bytes": 3165532,
+        "activeBytes": 0,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-2-no-theme",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-theme",
+      "intervals": 202,
+      "over33": 4,
+      "over50": 2,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 16.899999618530273,
+      "over33ByEndWindow": [
+        0,
+        3,
+        1
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 10,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 21.100000023841858,
+        "copyMs": 6.9999998807907104,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-3-no-reward-dom",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-reward-dom",
+      "intervals": 200,
+      "over33": 3,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        3,
+        0
+      ],
+      "rewardDomCreated": 0,
+      "rewardRasters": {
+        "prepared": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "maxPrepareMs": 0,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 0,
+        "copyMs": 0,
+        "rasterCopies": 0,
+        "peakBytes": 3165532,
+        "active": 0,
+        "bytes": 3165532,
+        "activeBytes": 0,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-4-no-atmosphere",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-atmosphere",
+      "intervals": 176,
+      "over33": 6,
+      "over50": 2,
+      "maxMs": 84.0999984741211,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        0,
+        5,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 6.899999976158142,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 13.50000011920929,
+        "copyMs": 4.800000071525574,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-5-no-festival",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-festival",
+      "intervals": 175,
+      "over33": 7,
+      "over50": 1,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        0,
+        7,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 11.200000047683716,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 18.300000071525574,
+        "copyMs": 4.799999952316284,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 0,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-6-no-board-vfx",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-board-vfx",
+      "intervals": 162,
+      "over33": 9,
+      "over50": 2,
+      "maxMs": 58.900001525878906,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        0,
+        7,
+        2
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 7.100000023841858,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 16.00000011920929,
+        "copyMs": 5.0000001192092896,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-7-no-board-ink",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-board-ink",
+      "intervals": 176,
+      "over33": 8,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        6,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 11.200000047683716,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 19.59999990463257,
+        "copyMs": 5.299999952316284,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-8-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 165,
+      "over33": 11,
+      "over50": 2,
+      "maxMs": 75.5999984741211,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        0,
+        10,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 11.399999976158142,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 19.100000023841858,
+        "copyMs": 9.399999856948853,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "native-baseline",
+      "phase": "trace",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 166,
+      "over33": 8,
+      "over50": 3,
+      "maxMs": 92.5,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        7,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": {
+        "prepared": 4,
+        "cacheHits": 15,
+        "cacheMisses": 0,
+        "maxPrepareMs": 10,
+        "initialCachedBytes": 3165532,
+        "fallbacks": 0,
+        "prepareMs": 18.5,
+        "copyMs": 7.199999928474426,
+        "rasterCopies": 15,
+        "peakBytes": 5338112,
+        "active": 2,
+        "bytes": 4822072,
+        "activeBytes": 1656540,
+        "cachedBytes": 3165532,
+        "clockActive": false
+      },
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    }
+  ],
+  "comparisons": [
+    {
+      "condition": "no-board-ink",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 12,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.8461538461538463,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 8,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.33333333333333337,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-board-vfx",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 8,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.23076923076923084,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 9,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.25,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-festival",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 11,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.6923076923076923,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 7,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.41666666666666663,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-atmosphere",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 7,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.07692307692307687,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 6,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.5,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-reward-dom",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 1,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.8461538461538461,
+          "baselineStable": true,
+          "meetsTarget": true
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 3,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.75,
+          "baselineStable": true,
+          "meetsTarget": true
+        }
+      ],
+      "investigate": true
+    },
+    {
+      "condition": "no-theme",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 2,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.6923076923076923,
+          "baselineStable": true,
+          "meetsTarget": true
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 4,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.6666666666666667,
+          "baselineStable": true,
+          "meetsTarget": true
+        }
+      ],
+      "investigate": true
+    },
+    {
+      "condition": "legacy-reward-text",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 5,
+          "afterOver33": 8,
+          "candidateOver33": 9,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.3846153846153846,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 13,
+          "afterOver33": 11,
+          "candidateOver33": 10,
+          "referenceOver33": 12.0,
+          "reductionOver33": 0.16666666666666663,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    }
+  ],
+  "nominatedLayers": [
+    "no-reward-dom",
+    "no-theme"
+  ],
+  "hotRasterPreparation": {
+    "episodes": 14,
+    "totalPrepareMedianMs": 17.450000047683716,
+    "totalPrepareMinMs": 13.49999988079071,
+    "totalPrepareMaxMs": 23.899999976158142,
+    "maxSinglePrepareMs": 14.399999976158142,
+    "copyMedianMs": 5.550000011920929,
+    "peakEstimatedRgbaBytes": 5338112,
+    "allCacheHits15Misses0": true
+  },
+  "nativeTraceBytes": 29586164,
+  "nativeTraceEvents": 169986,
+  "currentCaptureConfirmed": true,
+  "genericMarkDeltasMs": [
+    26.517,
+    2402.754
+  ],
+  "markMapping": "Inferred start/committed/end from order/duration; names anonymized",
+  "parserAndBufferLossCounters": {
+    "android_br_parse_errors": 0,
+    "android_input_event_parse_errors": 0,
+    "app_wakelock_parse_error": 0,
+    "clock_sync_failure_undeferrable_packet_loss": 0,
+    "compact_sched_has_parse_errors": 0,
+    "deobfuscate_location_parse_error": 0,
+    "extra_parsing_descriptors_error": 0,
+    "frame_timeline_event_parser_errors": 0,
+    "game_intervention_has_parse_errors": 0,
+    "gpu_render_stage_parser_errors": 0,
+    "graphics_frame_event_parser_errors": 0,
+    "hprof_primitive_array_parsing_errors": 0,
+    "metatrace_overruns": 0,
+    "network_trace_parse_errors": 0,
+    "ninja_parse_errors": 0,
+    "packages_list_has_parse_errors": 0,
+    "perf_aux_lost": 0,
+    "perf_samples_skipped_dataloss": 0,
+    "smaps_parser_errors": 0,
+    "stackprofile_parser_error": 0,
+    "traced_buf[0].abi_violations": 0,
+    "traced_buf[0].bytes_overwritten": 0,
+    "traced_buf[0].chunks_discarded": 0,
+    "traced_buf[0].chunks_overwritten": 0,
+    "traced_buf[0].patches_failed": 0,
+    "traced_buf[0].readaheads_failed": 0,
+    "traced_buf[0].trace_writer_packet_loss": 0,
+    "traced_buf[1].abi_violations": 0,
+    "traced_buf[1].bytes_overwritten": 0,
+    "traced_buf[1].chunks_discarded": 0,
+    "traced_buf[1].chunks_overwritten": 0,
+    "traced_buf[1].patches_failed": 0,
+    "traced_buf[1].readaheads_failed": 0,
+    "traced_buf[1].trace_writer_packet_loss": 0,
+    "traced_chunks_discarded": 0,
+    "traced_patches_discarded": 0,
+    "track_event_parser_errors": 0,
+    "winscope_inputmethod_clients_parse_errors": 0,
+    "winscope_inputmethod_manager_service_parse_errors": 0,
+    "winscope_inputmethod_service_parse_errors": 0,
+    "winscope_protolog_invalid_interpolation_parse_errors": 0,
+    "winscope_protolog_missing_interned_arg_parse_errors": 0,
+    "winscope_protolog_missing_interned_stacktrace_parse_errors": 0,
+    "winscope_sf_layers_parse_errors": 0,
+    "winscope_sf_transactions_parse_errors": 0,
+    "winscope_shell_transitions_parse_errors": 0,
+    "winscope_viewcapture_missing_interned_string_parse_errors": 0,
+    "winscope_viewcapture_parse_errors": 0,
+    "winscope_windowmanager_parse_errors": 0
+  },
+  "nativeWindows": [
+    {
+      "afterCommitMs": [
+        0,
+        320
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 29,
+          "wallMs": 22.565,
+          "maxMs": 6.4
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 5,
+          "wallMs": 0.068,
+          "maxMs": 0.035
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 29,
+          "wallMs": 60.898,
+          "maxMs": 4.41
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 6,
+          "wallMs": 2.207,
+          "maxMs": 0.507
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 29,
+          "wallMs": 5.457,
+          "maxMs": 1.044
+        },
+        "DrawFn_DrawGL": {
+          "count": 27,
+          "wallMs": 212.896,
+          "maxMs": 34.959
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 54,
+          "wallMs": 183.376,
+          "maxMs": 28.874
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        320,
+        1400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 64,
+          "wallMs": 114.973,
+          "maxMs": 4.708
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 10,
+          "wallMs": 13.369,
+          "maxMs": 3.11
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 54,
+          "wallMs": 218.968,
+          "maxMs": 11.312
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 34,
+          "wallMs": 17.057,
+          "maxMs": 1.161
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 55,
+          "wallMs": 60.73,
+          "maxMs": 3.615
+        },
+        "DrawFn_DrawGL": {
+          "count": 54,
+          "wallMs": 884.25,
+          "maxMs": 90.611
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 108,
+          "wallMs": 799.832,
+          "maxMs": 83.733
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        1400,
+        2400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 84,
+          "wallMs": 87.812,
+          "maxMs": 4.211
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 0,
+          "wallMs": 0,
+          "maxMs": 0
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 84,
+          "wallMs": 273.47,
+          "maxMs": 9.315
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 49,
+          "wallMs": 23.361,
+          "maxMs": 1.031
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 85,
+          "wallMs": 57.86,
+          "maxMs": 2.21
+        },
+        "DrawFn_DrawGL": {
+          "count": 86,
+          "wallMs": 750.238,
+          "maxMs": 18.954
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 172,
+          "wallMs": 640.508,
+          "maxMs": 13.754
+        }
+      }
+    }
+  ],
+  "conclusion": "Reward raster optimization not accepted: no consistent same-capture advantage over legacy text",
+  "limitations": [
+    "One device/capture, two reversed passes; no temperature/frequency telemetry",
+    "Whole reward ablation includes emblem, label, flight, HUD notices and flashes",
+    "No-theme freezes all presentation palettes and also omits the theme notice",
+    "Native tracing is final baseline only; category wall spans overlap and cannot be added",
+    "Comparison to 0.55 is cross-session; does not isolate the Classic CSS change"
+  ]
+}

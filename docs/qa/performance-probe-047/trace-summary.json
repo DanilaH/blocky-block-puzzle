@@ -1,0 +1,518 @@
+[
+  {
+    "condition": {
+      "kind": "allclear",
+      "units": 0
+    },
+    "repeat": 0,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 168,
+      "total": 174
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 171,
+        "totalMs": 1710.807,
+        "maxMs": 51.926
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 171,
+        "totalMs": 1704.092,
+        "maxMs": 51.845
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 439,
+        "totalMs": 1646.916,
+        "maxMs": 51.505
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 166,
+        "totalMs": 2148.817,
+        "maxMs": 54.661
+      },
+      {
+        "thread": "CrBrowserMain",
+        "name": "Commit",
+        "count": 1,
+        "totalMs": 0.017,
+        "maxMs": 0.017
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 14,
+        "maxMs": 42.804,
+        "totalMs": 245.778
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 10,
+        "maxMs": 38.82,
+        "totalMs": 257.232
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 27,
+        "maxMs": 51.845,
+        "totalMs": 483.496
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 14.023,
+        "totalMs": 717.586
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  },
+  {
+    "condition": {
+      "kind": "allclear",
+      "units": 0
+    },
+    "repeat": 1,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 191,
+      "total": 192
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 189,
+        "totalMs": 2072.692,
+        "maxMs": 30.029
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 189,
+        "totalMs": 1634.006,
+        "maxMs": 28.009
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 189,
+        "totalMs": 1627.484,
+        "maxMs": 27.978
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 441,
+        "totalMs": 1578.295,
+        "maxMs": 27.694
+      },
+      {
+        "thread": "CrBrowserMain",
+        "name": "Commit",
+        "count": 1,
+        "totalMs": 0.04,
+        "maxMs": 0.04
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 15,
+        "maxMs": 27.978,
+        "totalMs": 257.43
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 12,
+        "maxMs": 23.713,
+        "totalMs": 250.65
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 42,
+        "maxMs": 22.948,
+        "totalMs": 474.771
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 12.264,
+        "totalMs": 644.633
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  },
+  {
+    "condition": {
+      "kind": "multi",
+      "units": 0
+    },
+    "repeat": 0,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 199,
+      "total": 204
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 200,
+        "totalMs": 1549.507,
+        "maxMs": 47.401
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 200,
+        "totalMs": 1542.784,
+        "maxMs": 47.364
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 478,
+        "totalMs": 1500.243,
+        "maxMs": 47.105
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 196,
+        "totalMs": 1825.613,
+        "maxMs": 50.075
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 12,
+        "maxMs": 47.364,
+        "totalMs": 254.34
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 16,
+        "maxMs": 45.357,
+        "totalMs": 244.765
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 52,
+        "maxMs": 13.049,
+        "totalMs": 394.109
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 7.871,
+        "totalMs": 649.57
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  },
+  {
+    "condition": {
+      "kind": "multi",
+      "units": 0
+    },
+    "repeat": 1,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 207,
+      "total": 208
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 205,
+        "totalMs": 1998.16,
+        "maxMs": 26.549
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 205,
+        "totalMs": 1707.82,
+        "maxMs": 24.579
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 205,
+        "totalMs": 1700.615,
+        "maxMs": 24.555
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 480,
+        "totalMs": 1643.352,
+        "maxMs": 24.283
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 16,
+        "maxMs": 20.748,
+        "totalMs": 257.809
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 18,
+        "maxMs": 24.555,
+        "totalMs": 242.19
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 51,
+        "maxMs": 11.67,
+        "totalMs": 391.85
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 20.605,
+        "totalMs": 808.766
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  },
+  {
+    "condition": {
+      "kind": "allclear",
+      "units": 0,
+      "noRender": true
+    },
+    "repeat": 0,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 212,
+      "total": 213
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 210,
+        "totalMs": 734.955,
+        "maxMs": 6.81
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 210,
+        "totalMs": 219.336,
+        "maxMs": 3.349
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 210,
+        "totalMs": 212.502,
+        "maxMs": 3.319
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 511,
+        "totalMs": 153.88,
+        "maxMs": 2.746
+      },
+      {
+        "thread": "CrBrowserMain",
+        "name": "Commit",
+        "count": 1,
+        "totalMs": 0.022,
+        "maxMs": 0.022
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 19,
+        "maxMs": 1.291,
+        "totalMs": 17.342
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 20,
+        "maxMs": 1.353,
+        "totalMs": 19.381
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 51,
+        "maxMs": 1.786,
+        "totalMs": 50.8
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 3.319,
+        "totalMs": 124.979
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  },
+  {
+    "condition": {
+      "kind": "allclear",
+      "units": 0,
+      "noRender": true
+    },
+    "repeat": 1,
+    "windowMs": 3500,
+    "waitSpansInsideCommit": {
+      "inside": 213,
+      "total": 214
+    },
+    "events": [
+      {
+        "thread": "CrRendererMain",
+        "name": "Commit",
+        "count": 211,
+        "totalMs": 743.134,
+        "maxMs": 8.048
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "ImplementationBase::WaitForCmd",
+        "count": 210,
+        "totalMs": 217.509,
+        "maxMs": 3.769
+      },
+      {
+        "thread": "CrRendererMain",
+        "name": "CommandBufferProxyImpl::WaitForGetOffset",
+        "count": 210,
+        "totalMs": 209.978,
+        "maxMs": 3.738
+      },
+      {
+        "thread": "CrGpuMain",
+        "name": "RunTask",
+        "count": 482,
+        "totalMs": 154.466,
+        "maxMs": 2.172
+      },
+      {
+        "thread": "CrBrowserMain",
+        "name": "Commit",
+        "count": 1,
+        "totalMs": 0.04,
+        "maxMs": 0.04
+      }
+    ],
+    "waitPhaseBins": [
+      {
+        "phaseMs": [
+          0,
+          320
+        ],
+        "count": 20,
+        "maxMs": 2.662,
+        "totalMs": 22.427
+      },
+      {
+        "phaseMs": [
+          320,
+          650
+        ],
+        "count": 19,
+        "maxMs": 3.738,
+        "totalMs": 23.479
+      },
+      {
+        "phaseMs": [
+          650,
+          1500
+        ],
+        "count": 51,
+        "maxMs": 3.248,
+        "totalMs": 55.431
+      },
+      {
+        "phaseMs": [
+          1500,
+          3500
+        ],
+        "count": 120,
+        "maxMs": 1.608,
+        "totalMs": 108.641
+      }
+    ],
+    "note": "Nested trace spans; totals are not additive. Trace-enabled run is separate from performance comparison."
+  }
+]

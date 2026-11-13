@@ -1,0 +1,14 @@
+{
+  "source": "6ee17c63faae8502bd1e3035e17e0bbb03093f44",
+  "run": 41295427723,
+  "verifyJob": 124815176519,
+  "androidJob": 124816929508,
+  "assets": "passed",
+  "build": "passed",
+  "unitPassed": 92,
+  "browserPassed": 99,
+  "android": "success",
+  "artifact": 13079311680,
+  "artifactSha256": "0d33e015b53b7ab7eb26f14c442355e6ed1994ff780a527e783babf2255a3804",
+  "physicalDeviceTested": false
+}

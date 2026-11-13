@@ -1,0 +1,7 @@
+OpenJDK 21 compiler module, source/target17 (no cross-release ct.sym), org.json 20240303, JUnit 4.13.2. Android SDK/bridge/APK not compiled here.
+JUnit version 4.13.2
+...
+Time: 0.013
+
+OK (3 tests)
+

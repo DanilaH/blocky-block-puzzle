@@ -1,0 +1,2937 @@
+{
+  "summary": [
+    {
+      "profile": "uncertain",
+      "n": 32,
+      "recipes": {
+        "baseline": 8,
+        "multi-clear": 21,
+        "direct": 2,
+        "prepare": 1
+      },
+      "meanSafe": 1,
+      "success": {
+        "clear": 32,
+        "two": 32,
+        "three": 32,
+        "plausible": 31
+      }
+    },
+    {
+      "profile": "expert",
+      "n": 32,
+      "recipes": {
+        "baseline": 8,
+        "multi-clear": 17,
+        "order": 2,
+        "direct": 5
+      },
+      "meanSafe": 0.9443399595160882,
+      "success": {
+        "clear": 32,
+        "two": 32,
+        "three": 32,
+        "plausible": 26
+      }
+    },
+    {
+      "profile": "recovery",
+      "n": 32,
+      "recipes": {
+        "baseline": 8,
+        "multi-clear": 20,
+        "prepare": 1,
+        "direct": 3
+      },
+      "meanSafe": 0.9973544973544973,
+      "success": {
+        "clear": 32,
+        "two": 32,
+        "three": 32,
+        "plausible": 31
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "p016",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 186635,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,I3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p016",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 217722,
+        "unknown": 6,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,I3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p016",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 186635,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,I3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p017",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 197312,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p017",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 7,
+        "checks": 190372,
+        "unknown": 5,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p017",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 197312,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p018",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 60750,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p018",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 72843,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "L5,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 0.9090909090909091,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p018",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 60750,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p019",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66205,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,O2,SZ4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p019",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66189,
+        "unknown": 0,
+        "orderFreedom": 0.6666666666666666,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,L5,O3|0|0|3"
+      },
+      "safeRatio": 0.75,
+      "orderFreedom": 0.6666666666666666,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p019",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "prepare",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "constructed",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66205,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 2,
+        "maxLines": 3,
+        "motif": "L3,SZ4,SZ4|0|1|3"
+      },
+      "safeRatio": 0.9523809523809523,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p020",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 119291,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,I4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p020",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 125966,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,I4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p020",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 119291,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,I4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p021",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 80195,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "I3,I3,I3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p021",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "order",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "recipe-order",
+        "fallback": false,
+        "checked": 8,
+        "checks": 91810,
+        "unknown": 0,
+        "orderFreedom": 0.16666666666666666,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,I5,O3|1|0|3"
+      },
+      "safeRatio": 0.5,
+      "orderFreedom": 0.16666666666666666,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p021",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "direct",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 7,
+        "checks": 80195,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "I3,L5,SZ4|0|0|2"
+      },
+      "safeRatio": 0.9629629629629629,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p022",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 181664,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p022",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 7,
+        "checks": 155346,
+        "unknown": 3,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p022",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 181664,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I3,I3,L3|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p023",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 98525,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,O2,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p023",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 150814,
+        "unknown": 2,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "L3,O3,SZ4|0|0|3"
+      },
+      "safeRatio": 0.8571428571428571,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p023",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 98525,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,O2,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p024",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 74343,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,L3,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p024",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 80499,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "I3,I3,L3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p024",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 74343,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,L3,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p025",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 213816,
+        "unknown": 3,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,I4,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p025",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 149344,
+        "unknown": 2,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,I4,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p025",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 213816,
+        "unknown": 3,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,I4,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p026",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 195723,
+        "unknown": 3,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I4,L3,O2|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p026",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 155089,
+        "unknown": 1,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I4,L3,O2|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p026",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 195723,
+        "unknown": 3,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I4,L3,O2|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p027",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 167974,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p027",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 133449,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p027",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 167974,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p028",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 122998,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p028",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 105398,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p028",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 122998,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,I4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p029",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 132929,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "L3,O2,SZ4|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p029",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 136023,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "L3,O2,SZ4|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p029",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 132929,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "L3,O2,SZ4|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p030",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 81345,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p030",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 66915,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "I2,L3,L3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p030",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 81345,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I4,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p031",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 200650,
+        "unknown": 3,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,I4,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p031",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 179564,
+        "unknown": 2,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I5,R6,SZ4|0|0|3"
+      },
+      "safeRatio": 0.9705882352941176,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p031",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 200650,
+        "unknown": 3,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I4,I4,O2|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p032",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 90701,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "O2,S1,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p032",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 91909,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "O2,R6,T4|0|0|3"
+      },
+      "safeRatio": 0.9230769230769231,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p032",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 90701,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "O2,S1,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p033",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 43561,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p033",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 41584,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p033",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 43561,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p034",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 73965,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,I3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p034",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 81301,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,I3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p034",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 73965,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,I3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p035",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 25514,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,S1,SZ4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p035",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 64230,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,S1,SZ4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p035",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 25514,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,S1,SZ4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p036",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66718,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,L3,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p036",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 27665,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,L3,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p036",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66718,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,L3,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p037",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 81563,
+        "unknown": 1,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,S1,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p037",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 136201,
+        "unknown": 2,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,S1,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p037",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 81563,
+        "unknown": 1,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,S1,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p038",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 111696,
+        "unknown": 2,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p038",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 61962,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p038",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 111696,
+        "unknown": 2,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,I3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p039",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "prepare",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 7,
+        "checks": 96793,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 2,
+        "maxLines": 2,
+        "motif": "I3,L5,SZ4|0|1|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 2,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p039",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 86874,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "O2,R6,SZ4|0|0|2"
+      },
+      "safeRatio": 0.8461538461538461,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p039",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "direct",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 96793,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "I2,I3,L3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p040",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 63523,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "D3,I3,L3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p040",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "recipe-prepare",
+        "fallback": false,
+        "checked": 8,
+        "checks": 50746,
+        "unknown": 0,
+        "orderFreedom": 0.6666666666666666,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "L3,L5,S1|0|0|2"
+      },
+      "safeRatio": 0.9318181818181818,
+      "orderFreedom": 0.6666666666666666,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p040",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "direct",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 63523,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "D3,I3,L3|0|0|2"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p041",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66823,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p041",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 84922,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p041",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 66823,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I3,SZ4,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p042",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 126065,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,L3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p042",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "baseline",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 78602,
+        "unknown": 1,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,L3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p042",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "baseline",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": true,
+        "checked": 8,
+        "checks": 126065,
+        "unknown": 4,
+        "orderFreedom": null,
+        "preparation": null,
+        "maxLines": null,
+        "motif": "I2,L3,S1|baseline"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p043",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "constructed",
+        "fallback": false,
+        "checked": 8,
+        "checks": 52408,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,L3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p043",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "direct",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "catalog",
+        "fallback": false,
+        "checked": 8,
+        "checks": 55140,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 2,
+        "motif": "L3,SZ4,T4|0|0|2"
+      },
+      "safeRatio": 0.8333333333333334,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p043",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "constructed",
+        "fallback": false,
+        "checked": 8,
+        "checks": 52408,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,L3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p044",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 34455,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,O2,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p044",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 49443,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,O2,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p044",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 34455,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,O2,T4|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p045",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 57910,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,I4,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p045",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 7,
+        "checks": 45478,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,I4,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p045",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 57910,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 4,
+        "motif": "I2,I4,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p046",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 27908,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "D3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p046",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 48697,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "D3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p046",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 27908,
+        "unknown": 0,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "D3,I3,I3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": false
+      }
+    },
+    {
+      "id": "p047",
+      "profile": "uncertain",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "challenge",
+        "target": 0.29000000000000004,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 54781,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,L3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p047",
+      "profile": "expert",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": true,
+        "recipe": "order",
+        "phase": "challenge",
+        "target": 0.5825,
+        "source": "recipe-prepare",
+        "fallback": false,
+        "checked": 8,
+        "checks": 45705,
+        "unknown": 0,
+        "orderFreedom": 0.5,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I2,R6,S1|1|0|3"
+      },
+      "safeRatio": 0.6976744186046512,
+      "orderFreedom": 0.5,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    },
+    {
+      "id": "p047",
+      "profile": "recovery",
+      "diagnostic": {
+        "revision": "recipes-v3",
+        "qualified": false,
+        "recipe": "multi-clear",
+        "phase": "recovery",
+        "target": 0.05,
+        "source": "baseline",
+        "fallback": false,
+        "checked": 8,
+        "checks": 54781,
+        "unknown": 1,
+        "orderFreedom": 1,
+        "preparation": 1,
+        "maxLines": 3,
+        "motif": "I3,L3,L3|0|0|3"
+      },
+      "safeRatio": 1,
+      "orderFreedom": 1,
+      "preparation": 1,
+      "allClear": false,
+      "outcomes": {
+        "clear": true,
+        "two": true,
+        "three": true,
+        "plausible": true
+      }
+    }
+  ]
+}

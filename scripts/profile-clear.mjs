@@ -1,0 +1,15 @@
+import {createServer} from 'vite';
+import {chromium} from '@playwright/test';
+import fs from 'node:fs/promises';
+const server=await createServer({server:{host:'127.0.0.1',port:5189,strictPort:true}});await server.listen();
+const browser=await chromium.launch();const results=[];
+try {for(const lines of [1,3,6]) {
+ const p=await browser.newPage({viewport:{width:390,height:844}});
+ await p.addInitScript(()=>{window.calls=0;for(const type of [WebGLRenderingContext,WebGL2RenderingContext])for(const name of ['drawArrays','drawElements']){const orig=type.prototype[name];type.prototype[name]=function(...a){window.calls++;return orig.apply(this,a);};}});
+ await p.goto('http://127.0.0.1:5189');await p.waitForFunction(()=>!document.querySelector('#app').inert);
+ await p.evaluate(async lines=>{const {IndexedSave}=await import('/src/platform/save.ts');const {newGame}=await import('/src/core/rules.ts');const a=new IndexedSave(),q=(await a.load()).profile;q.revision++;q.tutorialStep=4;q.best=100000;q.festivalBest=100000;q.game=newGame(1234,'profile-clear');q.game.scoringVersion='festival-v3';q.game.tray=[{shapeId:lines===1?'S1-0':'O3-0',color:2,used:false},{shapeId:'S1-0',color:3,used:false},{shapeId:'S1-0',color:4,used:false}];for(let y=0;y<8;y++)for(let x=0;x<8;x++)if(lines===1?(y===0&&x>0):((y<3&&x>=3)||(lines===6&&x<3&&y>=3)))q.game.board[y*8+x]=(x+y)%6+1;q.game.board[63]=3;await a.write(q);},lines);
+ await p.reload();await p.waitForFunction(()=>!document.querySelector('#app').inert);await p.locator('.piece').first().click();
+ await p.evaluate(()=>document.querySelector('#board').addEventListener('pointerup',()=>{window.done=new Promise(resolve=>{const samples=[],draws=[];let last=performance.now(),start=last;window.calls=0;function step(t){samples.push(t-last);draws.push(window.calls);window.calls=0;last=t;if(t-start<1600)requestAnimationFrame(step);else resolve({samples,draws});}requestAnimationFrame(step);});},{once:true}));
+ const b=await p.locator('#board').boundingBox();await p.mouse.click(b.x+b.width/16,b.y+b.height/16);const r=await p.evaluate(()=>window.done);const cleared=await p.evaluate(async()=>{const {IndexedSave}=await import('/src/platform/save.ts');const q=(await new IndexedSave().load()).profile;return q.game.moves===1&&q.game.board.filter(Boolean).length===1;});if(!cleared)throw new Error('Prepared clear did not complete');const sorted=r.samples.slice(1).sort((a,b)=>a-b);results.push({lines,frames:sorted.length,median:sorted[Math.floor(sorted.length*.5)],p95:sorted[Math.floor(sorted.length*.95)],peakDraws:Math.max(...r.draws),meanDraws:r.draws.reduce((a,b)=>a+b,0)/r.draws.length});await p.screenshot({path:`/tmp/clear-${process.argv[2]}-${lines}.png`});await p.close();
+}}finally{await browser.close();await server.close();}
+await fs.writeFile(`/tmp/clear-${process.argv[2]}.json`,JSON.stringify(results,null,2));console.log(results);

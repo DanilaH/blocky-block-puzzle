@@ -1,0 +1,5 @@
+installation_id,assignment_id,variant,cohort,mature_r7,mature_d1,mature_d7,known_revenue_usd,known_impressions,unknown_impressions,d1,d7,repeat_runs
+install-0,a-0,control,new,True,True,True,0,1,0,False,True,0
+install-1,a-1,control,new,True,True,True,0,0,0,False,False,0
+install-2,a-2,candidate,new,True,True,True,0.012345678901234567,1,0,True,False,0
+install-3,a-3,candidate,new,True,True,True,0,0,1,False,False,0

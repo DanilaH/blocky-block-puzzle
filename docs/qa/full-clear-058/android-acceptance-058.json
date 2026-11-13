@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "954653bbe7739d9859e12685d3a0ccc429db53c7",
+  "headCommit": "7ea79ec8949dbd5be8d807598fea71bcaccaba88",
+  "ciRun": 42594948856,
+  "completed": true,
+  "episodes": 57,
+  "validEpisodes": 57,
+  "comparisons": 40,
+  "attributionCaptures": 15,
+  "preflightReady": true,
+  "probeLinked": true,
+  "issues": [],
+  "zipBytes": 61681882,
+  "zipSha256": "df7ead98dec2e0baab242e18a538637c9aa60a5e28289981c00dc1b64a2ab237",
+  "manifestMembers": 49,
+  "elapsedMs": 652916.9,
+  "inspectorMs": {
+    "min": 988.60053,
+    "median": 1039.601671,
+    "max": 1117.159528
+  },
+  "rawTraceBytes": {
+    "min": 23235128,
+    "max": 25613102,
+    "total": 363757520
+  },
+  "allGzipFromChromium": true,
+  "allKnownNoDataLoss": true,
+  "allLinkedCaptureIds": true,
+  "nativeAds": {
+    "suspended": true,
+    "bannerPresent": false,
+    "loadingInterstitial": false,
+    "loadingRewarded": false
+  },
+  "scope": "Android emulator transport/output/export acceptance only. Software GPU and reduced virtual resolution do not measure POCO performance; no shipping optimization accepted."
+}

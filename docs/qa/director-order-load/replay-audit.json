@@ -1,0 +1,11 @@
+{
+  "valid": true,
+  "runs": 144,
+  "moves": 23617,
+  "proofs": 3860,
+  "diagnostics": 4281,
+  "maxWork": 22889,
+  "oldRuns": 80,
+  "oldMoves": 12026,
+  "resultsSha256": "e4d2843d0e40d0f22282343fbc0ac64d487441cc1070398c3d31682a0f15b649"
+}

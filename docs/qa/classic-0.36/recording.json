@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "a703ff30b358e870ddd0c7f2bdb4c5351d98e81c",
+  "duration": 49.545000076293945,
+  "frames": 2037,
+  "events": [
+    {
+      "streak": 1,
+      "t": 4.308000087738037
+    },
+    {
+      "streak": 2,
+      "t": 10.063000202178955
+    },
+    {
+      "streak": 4,
+      "t": 15.782999992370605
+    },
+    {
+      "streak": 6,
+      "t": 21.511000156402588
+    },
+    {
+      "streak": 10,
+      "t": 27.95300006866455
+    },
+    {
+      "streak": 16,
+      "t": 33.902000188827515
+    },
+    {
+      "streak": 20,
+      "t": 39.19600009918213
+    }
+  ],
+  "controlledPositions": true,
+  "realPointerDrag": true,
+  "liveWebAudio": true,
+  "physicalDevice": false
+}

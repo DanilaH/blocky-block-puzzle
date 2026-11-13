@@ -1,0 +1,206 @@
+name: Preview checks and APK
+on:
+  push:
+    branches: [main, feat/classic-preview]
+  pull_request:
+  workflow_dispatch:
+env:
+  VITE_SOURCE_COMMIT: ${{ github.sha }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}-${{ github.event.pull_request.base.ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run assets:check
+      - run: npm test
+      - run: python3 scripts/commercial/test_metrics.py
+      - run: python3 scripts/test-full-clear-analyzer.py
+      - run: python3 scripts/test-score-feedback-analyzer.py
+      - run: python3 scripts/test-surface-comparison-analyzer.py
+      - run: npm run build
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Use primary Ubuntu package mirror
+        run: |
+          for source_file in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$source_file" ]; then
+              sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$source_file"
+            fi
+          done
+      - name: Install headless browser and dependencies
+        timeout-minutes: 5
+        run: npx playwright install --with-deps --only-shell chromium
+      - name: Verify native CDP client against Chromium
+        run: node scripts/verify-cdp-native.mjs
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-review
+          path: |
+            test-results/
+            artifacts/native-cdp/
+            docs/qa/feel-0.8/*.png
+            docs/qa/feel-0.9/*.png
+            docs/qa/feel-0.10/*.png
+            docs/qa/feel-0.11/*.png
+            docs/qa/feel-0.12/*.png
+            docs/qa/usability-0.13/*.png
+            docs/qa/feel-0.14/*.png
+            docs/qa/feel-0.15/*.png
+            docs/qa/dealer-0.16/*.png
+            docs/qa/ads-0.17/*.png
+  focused-effects:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-headless-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Use primary Ubuntu package mirror
+        run: |
+          for source_file in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources; do
+            if [ -f "$source_file" ]; then
+              sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' "$source_file"
+            fi
+          done
+      - run: npx playwright install --with-deps --only-shell chromium
+        timeout-minutes: 5
+      - name: Verify restored effects and both startup barriers
+        run: npx playwright test e2e/celebration.spec.ts e2e/festival.spec.ts e2e/uiux-027.spec.ts e2e/vfx.spec.ts e2e/initial-background.spec.ts e2e/surface-release.spec.ts e2e/static-board.spec.ts --workers=1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: focused-effects-review
+          path: test-results/
+  android:
+    env:
+      BLOCKY_PREVIEW_ANALYTICS: 'off'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+      - run: npm ci
+      - run: npm run android:sync
+      - uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: blocky-preview-debug-keystore-v1
+      - name: Require original cached preview signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            echo 'Original preview signing key is missing from the cache; refusing to replace the signing identity.'
+            exit 1
+          fi
+          preview_signer="$(keytool -exportcert -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey | sha256sum | cut -d ' ' -f 1)"
+          test "$preview_signer" = e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13
+      - uses: actions/cache@v4
+        with:
+          path: ~/.gradle/blocky-distributions
+          key: blocky-gradle-${{ runner.os }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Prepare checksum-pinned Gradle
+        id: gradle
+        run: python3 scripts/prepare_gradle.py
+      - name: Test and assemble Android
+        run: '"${{ steps.gradle.outputs.gradle-bin }}" --project-dir android :app:testDebugUnitTest :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon'
+      - name: Verify preview APK signature and packaged files
+        run: python3 scripts/verify-preview-apk.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blocky-preview-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
+
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blocky-preview-apk-proof
+          path: artifacts/apk-verification.json
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blocky-cdp-android-smoke
+          path: android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          retention-days: 3
+  cdp-emulator:
+    needs: android
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: blocky-preview-debug-apk
+          path: diagnostic-app
+      - uses: actions/download-artifact@v4
+        with:
+          name: blocky-cdp-android-smoke
+          path: diagnostic-test
+      - name: Enable KVM for the ephemeral emulator
+        run: sudo chmod 666 /dev/kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          cores: 4
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader -memory 3072 -noaudio -no-boot-anim -camera-back none
+          script: python3 scripts/run-cdp-device-smoke.py --surfaces
+      - name: Retain emulator failure logs
+        if: always()
+        run: test -s cdp-emulator-logcat.txt || timeout 15s adb logcat -d -t 1500 > cdp-emulator-logcat.txt || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cdp-emulator-proof
+          path: |
+            surface-emulator.json
+            cdp-emulator-result.txt
+            cdp-emulator-logcat.txt
+            cdp-emulator-full.zip
+            cdp-emulator-analysis.json
+            cdp-emulator-score.zip
+            cdp-emulator-score-analysis.json
+            cdp-smoke-report.json
+            cdp-emulator-cache.tar

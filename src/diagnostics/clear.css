@@ -1,0 +1,40 @@
+.bench-shell {
+  color: #f4f7ff;
+  position: relative;
+  z-index: 5;
+  margin: 0 auto;
+  padding: 18px 14px;
+  width: min(100%, 440px);
+  box-sizing: border-box;
+  text-align: center;
+}
+.bench-shell h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+}
+.bench-help {
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.8;
+  margin: 8px 0 16px;
+}
+#bench-status {
+  min-height: 2.8em;
+  line-height: 1.4;
+  margin: 0;
+}
+.bench-board {
+  width: min(364px, calc(100vw - 28px), calc(100dvh - 280px));
+  margin: 0 auto 16px;
+}
+.bench-actions {
+  display: grid;
+  gap: 8px;
+}
+.bench-actions button {
+  width: 100%;
+  min-height: 42px;
+}
+.bench-actions button:disabled {
+  opacity: 0.5;
+}

@@ -1,0 +1,1484 @@
+{
+  "protocol": "PROTOCOL.md frozen seeds and limits",
+  "source": "48 engineering bot launches; one candidate, not human approval",
+  "games": [
+    {
+      "seed": 4101001,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 26,
+      "ended": true,
+      "clearMoves": 13,
+      "allClears": 0,
+      "issued": 27,
+      "small": 1,
+      "large": 15,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 15,
+          "small": 0
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 132.23615699999993
+    },
+    {
+      "seed": 4101001,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 26,
+      "ended": true,
+      "clearMoves": 13,
+      "allClears": 0,
+      "issued": 27,
+      "small": 1,
+      "large": 15,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 15,
+          "small": 0
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 45.9873510000001
+    },
+    {
+      "seed": 4101001,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 82,
+      "allClears": 36,
+      "issued": 183,
+      "small": 29,
+      "large": 47,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 1
+        },
+        "rest": {
+          "issued": 102,
+          "small": 19
+        },
+        "load": {
+          "issued": 27,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 42,
+          "small": 9
+        }
+      },
+      "cpuMs": 433.84585400000003
+    },
+    {
+      "seed": 4101001,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 100,
+      "allClears": 7,
+      "issued": 183,
+      "small": 27,
+      "large": 90,
+      "roles": {
+        "prepare": {
+          "issued": 33,
+          "small": 1
+        },
+        "rest": {
+          "issued": 21,
+          "small": 8
+        },
+        "payoff": {
+          "issued": 96,
+          "small": 7
+        },
+        "load": {
+          "issued": 33,
+          "small": 11
+        }
+      },
+      "cpuMs": 361.31356400000004
+    },
+    {
+      "seed": 4101001,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 146,
+      "ended": true,
+      "clearMoves": 75,
+      "allClears": 7,
+      "issued": 147,
+      "small": 7,
+      "large": 59,
+      "roles": {
+        "prepare": {
+          "issued": 27,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 72,
+          "small": 3
+        },
+        "rest": {
+          "issued": 21,
+          "small": 2
+        },
+        "load": {
+          "issued": 27,
+          "small": 1
+        }
+      },
+      "cpuMs": 302.57832900000017
+    },
+    {
+      "seed": 4101001,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 26,
+      "ended": true,
+      "clearMoves": 12,
+      "allClears": 1,
+      "issued": 27,
+      "small": 6,
+      "large": 11,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 3
+        },
+        "rest": {
+          "issued": 3,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 0
+        }
+      },
+      "cpuMs": 59.58007299999986
+    },
+    {
+      "seed": 4101002,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 77,
+      "ended": true,
+      "clearMoves": 38,
+      "allClears": 2,
+      "issued": 78,
+      "small": 6,
+      "large": 32,
+      "roles": {
+        "prepare": {
+          "issued": 18,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 42,
+          "small": 5
+        },
+        "load": {
+          "issued": 12,
+          "small": 1
+        },
+        "rest": {
+          "issued": 6,
+          "small": 0
+        }
+      },
+      "cpuMs": 148.83851100000038
+    },
+    {
+      "seed": 4101002,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 20,
+      "ended": true,
+      "clearMoves": 10,
+      "allClears": 0,
+      "issued": 21,
+      "small": 4,
+      "large": 11,
+      "roles": {
+        "prepare": {
+          "issued": 6,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 40.687348000000384
+    },
+    {
+      "seed": 4101002,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 81,
+      "allClears": 42,
+      "issued": 183,
+      "small": 26,
+      "large": 28,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 36,
+          "small": 8
+        },
+        "rest": {
+          "issued": 117,
+          "small": 18
+        },
+        "load": {
+          "issued": 21,
+          "small": 0
+        }
+      },
+      "cpuMs": 690.7734270000001
+    },
+    {
+      "seed": 4101002,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 94,
+      "allClears": 7,
+      "issued": 183,
+      "small": 33,
+      "large": 81,
+      "roles": {
+        "prepare": {
+          "issued": 36,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 96,
+          "small": 15
+        },
+        "rest": {
+          "issued": 18,
+          "small": 6
+        },
+        "load": {
+          "issued": 33,
+          "small": 11
+        }
+      },
+      "cpuMs": 421.456134
+    },
+    {
+      "seed": 4101002,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 88,
+      "allClears": 11,
+      "issued": 183,
+      "small": 30,
+      "large": 67,
+      "roles": {
+        "prepare": {
+          "issued": 30,
+          "small": 3
+        },
+        "payoff": {
+          "issued": 87,
+          "small": 15
+        },
+        "rest": {
+          "issued": 33,
+          "small": 8
+        },
+        "load": {
+          "issued": 33,
+          "small": 4
+        }
+      },
+      "cpuMs": 363.5856869999998
+    },
+    {
+      "seed": 4101002,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 167,
+      "ended": true,
+      "clearMoves": 98,
+      "allClears": 4,
+      "issued": 168,
+      "small": 28,
+      "large": 80,
+      "roles": {
+        "prepare": {
+          "issued": 36,
+          "small": 4
+        },
+        "payoff": {
+          "issued": 90,
+          "small": 13
+        },
+        "rest": {
+          "issued": 12,
+          "small": 2
+        },
+        "load": {
+          "issued": 30,
+          "small": 9
+        }
+      },
+      "cpuMs": 341.1963509999996
+    },
+    {
+      "seed": 4101003,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 17,
+      "ended": true,
+      "clearMoves": 5,
+      "allClears": 1,
+      "issued": 18,
+      "small": 2,
+      "large": 7,
+      "roles": {
+        "prepare": {
+          "issued": 6,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 6,
+          "small": 1
+        },
+        "rest": {
+          "issued": 3,
+          "small": 0
+        },
+        "load": {
+          "issued": 3,
+          "small": 0
+        }
+      },
+      "cpuMs": 27.773559999999634
+    },
+    {
+      "seed": 4101003,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 41,
+      "ended": true,
+      "clearMoves": 22,
+      "allClears": 1,
+      "issued": 42,
+      "small": 7,
+      "large": 26,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 21,
+          "small": 3
+        },
+        "rest": {
+          "issued": 3,
+          "small": 1
+        },
+        "load": {
+          "issued": 6,
+          "small": 2
+        }
+      },
+      "cpuMs": 59.683438000000024
+    },
+    {
+      "seed": 4101003,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 87,
+      "allClears": 36,
+      "issued": 183,
+      "small": 27,
+      "large": 39,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 42,
+          "small": 7
+        },
+        "load": {
+          "issued": 27,
+          "small": 0
+        },
+        "rest": {
+          "issued": 102,
+          "small": 19
+        }
+      },
+      "cpuMs": 443.86382200000025
+    },
+    {
+      "seed": 4101003,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 94,
+      "allClears": 14,
+      "issued": 183,
+      "small": 42,
+      "large": 65,
+      "roles": {
+        "prepare": {
+          "issued": 24,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 81,
+          "small": 12
+        },
+        "load": {
+          "issued": 36,
+          "small": 12
+        },
+        "rest": {
+          "issued": 42,
+          "small": 17
+        }
+      },
+      "cpuMs": 377.8699919999999
+    },
+    {
+      "seed": 4101003,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 93,
+      "allClears": 14,
+      "issued": 183,
+      "small": 19,
+      "large": 71,
+      "roles": {
+        "prepare": {
+          "issued": 24,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 84,
+          "small": 5
+        },
+        "load": {
+          "issued": 33,
+          "small": 2
+        },
+        "rest": {
+          "issued": 42,
+          "small": 10
+        }
+      },
+      "cpuMs": 382.90091399999983
+    },
+    {
+      "seed": 4101003,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 107,
+      "ended": true,
+      "clearMoves": 61,
+      "allClears": 2,
+      "issued": 108,
+      "small": 21,
+      "large": 50,
+      "roles": {
+        "prepare": {
+          "issued": 21,
+          "small": 4
+        },
+        "payoff": {
+          "issued": 60,
+          "small": 8
+        },
+        "load": {
+          "issued": 21,
+          "small": 6
+        },
+        "rest": {
+          "issued": 6,
+          "small": 3
+        }
+      },
+      "cpuMs": 202.4552909999993
+    },
+    {
+      "seed": 4101004,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 23,
+      "ended": true,
+      "clearMoves": 11,
+      "allClears": 1,
+      "issued": 24,
+      "small": 1,
+      "large": 9,
+      "roles": {
+        "prepare": {
+          "issued": 6,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 1
+        },
+        "rest": {
+          "issued": 3,
+          "small": 0
+        },
+        "load": {
+          "issued": 3,
+          "small": 0
+        }
+      },
+      "cpuMs": 40.42624199999955
+    },
+    {
+      "seed": 4101004,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 29,
+      "ended": true,
+      "clearMoves": 13,
+      "allClears": 1,
+      "issued": 30,
+      "small": 5,
+      "large": 11,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 15,
+          "small": 2
+        },
+        "rest": {
+          "issued": 3,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 55.32684100000006
+    },
+    {
+      "seed": 4101004,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 88,
+      "allClears": 21,
+      "issued": 183,
+      "small": 27,
+      "large": 66,
+      "roles": {
+        "prepare": {
+          "issued": 21,
+          "small": 0
+        },
+        "rest": {
+          "issued": 63,
+          "small": 15
+        },
+        "load": {
+          "issued": 30,
+          "small": 4
+        },
+        "payoff": {
+          "issued": 69,
+          "small": 8
+        }
+      },
+      "cpuMs": 413.5290189999996
+    },
+    {
+      "seed": 4101004,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 98,
+      "allClears": 8,
+      "issued": 183,
+      "small": 30,
+      "large": 83,
+      "roles": {
+        "prepare": {
+          "issued": 30,
+          "small": 2
+        },
+        "rest": {
+          "issued": 24,
+          "small": 7
+        },
+        "load": {
+          "issued": 36,
+          "small": 12
+        },
+        "payoff": {
+          "issued": 93,
+          "small": 9
+        }
+      },
+      "cpuMs": 378.36473899999964
+    },
+    {
+      "seed": 4101004,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 56,
+      "ended": true,
+      "clearMoves": 28,
+      "allClears": 5,
+      "issued": 57,
+      "small": 5,
+      "large": 25,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 1
+        },
+        "rest": {
+          "issued": 15,
+          "small": 3
+        },
+        "payoff": {
+          "issued": 24,
+          "small": 0
+        },
+        "load": {
+          "issued": 9,
+          "small": 1
+        }
+      },
+      "cpuMs": 113.58599900000081
+    },
+    {
+      "seed": 4101004,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 103,
+      "allClears": 1,
+      "issued": 183,
+      "small": 30,
+      "large": 103,
+      "roles": {
+        "prepare": {
+          "issued": 42,
+          "small": 8
+        },
+        "rest": {
+          "issued": 3,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 105,
+          "small": 11
+        },
+        "load": {
+          "issued": 33,
+          "small": 11
+        }
+      },
+      "cpuMs": 358.1516780000002
+    },
+    {
+      "seed": 4101005,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 14,
+      "ended": true,
+      "clearMoves": 6,
+      "allClears": 0,
+      "issued": 15,
+      "small": 2,
+      "large": 7,
+      "roles": {
+        "prepare": {
+          "issued": 6,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 6,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 21.3515069999994
+    },
+    {
+      "seed": 4101005,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 14,
+      "ended": true,
+      "clearMoves": 6,
+      "allClears": 0,
+      "issued": 15,
+      "small": 2,
+      "large": 7,
+      "roles": {
+        "prepare": {
+          "issued": 6,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 6,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 22.962565999999242
+    },
+    {
+      "seed": 4101005,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 73,
+      "allClears": 48,
+      "issued": 183,
+      "small": 33,
+      "large": 24,
+      "roles": {
+        "prepare": {
+          "issued": 3,
+          "small": 0
+        },
+        "rest": {
+          "issued": 132,
+          "small": 22
+        },
+        "load": {
+          "issued": 24,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 24,
+          "small": 11
+        }
+      },
+      "cpuMs": 461.4426020000001
+    },
+    {
+      "seed": 4101005,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 90,
+      "allClears": 8,
+      "issued": 183,
+      "small": 31,
+      "large": 86,
+      "roles": {
+        "prepare": {
+          "issued": 33,
+          "small": 3
+        },
+        "rest": {
+          "issued": 24,
+          "small": 8
+        },
+        "load": {
+          "issued": 33,
+          "small": 11
+        },
+        "payoff": {
+          "issued": 93,
+          "small": 9
+        }
+      },
+      "cpuMs": 366.97633399999995
+    },
+    {
+      "seed": 4101005,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 91,
+      "allClears": 11,
+      "issued": 183,
+      "small": 27,
+      "large": 75,
+      "roles": {
+        "prepare": {
+          "issued": 27,
+          "small": 3
+        },
+        "rest": {
+          "issued": 33,
+          "small": 10
+        },
+        "load": {
+          "issued": 36,
+          "small": 6
+        },
+        "payoff": {
+          "issued": 87,
+          "small": 8
+        }
+      },
+      "cpuMs": 348.28502500000013
+    },
+    {
+      "seed": 4101005,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 65,
+      "ended": true,
+      "clearMoves": 36,
+      "allClears": 5,
+      "issued": 66,
+      "small": 10,
+      "large": 22,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 0
+        },
+        "rest": {
+          "issued": 15,
+          "small": 5
+        },
+        "load": {
+          "issued": 12,
+          "small": 4
+        },
+        "payoff": {
+          "issued": 27,
+          "small": 1
+        }
+      },
+      "cpuMs": 131.41158499999983
+    },
+    {
+      "seed": 4101006,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 23,
+      "ended": true,
+      "clearMoves": 12,
+      "allClears": 0,
+      "issued": 24,
+      "small": 0,
+      "large": 13,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 0
+        },
+        "load": {
+          "issued": 3,
+          "small": 0
+        }
+      },
+      "cpuMs": 38.66164299999946
+    },
+    {
+      "seed": 4101006,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 29,
+      "ended": true,
+      "clearMoves": 14,
+      "allClears": 0,
+      "issued": 30,
+      "small": 5,
+      "large": 15,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 15,
+          "small": 2
+        },
+        "load": {
+          "issued": 6,
+          "small": 2
+        }
+      },
+      "cpuMs": 50.08740899999975
+    },
+    {
+      "seed": 4101006,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 92,
+      "allClears": 22,
+      "issued": 183,
+      "small": 23,
+      "large": 63,
+      "roles": {
+        "prepare": {
+          "issued": 24,
+          "small": 0
+        },
+        "rest": {
+          "issued": 66,
+          "small": 15
+        },
+        "load": {
+          "issued": 30,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 63,
+          "small": 7
+        }
+      },
+      "cpuMs": 399.6305579999989
+    },
+    {
+      "seed": 4101006,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 99,
+      "allClears": 3,
+      "issued": 183,
+      "small": 33,
+      "large": 104,
+      "roles": {
+        "prepare": {
+          "issued": 36,
+          "small": 3
+        },
+        "rest": {
+          "issued": 9,
+          "small": 3
+        },
+        "payoff": {
+          "issued": 102,
+          "small": 15
+        },
+        "load": {
+          "issued": 36,
+          "small": 12
+        }
+      },
+      "cpuMs": 371.49583599999823
+    },
+    {
+      "seed": 4101006,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 82,
+      "allClears": 16,
+      "issued": 183,
+      "small": 20,
+      "large": 70,
+      "roles": {
+        "prepare": {
+          "issued": 27,
+          "small": 0
+        },
+        "rest": {
+          "issued": 48,
+          "small": 9
+        },
+        "load": {
+          "issued": 33,
+          "small": 3
+        },
+        "payoff": {
+          "issued": 75,
+          "small": 8
+        }
+      },
+      "cpuMs": 375.0680000000011
+    },
+    {
+      "seed": 4101006,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 166,
+      "ended": true,
+      "clearMoves": 85,
+      "allClears": 3,
+      "issued": 168,
+      "small": 27,
+      "large": 90,
+      "roles": {
+        "prepare": {
+          "issued": 33,
+          "small": 3
+        },
+        "rest": {
+          "issued": 9,
+          "small": 3
+        },
+        "payoff": {
+          "issued": 93,
+          "small": 11
+        },
+        "load": {
+          "issued": 33,
+          "small": 10
+        }
+      },
+      "cpuMs": 355.99769000000015
+    },
+    {
+      "seed": 4101007,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 31,
+      "ended": true,
+      "clearMoves": 14,
+      "allClears": 0,
+      "issued": 33,
+      "small": 4,
+      "large": 17,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 18,
+          "small": 3
+        },
+        "load": {
+          "issued": 6,
+          "small": 1
+        }
+      },
+      "cpuMs": 56.740193999999974
+    },
+    {
+      "seed": 4101007,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 23,
+      "ended": true,
+      "clearMoves": 13,
+      "allClears": 0,
+      "issued": 24,
+      "small": 6,
+      "large": 10,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 3
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 39.02665100000013
+    },
+    {
+      "seed": 4101007,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 82,
+      "allClears": 32,
+      "issued": 183,
+      "small": 30,
+      "large": 46,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 45,
+          "small": 9
+        },
+        "load": {
+          "issued": 30,
+          "small": 1
+        },
+        "rest": {
+          "issued": 96,
+          "small": 20
+        }
+      },
+      "cpuMs": 417.27491499999996
+    },
+    {
+      "seed": 4101007,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 97,
+      "allClears": 15,
+      "issued": 183,
+      "small": 31,
+      "large": 66,
+      "roles": {
+        "prepare": {
+          "issued": 30,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 81,
+          "small": 11
+        },
+        "rest": {
+          "issued": 45,
+          "small": 10
+        },
+        "load": {
+          "issued": 27,
+          "small": 9
+        }
+      },
+      "cpuMs": 434.5577310000008
+    },
+    {
+      "seed": 4101007,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 44,
+      "ended": true,
+      "clearMoves": 26,
+      "allClears": 0,
+      "issued": 45,
+      "small": 7,
+      "large": 22,
+      "roles": {
+        "prepare": {
+          "issued": 12,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 24,
+          "small": 5
+        },
+        "load": {
+          "issued": 9,
+          "small": 1
+        }
+      },
+      "cpuMs": 64.55702500000007
+    },
+    {
+      "seed": 4101007,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 44,
+      "ended": true,
+      "clearMoves": 17,
+      "allClears": 4,
+      "issued": 45,
+      "small": 14,
+      "large": 15,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 1
+        },
+        "payoff": {
+          "issued": 18,
+          "small": 7
+        },
+        "rest": {
+          "issued": 12,
+          "small": 4
+        },
+        "load": {
+          "issued": 6,
+          "small": 2
+        }
+      },
+      "cpuMs": 88.43288900000152
+    },
+    {
+      "seed": 4101008,
+      "style": "bounded",
+      "policy": "director-v2",
+      "moves": 110,
+      "ended": true,
+      "clearMoves": 63,
+      "allClears": 1,
+      "issued": 111,
+      "small": 6,
+      "large": 55,
+      "roles": {
+        "prepare": {
+          "issued": 24,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 63,
+          "small": 4
+        },
+        "rest": {
+          "issued": 3,
+          "small": 0
+        },
+        "load": {
+          "issued": 21,
+          "small": 2
+        }
+      },
+      "cpuMs": 167.85430799999995
+    },
+    {
+      "seed": 4101008,
+      "style": "bounded",
+      "policy": "composition-v1",
+      "moves": 26,
+      "ended": true,
+      "clearMoves": 12,
+      "allClears": 1,
+      "issued": 27,
+      "small": 5,
+      "large": 9,
+      "roles": {
+        "prepare": {
+          "issued": 9,
+          "small": 0
+        },
+        "payoff": {
+          "issued": 12,
+          "small": 3
+        },
+        "rest": {
+          "issued": 3,
+          "small": 1
+        },
+        "load": {
+          "issued": 3,
+          "small": 1
+        }
+      },
+      "cpuMs": 55.91384400000061
+    },
+    {
+      "seed": 4101008,
+      "style": "three",
+      "policy": "director-v2",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 87,
+      "allClears": 25,
+      "issued": 183,
+      "small": 25,
+      "large": 52,
+      "roles": {
+        "prepare": {
+          "issued": 15,
+          "small": 1
+        },
+        "rest": {
+          "issued": 75,
+          "small": 15
+        },
+        "payoff": {
+          "issued": 63,
+          "small": 7
+        },
+        "load": {
+          "issued": 30,
+          "small": 2
+        }
+      },
+      "cpuMs": 402.90666899999997
+    },
+    {
+      "seed": 4101008,
+      "style": "three",
+      "policy": "composition-v1",
+      "moves": 180,
+      "ended": false,
+      "clearMoves": 95,
+      "allClears": 9,
+      "issued": 183,
+      "small": 31,
+      "large": 89,
+      "roles": {
+        "prepare": {
+          "issued": 33,
+          "small": 1
+        },
+        "rest": {
+          "issued": 27,
+          "small": 8
+        },
+        "payoff": {
+          "issued": 90,
+          "small": 11
+        },
+        "load": {
+          "issued": 33,
+          "small": 11
+        }
+      },
+      "cpuMs": 362.5404639999997
+    },
+    {
+      "seed": 4101008,
+      "style": "lapse",
+      "policy": "director-v2",
+      "moves": 74,
+      "ended": true,
+      "clearMoves": 38,
+      "allClears": 2,
+      "issued": 75,
+      "small": 4,
+      "large": 38,
+      "roles": {
+        "prepare": {
+          "issued": 18,
+          "small": 0
+        },
+        "rest": {
+          "issued": 6,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 39,
+          "small": 2
+        },
+        "load": {
+          "issued": 12,
+          "small": 0
+        }
+      },
+      "cpuMs": 147.2139930000012
+    },
+    {
+      "seed": 4101008,
+      "style": "lapse",
+      "policy": "composition-v1",
+      "moves": 62,
+      "ended": true,
+      "clearMoves": 29,
+      "allClears": 2,
+      "issued": 63,
+      "small": 7,
+      "large": 33,
+      "roles": {
+        "prepare": {
+          "issued": 15,
+          "small": 1
+        },
+        "rest": {
+          "issued": 6,
+          "small": 2
+        },
+        "payoff": {
+          "issued": 30,
+          "small": 1
+        },
+        "load": {
+          "issued": 12,
+          "small": 3
+        }
+      },
+      "cpuMs": 143.1348829999988
+    }
+  ],
+  "gates": [
+    {
+      "style": "bounded",
+      "ordinaryLines": true,
+      "duration": true,
+      "candidateEnded": 8,
+      "baselineEnded": 8,
+      "baselineSmall": 0.06666666666666667,
+      "candidateSmall": 0.16203703703703703
+    },
+    {
+      "style": "three",
+      "ordinaryLines": true,
+      "duration": true,
+      "candidateEnded": 0,
+      "baselineEnded": 0,
+      "baselineSmall": 0.15027322404371585,
+      "candidateSmall": 0.1762295081967213
+    },
+    {
+      "style": "lapse",
+      "ordinaryLines": true,
+      "duration": true,
+      "candidateEnded": 7,
+      "baselineEnded": 4,
+      "baselineSmall": 0.11268939393939394,
+      "candidateSmall": 0.17270531400966183
+    }
+  ],
+  "behaviorPass": true
+}
