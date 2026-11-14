@@ -1,0 +1,801 @@
+{
+  "environment": "Chromium software renderer, synthetic repeated clear/drag/pause and restart; not a 30-minute physical playtest",
+  "cycles": 210,
+  "elapsedMs": 605173,
+  "hints": 56,
+  "losses": 42,
+  "errors": [],
+  "samples": [
+    {
+      "label": 1,
+      "documents": 2,
+      "nodes": 392,
+      "jsEventListeners": 253,
+      "heap": 26502328,
+      "elements": 161,
+      "canvases": 3,
+      "animations": 4,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 10,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 26744764,
+      "elements": 191,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 20,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 26921936,
+      "elements": 191,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 30,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 27053096,
+      "elements": 192,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 40,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 27072248,
+      "elements": 191,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 50,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27180368,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 60,
+      "documents": 2,
+      "nodes": 450,
+      "jsEventListeners": 244,
+      "heap": 27321580,
+      "elements": 195,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 70,
+      "documents": 2,
+      "nodes": 450,
+      "jsEventListeners": 244,
+      "heap": 27374948,
+      "elements": 194,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 80,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27399576,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 90,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27463784,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 100,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27476608,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 110,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27533136,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 120,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27556676,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 130,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27591884,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 140,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 27637764,
+      "elements": 192,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 150,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27653780,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 160,
+      "documents": 2,
+      "nodes": 450,
+      "jsEventListeners": 244,
+      "heap": 27662508,
+      "elements": 194,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 170,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27681252,
+      "elements": 189,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 180,
+      "documents": 2,
+      "nodes": 447,
+      "jsEventListeners": 244,
+      "heap": 27687444,
+      "elements": 191,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 190,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27712132,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 200,
+      "documents": 2,
+      "nodes": 450,
+      "jsEventListeners": 244,
+      "heap": 27721204,
+      "elements": 194,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": 210,
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 244,
+      "heap": 27767600,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 1,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    },
+    {
+      "label": "settled",
+      "documents": 2,
+      "nodes": 444,
+      "jsEventListeners": 242,
+      "heap": 27767564,
+      "elements": 188,
+      "canvases": 3,
+      "animations": 0,
+      "clockJobs": 0,
+      "sparks": 0,
+      "voices": 0,
+      "sceneChildren": 1249,
+      "tiles": 768
+    }
+  ],
+  "dealer": "composition-v2",
+  "method": "Synthetic repeated clear/drag/pause/restart in one Chromium page; explicit full GCs between samples; no physical phone or consecutive human party. Same soak harness with candidate policy and isolated output.",
+  "phaseSummary": {
+    "boardDraw": {
+      "count": 13352,
+      "totalMs": 2616.7000001594424,
+      "maxMs": 8.199999995529652,
+      "meanMs": 0.19597813062907748
+    },
+    "moveCalculationWallTime": {
+      "count": 210,
+      "totalMs": 11.400000005960464,
+      "maxMs": 0.6000000014901161,
+      "meanMs": 0.05428571431409745
+    },
+    "atomicSaveWallTime": {
+      "count": 210,
+      "totalMs": 3581.1000000089407,
+      "maxMs": 171.10000000149012,
+      "meanMs": 17.052857142899718
+    },
+    "commitIncludingSaveWallTime": {
+      "count": 210,
+      "totalMs": 3596.700000025332,
+      "maxMs": 171.10000000149012,
+      "meanMs": 17.127142857263486
+    },
+    "placementRender": {
+      "count": 210,
+      "totalMs": 160.90000008791685,
+      "maxMs": 1.9000000059604645,
+      "meanMs": 0.7661904766091279
+    },
+    "reviveSelection": {
+      "count": 42,
+      "totalMs": 61.599999979138374,
+      "maxMs": 2.399999998509884,
+      "meanMs": 1.4666666661699612
+    }
+  },
+  "minuteWindows": [
+    {
+      "minute": 0,
+      "frames": 1554,
+      "totalMs": 28731.273999999998,
+      "maxMs": 100,
+      "over50": 7,
+      "phases": {
+        "boardDraw": {
+          "count": 1377,
+          "totalMs": 325.1000000759959,
+          "maxMs": 3.5
+        },
+        "moveCalculationWallTime": {
+          "count": 21,
+          "totalMs": 2.399999998509884,
+          "maxMs": 0.6000000014901161
+        },
+        "atomicSaveWallTime": {
+          "count": 21,
+          "totalMs": 381.19999999552965,
+          "maxMs": 84.79999999701977
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 21,
+          "totalMs": 383.79999999701977,
+          "maxMs": 84.79999999701977
+        },
+        "placementRender": {
+          "count": 21,
+          "totalMs": 16.000000029802322,
+          "maxMs": 1.3000000044703484
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 6.600000008940697,
+          "maxMs": 1.8000000044703484
+        }
+      }
+    },
+    {
+      "minute": 1,
+      "frames": 1544,
+      "totalMs": 28564.511999999995,
+      "maxMs": 83.30000000000291,
+      "over50": 6,
+      "phases": {
+        "boardDraw": {
+          "count": 1374,
+          "totalMs": 295.70000003278255,
+          "maxMs": 8.199999995529652
+        },
+        "moveCalculationWallTime": {
+          "count": 22,
+          "totalMs": 1.5999999791383743,
+          "maxMs": 0.19999999552965164
+        },
+        "atomicSaveWallTime": {
+          "count": 22,
+          "totalMs": 340.6000000089407,
+          "maxMs": 32.19999999552965
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 22,
+          "totalMs": 342.8999999985099,
+          "maxMs": 32.399999998509884
+        },
+        "placementRender": {
+          "count": 22,
+          "totalMs": 17.000000037252903,
+          "maxMs": 1.2000000029802322
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 6.999999992549419,
+          "maxMs": 2.399999998509884
+        }
+      }
+    },
+    {
+      "minute": 2,
+      "frames": 1542,
+      "totalMs": 28447.607999999935,
+      "maxMs": 100,
+      "over50": 5,
+      "phases": {
+        "boardDraw": {
+          "count": 1351,
+          "totalMs": 267.2000000923872,
+          "maxMs": 7.399999998509884
+        },
+        "moveCalculationWallTime": {
+          "count": 22,
+          "totalMs": 0.8999999985098839,
+          "maxMs": 0.10000000149011612
+        },
+        "atomicSaveWallTime": {
+          "count": 22,
+          "totalMs": 419.40000001341105,
+          "maxMs": 54.5
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 22,
+          "totalMs": 420.6000000089407,
+          "maxMs": 54.5
+        },
+        "placementRender": {
+          "count": 22,
+          "totalMs": 16.5,
+          "maxMs": 1.1000000014901161
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 5.499999992549419,
+          "maxMs": 1.7999999970197678
+        }
+      }
+    },
+    {
+      "minute": 3,
+      "frames": 1511,
+      "totalMs": 27381.338000000018,
+      "maxMs": 116.69999999998254,
+      "over50": 3,
+      "phases": {
+        "boardDraw": {
+          "count": 1345,
+          "totalMs": 238.8999999165535,
+          "maxMs": 7.899999998509884
+        },
+        "reviveSelection": {
+          "count": 5,
+          "totalMs": 6.499999992549419,
+          "maxMs": 1.3999999985098839
+        },
+        "moveCalculationWallTime": {
+          "count": 20,
+          "totalMs": 1.0000000149011612,
+          "maxMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 20,
+          "totalMs": 325.19999998807907,
+          "maxMs": 34.5
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 20,
+          "totalMs": 326.80000000447035,
+          "maxMs": 34.600000001490116
+        },
+        "placementRender": {
+          "count": 20,
+          "totalMs": 15.600000016391277,
+          "maxMs": 1.2000000029802322
+        }
+      }
+    },
+    {
+      "minute": 4,
+      "frames": 1417,
+      "totalMs": 26498.30799999999,
+      "maxMs": 133.29999999998836,
+      "over50": 9,
+      "phases": {
+        "boardDraw": {
+          "count": 1234,
+          "totalMs": 251.3000000268221,
+          "maxMs": 6.799999997019768
+        },
+        "moveCalculationWallTime": {
+          "count": 20,
+          "totalMs": 0.5000000074505806,
+          "maxMs": 0.10000000149011612
+        },
+        "atomicSaveWallTime": {
+          "count": 20,
+          "totalMs": 457.70000000298023,
+          "maxMs": 171.10000000149012
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 20,
+          "totalMs": 458.90000000596046,
+          "maxMs": 171.10000000149012
+        },
+        "placementRender": {
+          "count": 20,
+          "totalMs": 15.50000000745058,
+          "maxMs": 1.1000000014901161
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 5.0999999940395355,
+          "maxMs": 1.5999999940395355
+        }
+      }
+    },
+    {
+      "minute": 5,
+      "frames": 1537,
+      "totalMs": 27981.014000000025,
+      "maxMs": 66.60000000003492,
+      "over50": 2,
+      "phases": {
+        "boardDraw": {
+          "count": 1344,
+          "totalMs": 270.39999977499247,
+          "maxMs": 3.399999998509884
+        },
+        "moveCalculationWallTime": {
+          "count": 22,
+          "totalMs": 0.9000000059604645,
+          "maxMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 22,
+          "totalMs": 328.4999999925494,
+          "maxMs": 20.700000002980232
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 22,
+          "totalMs": 329.69999999552965,
+          "maxMs": 20.899999998509884
+        },
+        "placementRender": {
+          "count": 22,
+          "totalMs": 16.700000002980232,
+          "maxMs": 1
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 6.199999995529652,
+          "maxMs": 1.8999999985098839
+        }
+      }
+    },
+    {
+      "minute": 6,
+      "frames": 1547,
+      "totalMs": 28048.040000000212,
+      "maxMs": 66.69999999995343,
+      "over50": 2,
+      "phases": {
+        "boardDraw": {
+          "count": 1376,
+          "totalMs": 268.2000000923872,
+          "maxMs": 3.7999999970197678
+        },
+        "moveCalculationWallTime": {
+          "count": 23,
+          "totalMs": 1.1000000089406967,
+          "maxMs": 0.3999999985098839
+        },
+        "atomicSaveWallTime": {
+          "count": 23,
+          "totalMs": 417.59999998658895,
+          "maxMs": 76.79999999701977
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 23,
+          "totalMs": 419.19999999552965,
+          "maxMs": 76.79999999701977
+        },
+        "placementRender": {
+          "count": 23,
+          "totalMs": 17.30000000447035,
+          "maxMs": 1
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 5.800000004470348,
+          "maxMs": 2.100000001490116
+        }
+      }
+    },
+    {
+      "minute": 7,
+      "frames": 1626,
+      "totalMs": 29064.805999999808,
+      "maxMs": 49.90000000002328,
+      "over50": 0,
+      "phases": {
+        "boardDraw": {
+          "count": 1388,
+          "totalMs": 243.00000018626451,
+          "maxMs": 1.3999999985098839
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 5.399999998509884,
+          "maxMs": 1.5
+        },
+        "moveCalculationWallTime": {
+          "count": 20,
+          "totalMs": 0.7999999895691872,
+          "maxMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 20,
+          "totalMs": 294.6000000014901,
+          "maxMs": 24.899999998509884
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 20,
+          "totalMs": 295.59999999403954,
+          "maxMs": 25
+        },
+        "placementRender": {
+          "count": 20,
+          "totalMs": 15.199999995529652,
+          "maxMs": 1.3000000044703484
+        }
+      }
+    },
+    {
+      "minute": 8,
+      "frames": 1451,
+      "totalMs": 26165.304000000004,
+      "maxMs": 49.90000000002328,
+      "over50": 0,
+      "phases": {
+        "boardDraw": {
+          "count": 1273,
+          "totalMs": 218.49999997019768,
+          "maxMs": 2.7999999970197678
+        },
+        "reviveSelection": {
+          "count": 5,
+          "totalMs": 7.0999999940395355,
+          "maxMs": 1.8999999985098839
+        },
+        "moveCalculationWallTime": {
+          "count": 20,
+          "totalMs": 1.2000000029802322,
+          "maxMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 20,
+          "totalMs": 275.6000000089407,
+          "maxMs": 22.900000005960464
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 20,
+          "totalMs": 277.30000001192093,
+          "maxMs": 22.900000005960464
+        },
+        "placementRender": {
+          "count": 20,
+          "totalMs": 14.099999986588955,
+          "maxMs": 0.8999999985098839
+        }
+      }
+    },
+    {
+      "minute": 9,
+      "frames": 1473,
+      "totalMs": 26748.476000000024,
+      "maxMs": 50.09999999997672,
+      "over50": 1,
+      "phases": {
+        "boardDraw": {
+          "count": 1288,
+          "totalMs": 238.2999999895692,
+          "maxMs": 5.100000001490116
+        },
+        "moveCalculationWallTime": {
+          "count": 20,
+          "totalMs": 1,
+          "maxMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 20,
+          "totalMs": 340.7000000104308,
+          "maxMs": 34.5
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 20,
+          "totalMs": 341.90000001341105,
+          "maxMs": 34.600000001490116
+        },
+        "placementRender": {
+          "count": 20,
+          "totalMs": 17.00000000745058,
+          "maxMs": 1.9000000059604645
+        },
+        "reviveSelection": {
+          "count": 4,
+          "totalMs": 6.4000000059604645,
+          "maxMs": 1.9000000059604645
+        }
+      }
+    },
+    {
+      "minute": 10,
+      "frames": 0,
+      "totalMs": 0,
+      "maxMs": 0,
+      "over50": 0,
+      "phases": {
+        "boardDraw": {
+          "count": 2,
+          "totalMs": 0.10000000149011612,
+          "maxMs": 0.10000000149011612
+        }
+      }
+    }
+  ]
+}

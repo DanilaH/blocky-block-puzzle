@@ -8,7 +8,10 @@ anti-repeat через openingId/seedForDifferentOpening; ранние посл�
 long-tail dev/lapse +13.1%, holdout −48.7%, bounded exposure0, strong32
 censored240. Candidate HOLD, default v2, rollout OFF. Не тюнить по holdout.
 Preview65 demo/off, прежний signer обязателен, использовать PR1 cache.
-Нужна подписанная APK и протокол CI, затем телефон/human, не новый директор.
+APK0.65 подписана/99 bytes/demo-off проверены, PR1 run43631030232;
+25 focused и2 emulator PASS.10мин/210 synthetic cycles без роста пулов;
+245 browser RUNNING. Завершить их и протокол, затем телефон/human.
+[Поставка](qa/PREVIEW_0.65_PUBLICATION_2026-11-14.md).
 [Результаты](qa/COMPOSITION_V2_0.65_2026-11-14.md).
 
 ## Предыдущая точка D90

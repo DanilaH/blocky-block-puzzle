@@ -4,6 +4,10 @@ import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
 const cycles = Number(process.env.BLOCKY_CYCLES || 60);
 const durationMs = Number(process.env.BLOCKY_MINUTES || 0) * 60000;
+const dealer = process.env.BLOCKY_SOAK_DEALER || "director-v2";
+if (!["director-v2", "composition-v1", "composition-v2"].includes(dealer)) throw Error("Unsupported soak dealer");
+const output = process.env.BLOCKY_SOAK_OUTPUT || "docs/qa/commercial-iteration-2026-11-13/long-session.json";
+const checkpoint = process.env.BLOCKY_SOAK_CHECKPOINT || "/tmp/blocky-soak46-checkpoint.json";
 const started = Date.now();
 let completed = 0,
   hints = 0,
@@ -89,12 +93,12 @@ try {
     durationMs ? Date.now() - started < durationMs : i < cycles;
     i++
   ) {
-    await page.evaluate(async (i) => {
+    await page.evaluate(async ({i,dealer}) => {
       const { newGame } = await import("/src/core/rules.ts");
       await window.soakStore.waitIdle();
       await window.soakStore.update((p) => {
         const game = {
-          ...newGame(1234, "soak-" + i, "director-v2"),
+          ...newGame(1234, "soak-" + i, dealer),
           moves: 10,
           streak: [0, 5, 19, 99][i % 4],
           scoringVersion: "festival-v4",
@@ -124,6 +128,7 @@ try {
         }
         return {
           ...p,
+          ...(dealer !== "director-v2" ? {experiment:{...p.experiment,manualDealer:dealer}} : {}),
           earnedHints: 3,
           revision: p.revision + 1,
           tutorialStep: 4,
@@ -133,7 +138,7 @@ try {
           game,
         };
       });
-    }, i);
+    }, {i,dealer});
     await page.locator("#resume").click();
     if (i % 5 === 4) {
       await page.locator('[data-slot="0"]').click();
@@ -186,7 +191,7 @@ try {
         }),
       );
       await fs.writeFile(
-        "/tmp/blocky-soak46-checkpoint.json",
+        checkpoint,
         JSON.stringify(
           {
             completed,
@@ -207,6 +212,7 @@ try {
   const result = {
     environment:
       "Chromium software renderer, synthetic repeated clear/drag/pause and restart; not a 30-minute physical playtest",
+    dealer,
     cycles: completed,
     elapsedMs: Date.now() - started,
     hints,
@@ -216,7 +222,7 @@ try {
     performance: await page.evaluate(()=>window.soakCapture.snapshot()),
   };
   await fs.writeFile(
-    "docs/qa/commercial-iteration-2026-11-13/long-session.json",
+    output,
     JSON.stringify(result, null, 2),
   );
   if (

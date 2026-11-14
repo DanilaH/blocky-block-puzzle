@@ -110,7 +110,7 @@ not actual audience, revenue, retention or payout evidence.
 
 ```bash
 python3 scripts/commercial/build-preview.py --check
-python3 scripts/commercial/build-preview.py --output /absolute/path/blocky-0.64-preview.apk
+python3 scripts/commercial/build-preview.py --output /absolute/path/blocky-0.65-preview.apk
 ```
 
 Requires Android SDK 36/build-tools 36.0.0, JDK21 and the original preview signing

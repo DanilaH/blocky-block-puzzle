@@ -1,4 +1,4 @@
-D91 / preview0.65: отдельный composition-v2 с восемью стартами и поздней настройкой помощи.339 unit/7 browser/457 human replay PASS;96 bot launches — длинный хвост нестабилен, candidate HOLD/default v2/rollout OFF. [Результаты](docs/qa/COMPOSITION_V2_0.65_2026-11-14.md).
+D91 / preview0.65: подписанная APK0.65 готова, отдельный composition-v2 с восемью стартами и поздней настройкой помощи.339 unit/7 browser/457 human replay PASS;96 bot launches — длинный хвост нестабилен, candidate HOLD/default v2/rollout OFF. [Результаты](docs/qa/COMPOSITION_V2_0.65_2026-11-14.md).
 
 D90 / человеческий плейтест0.64:457 ходов точно воспроизведены. V2:185 ходов/25 полных очисток; composition-v1:20,32,220 ходов. Старт I5,I5,R6 повторился в109/128 seed обеих политик. Направление разнообразия поддержано, длинный хвост/старт требуют следующей версии; candidate HOLD, runtime/APK не менялись. [Разбор](docs/qa/HUMAN_COMPARISON_0.64_2026-11-14.md).
 

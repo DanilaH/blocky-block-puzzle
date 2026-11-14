@@ -1200,7 +1200,10 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x]96 dev/holdout bot launches,11992 moves; early/clear/small gates PASS.
 - [ ] Long-tail gate: dev/lapse FAIL, holdout PASS, bounded unknown,
   strong censored. Candidate HOLD; не объявлять сложность/длину принятой.
-- [ ] Совместимая подписанная APK0.65 и итоговый протокол CI/подписи.
+- [x] Совместимая APK0.65: прежний signer,99 dist bytes, demo/off,25 focused
+  и2 emulator tests PASS;245 full browser пока RUNNING.
+- [x]10мин/210 synthetic lifecycle cycles, объектные пулы стабильны;
+  phone lag не воспроизведён и не объявлен исправленным.
 - [ ] Телефонная плавность/длинная сессия/demo SDK и человеческая оценка.
   AppMetrica кабинет отложен владельцем.
 
