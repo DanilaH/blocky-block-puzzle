@@ -1,0 +1,24 @@
+{
+  "observations": [
+    {
+      "atMove": 17,
+      "selection": "baseline-found",
+      "oldTrayRemaining": 1,
+      "savedWitnessMoves": 1,
+      "unchangedTrayAndScore": true,
+      "boardMatchesSaved3x3": true,
+      "oldTrayWitnessCompletes": true,
+      "playerContinued": true
+    },
+    {
+      "atMove": 152,
+      "selection": "baseline-found",
+      "oldTrayRemaining": 1,
+      "savedWitnessMoves": 1,
+      "unchangedTrayAndScore": true,
+      "boardMatchesSaved3x3": true,
+      "oldTrayWitnessCompletes": true,
+      "playerContinued": true
+    }
+  ]
+}
