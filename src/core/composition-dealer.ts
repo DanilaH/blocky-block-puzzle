@@ -8,6 +8,11 @@ import { decisionCertificate } from "./director-goal-tools";
  * v2's other two pieces, RNG, scoring and phase controller are retained. */
 export function compositionDeal(board: Board, seed: number, moves = 0, rhythm?: RhythmState, saved?: GoalDirectorState) {
   const base = goalDirectorDeal(board, seed, moves, rhythm, saved);
+  return diversifyDeal(base, board, rhythm);
+}
+
+/** The zero allowance retains the exact frozen composition-v1 policy. */
+export function diversifyDeal(base: ReturnType<typeof goalDirectorDeal>, board: Board, rhythm?: RhythmState, lineAllowance = 0) {
   const meter = new WorkBudget(12000); meter.ceiling = meter.limit;
   const finish = (reason: string) => ({...base, composition: {reason, checks:meter.used, limit:meter.limit}});
   const small = (id: string) => ["L3", "T4", "SZ4"].includes(SHAPES.find(s=>s.id===id)!.family);
@@ -34,7 +39,7 @@ export function compositionDeal(board: Board, seed: number, moves = 0, rhythm?: 
     let path:Operation[]|null=null, witness:Move[]=[];
     function visit(rows:Rows,left:number[],ops:Operation[],steps:Move[],lines:number,clears:number):boolean {
       if (!left.length) {
-        if (lines < originalLines || clears < requiredClears) return false;
+        if (lines < originalLines - lineAllowance || clears < requiredClears) return false;
         path=ops; witness=steps; return true;
       }
       for (const i of left) for (const op of catalog()[ids[i]!]!) {

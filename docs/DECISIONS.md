@@ -551,3 +551,17 @@ default v2, balance HOLD и rollout OFF. Старые v3–v6 не переоп�
 ранних поражений, длинного хвоста и двух видов очистки. Общую сложность
 всех партий, caps, revive rights и scoring по этому отзыву не менять.
 [Доказательства](qa/HUMAN_COMPARISON_0.64_2026-11-14.md).
+
+## D91. Разный старт и осторожная поздняя помощь —14.11.2026
+
+По поручению после D90 реализован один composition-v2, отдельный от прежних
+v2/composition-v1.8 seeded стартов с обычной линией/остатком и anti-repeat;
+после72 вне recovery payoff2→1 и allowance одной линии только prepare.
+Ранние последующие выдачи и3 recovery неизменны в том же состоянии. Старые
+партии/права/scoring/caps сохранены. Manual only, default v2, rollout OFF.
+339 unit/7 browser/457 historical moves PASS;96 bot launches11992 moves.
+Long-tail dev/lapse +13.1%, holdout −48.7%, bounded без поздних экспозиций,
+strong все32 censored240. Кандидат HOLD, стабильный выигрыш длительности не
+заявлять; не тюнить по раскрытому holdout. APK0.65 для ограниченной ручной
+пробы допустима, автоматическая техническая проверка не human acceptance.
+[Протокол и данные](qa/COMPOSITION_V2_0.65_2026-11-14.md).

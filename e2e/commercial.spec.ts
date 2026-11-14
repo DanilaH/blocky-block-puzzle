@@ -52,3 +52,26 @@ test("manual candidate starts only a new game, survives reload and never creates
   await page.locator('#pause').click();await page.locator('.advanced-settings > summary').click();await page.getByText('Запись партии для разбора',{exact:true}).click();
   await expect(page.locator('#play-capture-policy')).toContainText('Разнообразные формы');
 });
+test("new starter survives reload, completes through the real worker, and next restart changes its family",async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.addInitScript(()=>{crypto.getRandomValues=(a:any)=>{a.fill(0x9e3779b9);return a;};});
+  await page.goto('/');await page.locator('#lesson-skip').click();
+  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Экспериментальная выдача',{exact:true}).click();
+  await page.locator('#dealer-choice').selectOption('composition-v2');await page.locator('#new-game').click();await expect(page.locator('dialog')).not.toBeVisible();
+  const initial=await saved(page);expect(initial.game.dealerVersion).toBe('composition-v2');expect(initial.experiment.assignment).toBeUndefined();
+  await page.reload();expect((await saved(page)).game).toEqual(initial.game);
+  const witness=await page.evaluate(async()=>{const {openingDeal}=await import('/src/core/composition-dealer-v2.ts');return openingDeal(0x9e3779b9).witness;});
+  for(const m of witness){
+    const before=(await saved(page)).game.moves;
+    await page.locator(`#tray button[data-slot="${m.slot}"]`).click();
+    const b=(await page.locator('#board').boundingBox())!;
+    await page.locator('#board').click({position:{x:(m.x+.15)*b.width/8,y:(m.y+.15)*b.height/8}});
+    await expect.poll(async()=>(await saved(page)).game.moves).toBe(before+1);
+    await expect(page.locator('#board')).not.toHaveAttribute('aria-busy','true');
+  }
+  const played=await saved(page);expect(played.game.board.some(Boolean)).toBe(true);expect(played.game.openingId).toBe(initial.game.openingId);
+  await page.locator('#pause').click();await page.locator('#restart').click();
+  expect(await page.locator('#dealer-choice').inputValue()).toBe('composition-v2');
+  await page.locator('#new-game').click();await expect(page.locator('dialog')).not.toBeVisible();
+  const next=await saved(page);expect(next.game.openingId).not.toBe(initial.game.openingId);expect(next.experiment.manualDealer).toBe('composition-v2');
+});

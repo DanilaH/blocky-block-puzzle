@@ -1,3 +1,18 @@
+# Точка продолжения — D91, 14.11.2026
+
+По «давай делай» реализован composition-v2; исходники на основе8bdc416,
+старый main не использовался.8 стартов/32 поворота, одна обычная линия,
+anti-repeat через openingId/seedForDifferentOpening; ранние последующие
+выдачи и3 recovery совпадают с v1. Поздняя помощь ограничена после72.
+339 unit/7 browser/build/457 human replay PASS.96 bot runs11992 moves:
+long-tail dev/lapse +13.1%, holdout −48.7%, bounded exposure0, strong32
+censored240. Candidate HOLD, default v2, rollout OFF. Не тюнить по holdout.
+Preview65 demo/off, прежний signer обязателен, использовать PR1 cache.
+Нужна подписанная APK и протокол CI, затем телефон/human, не новый директор.
+[Результаты](qa/COMPOSITION_V2_0.65_2026-11-14.md).
+
+## Предыдущая точка D90
+
 # Точка продолжения — D90, 14.11.2026
 
 Получены новые приватные human records(5)(1)/(6)(1), APK0.64. Исходникf08f60c

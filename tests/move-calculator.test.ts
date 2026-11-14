@@ -32,8 +32,8 @@ function harness() {
 }
 afterEach(() => vi.useRealTimers());
 
-it("terminates cancelled candidate work and ignores its stale response", async()=>{
-  const h=harness(),g=state();g.dealerVersion="composition-v1";
+it.each(["composition-v1","composition-v2"] as const)("terminates cancelled %s work and ignores its stale response", async(version)=>{
+  const h=harness(),g=state();g.dealerVersion=version;
   const pending=h.calculator.calculate(g,move,g.revision);
   const rejection=expect(pending).rejects.toThrow("cancelled");
   const stale=h.workers[0]!.onmessage!;

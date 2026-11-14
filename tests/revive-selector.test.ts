@@ -29,11 +29,11 @@ it("reports unknown on an exhausted shared proof allowance and preserves the bas
   expect(plan.selection!.result).toBe("baseline-unknown");
   expect(plan.selection!.witness).toEqual([]);
 });
-it("uses the same fixed revive for the candidate and keeps the old tray before recovery",()=>{
-  const g={...structuredClone(cases.find(c=>c.name==="human-2")!.state),dealerVersion:"composition-v1" as const};
+it.each(["composition-v1","composition-v2"] as const)("uses the same fixed revive for %s and keeps the old tray before recovery",(dealerVersion)=>{
+  const g={...structuredClone(cases.find(c=>c.name==="human-2")!.state),dealerVersion,...(dealerVersion==="composition-v2"?{openingId:3}:{})};
   const plan=revivePlan(g)!;let state=plan.game;
   for(const m of plan.selection!.witness) state=applyMove(state,m,state.revision)!.state;
-  expect(state.dealerVersion).toBe("composition-v1");expect(state.rhythm!.recoveryDeals).toBe(2);
+  expect(state.dealerVersion).toBe(dealerVersion);expect(state.rhythm!.recoveryDeals).toBe(2);
   expect(validProfile({...createProfile(state),best:state.score})).toBe(true);
 });
 it("freezes before the decision window, survives reload and preserves old prepared entitlements", () => {

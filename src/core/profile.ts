@@ -163,7 +163,11 @@ export function validProfile(value: unknown): value is Profile {
         (!integer(g.streakMisses) ||
           g.streakMisses > 2 ||
           (!g.streak && g.streakMisses !== 0))) ||
-      (g.dealerDiagnostic!==undefined&&(g.dealerVersion!=="composition-v1"||!integer(g.dealerDiagnostic.checks)||g.dealerDiagnostic.checks>12000||g.dealerDiagnostic.limit!==12000||!["already-diverse","no-equal-area-slot","budget","equal-area-proven","no-role-proof"].includes(g.dealerDiagnostic.reason))) ||
+      (g.dealerDiagnostic!==undefined&&(!["composition-v1","composition-v2"].includes(g.dealerVersion)||!integer(g.dealerDiagnostic.checks)||g.dealerDiagnostic.checks>12000||g.dealerDiagnostic.limit!==12000||!["already-diverse","no-equal-area-slot","budget","equal-area-proven","no-role-proof",...(g.dealerVersion==="composition-v2"?["opening-catalog"]:[])].includes(g.dealerDiagnostic.reason))) ||
+      (g.dealerVersion === "composition-v2" && (!integer(g.openingId) || g.openingId! > 7)) ||
+      (g.dealerDiagnostic?.tempo !== undefined && typeof g.dealerDiagnostic.tempo !== "boolean") ||
+      (g.dealerDiagnostic?.payoffReduced !== undefined && typeof g.dealerDiagnostic.payoffReduced !== "boolean") ||
+      (g.dealerDiagnostic?.lineAllowance !== undefined && ![0,1].includes(g.dealerDiagnostic.lineAllowance)) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -183,11 +187,12 @@ export function validProfile(value: unknown): value is Profile {
         "director-v5",
         "director-v6",
         "composition-v1",
+        "composition-v2",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
       (g.dealerVersion === 'director-v1' && (!validRhythmV4(g.rhythm)||!validOrderDirector(g.director))) ||
-      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
+      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1' || g.dealerVersion === 'composition-v2') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
       (g.dealerVersion === 'director-v3' && (!validRhythmV4(g.rhythm)||!validMixedDirector(g.mixedDirector))) ||
       (g.dealerVersion === 'director-v6' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector,6))) ||
       (g.dealerVersion === 'director-v5' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector))) ||

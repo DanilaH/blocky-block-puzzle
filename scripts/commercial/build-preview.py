@@ -19,7 +19,7 @@ if not (sdk/"platforms/android-36/android.jar").exists(): blockers.append("Andro
 if not (sdk/"build-tools/36.0.0/apksigner").exists(): blockers.append("Android build-tools 36.0.0 missing")
 if not keystore.exists(): blockers.append("Original preview signing key missing; required SHA256 e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13")
 if not shutil.which("javac"): blockers.append("Full JDK command-line tools not configured")
-result={"version":"0.64.0-preview","ads":"Yandex demo units only","analytics":"off" if args.analytics == "off" else "separate test project", "blockers":blockers}
+result={"version":"0.65.0-preview","ads":"Yandex demo units only","analytics":"off" if args.analytics == "off" else "separate test project", "blockers":blockers}
 if blockers or args.check:
     print(json.dumps(result,indent=2));raise SystemExit(2 if blockers else 0)
 subprocess.run(["npm","ci"],check=True)

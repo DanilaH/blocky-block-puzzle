@@ -1,3 +1,4 @@
+import { seedForDifferentOpening } from "./core/composition-dealer-v2";
 import { ensureExperiment, assignedDealer, enabledDealer, COMPOSITION_EXPERIMENT } from "./core/experiment";
 import { compactMoveReward } from "./game/compact-reward";
 import { readRenderInfo } from "./platform/render-info";
@@ -86,12 +87,13 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "director-v2") => ({
-  ...newGame(seed(), crypto.randomUUID(), dealer),
+const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number) => ({
+  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : seed(), crypto.randomUUID(), dealer),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
 });
 const dealerChoices = [
+  { version: "composition-v2", label: "Разный старт и темп · новая проба", note: "Восемь стартовых наборов и меньше готовой помощи в затяжной партии. Отдельная проба для сравнения; баланс ещё не принят." },
   { version: "composition-v1", label: "Разнообразные формы · проба", note: "Пробная выдача на основе «С задачами и нагрузкой». Сравнивайте в новой партии; баланс ещё не принят." },
   {
     version: "director-v2",
@@ -2716,7 +2718,7 @@ async function start() {
       dialog.querySelector<HTMLElement>(".dealer-note")!.textContent =
         dealerChoices.find((item) => item.version === choice.value)!.note;
     };
-    choice.value = store.state.experiment?.assignment ? assignedDealer(store.state) : "director-v2";
+    choice.value = assignedDealer(store.state);
     choice.disabled = !!store.state.experiment?.assignment;
     choice.onchange = updateNote;
     updateNote();
@@ -2735,7 +2737,7 @@ async function start() {
         await store.update(p=>ensureExperiment({...p,revision:p.revision+1},Date.now(),false,crypto.randomUUID()));
       }
       const actualDealer=enabledDealer(dealer??assignedDealer(store.state));
-      const nextGame = {...fresh(actualDealer),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
+      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
       const changed =
         store.state.game.status === "over"
           ? await ads.betweenGames(nextGame)
@@ -2743,12 +2745,12 @@ async function start() {
               ...ads.stamp(p),
               revision: p.revision + 1,
               game: nextGame,
-              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|undefined}}:{}),
+              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1","composition-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
-        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|undefined}}));
+        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);

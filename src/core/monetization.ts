@@ -68,7 +68,7 @@ function reviveEffect(g: GameState, x: number, y: number, selection?: ReviveSele
     status: "playing", reviveUsed: true,
           ...(g.dealerVersion === "flow-v3"
             ? { rhythm: recoveryRhythm() }
-            : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
+            : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1'||g.dealerVersion==='composition-v2') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
               ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
               : {}),
     streak: 0, streakMisses: 0,
@@ -154,7 +154,7 @@ export function validRevivePlan(
     reviveUsed: true,
     ...(g.dealerVersion === "flow-v3"
       ? { rhythm: recoveryRhythm() }
-      : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
+      : g.dealerVersion === "flow-v4" || g.dealerVersion==='director-v1' || (g.dealerVersion==='director-v2'||g.dealerVersion==='composition-v1'||g.dealerVersion==='composition-v2') || g.dealerVersion==='director-v3' || g.dealerVersion==='director-v4' || (g.dealerVersion==='director-v5'||g.dealerVersion==='director-v6')
         ? { rhythm: { ...g.rhythm!, ...recoveryRhythm() } }
         : {}),
     streak: 0,

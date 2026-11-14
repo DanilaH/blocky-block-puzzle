@@ -1190,3 +1190,18 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   ещё не реализована. Данные одного владельца не заменяют аудиторию/A-B.
 
 [Разбор и пределы выводов](qa/HUMAN_COMPARISON_0.64_2026-11-14.md).
+
+## D91 — composition-v2 / preview0.65, 14.11.2026
+
+- [x] Один отдельный кандидат:8 стартов/32 поворота, обычная линия без полного
+  сброса, anti-repeat/reload; после72 ограничение payoff и prepare allowance.
+- [x]339 unit,7 browser,production build,457 exact/independent human replay.
+  Старые версии/права/3 recovery сохранены; default v2/rollout OFF.
+- [x]96 dev/holdout bot launches,11992 moves; early/clear/small gates PASS.
+- [ ] Long-tail gate: dev/lapse FAIL, holdout PASS, bounded unknown,
+  strong censored. Candidate HOLD; не объявлять сложность/длину принятой.
+- [ ] Совместимая подписанная APK0.65 и итоговый протокол CI/подписи.
+- [ ] Телефонная плавность/длинная сессия/demo SDK и человеческая оценка.
+  AppMetrica кабинет отложен владельцем.
+
+[Результат](qa/COMPOSITION_V2_0.65_2026-11-14.md).
