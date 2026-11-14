@@ -77,8 +77,8 @@ max92.58/142.58мс у кандидата. Запуски делили CPU с д
 APK0.65 собрана в PR1 run43631030232, Android job132557449527 PASS.
 APK v2-подпись e96d961e…5fdbe13 проверена независимо.99 файлов web-пакета
 побайтно совпали с независимой повторной сборкой; demo=true, AppMetrica key
-и live units пустые.25 focused и2 emulator instrumentation PASS. Полный
-browser прогон ещё выполняется; окончание будет в протоколе поставки.
+и live units пустые.25 focused и2 emulator instrumentation PASS. Все245
+browser сценариев PASS; PR1 полностью зелёный.
 [APK proof](composition-v2-2026-11-14/apk-proof.json).
 
 10мин5сек /210 синтетических clear-drag-pause-restart циклов новой версии

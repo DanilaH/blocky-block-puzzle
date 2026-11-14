@@ -35,7 +35,7 @@ API/base64/файлов по частям; исходных записей/кл�
   ILRD tests PASS локально. Android unit/assemble и подпись PASS в CI.
 -25 focused effects job132557449218 PASS.
 -2 Android emulator instrumentation job132558138126 PASS.
--7 targeted browser PASS локально; полный245 browser пока RUNNING.
+-7 targeted browser PASS локально; полный245 browser PASS в CI (22.0мин).
 -457 old recorded moves exact hashes + independent geometry PASS.
 -96 frozen bot launches/11992 moves и10мин synthetic lifecycle210 циклов:
   [результат с ограничениями](COMPOSITION_V2_0.65_2026-11-14.md).
