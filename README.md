@@ -1,4 +1,4 @@
-D92 / preview0.66: завершённый floating освобождает клетки/анимации, поздний возврат не трогает новый drag. Hidden starts36→0, снаружи44→44;339 unit/20 targeted browser PASS. Одна praise-проверка дала смешанный результат, scheduler прежний; phone gate открыт. [Результаты](docs/qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
+D92 / preview0.66: завершённый floating освобождает клетки/анимации, поздний возврат не трогает новый drag. Hidden starts36→0, снаружи44→44;339 unit/255 browser PASS; Android/эмулятор зелёные. Одна praise-проверка дала смешанный результат, scheduler прежний; phone gate открыт. [Результаты](docs/qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
 
 D91 / preview0.65: подписанная APK0.65 готова, отдельный composition-v2 с восемью стартами и поздней настройкой помощи.339 unit/245 browser/457 human replay PASS;96 bot launches — длинный хвост нестабилен, candidate HOLD/default v2/rollout OFF. [Результаты](docs/qa/COMPOSITION_V2_0.65_2026-11-14.md).
 

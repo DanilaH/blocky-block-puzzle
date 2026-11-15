@@ -47,7 +47,8 @@ appmetrica_api_key и live units пусты. Это demo/off, не delivery ка
 -25 focused effects job132886725355 PASS.
 -Android unit/assemble/signature job132886725395 PASS.
 -2 emulator instrumentation job132887524937 PASS. Это эмулятор, не телефон.
--255 общих browser в job132886725143 пока RUNNING.
+-255 общих browser в job132886725143 PASS (24.6мин);339 unit PASS.
+  Все4 jobs PR1 завершились success.
 -6 matched pairs/2 trace/1 cancel для praise: exact after hash совпадает,
   результат смешанный. Это инженерное измерение, не Android FPS.
 

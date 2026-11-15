@@ -579,3 +579,8 @@ RAF cadence actual present, эту правку — устранением phone
 Core/dealer/ads/revive/full celebration прежние. Preview0.66 demo/off;
 человеческий balance/default/rollout gate D91 не меняется.
 [Доказательства](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
+
+D92 technical delivery: PR1 run43738640302 полностью зелёный —339 unit,
+255 browser,25 focused effects,Android unit/assemble и2 emulator tests.
+APK0.66 подписана прежним cert,99 dist bytes и demo/off независимо сверены.
+Это не физическая/человеческая приёмка и не новый баланс.

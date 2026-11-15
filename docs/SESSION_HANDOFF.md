@@ -8,8 +8,9 @@ floating с generation guard. Две смены материала hidden36→0,
 Никакого phone FPS/CPU выигрыша из wall intervals не заявлять.
 Preview0.66/versionCode66 demo/off, нужен прежний signer из PR1 cache.
 APK подписана,99 dist bytes/demo-off/старый cert проверены. PR1 run43738640302:
-Android/25 focused/2 emulator PASS,255 full browser пока RUNNING.
-Завершить CI/протокол, не расширять аудит на новые renderer/quality manager.
+Android/25 focused/2 emulator/255 full browser PASS, весь PR1 зелёный.
+Техническая поставка завершена; phone gate открыт. Не расширять аудит на
+новые renderer/quality manager без измеренного эпизода.
 [Результат](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
 
 ## Предыдущая точка D91

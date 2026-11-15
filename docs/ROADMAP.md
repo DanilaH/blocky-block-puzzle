@@ -1218,7 +1218,7 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   2 trace и1 cancel probe; same game hash, результат смешанный, budget прежний.
 - [x] Два legacy multitouch сценария PASS.
 - [x] Подписанная0.66: прежний cert,99 bytes, demo/off; Android/25 focused/
-  2 emulator PASS. Широкий255 browser пока RUNNING.
+  2 emulator PASS. Полный255 browser PASS, весь PR1 CI зелёный.
 - [ ] Телефонный present/короткий проблемный эпизод/update/resume/demo SDK.
   Причина physical lag не установлена. Balance D91 HOLD/default v2/OFF.
 
