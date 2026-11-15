@@ -565,3 +565,17 @@ strong все32 censored240. Кандидат HOLD, стабильный выи�
 заявлять; не тюнить по раскрытому holdout. APK0.65 для ограниченной ручной
 пробы допустима, автоматическая техническая проверка не human acceptance.
 [Протокол и данные](qa/COMPOSITION_V2_0.65_2026-11-14.md).
+
+## D92. Владение floating и одна проверка praise —15.11.2026
+
+По конкретному заданию из kit research3f0c01d реализован минимальный cleanup
+завершённого floating с generation guard. Возврат не обрезается, новый drag
+синхронизируется до показа, MutationObserver/skipHidden не вводятся.
+Две смены материала: hidden36→0/outside44→44.18 focused/339 unit/build PASS.
+Тот же GameState сохранён. Один narrow praise A/B6пар+trace+cancel:
+результат смешанный; production180мс/350мс/3млн прежние, добавлены только
+bounded opt-in lifecycle wall markers. Не объявлять worker wall time CPU,
+RAF cadence actual present, эту правку — устранением phone lag.
+Core/dealer/ads/revive/full celebration прежние. Preview0.66 demo/off;
+человеческий balance/default/rollout gate D91 не меняется.
+[Доказательства](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).

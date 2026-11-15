@@ -1,0 +1,83 @@
+{
+  "environment": "v24.22.1, Linux/headless Chromium, Vite dev, software renderer; no phone and no present timing",
+  "browser": "141.0.7390.37",
+  "protocol": "docs/qa/floating-performance-2026-11-15/PROTOCOL.md",
+  "results": [
+    {
+      "index": 0,
+      "mode": "A",
+      "traced": false,
+      "cancelProbe": true,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 440.29999999701977
+        },
+        {
+          "kind": "cancel",
+          "at": 731
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 38,
+          "totalMs": 19.200000014156103,
+          "maxMs": 1.8999999985098839,
+          "meanMs": 0.5052631582672659
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.4000000022351742,
+          "maxMs": 0.4000000022351742,
+          "meanMs": 0.4000000022351742
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 97,
+          "maxMs": 97,
+          "meanMs": 97
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 97.5,
+          "maxMs": 97.5,
+          "meanMs": 97.5
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 0.9000000022351742,
+          "maxMs": 0.9000000022351742,
+          "meanMs": 0.9000000022351742
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerCancelWallTime": {
+          "count": 1,
+          "totalMs": 291.1000000014901,
+          "maxMs": 291.1000000014901,
+          "meanMs": 291.1000000014901
+        }
+      },
+      "raf": {
+        "samples": 37,
+        "p95": 66.69999694824219,
+        "over33": 5,
+        "over50": 4
+      },
+      "material": "plastic"
+    }
+  ]
+}

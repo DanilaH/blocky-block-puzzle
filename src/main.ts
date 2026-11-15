@@ -213,23 +213,30 @@ async function start() {
   let praiseResult: PraiseResult | null = null;
   let praiseKey = "";
   let praiseTimer = 0;
+  let praiseStartedAt = 0;
   let lastPraiseMove = -5;
   let defeatPlayed = "";
   let themeKey = "";
   let themeGame = "";
   let themeIndex = 0;
+  function finishPraiseWorker(reason: "Result" | "Error" | "Cancel") {
+    if (!praiseWorker) return;
+    // Includes scheduling/loading/messaging; this is not consumed CPU time.
+    performanceCapture.record(`praiseWorker${reason}WallTime`, performance.now() - praiseStartedAt);
+    const job = praiseWorker;
+    praiseWorker = null;
+    job.terminate();
+  }
   function suspendPraise() {
     clearTimeout(praiseTimer);
     praiseTimer = 0;
-    praiseWorker?.terminate();
-    praiseWorker = null;
+    finishPraiseWorker("Cancel");
     if (!praiseResult) praiseKey = "";
   }
   function stopPraise() {
     clearTimeout(praiseTimer);
     praiseTimer = 0;
-    praiseWorker?.terminate();
-    praiseWorker = null;
+    finishPraiseWorker("Cancel");
     praiseKey = "";
     praiseResult = null;
   }
@@ -247,20 +254,21 @@ async function start() {
     praiseTimer = window.setTimeout(() => {
       praiseTimer = 0;
       if (!running || praiseKey !== key) return;
+      praiseStartedAt = performance.now();
       const job = new Worker(
         new URL("./game/praise.worker.ts", import.meta.url),
         { type: "module" },
       );
       praiseWorker = job;
+      performanceCapture.record("praiseWorkerStart", 0);
       job.onmessage = (event: MessageEvent<PraiseResult>) => {
         if (praiseWorker !== job) return;
         praiseResult = event.data;
-        job.terminate();
-        praiseWorker = null;
+        finishPraiseWorker("Result");
       };
       job.onerror = () => {
-        job.terminate();
-        if (praiseWorker === job) praiseWorker = null;
+        if (praiseWorker === job) finishPraiseWorker("Error");
+        else job.terminate();
       };
       job.postMessage(g);
     }, 180);
@@ -327,6 +335,7 @@ async function start() {
   let hintTimeout = 0;
   let dragFrame = 0;
   let dragSample: PointerEvent | null = null;
+  let floatingGeneration = 0;
   let rejectedDrags = 0;
   let tapHelpShown = false;
   let running = false;
@@ -957,14 +966,24 @@ async function start() {
     drag = null;
     currentMove = null;
     selected = null;
-    floating.getAnimations().forEach((a) => a.cancel());
-    floating.hidden = true;
+    releaseFloating();
     el("tray").classList.remove("dragging");
     document.querySelectorAll(".piece.selected").forEach((e) => {
       e.classList.remove("selected");
       e.setAttribute("aria-pressed", "false");
     });
     scene.preview(hintMove(), true, true);
+  }
+  function releaseFloating(generation = floatingGeneration) {
+    if (generation !== floatingGeneration) return;
+    // Invalidate return callbacks before cancellation can deliver their events.
+    floatingGeneration++;
+    for (const a of floating.getAnimations({ subtree: true })) {
+      cosmetic.delete(a);
+      a.cancel();
+    }
+    floating.replaceChildren();
+    floating.hidden = true;
   }
   async function commit(move: Move, revision: number) {
     if (!running || store.busy || movePending) return;
@@ -1886,7 +1905,7 @@ async function start() {
     if (button.classList.contains("unavailable"))
       toast("Сейчас не помещается. Освободите место другой фигурой.", 5000);
     const rect = canvasBox.getBoundingClientRect();
-    floating.getAnimations().forEach((a) => a.cancel());
+    releaseFloating();
     floating.style.left = "0px";
     floating.style.top = "0px";
     floating.innerHTML = mini(selected, rect.width / 8);
@@ -1962,7 +1981,6 @@ async function start() {
       ) > 7;
     const move = locate(event, previous.slot, previous.touch);
     drag = null;
-    floating.hidden = true;
     if (previous.moved) {
       selected = null;
       currentMove = null;
@@ -1970,13 +1988,14 @@ async function start() {
       if (
         slot &&
         fits(currentGame().board, shapeById(slot.shapeId), move.x, move.y)
-      )
+      ) {
+        releaseFloating();
         void commit(move, previous.revision);
-      else {
+      } else {
         const target = el("tray")
           .querySelector(`[data-slot="${previous.slot}"]`)!
           .getBoundingClientRect();
-        floating.hidden = false;
+        const generation = floatingGeneration;
         const from = floating.getBoundingClientRect();
         const a = animate(
           floating,
@@ -1992,11 +2011,11 @@ async function start() {
         if (a) {
           const hide = () => {
             cosmetic.delete(a);
-            floating.hidden = true;
+            releaseFloating(generation);
           };
           a.onfinish = hide;
           a.oncancel = hide;
-        } else floating.hidden = true;
+        } else releaseFloating(generation);
         audio.play("cancel");
         render();
         rejectedDrags++;
@@ -2009,6 +2028,7 @@ async function start() {
         }
       }
     } else {
+      releaseFloating();
       render();
       scene.preview(hintMove(), true, true);
     }

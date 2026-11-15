@@ -1208,3 +1208,17 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   AppMetrica кабинет отложен владельцем.
 
 [Результат](qa/COMPOSITION_V2_0.65_2026-11-14.md).
+
+## D92 — законченный floating / preview0.66, 15.11.2026
+
+- [x] Конкретный kit task3f0c01d на актуальной f02a8c6, старый main не база.
+- [x] Hidden floating ownership:36→0 starts, outside44→44; return/new-drag
+  generation race, material sync, system reduced motion/next tap PASS.
+- [x]339 unit/build и18 focused browser. Одна praise-гипотеза:6 matched pairs,
+  2 trace и1 cancel probe; same game hash, результат смешанный, budget прежний.
+- [x] Два legacy multitouch сценария PASS.
+- [ ] Подписанная preview0.66/CI proof.
+- [ ] Телефонный present/короткий проблемный эпизод/update/resume/demo SDK.
+  Причина physical lag не установлена. Balance D91 HOLD/default v2/OFF.
+
+[Результат](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).

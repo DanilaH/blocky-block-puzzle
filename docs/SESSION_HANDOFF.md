@@ -1,3 +1,17 @@
+# Точка продолжения — D92, 15.11.2026
+
+На f02a8c6 по kit BLOCKY_NEXT_TASK.md3f0c01d реализовано освобождение
+floating с generation guard. Две смены материала hidden36→0, outside44→44;
+возврат/новый drag и system reduced motion работают,18 focused/339 unit PASS.
+Один praise-эпизод:6 пар+2 traces+cancel, hash c97addcb во всех. Результат
+смешанный; scheduler/budget прежние, добавлены opt-in worker wall markers.
+Никакого phone FPS/CPU выигрыша из wall intervals не заявлять.
+Preview0.66/versionCode66 demo/off, нужен прежний signer из PR1 cache.
+Завершить native APK/CI, не расширять аудит на новые renderer/quality manager.
+[Результат](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
+
+## Предыдущая точка D91
+
 # Точка продолжения — D91, 14.11.2026
 
 По «давай делай» реализован composition-v2; исходники на основе8bdc416,
