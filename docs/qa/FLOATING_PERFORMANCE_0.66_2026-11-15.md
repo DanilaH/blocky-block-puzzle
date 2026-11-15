@@ -96,8 +96,12 @@ rollout OFF. Исходные игровые записи/ключи не пуб
 ## Сборка и открытые проверки
 
 Одна preview0.66, versionCode66, прежний signer/package. Demo ads, AppMetrica
-OFF по решению владельца. Подписанная APK/CI результат фиксируются после
-сборки. Повторный полный общий soak/renderer-перебор не запускался.
+OFF по решению владельца. Подписанная APK собрана в PR1 run43738640302. Прежний сертификат, manifest,
+все99 файлов независимой повторной web-сборки и demo/off ресурсы проверены.
+Android unit/assemble,25 focused effects и2 emulator instrumentation PASS.
+Широкий255 browser ещё RUNNING на момент этого протокола.
+[APK proof](floating-performance-2026-11-15/apk-proof.json),
+[поставка](PREVIEW_0.66_PUBLICATION_2026-11-15.md). Повторный полный общий soak/renderer-перебор не запускался.
 На телефоне остаются настоящий present/frame pacing, update/resume,
 быстрый повторный drag после ошибки, короткий привычный проблемный эпизод.
 Требуется совпадающий эпизод, чтобы выбрать следующий источник исправления;
