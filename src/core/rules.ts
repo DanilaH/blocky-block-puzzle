@@ -31,7 +31,9 @@ export function scoreBreakdown(
   };
 }
 
+import { budgetDirectorDeal, freshAssistBudget, type AssistBudget, type AssistDecision } from "./assist-budget";
 import { compositionDealV2 } from "./composition-dealer-v2";
+import { finalDecision, emitDecision, decisionKey, type DecisionTrace, type DecisionSink, type DecisionOutput } from "./decision-trace";
 import { compositionDeal } from "./composition-dealer";
 import { flowDealV1 } from "./flow-dealer-v1";
 import { flowDealV3 } from "./flow-dealer-v3";
@@ -87,7 +89,8 @@ export type DealerVersion =
   | "director-v5"
   | "director-v6"
   | "composition-v1"
-  | "composition-v2";
+  | "composition-v2"
+  | "director-budget-v1";
 export interface GameState {
   gameId: string;
   comparisonMode?: "default" | "manual" | "audience";
@@ -103,7 +106,8 @@ export interface GameState {
   rngState: number;
   dealerVersion: DealerVersion;
   openingId?: number;
-  dealerDiagnostic?: {reason:string;checks:number;limit:number;tempo?:boolean;payoffReduced?:boolean;lineAllowance?:number};
+  assistBudget?: AssistBudget;
+  dealerDiagnostic?: {reason:string;checks:number;limit:number;tempo?:boolean;payoffReduced?:boolean;lineAllowance?:number;slot?:number;from?:string;to?:string};
   rhythm?: RhythmState;
   director?: OrderDirectorState;
   goalDirector?: GoalDirectorState;
@@ -252,6 +256,7 @@ export function deal(
   mixedDirector?: MixedDirectorState,
   forgivingDirector?: ForgivingDirectorState,
   rewardDirector?: RewardDirectorState,
+  assistBudget?: AssistBudget,
 ): {
   tray: Slot[];
   rngState: number;
@@ -264,7 +269,14 @@ export function deal(
   rewardDirector?: RewardDirectorState;
   openingId?: number;
   composition?: GameState["dealerDiagnostic"];
+  assistBudget?: AssistBudget;
+  assistDecision?: AssistDecision;
+  diagnostic?: DecisionOutput["diagnostic"];
 } {
+  if(version==='director-budget-v1') {
+    const {director:next,...rest}=budgetDirectorDeal(board,rngState,moves,rhythm,goalDirector,assistBudget);
+    return {...rest,goalDirector:next};
+  }
   if(version==='director-v1')return orderDirectorDeal(board,rngState,moves,rhythm,director);
   if(version==='director-v2'||version==='composition-v1'||version==='composition-v2'){
     const {director:next,...rest}=(version==='composition-v2'?compositionDealV2:version==='composition-v1'?compositionDeal:goalDirectorDeal)(board,rngState,moves,rhythm,goalDirector);
@@ -419,13 +431,28 @@ export function deal(
   }
   return { tray, rngState, fallback: true, witness: null };
 }
+/** Replay recorded inputs; never consult SDK, clocks, or current experiment assignment. */
+export function replayDecision(trace: DecisionTrace): DecisionTrace {
+  if (!trace || trace.schema !== 1 || !trace.input || trace.input.board.length !== 64 ||
+      !Number.isSafeInteger(trace.input.moves) || trace.input.moves < 0 ||
+      !Number.isSafeInteger(trace.input.seed) || trace.input.seed < 1 || trace.input.seed > 0xffffffff)
+    throw Error("Invalid decision input");
+  const i = trace.input, c = i.context;
+  const d = deal(i.board, i.seed, i.policy, i.moves, i.previous, c.rhythm, c.director, c.goalDirector, c.mixedDirector, c.forgivingDirector, c.rewardDirector, c.assistBudget);
+  const actual = finalDecision(trace.gameId, trace.revision, i, d);
+  if (decisionKey(actual) !== decisionKey(trace)) throw Error("Decision replay mismatch");
+  return actual;
+}
+
 export function newGame(
   seed: number,
   gameId: string,
   dealerVersion: DealerVersion = "initial-v1",
+  capture?: DecisionSink,
 ): GameState {
   const board = emptyBoard(),
     d = deal(board, seed >>> 0 || 1, dealerVersion);
+  emitDecision(capture, () => finalDecision(gameId, 0, { board, seed: seed >>> 0 || 1, policy: dealerVersion, moves: 0, previous: "", context: {} }, d));
   return {
     gameId,
     revision: 0,
@@ -438,11 +465,12 @@ export function newGame(
     moves: 0,
     rngState: d.rngState,
     dealerVersion,
+    ...(dealerVersion === "director-budget-v1" ? {assistBudget:d.assistBudget??freshAssistBudget()} : {}),
     ...(["composition-v1","composition-v2"].includes(dealerVersion) ? {dealerDiagnostic:d.composition} : {}),
     ...(d.openingId === undefined ? {} : {openingId:d.openingId}),
     ...(dealerVersion === "flow-v3"
       ? { rhythm: initialRhythm() }
-      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1' || (dealerVersion==='director-v2'||dealerVersion==='composition-v1'||dealerVersion==='composition-v2') || dealerVersion==='director-v3' || dealerVersion==='director-v4' || (dealerVersion==='director-v5'||dealerVersion==='director-v6')
+      : dealerVersion === "flow-v4" || dealerVersion === 'director-v1' || (dealerVersion==='director-v2'||dealerVersion==='composition-v1'||dealerVersion==='composition-v2'||dealerVersion==='director-budget-v1') || dealerVersion==='director-v3' || dealerVersion==='director-v4' || (dealerVersion==='director-v5'||dealerVersion==='director-v6')
         ? {
             rhythm: {
               ...initialRhythmV4(),
@@ -456,7 +484,7 @@ export function newGame(
           }
         : {}),
     ...(dealerVersion==='director-v1'?{director:d.director??initialOrderDirector()}:{}),
-    ...((dealerVersion==='director-v2'||dealerVersion==='composition-v1'||dealerVersion==='composition-v2')?{goalDirector:d.goalDirector??initialGoalDirector()}:{}),
+    ...((dealerVersion==='director-v2'||dealerVersion==='composition-v1'||dealerVersion==='composition-v2'||dealerVersion==='director-budget-v1')?{goalDirector:d.goalDirector??initialGoalDirector()}:{}),
     ...(dealerVersion==='director-v3'?{mixedDirector:d.mixedDirector??initialMixedDirector()}:{}),
     ...((dealerVersion==='director-v5'||dealerVersion==='director-v6')?{rewardDirector:d.rewardDirector??initialRewardDirector(dealerVersion==='director-v6'?6:5)}:{}),
     ...(dealerVersion==='director-v4'?{forgivingDirector:d.forgivingDirector??initialForgivingDirector()}:{}),
@@ -470,6 +498,7 @@ export function applyMove(
   state: GameState,
   move: Move,
   revision: number,
+  captureDecision = false,
 ): {
   state: GameState;
   cells: number[];
@@ -479,6 +508,7 @@ export function applyMove(
   breakdown: ReturnType<typeof scoreBreakdown>;
   seriesBonus: number;
   finishedStreak: number;
+  decision?: DecisionTrace;
 } | null {
   const slot = state.tray[move.slot];
   if (
@@ -514,7 +544,7 @@ export function applyMove(
     rngState = state.rngState,
     dealerFallbacks = state.dealerFallbacks;
   let rhythm =
-    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1' || (state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2') || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || (state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6')
+    state.dealerVersion === "flow-v4" || state.dealerVersion === 'director-v1' || (state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2'||state.dealerVersion==='director-budget-v1') || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || (state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6')
       ? advanceRhythmV4(
           state.rhythm ?? initialRhythmV4(),
           placed.board,
@@ -532,7 +562,9 @@ export function applyMove(
         : undefined;
   let director=state.dealerVersion==='director-v1'?observeOrderDirector(state.director??initialOrderDirector(),allClear):undefined;
   let dealerDiagnostic=state.dealerDiagnostic;
-  let goalDirector=(state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2')?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
+  let assistBudget=state.assistBudget;
+  let decision: DecisionTrace | undefined;
+  let goalDirector=(state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2'||state.dealerVersion==='director-budget-v1')?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
   let mixedDirector=state.dealerVersion==='director-v3'?observeMixedDirector(state.mixedDirector??initialMixedDirector(),allClear):undefined;
   let rewardDirector=(state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6')?observeRewardDirector(state.rewardDirector??initialRewardDirector(state.dealerVersion==='director-v6'?6:5),allClear):undefined;
   let forgivingDirector=state.dealerVersion==='director-v4'?observeForgivingDirector(state.forgivingDirector??initialForgivingDirector(),allClear):undefined;
@@ -552,13 +584,19 @@ export function applyMove(
       mixedDirector,
       forgivingDirector,
       rewardDirector,
+      assistBudget,
     );
+    if (captureDecision) emitDecision(t => { decision = t; }, () => finalDecision(state.gameId, state.revision + 1, {
+      board: placed.board, seed: rngState, policy: state.dealerVersion, moves: state.moves + 1,
+      previous: state.tray.map(s => shapeById(s.shapeId).family).sort().join(","),
+      context: { ...(rhythm ? {rhythm} : {}), ...(director ? {director} : {}), ...(goalDirector ? {goalDirector} : {}), ...(mixedDirector ? {mixedDirector} : {}), ...(forgivingDirector ? {forgivingDirector} : {}), ...(rewardDirector ? {rewardDirector} : {}), ...(assistBudget ? {assistBudget} : {}) },
+    }, d));
     if (rhythm)
       rhythm = {
         ...rhythm,
         recoveryDeals: Math.max(0, rhythm.recoveryDeals - 1),
       };
-    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1' || (state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2') || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || (state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6')))
+    if (rhythm && (state.dealerVersion === "flow-v4" || state.dealerVersion==='director-v1' || (state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2'||state.dealerVersion==='director-budget-v1') || state.dealerVersion==='director-v3' || state.dealerVersion==='director-v4' || (state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6')))
       rhythm = {
         ...rhythm,
         encoreDeals: Math.max(0, (rhythm.encoreDeals ?? 0) - 1),
@@ -571,8 +609,9 @@ export function applyMove(
         ].slice(-4),
       };
     tray = d.tray;
+    if(state.dealerVersion === "director-budget-v1")assistBudget=d.assistBudget;
     if(state.dealerVersion==='director-v1')director=d.director;
-    if((state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2'))goalDirector=d.goalDirector;
+    if((state.dealerVersion==='director-v2'||state.dealerVersion==='composition-v1'||state.dealerVersion==='composition-v2'||state.dealerVersion==='director-budget-v1'))goalDirector=d.goalDirector;
     if(['composition-v1','composition-v2'].includes(state.dealerVersion)) dealerDiagnostic=d.composition;
     if(state.dealerVersion==='director-v3')mixedDirector=d.mixedDirector;
     if((state.dealerVersion==='director-v5'||state.dealerVersion==='director-v6'))rewardDirector=d.rewardDirector;
@@ -593,6 +632,7 @@ export function applyMove(
       : 0;
   return {
     seriesBonus,
+    ...(decision ? {decision} : {}),
     finishedStreak,
     state: {
       ...state,
@@ -603,6 +643,7 @@ export function applyMove(
       dealerFallbacks,
     ...(["composition-v1","composition-v2"].includes(state.dealerVersion) ? {dealerDiagnostic} : {}),
       ...(rhythm ? { rhythm } : {}),
+      ...(assistBudget ? {assistBudget} : {}),
       ...(director ? {director} : {}),
       ...(goalDirector ? {goalDirector} : {}),
       ...(mixedDirector ? {mixedDirector} : {}),

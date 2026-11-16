@@ -1,4 +1,5 @@
-import { applyMove, type GameState } from "../../src/core/rules";
+import { applyMove, replayDecision, type GameState } from "../../src/core/rules";
+import { decisionKey } from "../../src/core/decision-trace";
 import { createProfile, validProfile } from "../../src/core/profile";
 import {
   stateHash,
@@ -56,6 +57,13 @@ export function replayRecord(input: unknown) {
       if (!validProfile({ ...createProfile(e.state), best: e.state?.score }))
         throw Error("Invalid checkpoint");
       state = structuredClone(e.state);
+      if (e.decision) {
+        replayDecision(e.decision);
+        if (e.decision.gameId !== state.gameId || e.decision.revision !== state.revision ||
+            e.decision.seedAfter !== state.rngState ||
+            decisionKey(e.decision.finalPieceIds) !== decisionKey(state.tray.map(s => s.shapeId)))
+          throw Error("Checkpoint decision mismatch");
+      }
       segment++;
       segments.push({
         index: segment,
@@ -71,9 +79,11 @@ export function replayRecord(input: unknown) {
         !e.move
       )
         throw Error("Broken recording chain");
-      const result = applyMove(state, e.move, state.revision);
+      const result = applyMove(state, e.move, state.revision, !!e.decision);
       if (!result || stateHash(result.state) !== e.after)
         throw Error("Move replay mismatch");
+      if (e.decision && decisionKey(result.decision) !== decisionKey(e.decision))
+        throw Error("Decision replay mismatch");
       moves.push({
         event: e,
         before: state,

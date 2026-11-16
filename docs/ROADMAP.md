@@ -1237,3 +1237,17 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Телефонные update/resume/полная очистка/оставшийся рывок.
 
 [Протокол и границы](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
+
+
+## D94 — первая итерация commercial-director TZ,16.11.2026
+
+- [x] P0-A audit реального0.67 иисточников помощи;P0-B final trace/replay,A/A.
+- [x] P1-A один finite-help candidate,save/receipts/early/recovery иstable flags.
+- [x]352 unit/build/assets,15 browser,1120 exact/independent human replay.
+- [x]192 model launches32168moves,dev/untouched holdout gates PASS;HOLD/manual.
+- [ ] Подписанная0.68,Android/CI/emulator/packaged proof.
+- [ ] Human/phone:новый режим,refill ипродолжение;defaultv2/rolloutOFF.
+- [ ] P1-B новые challenge/phase/opener,P1-C revive window,P2 ad cadence —
+  следующие отдельные этапы,не заявлять готовыми по этой поставке.
+
+[Результаты](qa/ASSIST_BUDGET_0.68_2026-11-16.md).

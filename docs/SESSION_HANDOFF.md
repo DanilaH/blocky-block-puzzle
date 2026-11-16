@@ -1,3 +1,28 @@
+# Точка продолжения — D94,16.11.2026
+
+Реализована первая согласованная итерация Blocky_TZ.zip на5390af7/current0.67,
+не main: audit→opt-in DecisionTrace в существующем PlayCapture/worker после
+durable commit→один director-budget-v1. Trace A/A сохраняет старые hashes/RNG.
+Старые4 записи найдены вLibrary,1120 exact+independent cells PASS;raw только
+ignored private-inputs.352 unit/build/assets,15 targeted browser PASS.
+Baseline64+dev64+holdout64=192 launches/32168moves,config/gates заморожены
+локальным f0798b6 до comparisons;все gates PASS,без tuning по holdout. Strong всеmatched
+playing300 censored,не forced loss. Credits5/sourceCaps reward5/relief2/gap2;
+ранние12 выдач и3 recovery прежние. Ordinary whole-hand safe бесплатен.
+Подробные диапазоны и границы вновом отчёте. Policy manual only/HOLD,defaultv2,
+audienceOFF. Revive/ad caps/scoring/права/эффекты/кольцо0.67 не переопределены.
+Preview0.68/code68 demo/off;дальше подписанная APK через прежний PR1 signer,
+проверка packaged bytes/resources/cert,поставка прямой APK. Не генерировать
+новый key/не просить uninstall. Публикация и Actions ранее явно разрешены;
+новый user попросил реализацию. Kit consumer reports/записи/ключи туда не писать.
+Публикация: только агрегаты и synthetic seed/hash recipes. Полные synthetic
+снимки перенесены в ignored artifacts,оригиналы по-прежнему private-inputs.
+Локальные checkpoints со снимками не публиковать: чистая поставка одним
+коммитом поверх public dc26d27,без включения экспериментальной истории.
+[Результат](qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+
+## Предыдущая точка D93
+
 # Точка продолжения — D93,16.11.2026
 
 Исправлен только full-clear bitmap-ring и его cross-дубль. Праздник/ядро/

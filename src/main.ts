@@ -8,6 +8,7 @@ import { presentScoreGlow } from "./game/score-glow";
 import { presentReviveClock } from "./game/revive-clock";
 import { MoveCalculator } from "./game/move-calculator";
 import { PlayCapture } from "./platform/play-capture";
+import type { DecisionTrace } from "./core/decision-trace";
 import { sharePlayRecord } from "./platform/share-json";
 import { presentResult } from "./game/result-presentation";
 import {
@@ -87,12 +88,14 @@ const bulb = svg(
 const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
-const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number) => ({
-  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : seed(), crypto.randomUUID(), dealer),
+let pendingInitialDecision: DecisionTrace | undefined;
+const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number, captureDecision = false) => ({
+  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
 });
 const dealerChoices = [
+  { version: "director-budget-v1", label: "Конечная помощь", note: "Прежнее начало партии, затем дополнительные разгрузки ограничены. Отдельная проба; баланс ещё не принят." },
   { version: "composition-v2", label: "Разный старт и темп · новая проба", note: "Восемь стартовых наборов и меньше готовой помощи в затяжной партии. Отдельная проба для сравнения; баланс ещё не принят." },
   { version: "composition-v1", label: "Разнообразные формы · проба", note: "Пробная выдача на основе «С задачами и нагрузкой». Сравнивайте в новой партии; баланс ещё не принят." },
   {
@@ -189,7 +192,9 @@ async function start() {
   store.observer = {
     prepare: (before, next) => analytics.prepare(before, next),
     committed: (before, next, reason) => {
-      playCapture.committed(before, next);
+      const decision = pendingInitialDecision?.gameId === next.game.gameId && next.game.revision === 0 ? pendingInitialDecision : undefined;
+      playCapture.committed(before, next, decision);
+      if (decision) pendingInitialDecision = undefined;
       analytics.committed(before, next, reason);
       syncAdContext(next);
     },
@@ -1031,7 +1036,7 @@ async function start() {
     const saveStarted = performance.now();
     movePending = true;
     try {
-      const calculated = await moveCalculator.calculate(before, move, revision);
+      const calculated = await moveCalculator.calculate(before, move, revision, playCapture.enabled);
       performanceCapture.record(
         "moveCalculationWallTime",
         performance.now() - saveStarted,
@@ -1084,7 +1089,7 @@ async function start() {
       currentMove = null;
       rejectedDrags = 0;
       const event = outcome.result!;
-      if (!practicing) playCapture.record(before, move, event.state);
+      if (!practicing) playCapture.record(before, move, event.state, event.decision);
       const signature = clearSignature(event.cells);
       const revealVariant = (store.state.wardrobe?.discoveries ?? 1) % 3;
       const newRecord =
@@ -2757,7 +2762,7 @@ async function start() {
         await store.update(p=>ensureExperiment({...p,revision:p.revision+1},Date.now(),false,crypto.randomUUID()));
       }
       const actualDealer=enabledDealer(dealer??assignedDealer(store.state));
-      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
+      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined, playCapture.enabled),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
       const changed =
         store.state.game.status === "over"
           ? await ads.betweenGames(nextGame)
@@ -2765,12 +2770,12 @@ async function start() {
               ...ads.stamp(p),
               revision: p.revision + 1,
               game: nextGame,
-              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1","composition-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|undefined}}:{}),
+              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
-        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|undefined}}));
+        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);

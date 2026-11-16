@@ -1,3 +1,5 @@
+D94 / исходники0.68: opt-in финальная трасса и один director-budget-v1 с конечной дополнительной помощью.352 unit/15 focused browser/1120 human replay и192 synthetic launches PASS;новый holdout прошёл gates. Candidate HOLD/manual/defaultv2/rolloutOFF;APK проверяется. [Результаты](docs/qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+
 D93 / preview0.67: убран растягивающийся bitmap-ring только полной очистки, остальной праздник сохранён. APK подписана прежним cert,99 dist bytes/demo-off проверены;339 unit/31 focused/Android/2 emulator PASS. Полный browser CI ещё идёт. Phone speedup не заявлен. [Результат](docs/qa/ALL_CLEAR_RING_0.67_2026-11-16.md), [поставка](docs/qa/PREVIEW_0.67_PUBLICATION_2026-11-16.md).
 
 D92 / preview0.66: завершённый floating освобождает клетки/анимации, поздний возврат не трогает новый drag. Hidden starts36→0, снаружи44→44;339 unit/255 browser PASS; Android/эмулятор зелёные. Одна praise-проверка дала смешанный результат, scheduler прежний; phone gate открыт. [Результаты](docs/qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).

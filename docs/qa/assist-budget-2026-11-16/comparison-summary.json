@@ -1,0 +1,444 @@
+{
+  "provenance": "Synthetic only; seed ranges and generators in PROTOCOL.md. No owner records, boards, moves or per-decision traces.",
+  "baseline": [
+    {
+      "style": "bounded",
+      "policy": "composition-v2",
+      "runs": 8,
+      "moves": 228,
+      "early": 6,
+      "censored": 0,
+      "ordinaryClearMoves": 93,
+      "allClears": 5,
+      "fallback": 0
+    },
+    {
+      "style": "bounded",
+      "policy": "director-v2",
+      "runs": 8,
+      "moves": 268,
+      "early": 6,
+      "censored": 0,
+      "ordinaryClearMoves": 124,
+      "allClears": 6,
+      "fallback": 0
+    },
+    {
+      "style": "clear",
+      "policy": "composition-v2",
+      "runs": 8,
+      "moves": 966,
+      "early": 1,
+      "censored": 0,
+      "ordinaryClearMoves": 464,
+      "allClears": 19,
+      "fallback": 0
+    },
+    {
+      "style": "clear",
+      "policy": "director-v2",
+      "runs": 8,
+      "moves": 1425,
+      "early": 0,
+      "censored": 2,
+      "ordinaryClearMoves": 539,
+      "allClears": 115,
+      "fallback": 0
+    },
+    {
+      "style": "lapse",
+      "policy": "composition-v2",
+      "runs": 8,
+      "moves": 894,
+      "early": 0,
+      "censored": 0,
+      "ordinaryClearMoves": 457,
+      "allClears": 14,
+      "fallback": 0
+    },
+    {
+      "style": "lapse",
+      "policy": "director-v2",
+      "runs": 8,
+      "moves": 1556,
+      "early": 1,
+      "censored": 4,
+      "ordinaryClearMoves": 701,
+      "allClears": 98,
+      "fallback": 0
+    },
+    {
+      "style": "three",
+      "policy": "composition-v2",
+      "runs": 8,
+      "moves": 2400,
+      "early": 0,
+      "censored": 8,
+      "ordinaryClearMoves": 1245,
+      "allClears": 105,
+      "fallback": 0
+    },
+    {
+      "style": "three",
+      "policy": "director-v2",
+      "runs": 8,
+      "moves": 2400,
+      "early": 0,
+      "censored": 8,
+      "ordinaryClearMoves": 789,
+      "allClears": 393,
+      "fallback": 0
+    }
+  ],
+  "dev": {
+    "config": {
+      "id": "assist-budget-v1",
+      "version": 1,
+      "credits": 5,
+      "warmDeals": 12,
+      "minDealGap": 2,
+      "sourceCaps": {
+        "reward": 5,
+        "relief": 2
+      },
+      "searchPerPlan": 11900
+    },
+    "cap": 300,
+    "environment": "v24.22.1 linux/x64; serial Node process; trace ON; CPU process user+system separately from wall; no phone",
+    "comparisons": [
+      {
+        "style": "bounded",
+        "base": {
+          "moves": 268,
+          "early": 6,
+          "censored": 0,
+          "tail": 0,
+          "ordinaryRate": 0.4626865671641791,
+          "allClearRate": 0.022388059701492536,
+          "helpPer100": 33.33333333333333,
+          "fallback": 0,
+          "p95": 14.02453700000001,
+          "cpuP95": 23.549
+        },
+        "candidate": {
+          "moves": 268,
+          "early": 6,
+          "censored": 0,
+          "tail": 0,
+          "ordinaryRate": 0.4626865671641791,
+          "allClearRate": 0.022388059701492536,
+          "helpPer100": 0,
+          "fallback": 0,
+          "p95": 11.472785000000044,
+          "cpuP95": 13.633
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": "not-gated",
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "clear",
+        "base": {
+          "moves": 1425,
+          "early": 0,
+          "censored": 2,
+          "tail": 860,
+          "ordinaryRate": 0.3782456140350877,
+          "allClearRate": 0.08070175438596491,
+          "helpPer100": 47.51958224543081,
+          "fallback": 0,
+          "p95": 11.419065000000046,
+          "cpuP95": 12.151
+        },
+        "candidate": {
+          "moves": 1228,
+          "early": 0,
+          "censored": 1,
+          "tail": 673,
+          "ordinaryRate": 0.47068403908794787,
+          "allClearRate": 0.04315960912052117,
+          "helpPer100": 2.2082018927444795,
+          "fallback": 0,
+          "p95": 12.918857000000116,
+          "cpuP95": 13.085
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": true,
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "three",
+        "base": {
+          "moves": 2400,
+          "early": 0,
+          "censored": 8,
+          "tail": 1824,
+          "ordinaryRate": 0.32875,
+          "allClearRate": 0.16375,
+          "helpPer100": 58.98876404494382,
+          "fallback": 0,
+          "p95": 10.98397599999953,
+          "cpuP95": 11.29
+        },
+        "candidate": {
+          "moves": 2400,
+          "early": 0,
+          "censored": 8,
+          "tail": 1824,
+          "ordinaryRate": 0.46291666666666664,
+          "allClearRate": 0.08458333333333333,
+          "helpPer100": 3.7921348314606744,
+          "fallback": 0,
+          "p95": 13.686665000001085,
+          "cpuP95": 13.679
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": "not-gated",
+          "reward": true,
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "lapse",
+        "base": {
+          "moves": 1556,
+          "early": 1,
+          "censored": 4,
+          "tail": 1029,
+          "ordinaryRate": 0.4505141388174807,
+          "allClearRate": 0.06298200514138817,
+          "helpPer100": 40.97222222222222,
+          "fallback": 0,
+          "p95": 10.80547800000204,
+          "cpuP95": 10.883
+        },
+        "candidate": {
+          "moves": 1422,
+          "early": 1,
+          "censored": 3,
+          "tail": 926,
+          "ordinaryRate": 0.5084388185654009,
+          "allClearRate": 0.03164556962025317,
+          "helpPer100": 1.03359173126615,
+          "fallback": 0,
+          "p95": 12.734659000001557,
+          "cpuP95": 12.832
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": true,
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      }
+    ],
+    "runs": 64,
+    "moves": 10967
+  },
+  "holdout": {
+    "config": {
+      "id": "assist-budget-v1",
+      "version": 1,
+      "credits": 5,
+      "warmDeals": 12,
+      "minDealGap": 2,
+      "sourceCaps": {
+        "reward": 5,
+        "relief": 2
+      },
+      "searchPerPlan": 11900
+    },
+    "cap": 300,
+    "environment": "v24.22.1 linux/x64; serial Node process; trace ON; CPU process user+system separately from wall; no phone",
+    "comparisons": [
+      {
+        "style": "bounded",
+        "base": {
+          "moves": 381,
+          "early": 4,
+          "censored": 0,
+          "tail": 32,
+          "ordinaryRate": 0.49606299212598426,
+          "allClearRate": 0.007874015748031496,
+          "helpPer100": 25.581395348837212,
+          "fallback": 0,
+          "p95": 12.411280000000033,
+          "cpuP95": 17.663
+        },
+        "candidate": {
+          "moves": 343,
+          "early": 4,
+          "censored": 0,
+          "tail": 0,
+          "ordinaryRate": 0.5043731778425656,
+          "allClearRate": 0.008746355685131196,
+          "helpPer100": 0,
+          "fallback": 0,
+          "p95": 11.397110999999995,
+          "cpuP95": 13.91
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": "not-gated",
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "clear",
+        "base": {
+          "moves": 1832,
+          "early": 1,
+          "censored": 4,
+          "tail": 1299,
+          "ordinaryRate": 0.3962882096069869,
+          "allClearRate": 0.06441048034934498,
+          "helpPer100": 40.804597701149426,
+          "fallback": 0,
+          "p95": 14.85754199999974,
+          "cpuP95": 15.325
+        },
+        "candidate": {
+          "moves": 1307,
+          "early": 1,
+          "censored": 1,
+          "tail": 781,
+          "ordinaryRate": 0.4575363427697016,
+          "allClearRate": 0.046671767406273906,
+          "helpPer100": 1.7391304347826086,
+          "fallback": 0,
+          "p95": 18.889898000000358,
+          "cpuP95": 19.008
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": true,
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "three",
+        "base": {
+          "moves": 2400,
+          "early": 0,
+          "censored": 8,
+          "tail": 1824,
+          "ordinaryRate": 0.27958333333333335,
+          "allClearRate": 0.18625,
+          "helpPer100": 66.01123595505618,
+          "fallback": 0,
+          "p95": 16.449745999998413,
+          "cpuP95": 16.58
+        },
+        "candidate": {
+          "moves": 2400,
+          "early": 0,
+          "censored": 8,
+          "tail": 1824,
+          "ordinaryRate": 0.455,
+          "allClearRate": 0.09,
+          "helpPer100": 4.073033707865169,
+          "fallback": 0,
+          "p95": 19.862154999998893,
+          "cpuP95": 19.677
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": "not-gated",
+          "reward": true,
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      },
+      {
+        "style": "lapse",
+        "base": {
+          "moves": 1247,
+          "early": 1,
+          "censored": 1,
+          "tail": 752,
+          "ordinaryRate": 0.42181234963913394,
+          "allClearRate": 0.0817963111467522,
+          "helpPer100": 39.69230769230769,
+          "fallback": 0,
+          "p95": 14.154302000002644,
+          "cpuP95": 14.171
+        },
+        "candidate": {
+          "moves": 1154,
+          "early": 1,
+          "censored": 1,
+          "tail": 671,
+          "ordinaryRate": 0.4714038128249567,
+          "allClearRate": 0.0511265164644714,
+          "helpPer100": 1.0204081632653061,
+          "fallback": 0,
+          "p95": 16.640244000001985,
+          "cpuP95": 16.037
+        },
+        "gates": {
+          "early": true,
+          "ordinary": true,
+          "tail": true,
+          "reward": "not-gated",
+          "help": true,
+          "fallback": true,
+          "compute": true
+        }
+      }
+    ],
+    "runs": 64,
+    "moves": 11064
+  },
+  "traceCost": {
+    "environment": "v24.22.1, serial synchronous Node wall duration; no worker/phone CPU or FPS",
+    "largestTraceBytes": 1944,
+    "record": {
+      "moves": 300,
+      "bytes": 224273,
+      "limit": 800000,
+      "stopped": "recording",
+      "eventCount": 301
+    },
+    "modelStateBytes": 902,
+    "terminalCreditsLeft": 0,
+    "timing": {
+      "off": {
+        "n": 42,
+        "p95": 38.34594900000002
+      },
+      "on": {
+        "n": 42,
+        "p95": 40.327710000000025
+      }
+    }
+  }
+}

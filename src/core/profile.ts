@@ -1,3 +1,4 @@
+import {validAssistBudget} from "./assist-budget";
 import {validExperiment, type ExperimentState} from "./experiment";
 import {validRewardDirector} from "./reward-director";
 import { validRhythm, validRhythmV4 } from "./rhythm";
@@ -168,6 +169,8 @@ export function validProfile(value: unknown): value is Profile {
       (g.dealerDiagnostic?.tempo !== undefined && typeof g.dealerDiagnostic.tempo !== "boolean") ||
       (g.dealerDiagnostic?.payoffReduced !== undefined && typeof g.dealerDiagnostic.payoffReduced !== "boolean") ||
       (g.dealerDiagnostic?.lineAllowance !== undefined && ![0,1].includes(g.dealerDiagnostic.lineAllowance)) ||
+      (g.dealerVersion === "director-budget-v1" && (!validAssistBudget(g.assistBudget) || (g.assistBudget!.lastAppliedDeal !== null && g.assistBudget!.lastAppliedDeal! > (g.goalDirector?.deals ?? 0)))) ||
+      (g.dealerVersion !== "director-budget-v1" && g.assistBudget !== undefined) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -188,11 +191,12 @@ export function validProfile(value: unknown): value is Profile {
         "director-v6",
         "composition-v1",
         "composition-v2",
+        "director-budget-v1",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
       (g.dealerVersion === 'director-v1' && (!validRhythmV4(g.rhythm)||!validOrderDirector(g.director))) ||
-      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1' || g.dealerVersion === 'composition-v2') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
+      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1' || g.dealerVersion === 'composition-v2' || g.dealerVersion === 'director-budget-v1') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
       (g.dealerVersion === 'director-v3' && (!validRhythmV4(g.rhythm)||!validMixedDirector(g.mixedDirector))) ||
       (g.dealerVersion === 'director-v6' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector,6))) ||
       (g.dealerVersion === 'director-v5' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector))) ||

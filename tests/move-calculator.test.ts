@@ -32,9 +32,10 @@ function harness() {
 }
 afterEach(() => vi.useRealTimers());
 
-it.each(["composition-v1","composition-v2"] as const)("terminates cancelled %s work and ignores its stale response", async(version)=>{
+it.each(["composition-v1","composition-v2","director-budget-v1"] as const)("terminates cancelled %s work and ignores its stale response", async(version)=>{
   const h=harness(),g=state();g.dealerVersion=version;
-  const pending=h.calculator.calculate(g,move,g.revision);
+  const pending=h.calculator.calculate(g,move,g.revision,true);
+  expect(h.workers[0]!.postMessage.mock.calls[0]![0].captureDecision).toBe(true);
   const rejection=expect(pending).rejects.toThrow("cancelled");
   const stale=h.workers[0]!.onmessage!;
   h.calculator.cancel();await rejection;

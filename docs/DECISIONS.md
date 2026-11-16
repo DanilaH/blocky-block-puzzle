@@ -600,3 +600,17 @@ D93 technical preview: APK0.67 подписана прежним cert,99 package
 demo/off независимо сверены;339 unit/31 focused/Android/2 emulator PASS.
 Полный browser verify ещё идёт,phone gate открыт.
 [Поставка](qa/PREVIEW_0.67_PUBLICATION_2026-11-16.md).
+
+
+## D94. Конечная дополнительная помощь и final-deal trace —16.11.2026
+
+По принятому первому этапу Blocky_TZ добавлена opt-in trace после всех замен,
+через прежний worker/capture после atomic save. Старые hash/RNG/1120 human
+moves совпали. Один director-budget-v1:12 исходных ранних выдач и3 recovery
+прежние,потомordinary constructive plan+до5 доказанных дополнительных наград
+с gap2/source caps. Safe не расходуетcredit,отказ не продвигаетselected RNG.
+Config f0798b6 заморожен доdev/untouched holdout.192 runs32168moves/352 unit/
+15 browser PASS;strong300 censored,не объявлять конечность/retention/revenue.
+HOLD/manual/defaultv2/rolloutOFF. Revive window/ads иследующие фазы отдельно.
+Preview68 demo/off,предыдущая подпись обязательна,KIT IMPACT NONE.
+[Данные и ограничения](qa/ASSIST_BUDGET_0.68_2026-11-16.md).

@@ -17,15 +17,15 @@ export class MoveCalculator {
 
   constructor(private createWorker: () => MoveWorker) {}
 
-  async calculate(state: GameState, move: Move, revision: number) {
+  async calculate(state: GameState, move: Move, revision: number, captureDecision = false) {
     if (this.pending) throw new Error("Move search already pending");
     if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2"].includes(
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1"].includes(
         state.dealerVersion,
       ) ||
       state.tray.filter((s) => s.used).length !== 2
     )
-      return applyMove(state, move, revision);
+      return applyMove(state, move, revision, captureDecision);
 
     const worker = (this.worker ??= this.createWorker());
     this.pending = true;
@@ -57,7 +57,7 @@ export class MoveCalculator {
       worker.onmessageerror = () =>
         finish(new Error("Move response could not be read"));
       try {
-        worker.postMessage({ state, move, revision });
+        worker.postMessage({ state, move, revision, ...(captureDecision ? {captureDecision:true} : {}) });
       } catch {
         finish(new Error("Move request could not be sent"));
       }

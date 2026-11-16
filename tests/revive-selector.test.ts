@@ -4,6 +4,7 @@ import { applyMove, type GameState } from "../src/core/rules";
 import { revivePlan, prepareReward, applyReceipt } from "../src/core/monetization";
 import { startReviveOffer, acceptReviveOffer } from "../src/core/revive-offer";
 import { createProfile, validProfile } from "../src/core/profile";
+import { freshAssistBudget } from "../src/core/assist-budget";
 const cases = JSON.parse(fs.readFileSync(new URL("./fixtures/revive-regressions.json", import.meta.url), "utf8")) as {name:string;state:GameState}[];
 for (const c of cases) it(`proves the remaining tray without strengthening a solvable baseline: ${c.name}`, () => {
   const g = structuredClone(c.state), original = structuredClone(g), plan = revivePlan(g)!;
@@ -28,6 +29,27 @@ it("reports unknown on an exhausted shared proof allowance and preserves the bas
   expect([plan.x,plan.y]).toEqual([5,4]);
   expect(plan.selection!.result).toBe("baseline-unknown");
   expect(plan.selection!.witness).toEqual([]);
+});
+it("budget candidate retains earned revive and all three recoveries even with no discretionary credits", () => {
+  let game=structuredClone(cases.find(c=>c.name==="human-2")!.state);
+  game.dealerVersion="director-budget-v1";game.goalDirector={...game.goalDirector!,deals:20};
+  game.assistBudget={...freshAssistBudget(),left:0,spent:{reward:5,relief:0},lastAppliedDeal:20};
+  const originalBudget=structuredClone(game.assistBudget),prepared=revivePlan(game)!;
+  game=acceptReviveOffer(startReviveOffer(game,10000,prepared),14999);
+  const pending=prepareReward({...createProfile(game),best:game.score},"budget-revive","revive");
+  const restored=JSON.parse(JSON.stringify(pending));expect(validProfile(restored)).toBe(true);
+  const earned=applyReceipt(restored,{id:"earned-budget",intentId:"budget-revive"});
+  expect(applyReceipt(earned,{id:"earned-budget",intentId:"budget-revive"})).toBe(earned);
+  let state=earned.game,witness=prepared.selection!.witness;
+  expect(state.rhythm!.recoveryDeals).toBe(3);expect(state.assistBudget).toEqual(originalBudget);
+  for(let round=0;round<3;round++) {
+    let decision;
+    for(const m of witness){const r=applyMove(state,m,state.revision,true)!;expect(r).not.toBeNull();state=r.state;decision=r.decision??decision;}
+    expect(decision!.assistance!.reason).toBe("protected-recovery");
+    expect(state.rhythm!.recoveryDeals).toBe(2-round);expect(state.assistBudget).toEqual(originalBudget);
+    witness=decision!.validation.witness;
+    expect(validProfile({...createProfile(state),best:state.score})).toBe(true);
+  }
 });
 it.each(["composition-v1","composition-v2"] as const)("uses the same fixed revive for %s and keeps the old tray before recovery",(dealerVersion)=>{
   const g={...structuredClone(cases.find(c=>c.name==="human-2")!.state),dealerVersion,...(dealerVersion==="composition-v2"?{openingId:3}:{})};

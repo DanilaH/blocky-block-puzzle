@@ -75,6 +75,7 @@ export function goalDirectorDeal(
   rhythm: RhythmState = initialRhythmV4(),
   saved = initialGoalDirector(),
   budget = 24000,
+  ordinary = false,
 ) {
   const meter = new WorkBudget(budget),
     rows = toRows(board),
@@ -109,9 +110,13 @@ export function goalDirectorDeal(
     source = "goal-beam",
     path: Operation[] | null = null,
     goalFound = false;
+  // Only the separately versioned budget candidate uses this mode. Keep the
+  // normal constructive promise, without rearming a free support phase.
+  if (ordinary && requested !== "recovery")
+    actual = saved.sinceLoad >= 3 && large ? "load" : "prepare";
   const old = meter.ceiling;
   if (
-    count &&
+    !ordinary && count &&
     (requested === "payoff" ||
       requested === "relief" ||
       requested === "recovery")
@@ -129,8 +134,8 @@ export function goalDirectorDeal(
       .join(",");
   const history = rhythm.recentBags ?? [];
   function beam(load: boolean) {
-    const support=requested==='payoff'||requested==='relief'||requested==='recovery';
-    const maxSize=requested==='rest'?4:moves<12?6:9;
+    const support=!ordinary&&(requested==='payoff'||requested==='relief'||requested==='recovery');
+    const maxSize=!ordinary&&requested==='rest'?4:moves<12?6:9;
     return directorBeam({rows,meter,rank,reverse,
       allow:(id,depth)=>{
         const size=SHAPES[id]!.cells.length;
@@ -148,9 +153,9 @@ export function goalDirectorDeal(
 
   let frontier: Node[] = [];
   if (!path) {
-    frontier = beam(requested === "load");
+    frontier = beam(actual === "load");
     path = frontier[0]?.path ?? null;
-    if (!path && requested === "load") {
+    if (!path && actual === "load") {
       actual = "prepare";
       source = "load-miss";
       frontier = beam(false);
@@ -257,9 +262,9 @@ export function goalDirectorDeal(
     version: 2,
     deals: Math.min(1000000, saved.deals + 1),
     sinceLoad: actual === "load" ? 0 : Math.min(32, saved.sinceLoad + 1),
-    rest: requested === "rest" ? 0 : saved.rest,
+    rest: ordinary ? 0 : requested === "rest" ? 0 : saved.rest,
     payoff:
-      actual === "load"
+      ordinary ? 0 : actual === "load"
         ? 2
         : actual === "prepare"
           ? 1
@@ -276,7 +281,7 @@ export function goalDirectorDeal(
     diagnostic: {
       requested,
       actual,
-      source,
+      source: ordinary ? `ordinary-${source}` : source,
       checks: meter.used,
       limit: meter.limit,
       goalFound,

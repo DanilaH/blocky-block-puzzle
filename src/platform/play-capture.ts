@@ -1,6 +1,7 @@
 import type { GameState, Move } from "../core/rules";
 import { APP_VERSION } from "../app-version";
 import type { Profile } from "../core/profile";
+import type { DecisionTrace } from "../core/decision-trace";
 export const PLAY_CAPTURE_LIMIT = 800000;
 export function stateHash(g: GameState): string {
   const canonical = (v: any): any =>
@@ -22,13 +23,14 @@ export function stateHash(g: GameState): string {
 type Stamp = { activeMs: number; wallMs: number };
 export type PlayEvent = Stamp &
   (
-    | { kind: "checkpoint"; state: GameState; reason: string }
+    | { kind: "checkpoint"; state: GameState; reason: string; decision?: DecisionTrace }
     | {
         kind: "move";
         move: Move;
         before: string;
         after: string;
         hinted: boolean;
+        decision?: DecisionTrace;
       }
   );
 export type PlayRecord = {
@@ -128,7 +130,7 @@ export class PlayCapture {
     this.bytes += bytes;
     return true;
   }
-  private checkpoint(g: GameState, reason: string) {
+  private checkpoint(g: GameState, reason: string, decision?: DecisionTrace) {
     if (!this.enabled) return;
     if (
       this.append({
@@ -136,11 +138,12 @@ export class PlayCapture {
         kind: "checkpoint",
         state: structuredClone(g),
         reason,
+        ...(decision ? {decision: structuredClone(decision)} : {}),
       })
     )
       this.lastHash = stateHash(g);
   }
-  committed(before: Profile, next: Profile) {
+  committed(before: Profile, next: Profile, decision?: DecisionTrace) {
     if (!this.enabled) return;
     try {
       if (next.hint && next.hint !== before.hint) this.hinted = true;
@@ -157,12 +160,13 @@ export class PlayCapture {
             : !a.reviveUsed && b.reviveUsed
               ? "revive"
               : "state-change",
+          decision,
         );
     } catch {
       this.stop("capture-error");
     }
   }
-  record(before: GameState, move: Move, after: GameState) {
+  record(before: GameState, move: Move, after: GameState, decision?: DecisionTrace) {
     if (!this.enabled) return;
     try {
       const from = stateHash(before),
@@ -178,6 +182,7 @@ export class PlayCapture {
           before: from,
           after: to,
           hinted: this.hinted,
+          ...(decision ? {decision: structuredClone(decision)} : {}),
         })
       )
         this.lastHash = to;
