@@ -39,7 +39,7 @@ export interface ChallengeState {
   lastBeatMs: number | null;
   openingKey: string | null;
 }
-export const hasChallengeStarts = (s: ChallengeState) =>
+export const hasChallengeStarts = (s: Pick<ChallengeState,'variant'>) =>
   s.variant === "full" || s.variant === "starts";
 const hasTasks = (s: ChallengeState) =>
   s.variant === "full" || s.variant === "tasks";
@@ -143,6 +143,7 @@ export function challengeDirectorDeal(
   rhythm: RhythmState = initialRhythmV4(),
   saved: GoalDirectorState = initialGoalDirector(),
   state: ChallengeState = initialChallengeState(),
+  generate:typeof goalDirectorDeal=goalDirectorDeal,
 ) {
   if (!validChallengeState(state)) throw Error("Invalid content state");
   if (!saved.deals && !moves && hasChallengeStarts(state)) {
@@ -216,7 +217,7 @@ export function challengeDirectorDeal(
       next.windowEndsAt = index + CHALLENGE_CONFIG.windowDeals - 1;
     focus = next.nextFocus;
   }
-  const d = goalDirectorDeal(
+  const d = generate(
     board,
     seed,
     moves,

@@ -34,6 +34,7 @@ export function scoreBreakdown(
 import { budgetDirectorDeal, freshAssistBudget, type AssistBudget, type AssistDecision } from "./assist-budget";
 import { challengeDirectorDeal, initialChallengeState, hasChallengeStarts, observeChallenge, type ChallengeState, type ChallengeDecision, type ChallengeVariant, type ChallengeObservation } from "./challenge-director";
 import { challengeOpening } from "./challenge-openings";
+import {challengeDirectorDealV2,initialChallengeStateV2,observeChallengeV2,type ChallengeStateV2,type ChallengeDecisionV2} from './challenge-director-v2';
 import { compositionDealV2 } from "./composition-dealer-v2";
 import { finalDecision, emitDecision, decisionKey, type DecisionTrace, type DecisionSink, type DecisionOutput } from "./decision-trace";
 import { compositionDeal } from "./composition-dealer";
@@ -93,8 +94,9 @@ export type DealerVersion =
   | "composition-v1"
   | "composition-v2"
   | "director-budget-v1"
-  | "director-challenge-v1";
-export const isGoalDealer=(version:DealerVersion)=>["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1"].includes(version);
+  | "director-challenge-v1"
+  | "director-challenge-v2";
+export const isGoalDealer=(version:DealerVersion)=>["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2"].includes(version);
 export interface GameState {
   gameId: string;
   comparisonMode?: "default" | "manual" | "audience";
@@ -112,6 +114,7 @@ export interface GameState {
   openingId?: number;
   assistBudget?: AssistBudget;
   challengeState?: ChallengeState;
+  challengeV2State?: ChallengeStateV2;
   dealerDiagnostic?: {reason:string;checks:number;limit:number;tempo?:boolean;payoffReduced?:boolean;lineAllowance?:number;slot?:number;from?:string;to?:string};
   rhythm?: RhythmState;
   director?: OrderDirectorState;
@@ -263,6 +266,7 @@ export function deal(
   rewardDirector?: RewardDirectorState,
   assistBudget?: AssistBudget,
   challengeState?: ChallengeState,
+  challengeV2State?: ChallengeStateV2,
 ): {
   tray: Slot[];
   rngState: number;
@@ -278,9 +282,14 @@ export function deal(
   assistBudget?: AssistBudget;
   assistDecision?: AssistDecision;
   challengeState?: ChallengeState;
-  challengeDecision?: ChallengeDecision;
+  challengeV2State?: ChallengeStateV2;
+  challengeDecision?: ChallengeDecision|ChallengeDecisionV2;
   diagnostic?: DecisionOutput["diagnostic"];
 } {
+  if(version==='director-challenge-v2'){
+    const {director:next,...rest}=challengeDirectorDealV2(board,rngState,moves,rhythm,goalDirector,challengeV2State);
+    return{...rest,goalDirector:next};
+  }
   if(version==='director-challenge-v1') {
     const {director:next,...rest}=challengeDirectorDeal(board,rngState,moves,rhythm,goalDirector,challengeState);
     return {...rest,goalDirector:next};
@@ -450,7 +459,7 @@ export function replayDecision(trace: DecisionTrace): DecisionTrace {
       !Number.isSafeInteger(trace.input.seed) || trace.input.seed < 1 || trace.input.seed > 0xffffffff)
     throw Error("Invalid decision input");
   const i = trace.input, c = i.context;
-  const d = deal(i.board, i.seed, i.policy, i.moves, i.previous, c.rhythm, c.director, c.goalDirector, c.mixedDirector, c.forgivingDirector, c.rewardDirector, c.assistBudget, c.challengeState);
+  const d = deal(i.board, i.seed, i.policy, i.moves, i.previous, c.rhythm, c.director, c.goalDirector, c.mixedDirector, c.forgivingDirector, c.rewardDirector, c.assistBudget, c.challengeState, c.challengeV2State);
   const actual = finalDecision(trace.gameId, trace.revision, i, d);
   if (decisionKey(actual) !== decisionKey(trace)) throw Error("Decision replay mismatch");
   return actual;
@@ -464,9 +473,11 @@ export function newGame(
   challengeVariant: ChallengeVariant = "full",
 ): GameState {
   const challengeState=dealerVersion==="director-challenge-v1"?initialChallengeState(challengeVariant):undefined;
-  const board = challengeState&&hasChallengeStarts(challengeState)?challengeOpening(seed).board:emptyBoard(),
-    d = deal(board, seed >>> 0 || 1, dealerVersion,0,"",undefined,undefined,undefined,undefined,undefined,undefined,undefined,challengeState);
-  emitDecision(capture, () => finalDecision(gameId, 0, { board, seed: seed >>> 0 || 1, policy: dealerVersion, moves: 0, previous: "", context: challengeState?{challengeState}:{} }, d));
+  const challengeV2State=dealerVersion==="director-challenge-v2"?initialChallengeStateV2(challengeVariant):undefined;
+  const starterState=challengeState??challengeV2State;
+  const board = starterState&&hasChallengeStarts(starterState)?challengeOpening(seed).board:emptyBoard(),
+    d = deal(board, seed >>> 0 || 1, dealerVersion,0,"",undefined,undefined,undefined,undefined,undefined,undefined,undefined,challengeState,challengeV2State);
+  emitDecision(capture, () => finalDecision(gameId, 0, { board, seed: seed >>> 0 || 1, policy: dealerVersion, moves: 0, previous: "", context: {...(challengeState?{challengeState}:{}),...(challengeV2State?{challengeV2State}:{})} }, d));
   return {
     gameId,
     revision: 0,
@@ -481,6 +492,7 @@ export function newGame(
     dealerVersion,
     ...(dealerVersion === "director-budget-v1" ? {assistBudget:d.assistBudget??freshAssistBudget()} : {}),
     ...(challengeState?{challengeState:d.challengeState??challengeState}:{}),
+    ...(challengeV2State?{challengeV2State:d.challengeV2State??challengeV2State}:{}),
     ...(["composition-v1","composition-v2"].includes(dealerVersion) ? {dealerDiagnostic:d.composition} : {}),
     ...(d.openingId === undefined ? {} : {openingId:d.openingId}),
     ...(dealerVersion === "flow-v3"
@@ -580,6 +592,7 @@ export function applyMove(
   let dealerDiagnostic=state.dealerDiagnostic;
   let assistBudget=state.assistBudget;
   let challengeState=state.dealerVersion==="director-challenge-v1"?observeChallenge(state.challengeState??initialChallengeState(),observation,allClear,state.goalDirector?.deals??0):undefined;
+  let challengeV2State=state.dealerVersion==="director-challenge-v2"?observeChallengeV2(state.challengeV2State??initialChallengeStateV2(),observation,allClear,state.goalDirector?.deals??0):undefined;
   let decision: DecisionTrace | undefined;
   let goalDirector=isGoalDealer(state.dealerVersion)?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
   let mixedDirector=state.dealerVersion==='director-v3'?observeMixedDirector(state.mixedDirector??initialMixedDirector(),allClear):undefined;
@@ -603,11 +616,12 @@ export function applyMove(
       rewardDirector,
       assistBudget,
       challengeState,
+      challengeV2State,
     );
     if (captureDecision) emitDecision(t => { decision = t; }, () => finalDecision(state.gameId, state.revision + 1, {
       board: placed.board, seed: rngState, policy: state.dealerVersion, moves: state.moves + 1,
       previous: state.tray.map(s => shapeById(s.shapeId).family).sort().join(","),
-      context: { ...(rhythm ? {rhythm} : {}), ...(director ? {director} : {}), ...(goalDirector ? {goalDirector} : {}), ...(mixedDirector ? {mixedDirector} : {}), ...(forgivingDirector ? {forgivingDirector} : {}), ...(rewardDirector ? {rewardDirector} : {}), ...(assistBudget ? {assistBudget} : {}), ...(challengeState?{challengeState}:{}) },
+      context: { ...(rhythm ? {rhythm} : {}), ...(director ? {director} : {}), ...(goalDirector ? {goalDirector} : {}), ...(mixedDirector ? {mixedDirector} : {}), ...(forgivingDirector ? {forgivingDirector} : {}), ...(rewardDirector ? {rewardDirector} : {}), ...(assistBudget ? {assistBudget} : {}), ...(challengeState?{challengeState}:{}),...(challengeV2State?{challengeV2State}:{}) },
     }, d));
     if (rhythm)
       rhythm = {
@@ -629,6 +643,7 @@ export function applyMove(
     tray = d.tray;
     if(state.dealerVersion === "director-budget-v1")assistBudget=d.assistBudget;
     if(state.dealerVersion === "director-challenge-v1")challengeState=d.challengeState;
+    if(state.dealerVersion === "director-challenge-v2")challengeV2State=d.challengeV2State;
     if(state.dealerVersion==='director-v1')director=d.director;
     if(isGoalDealer(state.dealerVersion))goalDirector=d.goalDirector;
     if(['composition-v1','composition-v2'].includes(state.dealerVersion)) dealerDiagnostic=d.composition;
@@ -664,6 +679,7 @@ export function applyMove(
       ...(rhythm ? { rhythm } : {}),
       ...(assistBudget ? {assistBudget} : {}),
       ...(challengeState?{challengeState}:{}),
+      ...(challengeV2State?{challengeV2State}:{}),
       ...(director ? {director} : {}),
       ...(goalDirector ? {goalDirector} : {}),
       ...(mixedDirector ? {mixedDirector} : {}),

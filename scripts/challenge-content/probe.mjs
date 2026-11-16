@@ -5,9 +5,11 @@ import assert from "node:assert/strict";
 const server = await createServer({
   server: { middlewareMode: true, hmr: false, watch: null },
 });
+const verified=process.argv.includes('--verified');
 try {
   const R = await server.ssrLoadModule("/src/core/rules.ts"),
     G = await server.ssrLoadModule("/src/core/goal-director.ts");
+  const candidate=verified?(await server.ssrLoadModule('/src/core/verified-goal.ts')).verifiedGoalDeal:G.goalDirectorDeal;
   const P = await server.ssrLoadModule("/scripts/director/mixed-players.ts"),
     O = await server.ssrLoadModule("/scripts/challenge-content/oracle.ts");
   const cases = [];
@@ -36,7 +38,7 @@ try {
         const a = O.inspectChoices(i.board, base.tray),
           out = [];
         for (const focus of ["chain", "choice"]) {
-          const d = G.goalDirectorDeal(
+          const d = candidate(
             i.board,
             i.seed,
             i.moves,
@@ -50,6 +52,10 @@ try {
               (v, j) => v.shapeId !== d.tray[j].shapeId,
             ),
             b = changed ? O.inspectChoices(i.board, d.tray) : a;
+          if(verified){
+            assert.equal(d.rngState,base.rngState);assert.deepEqual(d.director,base.director);
+            if(changed){assert(d.focusResult.selected);assert(d.admission?.accepted);assert(d.admission.accepted.lines>=d.admission.baseline.lines);assert.equal(d.admission.accepted.clears,d.admission.baseline.clears);}
+          }
           out.push({
             focus,
             changed,
@@ -62,7 +68,7 @@ try {
       }
     }
   await fs.writeFile(
-    "artifacts/challenge-content/probe.json",
+    verified?"artifacts/challenge-balance/probe.json":"artifacts/challenge-content/probe.json",
     JSON.stringify(cases, null, 2) + "\n",
   );
   const summary = {

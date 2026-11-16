@@ -184,7 +184,7 @@ export class PlayCapture {
           before: from,
           after: to,
           hinted: this.hinted,
-          ...(after.dealerVersion==="director-challenge-v1"&&after.challengeState?.clockKnown?{observation:{activeMs:after.challengeState.activeMs}}:{}),
+          ...(["director-challenge-v1","director-challenge-v2"].includes(after.dealerVersion)&&(after.challengeV2State??after.challengeState)?.clockKnown?{observation:{activeMs:(after.challengeV2State??after.challengeState)!.activeMs}}:{}),
           ...(decision ? {decision: structuredClone(decision)} : {}),
         })
       )

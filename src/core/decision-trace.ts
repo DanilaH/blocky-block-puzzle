@@ -1,6 +1,7 @@
 import type { Board, DealerVersion, GameState, Move, Slot } from "./rules";
 import type { AssistDecision } from "./assist-budget";
 import type { ChallengeDecision } from "./challenge-director";
+import type {ChallengeDecisionV2} from './challenge-director-v2';
 
 /** Only opted-in local captures. Not authoritative state or product analytics. */
 export type DealInput = {
@@ -9,14 +10,14 @@ export type DealInput = {
   policy: DealerVersion;
   moves: number;
   previous: string;
-  context: Pick<GameState, "rhythm" | "director" | "goalDirector" | "mixedDirector" | "forgivingDirector" | "rewardDirector" | "assistBudget" | "challengeState">;
+  context: Pick<GameState, "rhythm" | "director" | "goalDirector" | "mixedDirector" | "forgivingDirector" | "rewardDirector" | "assistBudget" | "challengeState" | "challengeV2State">;
 };
 export type DecisionOutput = {
   tray: Slot[]; rngState: number; fallback: boolean; witness: Move[] | null;
   diagnostic?: { requested: string; actual: string; source: string; checks: number; limit: number; certificate?: { kind: string } | null };
   composition?: { reason: string; checks: number; limit: number; from?: string; to?: string; slot?: number };
   assistDecision?: AssistDecision;
-  challengeDecision?: ChallengeDecision;
+  challengeDecision?: ChallengeDecision|ChallengeDecisionV2;
 };
 export type DecisionTrace = {
   schema: 1;
@@ -31,7 +32,7 @@ export type DecisionTrace = {
   fallback: boolean;
   certificate: string | null;
   assistance?: AssistDecision;
-  challenge?: ChallengeDecision;
+  challenge?: ChallengeDecision|ChallengeDecisionV2;
 };
 export type DecisionSink = (trace: DecisionTrace) => void;
 

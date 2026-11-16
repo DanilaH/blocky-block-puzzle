@@ -68,6 +68,16 @@ export const observeGoalDirector = (
 import {boardGeometry,finishGoal,decisionCertificate,directorBeam,type DirectorNode as Node,type DecisionCertificate as Certificate} from './director-goal-tools';
 export {boardGeometry} from './director-goal-tools';
 
+/** Optional consumer-specific refinement after the complete legacy incumbent.
+ * Its observer never changes ranking, deduplication, work or selected parents. */
+export interface GoalRefinement {
+  focus:"chain"|"choice";
+  completed(node:Node,available:Set<number>):void;
+  select(context:{rows:Rows;rank:number[];available:Set<number>;initial:Operation[];initialComplete:boolean;path:Operation[];certificate:Certificate|null;frontier:Node[];meter:WorkBudget;goalFound:boolean;actual:GoalKind;explore:()=>void}):{path:Operation[];certificate:Certificate|null;source:string}|null;
+  selected:boolean;
+  attempted:boolean;
+}
+
 export function goalDirectorDeal(
   board: Board,
   seed: number,
@@ -77,6 +87,7 @@ export function goalDirectorDeal(
   budget = 24000,
   ordinary = false,
   focus?: "chain" | "choice" | "observe",
+  refinement?:GoalRefinement,
 ) {
   const meter = new WorkBudget(budget),
     rows = toRows(board),
@@ -148,13 +159,15 @@ export function goalDirectorDeal(
       .sort()
       .join(",");
   const history = rhythm.recentBags ?? [];
-  function beam(load: boolean) {
+  function beam(load: boolean,extraWork?:number) {
     const support=!ordinary&&(requested==='payoff'||requested==='relief'||requested==='recovery');
     const positions=new Map<number,number>();
     if(focus&&focus!=="observe")for(const op of initial.ops)positions.set(op.shape,(positions.get(op.shape)??0)+1);
     const maxSize=!ordinary&&requested==='rest'?4:moves<12?6:9;
-    const contentSearch=focus&&focus!=="observe"&&moves>=36&&!["rest","recovery"].includes(requested);
+    const contentSearch=extraWork!==undefined||focus&&focus!=="observe"&&moves>=36&&!["rest","recovery"].includes(requested);
     return directorBeam({rows,meter,rank,reverse,
+      ...(extraWork!==undefined?{work:extraWork}:{}),
+      ...(refinement?{completed:(node:Node)=>refinement.completed(node,available)}:{}),
       ...(contentSearch?{key:(node:Node)=>`${node.rows.join()}/${bag(node.path)}`,
         diversity:(node:Node)=>bag(node.path)}:{}),
       allow:(id,depth)=>{
@@ -227,7 +240,7 @@ export function goalDirectorDeal(
     source = "bounded-singletons";
   }
   let certificate: Certificate | null = exactCertificate;
-  const incumbentPath=exactIncumbent??[...path],incumbentIds=incumbentPath.map(op=>op.shape).join(",");
+  let incumbentPath=exactIncumbent??[...path],incumbentIds=incumbentPath.map(op=>op.shape).join(",");
   let focused = exactFocused, focusAttempted = !!exactIncumbent;
   if (focus && focus !== "observe" && moves >= 36 && initial.complete &&
       !goalFound && !["rest", "recovery", "emergency"].includes(actual)) {
@@ -292,6 +305,13 @@ export function goalDirectorDeal(
   }
   if(focusAttempted&&focus&&focus!=="observe")
     focused ||= focus==="chain"?path.some(op=>!available.has(op.shape)):certificate?.kind==="placement";
+  if(refinement){
+    incumbentPath=[...path];incumbentIds=path.map(op=>op.shape).join(",");
+    const replacement=refinement.select({rows,rank,available,initial:initial.ops,initialComplete:initial.complete,path,certificate,frontier,meter,goalFound,actual,
+      explore:()=>{const work=Math.max(0,Math.min(6000,meter.ceiling-meter.used-5000));if(work)beam(actual==='load',work);}});
+    if(replacement){path=replacement.path;certificate=replacement.certificate;source=replacement.source;}
+    focused=refinement.selected;focusAttempted=refinement.attempted;
+  }
   const permutation = [0, 1, 2]
       .map((i) => ({ i, r: roll() }))
       .sort((a, b) => a.r - b.r)
@@ -336,7 +356,7 @@ export function goalDirectorDeal(
     rngState: rng,
     fallback: actual === "emergency",
     director,
-    ...(focus ? {focusResult:{requested:focus,attempted:focusAttempted,selected:focused,
+    ...(focus ? {focusResult:{requested:refinement?.focus??focus,attempted:focusAttempted,selected:focused,
       initialPieceIds:permutation.map(i=>SHAPES[incumbentPath[i]!.shape]!.id),
       changedHand:path.map(op=>op.shape).join(",")!==incumbentIds,
       initialComplete:initial.complete,

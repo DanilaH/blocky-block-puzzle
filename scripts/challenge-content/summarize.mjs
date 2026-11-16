@@ -25,6 +25,7 @@ function aggregate(rows) {
     content: sum(rows, "content"),
     contentRate: rate(sum(rows, "content"), sum(rows, "eligibleDeals")),
     unknown: sum(rows, "unknown"),
+    proofUnknowns: rows.reduce((n,r)=>n+(r.proofUnknowns??0),0),
     focus: sum(rows, "focus"),
     selected: sum(rows, "selected"),
     changed: sum(rows, "changed"),
@@ -36,7 +37,7 @@ function aggregate(rows) {
     maxStateBytes: Math.max(...rows.map((r) => r.maxStateBytes), 0),
   };
 }
-assert.equal(data.games.length, 128, "Incomplete factorial");
+assert.equal(data.games.length, data.expectedRuns??128, "Incomplete factorial");
 const styles = ["bounded", "clear", "three", "lapse"],
   arms = ["control", "starts", "tasks", "full"];
 const byArm = Object.fromEntries(
@@ -81,6 +82,7 @@ for (const [candidate, control] of [
   for (const style of styles) {
     const x = byStyle[style][candidate],
       y = byStyle[style][control];
+    const allowance=x.runs/8;
     check(
       `${candidate}/${style}:ordinary`,
       x.ordinaryRate >= y.ordinaryRate * 0.85,
@@ -97,15 +99,15 @@ for (const [candidate, control] of [
     else
       check(
         `${candidate}/${style}:reward-games`,
-        x.rewardGames >= y.rewardGames - 1,
+        x.rewardGames >= y.rewardGames - allowance,
         x.rewardGames,
-        y.rewardGames - 1,
+        y.rewardGames - allowance,
       );
     check(
       `${candidate}/${style}:early`,
-      x.early <= y.early + 1,
+      x.early <= y.early + allowance,
       x.early,
-      y.early + 1,
+      y.early + allowance,
     );
     if (["clear", "lapse"].includes(style))
       check(
@@ -116,9 +118,9 @@ for (const [candidate, control] of [
       );
     check(
       `${candidate}/${style}:fallback`,
-      x.fallback <= y.fallback * 2 + 1,
+      x.fallback <= y.fallback * 2 + allowance,
       x.fallback,
-      y.fallback * 2 + 1,
+      y.fallback * 2 + allowance,
     );
   }
 }

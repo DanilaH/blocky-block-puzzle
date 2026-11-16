@@ -1,4 +1,5 @@
 import { validChallengeState } from "./challenge-director";
+import {validChallengeStateV2} from './challenge-director-v2';
 import { isGoalDealer } from "./rules";
 import {validAssistBudget} from "./assist-budget";
 import {validExperiment, type ExperimentState} from "./experiment";
@@ -174,6 +175,7 @@ export function validProfile(value: unknown): value is Profile {
       (g.dealerVersion === "director-budget-v1" && (!validAssistBudget(g.assistBudget) || (g.assistBudget!.lastAppliedDeal !== null && g.assistBudget!.lastAppliedDeal! > (g.goalDirector?.deals ?? 0)))) ||
       (g.dealerVersion !== "director-budget-v1" && g.assistBudget !== undefined) ||
       (g.dealerVersion === "director-challenge-v1" ? !validChallengeState(g.challengeState) : g.challengeState !== undefined) ||
+      (g.dealerVersion === "director-challenge-v2" ? !validChallengeStateV2(g.challengeV2State) : g.challengeV2State !== undefined) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -196,6 +198,7 @@ export function validProfile(value: unknown): value is Profile {
         "composition-v2",
         "director-budget-v1",
         "director-challenge-v1",
+        "director-challenge-v2",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||

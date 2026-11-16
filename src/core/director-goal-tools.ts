@@ -17,8 +17,8 @@ export type DirectorNode = {
   clears: number;
   value: number;
 };
-export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string;diversity?:(node:DirectorNode)=>string}){
-  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key,diversity}=options;
+export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string;diversity?:(node:DirectorNode)=>string;completed?:(node:DirectorNode)=>void}){
+  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key,diversity,completed}=options;
   const maxWork=Math.min(meter.ceiling,meter.used+work);
   let current:DirectorNode[]=[{rows,path:[],lines:0,clears:0,value:0}],final:DirectorNode[]=[];
   for(let depth=0;depth<depths;depth++){
@@ -34,7 +34,7 @@ export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];r
           if(fits===null)break outer;if(!fits)continue;
           const next=transition(parent.rows,op,meter);if(!next)break outer;
           const child:DirectorNode={rows:next.rows,path:[...parent.path,op],lines:parent.lines+next.lines,clears:parent.clears+Number(next.clear),value:0};
-          child.value=score(child,depth);const stateKey=key?key(child):child.rows.join(',');
+          child.value=score(child,depth);if(depth===depths-1)completed?.(child);const stateKey=key?key(child):child.rows.join(',');
           if((children.get(stateKey)?.value??-Infinity)<child.value)children.set(stateKey,child);
         }
       }

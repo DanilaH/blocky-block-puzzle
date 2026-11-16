@@ -3,9 +3,10 @@ import fs from "node:fs/promises";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { createServer } from "vite";
+import {challengeSeedPlan} from './seed-plan.mjs';
 const stage = process.argv[2];
 assert(
-  ["development", "development-r2", "development-r3", "holdout"].includes(
+  ["development", "development-r2", "development-r3", "holdout", "development-v2", "holdout-v2"].includes(
     stage,
   ),
 );
@@ -20,6 +21,8 @@ const start =
           : 8103001,
   arms = ["control", "starts", "tasks", "full"];
 const durations = { bounded: 2200, clear: 1500, three: 3200, lapse: 2400 };
+const verified=stage.endsWith('-v2'),plan=verified?challengeSeedPlan(stage):Array.from({length:8},(_,i)=>({caseId:start+i,seed:start+i}));
+const expectedRuns=plan.length*16;
 const server = await createServer({
   server: { middlewareMode: true, hmr: false, watch: null },
 });
@@ -34,8 +37,8 @@ try {
     cases = [];
   await fs.mkdir(out, { recursive: true });
   for (const [styleIndex, style] of Object.keys(durations).entries())
-    for (let seed = start; seed < start + 8; seed++) {
-      const offset = (seed - start + styleIndex) % 4,
+    for (const [seedIndex,{seed,caseId}] of plan.entries()) {
+      const offset = (seedIndex + styleIndex) % 4,
         order = [...arms.slice(offset), ...arms.slice(0, offset)];
       for (const arm of order) {
         let trace,
@@ -44,12 +47,13 @@ try {
         let g = R.newGame(
           seed,
           `challenge-${stage}-${style}-${seed}-${arm}`,
-          arm === "control" ? "director-v2" : "director-challenge-v1",
+          arm === "control" ? "director-v2" : verified?"director-challenge-v2":"director-challenge-v1",
           (t) => (trace = t),
           arm,
         );
         const row = {
           seed,
+          ...(verified?{caseId}:{}),
           style,
           arm,
           moves: 0,
@@ -65,6 +69,7 @@ try {
           choice: 0,
           content: 0,
           unknown: 0,
+          ...(verified?{proofUnknowns:0,admissionReasons:{}}:{}),
           focus: 0,
           selected: 0,
           changed: 0,
@@ -84,6 +89,16 @@ try {
           assert.notEqual(a.status, "UNSOLVABLE");
           assert(t.validation.work <= t.validation.limit);
           const c = t.challenge;
+          if(verified&&c?.admission){row.proofUnknowns+=c.admission.unknownProofs;row.admissionReasons[c.admission.reason]=(row.admissionReasons[c.admission.reason]??0)+1;}
+          let counterfactual;
+          if(verified&&i.moves>0){
+            const ctx=i.context;counterfactual=R.deal(i.board,i.seed,'director-v2',i.moves,i.previous,ctx.rhythm,ctx.director,ctx.goalDirector);
+            assert.equal(counterfactual.rngState,g.rngState,'Refinement changed RNG');assert.deepEqual(counterfactual.goalDirector,g.goalDirector,'Refinement changed controller');
+            const actualChanged=JSON.stringify(counterfactual.tray)!==JSON.stringify(g.tray);
+            if(c){assert.equal(c.changedHand,actualChanged,'Incorrect actual change flag');assert.deepEqual(c.initialPieceIds,counterfactual.tray.map(s=>s.shapeId));}
+            if(actualChanged){assert(c?.selected&&c.admission?.accepted,'Unadmitted change');assert(c.admission.accepted.lines>=c.admission.baseline.lines);assert.equal(c.admission.accepted.clears,c.admission.baseline.clears);}
+            else assert.deepEqual(t.validation.witness,counterfactual.witness,'Miss changed the witnessed route');
+          }
           if (c?.task === "CHAIN") assert(a.chain, "False claimed CHAIN");
           if (c?.task === "CHOICE") {
             const bad = c.certificate.badFirst,
@@ -114,7 +129,7 @@ try {
             row.selected += Number(c.selected);
             row.changed += Number(c.changedHand);
             const ctx = i.context;
-            const d = R.deal(
+            const d = counterfactual??R.deal(
               i.board,
               i.seed,
               "director-v2",
@@ -155,7 +170,7 @@ try {
           }
           row.maxStateBytes = Math.max(
             row.maxStateBytes,
-            JSON.stringify(g.challengeState ?? null).length,
+            JSON.stringify(g.challengeV2State??g.challengeState ?? null).length,
           );
         }
         issued(trace);
@@ -193,6 +208,7 @@ try {
               provenance: "Synthetic only; frozen factorial",
               stage,
               cap: 300,
+              ...(verified?{seedPlan:plan,expectedRuns}:{}),
               durations,
               games,
             },
@@ -205,7 +221,7 @@ try {
           JSON.stringify(cases, null, 2) + "\n",
         );
         console.log(
-          `${games.length}/128 ${style} ${seed} ${arm} moves=${row.moves} content=${row.content}/${row.eligibleDeals} new=${row.novelChain}/${row.novelChoice} rewards=${row.allClears}`,
+          `${games.length}/${expectedRuns} ${style} ${seed} ${arm} moves=${row.moves} content=${row.content}/${row.eligibleDeals} new=${row.novelChain}/${row.novelChoice} rewards=${row.allClears}`,
         );
       }
     }
