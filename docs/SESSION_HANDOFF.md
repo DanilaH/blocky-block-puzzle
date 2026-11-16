@@ -1,3 +1,19 @@
+# Точка продолжения — D98, 16.11.2026
+
+Ветка work/challenge-start-causality-20261116 от585b38a, не main. Диагностика завершена без production changes. Source preview/APK0.71 остаются5be1d7b, PR1 и main не двигались. Старые политики, сохранения и права прежние. Defaultv2 / аудиторияOFF, demo ads / analyticsOFF, AppMetrica отложена владельцем. KIT IMPACT NONE, guidancefbadc2f / runtime5450f9d.
+
+512 crossed +512 independent-future запусков /184170 ходов, cap300/no revive. Payoff1 у ordinary/authored, sinceLoad1/0; 256 пар счётчика без изменения траекторий, 128 родных D97 outcomes exact. Разница RNG draws35/5 чувствительна к знаку эффекта. Ещё четыре future streams заранее заморожены, анализ усредняет внутри16case clusters: задачи на authored length clear−10,22 / lapse+4,16; interaction clear+0,52 (95%−15,91…17,59), lapse+13,58 (+1,63…27,16). Положительный lapse signal не скрывать; это seen diagnostic, не acceptance/люди/телефон. Общего дефекта и конкретной правки не установлено. Не выпускать v4 и не подбирать runtime offset ради видимых seed.
+
+Пять новых math tests/build/public guard PASS. Все initial/final profiles и whole witnesses проверены, maxwork23488. Полного нового suite/CI/Android/phone нет. Независимый процесс оборвался на448, --resume сохранил строки и завершил64 с теми же условиями; source357fcf2/public9ce06dd. Source freeze первой матрицы aa13a62/public125da1b, анализ7a42d38/public25ee5d4; независимый14beee1/public9197de2, анализa42a2b9/public495eb1d. Trees в каждой паре exact; публикация после исходов, локальные freezes до них.
+
+D97 full остаётся HOLD/content иtailFAIL; эту диагностику не считать пересдачей. Hidden8110xxx/8108xxx/8103xxx не открывались. v3 без меню, новаяAPK не создаётся. Следующий полезный шаг — ручное сравнение уже поставленной0.71 («Задачи и старты · v2») с сохранённой0.70, отдельные встроенные JSON, видео необязательно. Сначала выгрузить и сохранить запись, затем удалять её перед новой. После конкретного эпизода формулировать следующую узкую гипотезу, не перебирать алгоритмы по видимым gates.
+
+Owner archive Blocky-D98-synthetic-QA.zip:1918376bytes/10files/SHA96cc05d28bbd0bb9293c66c79bff51394a3bc07c6e9e64bf4ad86eafa71f30b5. Обе raw synthetic матрицы и D97input сохранены отдельно; вGit только агрегаты. Оригиналы владельца/keys/APK/скриншоты не публиковать. Whole UTF-8 tree API уже разрешён владельцем после credential failure обычногоGit; без повторного разрешения, blob API/base64/фрагментов.
+
+[Полный результат](qa/CHALLENGE_START_CAUSALITY_D98_2026-11-16.md), [протокол](qa/challenge-start-causality-2026-11-16/PROTOCOL.md), [инструкция0.71](qa/PLAYTEST_0.71_RU.txt).
+
+## Предыдущая точка D97
+
 # Точка продолжения — D97,16.11.2026
 
 Ветка work/challenge-opportunity-20261116 отd007815, не main. Source preview/APK0.71 остаются5be1d7b, PR1 не двигался. Рабочие v1/v2/сохранения/права сохранены. Round-robin extra traversal исследован и не включён в игры: больше completed hands, но0 новых задач на37 seen misses. Oracle нашёл50 задач в8contexts, все теряли1–2 линии при том жеfull-clear.

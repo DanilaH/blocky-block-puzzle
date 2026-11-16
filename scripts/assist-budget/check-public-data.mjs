@@ -25,3 +25,13 @@ for(const file of await fs.readdir('docs/qa/challenge-opportunity-2026-11-16'))i
  assert(data.provenance.startsWith('Synthetic only'));assert.equal(data.runs,256);assert(data.byArm&&data.gates);
 }
 console.log('Opportunity QA is aggregate-only; independent content and negative gates remain explicit');
+const causalityDir='docs/qa/challenge-start-causality-2026-11-16';
+assert.deepEqual((await fs.readdir(causalityDir)).filter(p=>p.endsWith('.json')).sort(),['crossed-summary.json','independent-summary.json']);
+for(const file of ['crossed-summary.json','independent-summary.json']){
+ const data=JSON.parse(await fs.readFile(`${causalityDir}/${file}`,'utf8'));walk(data);
+ assert(data.provenance.startsWith('Synthetic only'));assert.equal(data.runs,512);assert.equal(data.nCases,16);
+ assert(data.byCell);assert(data.maxWork<=24000);
+ if(file==='crossed-summary.json')assert.equal(data.nativeOutcomesExact,128);
+ else {assert.equal(data.streamsPerCase,4);for(const p of data.pooled){assert.equal(p.nCaseClusters,16);assert.equal(p.pairedGames,64);}}
+}
+console.log('D98 diagnostics are aggregate-only; paired stream games retain sixteen case clusters');
