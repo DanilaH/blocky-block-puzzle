@@ -1,3 +1,19 @@
+# Точка продолжения — D93,16.11.2026
+
+По конкретному owner symptom убран full-clear bitmap-ring и его дубль cross.
+Остальной праздник/обычные cross/ядро/save/revive прежние. Пользователь явно
+разрешил публикацию и Actions16.11 после отказа auto-review15.11. Не спрашивать
+повторно. Scratch reset: восстановлена актуальная D92/public0c4e468,не main.
+BoardScene blob be6aac47b2e361cb135d8bc8f4051d438a7b4a6c совпадает с прошлой
+правкой. Старые непубличные raw traces недоступны, только таблица из протокола;
+не выдавать их за новый замер. Повторить checks,получить подписанную0.67 из
+PR1 cache,сверить cert/все dist bytes/demo-off. Прямой APK download обязателен,
+ZIP только запасной. Не создавать signer/не просить uninstall. Default v2,
+composition-v2 HOLD,rollout OFF,AppMetrica отложена. Phone gate открыт.
+[Результат](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
+
+## Предыдущая точка D92
+
 # Точка продолжения — D92, 15.11.2026
 
 На f02a8c6 по kit BLOCKY_NEXT_TASK.md3f0c01d реализовано освобождение

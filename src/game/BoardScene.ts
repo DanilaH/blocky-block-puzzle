@@ -59,7 +59,12 @@ export class BoardScene extends Phaser.Scene {
   private impacts: Impact[] = [];
   calm = false;
   compactEffects = false;
-  private diagnostic = { cachedBorder: false, hideInk: false, hideVfx: false };
+  private diagnostic = {
+    cachedBorder: false,
+    hideInk: false,
+    hideVfx: false,
+    allClearRing: "off" as "bitmap" | "off",
+  };
   private diagnosticSample: {
     draws: number;
     inkPeak: number;
@@ -85,6 +90,7 @@ export class BoardScene extends Phaser.Scene {
       cachedBorder: false,
       hideInk: false,
       hideVfx: false,
+      allClearRing: "off",
       ...profile,
     };
     this.ink?.setVisible(!this.diagnostic.hideInk);
@@ -680,18 +686,19 @@ export class BoardScene extends Phaser.Scene {
           const cx = e.columns[0]! * 64 + 32,
             cy = e.rows[0]! * 64 + 32;
           // A short intake precedes one central impact and four outgoing arms.
-          // Same six sprite slots as the old uniform expansion.
+          // Full clears keep the flash/arms; only the diagnostic control adds bitmap rings.
           if (age < 180) {
             const t = age / 180;
-            fx.stamp(
-              "ring",
-              cx,
-              cy,
-              240 - t * 180,
-              240 - t * 180,
-              0.3 + t * 0.6,
-              accent,
-            );
+            if (!e.allClear || this.diagnostic.allClearRing === "bitmap")
+              fx.stamp(
+                "ring",
+                cx,
+                cy,
+                240 - t * 180,
+                240 - t * 180,
+                0.3 + t * 0.6,
+                accent,
+              );
             fx.stamp(
               "flash",
               cx,
@@ -712,15 +719,16 @@ export class BoardScene extends Phaser.Scene {
               (1 - t) ** 2,
               0xffffff,
             );
-            fx.stamp(
-              "ring",
-              cx,
-              cy,
-              60 + t * 450,
-              60 + t * 450,
-              (1 - t) * 0.8,
-              accent,
-            );
+            if (!e.allClear || this.diagnostic.allClearRing === "bitmap")
+              fx.stamp(
+                "ring",
+                cx,
+                cy,
+                60 + t * 450,
+                60 + t * 450,
+                (1 - t) * 0.8,
+                accent,
+              );
             for (const sign of [-1, 1]) {
               fx.stamp(
                 "flash",
@@ -792,16 +800,17 @@ export class BoardScene extends Phaser.Scene {
         const t = (age - 400) / 600;
         g.fillStyle(0xffeb8a, Math.sin(t * Math.PI) * 0.12);
         g.fillRect(0, 0, 512, 512);
-        fx.stamp(
-          "ring",
-          256,
-          256,
-          130 + t * 620,
-          130 + t * 620,
-          (1 - t) * 0.8,
-          accent,
-          t * 0.15,
-        );
+        if (this.diagnostic.allClearRing === "bitmap")
+          fx.stamp(
+            "ring",
+            256,
+            256,
+            130 + t * 620,
+            130 + t * 620,
+            (1 - t) * 0.8,
+            accent,
+            t * 0.15,
+          );
         if (t < 0.55)
           fx.stamp(
             "flash",

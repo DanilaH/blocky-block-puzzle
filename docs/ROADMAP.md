@@ -1223,3 +1223,16 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   Причина physical lag не установлена. Balance D91 HOLD/default v2/OFF.
 
 [Результат](qa/FLOATING_PERFORMANCE_0.66_2026-11-15.md).
+
+
+## D93 — кольцо полной очистки / preview0.67,16.11.2026
+
+- [x] Убран только full-clear bitmap actor,другие эффекты/правила сохранены.
+- [x] Runtime восстановлен побайтно после scratch reset; есть явное разрешение
+  владельца на публикацию этой правки и Actions. Старый main не использован.
+- [x] Повторные339 unit/6 новых browser/build/assets PASS.
+- [ ]31 focused/full browser,Android/CI/emulator этой поставки.
+- [ ] Подписанная APK0.67,старый cert,packaged bytes,demo/off.
+- [ ] Телефонные update/resume/полная очистка/оставшийся рывок.
+
+[Протокол и границы](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).

@@ -584,3 +584,14 @@ D92 technical delivery: PR1 run43738640302 полностью зелёный —
 255 browser,25 focused effects,Android unit/assemble и2 emulator tests.
 APK0.66 подписана прежним cert,99 dist bytes и demo/off независимо сверены.
 Это не физическая/человеческая приёмка и не новый баланс.
+
+
+## D93. Кольцо полной очистки —15–16.11.2026
+
+По owner feedback после0.66 убран только zooming full-clear bitmap-ring и
+его overlap из cross. Остальные эффекты сохранены,непустой cross прежний.
+Один native-wave кандидат отвергнут; дополнительный слой не вводится. Это
+визуальная правка,phone lag причинно не установлен. Preview0.67/code67 demo/off,
+прежний signer,core/save/revive/dealers без изменений. Владелец явно разрешил
+публикацию/Actions16.11; восстановление после scratch reset описано честно.
+[Протокол и границы](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
