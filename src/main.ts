@@ -2366,11 +2366,23 @@ async function start() {
     el("reward-back").onclick = close;
     rewardButton("hints");
   }
+  let decliningRevive = false;
   async function declineRevive(decision: "back" | "explicit_decline" = "explicit_decline") {
-    if (ads.busy || store.busy) return;
+    if (ads.busy || decliningRevive || modal !== "revive") return;
+    const gameId = store.state.game.gameId;
+    const offerId = store.state.game.reviveOffer?.id;
+    const deadline = store.state.game.reviveOffer?.deadline;
+    decliningRevive = true;
     try {
+      // The offer is visible while its impression is being saved. Preserve Back
+      // through that write, then revalidate so it cannot decline another game.
+      await store.waitIdle();
+      if (ads.busy || modal !== "revive") return;
       if (
-        !(await store.update((p) => ({
+        !(await store.update((p) => p.game.gameId !== gameId ||
+          p.game.status !== "over" || p.game.reviveOffer?.id !== offerId ||
+          p.game.reviveOffer?.deadline !== deadline || p.game.reviveOffer?.expired ||
+          ads.busy ? null : ({
           ...p,
           revision: p.revision + 1,
           game: {
@@ -2396,6 +2408,8 @@ async function start() {
         error,
         "Не удалось сохранить отказ. Попробуйте ещё раз.",
       );
+    } finally {
+      decliningRevive = false;
     }
   }
   function positionRevive() {

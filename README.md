@@ -1,4 +1,6 @@
-D94 / исходники0.68: opt-in финальная трасса и один director-budget-v1 с конечной дополнительной помощью.352 unit/15 focused browser/1120 human replay и192 synthetic launches PASS;новый holdout прошёл gates. Candidate HOLD/manual/defaultv2/rolloutOFF;APK проверяется. [Результаты](docs/qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+D94 / preview 0.69: отдельный director-budget-v1 с конечной помощью и opt-in трасса итоговой выдачи. Основной director-v2 сохранён; кандидат HOLD/manual, audience rollout OFF.
+
+Полный CI 0.68 дал 263/264 browser PASS: ранний Escape во время сохранения показа revive терялся, результат появлялся лишь по таймеру. В 0.69 отказ ждёт сохранения, проверяет исходную партию и выполняется один раз. Ошибка воспроизведена до исправления; 352 unit/build и 28 затронутых browser-сценариев прошли. Подписанная 0.69 и новый CI ещё готовятся. [Исправление](docs/qa/REVIVE_BACK_0.69_2026-11-16.md), [кандидат и сравнение](docs/qa/ASSIST_BUDGET_0.68_2026-11-16.md).
 
 D93 / preview0.67: убран растягивающийся bitmap-ring только полной очистки, остальной праздник сохранён. APK подписана прежним cert,99 dist bytes/demo-off проверены;339 unit/31 focused/Android/2 emulator PASS. Полный browser CI ещё идёт. Phone speedup не заявлен. [Результат](docs/qa/ALL_CLEAR_RING_0.67_2026-11-16.md), [поставка](docs/qa/PREVIEW_0.67_PUBLICATION_2026-11-16.md).
 
