@@ -6,7 +6,7 @@ import { createServer } from "vite";
 import {challengeSeedPlan} from './seed-plan.mjs';
 const stage = process.argv[2];
 assert(
-  ["development", "development-r2", "development-r3", "holdout", "development-v2", "holdout-v2"].includes(
+  ["development", "development-r2", "development-r3", "holdout", "development-v2", "holdout-v2", "development-v3", "holdout-v3"].includes(
     stage,
   ),
 );
@@ -21,7 +21,7 @@ const start =
           : 8103001,
   arms = ["control", "starts", "tasks", "full"];
 const durations = { bounded: 2200, clear: 1500, three: 3200, lapse: 2400 };
-const verified=stage.endsWith('-v2'),plan=verified?challengeSeedPlan(stage):Array.from({length:8},(_,i)=>({caseId:start+i,seed:start+i}));
+const opportunity=stage.endsWith('-v3'),verified=opportunity||stage.endsWith('-v2'),plan=verified?challengeSeedPlan(stage):Array.from({length:8},(_,i)=>({caseId:start+i,seed:start+i}));
 const expectedRuns=plan.length*16;
 const server = await createServer({
   server: { middlewareMode: true, hmr: false, watch: null },
@@ -47,7 +47,7 @@ try {
         let g = R.newGame(
           seed,
           `challenge-${stage}-${style}-${seed}-${arm}`,
-          arm === "control" ? "director-v2" : verified?"director-challenge-v2":"director-challenge-v1",
+          arm === "control" ? "director-v2" : opportunity?"director-challenge-v3":verified?"director-challenge-v2":"director-challenge-v1",
           (t) => (trace = t),
           arm,
         );
@@ -96,7 +96,7 @@ try {
             assert.equal(counterfactual.rngState,g.rngState,'Refinement changed RNG');assert.deepEqual(counterfactual.goalDirector,g.goalDirector,'Refinement changed controller');
             const actualChanged=JSON.stringify(counterfactual.tray)!==JSON.stringify(g.tray);
             if(c){assert.equal(c.changedHand,actualChanged,'Incorrect actual change flag');assert.deepEqual(c.initialPieceIds,counterfactual.tray.map(s=>s.shapeId));}
-            if(actualChanged){assert(c?.selected&&c.admission?.accepted,'Unadmitted change');assert(c.admission.accepted.lines>=c.admission.baseline.lines);assert.equal(c.admission.accepted.clears,c.admission.baseline.clears);}
+            if(actualChanged){assert(c?.selected&&c.admission?.accepted,'Unadmitted change');assert(c.admission.accepted.lines>=c.admission.baseline.lines-(opportunity?1:0));assert.equal(c.admission.accepted.clears,c.admission.baseline.clears);if(opportunity)assert(c.admission.accepted.occupied<=c.admission.baseline.occupied+8);}
             else assert.deepEqual(t.validation.witness,counterfactual.witness,'Miss changed the witnessed route');
           }
           if (c?.task === "CHAIN") assert(a.chain, "False claimed CHAIN");
@@ -170,7 +170,7 @@ try {
           }
           row.maxStateBytes = Math.max(
             row.maxStateBytes,
-            JSON.stringify(g.challengeV2State??g.challengeState ?? null).length,
+            JSON.stringify(g.challengeV3State??g.challengeV2State??g.challengeState ?? null).length,
           );
         }
         issued(trace);

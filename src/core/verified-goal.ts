@@ -11,7 +11,10 @@ import { transition, occupied, type Operation } from "./director-search";
 type Context = Parameters<GoalRefinement["select"]>[0];
 type Metrics = { lines: number; clears: number; occupied: number };
 export interface VerifiedAdmission {
-  version: 1;
+  version: 1 | 2;
+  qualityBand?: "one-line";
+  lineAllowance?: 1;
+  occupiedAllowance?: 8;
   reason: string;
   pool: number;
   beforeWork: number;
@@ -33,12 +36,20 @@ const handKey = (path: Operation[]) =>
 export function verifiedRefinement(
   focus: "chain" | "choice",
   additionalAllowance?: number,
+  qualityBand: "strict" | "one-line" = "strict",
 ): GoalRefinement & { admission: VerifiedAdmission } {
   const pool = new Map<string, DirectorNode>();
   let worstKey = "",
     worstValue = -Infinity;
   const admission: VerifiedAdmission = {
-    version: 1,
+    version: qualityBand === "strict" ? 1 : 2,
+    ...(qualityBand === "one-line"
+      ? {
+          qualityBand: "one-line" as const,
+          lineAllowance: 1 as const,
+          occupiedAllowance: 8 as const,
+        }
+      : {}),
     reason: "not-run",
     pool: 0,
     beforeWork: 0,
@@ -148,7 +159,9 @@ export function verifiedRefinement(
           return null;
         }
         const quality = (m: Metrics) =>
-          m.lines >= baseline.lines && m.clears === baseline.clears;
+          m.lines >= baseline.lines - (qualityBand === "one-line" ? 1 : 0) &&
+          m.clears === baseline.clears &&
+          (qualityBand === "strict" || m.occupied <= baseline.occupied + 8);
         const accept = (
           path: Operation[],
           m: Metrics,
@@ -169,7 +182,7 @@ export function verifiedRefinement(
             .filter(
               (n) =>
                 handKey(n.path) !== baselineKey &&
-                n.value >= baseNode.value - 80,
+                (qualityBand === "one-line" || n.value >= baseNode.value - 80),
             )
             .sort((a, b) =>
               focus === "chain"
@@ -287,7 +300,19 @@ export function verifiedRefinement(
 }
 
 /** Same v2 incumbent, RNG and controller; only a certified replacement may differ. */
-export function verifiedGoalDeal(
+export function verifiedGoalDeal(...args: Parameters<typeof goalDirectorDeal>) {
+  return qualityGoalDeal("strict", ...args);
+}
+
+/** A separately versioned one-line tradeoff; no search or phase changes. */
+export function opportunityGoalDeal(
+  ...args: Parameters<typeof goalDirectorDeal>
+) {
+  return qualityGoalDeal("one-line", ...args);
+}
+
+function qualityGoalDeal(
+  qualityBand: "strict" | "one-line",
   ...[
     board,
     seed,
@@ -306,7 +331,9 @@ export function verifiedGoalDeal(
     !rhythm?.recoveryDeals &&
     !saved?.rest &&
     !ordinary;
-  const refinement = enabled ? verifiedRefinement(focus) : undefined;
+  const refinement = enabled
+    ? verifiedRefinement(focus, undefined, qualityBand)
+    : undefined;
   const d = goalDirectorDeal(
     board,
     seed,

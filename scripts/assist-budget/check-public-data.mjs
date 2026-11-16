@@ -20,3 +20,8 @@ for(const file of await fs.readdir('docs/qa/challenge-balance-2026-11-16'))if(fi
  assert(data.provenance.startsWith('Synthetic only'));assert.equal(data.runs,256);assert(data.byArm&&data.gates);
 }
 console.log('Verified challenge QA contains aggregates only; no raw states or owner inputs');
+for(const file of await fs.readdir('docs/qa/challenge-opportunity-2026-11-16'))if(file.endsWith('.json')){
+ const data=JSON.parse(await fs.readFile(`docs/qa/challenge-opportunity-2026-11-16/${file}`,'utf8'));walk(data);
+ assert(data.provenance.startsWith('Synthetic only'));assert.equal(data.runs,256);assert(data.byArm&&data.gates);
+}
+console.log('Opportunity QA is aggregate-only; independent content and negative gates remain explicit');

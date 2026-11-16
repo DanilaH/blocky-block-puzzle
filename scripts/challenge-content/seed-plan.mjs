@@ -13,12 +13,13 @@ function mix(n) {
   return (n ^ (n >>> 15)) >>> 0 || 1;
 }
 export function challengeSeedPlan(stage) {
-  assert(["development-v2", "holdout-v2"].includes(stage));
-  const base = stage === "development-v2" ? 8107001 : 8108001;
+  assert(["development-v2", "holdout-v2", "development-v3", "holdout-v3"].includes(stage));
+  const dev=stage.startsWith("development"), v3=stage.endsWith("-v3");
+  const base = v3 ? (dev ? 8109001 : 8110001) : (dev ? 8107001 : 8108001);
   return Array.from({ length: 16 }, (_, i) => {
     const caseId = base + i,
       opening = i % 8,
-      rotation = Math.floor(i / 8) + (stage === "holdout-v2" ? 2 : 0);
+      rotation = Math.floor(i / 8) + (!dev ? 2 : 0);
     let seed = mix(caseId),
       attempt = 0;
     while (attempt++ < 100000) {
