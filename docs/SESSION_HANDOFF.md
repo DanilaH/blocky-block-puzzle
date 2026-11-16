@@ -1,16 +1,20 @@
 # Точка продолжения — D93,16.11.2026
 
-По конкретному owner symptom убран full-clear bitmap-ring и его дубль cross.
-Остальной праздник/обычные cross/ядро/save/revive прежние. Пользователь явно
-разрешил публикацию и Actions16.11 после отказа auto-review15.11. Не спрашивать
-повторно. Scratch reset: восстановлена актуальная D92/public0c4e468,не main.
-BoardScene blob be6aac47b2e361cb135d8bc8f4051d438a7b4a6c совпадает с прошлой
-правкой. Старые непубличные raw traces недоступны, только таблица из протокола;
-не выдавать их за новый замер. Повторить checks,получить подписанную0.67 из
-PR1 cache,сверить cert/все dist bytes/demo-off. Прямой APK download обязателен,
-ZIP только запасной. Не создавать signer/не просить uninstall. Default v2,
-composition-v2 HOLD,rollout OFF,AppMetrica отложена. Phone gate открыт.
-[Результат](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
+Исправлен только full-clear bitmap-ring и его cross-дубль. Праздник/ядро/
+save/revive/выдачи прежние. Владелец явно разрешил публикацию/Actions16.11;
+повторно разрешение не спрашивать. После reset восстановлена D92/public0c4e,
+не main. Source86daf152/tree1e32e331 опубликован, preview frozen на нём.
+PR1 run43815781553,checkout c9393a15 с тем же tree. Подписанная0.67/code67:
+11791100bytes,SHA d528da09a687dd307b04c0efd96502173eccae6f554549ee859ee25fa6e753b2.
+Старый cert,99 dist files,demo/off независимо проверены,CI proof совпадает.
+APK+ZIP+инструкция сохранены владельцу и прямая ссылка APK выдана.
+339 unit/31 focused/Android unit-build/2 emulator PASS. Full verify job
+133127380899 ещё идёт в test:e2e; не заявлять весь CI зелёным. При продолжении
+сначала проверить итог,а не пересобирать без причины. Новая APK уже пригодна
+для ограниченной телефонной пробы; phone speedup/update/resume/demo show
+не проверены. Default v2,composition-v2 HOLD,rollout OFF,AppMetrica отложена.
+[Поставка](qa/PREVIEW_0.67_PUBLICATION_2026-11-16.md),
+[правка/честные границы восстановления](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
 
 ## Предыдущая точка D92
 

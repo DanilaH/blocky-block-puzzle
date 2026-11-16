@@ -595,3 +595,8 @@ APK0.66 подписана прежним cert,99 dist bytes и demo/off нез�
 прежний signer,core/save/revive/dealers без изменений. Владелец явно разрешил
 публикацию/Actions16.11; восстановление после scratch reset описано честно.
 [Протокол и границы](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
+
+D93 technical preview: APK0.67 подписана прежним cert,99 packaged files и
+demo/off независимо сверены;339 unit/31 focused/Android/2 emulator PASS.
+Полный browser verify ещё идёт,phone gate открыт.
+[Поставка](qa/PREVIEW_0.67_PUBLICATION_2026-11-16.md).

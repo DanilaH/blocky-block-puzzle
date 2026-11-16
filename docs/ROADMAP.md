@@ -1231,8 +1231,9 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] Runtime восстановлен побайтно после scratch reset; есть явное разрешение
   владельца на публикацию этой правки и Actions. Старый main не использован.
 - [x] Повторные339 unit/6 новых browser/build/assets PASS.
-- [ ]31 focused/full browser,Android/CI/emulator этой поставки.
-- [ ] Подписанная APK0.67,старый cert,packaged bytes,demo/off.
+- [x]31 focused browser,Android unit/assemble и2 emulator PASS.
+- [ ] Полный browser verify ещё идёт; workflow целиком не объявлен зелёным.
+- [x] Подписанная APK0.67,старый cert,99 packaged bytes,demo/off.
 - [ ] Телефонные update/resume/полная очистка/оставшийся рывок.
 
 [Протокол и границы](qa/ALL_CLEAR_RING_0.67_2026-11-16.md).
