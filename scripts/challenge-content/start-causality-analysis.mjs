@@ -62,8 +62,32 @@ export function analyze(data){
  return {provenance:'Synthetic only; seen diagnostic counterfactuals, not acceptance/people/phone',runs:512,nCases:16,nativeOutcomesExact:128,initial:{ordinarySinceLoad:1,authoredSinceLoad:0,payoffBoth:1,ordinaryRngDraws:[...new Set(data.initialChecks.map(x=>x.ordinaryRngDraws))],authoredRngDraws:[...new Set(data.initialChecks.map(x=>x.authoredRngDraws))]},byCell,paired,interactions,native,maxWork:Math.max(...games.map(g=>g.maxWork)),notes:['Capped at300; censored is not a loss','Case bootstrap is exploratory at16 preselected conditions, not a population significance test','Trace hash includes chosen slots; it is not a content diversity score','Certificates are not independent plausible content; no content acceptance evaluated','No production policy or owner save modified']};
 }
 
+/** Four future streams are averaged inside each of the sixteen case clusters. */
+export function analyzeIndependent(data,iterations=10000){
+ assert.equal(data.games.length,512);assert.equal(data.independent,true);
+ const cases=[...new Set(data.games.map(g=>g.caseId))].sort((a,b)=>a-b);assert.equal(cases.length,16);
+ const index=new Map();for(const g of data.games){assert.equal(g.counter,1);const key=[g.style,g.caseId,g.geometry,g.stream,g.tasks].join('/');assert(!index.has(key));index.set(key,g);}
+ const get=(style,id,g,r,t)=>{const x=index.get([style,id,g,r,t].join('/'));assert(x);return x;};
+ const byCell={},effects=[],pooled=[];
+ for(const style of ['clear','lapse']){
+  byCell[style]={};
+  for(let geometry=0;geometry<2;geometry++)for(let stream=0;stream<4;stream++)for(let tasks=0;tasks<2;tasks++){
+   const rows=cases.map(id=>get(style,id,geometry,stream,tasks)),moves=rows.reduce((n,x)=>n+x.moves,0);
+   byCell[style][`g${geometry}_r${stream}_t${tasks}`]={geometry,stream,tasks,runs:16,cappedMean:moves/16,censored:rows.filter(x=>!x.ended).length,rewardRate:rows.reduce((n,x)=>n+x.allClears,0)/moves,ordinaryRate:rows.reduce((n,x)=>n+x.ordinary,0)/moves};
+  }
+  for(let stream=0;stream<4;stream++){
+   const plain=cases.map(id=>get(style,id,0,stream,1).moves-get(style,id,0,stream,0).moves),authored=cases.map(id=>get(style,id,1,stream,1).moves-get(style,id,1,stream,0).moves),label=`independent/${style}/${stream}`;
+   effects.push({style,stream,plainTaskEffect:pairedStats(plain,label+'/plain',iterations),authoredTaskEffect:pairedStats(authored,label+'/authored',iterations),differenceInEffects:pairedStats(plain.map((x,i)=>authored[i]-x),label+'/difference',iterations)});
+  }
+  const average=fn=>cases.map(id=>[0,1,2,3].reduce((n,r)=>n+fn(id,r),0)/4),label=`pooled/${style}`;
+  const plain=average((id,r)=>get(style,id,0,r,1).moves-get(style,id,0,r,0).moves),authored=average((id,r)=>get(style,id,1,r,1).moves-get(style,id,1,r,0).moves);
+  pooled.push({style,nCaseClusters:16,streamsPerCase:4,pairedGames:64,plainTaskEffect:pairedStats(plain,label+'/plain',iterations),authoredTaskEffect:pairedStats(authored,label+'/authored',iterations),differenceInEffects:pairedStats(plain.map((x,i)=>authored[i]-x),label+'/difference',iterations),diagnosticTailExcess:pairedStats(average((id,r)=>get(style,id,1,r,1).moves-1.1*get(style,id,1,r,0).moves),label+'/excess',iterations)});
+ }
+ return {provenance:'Synthetic only; independent-future diagnostic replication, not acceptance/people/phone',runs:512,nCases:16,streamsPerCase:4,byCell,effects,pooled,maxWork:Math.max(...data.games.map(g=>g.maxWork)),notes:['No new runtime policy or APK','Average within case before resampling; 64 games are not 64 independent starting packages','Do not reinterpret this diagnostic as D97 acceptance or select a winning stream','Closed holdouts remain unopened']};
+}
+
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const file=process.argv[2]??'artifacts/challenge-start-causality/diagnostic.json',data=JSON.parse(await fs.readFile(file,'utf8'));
- const summary=analyze(data);await fs.writeFile(file.replace(/\.json$/,'.summary.json'),JSON.stringify(summary,null,2)+'\n');
- console.log(JSON.stringify({runs:summary.runs,initial:summary.initial,native:summary.native,interactions:summary.interactions.filter(x=>x.counter===1),counterPairs:summary.paired.filter(x=>x.factor==='counter').map(x=>({style:x.style,fixed:x.fixed,mean:x.deltaCappedMoves.mean,traceDifferent:x.traceDifferent}))},null,2));
+ const summary=data.independent?analyzeIndependent(data):analyze(data);await fs.writeFile(file.replace(/\.json$/,'.summary.json'),JSON.stringify(summary,null,2)+'\n');
+ console.log(JSON.stringify(data.independent?{runs:summary.runs,effects:summary.effects,pooled:summary.pooled}:{runs:summary.runs,initial:summary.initial,native:summary.native,interactions:summary.interactions.filter(x=>x.counter===1),counterPairs:summary.paired.filter(x=>x.factor==='counter').map(x=>({style:x.style,fixed:x.fixed,mean:x.deltaCappedMoves.mean,traceDifferent:x.traceDifferent}))},null,2));
 }
