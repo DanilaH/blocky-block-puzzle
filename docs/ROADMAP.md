@@ -1263,7 +1263,8 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x] R3 full passes development guards,367unit/22browser/build/assets/public guard PASS.
 - [x]1120exact/independent legacy moves;7200desktop moves,capture cap/replay/hash equality.
 - [ ] Общий factorial gate:tasks-only reward/tailFAIL;holdout не открывать.
-- [ ] Подписанная0.70,полный browser/Android/distributable proof — в работе.
+- [x] Подписанная0.70:старый signer/99 bytes/demo-off/CI-local proof совпали.
+- [x] ПолныйCI43869146345:367unit/270browser/40focused/Android/2emulator PASS.
 - [ ] Human/phone:первые решения,осмысленность задач,clear feel/длинная сессия.
 - [ ] P1-C revive window иP2 ad cadence — отдельные следующие этапы.
 

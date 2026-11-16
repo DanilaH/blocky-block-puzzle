@@ -633,5 +633,7 @@ R1/R2 dev отклонены;R3 fresh dev128:full content9.05% противstart
 не проходит reward/tail;общий factorial gateFAIL,holdout закрыт.
 Manual/HOLD-сборка по прямому заказу для наблюдений;defaultv2/rolloutOFF,
 улучшение баланса/победитель не объявлены.367 unit/build/assets PASS;
-Android/финальная поставка проверяются отдельно. KitNONE,demo/off.
+CI43869146345 целиком PASS:367unit/270browser/40focused/Android/2emulator.
+APK0.70:11804501bytes,прежний signer,99 packaged files/demo-off иполный
+CI/local proof независимо совпали. KitNONE,demo/off.
 [Реализация, все неуспехи и ограничения](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md).

@@ -1,3 +1,9 @@
+D95 / preview0.70: отдельный ручной режим «Задачи и старты» —8 оригинальных полей/6 первых решений, подтверждённые CHAIN/CHOICE и ограниченные окна в прежнем goal search. Старыйv2/сохранения/earned recovery3 сохранены,defaultv2/rolloutOFF.
+
+Подписанная APK11804501bytes,прежний signer,99 production files/demo-off иточныйCI-local proof совпали. ПолныйCI43869146345 PASS:367unit/270browser/40focused/Android/2emulator;1120legacy moves и7200desktop stress moves PASS. Full-candidate development9.05% содержательных задач против5.76% starts-only;но tasks-only reward/tailFAIL,общий model gate не закрыт,holdout не открыт. Это manual/HOLD-проба для человеческого сравнения,не новый принятый баланс. [Реализация и неуспехи](docs/qa/CHALLENGE_CONTENT_0.70_2026-11-16.md),[точная поставка](docs/qa/PREVIEW_0.70_PUBLICATION_2026-11-16.md),[продолжение](docs/SESSION_HANDOFF.md).
+
+Предыдущая точка:
+
 D94 / preview 0.69: отдельный director-budget-v1 с конечной дополнительной помощью и opt-in трасса итоговой выдачи. Кандидат HOLD/manual; основной director-v2 и выключенный audience rollout сохранены.
 
 Подписанная APK: 11795668 байт, прежний сертификат, все 99 упакованных файлов и demo/off независимо проверены. Полный CI43835669338 завершился успешно: 352 unit, 266 browser, 36 focused, Android и 2 emulator tests. Исправлена потеря Back во время сохранения показа revive. Старые 1120 ходов и 192 синтетических запуска прошли проверки; человеческая оценка и телефон остаются открытыми. [Результаты](docs/qa/ASSIST_BUDGET_0.68_2026-11-16.md), [поставка](docs/qa/PREVIEW_0.69_PUBLICATION_2026-11-16.md), [исправление Back](docs/qa/REVIVE_BACK_0.69_2026-11-16.md).
