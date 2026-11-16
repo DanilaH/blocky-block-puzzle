@@ -1253,3 +1253,18 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
   следующие отдельные этапы,не заявлять готовыми по этой поставке.
 
 [Результаты](qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+
+## D95 — P1-B,16.11.2026
+
+- [x] Оригинальный task/start candidate отдельной версии,defaultv2/rolloutOFF.
+- [x] Полные CHAIN/CHOICE proofs, bounded windows/foreground inputs/replay.
+- [x]8 starting boards/6 first decisions/32 rotations/D4 anti-repeat/atomic save.
+- [x] Три frozen development поколения по128 запусков;все failures раскрыты.
+- [x] R3 full passes development guards,367unit/22browser/build/assets/public guard PASS.
+- [x]1120exact/independent legacy moves;7200desktop moves,capture cap/replay/hash equality.
+- [ ] Общий factorial gate:tasks-only reward/tailFAIL;holdout не открывать.
+- [ ] Подписанная0.70,полный browser/Android/distributable proof — в работе.
+- [ ] Human/phone:первые решения,осмысленность задач,clear feel/длинная сессия.
+- [ ] P1-C revive window иP2 ad cadence — отдельные следующие этапы.
+
+[Данные и статус](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md).

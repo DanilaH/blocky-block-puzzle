@@ -2,7 +2,7 @@ import type { Profile } from "./profile";
 import type { DealerVersion, GameState } from "./rules";
 export const COMPOSITION_EXPERIMENT = { id: "blocky-composition-1", version: 1, enabled: false, candidateEnabled: true, candidateDealer: "composition-v1" as DealerVersion };
 export const ASSIST_BUDGET_EXPERIMENT = {...COMPOSITION_EXPERIMENT,id:"blocky-assist-budget-1",candidateDealer:"director-budget-v1" as DealerVersion};
-export const CHALLENGE_EXPERIMENT = {...COMPOSITION_EXPERIMENT,id:"blocky-challenge-content-1",candidateDealer:"director-challenge-v1" as DealerVersion};
+export const CHALLENGE_EXPERIMENT = {...COMPOSITION_EXPERIMENT,id:"blocky-challenge-content-1",version:3,candidateDealer:"director-challenge-v1" as DealerVersion};
 export interface ExperimentState {
   installationId: string;
   cohort: "new" | "existing";

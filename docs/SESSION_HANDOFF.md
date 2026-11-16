@@ -1,3 +1,17 @@
+# Точка продолжения — D95 / P1-B,16.11.2026
+
+Новая ветка feat/challenge-content-v1-20261116 от публичногоc729e10/проверенной0.69, не main. Реализованы director-challenge-v1 / challenge-content-v1-r3,8 оригинальных стартов/6 решений/32 вращения, bounded task windows/foreground inputs/replay, atomic anti-repeat. Старые политики и3 earned recovery не менялись. Budget-v1 остаётся отдельным HOLD, не складывать автоматически.
+
+R1 frozen0ceef8d иR2 frozen009e802 отклонены по fresh dev. R3 frozen07f9836:128 новых8105xxx model launches, full9.05% CHAIN/CHOICE противstarts5.76%,4 новыхCHAIN/19CHOICE. Full проходит численные development guards; tasks-only reward/tail не проходит. Общий gateFAIL, holdout8103xxx НЕ ОТКРЫВАТЬ. Никакой дальнейшей подгонки по holdout. Manual/HOLD APK по прямому заказу — техническая исследовательская поставка, не принятие баланса; это разделение записано доR3. Defaultv2/rolloutOFF.
+
+Локально367unit/22browser/build/assets/public-data guard,1120exact+independent legacy moves и7200accepted desktop moves PASS. CaptureON/OFF final hashes совпали, обе bounded records replay;full cap1004moves/798265bytes, игра до1800 продолжилась. Android/distributable proof ещё завершаются. Preview0.70/code70 готовится,НЕ заявлять подписанным до получения и сверки. Использовать прежний signer изPR1 cache; не генерировать key и не просить uninstall. Demo ads/analyticsOFF,AppMetrica отложена владельцем.
+
+Публиковать толькоBlocky,whole UTF-8 trees через уже разрешённый API при подтверждённой credential failure Git. Публичные QA JSON только агрегаты; raw synthetic подartifacts, оригиналы владельца подprivate-inputs — не вGit. Все новые checkpoint ancestry отc729 безопасны; старую private экспериментальную ancestry D94 не публиковать. KIT IMPACT NONE; guidance a1af141, runtime pin5450f9d.
+
+[Результаты](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md),[freeze/gates](qa/challenge-content-2026-11-16/PROTOCOL.md). После подписи source preview заморозить; дальнейшие proof/docs толькоfeature/work. Ссылки наAPK ифактическиеCI/source/cert добавить после проверки.
+
+## Предыдущая точка D94
+
 # Точка продолжения — D94, 16.11.2026
 
 Первая согласованная итерация Blocky_TZ реализована поверх текущей 0.67, не main: аудит, opt-in DecisionTrace через прежний worker/PlayCapture после durable save и один director-budget-v1. Старые hash/RNG совпадают; четыре исходные записи — 1120 ходов — прошли точный replay и независимую клеточную проверку. Исходники только в ignored private-inputs.

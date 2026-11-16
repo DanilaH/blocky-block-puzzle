@@ -620,3 +620,18 @@ Preview68 demo/off,предыдущая подпись обязательна,KI
 Подписанная0.69:11795668bytes,старый cert,99 packaged files,demo/off проверены;
 полный266-browser/36focused/Android/2emulator CI43835669338 PASS. Конфигурация выдачи прежняя.
 [Данные и ограничения](qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+
+## D95. Содержательные задачи и разные первые решения —16.11.2026
+
+P1-B поверх0.69: один director-challenge-v1/config challenge-content-v1-r3,
+прежний goal search/worker, whole-tray witnesses и complete placement proofs;
+bounded phase windows, подтверждённое активное время,8 оригинальных starting
+boards/6 первых решений/32 вращения/атомарная anti-repeat history.
+Ранние12/rest/earned recovery3 и старые saves/rights сохранены.
+R1/R2 dev отклонены;R3 fresh dev128:full content9.05% противstarts5.76%,
+новые matched4CHAIN/19CHOICE. Полный фактор проходит guards,но tasks-only
+не проходит reward/tail;общий factorial gateFAIL,holdout закрыт.
+Manual/HOLD-сборка по прямому заказу для наблюдений;defaultv2/rolloutOFF,
+улучшение баланса/победитель не объявлены.367 unit/build/assets PASS;
+Android/финальная поставка проверяются отдельно. KitNONE,demo/off.
+[Реализация, все неуспехи и ограничения](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md).
