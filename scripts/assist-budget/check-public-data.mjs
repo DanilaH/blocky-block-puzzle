@@ -35,3 +35,11 @@ for(const file of ['crossed-summary.json','independent-summary.json']){
  else {assert.equal(data.streamsPerCase,4);for(const p of data.pooled){assert.equal(p.nCaseClusters,16);assert.equal(p.pairedGames,64);}}
 }
 console.log('D98 diagnostics are aggregate-only; paired stream games retain sixteen case clusters');
+const humanDir='docs/qa/human-selection-071-2026-11-17';
+assert.deepEqual((await fs.readdir(humanDir)).filter(p=>p.endsWith('.json')),['selection-summary.json']);
+const human=JSON.parse(await fs.readFile(`${humanDir}/selection-summary.json`,'utf8'));walk(human);
+assert(human.provenance.startsWith('Owner playtest aggregates'));assert.equal(human.humanParticipants,1);
+assert.equal(human.recordings,2);assert.equal(human.exactMoves,685);assert.equal(human.uniqueMoves,685);assert.equal(human.playedGames,5);
+assert.equal(human.games.reduce((n,g)=>n+g.all.moves,0),685);assert(human.games.every(g=>g.ended&&g.hinted===0));
+assert(!/gameId|installationId|blocky-play|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(JSON.stringify(human)));
+console.log('Human selection QA contains anonymous counts only; source recordings remain private');

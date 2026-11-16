@@ -106,7 +106,7 @@ try {
     const first = [], last = [], refill = [], ordinary = [], slow = [];
     // Same recorded actions, twice. This is CPU diagnostics, not new player samples.
     for (let pass = 0; pass < 2; pass++) for (let i = 0; i < replay.moves.length; i++) {
-      const m = replay.moves[i], at = performance.now(), result = R.applyMove(m.before, m.event.move, m.before.revision), ms = performance.now() - at;
+      const m = replay.moves[i], at = performance.now(), result = R.applyMove(m.before, m.event.move, m.before.revision, false, m.event.observation), ms = performance.now() - at;
       assert.equal(C.stateHash(result.state), m.event.after);
       const isRefill = m.before.tray.filter((slot) => !slot.used).length === 1;
       (isRefill ? refill : ordinary).push(ms);

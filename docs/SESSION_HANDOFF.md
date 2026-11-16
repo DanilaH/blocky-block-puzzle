@@ -1,3 +1,17 @@
+# Точка продолжения — D99, 17.11.2026
+
+Ветка work/human-selection-v2-20261117 от6113914, не main. Владелец после сравнения предпочёл «Задачи и старты · v2» (director-challenge-v2/config challenge-content-v2/full). Настройку директора останавливаем; не начинать v4 или повторный плейтест этой пары без нового конкретного дефекта. Это человеческий выбор версии для дальнейшей поставки, не отмена model FAIL D96/D97 или A/B.
+
+Новые два экспорта:685 точных уникальных ходов, независимые клетки/all-clear/game-over PASS. Две сыгранные партии0.70:35/230 ходов, первое поражение26/134; триv2:86/158/176, первое поражение62/140/155. Все5 окончательно завершились после одного revive каждая. Два уникальных пустых старта исключены. Среднее занятых клеток до первого поражения12,73 в0.70 против18,18 вv2; ощущение более свободного поля сходится с этими партиями. Длина до первого поражения80/119 в среднем, не утверждатьv2 всегда короче. Пять3×3/старыйлоток/счёт/witness/recovery/реальных продолжений PASS; всеbaseline-found, не новые alt-zone cases.
+
+Изменены только offline инструменты и docs: CPU repeat analyzer теперь передаёт сохранённое observation.activeMs; новый summary исключает пустые игры/дубликаты, разделяет до поражения/послеrevive. Все685 основных и1370 дополнительных CPU applyMove совпали, не phone benchmark. Original attachments приватны, вGit только анонимные агрегаты. Нового fullsuite/build/CI/Android/APK нет. Production/src/android/public/package/default/rollout прежние. УстановленнаяAPK0.71/source5be1d7b уже содержит выбранный режим. Развёртывание выбранного default отдельным изменением; не путать выбранныйchallenge-v2 со старым defaultdirector-v2.
+
+Phone FPS/нагрев/память и live SDK/доход этимиJSON не доказаны. AppMetrica отложена владельцем,demo/off; holdouts8103/8108/8110 закрыты. Source preview/PR1/main не менять ради docs, права и old saves сохранять. Whole UTF-8 tree API ранее разрешён владельцем после Git credential failure; blob/base64/фрагменты не использовать. Только Blocky,KIT IMPACT NONE.
+
+[Разбор и решение](qa/HUMAN_SELECTION_0.71_2026-11-17.md), [агрегаты](qa/human-selection-071-2026-11-17/selection-summary.json).
+
+## Предыдущая точка D98
+
 # Точка продолжения — D98, 16.11.2026
 
 Ветка work/challenge-start-causality-20261116 от585b38a, не main. Диагностика завершена без production changes. Source preview/APK0.71 остаются5be1d7b, PR1 и main не двигались. Старые политики, сохранения и права прежние. Defaultv2 / аудиторияOFF, demo ads / analyticsOFF, AppMetrica отложена владельцем. KIT IMPACT NONE, guidancefbadc2f / runtime5450f9d.
