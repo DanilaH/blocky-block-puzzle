@@ -45,3 +45,13 @@ Gates для открытия holdout, затем те же для holdout:
 5. Первые12 контрольных выдач и earned recovery не меняются от task focus; существующие награды выше приоритета окна. Ни один стартовый witness не вызывает all-clear; вся тройка разыгрывается при32 вращениях; resume и ошибка сохранения не расходуют историю.
 
 В отчёте сохранять отдельные результаты обоих сравнений и всех факторов, даже при неуспехе. Dev-failure закрывает holdout; исправление причины требует нового freeze/поколения, не подбора по holdout. Успех gates разрешает техническую поставку manual/HOLD, не смену default и не rollout.
+
+## R1 закрыт; R2 до нового development
+
+Frozen R1:0ceef8d1ae570d3c87ef03e67c355167366a2c6c. Все128 dev8102xxx завершены, ни одного ложного witness или отрицательного proof, production max23488, oracleUNKNOWN0, fallback0. Но content gate НЕ пройден: tasks4.78% противcontrol4.13%, full4.62% противstarts5.52%; новый matchedCHAIN0 в обоих. В full/clear ordinary83% отstarts (guard85%); tasks/lapse capped tail+12.2% (guard10%). Holdout8103xxx не открыт. Полные числа в r1-development-summary.json; R1 не улучшение и не победитель.
+
+Установлен дефект переключения: истёкшее двухвыдачное окно, прерванное payoff/rest, открывалось заново до смены nextFocus. Все547 focused-запросов R1 приходились на chain; choice голодал. В R2 expiry обрабатывается до открытия следующего окна; all-clear закрывает окно и продвигает nextFocus. Награды и ровно3 earned recovery выше приоритета, их окно не продлевается.
+
+R2 config challenge-content-v1-r2: те же warm/window/gap/work и исходные8 стартов; внутри прежнего beam только bounded preference≤80 за уже свидетельствованный unlock (CHAIN) или более ограниченные начальные размещения (CHOICE). Это предпочтение поиска, не отрицательное доказательство: принимается только complete witness/placement certificate. Общий meter24000; pool/quality guards и независимый oracle прежние. Промежуточная попытка post-search замены одной фигуры на baseline engineering дала0 новых задач и удалена, в APK её нет. На80 baseline engineering полях финальный R2: CHAIN5 против4, CHOICE3 против1; это проверка механики, не acceptance.
+
+Неизменённые численные gates выше применяются к НОВОМУ dev8104001…8104008 (128 запусков); holdout8103001…8103008 остаётся нераскрытым. Нельзя повторно считать8102xxx подтверждением R2. Новый dev запускается после отдельного freeze commit; source SHA и сырые результаты только вignored artifacts. Если R2 не проходит — HOLD без просмотра holdout, оба неуспеха в итоговом отчёте.

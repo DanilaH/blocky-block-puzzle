@@ -8,8 +8,8 @@ import { initialRhythmV4, type RhythmState } from "./rhythm";
 import type { Board } from "./rules";
 
 export const CHALLENGE_CONFIG = {
-  id: "challenge-content-v1",
-  version: 1,
+  id: "challenge-content-v1-r2",
+  version: 2,
   warmDeals: 12,
   windowDeals: 2,
   gapDeals: 2,
@@ -26,7 +26,7 @@ export type ContentPhase =
 export type ChallengeObservation = { activeMs: number };
 export interface ChallengeState {
   version: 1;
-  configId: "challenge-content-v1";
+  configId: "challenge-content-v1-r2";
   variant: ChallengeVariant;
   phase: ContentPhase;
   activeMs: number;
@@ -107,6 +107,8 @@ export function observeChallenge(
     ...(observed ? { activeMs: observation.activeMs, clockKnown: true } : {}),
   };
   if (allClear) {
+    if (next.windowEndsAt)
+      next.nextFocus = next.nextFocus === "chain" ? "choice" : "chain";
     next.nextWindowAt = Math.max(next.nextWindowAt, deals + 2);
     next.windowEndsAt = 0;
     next.lastBeatMs = next.clockKnown ? next.activeMs : null;
@@ -114,7 +116,7 @@ export function observeChallenge(
   return next;
 }
 export interface ChallengeDecision {
-  configId: "challenge-content-v1";
+  configId: "challenge-content-v1-r2";
   variant: ChallengeVariant;
   requestedPhase: ContentPhase;
   selectedPhase: ContentPhase;
@@ -189,6 +191,14 @@ export function challengeDirectorDeal(
     recovery = rhythm.recoveryDeals > 0;
   let next = { ...state, recentTrayMs: [...state.recentTrayMs] },
     focus: "chain" | "choice" | null = null;
+  if (next.windowEndsAt && index > next.windowEndsAt) {
+    next.nextFocus = next.nextFocus === "chain" ? "choice" : "chain";
+    next.nextWindowAt = Math.max(
+      next.nextWindowAt,
+      next.windowEndsAt + CHALLENGE_CONFIG.gapDeals,
+    );
+    next.windowEndsAt = 0;
+  }
   const rewardWindow = !!(saved.rest || saved.payoff);
   const gapReady =
     state.lastBeatMs === null ||
@@ -199,7 +209,7 @@ export function challengeDirectorDeal(
     !protectedWarm &&
     !recovery &&
     !rewardWindow &&
-    index >= state.nextWindowAt &&
+    index >= next.nextWindowAt &&
     gapReady
   ) {
     if (!next.windowEndsAt || index > next.windowEndsAt)
@@ -234,9 +244,6 @@ export function challengeDirectorDeal(
     next.windowEndsAt = 0;
     next.nextWindowAt = index + CHALLENGE_CONFIG.gapDeals;
     if (q.selected) next.lastBeatMs = next.clockKnown ? next.activeMs : null;
-  } else if (next.windowEndsAt && index > next.windowEndsAt) {
-    next.windowEndsAt = 0;
-    next.nextWindowAt = index + CHALLENGE_CONFIG.gapDeals;
   }
   const phase: ContentPhase = recovery
     ? "POST_REVIVE"

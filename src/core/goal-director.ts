@@ -136,6 +136,8 @@ export function goalDirectorDeal(
   const history = rhythm.recentBags ?? [];
   function beam(load: boolean) {
     const support=!ordinary&&(requested==='payoff'||requested==='relief'||requested==='recovery');
+    const positions=new Map<number,number>();
+    if(focus&&focus!=="observe")for(const op of initial.ops)positions.set(op.shape,(positions.get(op.shape)??0)+1);
     const maxSize=!ordinary&&requested==='rest'?4:moves<12?6:9;
     const contentSearch=focus&&focus!=="observe"&&moves>=36&&!["rest","recovery"].includes(requested);
     return directorBeam({rows,meter,rank,reverse,
@@ -149,8 +151,10 @@ export function goalDirectorDeal(
         const p=node.path,lines=node.lines,clears=node.clears,g=boardGeometry(node.rows);
         const novelty=depth===2?(history.includes(bag(p))?-100:60):0;
         const variety=depth===2&&new Set(p.map(o=>SHAPES[o.shape]!.family)).size>=2?60:0;
-        return load?g.occupied*4-lines*10-g.holes*20-g.edges*.5:
-          clears*(support?8000:2500)+lines*(support?500:180)+g.fullness*1.1-g.edges*2-g.holes*65-Math.abs(g.occupied-(support?0:16))*2+novelty+variety;
+        const preference=focus==="chain"&&p.some(op=>!available.has(op.shape))?80:
+          focus==="choice"&&depth===2?Math.max(0,80-p.reduce((n,op)=>n+(positions.get(op.shape)??0),0)):0;
+        return preference+(load?g.occupied*4-lines*10-g.holes*20-g.edges*.5:
+          clears*(support?8000:2500)+lines*(support?500:180)+g.fullness*1.1-g.edges*2-g.holes*65-Math.abs(g.occupied-(support?0:16))*2+novelty+variety);
       }
     });
   }
@@ -268,6 +272,8 @@ export function goalDirectorDeal(
     }
     meter.ceiling = old;
   }
+  if(focusAttempted&&focus&&focus!=="observe")
+    focused ||= focus==="chain"?path.some(op=>!available.has(op.shape)):certificate?.kind==="placement";
   const permutation = [0, 1, 2]
       .map((i) => ({ i, r: roll() }))
       .sort((a, b) => a.r - b.r)

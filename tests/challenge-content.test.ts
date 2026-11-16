@@ -13,6 +13,8 @@ import { goalDirectorDeal } from "../src/core/goal-director";
 import {
   initialChallengeState,
   validChallengeState,
+  challengeDirectorDeal,
+  observeChallenge,
 } from "../src/core/challenge-director";
 import {
   CHALLENGE_OPENINGS,
@@ -38,6 +40,100 @@ import { ProfileStore } from "../src/platform/save";
 import { replayRecord } from "../scripts/calibration/replay";
 import { DecisionPlayClock } from "../src/platform/decision-clock";
 import { prepareReward, applyReceipt } from "../src/core/monetization";
+import { initialRhythmV4 } from "../src/core/rhythm";
+import { initialGoalDirector } from "../src/core/goal-director";
+import { AdsController } from "../src/platform/ads";
+
+it("terminal new-game path commits the new opener atomically and preserves the existing rights", async () => {
+  const g = newGame(42, "ended", "director-v2");
+  g.status = "over";
+  g.board = Array.from({ length: 64 }, (_, i) => (i + (i >> 3)) % 2);
+  g.tray.forEach((s) => (s.shapeId = "O3-0"));
+  const p = ensureExperiment(
+    { ...createProfile(g), earnedHints: 5, freeHints: 2, best: 100 },
+    1,
+    false,
+    "terminal",
+  );
+  let fail = true;
+  const store = new ProfileStore(p, {
+    load: async () => ({ profile: p, recovered: false }),
+    write: async () => {
+      if (fail) throw Error("quota");
+    },
+  });
+  const ads = new AdsController(
+      store,
+      null,
+      () => {},
+      () => {},
+      () => {},
+    ),
+    next = newGame(8101001, "next", "director-challenge-v1");
+  await expect(ads.betweenGames(next)).rejects.toThrow("quota");
+  expect(store.state).toEqual(p);
+  expect(ads.busy).toBe(false);
+  fail = false;
+  expect(await ads.betweenGames(next)).toBe(true);
+  expect(store.state.experiment!.challengeOpeningHistory).toEqual([
+    next.challengeState!.openingKey,
+  ]);
+  expect(store.state.revision).toBe(p.revision + 1);
+  expect(store.state.earnedHints).toBe(5);
+  expect(store.state.freeHints).toBe(2);
+  expect(store.state.best).toBe(100);
+  expect(validProfile(store.state)).toBe(true);
+});
+
+it("advances an interrupted focus window before reopening it, while keeping the reward and recovery priorities", () => {
+  const state = {
+    ...initialChallengeState("tasks"),
+    phase: "BUILD" as const,
+    windowEndsAt: 14,
+    nextWindowAt: 13,
+  };
+  const rhythm = initialRhythmV4(),
+    saved = { ...initialGoalDirector(), deals: 13, rest: 1 };
+  const reward = challengeDirectorDeal(
+    emptyBoard(),
+    91,
+    39,
+    rhythm,
+    saved,
+    state,
+  );
+  expect(reward.challengeDecision.focus).toBeNull();
+  const gap = challengeDirectorDeal(
+    emptyBoard(),
+    91,
+    42,
+    rhythm,
+    { ...saved, deals: 14, rest: 0 },
+    reward.challengeState,
+  );
+  expect(gap.challengeDecision.focus).toBeNull();
+  expect(gap.challengeState.nextFocus).toBe("choice");
+  const next = challengeDirectorDeal(
+    emptyBoard(),
+    91,
+    45,
+    rhythm,
+    { ...saved, deals: 15, rest: 0 },
+    gap.challengeState,
+  );
+  expect(next.challengeDecision.focus).toBe("choice");
+  const protectedDeal = challengeDirectorDeal(
+    emptyBoard(),
+    91,
+    45,
+    { ...rhythm, recoveryDeals: 3 },
+    { ...saved, deals: 15, rest: 0 },
+    gap.challengeState,
+  );
+  expect(protectedDeal.challengeDecision.focus).toBeNull();
+  expect(protectedDeal.challengeDecision.selectedPhase).toBe("POST_REVIVE");
+  expect(observeChallenge(state, undefined, true, 14).nextFocus).toBe("choice");
+});
 
 it("has eight D4-distinct original starts, six first-decision families and verified rotations without scripted all-clear", () => {
   const rotations = new Set<string>(),
