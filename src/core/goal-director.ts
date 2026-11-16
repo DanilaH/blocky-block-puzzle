@@ -72,6 +72,7 @@ export {boardGeometry} from './director-goal-tools';
  * Its observer never changes ranking, deduplication, work or selected parents. */
 export interface GoalRefinement {
   focus:"chain"|"choice";
+  explorationOrder?:"interleaved";
   completed(node:Node,available:Set<number>):void;
   select(context:{rows:Rows;rank:number[];available:Set<number>;initial:Operation[];initialComplete:boolean;path:Operation[];certificate:Certificate|null;frontier:Node[];meter:WorkBudget;goalFound:boolean;actual:GoalKind;explore:()=>void}):{path:Operation[];certificate:Certificate|null;source:string}|null;
   selected:boolean;
@@ -167,6 +168,7 @@ export function goalDirectorDeal(
     const contentSearch=extraWork!==undefined||focus&&focus!=="observe"&&moves>=36&&!["rest","recovery"].includes(requested);
     return directorBeam({rows,meter,rank,reverse,
       ...(extraWork!==undefined?{work:extraWork}:{}),
+      ...(extraWork!==undefined&&refinement?.explorationOrder?{interleaved:true}:{}),
       ...(refinement?{completed:(node:Node)=>refinement.completed(node,available)}:{}),
       ...(contentSearch?{key:(node:Node)=>`${node.rows.join()}/${bag(node.path)}`,
         diversity:(node:Node)=>bag(node.path)}:{}),

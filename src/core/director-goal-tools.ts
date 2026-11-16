@@ -17,8 +17,8 @@ export type DirectorNode = {
   clears: number;
   value: number;
 };
-export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string;diversity?:(node:DirectorNode)=>string;completed?:(node:DirectorNode)=>void}){
-  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key,diversity,completed}=options;
+export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string;diversity?:(node:DirectorNode)=>string;completed?:(node:DirectorNode)=>void;interleaved?:boolean}){
+  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key,diversity,completed,interleaved=false}=options;
   const maxWork=Math.min(meter.ceiling,meter.used+work);
   let current:DirectorNode[]=[{rows,path:[],lines:0,clears:0,value:0}],final:DirectorNode[]=[];
   for(let depth=0;depth<depths;depth++){
@@ -26,7 +26,18 @@ export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];r
     for(let pi=0;pi<current.length;pi++){
       const parent=current[pi]!,parentEnd=meter.used+Math.floor((depthEnd-meter.used)/(current.length-pi)),cap=meter.ceiling;
       meter.ceiling=Math.min(cap,parentEnd);
-      outer:for(const id of rank){
+      if(interleaved){
+        const eligible=rank.filter(id=>allow(id,depth)),length=Math.max(0,...eligible.map(id=>catalog()[id]!.length));
+        roundRobin:for(let k=0;k<length;k++)for(const id of eligible){
+          const ops=catalog()[id]!;if(k>=ops.length)continue;
+          const op=ops[reverse?ops.length-1-k:k]!,fits=canPlace(parent.rows,op,meter);
+          if(fits===null)break roundRobin;if(!fits)continue;
+          const next=transition(parent.rows,op,meter);if(!next)break roundRobin;
+          const child:DirectorNode={rows:next.rows,path:[...parent.path,op],lines:parent.lines+next.lines,clears:parent.clears+Number(next.clear),value:0};
+          child.value=score(child,depth);if(depth===depths-1)completed?.(child);const stateKey=key?key(child):child.rows.join(',');
+          if((children.get(stateKey)?.value??-Infinity)<child.value)children.set(stateKey,child);
+        }
+      } else outer:for(const id of rank){
         if(!allow(id,depth))continue;
         const ops=catalog()[id]!;
         for(let k=0;k<ops.length;k++){
