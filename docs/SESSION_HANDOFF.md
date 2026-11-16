@@ -1,3 +1,19 @@
+# Точка продолжения — D97,16.11.2026
+
+Ветка work/challenge-opportunity-20261116 отd007815, не main. Source preview/APK0.71 остаются5be1d7b, PR1 не двигался. Рабочие v1/v2/сохранения/права сохранены. Round-robin extra traversal исследован и не включён в игры: больше completed hands, но0 новых задач на37 seen misses. Oracle нашёл50 задач в8contexts, все теряли1–2 линии при том жеfull-clear.
+
+Один semantic-band candidate director-challenge-v3/config challenge-content-v3/authoritative challengeV3State: ≤1 lost ordinary line, ≤8 occupied cells, exact baseline full-clears; вместо scalar band−80. Поиск/каталог/окна/work24000/recovery3/RNG/controller прежние. Старый v2 strict guard не менялся. Freeze local4bc98563518c4a373778c1584d3f5dd32e2344df = public31eb8f3496af42b6ced02be99fb7ffc3d2bcdf6c/treee1b5337. До него diagnostic2273d25 = publiccf0f36f/tree09c2920. Оба checkpoints опубликованы с идентичнымиtrees. Whole UTF-8 tree API уже разрешён владельцем после credential failure Git; без повторного разрешения, blob API/base64/фрагментов.
+
+Dev8109xxx:256партий/45930ходов,44/46guards PASS. Tasks-only passes; **full:content FAIL7,699% при8,153%**, **full/clear:tail FAIL245,5625 против220,9375 (предел243,03125)**. Общий HOLD, UI v3 не добавлен, версия/APK0.71 прежние, следующийAPK по этому провалу не собирать. Holdout8110xxx/старые8108xxx/8103xxx НЕ ОТКРЫВАТЬ, численные guards и алгоритм не подбирать по dev. Не объявлять tasks-only принятой новой продуктовой конфигурацией задним числом.
+
+392unit/59files/build PASS;30focused проверяют band/zero allowance/replay/clock/worker/atomic opening/earned3recovery. Первый unit запуск рядом сlegacy replay/build дал3старых5s timeout, повтор без фоновой нагрузки прошёл без test/timeout changes. Все128R3+256D96=384старые партии exact,1120private user moves exact+cell oracle PASS. Накаждомnewrefill whole witness/admission/actual baseline/RNG/controller guards PASS;oracleUNKNOWN0, fallback0,maxwork23488,p95full18,17мс. Это desktop/core, нового CI/Android/телефона нет.
+
+Следующий причинный вопрос — взаимодействие задач со стартовыми полями и начальным RNG/controller, потому что tasks-only проходит, full не проходит. Не требовать плейтест как блокер этого разбора и не начинать цепочку новых директоров без диагноза/нового freeze. Не менять текущие v1/v2 и не складывать budget-v1 автоматически. Defaultv2/rolloutOFF,demo/off. Guidance33515a3/runtime5450f9d,KIT IMPACT NONE. Ничего не публиковать вmini-games-kit. Public QA толькоагрегаты;raw synthetic/original owner inputs/APK/keys не вGit.
+
+[Полный итог и оставшиеся вопросы](qa/CHALLENGE_OPPORTUNITY_D97_2026-11-16.md),[протокол](qa/challenge-opportunity-2026-11-16/PROTOCOL.md),[диагноз](qa/challenge-opportunity-2026-11-16/DIAGNOSIS.md).
+
+## Предыдущая точка D96
+
 # Точка продолжения — D96, 16.11.2026
 
 Ветка work/challenge-balance-20261116 от опубликованного 7c80782, не main. Причина R3: 176 из 202 фактических замен с настоящим v2 возникали без принятой задачи; restore-miss исправил часть наград, но не длинный хвост. Диагноз aa164e1. Следующий один алгоритм director-challenge-v2 / challenge-content-v2 заморожен до development в 7a5ee756a1d958e2cd1478318b6b6c382cea7bc7. Старый director-challenge-v1 / challenge-content-v1-r3 и authoritative challengeState сохранены; новая версия имеет отдельный challengeV2State. При miss/UNKNOWN возвращается буквальный baseline hand/witness/RNG/controller; доказанная замена сохраняет линии и точное число полных очисток. Общий work 24000, окна/ранние12/rest/earned recovery3 прежние.

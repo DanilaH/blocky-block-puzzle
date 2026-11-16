@@ -1284,3 +1284,15 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Новая гипотеза content gain перед A/B;revive window/ad cadence/кабинет отдельно.
 
 [Результат и ограничения](qa/CHALLENGE_BALANCE_0.71_2026-11-16.md).
+
+## D97 — одна линия за подтверждённую задачу,16.11.2026
+
+- [x] Диагноз: traversal coverage недостаточно;37seen misses/1630hands/50tasks заstrictband,UNKNOWN0.
+- [x] Отдельные v3/config/state иsemanticband≤1line/+8occupied/exactfull-clear;старыеv1/v2 сохранены.
+- [x] Algorithm freeze4bc9856/public31eb8f3 до256fresh dev/45930moves;44/46guardsPASS.
+- [x]392unit/build,384old runs exact,1120private replay/cell oraclePASS.
+- [ ] Full content7,699%<8,153% иclear cappedmean245,5625>243,03125 —HOLD,holdout закрыт.
+- [ ] Причинноразделить взаимодействие задач со стартовыми state/RNG перед новымкандидатом.
+- [ ] Human/phone остаются отдельно;новуюAPK дляэтогоfullкандидата неготовить,действующая0.71.
+
+[Итог и границы](qa/CHALLENGE_OPPORTUNITY_D97_2026-11-16.md).
