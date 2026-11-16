@@ -79,7 +79,8 @@ export function replayRecord(input: unknown) {
         !e.move
       )
         throw Error("Broken recording chain");
-      const result = applyMove(state, e.move, state.revision, !!e.decision);
+      if(e.observation&&(!Number.isSafeInteger(e.observation.activeMs)||e.observation.activeMs<(state.challengeState?.activeMs??0)))throw Error("Invalid decision observation");
+      const result = applyMove(state, e.move, state.revision, !!e.decision, e.observation);
       if (!result || stateHash(result.state) !== e.after)
         throw Error("Move replay mismatch");
       if (e.decision && decisionKey(result.decision) !== decisionKey(e.decision))

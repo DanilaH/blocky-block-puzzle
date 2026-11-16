@@ -1,3 +1,6 @@
+import { seedForChallengeOpening } from "./core/challenge-openings";
+import { rememberChallengeOpening } from "./core/experiment";
+import { DecisionPlayClock } from "./platform/decision-clock";
 import { seedForDifferentOpening } from "./core/composition-dealer-v2";
 import { ensureExperiment, assignedDealer, enabledDealer, COMPOSITION_EXPERIMENT } from "./core/experiment";
 import { compactMoveReward } from "./game/compact-reward";
@@ -89,12 +92,13 @@ const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 let pendingInitialDecision: DecisionTrace | undefined;
-const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number, captureDecision = false) => ({
-  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
+const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number, captureDecision = false, openingHistory:readonly string[] = []) => ({
+  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : dealer === "director-challenge-v1" ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
 });
 const dealerChoices = [
+  { version: "director-challenge-v1", label: "Задачи и старты", note: "Проба подготовительных ходов, выбора и разных стартовых полей. Отдельная версия для сравнения; баланс ещё не принят." },
   { version: "director-budget-v1", label: "Конечная помощь", note: "Прежнее начало партии, затем дополнительные разгрузки ограничены. Отдельная проба; баланс ещё не принят." },
   { version: "composition-v2", label: "Разный старт и темп · новая проба", note: "Восемь стартовых наборов и меньше готовой помощи в затяжной партии. Отдельная проба для сравнения; баланс ещё не принят." },
   { version: "composition-v1", label: "Разнообразные формы · проба", note: "Пробная выдача на основе «С задачами и нагрузкой». Сравнивайте в новой партии; баланс ещё не принят." },
@@ -463,10 +467,13 @@ async function start() {
     el("burst").textContent = "";
     scene.stopEffects();
   }
-  store.onBusyChange = syncSaving;
+  const decisionClock=new DecisionPlayClock();
+  function syncDecisionClock(){decisionClock.sync(store.state.game,running&&!store.busy&&!movePending&&!inLesson()&&store.state.game.status==="playing");}
+  store.onBusyChange = ()=>{syncSaving();syncDecisionClock();};
   const activity = new GameplayActivityCoordinator(
     () => {
       running = true;
+      syncDecisionClock();
       playCapture.setActive(
         !inLesson() && store.state.game.status === "playing",
       );
@@ -494,6 +501,7 @@ async function start() {
     },
     () => {
       running = false;
+      syncDecisionClock();
       playCapture.setActive(false);
       analytics.setActive(false, store.state);
       performanceCapture.setActive(false);
@@ -890,6 +898,7 @@ async function start() {
       store.state,
     );
     bannerWatch?.update();
+    syncDecisionClock();
     syncSaving();
   }
   function syncSaving() {
@@ -1034,9 +1043,12 @@ async function start() {
       canvasBox.setAttribute("aria-busy", "true");
     }
     const saveStarted = performance.now();
+    syncDecisionClock();
+    const observation=decisionClock.observation(before);
     movePending = true;
+    syncDecisionClock();
     try {
-      const calculated = await moveCalculator.calculate(before, move, revision, playCapture.enabled);
+      const calculated = await moveCalculator.calculate(before, move, revision, playCapture.enabled,observation);
       performanceCapture.record(
         "moveCalculationWallTime",
         performance.now() - saveStarted,
@@ -1498,6 +1510,7 @@ async function start() {
       render();
     } finally {
       movePending = false;
+      syncDecisionClock();
       scene.pendingPlacement([]);
       canvasBox.removeAttribute("aria-busy");
     }
@@ -2776,20 +2789,20 @@ async function start() {
         await store.update(p=>ensureExperiment({...p,revision:p.revision+1},Date.now(),false,crypto.randomUUID()));
       }
       const actualDealer=enabledDealer(dealer??assignedDealer(store.state));
-      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined, playCapture.enabled),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
+      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined, playCapture.enabled,store.state.experiment?.challengeOpeningHistory),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
       const changed =
         store.state.game.status === "over"
           ? await ads.betweenGames(nextGame)
           : await store.update((p) => ({
-              ...ads.stamp(p),
+              ...rememberChallengeOpening(ads.stamp(p),nextGame),
               revision: p.revision + 1,
               game: nextGame,
-              ...(manual&&p.experiment?{experiment:{...p.experiment,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|undefined}}:{}),
+              ...(manual&&p.experiment?{experiment:{...rememberChallengeOpening(p,nextGame).experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
-        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|undefined}}));
+        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);

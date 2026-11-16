@@ -17,8 +17,8 @@ export type DirectorNode = {
   clears: number;
   value: number;
 };
-export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string}){
-  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key}=options;
+export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];reverse:boolean;allow:(shape:number,depth:number)=>boolean;score:(node:DirectorNode,depth:number)=>number;width?:number;work?:number;depths?:1|2|3;key?:(node:DirectorNode)=>string;diversity?:(node:DirectorNode)=>string}){
+  const {rows,meter,rank,reverse,allow,score,width=4,work=14000,depths=3,key,diversity}=options;
   const maxWork=Math.min(meter.ceiling,meter.used+work);
   let current:DirectorNode[]=[{rows,path:[],lines:0,clears:0,value:0}],final:DirectorNode[]=[];
   for(let depth=0;depth<depths;depth++){
@@ -41,7 +41,17 @@ export function directorBeam(options:{rows:Rows;meter:WorkBudget;rank:number[];r
       meter.ceiling=cap;
     }
     const ranked=[...children.values()].sort((a,b)=>b.value-a.value);if(!ranked.length)break;
-    current=ranked.slice(0,width);if(depth===depths-1)final=ranked;
+    if(diversity&&depth<depths-1){
+      const selected:DirectorNode[]=[],seen=new Set<string>(),best=ranked[0]!;
+      for(const node of ranked){
+        if(node.value<best.value-80)break;
+        const group=diversity(node);
+        if(!seen.has(group)&&node.clears>=best.clears){selected.push(node);seen.add(group);if(selected.length===width)break;}
+      }
+      for(const node of ranked)if(selected.length<width&&!selected.includes(node))selected.push(node);
+      current=selected;
+    } else current=ranked.slice(0,width);
+    if(depth===depths-1)final=ranked;
   }
   return final;
 }
@@ -385,6 +395,7 @@ export function decisionCertificate(
   rows: Rows,
   path: Operation[],
   meter: WorkBudget,
+  preference: "any" | "placement" = "any",
 ): DecisionCertificate | null {
   const ids = path.map((o) => o.shape),
     positiveOrder = [0, 1, 2];
@@ -446,7 +457,7 @@ export function decisionCertificate(
       }
     return "unsolvable";
   }
-  if (reward)
+  if (reward && preference === "any")
     for (const c of options.slice(0, 5)) {
       const status = rewardRoute(
         c.next,
@@ -484,7 +495,7 @@ export function decisionCertificate(
   // the whole diagnostic allowance before looking for a bad placement.
   const old = meter.ceiling;
   meter.ceiling = Math.min(old, meter.used + 1600);
-  for (const order of [permutations[5]!, permutations[2]!, permutations[3]!]) {
+  for (const order of preference === "any" ? [permutations[5]!, permutations[2]!, permutations[3]!] : []) {
     if (order.join() === positiveOrder.join()) continue;
     if (fixed(rows, order) === "unsolvable") {
       meter.ceiling = old;

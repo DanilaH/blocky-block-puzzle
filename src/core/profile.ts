@@ -1,3 +1,5 @@
+import { validChallengeState } from "./challenge-director";
+import { isGoalDealer } from "./rules";
 import {validAssistBudget} from "./assist-budget";
 import {validExperiment, type ExperimentState} from "./experiment";
 import {validRewardDirector} from "./reward-director";
@@ -171,6 +173,7 @@ export function validProfile(value: unknown): value is Profile {
       (g.dealerDiagnostic?.lineAllowance !== undefined && ![0,1].includes(g.dealerDiagnostic.lineAllowance)) ||
       (g.dealerVersion === "director-budget-v1" && (!validAssistBudget(g.assistBudget) || (g.assistBudget!.lastAppliedDeal !== null && g.assistBudget!.lastAppliedDeal! > (g.goalDirector?.deals ?? 0)))) ||
       (g.dealerVersion !== "director-budget-v1" && g.assistBudget !== undefined) ||
+      (g.dealerVersion === "director-challenge-v1" ? !validChallengeState(g.challengeState) : g.challengeState !== undefined) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -192,11 +195,12 @@ export function validProfile(value: unknown): value is Profile {
         "composition-v1",
         "composition-v2",
         "director-budget-v1",
+        "director-challenge-v1",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
       (g.dealerVersion === 'director-v1' && (!validRhythmV4(g.rhythm)||!validOrderDirector(g.director))) ||
-      ((g.dealerVersion === 'director-v2' || g.dealerVersion === 'composition-v1' || g.dealerVersion === 'composition-v2' || g.dealerVersion === 'director-budget-v1') && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
+      (isGoalDealer(g.dealerVersion) && (!validRhythmV4(g.rhythm)||!validGoalDirector(g.goalDirector))) ||
       (g.dealerVersion === 'director-v3' && (!validRhythmV4(g.rhythm)||!validMixedDirector(g.mixedDirector))) ||
       (g.dealerVersion === 'director-v6' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector,6))) ||
       (g.dealerVersion === 'director-v5' && (!validRhythmV4(g.rhythm)||!validRewardDirector(g.rewardDirector))) ||

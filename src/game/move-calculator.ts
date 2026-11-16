@@ -1,4 +1,5 @@
 import { applyMove, type GameState, type Move } from "../core/rules";
+import type { ChallengeObservation } from "../core/challenge-director";
 
 type MoveWorker = Pick<
   Worker,
@@ -17,15 +18,15 @@ export class MoveCalculator {
 
   constructor(private createWorker: () => MoveWorker) {}
 
-  async calculate(state: GameState, move: Move, revision: number, captureDecision = false) {
+  async calculate(state: GameState, move: Move, revision: number, captureDecision = false, observation?:ChallengeObservation) {
     if (this.pending) throw new Error("Move search already pending");
     if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1"].includes(
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1", "director-challenge-v1"].includes(
         state.dealerVersion,
       ) ||
       state.tray.filter((s) => s.used).length !== 2
     )
-      return applyMove(state, move, revision, captureDecision);
+      return applyMove(state, move, revision, captureDecision,observation);
 
     const worker = (this.worker ??= this.createWorker());
     this.pending = true;
@@ -57,7 +58,7 @@ export class MoveCalculator {
       worker.onmessageerror = () =>
         finish(new Error("Move response could not be read"));
       try {
-        worker.postMessage({ state, move, revision, ...(captureDecision ? {captureDecision:true} : {}) });
+        worker.postMessage({ state, move, revision, ...(captureDecision ? {captureDecision:true} : {}),...(observation?{observation}:{}) });
       } catch {
         finish(new Error("Move request could not be sent"));
       }

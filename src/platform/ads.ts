@@ -1,5 +1,5 @@
 import type { ProductAnalytics } from "./analytics";
-import { experimentContext } from "../core/experiment";
+import { experimentContext,rememberChallengeOpening } from "../core/experiment";
 import type { GameState } from "../core/rules";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import {
@@ -346,7 +346,7 @@ export class AdsController {
             : i,
         );
         return {
-          ...next,
+          ...rememberChallengeOpening(next,nextGame),
           revision: current.revision + 1,
           game: nextGame,
           tutorialStep: 4,

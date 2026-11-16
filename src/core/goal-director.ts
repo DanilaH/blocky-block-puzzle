@@ -76,6 +76,7 @@ export function goalDirectorDeal(
   saved = initialGoalDirector(),
   budget = 24000,
   ordinary = false,
+  focus?: "chain" | "choice" | "observe",
 ) {
   const meter = new WorkBudget(budget),
     rows = toRows(board),
@@ -136,7 +137,10 @@ export function goalDirectorDeal(
   function beam(load: boolean) {
     const support=!ordinary&&(requested==='payoff'||requested==='relief'||requested==='recovery');
     const maxSize=!ordinary&&requested==='rest'?4:moves<12?6:9;
+    const contentSearch=focus&&focus!=="observe"&&moves>=36&&!["rest","recovery"].includes(requested);
     return directorBeam({rows,meter,rank,reverse,
+      ...(contentSearch?{key:(node:Node)=>`${node.rows.join()}/${bag(node.path)}`,
+        diversity:(node:Node)=>bag(node.path)}:{}),
       allow:(id,depth)=>{
         const size=SHAPES[id]!.cells.length;
         return !(load?(depth===0||depth===2&&saved.deals>=8?size<6:depth===1?size>4:false):size>maxSize);
@@ -205,6 +209,36 @@ export function goalDirectorDeal(
     source = "bounded-singletons";
   }
   let certificate: Certificate | null = null;
+  const incumbentPath=[...path],incumbentIds=path.map(op=>op.shape).join(",");
+  let focused = false, focusAttempted = false;
+  if (focus && focus !== "observe" && moves >= 36 && initial.complete &&
+      !goalFound && !["rest", "recovery", "emergency"].includes(actual)) {
+    const best = frontier[0];
+    const pool = frontier.slice(0, 12).filter(n => !!best &&
+      n.value >= best.value - 80 && n.clears >= best.clears && n.lines >= best.lines);
+    if (focus === "chain") {
+      focusAttempted = pool.length > 0;
+      const next = pool.find(n => n.path.some(op => !available.has(op.shape)));
+      if (next) { path = next.path; focused = true; source = "goal-beam-chain"; }
+    } else if (pool.length) {
+      focusAttempted = true;
+      // Same completed frontier, not another generator. Prefer constrained
+      // alternatives but retain the original incumbent on an unknown proof.
+      const positions = new Map<number,number>();
+      for (const op of initial.ops) positions.set(op.shape,(positions.get(op.shape)??0)+1);
+      const constrained = (n:Node) => n.path.reduce((v,op)=>v+(positions.get(op.shape)??0),0);
+      pool.sort((a,b)=>constrained(a)-constrained(b)||b.value-a.value);
+      meter.ceiling = Math.min(old,meter.used+5000);
+      for (const n of pool.slice(0,4)) {
+        const proof = decisionCertificate(rows,n.path,meter,"placement");
+        if (proof?.kind === "placement") {
+          path=n.path;certificate=proof;focused=true;source="goal-beam-choice";break;
+        }
+        if (meter.used >= meter.ceiling) break;
+      }
+      meter.ceiling=old;
+    }
+  }
   if (
     moves >= 12 &&
     actual !== "rest" &&
@@ -212,8 +246,8 @@ export function goalDirectorDeal(
     actual !== "emergency"
   ) {
     meter.ceiling = Math.min(old, meter.used + 5000);
-    certificate = decisionCertificate(rows, path, meter);
-    if (!certificate && !goalFound) {
+    certificate ??= decisionCertificate(rows, path, meter);
+    if (!certificate && !goalFound && !focused) {
       const best = frontier[0];
       for (const alternative of frontier.slice(1, 4)) {
         if (
@@ -278,6 +312,14 @@ export function goalDirectorDeal(
     rngState: rng,
     fallback: actual === "emergency",
     director,
+    ...(focus ? {focusResult:{requested:focus,attempted:focusAttempted,selected:focused,
+      initialPieceIds:permutation.map(i=>SHAPES[incumbentPath[i]!.shape]!.id),
+      changedHand:path.map(op=>op.shape).join(",")!==incumbentIds,
+      initialComplete:initial.complete,
+      initialSlots:initial.complete?path.filter(op=>available.has(op.shape)).length:null,
+      initialMoves:initial.complete?path.reduce((n,op)=>n+initial.ops.filter(p=>p.shape===op.shape).length,0):null,
+      chain:initial.complete?path.some(op=>!available.has(op.shape)):null,
+      certificate}} : {}),
     diagnostic: {
       requested,
       actual,

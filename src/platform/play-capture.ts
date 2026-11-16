@@ -2,6 +2,7 @@ import type { GameState, Move } from "../core/rules";
 import { APP_VERSION } from "../app-version";
 import type { Profile } from "../core/profile";
 import type { DecisionTrace } from "../core/decision-trace";
+import type { ChallengeObservation } from "../core/challenge-director";
 export const PLAY_CAPTURE_LIMIT = 800000;
 export function stateHash(g: GameState): string {
   const canonical = (v: any): any =>
@@ -30,6 +31,7 @@ export type PlayEvent = Stamp &
         before: string;
         after: string;
         hinted: boolean;
+        observation?: ChallengeObservation;
         decision?: DecisionTrace;
       }
   );
@@ -182,6 +184,7 @@ export class PlayCapture {
           before: from,
           after: to,
           hinted: this.hinted,
+          ...(after.dealerVersion==="director-challenge-v1"&&after.challengeState?.clockKnown?{observation:{activeMs:after.challengeState.activeMs}}:{}),
           ...(decision ? {decision: structuredClone(decision)} : {}),
         })
       )
