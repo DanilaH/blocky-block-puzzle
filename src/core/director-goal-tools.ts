@@ -163,7 +163,7 @@ function lastRewardCandidates(rows: Rows, shape: number) {
   ];
 }
 /** A target-class miss is unknown. The route is replayed, including early clears. */
-export function finishGoal(rows: Rows, meter: WorkBudget, rank: number[], allowed?:ReadonlySet<number>):Operation[]|null {
+export function finishGoal(rows: Rows, meter: WorkBudget, rank: number[], allowed?:ReadonlySet<number>,prefer?:(route:Operation[])=>boolean):Operation[]|null {
   const count = occupied(rows),
     priority = new Map(rank.map((id, i) => [id, i]));
   const byCell = goalCovering().map((ops) =>
@@ -200,8 +200,8 @@ export function finishGoal(rows: Rows, meter: WorkBudget, rank: number[], allowe
           route.push(op);
         }
         if (valid && occupied(board) === 0) {
-          answer = route;
-          return true;
+          answer ??= route;
+          if(!prefer||prefer(route)){answer=route;return true;}
         }
       }
       return false;
@@ -250,7 +250,7 @@ export function finishGoal(rows: Rows, meter: WorkBudget, rank: number[], allowe
       return answer;
     if (exhausted) break;
   }
-  return null;
+  return answer;
 }
 
 /** v4: an exact cover may pay off in ONE or TWO moves, with the rest of the

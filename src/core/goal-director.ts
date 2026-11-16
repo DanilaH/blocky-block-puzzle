@@ -111,6 +111,7 @@ export function goalDirectorDeal(
     source = "goal-beam",
     path: Operation[] | null = null,
     goalFound = false;
+  let exactIncumbent:Operation[]|null=null,exactCertificate:Certificate|null=null,exactFocused=false;
   // Only the separately versioned budget candidate uses this mode. Keep the
   // normal constructive promise, without rearming a free support phase.
   if (ordinary && requested !== "recovery")
@@ -123,10 +124,23 @@ export function goalDirectorDeal(
       requested === "recovery")
   ) {
     meter.ceiling = Math.min(old, meter.used + 6000);
-    path = finishGoal(rows, meter, rank);
+    const seen=new Set<string>();let proofs=0;
+    const prefer=focus&&focus!=="observe"&&moves>=36&&initial.complete&&requested!=="recovery"?(route:Operation[])=>{
+      exactIncumbent??=[...route];
+      const key=route.map(op=>op.shape).sort().join();if(seen.has(key))return false;seen.add(key);
+      if(focus==="chain"){
+        exactFocused=route.some(op=>!available.has(op.shape));return exactFocused;
+      }
+      if(key===exactIncumbent.map(op=>op.shape).sort().join()||proofs>=2)return false;
+      proofs++;const cap=meter.ceiling;meter.ceiling=Math.min(cap,meter.used+1800);
+      const proof=decisionCertificate(rows,route,meter,"placement");meter.ceiling=cap;
+      if(proof?.kind!=="placement")return false;
+      exactCertificate=proof;exactFocused=true;return true;
+    }:undefined;
+    path = finishGoal(rows, meter, rank,undefined,prefer);
     goalFound = !!path;
     meter.ceiling = old;
-    if (path) source = "exact-clear";
+    if (path) source = exactFocused?`exact-clear-${focus}`:"exact-clear";
   }
   const bag = (p: Operation[]) =>
     p
@@ -151,8 +165,8 @@ export function goalDirectorDeal(
         const p=node.path,lines=node.lines,clears=node.clears,g=boardGeometry(node.rows);
         const novelty=depth===2?(history.includes(bag(p))?-100:60):0;
         const variety=depth===2&&new Set(p.map(o=>SHAPES[o.shape]!.family)).size>=2?60:0;
-        const preference=focus==="chain"&&p.some(op=>!available.has(op.shape))?80:
-          focus==="choice"&&depth===2?Math.max(0,80-p.reduce((n,op)=>n+(positions.get(op.shape)??0),0)):0;
+        const preference=contentSearch?(focus==="chain"&&p.some(op=>!available.has(op.shape))?80:
+          focus==="choice"&&depth===2?Math.max(0,80-p.reduce((n,op)=>n+(positions.get(op.shape)??0),0)):0):0;
         return preference+(load?g.occupied*4-lines*10-g.holes*20-g.edges*.5:
           clears*(support?8000:2500)+lines*(support?500:180)+g.fullness*1.1-g.edges*2-g.holes*65-Math.abs(g.occupied-(support?0:16))*2+novelty+variety);
       }
@@ -212,13 +226,13 @@ export function goalDirectorDeal(
     actual = "emergency";
     source = "bounded-singletons";
   }
-  let certificate: Certificate | null = null;
-  const incumbentPath=[...path],incumbentIds=path.map(op=>op.shape).join(",");
-  let focused = false, focusAttempted = false;
+  let certificate: Certificate | null = exactCertificate;
+  const incumbentPath=exactIncumbent??[...path],incumbentIds=incumbentPath.map(op=>op.shape).join(",");
+  let focused = exactFocused, focusAttempted = !!exactIncumbent;
   if (focus && focus !== "observe" && moves >= 36 && initial.complete &&
       !goalFound && !["rest", "recovery", "emergency"].includes(actual)) {
     const best = frontier[0];
-    const pool = frontier.slice(0, 12).filter(n => !!best &&
+    const pool = frontier.slice(0, 64).filter(n => !!best &&
       n.value >= best.value - 80 && n.clears >= best.clears && n.lines >= best.lines);
     if (focus === "chain") {
       focusAttempted = pool.length > 0;
@@ -233,12 +247,16 @@ export function goalDirectorDeal(
       const constrained = (n:Node) => n.path.reduce((v,op)=>v+(positions.get(op.shape)??0),0);
       pool.sort((a,b)=>constrained(a)-constrained(b)||b.value-a.value);
       meter.ceiling = Math.min(old,meter.used+5000);
-      for (const n of pool.slice(0,4)) {
+      const seenHands=new Set<string>(),distinct=pool.filter(n=>{const key=n.path.map(op=>op.shape).sort().join();if(seenHands.has(key))return false;seenHands.add(key);return true;}).slice(0,4);
+      const focusEnd=meter.ceiling;
+      for (const [index,n] of distinct.entries()) {
+        meter.ceiling=meter.used+Math.floor((focusEnd-meter.used)/(distinct.length-index));
         const proof = decisionCertificate(rows,n.path,meter,"placement");
         if (proof?.kind === "placement") {
           path=n.path;certificate=proof;focused=true;source="goal-beam-choice";break;
         }
-        if (meter.used >= meter.ceiling) break;
+        meter.ceiling=focusEnd;
+        if (meter.used >= focusEnd) break;
       }
       meter.ceiling=old;
     }

@@ -43,6 +43,24 @@ import { prepareReward, applyReceipt } from "../src/core/monetization";
 import { initialRhythmV4 } from "../src/core/rhythm";
 import { initialGoalDirector } from "../src/core/goal-director";
 import { AdsController } from "../src/platform/ads";
+import { finishGoal } from "../src/core/director-goal-tools";
+import { WorkBudget, toRows } from "../src/core/director-search";
+import { SHAPES } from "../src/core/rules";
+
+it("retains a complete rewarding incumbent when a preferred exact-cover task is not found before budget ends", () => {
+  const board = emptyBoard();
+  board.fill(1, 0, 5);
+  const rank = SHAPES.map((_, i) => i);
+  const original = finishGoal(toRows(board), new WorkBudget(6000), rank);
+  expect(original).not.toBeNull();
+  const meter = new WorkBudget(6000),
+    fallback = finishGoal(toRows(board), meter, rank, undefined, () => false);
+  expect(fallback).toEqual(original);
+  expect(meter.used).toBeLessThanOrEqual(6000);
+  let b = board;
+  for (const op of fallback!) b = place(b, SHAPES[op.shape]!, op.x, op.y).board;
+  expect(b.some(Boolean)).toBe(false);
+});
 
 it("terminal new-game path commits the new opener atomically and preserves the existing rights", async () => {
   const g = newGame(42, "ended", "director-v2");

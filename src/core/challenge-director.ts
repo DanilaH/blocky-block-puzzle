@@ -8,8 +8,8 @@ import { initialRhythmV4, type RhythmState } from "./rhythm";
 import type { Board } from "./rules";
 
 export const CHALLENGE_CONFIG = {
-  id: "challenge-content-v1-r2",
-  version: 2,
+  id: "challenge-content-v1-r3",
+  version: 3,
   warmDeals: 12,
   windowDeals: 2,
   gapDeals: 2,
@@ -26,7 +26,7 @@ export type ContentPhase =
 export type ChallengeObservation = { activeMs: number };
 export interface ChallengeState {
   version: 1;
-  configId: "challenge-content-v1-r2";
+  configId: "challenge-content-v1-r3";
   variant: ChallengeVariant;
   phase: ContentPhase;
   activeMs: number;
@@ -116,7 +116,7 @@ export function observeChallenge(
   return next;
 }
 export interface ChallengeDecision {
-  configId: "challenge-content-v1-r2";
+  configId: "challenge-content-v1-r3";
   variant: ChallengeVariant;
   requestedPhase: ContentPhase;
   selectedPhase: ContentPhase;
@@ -208,7 +208,7 @@ export function challengeDirectorDeal(
     hasTasks(state) &&
     !protectedWarm &&
     !recovery &&
-    !rewardWindow &&
+    !saved.rest &&
     index >= next.nextWindowAt &&
     gapReady
   ) {

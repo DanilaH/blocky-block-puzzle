@@ -4,14 +4,20 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import { createServer } from "vite";
 const stage = process.argv[2];
-assert(["development", "development-r2", "holdout"].includes(stage));
+assert(
+  ["development", "development-r2", "development-r3", "holdout"].includes(
+    stage,
+  ),
+);
 const out = process.argv[3] ?? "artifacts/challenge-content";
 const start =
     stage === "development"
       ? 8102001
       : stage === "development-r2"
         ? 8104001
-        : 8103001,
+        : stage === "development-r3"
+          ? 8105001
+          : 8103001,
   arms = ["control", "starts", "tasks", "full"];
 const durations = { bounded: 2200, clear: 1500, three: 3200, lapse: 2400 };
 const server = await createServer({
