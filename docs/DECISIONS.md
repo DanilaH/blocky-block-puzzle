@@ -637,3 +637,9 @@ CI43869146345 целиком PASS:367unit/270browser/40focused/Android/2emulator
 APK0.70:11804501bytes,прежний signer,99 packaged files/demo-off иполный
 CI/local proof независимо совпали. KitNONE,demo/off.
 [Реализация, все неуспехи и ограничения](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md).
+
+## D96. Проверенная замена после настоящего baseline — 16.11.2026
+
+Новая версия director-challenge-v2 / challenge-content-v2 завершает обычный v2 до дополнительного отбора. Только доказанный CHAIN/placementCHOICE может заменить hand при сохранении baseline линий и точного числа full-clear. Miss/UNKNOWN оставляет hand/witness/RNG/controller. Ограниченный поиск и proof используют остаток прежнего work24000. Старые policy/config/save fields и recovery3 не меняются.
+
+Причинный диагноз: 176/202 замен R3 возникали без selected. Алгоритм заморожен в7a5ee75 до новых256 stratified dev партий. Tasks-only прошёл guards, полный вариант не набрал достаточного content gain:5,33% при требовании6,15%,starts5,13%. Общий gateFAIL,holdout закрыт, никакой подгонки по нему. Preview0.71 только HOLD/manual,0.70 сохранена рядом,defaultv2/rolloutOFF.381unit/17browser/1120original moves/128old games/3600desktop moves PASS. Подпись APK и полный CI пока ожидаются; физический телефон/интересность не приняты. Guidancee528149/runtime5450f9d,KitNONE,demo/off. [Данные и ограничения](qa/CHALLENGE_BALANCE_0.71_2026-11-16.md).

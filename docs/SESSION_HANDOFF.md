@@ -1,3 +1,17 @@
+# Точка продолжения — D96, 16.11.2026
+
+Ветка work/challenge-balance-20261116 от опубликованного 7c80782, не main. Причина R3: 176 из 202 фактических замен с настоящим v2 возникали без принятой задачи; restore-miss исправил часть наград, но не длинный хвост. Диагноз aa164e1. Следующий один алгоритм director-challenge-v2 / challenge-content-v2 заморожен до development в 7a5ee756a1d958e2cd1478318b6b6c382cea7bc7. Старый director-challenge-v1 / challenge-content-v1-r3 и authoritative challengeState сохранены; новая версия имеет отдельный challengeV2State. При miss/UNKNOWN возвращается буквальный baseline hand/witness/RNG/controller; доказанная замена сохраняет линии и точное число полных очисток. Общий work 24000, окна/ранние12/rest/earned recovery3 прежние.
+
+256 свежих dev запусков 8107xxx / 43315 ходов, все 8 стартов × rotations0/1. Все технические/наградные/tail guards PASS, но full:content FAIL: 5,33% против 5,13% starts-only при пороге 6,15%; абсолютные задачи 158 против159. Tasks-only content проходит. Общий HOLD/manual, default v2 / rollout OFF. Holdout8108xxx и прежний8103xxx НЕ ОТКРЫВАТЬ; не менять gates и алгоритм по видимому провалу. Новая APK — исследовательское ручное сравнение по заказу, не принятый баланс.
+
+Локально 381unit/17browser/build/assets/public guard, 1120exact+independent legacy moves и все128 прежних R3 games PASS. Новая версия 3600desktop moves: capture OFF/ON final hash одинаковый, capture limit970moves/800078bytes, bounded clock/profile и exact replay. На телефоне это не проверка лагов. UI на320/390 просмотрен. Версия0.71/code71, оба режима в dropdown. Полный CI/подпись/байты ещё предстоит подтвердить, APK до этого не выдавать.
+
+Git dry-run push вновь отклонён из-за credentials. Whole UTF-8 tree API и Actions уже разрешены владельцем, без повторного согласования, blob API/base64/частей файлов. Публиковать диагноз, frozen algorithm и release с совпадающими trees, затем только source release в PR1 preview для прежнего cached signer. Новый ключ не создавать, uninstall не предлагать. После CI source preview заморозить; proof/docs только feature/work. Публичные JSON — только агрегаты. Private inputs и raw synthetic artifacts/APK/keys не коммитить. Guidancee528149, runtime5450f9d, KIT IMPACT NONE. AppMetrica отложена владельцем, demo ads / analytics OFF.
+
+[Итоги и ограничения](qa/CHALLENGE_BALANCE_0.71_2026-11-16.md), [протокол](qa/challenge-balance-2026-11-16/PROTOCOL.md), [как сравнить](qa/PLAYTEST_0.71_RU.txt).
+
+## Предыдущая точка D95
+
 # Точка продолжения — D95 / P1-B,16.11.2026
 
 Новая ветка feat/challenge-content-v1-20261116 от публичногоc729e10/проверенной0.69, не main. Реализованы director-challenge-v1 / challenge-content-v1-r3,8 оригинальных стартов/6 решений/32 вращения, bounded task windows/foreground inputs/replay, atomic anti-repeat. Старые политики и3 earned recovery не менялись. Budget-v1 остаётся отдельным HOLD, не складывать автоматически.

@@ -1,3 +1,9 @@
+D96 / preview 0.71 готовится к технической сборке: отдельный «Задачи и старты · v2» принимает замену выдачи только после подтверждения задачи и защиты контрольных линий/награды. Режим 0.70 и старые партии сохранены, основной v2 / rollout OFF.
+
+381 unit, 17 browser, 1120 точных исходных ходов, 128 неизменных старых партий и 3600 desktop stress ходов PASS. На 256 новых партиях прошли guards наград/длины/ресурсов, но full-content 5,33% против 5,13% starts-only ниже порога 6,15%. Общий gate FAIL, holdout закрыт, кандидат только HOLD/manual. Полный CI и подписанная APK ещё не подтверждены. [Результаты и границы](docs/qa/CHALLENGE_BALANCE_0.71_2026-11-16.md), [продолжение](docs/SESSION_HANDOFF.md).
+
+Предыдущая поставка:
+
 D95 / preview0.70: отдельный ручной режим «Задачи и старты» —8 оригинальных полей/6 первых решений, подтверждённые CHAIN/CHOICE и ограниченные окна в прежнем goal search. Старыйv2/сохранения/earned recovery3 сохранены,defaultv2/rolloutOFF.
 
 Подписанная APK11804501bytes,прежний signer,99 production files/demo-off иточныйCI-local proof совпали. ПолныйCI43869146345 PASS:367unit/270browser/40focused/Android/2emulator;1120legacy moves и7200desktop stress moves PASS. Full-candidate development9.05% содержательных задач против5.76% starts-only;но tasks-only reward/tailFAIL,общий model gate не закрыт,holdout не открыт. Это manual/HOLD-проба для человеческого сравнения,не новый принятый баланс. [Реализация и неуспехи](docs/qa/CHALLENGE_CONTENT_0.70_2026-11-16.md),[точная поставка](docs/qa/PREVIEW_0.70_PUBLICATION_2026-11-16.md),[продолжение](docs/SESSION_HANDOFF.md).

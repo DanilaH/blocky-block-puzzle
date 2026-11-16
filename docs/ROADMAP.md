@@ -1269,3 +1269,18 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] P1-C revive window иP2 ad cadence — отдельные следующие этапы.
 
 [Данные и статус](qa/CHALLENGE_CONTENT_0.70_2026-11-16.md).
+
+## D96 — baseline до дополнительной задачи, 16.11.2026
+
+- [x] Причинно воспроизведены 202 замены R3,176 без принятой задачи; старые32 trajectories совпали.
+- [x] Отдельный director-challenge-v2/config/state, защита буквального baseline и награды, прежний общий work24000.
+- [x] Алгоритм7a5ee75 заморожен до dev;256 новых запусков/43315ходов охватили все8 стартов.
+- [x] Guards наград/линий/tail/ранних поражений/CPU PASS, tasks-only content PASS.
+- [ ] Full-content5,33% ниже6,15%; общий balance gateFAIL,holdout8108xxx/8103xxx закрыт.
+- [x]381unit/17browser/build/assets/public guard,1120exact original moves,128old R3 games,3600desktop moves/cap/replay PASS.
+- [x] Ручной UI сохраняет режим0.70 рядом сv2;defaultv2/rolloutOFF.
+- [ ] Полный CI/подписанная0.71/проверка packaged bytes.
+- [ ] Phone/human:обновление/resume/refill/demo reward/длинная сессия/интересность.
+- [ ] Новая гипотеза content gain перед A/B;revive window/ad cadence/кабинет отдельно.
+
+[Результат и ограничения](qa/CHALLENGE_BALANCE_0.71_2026-11-16.md).

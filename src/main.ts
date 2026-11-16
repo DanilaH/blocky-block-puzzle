@@ -93,12 +93,13 @@ const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 let pendingInitialDecision: DecisionTrace | undefined;
 const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number, captureDecision = false, openingHistory:readonly string[] = []) => ({
-  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : dealer === "director-challenge-v1" ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
+  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : ["director-challenge-v1","director-challenge-v2"].includes(dealer) ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
 });
 const dealerChoices = [
-  { version: "director-challenge-v1", label: "Задачи и старты", note: "Проба подготовительных ходов, выбора и разных стартовых полей. Отдельная версия для сравнения; баланс ещё не принят." },
+  { version: "director-challenge-v2", label: "Задачи и старты · v2", note: "Более осторожный подбор цепочек и выбора. Баланс ещё не принят." },
+  { version: "director-challenge-v1", label: "Задачи и старты · 0.70", note: "Вариант из 0.70, сохранён для сравнения и продолжения прежних партий." },
   { version: "director-budget-v1", label: "Конечная помощь", note: "Прежнее начало партии, затем дополнительные разгрузки ограничены. Отдельная проба; баланс ещё не принят." },
   { version: "composition-v2", label: "Разный старт и темп · новая проба", note: "Восемь стартовых наборов и меньше готовой помощи в затяжной партии. Отдельная проба для сравнения; баланс ещё не принят." },
   { version: "composition-v1", label: "Разнообразные формы · проба", note: "Пробная выдача на основе «С задачами и нагрузкой». Сравнивайте в новой партии; баланс ещё не принят." },
@@ -2797,12 +2798,12 @@ async function start() {
               ...rememberChallengeOpening(ads.stamp(p),nextGame),
               revision: p.revision + 1,
               game: nextGame,
-              ...(manual&&p.experiment?{experiment:{...rememberChallengeOpening(p,nextGame).experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|undefined}}:{}),
+              ...(manual&&p.experiment?{experiment:{...rememberChallengeOpening(p,nextGame).experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|"director-challenge-v2"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
-        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|undefined}}));
+        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|"director-challenge-v2"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);
