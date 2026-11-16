@@ -8,24 +8,35 @@ const independent=process.argv.includes('--independent');
 const out=independent?'artifacts/challenge-start-causality-independent':'artifacts/challenge-start-causality';
 const originalFile='artifacts/challenge-opportunity/development-v3.json';
 const originalBytes=await fs.readFile(originalFile),original=JSON.parse(originalBytes);
+const inputSha=crypto.createHash('sha256').update(originalBytes).digest('hex');
+// Resume only complete saved games; no draw, policy, or outcome is changed.
+const saved=process.argv.includes('--resume')?JSON.parse(await fs.readFile(`${out}/diagnostic.json`)):null;
+if(saved){assert.equal(saved.independent,independent);assert.equal(saved.expectedRuns,512);assert.equal(saved.sourceInputSha256,inputSha);assert(saved.games.length<512);}
+const runKey=g=>[g.style,g.caseId,g.geometry,g.counter,g.stream,g.tasks].join('/');
+const savedKeys=new Set(saved?.games.map(runKey)??[]);assert.equal(savedKeys.size,saved?.games.length??0);
 const plan=challengeSeedPlan('development-v3');
 const server=await createServer({server:{middlewareMode:true,hmr:false,watch:null}});
 try{
  const R=await server.ssrLoadModule('/src/core/rules.ts'),P=await server.ssrLoadModule('/scripts/director/mixed-players.ts'),C=await server.ssrLoadModule('/src/platform/play-capture.ts');
  const O=await server.ssrLoadModule('/scripts/challenge-content/oracle.ts'),F=await server.ssrLoadModule('/src/core/profile.ts');
- const games=[],initialChecks=[];let reproduced=0;
- const rows=()=>({provenance:'Synthetic only; D98 diagnostic counterfactuals, not acceptance or phone',independent,sourceInputSha256:crypto.createHash('sha256').update(originalBytes).digest('hex'),expectedRuns:512,reproduced,initialChecks,games});
+ const games=saved?.games??[],initialChecks=saved?.initialChecks??[];let reproduced=saved?.reproduced??0;
+ assert.equal(reproduced,games.filter(g=>g.native).length);
+ const rows=()=>({provenance:'Synthetic only; D98 diagnostic counterfactuals, not acceptance or phone',independent,sourceInputSha256:inputSha,expectedRuns:512,reproduced,initialChecks,games});
  await fs.mkdir(out,{recursive:true});
  for(const [style,ms] of Object.entries({clear:1500,lapse:2400}))for(const {seed,caseId,opening,rotation} of plan){
   const ordinary=R.newGame(seed,'ordinary-init','director-challenge-v3',undefined,'tasks'),authored=R.newGame(seed,'authored-init','director-challenge-v3',undefined,'full');
   const {sinceLoad:a,...aa}=ordinary.goalDirector,{sinceLoad:b,...bb}=authored.goalDirector;
   assert.equal(a,1);assert.equal(b,0);assert.deepEqual(aa,bb);assert.equal(aa.payoff,1);
   const distance=target=>{let state=seed;for(let n=0;n<128;n++){if(state===target)return n;state=R.random(state).state;}throw Error('Unknown initial RNG consumption');};
-  if(style==='clear')initialChecks.push({caseId,opening,rotation,ordinarySinceLoad:a,authoredSinceLoad:b,payoff:aa.payoff,ordinaryRngDraws:distance(ordinary.rngState),authoredRngDraws:distance(authored.rngState)});
+  if(style==='clear'){
+   const check={caseId,opening,rotation,ordinarySinceLoad:a,authoredSinceLoad:b,payoff:aa.payoff,ordinaryRngDraws:distance(ordinary.rngState),authoredRngDraws:distance(authored.rngState)};
+   const old=initialChecks.find(x=>x.caseId===caseId);if(old)assert.deepEqual(old,check);else initialChecks.push(check);
+  }
   const offset=(opening+rotation+(style==='lapse'?1:0))%16;
   const codes=Array.from({length:16},(_,i)=>(i+offset)%16);
   for(const code of codes){
    const geometry=(code>>3)&1,counter=independent?1:(code>>2)&1,stream=independent?(code>>1)&3:(code>>1)&1,tasks=code&1;
+   if(savedKeys.has(runKey({style,caseId,geometry,counter,stream,tasks})))continue;
    const variant=geometry?(tasks?'full':'starts'):(tasks?'tasks':'control');
    const native=!independent&&counter===(geometry?0:1)&&stream===(geometry?0:1);
    const baseId=`challenge-development-v3-${style}-${seed}-${variant}`;
