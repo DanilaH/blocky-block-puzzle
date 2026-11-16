@@ -1279,7 +1279,7 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Full-content5,33% ниже6,15%; общий balance gateFAIL,holdout8108xxx/8103xxx закрыт.
 - [x]381unit/17browser/build/assets/public guard,1120exact original moves,128old R3 games,3600desktop moves/cap/replay PASS.
 - [x] Ручной UI сохраняет режим0.70 рядом сv2;defaultv2/rolloutOFF.
-- [ ] Полный CI/подписанная0.71/проверка packaged bytes.
+- [x] Полный CI43900709468:381unit/274browser/44focused/Android/2emulator; APK0.71/11808929bytes,прежний signer/99files/demo-off/CI-local proof PASS.
 - [ ] Phone/human:обновление/resume/refill/demo reward/длинная сессия/интересность.
 - [ ] Новая гипотеза content gain перед A/B;revive window/ad cadence/кабинет отдельно.
 
