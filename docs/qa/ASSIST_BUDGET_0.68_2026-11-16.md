@@ -1,122 +1,78 @@
-# D94 / preview0.68: итоговая трасса и один конечный бюджет помощи
+# D94 / preview 0.68–0.69: конечная помощь и запись итогового решения
 
-Первая согласованная итерация приложенного [ТЗ](../tasks/COMMERCIAL_DIRECTOR_2026-11-15.md).
-База5390af7/publicdc26d27,последняя0.67,не main. Её полный CI43815781553
-уже success:339 unit,261 browser,31 focused,Android и2 emulator tests.
-Правка кольца0.67 и полный праздник сохранены. Default director-v2;composition
-v1/v2 исторические отдельные ручные варианты,HOLD;audience rollout OFF.
+Реализован первый согласованный этап приложенного [ТЗ](../tasks/COMMERCIAL_DIRECTOR_2026-11-15.md): аудит действующей выдачи, диагностическая трасса без изменения старых партий и один отдельно версионированный кандидат. База — текущая 0.67 / public `dc26d27`, а не main. Полный CI предыдущей 0.67 завершился успешно: 339 unit, 261 browser, 31 focused, Android и 2 emulator tests.
 
-## Что реально изменилось
+Кандидат **director-budget-v1 остаётся HOLD для ручного сравнения**. Основной режим — director-v2; автоматическое назначение аудитории выключено. Исторические composition-v1/v2 сохранены. Изменение кольца из 0.67, остальные эффекты, правила очков, рекламные лимиты, сохранения и заработанные права не переопределены.
 
-|Было|Стало|Зачем/версия|Проверка|
-|---|---|---|---|
-|requested/actual/source терялись между генератором,post-process и записью|опциональный DecisionTrace прямо в существующих move/checkpoint PlayCapture|schema1,только при opt-in capture;без новых массовых analytics/save полей|exact A/A по frozen0.67 contexts;1120 старых human moves|
-|не виден последний composition override|initial/final IDs,reason/accepted,proof,work и RNG до/после;исходный board/history для replay|детерминированный finalDecision/replayDecision,никакого SDK/часов при replay|composition и повреждённые reasons/IDs/RNG;реальный worker export/replay|
-|prepare заново включает payoff,all-clear снова включает rest,relief повторяется|один manual director-budget-v1 с конечными extra rewards|один candidate/config assist-budget-v1;нового director engine нет|64 dev+64 untouched holdout runs,лимиты/work/proofs|
-|основная конструктивная разыгрываемость и обещанные recovery смешивались бы с помощью|целая ordinary тройка бесплатна;early12 выдач и3 recovery идентичны control|сохранить обычный контракт и earned value,не продавать safe за credits|exact early/recovery иreceipt/save/reload/duplicate/cancel regressions|
-|ручной режим мог быть плохо читаем в Classic|тот же dropdown,короткая «Конечная помощь»,тёмный текст на существующем белом поле|локальный подтверждённый contrast bug;без нового арт-дирекшена|320/390px,contrast≥4.5,48px control,скрин иреальная новая партия|
+## Что изменилось
 
-DecisionTrace не хранится в каждом GameState:worker возвращает его только по
-captureDecision,контроллер добавляет в запись после durable save. Callback
-диагностики не определяет игровой исход. Core control не расходует новый RNG
-и не меняет свой GameState/hash. Стартовая трасса пишется,если запись уже была
-включена до новой партии;начатая посреди лотка запись честно начинается с
-checkpoint,без выдуманного предшествующего RNG. Размер capture по-прежнему
-ограничен800000bytes,невыгруженные данные защищены прежними guards.
+|Область|Результат|Проверка|
+|---|---|---|
+|Итоговая выдача|Opt-in DecisionTrace фиксирует результат после замен: исходные и окончательные фигуры, RNG, причины, свидетельство разыгрываемости и работу поиска|Точные старые хеши, повтор composition overrides, обнаружение повреждённых полей|
+|Запись партии|Трасса проходит через существующий worker и попадает в PlayCapture после атомарного сохранения|Реальный worker, экспорт и повтор записи в браузере; старые записи совместимы|
+|Дополнительная помощь|Один новый director-budget-v1 с конечным сохраняемым бюджетом|64 development и 64 untouched holdout запуска; проверки лимитов и свидетельств|
+|Обычная игра и revive|Конструктивный обычный лоток бесплатен; первые 12 выдач и все 3 recovery-выдачи совпадают с v2|Точное сравнение, сохранение, награда revive, дубликаты и отмена|
+|Ручной выбор|Новый пункт «Конечная помощь» в существующем меню; исправлен подтверждённый контраст текста dropdown|320/390 px, контраст ≥4.5, размер control 48 px, новая партия и reload|
 
-## Кандидат,не новая основная выдача
+DecisionTrace не хранится в каждом GameState и не является массовой аналитикой. Worker возвращает его только при включённой записи. Сбой диагностического callback не меняет игровой результат. Если запись включена до новой партии, сохраняется первая выдача; запись посреди партии начинается с честного checkpoint без выдумывания предыдущего RNG. Прежний предел записи — 800000 байт.
 
-Конфигурация и gates заморожены локальным checkpoint f0798b6 ДО dev/holdout. [Протокол](assist-budget-2026-11-16/PROTOCOL.md),
-[audit фактических источников](assist-budget-2026-11-16/CURRENT_STATE_AUDIT.md).
-Никакой настройки по holdout D91 или новому раскрытому holdout не было.
+## Замороженный кандидат
 
-- Первые12 выдач(36 постановок) ивсе3 post-revive recovery прежние по tray/
-  RNG/witness/controller. Они конечны и не обновляются от record/new-day/resume.
-- Затем ordinary использует прежний constructive beam,линии/геометрию/нагрузку,
-  без бесконечного нового rest/payoff/exact-clear. Safe whole hand не требует credit.
-- Дополнительный reward-biased лоток имеет общий budget5,source caps reward5/
-  relief2,не менее2 завершённых лотков между применениями. Два bounded поиска
-  ≤11900work каждый+два исполнения witness,общий≤24000.
-- Тратим1 только за выбранную отличающуюся тройку,чей whole witness даёт
-  дополнительную линию илиall-clear против конкретного ordinary incumbent.
-  Rejected/requested/attempted/applied раздельны;сохраняем RNG выбранного плана,
-  RNG отвергнутой альтернативы показан в trace и не продвигает игровой seed.
-- Credits сохраняются атомарно с ходом,не восстанавливаются от очищения,
-  фон/возврат/revive/даты. Paid-earned права иcooldown не конфликтуют:
-  promised recovery имеет приоритет ине зависит от discretionary budget.
-- Новая policy/config записана в новой выбранной партии;resume не переназначается.
-  Старый composition experiment не переопределён,новый future assignment отдельный,
-  стабильный иOFF. Никаких ad-value/readiness/time-to-die входов.
+Конфигурация и критерии были зафиксированы локальным checkpoint `f0798b6` до development и holdout. См. [протокол](assist-budget-2026-11-16/PROTOCOL.md) и [аудит источников помощи](assist-budget-2026-11-16/CURRENT_STATE_AUDIT.md). Настройки по раскрытому holdout не менялись; старый holdout D91 не использовался.
+
+- Первые 12 выдач — 36 постановок — и все 3 обещанные выдачи после revive сохраняют прежние фигуры, RNG, свидетельство и состояние контроллера. Дополнительные кредиты на них не тратятся.
+- Затем ordinary использует существующий конструктивный поиск, линии, геометрию и нагрузку, без повторного бесплатного включения rest/payoff/exact-clear. Возможность разыграть обычный лоток не требует кредита.
+- Дополнительный наградной кандидат имеет 5 кредитов на партию, source caps reward=5 / relief=2 и интервал не менее 2 завершённых лотков между применениями. Два поиска ограничены 11900 единицами работы каждый; вместе с проверкой путей общий предел — 24000.
+- Один кредит списывается только за выбранную отличающуюся тройку, чей исполненный путь даёт больше линий или полных очисток, чем конкретный ordinary incumbent. Запрос, попытка и применение различаются. Отклонённый кандидат не расходует кредит или cooldown и не продвигает выбранный игровой RNG.
+- Бюджет сохраняется атомарно с ходом. Очистка, фон/возврат, новый день и revive не восстанавливают его. Обещанная recovery-помощь имеет приоритет и не блокируется этим cooldown.
+- Версия записана в новой партии; resume не переназначается. Новый стабильный assignment подготовлен отдельно и выключен. Рекламные цены, готовность SDK и таймер поражения не управляют выдачей.
 
 ## Сравнение
 
-Baseline64 runs(v2/composition-v2 HOLD),dev64 иholdout64:192 synthetic launches,
-32168 moves. Четыре стиля получают только board/tray,не witness/director/budget.
-Одинаковый независимый player RNG;cap300,без revive. Упёршиеся вcap — censored,
-не поражения. Стартер control/candidate одинаковый:новые рецепты сюда не смешаны.
+64 baseline + 64 development + 64 holdout = **192 синтетических запуска, 32168 ходов**. Четыре бота видят только поле и лоток, не свидетельство или бюджет. У них одинаковый независимый player RNG. Ограничение — 300 ходов, без revive. Дошедшие до ограничения партии считаются цензурированными, а не проигранными. Старты control/candidate намеренно одинаковые: новое разнообразие старта в этот эксперимент не смешивалось.
 
-|Выборка/игрок|Ходы v2→candidate|Хвост после72|Ordinary clear-moves/ход|All-clear/ход|
+|Выборка / игрок|Ходы v2 → кандидат|Ходы после 72-го|Обычные очистки / ход|Полные очистки / ход|
 |---|---:|---:|---:|---:|
-|dev bounded|268→268|0→0(нет экспозиции)|.463→.463|.022→.022|
-|dev clear|1425→1228|860→673(−21.7%)|.378→.471|.081→.043|
-|dev three|2400→2400|1824→1824(censored)|.329→.463|.164→.085|
-|dev lapse|1556→1422|1029→926(−10.0%)|0.451→0.508|0.063→0.032|
-|holdout bounded|381→343|32→0|.496→.504|.008→.009|
-|holdout clear|1832→1307|1299→781(−39.9%)|.396→.458|.064→.047|
-|holdout three|2400→2400|1824→1824(censored)|.280→.455|.186→.090|
-|holdout lapse|1247→1154|752→671(−10.8%)|.422→.471|.082→.051|
+|dev bounded|268 → 268|0 → 0, нет экспозиции|.463 → .463|.022 → .022|
+|dev clear|1425 → 1228|860 → 673, −21.7%|.378 → .471|.081 → .043|
+|dev three|2400 → 2400|1824 → 1824, censored|.329 → .463|.164 → .085|
+|dev lapse|1556 → 1422|1029 → 926, −10.0%|.451 → .508|.063 → .032|
+|holdout bounded|381 → 343|32 → 0|.496 → .504|.008 → .009|
+|holdout clear|1832 → 1307|1299 → 781, −39.9%|.396 → .458|.064 → .047|
+|holdout three|2400 → 2400|1824 → 1824, censored|.280 → .455|.186 → .090|
+|holdout lapse|1247 → 1154|752 → 671, −10.8%|.422 → .471|.082 → .051|
 
-Ранние смерти≤36 совпали в каждой группе. Все frozen gates прошли;никаких
-technical fallback в128 matched runs,максимальный work23084. Дополнительная
-помощь по единому counterfactual определению снизилась уthree с59–66 до3.8–4.1
-на100 поздних выдач. В control эта метка вычислялась отдельно после измеряемого
-хода;это одинаковое QA-определение дополнительной наградной возможности,не
-кнопка/SDK impression и не гарантированное следование игрока witness.
+Ранние поражения до 36-го хода совпали в каждой группе. Все применимые заранее заданные критерии прошли. В 128 парных запусках технических fallback не было; максимальная работа — 23084. Дополнительная помощь по единому counterfactual-определению снизилась у three с 59–66 до 3.8–4.1 на 100 поздних выдач. Для control эта метка вычислялась отдельно после измеряемого хода: это QA-определение дополнительной наградной возможности, не показ рекламы и не гарантия того, что человек выберет найденный путь.
 
-Уthree все32 matched партии осталисьplaying на300:конечность сильной игры
-не доказана ине требуется таймер смерти. Разница clear/lapse на8seeds — модельный
-результат,не оценка человеческого удовольствия/retention/revenue. Candidate
-**HOLD для ручной человеческой пробы**,не ACCEPT/default отзелёных автотестов.
-Публичные данные: [агрегаты baseline/dev/holdout](assist-budget-2026-11-16/comparison-summary.json).
-Полные синтетические состояния и decision traces остаются в ignored artifacts;
-воспроизводятся scripts/assist-budget/baseline.mjs и compare.mjs. Frozen A/A
-контексты строятся из публичных seed recipes и проверяются по старым хешам.
-Публикуемая история не включает исходные записи или полные игровые снимки.
+У сильного three все 32 парные партии остались playing на 300-м ходу. Конечность сильной игры не доказана; принудительное поражение по таймеру не вводилось. Результат clear/lapse на восьми seed не доказывает удовольствие, удержание или доход у людей. Кандидат не становится основным из-за зелёных автотестов.
 
-Воспроизведение в ignored artifacts (сначала `mkdir -p artifacts/assist-budget`):
-`node scripts/assist-budget/baseline.mjs artifacts/assist-budget/baseline.json`,
-`node scripts/assist-budget/compare.mjs dev artifacts/assist-budget/dev.json`,
-`node scripts/assist-budget/compare.mjs holdout artifacts/assist-budget/holdout.json`,
-`node scripts/assist-budget/trace-cost.mjs artifacts/assist-budget/trace-cost.json`.
-Последовательность dev/holdout отражает уже замороженный эксперимент;
-повтор результатов не разрешает настройку по этим seed.
+Публично доступны [агрегаты](assist-budget-2026-11-16/comparison-summary.json). Подробные синтетические состояния и трассы сохранены отдельно; в публичную историю они не включены. A/A fixtures строятся из опубликованных seed recipes и проверяются по замороженным старым хешам.
+
+Воспроизведение, после `mkdir -p artifacts/assist-budget`:
+
+```sh
+node scripts/assist-budget/baseline.mjs artifacts/assist-budget
+node scripts/assist-budget/compare.mjs dev artifacts/assist-budget/dev.json
+node scripts/assist-budget/compare.mjs holdout artifacts/assist-budget/holdout.json
+node scripts/assist-budget/trace-cost.mjs artifacts/assist-budget/trace-cost.json
+```
+
+Повтор этих результатов не разрешает настройку по уже раскрытым seed.
 
 ## Проверки и стоимость
 
-352 unit/TypeScript/build/assets PASS.15 targeted browser PASS:manual choice,
-save/resume,actual refill Worker,один расход,export с полным replay,прежние
-commercial/capture/save-atomicity случаи. Дополнительный compact320px повтор
-проверяет читаемый dropdown. Старые4 private записи найдены заново:402+261+
-185+272=1120moves,exact hashes плюс независимые клеточные переходы PASS.
-Исходные файлы остаются вignored private-inputs;в Git не добавлялись.
+352 unit, TypeScript/build/assets и 15 целевых локальных browser-сценариев прошли. Проверены ручной выбор, save/resume, реальный refill worker, однократный расход, экспорт и полный replay, прежние commercial/capture/save-atomicity сценарии. После перевода QA fixtures на seed/hash recipes дополнительно прошли 11 затронутых unit, 3 browser и build.
 
-Compute вserial Node,traceON:refill p95 control→candidate devthree10.98→13.69ms,
-holdoutthree16.45→19.86ms;process CPU user+system13.68/19.68ms уcandidate,
-отдельно отwall. Некоторые выдачи дороже:фиксированный work cap не равен
-нулевой стоимости. Это не worker wall lifetime,main-thread latency или phone FPS.
-Отдельная opt-in trace проба42/42 с чередованием далаp95 off38.35/on40.33ms
-на выбранных контекстах;не считать разницу2ms гарантией устройства.
-300 synthetic witness-driven moves дают224273bytes capture,максимальная trace1944
-bytes,current model902bytes,credits конечны. [Агрегаты](assist-budget-2026-11-16/comparison-summary.json).
-Это проверка bounded data и replay,не доказательство отсутствия всех утечек.
+Четыре исходные записи владельца: 402 + 261 + 185 + 272 = **1120 ходов**, точные хеши и независимые клеточные переходы совпали. Исходники находятся только в ignored private-inputs и в Git не добавлялись.
 
-Preview0.68/code68,прежний package/signer,demo ads,analytics OFF. Android/CI/APK
-ещё проверяются в отдельной поставке. Телефон/human gate открыт:ощущения
-помощи/наград/задач,плавность refill,update/resume иреальный demo SDK.
-AppMetrica кабинет отложен;монетизация/retention не объявляются улучшенными.
+На последовательном Node-прогоне с включённой трассой refill p95 у three составил control → candidate: development 10.98 → 13.69 мс, holdout 16.45 → 19.86 мс. Process CPU user+system кандидата — 13.68 / 19.68 мс, отдельно от wall time. Некоторые выдачи стали дороже. Это не время ответа worker с очередью, задержка main thread или FPS телефона.
 
-Следующие части большого TZ:P1-B новые challenge/фазы/старты,P1-C другое окно
-revive,P2 ad cadence — отдельно,после этой проверки. Они не включены молча.
-Использованы pass4+geometry correction+iOS delta иChallenge/Experimentation
-guidance ca427723;runtime5450f9d прежний. **KIT IMPACT NONE**:изменение политики
-Blocky,не новый универсальный API. Kit/его research файлы не менялись.
+Отдельная чередующаяся проба трассы, 42 замера на режим: p95 off=38.35 / on=40.33 мс на выбранных контекстах. Разница около 2 мс не является гарантией устройства. 300 синтетических ходов по найденному пути дали 224273 байта записи; максимальная трасса — 1944 байта, текущее состояние модели — 902 байта. Бюджет конечен. Это проверка ограниченного объёма данных и replay, а не доказательство отсутствия всех утечек. [Агрегаты измерений](assist-budget-2026-11-16/comparison-summary.json).
+
+Первичная 0.68 прошла Android, 34 focused и 2 emulator tests, но полный browser-прогон дал 263/264: обнаружена потеря раннего Back во время сохранения показа revive. [Ошибка воспроизведена и исправлена в 0.69](REVIVE_BACK_0.69_2026-11-16.md); исходники ядра и параметры кандидата не менялись.
+
+Итоговая APK 0.69 / code 69 сохраняет прежний package и signer, demo ads и analytics OFF. Все 99 упакованных файлов и подпись независимо проверены; Полный CI 43835669338 завершился успешно: 352 unit, 266 browser, 36 focused browser, Android и 2 emulator tests PASS. [Поставка APK](PREVIEW_0.69_PUBLICATION_2026-11-16.md).
+
+Открытые проверки: телефонные update/resume, плавность refill и длинной сессии, реальный demo SDK; человеческое ощущение помощи, задач, наград и последствий ошибок. AppMetrica и реальные деньги отложены.
+
+Следующие части большого ТЗ — P1-B challenge/фазы/старты, P1-C другое окно revive и P2 ad cadence — остаются отдельными этапами. Использованы pass4 с geometry correction и iOS delta, Challenge/Experimentation guidance `ca427723`; runtime pin `5450f9d` сохранён. **KIT IMPACT NONE:** политика относится к Blocky; файлы mini-games-kit не менялись.

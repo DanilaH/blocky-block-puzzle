@@ -1,25 +1,20 @@
-# Точка продолжения — D94,16.11.2026
+# Точка продолжения — D94, 16.11.2026
 
-Реализована первая согласованная итерация Blocky_TZ.zip на5390af7/current0.67,
-не main: audit→opt-in DecisionTrace в существующем PlayCapture/worker после
-durable commit→один director-budget-v1. Trace A/A сохраняет старые hashes/RNG.
-Старые4 записи найдены вLibrary,1120 exact+independent cells PASS;raw только
-ignored private-inputs.352 unit/build/assets,15 targeted browser PASS.
-Baseline64+dev64+holdout64=192 launches/32168moves,config/gates заморожены
-локальным f0798b6 до comparisons;все gates PASS,без tuning по holdout. Strong всеmatched
-playing300 censored,не forced loss. Credits5/sourceCaps reward5/relief2/gap2;
-ранние12 выдач и3 recovery прежние. Ordinary whole-hand safe бесплатен.
-Подробные диапазоны и границы вновом отчёте. Policy manual only/HOLD,defaultv2,
-audienceOFF. Revive/ad caps/scoring/права/эффекты/кольцо0.67 не переопределены.
-Preview0.68/code68 demo/off;дальше подписанная APK через прежний PR1 signer,
-проверка packaged bytes/resources/cert,поставка прямой APK. Не генерировать
-новый key/не просить uninstall. Публикация и Actions ранее явно разрешены;
-новый user попросил реализацию. Kit consumer reports/записи/ключи туда не писать.
-Публикация: только агрегаты и synthetic seed/hash recipes. Полные synthetic
-снимки перенесены в ignored artifacts,оригиналы по-прежнему private-inputs.
-Локальные checkpoints со снимками не публиковать: чистая поставка одним
-коммитом поверх public dc26d27,без включения экспериментальной истории.
-[Результат](qa/ASSIST_BUDGET_0.68_2026-11-16.md).
+Первая согласованная итерация Blocky_TZ реализована поверх текущей 0.67, не main: аудит, opt-in DecisionTrace через прежний worker/PlayCapture после durable save и один director-budget-v1. Старые hash/RNG совпадают; четыре исходные записи — 1120 ходов — прошли точный replay и независимую клеточную проверку. Исходники только в ignored private-inputs.
+
+Кандидат имеет 5 кредитов, source caps reward=5/relief=2 и gap=2. Первые 12 выдач и все 3 recovery прежние; ordinary constructive plan бесплатен. Бюджет не восстанавливается от очистки, нового дня, resume или revive. Config и gates заморожены локальным f0798b6 до comparisons. 64 baseline +64 development +64 untouched holdout =192 запуска /32168 ходов, применимые gates PASS без tuning. У сильного бота все парные партии цензурированы на 300 ходах. Кандидат manual/HOLD, default v2, rollout OFF. Новые фазы/старты, другое revive window и ad cadence — следующие отдельные этапы.
+
+Первичная 0.68 в CI43830830634 дала 263/264 browser PASS: быстрый Escape во время сохранения shown=true терялся. Ошибка воспроизведена двумя delayed-write тестами и исправлена в0.69: ожидание idle, проверка исходной партии/предложения/deadline и флаг против дублей. Старый showcase не менялся и прошёл. Core/config кандидата между0.68 и0.69 побайтно прежние.
+
+Итоговая preview0.69 / code69, demo ads, analytics OFF. APK11795668байт, SHA-256 f1d221460893d95fd4f73aca7899c1f130570c996b1f52068e40aeed555d4e40. Прежний signer, все99 packaged files иAndroid resources независимо проверены; полные CI/local proof совпадают. APK/ZIP/инструкция сохранены владельцу; ранее выданная0.68 заменена0.69. Не генерировать новый key и не просить uninstall.
+
+Source9aac45e857955d4ce53cb7b2acf2b800e107b9c6, tree4f9c3cdd1042bf32c4c2fa170a034018861af3dd; PR1 checkout23e347ab3461954542e0d87f9f1bc2fb1a700e35 с темжеtree. 352unit, локальные28browser, CI36focused/Android/2emulator PASS. Полный266-browser verify ивесь run43835669338 завершились success. Preview/source frozen: дальнейшие документы только вwork/feature branches.
+
+Публикация и Actions ранее явно разрешены. Ordinary Git чистой ветки снова не имеет credentials; разрешённый whole UTF-8 tree API дал ровно локальное дерево. После auto-review сокращён public QA: только агрегаты иseed/hash recipes, без полных снимков. Публичный a6e0af8 идёт непосредственно отdc26d27, а0.69 отa6e0af8. Локальные экспериментальные предки сraw synthetic JSON не публиковать. Подробные синтетические результаты отдельно сохранены; исходные записи иключи не публиковать. Kit не менялся.
+
+Последующая поставка документов идёт вwork/assist-budget-delivery-20261116 ипубличные feature/work ветки; исходники приложения остаются ровно9aac. Не откатываться к origin/feat/classic-preview без проверки: Git transport уже возвращал старый cached ref после API-публикации. Для независимого APK proof точный marker/tree уже проверены. Документы опубликованы отдельным docs-only коммитом вfeature/work ветках; source preview не двигать.
+
+[Результаты](qa/ASSIST_BUDGET_0.68_2026-11-16.md), [исправление Back](qa/REVIVE_BACK_0.69_2026-11-16.md), [поставка и границы проверки](qa/PREVIEW_0.69_PUBLICATION_2026-11-16.md).
 
 ## Предыдущая точка D93
 

@@ -613,4 +613,10 @@ Config f0798b6 заморожен доdev/untouched holdout.192 runs32168moves/3
 15 browser PASS;strong300 censored,не объявлять конечность/retention/revenue.
 HOLD/manual/defaultv2/rolloutOFF. Revive window/ads иследующие фазы отдельно.
 Preview68 demo/off,предыдущая подпись обязательна,KIT IMPACT NONE.
+Первичная0.68 дала263/264 browser PASS: Back терялся во время записи показа revive.
+В0.69 обработчик ждёт save,проверяет исходную партию исериализует повтор.
+Два delayed-write теста воспроизводят ошибку до правки ипроходят после неё;
+старый showcase не менялся. 352 unit/28 локальных browser/36 focused/Android PASS.
+Подписанная0.69:11795668bytes,старый cert,99 packaged files,demo/off проверены;
+полный266-browser/36focused/Android/2emulator CI43835669338 PASS. Конфигурация выдачи прежняя.
 [Данные и ограничения](qa/ASSIST_BUDGET_0.68_2026-11-16.md).

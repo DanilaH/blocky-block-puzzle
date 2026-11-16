@@ -8,6 +8,6 @@
 
 Новые два browser-теста удерживают запись показа и нажимают Escape дважды. Проверены успешная запись и её искусственная ошибка. До исправления оба случая теряли Back; после него результат появляется в пределах 1500 мс после освобождения записи, до таймера expiry. В сохранении decision=back, reviveUsed и бюджет помощи прежние; события revive_offer_decided и run_closed появляются ровно по одному. Старый recorded showcase тоже прошёл без изменения теста.
 
-Локально: 352 unit, build и 28 затронутых browser-сценариев PASS — ads, commercial, result-motion, polish, revive-back и assist-budget. Подписанная 0.69 / code 69 и новый CI ещё проверяются. Прежние package и signer обязательны; demo ads, analytics OFF.
+Локально: 352 unit, build и 28 затронутых browser-сценариев PASS — ads, commercial, result-motion, polish, revive-back и assist-budget. Подписанная 0.69 / code 69 проверена. Полный [CI43835669338](https://github.com/DanilaH/blocky-block-puzzle/actions/runs/43835669338) завершился успешно: 352 unit, 266 browser, 36 focused, Android и 2 emulator tests. См. [проверку подписи и содержимого APK](PREVIEW_0.69_PUBLICATION_2026-11-16.md). Прежние package и signer обязательны; demo ads, analytics OFF.
 
 Кандидат director-budget-v1, его конфигурация и эксперимент из [отчёта 0.68](ASSIST_BUDGET_0.68_2026-11-16.md) не менялись. Обычная выдача, зона и награда revive, три recovery-выдачи, рекламные лимиты, заработанные права и эффекты сохранены. Синтетический holdout повторно для настройки не использовался. Телефон и человеческая оценка остаются открытыми.
