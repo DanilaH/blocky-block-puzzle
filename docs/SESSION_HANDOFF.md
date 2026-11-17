@@ -1,3 +1,23 @@
+# Точка продолжения — D101 / ручная проба0.73,17.11.2026
+
+Base915da0d,веткаwork/sparse-build-v1-20261117,неmain. После новой конкретной жалобы владельца выполнена одна разрешённая итерация. Дополнительныйdirector-build-v1/configchallenge-build-v1/отдельныйchallengeBuildState:приoccupied<=16,кромеearnedrecovery,skip exact-clear и убрать бонусы заlines/full-clear. Остальнаяоценка/target16/catalog/authoredstarts/anti-repeat/RNG/budget24000/taskwindows/strictadmission/load/rest/счётчики прежние. Defaultостаётсявыбраннымdirector-challenge-v2/full; обычныйNewGame/again запускаетv2, каждую ручную пробу выбирать явно «Накопление поля · проба». Старыеpolicies/saves/earnedrights/3recovery/revive/rewards/ads прежние, A/Boff, v3hidden. Никаких новых director generation/threshold tuning без нового конкретного основания.
+
+Исходнаяноваязапись382moves exact+cells:126refills,11/11empty и19/24low8 witnessedfullclear, все24literalbaseline; extra-v2 заменил2/126 наoccupied13/26. Actualfullclearвследующие3хода1/11empty и7/24low8: возможность не означает сыгранное действие/человеческую лёгкость. Candidate same-input empty0/11/low8 0/24,71dense/recoverytray/witness/RNG/controller exactPASS.
+
+Алгоритм/guardsfreeze локальный4e79497 доfreshdev.128runs/21570moves,16freshcases8121001..8121016 ×4styles ×2policy,300cap.22/24guardsPASS:minimummeanlengthFAILclear141.94/229.56 (61.83%) иlapse107.38/202.44 (53.04%),граница65%. Порог16/семена/критерии после результата не менялись. КандидатHOLD/manual по заранее заказанному humanсравнению,неdefault/adoption. Старыеhidden8103/8108/8110 закрыты. Сильныйthreebot15/16candidateдошёлcap,бесконечныйхвост не исключён. Оценить телефон/человеческий темп/жёсткость; не требовать нового исследования ради количества.
+
+SourceAPK/preview7f3f5274a29d9c17099865aa9f568ae5d5fbebec/treead71036cc3a00ef8f8b43242ce8af2d0e264798e заморожены. PR1checkoutbe0da12a1b4e37c0f0a20c4038f81d71d55c9426 тотжеtree. Дальшеproof/docs толькоwork,preview не двигать. Main/storeне менялись,PRdraft. Gitwritecredentialfailure,whole UTF-8 tree API+Actions уже разрешены,не просить повторно;blobAPI/base64/filefragments запрещены. Local4e79497/ed7b902 сохранены backup/sparse-build-local-freeze-20261117. ВсеAPItrees проверять поlocalGit.
+
+ПолныйPRCI44056991012 attempt1 success:408unit/62files,Python5/8/4/7,284browser(101+93+90),54focused,Androidunit/build/signature,2emulatorPASS. Локально408unit/20browser/build/assets/publicguard,2187original exact+cellmovesPASS. Длинныйdesktop1800OFF+1800ON finalhashравен,933captured/800100bytes, capиclockring8bounded/profile<=1341/content<=316. Первыйlocalbrowser запуск был до install executable,повтор20PASS. Pushrun44056981960refuseddifferentbranchcachedsigner,защиту не обходили,исходныйkey изPR1cache,не генерировать новый/uninstall не предлагать.
+
+APKBlocky-0.73.0-preview.apk11810849bytes,SHA9e269bae9419dcb5de88becbf18fd29346a0557ec0fb46f423abb32db55a494b,com.danilah.blocky.dev/code73,прежнийcert e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13.99webfiles/fullCI-localproofbyteequal/demo-off/officialapksigner+aapt2+zipalign16KiBPASS. APKartifact14315624430/proof14315588934,ZIPdigests вpublicationreport. APK/backupZIP/instructions сохранены владельцу отдельно,неGit. ZIP11097211bytes/SHA64b37937938c57f47bba4a0f14967222c6137280bd86929de360153c496e9ea3.
+
+Осталось: физическое updateповерх0.72без удаления/resume/background,1-2ручныхcandidateпартии и сравнение ощущенийсv2. Особое внимание:успеваетлиполенаполниться/сохранилисьлизадачи/не слишкомжёстко послеошибки. Recordingжелательна,ощущения тоже полезны. PhoneFPS/heat/memory/liveSDK/ILRD/cabinet/revenueне доказаны;AppMetricaотложена,demo ads/analyticsOFF. Originalrecords/privateinputs/boards/UUID/actions/keys/APKнеGit. Guidancead9ad52d6fc2d4025252698b2428c011eb90d813/runtime5450f9d,KITIMPACTNONE,толькоBlocky.
+
+[Результаты](qa/SPARSE_BUILD_0.73_2026-11-17.md),[точнаяпоставка](qa/PREVIEW_0.73_PUBLICATION_2026-11-17.md),[freeze](qa/sparse-build-2026-11-17/PROTOCOL.md).
+
+## Предыдущая точка D100
+
 # Точка продолжения — D100 / поставка0.72, 17.11.2026
 
 Работа завершена на work/selected-v2-default-20261117, от21657057 (не main, не устаревшая локальная7c80782). Владелец выбрал и разрешил закрепить «Задачи и старты · v2» основным:director-challenge-v2/challenge-content-v2/full. Дальнейший тюнинг директора остановлен. Выбор владельца не отменяет исторические modelFAIL D96/D97 и не является A/B. Hidden8103/8108/8110 закрыты.
