@@ -16,9 +16,9 @@ async function capturePanel(page: Page) {
 for (const width of [320, 390]) test(`manual budget choice keeps style/save and default control at ${width}`, async ({ page }, info) => {
   await page.setViewportSize({width,height:844});
   await page.goto("/");await page.locator("#lesson-skip").click();
-  expect((await saved(page)).game.dealerVersion).toBe("director-v2");
+  expect((await saved(page)).game.dealerVersion).toBe("director-challenge-v2");
   await page.locator("#pause").click();await page.locator("#restart").click();
-  await page.getByText("Экспериментальная выдача",{exact:true}).click();
+  await page.getByText("Другие варианты выдачи",{exact:true}).click();
   await page.locator("#dealer-choice").selectOption("director-budget-v1");
   const contrast=await page.locator("#dealer-choice").evaluate(e=>{
     const s=getComputedStyle(e),luminance=(c:string)=>{

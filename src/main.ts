@@ -1,5 +1,5 @@
 import { seedForChallengeOpening } from "./core/challenge-openings";
-import { rememberChallengeOpening } from "./core/experiment";
+import { rememberClassicGame, DEFAULT_CLASSIC_DEALER, classicNewGameDealer } from "./core/experiment";
 import { DecisionPlayClock } from "./platform/decision-clock";
 import { seedForDifferentOpening } from "./core/composition-dealer-v2";
 import { ensureExperiment, assignedDealer, enabledDealer, COMPOSITION_EXPERIMENT } from "./core/experiment";
@@ -92,13 +92,14 @@ const crown = svg('<path d="m3 6 4 5 5-7 5 7 4-5-2 12H5Z"/>');
 const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 let pendingInitialDecision: DecisionTrace | undefined;
-const fresh = (dealer: DealerVersion = "director-v2", previousOpening?: number, captureDecision = false, openingHistory:readonly string[] = []) => ({
+const fresh = (dealer: DealerVersion = DEFAULT_CLASSIC_DEALER, previousOpening?: number, captureDecision = false, openingHistory:readonly string[] = []) => ({
   ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : ["director-challenge-v1","director-challenge-v2"].includes(dealer) ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
+  comparisonMode: "default" as const,
 });
 const dealerChoices = [
-  { version: "director-challenge-v2", label: "Задачи и старты · v2", note: "Более осторожный подбор цепочек и выбора. Баланс ещё не принят." },
+  { version: "director-challenge-v2", label: "Задачи и старты · v2 (основная)", note: "Цепочки и выбор мест для фигур. Основной режим новых партий." },
   { version: "director-challenge-v1", label: "Задачи и старты · 0.70", note: "Вариант из 0.70, сохранён для сравнения и продолжения прежних партий." },
   { version: "director-budget-v1", label: "Конечная помощь", note: "Прежнее начало партии, затем дополнительные разгрузки ограничены. Отдельная проба; баланс ещё не принят." },
   { version: "composition-v2", label: "Разный старт и темп · новая проба", note: "Восемь стартовых наборов и меньше готовой помощи в затяжной партии. Отдельная проба для сравнения; баланс ещё не принят." },
@@ -182,6 +183,7 @@ async function start() {
     if (initialized!==initial) {
       initial={...initialized,revision:initial.revision+1};
       if (!loaded.profile && COMPOSITION_EXPERIMENT.enabled) initial.game={...fresh(assignedDealer(initial)),comparisonMode:"audience"};
+      if (!loaded.profile) initial=rememberClassicGame(initial,initial.game,true);
       await adapter.write(initial);
     }
   }
@@ -2763,7 +2765,7 @@ async function start() {
   function confirmRestart() {
     modal = "restart";
     dialog.dataset.kind = "restart";
-    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Экспериментальная выдача</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice">${dealerChoices.map((choice) => `<option value="${choice.version}">${choice.label}</option>`).join("")}</select></label><p class="dealer-note"></p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
+    dialog.innerHTML = `<h2 id="dialog-title">Начать заново?</h2><p>Текущая партия завершится. Рекорд и подсказки сохранятся.${currentGame().scoringVersion === "festival-v4" ? "" : " В новой партии — развитие комбо без потолка ×5 и отдельный рекорд."}</p><details class="diagnostics"><summary>Другие варианты выдачи</summary><label class="dealer-choice">Выдача в новой партии<select id="dealer-choice">${dealerChoices.map((choice) => `<option value="${choice.version}">${choice.label}</option>`).join("")}</select></label><p class="dealer-note"></p></details><button class="primary" id="new-game">Новая партия</button><button class="secondary" id="keep-game">Продолжить текущую</button>`;
     structureDialog();
     syncSaving();
     const choice = el<HTMLSelectElement>("dealer-choice");
@@ -2771,13 +2773,13 @@ async function start() {
       dialog.querySelector<HTMLElement>(".dealer-note")!.textContent =
         dealerChoices.find((item) => item.version === choice.value)!.note;
     };
-    choice.value = assignedDealer(store.state);
-    choice.disabled = !!store.state.experiment?.assignment;
+    choice.value = classicNewGameDealer(store.state);
+    choice.disabled = COMPOSITION_EXPERIMENT.enabled && !!store.state.experiment?.assignment;
     choice.onchange = updateNote;
     updateNote();
     el("new-game").onclick = () =>
       void restart(
-        el<HTMLSelectElement>("dealer-choice").value as DealerVersion, !store.state.experiment?.assignment,
+        choice.value as DealerVersion, !choice.disabled && choice.value !== classicNewGameDealer(store.state),
       );
     el("keep-game").onclick = close;
   }
@@ -2789,21 +2791,19 @@ async function start() {
       if (!manual && COMPOSITION_EXPERIMENT.enabled && !store.state.experiment?.assignment) {
         await store.update(p=>ensureExperiment({...p,revision:p.revision+1},Date.now(),false,crypto.randomUUID()));
       }
-      const actualDealer=enabledDealer(dealer??assignedDealer(store.state));
-      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined, playCapture.enabled,store.state.experiment?.challengeOpeningHistory),comparisonMode:(manual||store.state.experiment?.manualDealer?"manual":store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
+      const actualDealer=enabledDealer(dealer??classicNewGameDealer(store.state));
+      const nextGame = {...fresh(actualDealer, store.state.game.dealerVersion === "composition-v2" ? store.state.game.openingId : undefined, playCapture.enabled,store.state.experiment?.challengeOpeningHistory),comparisonMode:(manual?"manual":COMPOSITION_EXPERIMENT.enabled&&store.state.experiment?.assignment?"audience":"default") as "manual"|"audience"|"default"};
       const changed =
         store.state.game.status === "over"
           ? await ads.betweenGames(nextGame)
           : await store.update((p) => ({
-              ...rememberChallengeOpening(ads.stamp(p),nextGame),
+              ...rememberClassicGame(ads.stamp(p),nextGame),
               revision: p.revision + 1,
               game: nextGame,
-              ...(manual&&p.experiment?{experiment:{...rememberChallengeOpening(p,nextGame).experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|"director-challenge-v2"|undefined}}:{}),
               tutorialStep: 4,
               hint: null,
             }));
       if (changed) {
-        if (manual && store.state.experiment) await store.update(p=>({...p,revision:p.revision+1,experiment:{...p.experiment!,manualDealer:(["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2"].includes(actualDealer)?actualDealer:undefined) as "director-v2"|"composition-v1"|"composition-v2"|"director-budget-v1"|"director-challenge-v1"|"director-challenge-v2"|undefined}}));
         recordCelebrated = false;
         resultPending = false;
         clearTimeout(resultTimer);
@@ -3317,7 +3317,8 @@ void (
         const buttons = box.querySelectorAll<HTMLButtonElement>("button");
         buttons.forEach((b) => (b.disabled = true));
         try {
-          await new IndexedSave().recoverDamaged(createProfile(fresh()));
+          const profile=ensureExperiment(createProfile(fresh()),Date.now(),true,crypto.randomUUID());
+          await new IndexedSave().recoverDamaged(rememberClassicGame(profile,profile.game,true));
           location.reload();
         } catch (error) {
           document.getElementById("recovery-status")!.textContent =

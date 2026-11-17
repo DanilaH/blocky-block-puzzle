@@ -9,7 +9,7 @@ async function saved(page: Page) {
 async function choose(page: Page, version: string) {
   await page.locator("#pause").click();
   await page.locator("#restart").click();
-  await page.getByText("Экспериментальная выдача", { exact: true }).click();
+  await page.getByText("Другие варианты выдачи", { exact: true }).click();
   await page.locator("#dealer-choice").selectOption(version);
 }
 
@@ -34,8 +34,8 @@ for (const version of [
       });
       await page.goto("/");
       await page.locator("#lesson-skip").click();
-      expect((await saved(page)).game.dealerVersion).toBe("director-v2");
-      const history: string[] = [];
+      expect((await saved(page)).game.dealerVersion).toBe("director-challenge-v2");
+      const history: string[] = [...(await saved(page)).experiment!.challengeOpeningHistory!];
       for (let round = 0; round < 4; round++) {
         await choose(page, version);
         expect(
@@ -63,7 +63,7 @@ for (const version of [
           history.slice(-3),
         );
         expect(p.experiment!.assignment).toBeUndefined();
-        expect(p.experiment!.manualDealer).toBe(version);
+        expect(p.experiment!.manualDealer).toBe(version === "director-challenge-v2" ? undefined : version);
         await page.reload();
         await expect(page.locator("#app")).not.toHaveAttribute(
           "aria-busy",
@@ -100,12 +100,12 @@ for (const version of [
     );
     const failed = await saved(page);
     expect(failed.game).toEqual(before.game);
-    expect(failed.experiment!.challengeOpeningHistory).toBeUndefined();
+    expect(failed.experiment!.challengeOpeningHistory).toEqual(before.experiment!.challengeOpeningHistory);
     await page.evaluate(() => ((window as any).rejectChallenge = false));
     await page.locator("#new-game").click();
     await expect(page.locator("dialog")).not.toBeVisible();
     const after = await saved(page);
-    expect(after.experiment!.challengeOpeningHistory).toHaveLength(1);
+    expect(after.experiment!.challengeOpeningHistory).toEqual([...(before.experiment!.challengeOpeningHistory ?? []), after.game.challengeV2State?.openingKey ?? after.game.challengeState!.openingKey!].slice(-3));
     await page.reload();
     expect((await saved(page)).game).toEqual(after.game);
   });

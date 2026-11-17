@@ -85,8 +85,8 @@ jobs:
           done
       - run: npx playwright install --with-deps --only-shell chromium
         timeout-minutes: 5
-      - name: Verify restored effects and both startup barriers
-        run: npx playwright test e2e/challenge-content.spec.ts e2e/revive-back.spec.ts e2e/assist-budget.spec.ts e2e/all-clear-ring.spec.ts e2e/celebration.spec.ts e2e/festival.spec.ts e2e/uiux-027.spec.ts e2e/vfx.spec.ts e2e/initial-background.spec.ts e2e/surface-release.spec.ts e2e/static-board.spec.ts --workers=1
+      - name: Verify selected default, restored effects and both startup barriers
+        run: npx playwright test e2e/selected-default.spec.ts e2e/challenge-content.spec.ts e2e/revive-back.spec.ts e2e/assist-budget.spec.ts e2e/all-clear-ring.spec.ts e2e/celebration.spec.ts e2e/festival.spec.ts e2e/uiux-027.spec.ts e2e/vfx.spec.ts e2e/initial-background.spec.ts e2e/surface-release.spec.ts e2e/static-board.spec.ts --workers=1
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -5,6 +5,16 @@ async function panel(page: Page) {
   await page.locator(".advanced-settings > summary").click();
   await page.getByText("Запись партии для разбора", { exact: true }).click();
 }
+async function playLegalMove(page:Page){
+  const move=await page.evaluate(async()=>{
+    const {IndexedSave}=await import('/src/platform/save.ts');const {placements,shapeById}=await import('/src/core/rules.ts');
+    const g=(await new IndexedSave().load()).profile!.game;
+    for(let slot=0;slot<g.tray.length;slot++){if(g.tray[slot].used)continue;const p=placements(g.board,shapeById(g.tray[slot].shapeId))[0];if(p)return {...p,slot};}
+    throw Error('No legal recorded move');
+  });
+  await page.locator(`#tray button[data-slot="${move.slot}"]`).click();const b=(await page.locator('#board').boundingBox())!;
+  await page.locator('#board').click({position:{x:(move.x+.25)*b.width/8,y:(move.y+.25)*b.height/8}});
+}
 test("clearing an exported record does not let an equally long fresh record leave unsaved", async ({
   page,
 }) => {
@@ -42,7 +52,7 @@ for (const [policy, label] of [
     await page.locator("#lesson-skip").click();
     await page.locator("#pause").click();
     await page.locator("#restart").click();
-    await page.getByText("Экспериментальная выдача", { exact: true }).click();
+    await page.getByText("Другие варианты выдачи", { exact: true }).click();
     await page.locator("#dealer-choice").selectOption(policy!);
     await page.locator("#new-game").click();
     await expect(page.locator("dialog")).not.toBeVisible();
@@ -79,8 +89,7 @@ test("opt-in recording exports real committed UI moves and replays exactly", asy
   await expect(page.locator("#play-capture-export")).toBeDisabled();
   await page.locator("#play-capture-toggle").click();
   await page.locator("#resume").click();
-  await page.locator("#tray button").first().click();
-  await page.locator("#board").click({ position: { x: 3, y: 3 } });
+  await playLegalMove(page);
   await panel(page);
   await expect(page.locator("#play-capture-status")).toContainText("ходов: 1");
   const download = page.waitForEvent("download");
@@ -118,8 +127,7 @@ test("failed atomic placement is absent from the recording", async ({
       return old.call(this, value, key);
     };
   });
-  await page.locator("#tray button").first().click();
-  await page.locator("#board").click({ position: { x: 3, y: 3 } });
+  await playLegalMove(page);
   await expect(page.locator("#toast")).toBeVisible();
   await panel(page);
   await expect(page.locator("#play-capture-status")).toContainText("ходов: 0");

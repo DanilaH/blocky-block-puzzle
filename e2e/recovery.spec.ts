@@ -8,6 +8,8 @@ async function ready(page) {
     const a = new IndexedSave(),
       p = (await a.load()).profile;
     p.revision++;
+    // This storage-failure fixture needs a known free corner, regardless of the starter.
+    p.game.board = Array(64).fill(0);
     p.game.tray = [0, 1, 2].map((i) => ({
       shapeId: "S1-0",
       color: i + 1,

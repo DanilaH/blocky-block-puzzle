@@ -1317,3 +1317,15 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Развёртывание выбранного режима как default, телефонный performance и live SDK/кабинет — отдельные оставшиеся работы; AppMetrica отложена владельцем.
 
 [Человеческий результат и границы](qa/HUMAN_SELECTION_0.71_2026-11-17.md).
+
+
+## D100 — поставка выбранного v2, 17.11.2026
+
+- [x] Основной режим обычной новой партии challenge-v2/full, старые игры без миграции баланса; исторические варианты доступны явно.
+- [x] Atomic game/history/manual choice и повтор после отказа сохранения, начальная opening history.
+- [x]401unit/40 targeted browser/1805 exact+independent-cell старых ходов/build/assets/public guard PASS. Два upgrade fixtures из точного source0.71, сохранность earned hints/receipts/revive/settings и реальный ход.
+- [ ] Подписанная0.72 с прежним signer, полныйCI/Android/emulator и независимая проверка APK/resources/dist.
+- [ ] Короткая физическая проверка обновления поверх0.71/старой партии/нового обычногоv2/фона. Повторное сравнение баланса не требуется.
+- [ ] Live ads/кабинет/магазин отдельно; AppMetrica отложена владельцем.
+
+[Исходное изменение и ограничения](qa/SELECTED_V2_DEFAULT_0.72_2026-11-17.md).

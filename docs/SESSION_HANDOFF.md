@@ -1,3 +1,19 @@
+# Точка продолжения — D100 / source0.72, 17.11.2026
+
+Ветка work/selected-v2-default-20261117 от21657057bdadc4375d107ae13311f812f1aef22b. Восстановлена свежая опубликованная работа, исходная локальная копия7c80782 не использована как база. Владелец разрешил закрепить выбранный challenge-v2/full основным и собрать подписанную0.72. Human decision D99 выше исторических model gates; старые FAIL/holdouts не переписаны. Саму выдачу больше не перенастраивать.
+
+Основной новый Classic challenge-v2; старые saves продолжают прежнюю policy. Обычный restart больше не наследует прошлый manual comparison; выбери альтернативу явно в «Другие варианты выдачи». Game/opening history/manual choice теперь атомарны, включая AdsController.betweenGames, поздней второй записи нет. Initial history сохраняется с новым профилем. Config A/B OFF, старые assignment IDs сохранены. Algorithms/rules/catalog/RNG/revive/ads/effects прежние. Версия0.72/code72/demo/off.
+
+401unit/61files,40 unique targeted browser,1805 exact+cell old moves,build/assets/public guard PASS. В первом unit запуске60workers два старых5s timeout; maxWorkers4 прошёл без timeout changes. Browser сначала отсутствовал, установлен штатный headless; один тест предполагал пустую угловую клетку, теперь выбирает реальное допустимое место. Все6 новых default/upgrade/atomic tests PASS; update fixtures созданы именно5be1d7b/source0.71 в detached worktree и сохраняют права/receipts/settings, затем реальный UI move. Это browser compatibility, не физическая Android-update проверка.
+
+ПодписаннаяAPK/полныйCI/Android/emulator ещё готовятся. Прежний key только изActions cache, сертификатe96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13. Не генерировать ключ и не предлагать uninstall. Source preview0.71 пока5be1d7b; при разрешённой поставке0.72 обновить PR1/source preview, после подписи заморозить, дальнейшиеproof/docs толькоwork. Whole UTF-8 tree API уже разрешён владельцем после credential failure Git; blob API/base64/фрагменты не использовать. Main/store не публиковать автоматически.
+
+Оригиналы4+2 восстановлены приватно; не коммитить исходные JSON/APK/keys/скриншоты. Phone FPS/тепло/память/live SDK/доход не проверены. AppMetrica отложена,demo ads. KIT IMPACT NONE; guidancec7ddb3018c625bc654a58bd846bb77baece32728/runtime5450f9d. ТолькоBlocky.
+
+[Изменение и проверки](qa/SELECTED_V2_DEFAULT_0.72_2026-11-17.md).
+
+## Предыдущая точка D99
+
 # Точка продолжения — D99, 17.11.2026
 
 Ветка work/human-selection-v2-20261117 от6113914, не main. Владелец после сравнения предпочёл «Задачи и старты · v2» (director-challenge-v2/config challenge-content-v2/full). Настройку директора останавливаем; не начинать v4 или повторный плейтест этой пары без нового конкретного дефекта. Это человеческий выбор версии для дальнейшей поставки, не отмена model FAIL D96/D97 или A/B.

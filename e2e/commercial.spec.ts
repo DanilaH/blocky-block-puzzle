@@ -43,10 +43,10 @@ test("revive freezes the repaired human zone before the offer and completes the 
 test("manual candidate starts only a new game, survives reload and never creates audience assignment",async({page})=>{
   await page.setViewportSize({width:390,height:844});await page.goto('/');await page.locator('#lesson-skip').click();
   const original=(await saved(page)).game;
-  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Экспериментальная выдача',{exact:true}).click();
+  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Другие варианты выдачи',{exact:true}).click();
   await page.locator('#dealer-choice').selectOption('composition-v1');await page.locator('#keep-game').click();
   expect((await saved(page)).game).toEqual(original);
-  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Экспериментальная выдача',{exact:true}).click();await page.locator('#dealer-choice').selectOption('composition-v1');await page.locator('#new-game').click();
+  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Другие варианты выдачи',{exact:true}).click();await page.locator('#dealer-choice').selectOption('composition-v1');await page.locator('#new-game').click();
   await expect(page.locator('dialog')).not.toBeVisible();await page.reload();
   const p=await saved(page);expect(p.game.dealerVersion).toBe('composition-v1');expect(p.game.comparisonMode).toBe('manual');expect(p.experiment.assignment).toBeUndefined();
   await page.locator('#pause').click();await page.locator('.advanced-settings > summary').click();await page.getByText('Запись партии для разбора',{exact:true}).click();
@@ -56,7 +56,7 @@ test("new starter survives reload, completes through the real worker, and next r
   await page.setViewportSize({width:390,height:844});
   await page.addInitScript(()=>{crypto.getRandomValues=(a:any)=>{a.fill(0x9e3779b9);return a;};});
   await page.goto('/');await page.locator('#lesson-skip').click();
-  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Экспериментальная выдача',{exact:true}).click();
+  await page.locator('#pause').click();await page.locator('#restart').click();await page.getByText('Другие варианты выдачи',{exact:true}).click();
   await page.locator('#dealer-choice').selectOption('composition-v2');await page.locator('#new-game').click();await expect(page.locator('dialog')).not.toBeVisible();
   const initial=await saved(page);expect(initial.game.dealerVersion).toBe('composition-v2');expect(initial.experiment.assignment).toBeUndefined();
   await page.reload();expect((await saved(page)).game).toEqual(initial.game);
@@ -71,7 +71,9 @@ test("new starter survives reload, completes through the real worker, and next r
   }
   const played=await saved(page);expect(played.game.board.some(Boolean)).toBe(true);expect(played.game.openingId).toBe(initial.game.openingId);
   await page.locator('#pause').click();await page.locator('#restart').click();
-  expect(await page.locator('#dealer-choice').inputValue()).toBe('composition-v2');
+  expect(await page.locator('#dealer-choice').inputValue()).toBe('director-challenge-v2');
+  await page.getByText('Другие варианты выдачи',{exact:true}).click();
+  await page.locator('#dealer-choice').selectOption('composition-v2');
   await page.locator('#new-game').click();await expect(page.locator('dialog')).not.toBeVisible();
   const next=await saved(page);expect(next.game.openingId).not.toBe(initial.game.openingId);expect(next.experiment.manualDealer).toBe('composition-v2');
 });
