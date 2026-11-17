@@ -12,7 +12,7 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  verify:
+  core:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +29,20 @@ jobs:
       - run: python3 scripts/test-score-feedback-analyzer.py
       - run: python3 scripts/test-surface-comparison-analyzer.py
       - run: npm run build
+  browser:
+    needs: core
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -45,11 +59,11 @@ jobs:
         run: npx playwright install --with-deps --only-shell chromium
       - name: Verify native CDP client against Chromium
         run: node scripts/verify-cdp-native.mjs
-      - run: npm run test:e2e
+      - run: npm run test:e2e -- --shard=${{ matrix.shard }}/3
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-review
+          name: browser-review-${{ matrix.shard }}
           path: |
             test-results/
             artifacts/native-cdp/
@@ -63,6 +77,16 @@ jobs:
             docs/qa/feel-0.15/*.png
             docs/qa/dealer-0.16/*.png
             docs/qa/ads-0.17/*.png
+  verify:
+    if: always()
+    needs: [core, browser]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require every core and browser shard
+        env:
+          CORE_RESULT: ${{ needs.core.result }}
+          BROWSER_RESULT: ${{ needs.browser.result }}
+        run: test "$CORE_RESULT" = success && test "$BROWSER_RESULT" = success
   focused-effects:
     runs-on: ubuntu-24.04
     steps:

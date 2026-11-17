@@ -1,10 +1,10 @@
 import {test,expect} from '@playwright/test';
-test('new installs use the goal director; legacy resume stays exact until a committed restart',async({page})=>{
+test('new installs use selected challenge-v2; legacy resume stays exact until a committed restart',async({page})=>{
   await page.goto('/');
   const read=()=>page.evaluate(async()=>{
     const {IndexedSave}=await import('/src/platform/save.ts');return (await new IndexedSave().load()).profile!;
   });
-  await expect.poll(async()=>(await read())?.game.dealerVersion).toBe('director-v2');
+  await expect.poll(async()=>(await read())?.game.dealerVersion).toBe('director-challenge-v2');
   await page.evaluate(async()=>{
     const {IndexedSave}=await import('/src/platform/save.ts'),{newGame}=await import('/src/core/rules.ts');
     const save=new IndexedSave(),p=(await save.load()).profile!;p.revision++;p.tutorialStep=4;
@@ -14,7 +14,7 @@ test('new installs use the goal director; legacy resume stays exact until a comm
   await page.locator('#pause').click();await page.locator('#restart').click();
   await page.locator('#keep-game').click();expect((await read()).game).toEqual(old);
   await page.locator('#pause').click();await page.locator('#restart').click();await page.locator('#new-game').click();
-  await expect.poll(async()=>(await read()).game.dealerVersion).toBe('director-v2');
+  await expect.poll(async()=>(await read()).game.dealerVersion).toBe('director-challenge-v2');
   const current=(await read()).game;expect(current.goalDirector!.version).toBe(2);expect(current.gameId).not.toBe(old.gameId);
   await page.reload();expect((await read()).game).toEqual(current);
 });
