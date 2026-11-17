@@ -127,7 +127,13 @@ test("failed tutorial save does not advance; replay and skip preserve a started 
   await page.evaluate(() => Reflect.get(window, "restoreWrites")());
   await page.locator("#lesson-skip").click();
   await expect(page.locator("#lesson")).toBeHidden();
-  await put(page, 0, 0, 0);
+  const move=await page.evaluate(async()=>{
+    const {IndexedSave}=await import('/src/platform/save.ts'),{placements,shapeById}=await import('/src/core/rules.ts');
+    const g=(await new IndexedSave().load()).profile!.game;
+    for(let slot=0;slot<g.tray.length;slot++){if(g.tray[slot].used)continue;const p=placements(g.board,shapeById(g.tray[slot].shapeId))[0];if(p)return {...p,slot};}
+    throw Error('No legal move after tutorial skip');
+  });
+  await put(page, move.slot, move.x, move.y);
   await expect(page.locator("#score")).not.toHaveText("0");
   const started = await profile(page);
   expect(started.game.moves).toBe(1);

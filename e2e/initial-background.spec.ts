@@ -36,8 +36,13 @@ test("Classic can boot while hidden, return, and accept exactly one move", async
     const { IndexedSave } = await import("/src/platform/save.ts");
     return (await new IndexedSave().load()).profile!.game;
   });
-  await page.locator("#tray button").first().click();
-  await page.locator("#board").click({ position: { x: 4, y: 4 } });
+  const move=await page.evaluate(async g=>{
+    const {placements,shapeById}=await import('/src/core/rules.ts');
+    for(let slot=0;slot<g.tray.length;slot++){if(g.tray[slot].used)continue;const p=placements(g.board,shapeById(g.tray[slot].shapeId))[0];if(p)return {...p,slot};}
+    throw Error('No legal move after hidden startup');
+  },before);
+  await page.locator(`#tray button[data-slot="${move.slot}"]`).click();const b=(await page.locator('#board').boundingBox())!;
+  await page.locator('#board').click({position:{x:(move.x+.25)*b.width/8,y:(move.y+.25)*b.height/8}});
   await expect
     .poll(() =>
       page.evaluate(async () => {
