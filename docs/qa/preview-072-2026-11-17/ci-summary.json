@@ -1,0 +1,39 @@
+{
+  "provenance": "CI/API and independent APK verification metadata; no device performance, raw recordings or private links",
+  "sourceCommit": "7b5b95ada88e5330990dd759f2501c5b6cbfb8f5",
+  "sourceTree": "5f324ef19d9c58066549efac094260e0cdaab0c5",
+  "ciCheckout": "8658504f3082f5233c7ae6204c4bbb1260f79541",
+  "workflowRun": 44039667836,
+  "attempt": 1,
+  "conclusion": "success",
+  "unit": {
+    "files": 61,
+    "passed": 401
+  },
+  "pythonPassed": [
+    5,
+    8,
+    4,
+    7
+  ],
+  "browser": {
+    "shards": [
+      97,
+      93,
+      90
+    ],
+    "passed": 280,
+    "exactCoverage": true,
+    "duplicates": 0,
+    "renderWorkersPerShard": 1
+  },
+  "focusedBrowserPassed": 50,
+  "android": "unit/build/signature PASS",
+  "emulatorPassed": 2,
+  "legacyOwnerMovesExactAndCells": 1805,
+  "localTargetedBrowserPassed": 63,
+  "physicalAndroidUpdateVerified": false,
+  "liveSdkVerified": false,
+  "analytics": "OFF",
+  "ads": "demo"
+}
