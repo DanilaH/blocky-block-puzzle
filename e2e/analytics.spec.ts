@@ -19,8 +19,14 @@ test("real play emits start once, hint spends once, reload resumes without a sec
     .poll(() => events(page, "tutorial_skip").then((e) => e.length))
     .toBe(1);
   expect(await events(page, "game_start")).toHaveLength(0);
-  await page.locator("#tray button").first().click();
-  await page.locator("#board").click({ position: { x: 3, y: 3 } });
+  const move=await page.evaluate(async()=>{
+    const {IndexedSave}=await import('/src/platform/save.ts'),{placements,shapeById}=await import('/src/core/rules.ts');
+    const g=(await new IndexedSave().load()).profile!.game;
+    for(let slot=0;slot<g.tray.length;slot++){if(g.tray[slot].used)continue;const p=placements(g.board,shapeById(g.tray[slot].shapeId))[0];if(p)return {...p,slot};}
+    throw Error('No legal starting move');
+  });
+  await page.locator(`#tray button[data-slot="${move.slot}"]`).click();const b=(await page.locator('#board').boundingBox())!;
+  await page.locator('#board').click({position:{x:(move.x+.25)*b.width/8,y:(move.y+.25)*b.height/8}});
   await expect
     .poll(() => events(page, "game_start").then((e) => e.length))
     .toBe(1);

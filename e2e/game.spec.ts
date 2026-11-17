@@ -3,6 +3,12 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
   await page.locator("#lesson-skip").click();
   await expect(page.locator("#lesson")).toBeHidden();
+  // These pointer/save checks need a known free target; default-starter coverage is separate.
+  await page.evaluate(async()=>{
+    const {IndexedSave}=await import('/src/platform/save.ts');const save=new IndexedSave(),p=(await save.load()).profile!;
+    await save.write({...p,revision:p.revision+1,game:{...p.game,board:Array(64).fill(0)}});
+  });
+  await page.reload();
 });
 test("play, cancel drag, hint receipt, reload and responsive bounds", async ({
   page,
