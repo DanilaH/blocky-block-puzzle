@@ -301,18 +301,24 @@ export function verifiedRefinement(
 
 /** Same v2 incumbent, RNG and controller; only a certified replacement may differ. */
 export function verifiedGoalDeal(...args: Parameters<typeof goalDirectorDeal>) {
-  return qualityGoalDeal("strict", ...args);
+  return qualityGoalDeal("strict", false, ...args);
 }
 
 /** A separately versioned one-line tradeoff; no search or phase changes. */
 export function opportunityGoalDeal(
   ...args: Parameters<typeof goalDirectorDeal>
 ) {
-  return qualityGoalDeal("one-line", ...args);
+  return qualityGoalDeal("one-line", false, ...args);
+}
+
+/** Same verified task admission; only the sparse baseline objective differs. */
+export function sparseBuildGoalDeal(...args: Parameters<typeof goalDirectorDeal>) {
+  return qualityGoalDeal("strict", true, ...args);
 }
 
 function qualityGoalDeal(
   qualityBand: "strict" | "one-line",
+  sparseBuild: boolean,
   ...[
     board,
     seed,
@@ -344,6 +350,7 @@ function qualityGoalDeal(
     ordinary,
     "observe",
     refinement,
+    sparseBuild,
   );
   if (!refinement && d.focusResult) {
     d.focusResult.initialPieceIds = d.tray.map((s) => s.shapeId);

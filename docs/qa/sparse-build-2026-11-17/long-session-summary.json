@@ -1,0 +1,35 @@
+{
+  "provenance": "Synthetic only; serial desktop Node core/capture, no renderer or SDK",
+  "results": [
+    {
+      "policy": "director-build-v1",
+      "recording": false,
+      "accepted": 1800,
+      "games": 2,
+      "captured": 0,
+      "status": "off",
+      "finalHash": "97606c32",
+      "p95GenerationMs": 42.785227999999734,
+      "p95SerializeMs": 0.05393900000035501,
+      "maxProfileBytes": 1341,
+      "maxContentBytes": 316,
+      "maxClockRing": 8,
+      "maxRecordBytes": 0
+    },
+    {
+      "policy": "director-build-v1",
+      "recording": true,
+      "accepted": 1800,
+      "games": 2,
+      "captured": 933,
+      "status": "limit",
+      "finalHash": "97606c32",
+      "p95GenerationMs": 38.930866000000606,
+      "p95SerializeMs": 0.03863600000113365,
+      "maxProfileBytes": 1341,
+      "maxContentBytes": 316,
+      "maxClockRing": 8,
+      "maxRecordBytes": 800100
+    }
+  ]
+}

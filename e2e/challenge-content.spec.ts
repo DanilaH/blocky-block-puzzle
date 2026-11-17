@@ -16,6 +16,7 @@ async function choose(page: Page, version: string) {
 for (const version of [
   "director-challenge-v1",
   "director-challenge-v2",
+  "director-build-v1",
 ] as const) {
   for (const width of [320, 390])
     test(`${version}: original starting decisions persist and avoid repetition under constant seed at ${width}`, async ({
@@ -51,7 +52,7 @@ for (const version of [
         await expect(page.locator("dialog")).not.toBeVisible();
         const p = await saved(page),
           g = p.game,
-          key = (g.challengeV2State ?? g.challengeState)!.openingKey!;
+          key = (g.challengeBuildState ?? g.challengeV2State ?? g.challengeState)!.openingKey!;
         expect(g.dealerVersion).toBe(version);
         expect(g.score).toBe(0);
         expect(g.board.some(Boolean)).toBe(true);
@@ -105,7 +106,7 @@ for (const version of [
     await page.locator("#new-game").click();
     await expect(page.locator("dialog")).not.toBeVisible();
     const after = await saved(page);
-    expect(after.experiment!.challengeOpeningHistory).toEqual([...(before.experiment!.challengeOpeningHistory ?? []), after.game.challengeV2State?.openingKey ?? after.game.challengeState!.openingKey!].slice(-3));
+    expect(after.experiment!.challengeOpeningHistory).toEqual([...(before.experiment!.challengeOpeningHistory ?? []), after.game.challengeBuildState?.openingKey ?? after.game.challengeV2State?.openingKey ?? after.game.challengeState!.openingKey!].slice(-3));
     await page.reload();
     expect((await saved(page)).game).toEqual(after.game);
   });
@@ -193,7 +194,7 @@ for (const version of [
     expect(requests).toHaveLength(1);
     expect(requests[0].captureDecision).toBe(true);
     expect(requests[0].observation.activeMs).toBe(
-      (afterFirst.challengeV2State ?? afterFirst.challengeState)!.activeMs,
+      (afterFirst.challengeBuildState ?? afterFirst.challengeV2State ?? afterFirst.challengeState)!.activeMs,
     );
     await expect(page.locator("#board")).not.toHaveAttribute(
       "aria-busy",
@@ -220,8 +221,8 @@ for (const version of [
     const after = (await saved(page)).game,
       elapsed = await page.evaluate(() => performance.now());
     const active =
-      (after.challengeV2State ?? after.challengeState)!.activeMs -
-      (afterFirst.challengeV2State ?? afterFirst.challengeState)!.activeMs;
+      (after.challengeBuildState ?? after.challengeV2State ?? after.challengeState)!.activeMs -
+      (afterFirst.challengeBuildState ?? afterFirst.challengeV2State ?? afterFirst.challengeState)!.activeMs;
     expect(elapsed - requests[0].postedAt - active).toBeGreaterThanOrEqual(
       2500,
     );

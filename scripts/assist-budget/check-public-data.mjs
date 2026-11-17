@@ -43,3 +43,9 @@ assert.equal(human.recordings,2);assert.equal(human.exactMoves,685);assert.equal
 assert.equal(human.games.reduce((n,g)=>n+g.all.moves,0),685);assert(human.games.every(g=>g.ended&&g.hinted===0));
 assert(!/gameId|installationId|blocky-play|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(JSON.stringify(human)));
 console.log('Human selection QA contains anonymous counts only; source recordings remain private');
+
+const buildDir="docs/qa/sparse-build-2026-11-17";
+assert.deepEqual((await fs.readdir(buildDir)).filter(p=>p.endsWith(".json")).sort(),["development-summary.json","long-session-summary.json","record-regression.json"]);
+for(const file of (await fs.readdir(buildDir)).filter(p=>p.endsWith(".json"))){const data=JSON.parse(await fs.readFile(`${buildDir}/${file}`,"utf8"));walk(data);assert(!/gameId|installationId|blocky-play|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(JSON.stringify(data)));}
+const build=JSON.parse(await fs.readFile(`${buildDir}/development-summary.json`,"utf8"));assert.equal(build.runs,128);assert.equal(build.guards.filter(g=>!g.lengthLower).length,2);assert(build.guards.every(g=>g.ordinary&&g.lengthUpper&&g.p90&&g.earlyLoss&&g.content));
+console.log("Sparse-build QA preserves two negative length guards and contains no private states");

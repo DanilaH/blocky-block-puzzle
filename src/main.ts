@@ -93,12 +93,13 @@ const root = document.querySelector<HTMLDivElement>("#app")!;
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 let pendingInitialDecision: DecisionTrace | undefined;
 const fresh = (dealer: DealerVersion = DEFAULT_CLASSIC_DEALER, previousOpening?: number, captureDecision = false, openingHistory:readonly string[] = []) => ({
-  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : ["director-challenge-v1","director-challenge-v2"].includes(dealer) ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
+  ...newGame(dealer === "composition-v2" ? seedForDifferentOpening(seed(), previousOpening) : ["director-challenge-v1","director-challenge-v2","director-build-v1"].includes(dealer) ? seedForChallengeOpening(seed(),openingHistory) : seed(), crypto.randomUUID(), dealer, captureDecision ? t => { pendingInitialDecision = t; } : undefined),
   scoringVersion: "festival-v4" as const,
   seriesBonusVersion: 1 as const,
   comparisonMode: "default" as const,
 });
 const dealerChoices = [
+  { version: "director-build-v1", label: "Накопление поля · проба", note: "На редком поле меньше готовых очисток. Сравните с v2 в новой партии; баланс ещё не принят." },
   { version: "director-challenge-v2", label: "Задачи и старты · v2 (основная)", note: "Цепочки и выбор мест для фигур. Основной режим новых партий." },
   { version: "director-challenge-v1", label: "Задачи и старты · 0.70", note: "Вариант из 0.70, сохранён для сравнения и продолжения прежних партий." },
   { version: "director-budget-v1", label: "Конечная помощь", note: "Прежнее начало партии, затем дополнительные разгрузки ограничены. Отдельная проба; баланс ещё не принят." },

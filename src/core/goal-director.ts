@@ -15,6 +15,8 @@ import {
   type Rows,
 } from "./director-search";
 
+export const SPARSE_BUILD_LIMIT = 16;
+
 export type GoalKind =
   "prepare" | "payoff" | "load" | "relief" | "rest" | "recovery" | "emergency";
 export interface GoalDirectorState {
@@ -89,10 +91,13 @@ export function goalDirectorDeal(
   ordinary = false,
   focus?: "chain" | "choice" | "observe",
   refinement?:GoalRefinement,
+  sparseBuild = false,
 ) {
   const meter = new WorkBudget(budget),
     rows = toRows(board),
     count = occupied(rows);
+  // Opt-in candidate only. Earned recovery always keeps the original support.
+  const accumulate = sparseBuild && count <= SPARSE_BUILD_LIMIT && !rhythm.recoveryDeals;
   let rng = seed >>> 0 || 1;
   const roll = () => {
     const r = random(rng);
@@ -130,7 +135,7 @@ export function goalDirectorDeal(
     actual = saved.sinceLoad >= 3 && large ? "load" : "prepare";
   const old = meter.ceiling;
   if (
-    !ordinary && count &&
+    !ordinary && !accumulate && count &&
     (requested === "payoff" ||
       requested === "relief" ||
       requested === "recovery")
@@ -161,7 +166,7 @@ export function goalDirectorDeal(
       .join(",");
   const history = rhythm.recentBags ?? [];
   function beam(load: boolean,extraWork?:number) {
-    const support=!ordinary&&(requested==='payoff'||requested==='relief'||requested==='recovery');
+    const support=!ordinary&&!accumulate&&(requested==='payoff'||requested==='relief'||requested==='recovery');
     const positions=new Map<number,number>();
     if(focus&&focus!=="observe")for(const op of initial.ops)positions.set(op.shape,(positions.get(op.shape)??0)+1);
     const maxSize=!ordinary&&requested==='rest'?4:moves<12?6:9;
@@ -183,7 +188,7 @@ export function goalDirectorDeal(
         const preference=contentSearch?(focus==="chain"&&p.some(op=>!available.has(op.shape))?80:
           focus==="choice"&&depth===2?Math.max(0,80-p.reduce((n,op)=>n+(positions.get(op.shape)??0),0)):0):0;
         return preference+(load?g.occupied*4-lines*10-g.holes*20-g.edges*.5:
-          clears*(support?8000:2500)+lines*(support?500:180)+g.fullness*1.1-g.edges*2-g.holes*65-Math.abs(g.occupied-(support?0:16))*2+novelty+variety);
+          clears*(accumulate?0:support?8000:2500)+lines*(accumulate?0:support?500:180)+g.fullness*1.1-g.edges*2-g.holes*65-Math.abs(g.occupied-(support?0:16))*2+novelty+variety);
       }
     });
   }
@@ -369,7 +374,7 @@ export function goalDirectorDeal(
     diagnostic: {
       requested,
       actual,
-      source: ordinary ? `ordinary-${source}` : source,
+      source: ordinary ? `ordinary-${source}` : accumulate ? `sparse-build-${source}` : source,
       checks: meter.used,
       limit: meter.limit,
       goalFound,

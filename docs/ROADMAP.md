@@ -1329,3 +1329,14 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Live ads/кабинет/магазин отдельно; AppMetrica отложена владельцем.
 
 [Исходное изменение и ограничения](qa/SELECTED_V2_DEFAULT_0.72_2026-11-17.md).
+
+
+## D101 — ручной кандидат накопления поля,17.11.2026
+
+- [x] Причина на382original moves exact+cells;126fixed inputs,empty11→0/low8 19→0,71dense/recoveryexact.
+- [x] Отдельныйdirector-build-v1/state/config, старый выбранныйv2/default/saves/earned3recovery сохранены;408unit/buildPASS.
+- [x] Fresh128runs/21570moves,22/24guards;minimumlengthFAIL уclear/lapse раскрыт,HOLD/manual,hiddenholdouts не открыты.
+- [ ] Browser/long-session/fullCI/signed0.73 и точныйpayloadproof.
+- [ ] Короткий phone/manual playtest: наполненность/темп/чрезмерная жёсткость; default не менять по автотестам.
+
+[Разбор](qa/SPARSE_BUILD_0.73_2026-11-17.md).

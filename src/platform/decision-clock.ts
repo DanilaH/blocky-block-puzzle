@@ -17,16 +17,16 @@ export class DecisionPlayClock {
   }
   sync(game: GameState, enabled: boolean) {
     this.accumulate();
-    const base = game.challengeV3State?.activeMs ?? game.challengeV2State?.activeMs ?? game.challengeState?.activeMs ?? 0;
+    const base = game.challengeBuildState?.activeMs ?? game.challengeV3State?.activeMs ?? game.challengeV2State?.activeMs ?? game.challengeState?.activeMs ?? 0;
     if (game.gameId !== this.gameId) {
       this.gameId = game.gameId;
       this.elapsed = base;
     } else this.elapsed = Math.max(this.elapsed, base);
-    this.active = enabled && ["director-challenge-v1","director-challenge-v2","director-challenge-v3"].includes(game.dealerVersion);
+    this.active = enabled && ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(game.dealerVersion);
   }
   observation(game: GameState): ChallengeObservation | undefined {
     this.accumulate();
-    return ["director-challenge-v1","director-challenge-v2","director-challenge-v3"].includes(game.dealerVersion)
+    return ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(game.dealerVersion)
       ? { activeMs: Math.floor(this.elapsed) }
       : undefined;
   }

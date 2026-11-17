@@ -12,7 +12,9 @@ try {
     F = await server.ssrLoadModule("/src/core/profile.ts");
   const V = await server.ssrLoadModule("/scripts/calibration/replay.ts");
   const results = [];
-  for (const policy of process.argv.includes("--verified")
+  for (const policy of process.argv.includes("--sparse-build")
+    ? ["director-build-v1"]
+    : process.argv.includes("--verified")
     ? ["director-challenge-v2"]
     : ["director-v2", "director-challenge-v1"])
     for (const recording of [false, true]) {
@@ -42,8 +44,8 @@ try {
           begin = performance.now();
         const r = R.applyMove(g, m, g.revision, capture.enabled, {
           activeMs:
-            (g.challengeV2State ?? g.challengeState)
-              ? (g.challengeV2State ?? g.challengeState).activeMs + 3200
+            (g.challengeBuildState ?? g.challengeV2State ?? g.challengeState)
+              ? (g.challengeBuildState ?? g.challengeV2State ?? g.challengeState).activeMs + 3200
               : now,
         });
         assert(r);
@@ -70,14 +72,14 @@ try {
             gameMoves: g.moves,
             profileBytes: bytes,
             contentBytes: JSON.stringify(
-              g.challengeV2State ?? g.challengeState ?? null,
+              g.challengeBuildState ?? g.challengeV2State ?? g.challengeState ?? null,
             ).length,
             recordBytes: recording
               ? Buffer.byteLength(JSON.stringify(capture.snapshot()))
               : 0,
             heapBytes: process.memoryUsage().heapUsed,
             clockRing:
-              (g.challengeV2State ?? g.challengeState)?.recentTrayMs.length ??
+              (g.challengeBuildState ?? g.challengeV2State ?? g.challengeState)?.recentTrayMs.length ??
               0,
           });
         }
@@ -136,7 +138,9 @@ try {
       console.log(JSON.stringify(row));
     }
   await fs.writeFile(
-    process.argv.includes("--verified")
+    process.argv.includes("--sparse-build")
+      ? "artifacts/sparse-build/long-session.json"
+      : process.argv.includes("--verified")
       ? "artifacts/challenge-balance/long-session.json"
       : "artifacts/challenge-content/long-session.json",
     JSON.stringify(

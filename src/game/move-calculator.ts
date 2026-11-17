@@ -21,7 +21,7 @@ export class MoveCalculator {
   async calculate(state: GameState, move: Move, revision: number, captureDecision = false, observation?:ChallengeObservation) {
     if (this.pending) throw new Error("Move search already pending");
     if (
-      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1", "director-challenge-v1", "director-challenge-v2", "director-challenge-v3"].includes(
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1", "director-challenge-v1", "director-challenge-v2", "director-challenge-v3", "director-build-v1"].includes(
         state.dealerVersion,
       ) ||
       state.tray.filter((s) => s.used).length !== 2
