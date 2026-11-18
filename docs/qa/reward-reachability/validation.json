@@ -1,0 +1,17 @@
+{
+  "baseline": "adfeced",
+  "unit": {
+    "passed": 313,
+    "files": 49
+  },
+  "productionBuild": "passed",
+  "runtimeByteIdenticalTo": "c31a49e",
+  "runtimeIntegrated": false,
+  "newBrowserRun": false,
+  "newNativeRun": false,
+  "humanPlaytest": false,
+  "apk": "0.63",
+  "decision": "DIAGNOSE_ONLY",
+  "negativeExactBoards": 31,
+  "forwardLastFits": 3050202592
+}

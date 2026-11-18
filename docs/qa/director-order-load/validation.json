@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-10",
+  "status": "behavioral pilot failed; isolated research core, ordinary flow-v4/APK0.62 unchanged",
+  "unit": {
+    "passed": 268,
+    "files": 41,
+    "command": "npm test -- --no-file-parallelism",
+    "seconds": 24.72
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "environment": {
+    "node": "24.22.1",
+    "vite": "8.2.2",
+    "vitest": "4.1.11",
+    "typescript": "7.0.2"
+  },
+  "limitations": [
+    "Dependencies supplied by runtime, not a lockfile installation; dependency files unchanged",
+    "Partial source snapshot; diagnostics/clear.html materialized unchanged from research parent c96a117e239cc0e5f129bfdf289c054cc229fceb",
+    "Public asset completeness, full browser regression and Android not checked",
+    "No physical-phone performance or human feel claim",
+    "144-game pilot does not replace release-required1000 seeds/policy/player or human sessions"
+  ],
+  "replay": {
+    "valid": true,
+    "runs": 144,
+    "moves": 23617,
+    "proofs": 3860,
+    "diagnostics": 4281,
+    "maxWork": 22889,
+    "oldRuns": 80,
+    "oldMoves": 12026,
+    "resultsSha256": "e4d2843d0e40d0f22282343fbc0ac64d487441cc1070398c3d31682a0f15b649"
+  },
+  "loadRisk": {
+    "valid": true,
+    "fatalVerified": 14,
+    "loadWitnesses": 663,
+    "fatalEnds": {
+      "clear": {
+        "ended": 16,
+        "fatalLast": 4
+      },
+      "three": {
+        "ended": 8,
+        "fatalLast": 8
+      },
+      "plausible": {
+        "ended": 16,
+        "fatalLast": 2
+      }
+    },
+    "loadRiskSha256": "e364c0aad2a5dc2a425716a689d7cb31432ebff30c98703cca898c270269cd07"
+  },
+  "sourceSha256": {
+    "src/core/director-search.ts": "345d27175f0443c4a1f0aa7100989e57b4e40f4b4ce134781c842987c301be61",
+    "src/core/order-director.ts": "407b86795c3532e3c156924298eb433de3133eb6f349811feab6697b8ea33ef3",
+    "src/core/rules.ts": "a7178d7d47d7aadb581fc91a498390f738b3530baed3056e30e44fc5f2275e4d",
+    "src/core/profile.ts": "c54e8f8ffe1c7f6796ca25621a86d5e8524b207ea5ee90503b79ea4f8d502298",
+    "src/core/monetization.ts": "194df7694204327b571ea0034e40de7d54cd9e6c5ec19448acdd022adc2dabfb",
+    "src/core/rhythm.ts": "786630735b1039babc8761cab312884c38f653d6a7f3fe1e7a4b63cea8349f2a",
+    "src/core/shapes.json": "2ed1a34a2c3b7e069127d3d81c1ad6e0a20569053a4984d902339c299bd5b53e",
+    "src/game/move-calculator.ts": "65dba015f9ddc837fc6bdcc36f78035cd4af2e45376739672c0e9e39c1eacb86",
+    "tests/order-director.test.ts": "151b20e6ee4ae0b7157eb32394cea942503ba0067b438184e47eeb9ad410b68d",
+    "tests/move-calculator.test.ts": "7af9d164a292f82132fbdce274437e46958347da12004e59324f043476608bc2",
+    "scripts/difficulty/players.ts": "d0e3507e37e5ce6b2dd907da8e90b31842e03e76fbe6ddf94c476796464fb713",
+    "scripts/difficulty/analyze.ts": "d1deb62d009b02e579ad2cce318c4bfcf0dac450db83ce614601f303cc1f5da3",
+    "scripts/director/order-board.json": "5acb33349f2a965a5e2dff0da51565bfe7e44dd5e58ee21408714f9ec062276e",
+    "scripts/director/order-load-benchmark.mjs": "a866751d14ea32cdbe676aebcf4e8dd40f25f7f5380b8178fd8207fe353ea2cc",
+    "scripts/director/order-load-runtime.mjs": "66e7c68f991018e5a549d03d9262e11685b32728f4d2abfc9a4386afabb18f31",
+    "scripts/director/verify-order-load.mjs": "4a53d2ffa4d88d8fd2fdd80e351d9583faaed4d765c0b8f4324e271862e529d8",
+    "scripts/director/analyze-order-load.py": "65975037c7786e6f9ea1acbca1866f85b07b246c79fcf056363f87c96f0f963a",
+    "scripts/director/load-risk-census.mjs": "bfe148de7e88a6d6f5d7c0175efb2b749add043a1e52491710e51421a33ed430",
+    "scripts/director/verify-load-risk.mjs": "ce0f753bce232bc054b42b4e42b5ea43b3b1bb866e957189117cb5b1a4d18c2d",
+    "docs/qa/director-order-load/protocol.md": "8697fbb41d14740dcb5c389a874986cf04de161b238fac894d8999b2be3a1065"
+  },
+  "dataSha256": {
+    "docs/qa/director-order-load/analysis.json": "74e9e772d72e9422b0d15e8358fd8f9d4005ccb4292d460c172dfbd75705da1f",
+    "docs/qa/director-order-load/invalid-player-rng.json.gz": "f0335d4f5b7b0723f018af0112665b67965f10f125b3399dd66e5b5e362bd274",
+    "docs/qa/director-order-load/load-risk-audit.json": "99c75bd1bf044c6c442c0a3d317a22c6dd080a012b1ec163ae23ebb9bb5caa89",
+    "docs/qa/director-order-load/load-risk.json.gz": "e364c0aad2a5dc2a425716a689d7cb31432ebff30c98703cca898c270269cd07",
+    "docs/qa/director-order-load/replay-audit.json": "e51a9282654c032448e8c57fe0610ff0b262189fdc376e5b2d42d9c7f034acbe",
+    "docs/qa/director-order-load/results.json.gz": "e4d2843d0e40d0f22282343fbc0ac64d487441cc1070398c3d31682a0f15b649"
+  }
+}

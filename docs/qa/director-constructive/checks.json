@@ -1,0 +1,79 @@
+{
+  "unit": {
+    "passed": 306,
+    "files": 47,
+    "command": "npx vitest run --maxWorkers=4"
+  },
+  "browser": {
+    "passed": 9,
+    "command": "npx playwright test e2e/constructive-director.spec.ts e2e/reward-director.spec.ts e2e/forgiving-director.spec.ts e2e/goal-director.spec.ts e2e/save-atomicity.spec.ts --workers=1"
+  },
+  "typescript": true,
+  "productionBuild": true,
+  "assetsCheck": true,
+  "historicalReplay": {
+    "valid": true,
+    "games": 576,
+    "moves": 110462,
+    "results": [
+      {
+        "path": "docs/qa/director-goal-cycle/results.json.gz",
+        "games": 96,
+        "moves": 20889,
+        "sourceSha256": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+      },
+      {
+        "path": "docs/qa/director-mixed/results.json.gz",
+        "games": 160,
+        "moves": 27350,
+        "sourceSha256": "4055811c83d3b31038d7fb1f27c664731ae66588e31cd2e73a05ad4d2a3bb2e1"
+      },
+      {
+        "path": "docs/qa/director-forgiving/results.json.gz",
+        "games": 160,
+        "moves": 30877,
+        "sourceSha256": "e703dd2f641ef1bef2b5dc34adbc71e6f2a58b5fa8b42aee08c5d0ff06adec57"
+      },
+      {
+        "path": "docs/qa/director-reward-paths/results.json.gz",
+        "games": 160,
+        "moves": 31346,
+        "sourceSha256": "68e321479291e85d2932e0ba1fc4e351084d581d5724ecf6e776db5b9d0959c7"
+      }
+    ]
+  },
+  "candidateReplay": {
+    "valid": true,
+    "games": 160,
+    "moves": 32092,
+    "trios": 10801,
+    "constructionProofs": 8135,
+    "roots": 19564,
+    "seconds": 48753,
+    "preparations": 2638,
+    "negative": 53,
+    "playerChoicesRecomputed": true,
+    "sourceSha256": "63d9bfd28024355727102a71fb099a5fa929851f2bb0daa305cc6521351a4d0c"
+  },
+  "physicalAndroid": false,
+  "newApkBuilt": false,
+  "defaultChanged": false,
+  "behaviorAccepted": false,
+  "diagnosis": {
+    "selectedOldEndpoints": 41,
+    "compact550": 10,
+    "compactFull": 12,
+    "mixedEnvelope3": 12,
+    "mixedEnvelope6": 13,
+    "sequential3": 3,
+    "additionalSequentialSolutions": 0,
+    "note": "Bounded target classes and selected cases; misses do not prove impossibility."
+  },
+  "dependencies": {
+    "reusedExistingInstall": true,
+    "lockUnchanged": true,
+    "installedVersionsChecked": 151,
+    "versionMismatches": [],
+    "lockSha256": "26ce231829f0b97763e1bba44f543c8d5406e6640f133982e39f0f1e0e62b999"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "environment": "Chromium software WebGL; 390x844 DPR2; one full-combo and one idle-drag scenario per invocation; not Android FPS. Invocation order: after1, before1, before2, after2.",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "full",
+      "frames": 37,
+      "median": 33.400000000000546,
+      "p95": 83.30000000000018,
+      "over33": 19,
+      "metrics": {
+        "LayoutCount": 48,
+        "LayoutDuration": 0.004667,
+        "RecalcStyleCount": 77,
+        "RecalcStyleDuration": 0.032113,
+        "ScriptDuration": 0.31514,
+        "TaskDuration": 1.6740599999999999
+      },
+      "audit": {
+        "rectReads": 49,
+        "previewCalls": 43,
+        "draws": 51,
+        "drawCPU": 37.19999998062849,
+        "festivalPeak": 330,
+        "vfxPeak": 220,
+        "long": [
+          80,
+          95,
+          75,
+          57,
+          93,
+          56,
+          52,
+          54,
+          66,
+          55,
+          67,
+          79,
+          68,
+          52
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "idle-drag",
+      "frames": 25,
+      "median": 50.099999999999454,
+      "p95": 116.69999999999982,
+      "over33": 22,
+      "metrics": {
+        "LayoutCount": 26,
+        "LayoutDuration": 0.008554,
+        "RecalcStyleCount": 53,
+        "RecalcStyleDuration": 0.005661,
+        "ScriptDuration": 0.256061,
+        "TaskDuration": 1.8503150000000002
+      },
+      "audit": {
+        "rectReads": 30,
+        "previewCalls": 27,
+        "draws": 27,
+        "drawCPU": 10.000000014901161,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": [
+          143,
+          82,
+          83,
+          50,
+          53,
+          54,
+          64,
+          82,
+          86,
+          109,
+          58,
+          85,
+          61,
+          62,
+          52,
+          60,
+          101,
+          133,
+          93,
+          63,
+          65,
+          179
+        ]
+      }
+    }
+  ],
+  "sourceCommit": "6100a261d332534e1e7c3c6d0389e2023f5aa8e3"
+}

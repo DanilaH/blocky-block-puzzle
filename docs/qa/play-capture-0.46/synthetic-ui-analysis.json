@@ -1,0 +1,78 @@
+{
+  "schema": "blocky-calibration-v1",
+  "source": "user-provided recording; provenance not independently authenticated",
+  "limitations": [
+    "Active intervals include interaction, calculation and saving; not pure thinking time.",
+    "Different moves from a bot are not automatically mistakes.",
+    "Unknown search outcomes are not failures.",
+    "Checkpoints are segment boundaries; unrecorded transitions are not replay-verified.",
+    "No retuning of dealer or invented target duration is performed."
+  ],
+  "summary": {
+    "moves": 1,
+    "segments": 1,
+    "scoreGain": 6,
+    "fullClears": 0,
+    "rewardMoves": 0,
+    "hintedMoves": 0,
+    "unhintedAvoidableDeadEnds": 0,
+    "unknownChoices": 0,
+    "medianActiveIntervalMs": 127
+  },
+  "segments": [
+    {
+      "index": 1,
+      "reason": "start",
+      "initialMoves": 0,
+      "gameId": "08498ba6-ee94-4913-9ecd-a1ede6ae0ae8"
+    }
+  ],
+  "rows": [
+    {
+      "segment": 1,
+      "move": 1,
+      "score": 6,
+      "activeIntervalMs": 127,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 6,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 58,
+        "squares": 43,
+        "largestRectangle": 48
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 0,
+        "x": 0,
+        "y": 0
+      },
+      "bots": {
+        "clear": {
+          "slot": 0,
+          "x": 6,
+          "y": 0
+        },
+        "space": {
+          "slot": 0,
+          "x": 6,
+          "y": 0
+        },
+        "two": {
+          "slot": 0,
+          "x": 6,
+          "y": 0
+        },
+        "three": {
+          "slot": 0,
+          "x": 6,
+          "y": 0
+        }
+      }
+    }
+  ]
+}

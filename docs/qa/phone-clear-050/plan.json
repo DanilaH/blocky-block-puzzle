@@ -1,0 +1,13 @@
+{
+  "candidate": "precomposed energy perimeter + startup VFX atlas",
+  "stage": "exploratory screen, no acceptance from this screen",
+  "confirmationGate": "If screened in, require >=10% lower median warm intervals >25ms on EACH of three actual phone fixtures, no warm repeat >baseline+2 intervals, cold median <=baseline+2, pixel maximum <=3/255 and mean <0.05/255; logical result unchanged. New frozen runs only. Physical Android acceptance remains separate.",
+  "baseline": "original SpriteInk energy perimeter, individual VFX textures; one texture unit; canvas896 for newest fixture",
+  "omissions": "Audio/haptics muted; native SDK absent; actual phone DOM bounds and pre-clear visual history unavailable.",
+  "additionalExploratoryCandidates": [
+    "Full-board wash as native flat-color Rectangle",
+    "All fillRect primitives as flat-color Rectangles",
+    "Cached perimeter + VFX atlas + flat wash",
+    "Cached perimeter + VFX atlas + flat fillRect primitives"
+  ]
+}

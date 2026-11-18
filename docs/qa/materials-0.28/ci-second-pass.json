@@ -1,0 +1,10 @@
+{
+  "run": 41294480588,
+  "source": "5eb763cea6a05a7ff4e7d7035413b6c42f596ab1",
+  "unitPassed": 92,
+  "browserPassed": 95,
+  "browserFailed": 4,
+  "dragPassed": true,
+  "failure": "Reload readiness blocked by paused synthetic RAF in festival/preflight test fixtures",
+  "fix": "Resume synthetic clock only after all reward assertions and before final reload; preserve every existing assertion"
+}

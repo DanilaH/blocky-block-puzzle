@@ -1,0 +1,23 @@
+{
+  "publicSourceCommit": "ca1e4a1b5e90e4531a282a32ebde2a951ea01864",
+  "localFullHistoryHead": "5a370c93a2baa198daa270fb1bb35db80f2c69f8",
+  "publicSourceTree": "da469c11261e82db1a0e421c6aff176ca66fa101",
+  "expectedTree": "da469c11261e82db1a0e421c6aff176ca66fa101",
+  "sameGameNativeTestsScriptsAndSettings": true,
+  "onlyExcludedGeneratedPaths": [
+    "docs/qa/branch-preparation/cell-fixtures.json",
+    "docs/qa/branch-preparation/results.json",
+    "docs/qa/commercial-iteration-2026-11-13/long-session.json",
+    "docs/qa/committed-rollout/results.json.gz",
+    "docs/qa/geometry-recovery/results.json",
+    "docs/qa/local-choice/engineering.json.gz",
+    "docs/qa/local-choice/holdout.json.gz",
+    "docs/qa/local-choice/matched.json.gz",
+    "docs/qa/played-rollout/results.json.gz"
+  ],
+  "publication": "one create_tree request with complete UTF-8 files; no blob API or base64; no force ref update",
+  "previewParents": [
+    "8894c8aba038578c95bc25597be630056db91fb4",
+    "c31a49e915ab5692edcc2b573c764501ebff9bea"
+  ]
+}

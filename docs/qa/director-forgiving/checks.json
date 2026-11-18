@@ -1,0 +1,32 @@
+{
+  "unit": {
+    "passed": 298,
+    "files": 45
+  },
+  "browser": {
+    "passed": 7,
+    "files": [
+      "e2e/forgiving-director.spec.ts",
+      "e2e/goal-director.spec.ts",
+      "e2e/save-atomicity.spec.ts"
+    ],
+    "realPlacementsV4": 24,
+    "realPlacementsV2": 36
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "assetsCheck": "passed",
+  "physicalAndroid": "not tested",
+  "humanBalance": "not accepted",
+  "candidateBehaviorAccepted": false,
+  "defaultDealer": "director-v2",
+  "previewVersion": "0.63.0-preview",
+  "sha256": {
+    "results.json.gz": "e703dd2f641ef1bef2b5dc34adbc71e6f2a58b5fa8b42aee08c5d0ff06adec57",
+    "metrics.json": "b885c25f8607258727b198a70a5e1e83f639f8414cfe1598f0c60a4a439366ae",
+    "phases.json": "d31b350b7e2fe758fa1822530a2304195aa3a59f9fa19ef25b3fc278fb1b9047",
+    "replay.json": "cd87f1e62b1bd58c760c586703c8e9bdb6d1d1fe227709d1a4e5b5dfe5786b9b",
+    "legacy-replay.json": "8943460c3e1fca526ca6e7a00e60c8fcae244496593383c4df4cc330ea957162",
+    "reward-misses.json": "c3fa950d0396251b504cd152d5c8f3f3dc9fbf6aedb58cb0ea2461a4cb75e1df"
+  }
+}

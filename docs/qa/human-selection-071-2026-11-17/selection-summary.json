@@ -1,0 +1,249 @@
+{
+  "provenance": "Owner playtest aggregates; one person, different seeds and unequal exposure; descriptive, not randomized A/B or phone performance",
+  "schema": 1,
+  "humanParticipants": 1,
+  "recordings": 2,
+  "appVersions": [
+    "0.71.0-preview"
+  ],
+  "exactMoves": 685,
+  "uniqueMoves": 685,
+  "playedGames": 5,
+  "unplayedGamesExcluded": 2,
+  "byDealer": {
+    "director-challenge-v1": {
+      "games": 2,
+      "ended": 2,
+      "all": {
+        "moves": 265,
+        "clearMoves": 110,
+        "allClears": 15,
+        "totalLines": 172,
+        "occupiedSum": 4257,
+        "maxOccupied": 41,
+        "meanOccupied": 16.064150943396225
+      },
+      "beforeFirstLoss": {
+        "moves": 160,
+        "clearMoves": 63,
+        "allClears": 11,
+        "totalLines": 97,
+        "occupiedSum": 2037,
+        "maxOccupied": 39,
+        "meanOccupied": 12.73125
+      },
+      "afterRevive": {
+        "moves": 105,
+        "clearMoves": 47,
+        "allClears": 4,
+        "totalLines": 75,
+        "occupiedSum": 2220,
+        "maxOccupied": 41,
+        "meanOccupied": 21.142857142857142
+      }
+    },
+    "director-challenge-v2": {
+      "games": 3,
+      "ended": 3,
+      "all": {
+        "moves": 420,
+        "clearMoves": 175,
+        "allClears": 21,
+        "totalLines": 271,
+        "occupiedSum": 8301,
+        "maxOccupied": 48,
+        "meanOccupied": 19.764285714285716
+      },
+      "beforeFirstLoss": {
+        "moves": 357,
+        "clearMoves": 147,
+        "allClears": 21,
+        "totalLines": 227,
+        "occupiedSum": 6490,
+        "maxOccupied": 42,
+        "meanOccupied": 18.179271708683473
+      },
+      "afterRevive": {
+        "moves": 63,
+        "clearMoves": 28,
+        "allClears": 0,
+        "totalLines": 44,
+        "occupiedSum": 1811,
+        "maxOccupied": 48,
+        "meanOccupied": 28.746031746031747
+      }
+    }
+  },
+  "games": [
+    {
+      "game": 1,
+      "dealer": "director-challenge-v1",
+      "firstLossAt": 26,
+      "ended": true,
+      "hinted": 0,
+      "all": {
+        "moves": 35,
+        "clearMoves": 12,
+        "allClears": 1,
+        "totalLines": 20,
+        "occupiedSum": 673,
+        "maxOccupied": 39,
+        "meanOccupied": 19.228571428571428
+      },
+      "beforeFirstLoss": {
+        "moves": 26,
+        "clearMoves": 8,
+        "allClears": 1,
+        "totalLines": 13,
+        "occupiedSum": 407,
+        "maxOccupied": 39,
+        "meanOccupied": 15.653846153846153
+      },
+      "afterRevive": {
+        "moves": 9,
+        "clearMoves": 4,
+        "allClears": 0,
+        "totalLines": 7,
+        "occupiedSum": 266,
+        "maxOccupied": 39,
+        "meanOccupied": 29.555555555555557
+      }
+    },
+    {
+      "game": 2,
+      "dealer": "director-challenge-v1",
+      "firstLossAt": 134,
+      "ended": true,
+      "hinted": 0,
+      "all": {
+        "moves": 230,
+        "clearMoves": 98,
+        "allClears": 14,
+        "totalLines": 152,
+        "occupiedSum": 3584,
+        "maxOccupied": 41,
+        "meanOccupied": 15.582608695652175
+      },
+      "beforeFirstLoss": {
+        "moves": 134,
+        "clearMoves": 55,
+        "allClears": 10,
+        "totalLines": 84,
+        "occupiedSum": 1630,
+        "maxOccupied": 32,
+        "meanOccupied": 12.164179104477611
+      },
+      "afterRevive": {
+        "moves": 96,
+        "clearMoves": 43,
+        "allClears": 4,
+        "totalLines": 68,
+        "occupiedSum": 1954,
+        "maxOccupied": 41,
+        "meanOccupied": 20.354166666666668
+      }
+    },
+    {
+      "game": 3,
+      "dealer": "director-challenge-v2",
+      "firstLossAt": 62,
+      "ended": true,
+      "hinted": 0,
+      "all": {
+        "moves": 86,
+        "clearMoves": 40,
+        "allClears": 0,
+        "totalLines": 60,
+        "occupiedSum": 2107,
+        "maxOccupied": 48,
+        "meanOccupied": 24.5
+      },
+      "beforeFirstLoss": {
+        "moves": 62,
+        "clearMoves": 28,
+        "allClears": 0,
+        "totalLines": 43,
+        "occupiedSum": 1328,
+        "maxOccupied": 42,
+        "meanOccupied": 21.419354838709676
+      },
+      "afterRevive": {
+        "moves": 24,
+        "clearMoves": 12,
+        "allClears": 0,
+        "totalLines": 17,
+        "occupiedSum": 779,
+        "maxOccupied": 48,
+        "meanOccupied": 32.458333333333336
+      }
+    },
+    {
+      "game": 4,
+      "dealer": "director-challenge-v2",
+      "firstLossAt": 140,
+      "ended": true,
+      "hinted": 0,
+      "all": {
+        "moves": 158,
+        "clearMoves": 66,
+        "allClears": 14,
+        "totalLines": 98,
+        "occupiedSum": 2725,
+        "maxOccupied": 39,
+        "meanOccupied": 17.246835443037973
+      },
+      "beforeFirstLoss": {
+        "moves": 140,
+        "clearMoves": 59,
+        "allClears": 14,
+        "totalLines": 87,
+        "occupiedSum": 2248,
+        "maxOccupied": 39,
+        "meanOccupied": 16.057142857142857
+      },
+      "afterRevive": {
+        "moves": 18,
+        "clearMoves": 7,
+        "allClears": 0,
+        "totalLines": 11,
+        "occupiedSum": 477,
+        "maxOccupied": 39,
+        "meanOccupied": 26.5
+      }
+    },
+    {
+      "game": 5,
+      "dealer": "director-challenge-v2",
+      "firstLossAt": 155,
+      "ended": true,
+      "hinted": 0,
+      "all": {
+        "moves": 176,
+        "clearMoves": 69,
+        "allClears": 7,
+        "totalLines": 113,
+        "occupiedSum": 3469,
+        "maxOccupied": 41,
+        "meanOccupied": 19.710227272727273
+      },
+      "beforeFirstLoss": {
+        "moves": 155,
+        "clearMoves": 60,
+        "allClears": 7,
+        "totalLines": 97,
+        "occupiedSum": 2914,
+        "maxOccupied": 41,
+        "meanOccupied": 18.8
+      },
+      "afterRevive": {
+        "moves": 21,
+        "clearMoves": 9,
+        "allClears": 0,
+        "totalLines": 16,
+        "occupiedSum": 555,
+        "maxOccupied": 38,
+        "meanOccupied": 26.428571428571427
+      }
+    }
+  ]
+}

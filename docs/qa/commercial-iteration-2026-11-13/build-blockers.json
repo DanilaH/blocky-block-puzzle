@@ -1,0 +1,12 @@
+{
+  "version": "0.64.0-preview",
+  "ads": "Yandex demo units only",
+  "analytics": "separate test project required",
+  "blockers": [
+    "Separate valid APPMETRICA_TEST_API_KEY missing",
+    "Android SDK platform 36 missing",
+    "Android build-tools 36.0.0 missing",
+    "Original preview signing key missing; required SHA256 e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+    "Full JDK command-line tools not configured"
+  ]
+}

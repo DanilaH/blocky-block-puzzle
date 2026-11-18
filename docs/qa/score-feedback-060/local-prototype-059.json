@@ -1,0 +1,1558 @@
+{
+  "environment": "Linux Chromium mobile emulation, software graphics. Not POCO performance. Traced data is resource attribution, not FPS A/B.",
+  "scope": "Resource attribution in separate traced captures; untraced RAF did not establish a consistent end-to-end improvement. Not a physical POCO acceptance.",
+  "rows": [
+    {
+      "index": 0,
+      "variant": "baseline",
+      "scoreRasterWorkerWallMs": 25.168000000000003,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 463,
+            "over33Raw": 6,
+            "over33": 1,
+            "over34": 1,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 152,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 182,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 458,
+            "over33Raw": 6,
+            "over33": 2,
+            "over34": 2,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 148,
+              "inkPeak": 45,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 176,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 142,
+          "inkPeak": 47,
+          "vfxPeak": 79,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 239,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 172,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 144,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8044.487,
+      "errors": []
+    },
+    {
+      "index": 1,
+      "variant": "prepromote",
+      "scoreRasterWorkerWallMs": 26.921000000000006,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 452,
+            "over33Raw": 10,
+            "over33": 4,
+            "over34": 4,
+            "over50": 2,
+            "maxMs": 83.30000305175781,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 142,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 174,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 455,
+            "over33Raw": 8,
+            "over33": 4,
+            "over34": 4,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 143,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 171,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 141,
+          "inkPeak": 47,
+          "vfxPeak": 81,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 239,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 170,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 144,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8016.177,
+      "errors": []
+    },
+    {
+      "index": 2,
+      "variant": "filter-unpromoted",
+      "scoreRasterWorkerWallMs": 12.338,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 451,
+            "over33Raw": 13,
+            "over33": 4,
+            "over34": 4,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 33.29999923706055
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 139,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 169,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 459,
+            "over33Raw": 10,
+            "over33": 3,
+            "over34": 3,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 147,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 177,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 143,
+          "inkPeak": 47,
+          "vfxPeak": 79,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 239,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 171,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 148,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8013.918,
+      "errors": []
+    },
+    {
+      "index": 3,
+      "variant": "filter",
+      "scoreRasterWorkerWallMs": 9.724999999999996,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 461,
+            "over33Raw": 7,
+            "over33": 0,
+            "over34": 0,
+            "over50": 0,
+            "maxMs": 33.400001525878906,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 149,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 178,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 455,
+            "over33Raw": 9,
+            "over33": 3,
+            "over34": 3,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 146,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 173,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 144,
+          "inkPeak": 47,
+          "vfxPeak": 78,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 240,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 171,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 147,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8013.245,
+      "errors": []
+    },
+    {
+      "index": 4,
+      "variant": "filter",
+      "scoreRasterWorkerWallMs": 9.954999999999997,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 459,
+            "over33Raw": 7,
+            "over33": 1,
+            "over34": 1,
+            "over50": 1,
+            "maxMs": 66.5999984741211,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 148,
+              "inkPeak": 46,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 175,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 450,
+            "over33Raw": 12,
+            "over33": 5,
+            "over34": 5,
+            "over50": 2,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 33.29999923706055
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 138,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 238,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 169,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 142,
+          "inkPeak": 47,
+          "vfxPeak": 78,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 239,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 169,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 148,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8060.473,
+      "errors": []
+    },
+    {
+      "index": 5,
+      "variant": "filter-unpromoted",
+      "scoreRasterWorkerWallMs": 10.366999999999997,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 457,
+            "over33Raw": 10,
+            "over33": 1,
+            "over34": 1,
+            "over50": 0,
+            "maxMs": 50,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 146,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 174,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 446,
+            "over33Raw": 13,
+            "over33": 6,
+            "over34": 6,
+            "over50": 2,
+            "maxMs": 166.6999969482422,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 136,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 234,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 174,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 136,
+          "inkPeak": 47,
+          "vfxPeak": 79,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 239,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 166,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 144,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8047.869,
+      "errors": []
+    },
+    {
+      "index": 6,
+      "variant": "prepromote",
+      "scoreRasterWorkerWallMs": 25.067999999999998,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 451,
+            "over33Raw": 11,
+            "over33": 7,
+            "over34": 7,
+            "over50": 2,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 139,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 237,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 171,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 458,
+            "over33Raw": 6,
+            "over33": 3,
+            "over34": 3,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 146,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 176,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 144,
+          "inkPeak": 47,
+          "vfxPeak": 78,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 240,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 175,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 144,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8037.555,
+      "errors": []
+    },
+    {
+      "index": 7,
+      "variant": "baseline",
+      "scoreRasterWorkerWallMs": 30.879999999999995,
+      "untraced": [
+        {
+          "metrics": {
+            "intervals": 455,
+            "over33Raw": 11,
+            "over33": 4,
+            "over34": 4,
+            "over50": 1,
+            "maxMs": 50.099998474121094,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 143,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 239,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 172,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "metrics": {
+            "intervals": 457,
+            "over33Raw": 9,
+            "over33": 2,
+            "over34": 2,
+            "over50": 1,
+            "maxMs": 66.69999694824219,
+            "p95Ms": 16.799999237060547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 146,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 240,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "activeParticles": 0,
+              "activeReveals": 0,
+              "draws": 175,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "rowProof": {
+        "renderedTheme": 5,
+        "savedTheme": 5,
+        "score": 1574,
+        "boardEmpty": true,
+        "rewardDomCreated": 3,
+        "rewardEffects": {
+          "captionAnimations": 2,
+          "visibleEmblems": 0,
+          "pointFlights": 2,
+          "hudFlashes": 2,
+          "themeNotices": 1,
+          "themeImpulses": 1
+        },
+        "rewardRenderer": "dom",
+        "shownScore": 1574,
+        "pendingPoints": 0,
+        "scene": {
+          "draws": 151,
+          "inkPeak": 47,
+          "vfxPeak": 78,
+          "theme": 5
+        },
+        "atmosphere": {
+          "disabled": false,
+          "theme": 5,
+          "domPaletteTheme": 5,
+          "domPalette": {
+            "bg": "#233f57",
+            "ink": "#f2f4f7",
+            "accent": "#a5e8ef"
+          },
+          "draws": 241,
+          "canvas": [
+            588,
+            1308
+          ]
+        },
+        "festival": {
+          "activeParticles": 0,
+          "activeReveals": 0,
+          "draws": 179,
+          "bursts": 2,
+          "spawned": 148,
+          "peakParticles": 144,
+          "disabled": false,
+          "theme": 5,
+          "canvas": [
+            588,
+            1308
+          ]
+        }
+      },
+      "tracedWindowMs": 8015.522,
+      "errors": []
+    }
+  ],
+  "visualComparison": [
+    {
+      "atMs": 0,
+      "meanChannelError": 0.08912389444686096,
+      "maxChannelError": 6,
+      "percentPixelsOver8": 0
+    },
+    {
+      "atMs": 80,
+      "meanChannelError": 0.22292905127833357,
+      "maxChannelError": 7,
+      "percentPixelsOver8": 0
+    },
+    {
+      "atMs": 180,
+      "meanChannelError": 0.19960822338214682,
+      "maxChannelError": 8,
+      "percentPixelsOver8": 0
+    },
+    {
+      "atMs": 350,
+      "meanChannelError": 0.3101318205983278,
+      "maxChannelError": 14,
+      "percentPixelsOver8": 1.3416159199652022
+    },
+    {
+      "atMs": 550,
+      "meanChannelError": 0.29549683437243246,
+      "maxChannelError": 17,
+      "percentPixelsOver8": 1.4911374510656807
+    }
+  ]
+}

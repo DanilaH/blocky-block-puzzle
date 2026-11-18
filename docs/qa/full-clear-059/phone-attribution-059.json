@@ -1,0 +1,3351 @@
+{
+  "scope": "One instrumented capture per condition; counts and layer attribution only, not FPS A/B or GPU execution-time measurements. Raster durations are worker-wall sums and may overlap.",
+  "cases": [
+    {
+      "condition": "baseline",
+      "events": 376527,
+      "paintEvents": 495,
+      "rasterTop": [
+        {
+          "layerId": "2318",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 63,
+          "durationUs": 130226,
+          "maxUs": 8298
+        },
+        {
+          "layerId": "2358",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 21,
+          "durationUs": 93869,
+          "maxUs": 10466
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 16,
+          "durationUs": 25701,
+          "maxUs": 4930
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 112,
+          "durationUs": 21591,
+          "maxUs": 1407
+        },
+        {
+          "layerId": "2322",
+          "path": "218",
+          "count": 6,
+          "durationUs": 20857,
+          "maxUs": 7872
+        },
+        {
+          "layerId": "2330",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 10,
+          "durationUs": 20143,
+          "maxUs": 3805
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 51,
+          "durationUs": 13391,
+          "maxUs": 1679
+        },
+        {
+          "layerId": "2334",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 9,
+          "durationUs": 3769,
+          "maxUs": 1449
+        },
+        {
+          "layerId": "2321",
+          "path": "217",
+          "count": 1,
+          "durationUs": 3411,
+          "maxUs": 3411
+        },
+        {
+          "layerId": "2319",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 5,
+          "durationUs": 2909,
+          "maxUs": 1402
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 109,
+          "durationUs": 684885,
+          "maxUs": 15941
+        },
+        {
+          "size": "384x192",
+          "count": 4,
+          "durationUs": 24286,
+          "maxUs": 9871
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 22869,
+          "maxUs": 10585
+        },
+        {
+          "size": "448x256",
+          "count": 6,
+          "durationUs": 22256,
+          "maxUs": 8484
+        },
+        {
+          "size": "1024x448",
+          "count": 6,
+          "durationUs": 20540,
+          "maxUs": 6592
+        },
+        {
+          "size": "576x128",
+          "count": 5,
+          "durationUs": 15232,
+          "maxUs": 7587
+        },
+        {
+          "size": "384x128",
+          "count": 5,
+          "durationUs": 12708,
+          "maxUs": 7710
+        },
+        {
+          "size": "704x608",
+          "count": 6,
+          "durationUs": 12640,
+          "maxUs": 3951
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 11322,
+          "maxUs": 7814
+        },
+        {
+          "size": "448x320",
+          "count": 6,
+          "durationUs": 10877,
+          "maxUs": 5316
+        },
+        {
+          "size": "320x128",
+          "count": 3,
+          "durationUs": 10579,
+          "maxUs": 7236
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 9950,
+          "maxUs": 1893
+        },
+        {
+          "size": "384x256",
+          "count": 3,
+          "durationUs": 8918,
+          "maxUs": 5910
+        },
+        {
+          "size": "192x192",
+          "count": 5,
+          "durationUs": 8602,
+          "maxUs": 2531
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 8410,
+          "maxUs": 2922
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 6918,
+          "maxUs": 6918
+        },
+        {
+          "size": "320x64",
+          "count": 2,
+          "durationUs": 5529,
+          "maxUs": 5139
+        },
+        {
+          "size": "1088x608",
+          "count": 3,
+          "durationUs": 4582,
+          "maxUs": 1975
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 3421,
+          "maxUs": 2459
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 2937,
+          "maxUs": 1349
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2739,
+          "maxUs": 1582
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 2485,
+          "maxUs": 858
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 2307,
+          "maxUs": 2307
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 1899,
+          "maxUs": 1152
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1651,
+          "maxUs": 1651
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 1586,
+          "maxUs": 1586
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 1421,
+          "maxUs": 809
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1002,
+          "maxUs": 1002
+        }
+      ],
+      "nativeWaitCount": 97,
+      "nativeWaitInclusiveMs": 608.282
+    },
+    {
+      "condition": "no-hud-flashes",
+      "events": 385790,
+      "paintEvents": 508,
+      "rasterTop": [
+        {
+          "layerId": "2377",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 97,
+          "durationUs": 91514,
+          "maxUs": 5115
+        },
+        {
+          "layerId": "2381",
+          "path": "938",
+          "count": 8,
+          "durationUs": 37033,
+          "maxUs": 11504
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 124,
+          "durationUs": 24856,
+          "maxUs": 2018
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 52,
+          "durationUs": 19796,
+          "maxUs": 4234
+        },
+        {
+          "layerId": "2404",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-praise > I",
+          "count": 1,
+          "durationUs": 3863,
+          "maxUs": 3863
+        },
+        {
+          "layerId": "2403",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-praise > I",
+          "count": 1,
+          "durationUs": 3645,
+          "maxUs": 3645
+        },
+        {
+          "layerId": "2379",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 3612,
+          "maxUs": 3612
+        },
+        {
+          "layerId": "2378",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 4,
+          "durationUs": 3376,
+          "maxUs": 1488
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 14,
+          "durationUs": 3330,
+          "maxUs": 524
+        },
+        {
+          "layerId": "2380",
+          "path": "937",
+          "count": 1,
+          "durationUs": 2504,
+          "maxUs": 2504
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 102,
+          "durationUs": 675957,
+          "maxUs": 21704
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 24908,
+          "maxUs": 9649
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 18806,
+          "maxUs": 8257
+        },
+        {
+          "size": "192x192",
+          "count": 1,
+          "durationUs": 12027,
+          "maxUs": 12027
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 11227,
+          "maxUs": 5604
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 9751,
+          "maxUs": 5825
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 9583,
+          "maxUs": 2002
+        },
+        {
+          "size": "768x256",
+          "count": 2,
+          "durationUs": 7345,
+          "maxUs": 6099
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 7263,
+          "maxUs": 7263
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 6456,
+          "maxUs": 3319
+        },
+        {
+          "size": "576x128",
+          "count": 5,
+          "durationUs": 4498,
+          "maxUs": 1466
+        },
+        {
+          "size": "588x1308",
+          "count": 2,
+          "durationUs": 4444,
+          "maxUs": 2531
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 4050,
+          "maxUs": 3594
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 3074,
+          "maxUs": 1556
+        },
+        {
+          "size": "320x128",
+          "count": 1,
+          "durationUs": 2365,
+          "maxUs": 2365
+        },
+        {
+          "size": "512x128",
+          "count": 1,
+          "durationUs": 2358,
+          "maxUs": 2358
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 1951,
+          "maxUs": 1377
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1147,
+          "maxUs": 1147
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1135,
+          "maxUs": 1135
+        },
+        {
+          "size": "320x64",
+          "count": 1,
+          "durationUs": 919,
+          "maxUs": 919
+        }
+      ],
+      "nativeWaitCount": 90,
+      "nativeWaitInclusiveMs": 472.128
+    },
+    {
+      "condition": "no-reward-decoration",
+      "events": 363246,
+      "paintEvents": 454,
+      "rasterTop": [
+        {
+          "layerId": "2424",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 58,
+          "durationUs": 120277,
+          "maxUs": 7387
+        },
+        {
+          "layerId": "2449",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 18,
+          "durationUs": 93997,
+          "maxUs": 11227
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 19,
+          "durationUs": 35282,
+          "maxUs": 5831
+        },
+        {
+          "layerId": "2435",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 11,
+          "durationUs": 32501,
+          "maxUs": 8620
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration",
+          "count": 112,
+          "durationUs": 18890,
+          "maxUs": 1617
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 47,
+          "durationUs": 14040,
+          "maxUs": 3004
+        },
+        {
+          "layerId": "2439",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 9479,
+          "maxUs": 6035
+        },
+        {
+          "layerId": "2443",
+          "path": "L > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-points",
+          "count": 2,
+          "durationUs": 5812,
+          "maxUs": 4216
+        },
+        {
+          "layerId": "2427",
+          "path": "1675",
+          "count": 1,
+          "durationUs": 4430,
+          "maxUs": 4430
+        },
+        {
+          "layerId": "2436",
+          "path": "#document > HTML > BODY > DIV#app.diagnostic-no-reward-decoration > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 10,
+          "durationUs": 4364,
+          "maxUs": 1657
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 114,
+          "durationUs": 832603,
+          "maxUs": 16725
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 40471,
+          "maxUs": 18719
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 25962,
+          "maxUs": 7815
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 25129,
+          "maxUs": 19421
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 23089,
+          "maxUs": 6980
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 16975,
+          "maxUs": 16975
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 14355,
+          "maxUs": 10687
+        },
+        {
+          "size": "512x256",
+          "count": 2,
+          "durationUs": 13965,
+          "maxUs": 7135
+        },
+        {
+          "size": "448x320",
+          "count": 3,
+          "durationUs": 13299,
+          "maxUs": 5631
+        },
+        {
+          "size": "320x192",
+          "count": 3,
+          "durationUs": 13076,
+          "maxUs": 7523
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 12001,
+          "maxUs": 12001
+        },
+        {
+          "size": "384x256",
+          "count": 3,
+          "durationUs": 9805,
+          "maxUs": 8278
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 8996,
+          "maxUs": 1843
+        },
+        {
+          "size": "320x64",
+          "count": 2,
+          "durationUs": 8939,
+          "maxUs": 7564
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 7670,
+          "maxUs": 3733
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 6741,
+          "maxUs": 6320
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 6130,
+          "maxUs": 2344
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 4613,
+          "maxUs": 1380
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 4013,
+          "maxUs": 4013
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2470,
+          "maxUs": 1620
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 2430,
+          "maxUs": 1597
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 2402,
+          "maxUs": 2402
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1222,
+          "maxUs": 1222
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1002,
+          "maxUs": 1002
+        }
+      ],
+      "nativeWaitCount": 90,
+      "nativeWaitInclusiveMs": 597.583
+    },
+    {
+      "condition": "no-dom-palette",
+      "events": 390094,
+      "paintEvents": 239,
+      "rasterTop": [
+        {
+          "layerId": "2468",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 47,
+          "durationUs": 119451,
+          "maxUs": 8196
+        },
+        {
+          "layerId": "2508",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 25,
+          "durationUs": 115170,
+          "maxUs": 10736
+        },
+        {
+          "layerId": "2480",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 11,
+          "durationUs": 36784,
+          "maxUs": 7325
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 147,
+          "durationUs": 29531,
+          "maxUs": 1238
+        },
+        {
+          "layerId": "2472",
+          "path": "2322",
+          "count": 6,
+          "durationUs": 28881,
+          "maxUs": 7954
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 15,
+          "durationUs": 16923,
+          "maxUs": 2580
+        },
+        {
+          "layerId": "2471",
+          "path": "2321",
+          "count": 1,
+          "durationUs": 4223,
+          "maxUs": 4223
+        },
+        {
+          "layerId": "2469",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 3,
+          "durationUs": 3546,
+          "maxUs": 2375
+        },
+        {
+          "layerId": "2500",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-praise > I",
+          "count": 1,
+          "durationUs": 2748,
+          "maxUs": 2748
+        },
+        {
+          "layerId": "2492",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-praise > I",
+          "count": 1,
+          "durationUs": 2540,
+          "maxUs": 2540
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 105,
+          "durationUs": 572185,
+          "maxUs": 14065
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 23632,
+          "maxUs": 14143
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 23209,
+          "maxUs": 8895
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 22688,
+          "maxUs": 6567
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 21630,
+          "maxUs": 8761
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 14469,
+          "maxUs": 7437
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 11648,
+          "maxUs": 8309
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 11450,
+          "maxUs": 2307
+        },
+        {
+          "size": "384x256",
+          "count": 4,
+          "durationUs": 10569,
+          "maxUs": 6371
+        },
+        {
+          "size": "576x128",
+          "count": 5,
+          "durationUs": 10174,
+          "maxUs": 4723
+        },
+        {
+          "size": "192x192",
+          "count": 1,
+          "durationUs": 9782,
+          "maxUs": 9782
+        },
+        {
+          "size": "384x192",
+          "count": 2,
+          "durationUs": 9449,
+          "maxUs": 8062
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 6937,
+          "maxUs": 6187
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 6701,
+          "maxUs": 3140
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 6032,
+          "maxUs": 6032
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 3079,
+          "maxUs": 1834
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 3007,
+          "maxUs": 2276
+        },
+        {
+          "size": "384x128",
+          "count": 1,
+          "durationUs": 2843,
+          "maxUs": 2843
+        },
+        {
+          "size": "320x256",
+          "count": 1,
+          "durationUs": 2551,
+          "maxUs": 2551
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 2354,
+          "maxUs": 851
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 2350,
+          "maxUs": 2350
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 1963,
+          "maxUs": 1370
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 1908,
+          "maxUs": 1908
+        },
+        {
+          "size": "320x64",
+          "count": 2,
+          "durationUs": 1585,
+          "maxUs": 827
+        },
+        {
+          "size": "1088x608",
+          "count": 1,
+          "durationUs": 1353,
+          "maxUs": 1353
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 797,
+          "maxUs": 797
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 393,
+          "maxUs": 393
+        }
+      ],
+      "nativeWaitCount": 74,
+      "nativeWaitInclusiveMs": 397.565
+    },
+    {
+      "condition": "no-theme-notice",
+      "events": 381916,
+      "paintEvents": 458,
+      "rasterTop": [
+        {
+          "layerId": "2527",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 59,
+          "durationUs": 108574,
+          "maxUs": 11301
+        },
+        {
+          "layerId": "2566",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 22,
+          "durationUs": 95150,
+          "maxUs": 11438
+        },
+        {
+          "layerId": "2539",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 12,
+          "durationUs": 27984,
+          "maxUs": 8031
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 46,
+          "durationUs": 27461,
+          "maxUs": 3749
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 115,
+          "durationUs": 22548,
+          "maxUs": 3857
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 14,
+          "durationUs": 16277,
+          "maxUs": 2837
+        },
+        {
+          "layerId": "2531",
+          "path": "3135",
+          "count": 4,
+          "durationUs": 16151,
+          "maxUs": 7731
+        },
+        {
+          "layerId": "2529",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 7191,
+          "maxUs": 7191
+        },
+        {
+          "layerId": "2543",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 7154,
+          "maxUs": 2659
+        },
+        {
+          "layerId": "2540",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 10,
+          "durationUs": 5721,
+          "maxUs": 1440
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 104,
+          "durationUs": 737103,
+          "maxUs": 18857
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 20915,
+          "maxUs": 8240
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 19191,
+          "maxUs": 6763
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 18955,
+          "maxUs": 15459
+        },
+        {
+          "size": "1088x192",
+          "count": 3,
+          "durationUs": 16960,
+          "maxUs": 9385
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 15154,
+          "maxUs": 7516
+        },
+        {
+          "size": "384x256",
+          "count": 3,
+          "durationUs": 13807,
+          "maxUs": 8198
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 12752,
+          "maxUs": 5812
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 12101,
+          "maxUs": 2911
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 10507,
+          "maxUs": 2169
+        },
+        {
+          "size": "1024x448",
+          "count": 4,
+          "durationUs": 8451,
+          "maxUs": 2895
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 8130,
+          "maxUs": 4921
+        },
+        {
+          "size": "320x64",
+          "count": 1,
+          "durationUs": 7703,
+          "maxUs": 7703
+        },
+        {
+          "size": "588x1308",
+          "count": 2,
+          "durationUs": 6723,
+          "maxUs": 5842
+        },
+        {
+          "size": "448x256",
+          "count": 2,
+          "durationUs": 6588,
+          "maxUs": 5881
+        },
+        {
+          "size": "384x192",
+          "count": 2,
+          "durationUs": 6070,
+          "maxUs": 5149
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 5246,
+          "maxUs": 2014
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 4593,
+          "maxUs": 1895
+        },
+        {
+          "size": "576x128",
+          "count": 3,
+          "durationUs": 3516,
+          "maxUs": 1929
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 3226,
+          "maxUs": 1890
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 3073,
+          "maxUs": 3073
+        },
+        {
+          "size": "320x192",
+          "count": 3,
+          "durationUs": 2668,
+          "maxUs": 1116
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 2659,
+          "maxUs": 1893
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 2627,
+          "maxUs": 2030
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 2024,
+          "maxUs": 1015
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 1658,
+          "maxUs": 1658
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1556,
+          "maxUs": 1556
+        }
+      ],
+      "nativeWaitCount": 79,
+      "nativeWaitInclusiveMs": 513.514
+    },
+    {
+      "condition": "no-point-flights",
+      "events": 382470,
+      "paintEvents": 418,
+      "rasterTop": [
+        {
+          "layerId": "2585",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 54,
+          "durationUs": 114157,
+          "maxUs": 6854
+        },
+        {
+          "layerId": "2623",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 19,
+          "durationUs": 85838,
+          "maxUs": 12036
+        },
+        {
+          "layerId": "2596",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 9,
+          "durationUs": 22324,
+          "maxUs": 6808
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 15,
+          "durationUs": 20331,
+          "maxUs": 4485
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 85,
+          "durationUs": 14163,
+          "maxUs": 458
+        },
+        {
+          "layerId": "2589",
+          "path": "3791",
+          "count": 3,
+          "durationUs": 13552,
+          "maxUs": 8113
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 41,
+          "durationUs": 12712,
+          "maxUs": 3797
+        },
+        {
+          "layerId": "2600",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 9,
+          "durationUs": 5359,
+          "maxUs": 2241
+        },
+        {
+          "layerId": "2587",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 2,
+          "durationUs": 4724,
+          "maxUs": 4474
+        },
+        {
+          "layerId": "2597",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 9,
+          "durationUs": 3662,
+          "maxUs": 1203
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 103,
+          "durationUs": 622513,
+          "maxUs": 17257
+        },
+        {
+          "size": "192x192",
+          "count": 5,
+          "durationUs": 28274,
+          "maxUs": 13855
+        },
+        {
+          "size": "448x320",
+          "count": 7,
+          "durationUs": 26306,
+          "maxUs": 10009
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 25027,
+          "maxUs": 12894
+        },
+        {
+          "size": "320x64",
+          "count": 3,
+          "durationUs": 24905,
+          "maxUs": 12215
+        },
+        {
+          "size": "1024x448",
+          "count": 7,
+          "durationUs": 24724,
+          "maxUs": 8587
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 19211,
+          "maxUs": 7882
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 18178,
+          "maxUs": 9771
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 16487,
+          "maxUs": 6486
+        },
+        {
+          "size": "448x256",
+          "count": 2,
+          "durationUs": 16102,
+          "maxUs": 9946
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 12059,
+          "maxUs": 7932
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 11040,
+          "maxUs": 2351
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 9404,
+          "maxUs": 8236
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 8647,
+          "maxUs": 5974
+        },
+        {
+          "size": "512x256",
+          "count": 1,
+          "durationUs": 8001,
+          "maxUs": 8001
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 6814,
+          "maxUs": 5811
+        },
+        {
+          "size": "576x128",
+          "count": 3,
+          "durationUs": 4025,
+          "maxUs": 1686
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 3896,
+          "maxUs": 2235
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 3855,
+          "maxUs": 2037
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 3317,
+          "maxUs": 2212
+        },
+        {
+          "size": "1024x384",
+          "count": 2,
+          "durationUs": 3198,
+          "maxUs": 2146
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 3086,
+          "maxUs": 3086
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 2596,
+          "maxUs": 2596
+        },
+        {
+          "size": "1088x608",
+          "count": 1,
+          "durationUs": 1810,
+          "maxUs": 1810
+        },
+        {
+          "size": "384x256",
+          "count": 2,
+          "durationUs": 1745,
+          "maxUs": 904
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1362,
+          "maxUs": 1362
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 886,
+          "maxUs": 886
+        }
+      ],
+      "nativeWaitCount": 77,
+      "nativeWaitInclusiveMs": 643.144
+    },
+    {
+      "condition": "no-theme-impulse",
+      "events": 377383,
+      "paintEvents": 469,
+      "rasterTop": [
+        {
+          "layerId": "2643",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 59,
+          "durationUs": 116976,
+          "maxUs": 6974
+        },
+        {
+          "layerId": "2683",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 20,
+          "durationUs": 96565,
+          "maxUs": 7596
+        },
+        {
+          "layerId": "2655",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 11,
+          "durationUs": 30538,
+          "maxUs": 7413
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 15,
+          "durationUs": 24838,
+          "maxUs": 5623
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 103,
+          "durationUs": 21533,
+          "maxUs": 3442
+        },
+        {
+          "layerId": "2647",
+          "path": "4447",
+          "count": 4,
+          "durationUs": 19320,
+          "maxUs": 7813
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 48,
+          "durationUs": 12894,
+          "maxUs": 1343
+        },
+        {
+          "layerId": "2656",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 10,
+          "durationUs": 6071,
+          "maxUs": 2537
+        },
+        {
+          "layerId": "2682",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-points",
+          "count": 2,
+          "durationUs": 4228,
+          "maxUs": 3972
+        },
+        {
+          "layerId": "2659",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 3930,
+          "maxUs": 740
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 101,
+          "durationUs": 643606,
+          "maxUs": 15533
+        },
+        {
+          "size": "384x192",
+          "count": 3,
+          "durationUs": 22742,
+          "maxUs": 10452
+        },
+        {
+          "size": "448x256",
+          "count": 4,
+          "durationUs": 21776,
+          "maxUs": 8797
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 20200,
+          "maxUs": 9997
+        },
+        {
+          "size": "448x320",
+          "count": 6,
+          "durationUs": 18823,
+          "maxUs": 6177
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 14957,
+          "maxUs": 5402
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 14311,
+          "maxUs": 9366
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 13987,
+          "maxUs": 11037
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 11967,
+          "maxUs": 8512
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 10717,
+          "maxUs": 6727
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 10567,
+          "maxUs": 2175
+        },
+        {
+          "size": "384x256",
+          "count": 2,
+          "durationUs": 10420,
+          "maxUs": 9268
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 10360,
+          "maxUs": 2229
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 10137,
+          "maxUs": 10137
+        },
+        {
+          "size": "576x128",
+          "count": 4,
+          "durationUs": 9779,
+          "maxUs": 6323
+        },
+        {
+          "size": "320x192",
+          "count": 3,
+          "durationUs": 9114,
+          "maxUs": 4944
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 7996,
+          "maxUs": 7996
+        },
+        {
+          "size": "320x64",
+          "count": 2,
+          "durationUs": 7572,
+          "maxUs": 6920
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 6837,
+          "maxUs": 6097
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 6047,
+          "maxUs": 1944
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 4861,
+          "maxUs": 4861
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 3974,
+          "maxUs": 2082
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 2911,
+          "maxUs": 1968
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2440,
+          "maxUs": 1381
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 1967,
+          "maxUs": 1428
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 972,
+          "maxUs": 972
+        },
+        {
+          "size": "512x256",
+          "count": 1,
+          "durationUs": 766,
+          "maxUs": 766
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 525,
+          "maxUs": 525
+        }
+      ],
+      "nativeWaitCount": 83,
+      "nativeWaitInclusiveMs": 552.129
+    },
+    {
+      "condition": "no-flight-or-theme-impulse",
+      "events": 391405,
+      "paintEvents": 460,
+      "rasterTop": [
+        {
+          "layerId": "2702",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 62,
+          "durationUs": 119729,
+          "maxUs": 5861
+        },
+        {
+          "layerId": "2740",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 24,
+          "durationUs": 94373,
+          "maxUs": 8190
+        },
+        {
+          "layerId": "2713",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 8,
+          "durationUs": 24574,
+          "maxUs": 5083
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 124,
+          "durationUs": 19516,
+          "maxUs": 634
+        },
+        {
+          "layerId": "2706",
+          "path": "5134",
+          "count": 4,
+          "durationUs": 19370,
+          "maxUs": 10874
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 14,
+          "durationUs": 18375,
+          "maxUs": 3969
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 46,
+          "durationUs": 11885,
+          "maxUs": 1248
+        },
+        {
+          "layerId": "2704",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 2,
+          "durationUs": 7611,
+          "maxUs": 7394
+        },
+        {
+          "layerId": "2714",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 8,
+          "durationUs": 5033,
+          "maxUs": 1542
+        },
+        {
+          "layerId": "2717",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 8,
+          "durationUs": 4640,
+          "maxUs": 1939
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 97,
+          "durationUs": 642119,
+          "maxUs": 17580
+        },
+        {
+          "size": "448x192",
+          "count": 5,
+          "durationUs": 40190,
+          "maxUs": 10821
+        },
+        {
+          "size": "384x256",
+          "count": 4,
+          "durationUs": 27551,
+          "maxUs": 10576
+        },
+        {
+          "size": "192x192",
+          "count": 5,
+          "durationUs": 23086,
+          "maxUs": 9382
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 21274,
+          "maxUs": 6915
+        },
+        {
+          "size": "1024x448",
+          "count": 4,
+          "durationUs": 19502,
+          "maxUs": 8587
+        },
+        {
+          "size": "384x192",
+          "count": 2,
+          "durationUs": 12076,
+          "maxUs": 9222
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 11552,
+          "maxUs": 2521
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 10166,
+          "maxUs": 6800
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 10130,
+          "maxUs": 2496
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 8998,
+          "maxUs": 6384
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 8889,
+          "maxUs": 4949
+        },
+        {
+          "size": "320x64",
+          "count": 2,
+          "durationUs": 6738,
+          "maxUs": 5949
+        },
+        {
+          "size": "192x64",
+          "count": 1,
+          "durationUs": 6317,
+          "maxUs": 6317
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 6107,
+          "maxUs": 5618
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 5345,
+          "maxUs": 3555
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 5202,
+          "maxUs": 2434
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 4694,
+          "maxUs": 4694
+        },
+        {
+          "size": "576x128",
+          "count": 3,
+          "durationUs": 4269,
+          "maxUs": 1958
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 3082,
+          "maxUs": 1964
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 2899,
+          "maxUs": 2899
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 2606,
+          "maxUs": 1448
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 2562,
+          "maxUs": 2562
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 2037,
+          "maxUs": 2037
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 1819,
+          "maxUs": 932
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 1229,
+          "maxUs": 1229
+        }
+      ],
+      "nativeWaitCount": 91,
+      "nativeWaitInclusiveMs": 589.048
+    },
+    {
+      "condition": "no-reward-dom",
+      "events": 376644,
+      "paintEvents": 575,
+      "rasterTop": [
+        {
+          "layerId": "2760",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 119,
+          "durationUs": 117301,
+          "maxUs": 5208
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 133,
+          "durationUs": 35326,
+          "maxUs": 5025
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 63,
+          "durationUs": 16965,
+          "maxUs": 2344
+        },
+        {
+          "layerId": "2761",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 3,
+          "durationUs": 5061,
+          "maxUs": 2850
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 14,
+          "durationUs": 2840,
+          "maxUs": 370
+        },
+        {
+          "layerId": "2759",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-caption",
+          "count": 3,
+          "durationUs": 2542,
+          "maxUs": 1717
+        },
+        {
+          "layerId": "2769",
+          "path": "#document > HTML > BODY > DIV.festival-rear > svg",
+          "count": 3,
+          "durationUs": 273,
+          "maxUs": 137
+        },
+        {
+          "layerId": "2763",
+          "path": "#document > HTML > BODY > DIV.world-background",
+          "count": 4,
+          "durationUs": 214,
+          "maxUs": 62
+        },
+        {
+          "layerId": "80",
+          "path": "#document > HTML > BODY > DIV.world-background",
+          "count": 4,
+          "durationUs": 184,
+          "maxUs": 48
+        },
+        {
+          "layerId": "2768",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.tray-area > DIV#tray.tray > BUTTON.piece > SPAN.mini-shape > IMG.mini-cell.tile-chrome",
+          "count": 1,
+          "durationUs": 179,
+          "maxUs": 179
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 103,
+          "durationUs": 638079,
+          "maxUs": 16173
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 21318,
+          "maxUs": 10015
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 17009,
+          "maxUs": 7348
+        },
+        {
+          "size": "768x256",
+          "count": 2,
+          "durationUs": 11178,
+          "maxUs": 9221
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 6732,
+          "maxUs": 6732
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 5148,
+          "maxUs": 1789
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 4731,
+          "maxUs": 3466
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1700,
+          "maxUs": 1700
+        }
+      ],
+      "nativeWaitCount": 85,
+      "nativeWaitInclusiveMs": 365.045
+    },
+    {
+      "condition": "no-theme",
+      "events": 396857,
+      "paintEvents": 252,
+      "rasterTop": [
+        {
+          "layerId": "2783",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 62,
+          "durationUs": 155830,
+          "maxUs": 10186
+        },
+        {
+          "layerId": "2816",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 29,
+          "durationUs": 119491,
+          "maxUs": 10155
+        },
+        {
+          "layerId": "2789",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 12,
+          "durationUs": 53040,
+          "maxUs": 10003
+        },
+        {
+          "layerId": "2787",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:combo > SPAN.reward-event:combo > SPAN.reward-praise",
+          "count": 7,
+          "durationUs": 36045,
+          "maxUs": 8488
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 11,
+          "durationUs": 9882,
+          "maxUs": 2911
+        },
+        {
+          "layerId": "2786",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:combo > SPAN.reward-event:combo > SPAN.reward-points",
+          "count": 1,
+          "durationUs": 5931,
+          "maxUs": 5931
+        },
+        {
+          "layerId": "2785",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 2805,
+          "maxUs": 2805
+        },
+        {
+          "layerId": "2784",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 2,
+          "durationUs": 2535,
+          "maxUs": 2441
+        },
+        {
+          "layerId": "2799",
+          "path": "None",
+          "count": 16,
+          "durationUs": 2467,
+          "maxUs": 1045
+        },
+        {
+          "layerId": "2814",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear",
+          "count": 1,
+          "durationUs": 2044,
+          "maxUs": 2044
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 97,
+          "durationUs": 605399,
+          "maxUs": 14856
+        },
+        {
+          "size": "704x608",
+          "count": 6,
+          "durationUs": 17740,
+          "maxUs": 7547
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 16792,
+          "maxUs": 8332
+        },
+        {
+          "size": "384x256",
+          "count": 5,
+          "durationUs": 16585,
+          "maxUs": 6141
+        },
+        {
+          "size": "588x1308",
+          "count": 3,
+          "durationUs": 15427,
+          "maxUs": 6740
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 14797,
+          "maxUs": 6590
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 14625,
+          "maxUs": 5195
+        },
+        {
+          "size": "192x192",
+          "count": 1,
+          "durationUs": 11064,
+          "maxUs": 11064
+        },
+        {
+          "size": "1088x608",
+          "count": 2,
+          "durationUs": 10538,
+          "maxUs": 9153
+        },
+        {
+          "size": "384x128",
+          "count": 1,
+          "durationUs": 10310,
+          "maxUs": 10310
+        },
+        {
+          "size": "320x192",
+          "count": 4,
+          "durationUs": 10063,
+          "maxUs": 5119
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 9811,
+          "maxUs": 1466
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 9482,
+          "maxUs": 2235
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 7883,
+          "maxUs": 6202
+        },
+        {
+          "size": "576x128",
+          "count": 5,
+          "durationUs": 7789,
+          "maxUs": 3211
+        },
+        {
+          "size": "384x192",
+          "count": 2,
+          "durationUs": 7078,
+          "maxUs": 5868
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 6387,
+          "maxUs": 6387
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 3829,
+          "maxUs": 1417
+        },
+        {
+          "size": "768x256",
+          "count": 1,
+          "durationUs": 2944,
+          "maxUs": 2944
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2620,
+          "maxUs": 1414
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 2348,
+          "maxUs": 1226
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 2120,
+          "maxUs": 1019
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1813,
+          "maxUs": 1813
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 1516,
+          "maxUs": 1516
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 1134,
+          "maxUs": 1134
+        },
+        {
+          "size": "320x64",
+          "count": 1,
+          "durationUs": 643,
+          "maxUs": 643
+        }
+      ],
+      "nativeWaitCount": 68,
+      "nativeWaitInclusiveMs": null
+    },
+    {
+      "condition": "no-reward-or-theme",
+      "events": 393029,
+      "paintEvents": 270,
+      "rasterTop": [
+        {
+          "layerId": "2826",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 124,
+          "durationUs": 72691,
+          "maxUs": 4013
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 13,
+          "durationUs": 3001,
+          "maxUs": 441
+        },
+        {
+          "layerId": "2827",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 2,
+          "durationUs": 1119,
+          "maxUs": 877
+        },
+        {
+          "layerId": "2829",
+          "path": "#document > HTML > BODY > DIV.festival-rear > svg",
+          "count": 4,
+          "durationUs": 503,
+          "maxUs": 234
+        },
+        {
+          "layerId": "2825",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-caption",
+          "count": 1,
+          "durationUs": 209,
+          "maxUs": 209
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 102,
+          "durationUs": 611783,
+          "maxUs": 12684
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 27490,
+          "maxUs": 7962
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 20121,
+          "maxUs": 9416
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 11843,
+          "maxUs": 10238
+        },
+        {
+          "size": "768x256",
+          "count": 1,
+          "durationUs": 8398,
+          "maxUs": 8398
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 6626,
+          "maxUs": 2405
+        },
+        {
+          "size": "320x64",
+          "count": 1,
+          "durationUs": 919,
+          "maxUs": 919
+        }
+      ],
+      "nativeWaitCount": 66,
+      "nativeWaitInclusiveMs": null
+    },
+    {
+      "condition": "no-ink",
+      "events": 370414,
+      "paintEvents": 429,
+      "rasterTop": [
+        {
+          "layerId": "2834",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 54,
+          "durationUs": 121441,
+          "maxUs": 8812
+        },
+        {
+          "layerId": "2874",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 21,
+          "durationUs": 78888,
+          "maxUs": 6070
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 42,
+          "durationUs": 24319,
+          "maxUs": 3053
+        },
+        {
+          "layerId": "2846",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 10,
+          "durationUs": 24007,
+          "maxUs": 6195
+        },
+        {
+          "layerId": "2838",
+          "path": "7572",
+          "count": 5,
+          "durationUs": 20952,
+          "maxUs": 9277
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 15,
+          "durationUs": 19982,
+          "maxUs": 3420
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 103,
+          "durationUs": 19518,
+          "maxUs": 949
+        },
+        {
+          "layerId": "2836",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 5802,
+          "maxUs": 5802
+        },
+        {
+          "layerId": "2850",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 4566,
+          "maxUs": 1931
+        },
+        {
+          "layerId": "2847",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 10,
+          "durationUs": 3202,
+          "maxUs": 1021
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 107,
+          "durationUs": 716927,
+          "maxUs": 15114
+        },
+        {
+          "size": "192x64",
+          "count": 3,
+          "durationUs": 31794,
+          "maxUs": 15121
+        },
+        {
+          "size": "1024x448",
+          "count": 6,
+          "durationUs": 31635,
+          "maxUs": 9328
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 19550,
+          "maxUs": 15385
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 17372,
+          "maxUs": 10188
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 15292,
+          "maxUs": 3088
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 14220,
+          "maxUs": 7002
+        },
+        {
+          "size": "128x128",
+          "count": 2,
+          "durationUs": 14134,
+          "maxUs": 13272
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 12933,
+          "maxUs": 5242
+        },
+        {
+          "size": "704x608",
+          "count": 6,
+          "durationUs": 12432,
+          "maxUs": 6497
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 12025,
+          "maxUs": 7785
+        },
+        {
+          "size": "1088x608",
+          "count": 4,
+          "durationUs": 11847,
+          "maxUs": 6700
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 11558,
+          "maxUs": 9420
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 9538,
+          "maxUs": 9538
+        },
+        {
+          "size": "448x256",
+          "count": 2,
+          "durationUs": 8913,
+          "maxUs": 8100
+        },
+        {
+          "size": "320x64",
+          "count": 3,
+          "durationUs": 8464,
+          "maxUs": 6830
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 7930,
+          "maxUs": 5059
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 7266,
+          "maxUs": 6822
+        },
+        {
+          "size": "512x256",
+          "count": 1,
+          "durationUs": 5370,
+          "maxUs": 5370
+        },
+        {
+          "size": "384x256",
+          "count": 2,
+          "durationUs": 5239,
+          "maxUs": 3608
+        },
+        {
+          "size": "576x128",
+          "count": 4,
+          "durationUs": 5034,
+          "maxUs": 1888
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 4369,
+          "maxUs": 4369
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 3819,
+          "maxUs": 3819
+        },
+        {
+          "size": "1088x192",
+          "count": 3,
+          "durationUs": 3696,
+          "maxUs": 1608
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 3572,
+          "maxUs": 1437
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 3281,
+          "maxUs": 3281
+        },
+        {
+          "size": "64x64",
+          "count": 2,
+          "durationUs": 3064,
+          "maxUs": 1586
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 2526,
+          "maxUs": 1515
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 1920,
+          "maxUs": 960
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 1893,
+          "maxUs": 1160
+        },
+        {
+          "size": "768x128",
+          "count": 1,
+          "durationUs": 1323,
+          "maxUs": 1323
+        },
+        {
+          "size": "384x192",
+          "count": 1,
+          "durationUs": 1224,
+          "maxUs": 1224
+        }
+      ],
+      "nativeWaitCount": 95,
+      "nativeWaitInclusiveMs": 662.805
+    },
+    {
+      "condition": "no-board-vfx",
+      "events": 381160,
+      "paintEvents": 505,
+      "rasterTop": [
+        {
+          "layerId": "2893",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 65,
+          "durationUs": 127774,
+          "maxUs": 6512
+        },
+        {
+          "layerId": "2933",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 21,
+          "durationUs": 81777,
+          "maxUs": 5671
+        },
+        {
+          "layerId": "2905",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 11,
+          "durationUs": 22579,
+          "maxUs": 3215
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 17,
+          "durationUs": 20566,
+          "maxUs": 3477
+        },
+        {
+          "layerId": "2897",
+          "path": "8245",
+          "count": 5,
+          "durationUs": 19841,
+          "maxUs": 8097
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 118,
+          "durationUs": 17304,
+          "maxUs": 802
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 51,
+          "durationUs": 11238,
+          "maxUs": 1108
+        },
+        {
+          "layerId": "2914",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-points",
+          "count": 2,
+          "durationUs": 6923,
+          "maxUs": 5493
+        },
+        {
+          "layerId": "2895",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 4101,
+          "maxUs": 4101
+        },
+        {
+          "layerId": "2909",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 3569,
+          "maxUs": 915
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 105,
+          "durationUs": 598769,
+          "maxUs": 16758
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 33958,
+          "maxUs": 8144
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 20704,
+          "maxUs": 17794
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 18336,
+          "maxUs": 5838
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 17068,
+          "maxUs": 7099
+        },
+        {
+          "size": "512x256",
+          "count": 2,
+          "durationUs": 16319,
+          "maxUs": 8950
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 16243,
+          "maxUs": 6950
+        },
+        {
+          "size": "448x320",
+          "count": 7,
+          "durationUs": 13938,
+          "maxUs": 8546
+        },
+        {
+          "size": "448x256",
+          "count": 2,
+          "durationUs": 13136,
+          "maxUs": 8467
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 12379,
+          "maxUs": 12379
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 11515,
+          "maxUs": 7225
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 10860,
+          "maxUs": 2914
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 10641,
+          "maxUs": 2019
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 9093,
+          "maxUs": 5623
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 8363,
+          "maxUs": 8363
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 7569,
+          "maxUs": 3520
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 6679,
+          "maxUs": 5579
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 6342,
+          "maxUs": 6342
+        },
+        {
+          "size": "384x256",
+          "count": 2,
+          "durationUs": 5797,
+          "maxUs": 4829
+        },
+        {
+          "size": "320x64",
+          "count": 3,
+          "durationUs": 4115,
+          "maxUs": 1864
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 4084,
+          "maxUs": 3373
+        },
+        {
+          "size": "576x128",
+          "count": 4,
+          "durationUs": 3644,
+          "maxUs": 1679
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2995,
+          "maxUs": 2140
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 2592,
+          "maxUs": 1302
+        },
+        {
+          "size": "384x192",
+          "count": 2,
+          "durationUs": 2263,
+          "maxUs": 1470
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 2230,
+          "maxUs": 855
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1640,
+          "maxUs": 1640
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1313,
+          "maxUs": 1313
+        }
+      ],
+      "nativeWaitCount": 85,
+      "nativeWaitInclusiveMs": 554.075
+    },
+    {
+      "condition": "no-festival",
+      "events": 372167,
+      "paintEvents": 503,
+      "rasterTop": [
+        {
+          "layerId": "2952",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 67,
+          "durationUs": 143066,
+          "maxUs": 9003
+        },
+        {
+          "layerId": "2991",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 22,
+          "durationUs": 104188,
+          "maxUs": 9875
+        },
+        {
+          "layerId": "2964",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 10,
+          "durationUs": 29276,
+          "maxUs": 8395
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 124,
+          "durationUs": 23998,
+          "maxUs": 1248
+        },
+        {
+          "layerId": "2956",
+          "path": "8975",
+          "count": 5,
+          "durationUs": 23967,
+          "maxUs": 9725
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 15,
+          "durationUs": 18216,
+          "maxUs": 4126
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 51,
+          "durationUs": 12660,
+          "maxUs": 1351
+        },
+        {
+          "layerId": "2990",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward > SPAN#burst.burst:all-clear > SPAN.reward-event:all-clear > SPAN.reward-points",
+          "count": 2,
+          "durationUs": 7522,
+          "maxUs": 7402
+        },
+        {
+          "layerId": "2968",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 4793,
+          "maxUs": 1651
+        },
+        {
+          "layerId": "2965",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV.best",
+          "count": 10,
+          "durationUs": 4505,
+          "maxUs": 2178
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 100,
+          "durationUs": 647862,
+          "maxUs": 15709
+        },
+        {
+          "size": "384x256",
+          "count": 5,
+          "durationUs": 22903,
+          "maxUs": 9983
+        },
+        {
+          "size": "384x192",
+          "count": 3,
+          "durationUs": 22136,
+          "maxUs": 8561
+        },
+        {
+          "size": "704x608",
+          "count": 8,
+          "durationUs": 20473,
+          "maxUs": 5967
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 20140,
+          "maxUs": 6716
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 19254,
+          "maxUs": 8768
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 17449,
+          "maxUs": 4408
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 14806,
+          "maxUs": 7888
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 14585,
+          "maxUs": 11950
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 11457,
+          "maxUs": 3997
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 9745,
+          "maxUs": 2343
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 7339,
+          "maxUs": 6279
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 6241,
+          "maxUs": 6241
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 5446,
+          "maxUs": 2650
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 5329,
+          "maxUs": 2399
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 5325,
+          "maxUs": 2564
+        },
+        {
+          "size": "576x128",
+          "count": 4,
+          "durationUs": 5058,
+          "maxUs": 1512
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 2891,
+          "maxUs": 1509
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 2416,
+          "maxUs": 1421
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 2342,
+          "maxUs": 2342
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 2341,
+          "maxUs": 2341
+        },
+        {
+          "size": "320x64",
+          "count": 1,
+          "durationUs": 2232,
+          "maxUs": 2232
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 1737,
+          "maxUs": 1297
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 1006,
+          "maxUs": 1006
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 877,
+          "maxUs": 877
+        }
+      ],
+      "nativeWaitCount": 81,
+      "nativeWaitInclusiveMs": 503.182
+    },
+    {
+      "condition": "no-atmosphere",
+      "events": 360849,
+      "paintEvents": 512,
+      "rasterTop": [
+        {
+          "layerId": "3010",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel",
+          "count": 67,
+          "durationUs": 127341,
+          "maxUs": 8344
+        },
+        {
+          "layerId": "3050",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 22,
+          "durationUs": 86108,
+          "maxUs": 7731
+        },
+        {
+          "layerId": "3022",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > ASIDE.side > SECTION.score-panel > DIV > DIV#score.score",
+          "count": 10,
+          "durationUs": 25355,
+          "maxUs": 6175
+        },
+        {
+          "layerId": "3014",
+          "path": "9695",
+          "count": 5,
+          "durationUs": 24202,
+          "maxUs": 10452
+        },
+        {
+          "layerId": "82",
+          "path": "#document > HTML > BODY > DIV#app.Прервать",
+          "count": 109,
+          "durationUs": 20357,
+          "maxUs": 1689
+        },
+        {
+          "layerId": "83",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#clear-glow.clear-glow",
+          "count": 14,
+          "durationUs": 18261,
+          "maxUs": 4022
+        },
+        {
+          "layerId": "104",
+          "path": "#document > HTML > BODY > SECTION#full-clear-panel > DIV#full-progress",
+          "count": 53,
+          "durationUs": 14502,
+          "maxUs": 2156
+        },
+        {
+          "layerId": "3026",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV#combo-hud.combo-hud.visible",
+          "count": 10,
+          "durationUs": 4777,
+          "maxUs": 945
+        },
+        {
+          "layerId": "3012",
+          "path": "#document > HTML > BODY > DIV#app.Прервать > MAIN.shell > DIV.play-layout > SECTION.board-column > DIV.board-wrap > DIV.board-reward",
+          "count": 1,
+          "durationUs": 4403,
+          "maxUs": 4403
+        },
+        {
+          "layerId": "3013",
+          "path": "9694",
+          "count": 1,
+          "durationUs": 3884,
+          "maxUs": 3884
+        }
+      ],
+      "sharedImages": [
+        {
+          "size": "896x896",
+          "count": 113,
+          "durationUs": 795321,
+          "maxUs": 18696
+        },
+        {
+          "size": "704x608",
+          "count": 6,
+          "durationUs": 22666,
+          "maxUs": 8353
+        },
+        {
+          "size": "384x192",
+          "count": 3,
+          "durationUs": 19821,
+          "maxUs": 16890
+        },
+        {
+          "size": "768x256",
+          "count": 3,
+          "durationUs": 19737,
+          "maxUs": 9275
+        },
+        {
+          "size": "448x192",
+          "count": 4,
+          "durationUs": 18982,
+          "maxUs": 10359
+        },
+        {
+          "size": "128x192",
+          "count": 10,
+          "durationUs": 17926,
+          "maxUs": 5443
+        },
+        {
+          "size": "320x64",
+          "count": 3,
+          "durationUs": 17105,
+          "maxUs": 6259
+        },
+        {
+          "size": "192x64",
+          "count": 2,
+          "durationUs": 16638,
+          "maxUs": 8948
+        },
+        {
+          "size": "448x320",
+          "count": 4,
+          "durationUs": 15526,
+          "maxUs": 10564
+        },
+        {
+          "size": "384x128",
+          "count": 4,
+          "durationUs": 13325,
+          "maxUs": 5861
+        },
+        {
+          "size": "192x192",
+          "count": 4,
+          "durationUs": 12163,
+          "maxUs": 8761
+        },
+        {
+          "size": "544x608",
+          "count": 6,
+          "durationUs": 11629,
+          "maxUs": 3260
+        },
+        {
+          "size": "384x256",
+          "count": 4,
+          "durationUs": 11422,
+          "maxUs": 9042
+        },
+        {
+          "size": "588x1308",
+          "count": 1,
+          "durationUs": 9240,
+          "maxUs": 9240
+        },
+        {
+          "size": "1024x448",
+          "count": 5,
+          "durationUs": 7421,
+          "maxUs": 2534
+        },
+        {
+          "size": "1088x608",
+          "count": 2,
+          "durationUs": 6911,
+          "maxUs": 5229
+        },
+        {
+          "size": "1024x384",
+          "count": 3,
+          "durationUs": 6612,
+          "maxUs": 3079
+        },
+        {
+          "size": "576x128",
+          "count": 4,
+          "durationUs": 6044,
+          "maxUs": 2191
+        },
+        {
+          "size": "448x256",
+          "count": 1,
+          "durationUs": 5772,
+          "maxUs": 5772
+        },
+        {
+          "size": "320x128",
+          "count": 2,
+          "durationUs": 3235,
+          "maxUs": 1777
+        },
+        {
+          "size": "544x256",
+          "count": 3,
+          "durationUs": 2871,
+          "maxUs": 1171
+        },
+        {
+          "size": "640x608",
+          "count": 2,
+          "durationUs": 2792,
+          "maxUs": 1539
+        },
+        {
+          "size": "128x64",
+          "count": 1,
+          "durationUs": 2583,
+          "maxUs": 2583
+        },
+        {
+          "size": "192x128",
+          "count": 1,
+          "durationUs": 2041,
+          "maxUs": 2041
+        },
+        {
+          "size": "64x192",
+          "count": 2,
+          "durationUs": 1961,
+          "maxUs": 1201
+        },
+        {
+          "size": "1088x192",
+          "count": 1,
+          "durationUs": 1354,
+          "maxUs": 1354
+        },
+        {
+          "size": "320x192",
+          "count": 2,
+          "durationUs": 1330,
+          "maxUs": 691
+        },
+        {
+          "size": "768x192",
+          "count": 1,
+          "durationUs": 810,
+          "maxUs": 810
+        }
+      ],
+      "nativeWaitCount": 94,
+      "nativeWaitInclusiveMs": 546.906
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "policy": "qualified-v5",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 900,
+  "limit": 180,
+  "openingMatches": 18,
+  "summary": [
+    {
+      "style": "clear",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 1,
+      "medianMoves": 180,
+      "moves": 935,
+      "clears": 7,
+      "rewardRate": 0.43422459893048126,
+      "repeat": 2,
+      "maxDry": 9,
+      "p95Selection": null,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 10,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "clear",
+      "variant": "director",
+      "n": 6,
+      "deaths": 1,
+      "medianMoves": 180,
+      "moves": 935,
+      "clears": 7,
+      "rewardRate": 0.43422459893048126,
+      "repeat": 2,
+      "maxDry": 9,
+      "p95Selection": 6.982278000000406,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 10,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 180,
+      "moves": 1080,
+      "clears": 36,
+      "rewardRate": 0.4638888888888889,
+      "repeat": 4,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 180,
+      "moves": 1080,
+      "clears": 36,
+      "rewardRate": 0.4638888888888889,
+      "repeat": 4,
+      "maxDry": 7,
+      "p95Selection": 6.666672999999719,
+      "recovery": []
+    },
+    {
+      "style": "plausible",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 5,
+      "medianMoves": 80,
+      "moves": 543,
+      "clears": 0,
+      "rewardRate": 0.34806629834254144,
+      "repeat": 0,
+      "maxDry": 9,
+      "p95Selection": null,
+      "recovery": [
+        {
+          "moves": 3,
+          "rewardMoves": 0,
+          "dead": true
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 8,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "plausible",
+      "variant": "director",
+      "n": 6,
+      "deaths": 5,
+      "medianMoves": 80,
+      "moves": 543,
+      "clears": 0,
+      "rewardRate": 0.34806629834254144,
+      "repeat": 0,
+      "maxDry": 9,
+      "p95Selection": 4.077215000001161,
+      "recovery": [
+        {
+          "moves": 3,
+          "rewardMoves": 0,
+          "dead": true
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 8,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 6,
+          "dead": false
+        }
+      ]
+    }
+  ]
+}

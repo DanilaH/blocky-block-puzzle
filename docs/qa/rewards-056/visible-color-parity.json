@@ -1,0 +1,405 @@
+{
+  "scope": "Visible text/SVG paint properties and geometry at five color phases, both orientations, with former unused enamel transitions restored. Reward glyph pixels tested separately.",
+  "results": [
+    {
+      "view": "game",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 9,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 42,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 42,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 42,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 42,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 42,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 41,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 41,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 41,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 41,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 41,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 6,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 392,
+        "height": 872
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 0,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 250,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 500,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 750,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "viewport": {
+        "width": 872,
+        "height": 392
+      },
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 13,
+      "exactColorAndGeometry": true
+    }
+  ]
+}

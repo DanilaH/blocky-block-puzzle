@@ -1,0 +1,33 @@
+{
+  "recordedBeforeRunAt": "2026-11-07T17:53:59.030840+00:00",
+  "candidate": "Only zero-alpha borders of SpriteInk nine-slice subframes; native Phaser logical trim; two source texel gutter; small contours unchanged.",
+  "sourceSha256": {
+    "src/game/sprite-ink.ts": "d2e434ef65921439e8b44dba9743a9ab474aa4433b3dd0f904221b8ca07f1a7a",
+    "scripts/audit-performance-probe.mjs": "1c97fa7cb566ce67461158074a95568fee16ad8f80e6f6f7bee66e7fc26dc00d",
+    "scripts/performance-probe/browser.mjs": "a428ed699fab11e2acee6211f35d028a0f6ecb4a84ad5a09e5139a32b462c67d"
+  },
+  "conditions": {
+    "fixtureIndices": [
+      0,
+      1,
+      2
+    ],
+    "androidUA": true,
+    "dpr": 2.75,
+    "viewport": {
+      "width": 392,
+      "height": 872
+    },
+    "rounds": 3,
+    "repeats": 2,
+    "windowMs": 2200,
+    "productionBuild": true,
+    "revealVariant": 2
+  },
+  "judgment": "Candidate may ship as an incremental optimization, not as proven phone fix, only if each fixture warm median over25 decreases by at least 10%, no paired warm count increases by more than 30% (allow 1 absolute interval), no cold median increase >15% (allow 1 interval), final score/board match and six pixel galleries pass unchanged max delta<=3, mean channel delta<0.02, changed channel fraction<0.005. This threshold is for the new native-trim confirmation only; prior prototype runs were exploratory.",
+  "limitations": [
+    "Android UA on SwiftShader does not simulate phone GPU.",
+    "Physical POCO all-clear state/theme unknown; fixture2 is a proxy matching lines/streak/allClear only.",
+    "Single confirmatory batch has limited power and unseeded cosmetic randomness; acceptance is an engineering gate, not a statistical claim."
+  ]
+}

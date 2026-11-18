@@ -1,0 +1,215 @@
+{
+  "data_kind": "synthetic technical fixture",
+  "revive_quality_details": {
+    "control:first_move": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "control:old_tray_completed": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "control:next_tray_completed": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "control:failed_again": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "candidate:first_move": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "candidate:old_tray_completed": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "candidate:next_tray_completed": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    },
+    "candidate:failed_again": {
+      "intents": 0,
+      "additional_moves_mean": null,
+      "additional_active_ms_mean": null
+    }
+  },
+  "currency": "USD",
+  "canonical_source": "blocky_ilrd_v1",
+  "window": "[assignment_at, assignment_at + 7*24h)",
+  "cohort_policy": "All assigned mature players including zero revenue; immature windows reported separately. Manual/test excluded.",
+  "limitations": "Coverage concerns observed diagnostic impressions only; absent callbacks/export rows are not proven absent impressions. R7 is neither LTV, profit nor settled payout.",
+  "groups": [
+    {
+      "cohort": "new",
+      "variant": "control",
+      "assigned": 2,
+      "mature_r7": 2,
+      "known_revenue_usd": "0",
+      "known_r7_per_assigned_usd": "0",
+      "money_status": "observed_export_complete",
+      "known_impressions": 1,
+      "unknown_impressions": 0,
+      "observed_money_coverage": 1.0,
+      "d1_denominator": 2,
+      "d1_returned": 0,
+      "d7_denominator": 2,
+      "d7_returned": 1,
+      "repeat_runs": 0
+    },
+    {
+      "cohort": "new",
+      "variant": "candidate",
+      "assigned": 2,
+      "mature_r7": 2,
+      "known_revenue_usd": "0.012345678901234567",
+      "known_r7_per_assigned_usd": "0.0061728394506172835",
+      "money_status": "incomplete",
+      "known_impressions": 1,
+      "unknown_impressions": 1,
+      "observed_money_coverage": 0.5,
+      "d1_denominator": 2,
+      "d1_returned": 1,
+      "d7_denominator": 2,
+      "d7_returned": 0,
+      "repeat_runs": 0
+    },
+    {
+      "cohort": "existing",
+      "variant": "control",
+      "assigned": 0,
+      "mature_r7": 0,
+      "known_revenue_usd": "0",
+      "known_r7_per_assigned_usd": null,
+      "money_status": "observed_export_complete",
+      "known_impressions": 0,
+      "unknown_impressions": 0,
+      "observed_money_coverage": null,
+      "d1_denominator": 0,
+      "d1_returned": 0,
+      "d7_denominator": 0,
+      "d7_returned": 0,
+      "repeat_runs": 0
+    },
+    {
+      "cohort": "existing",
+      "variant": "candidate",
+      "assigned": 0,
+      "mature_r7": 0,
+      "known_revenue_usd": "0",
+      "known_r7_per_assigned_usd": null,
+      "money_status": "observed_export_complete",
+      "known_impressions": 0,
+      "unknown_impressions": 0,
+      "observed_money_coverage": null,
+      "d1_denominator": 0,
+      "d1_returned": 0,
+      "d7_denominator": 0,
+      "d7_returned": 0,
+      "repeat_runs": 0
+    }
+  ],
+  "uncertainty": [
+    {
+      "cohort": "new",
+      "delta_known_r7_usd": 0.006172839450617283,
+      "player_bootstrap_95": [
+        0.0,
+        0.012345678901234567
+      ],
+      "interpretation": "Observed known revenue only; inspect coverage, maturity and retention before commercial interpretation. No automatic adoption or sample-size claim."
+    }
+  ],
+  "funnel": {
+    "control:revive_offer_shown": 0,
+    "candidate:revive_offer_shown": 0,
+    "control:revive_offer_decided": 0,
+    "control:decision:accept": 0,
+    "control:decision:back": 0,
+    "control:decision:explicit_decline": 0,
+    "control:decision:expired": 0,
+    "candidate:revive_offer_decided": 0,
+    "candidate:decision:accept": 0,
+    "candidate:decision:back": 0,
+    "candidate:decision:explicit_decline": 0,
+    "candidate:decision:expired": 0,
+    "control:reward_earned": 0,
+    "candidate:reward_earned": 0,
+    "control:reward_applied": 0,
+    "candidate:reward_applied": 0,
+    "control:revive_impression_offers": 0,
+    "candidate:revive_impression_offers": 0
+  },
+  "interstitial_blockers": {},
+  "revive_quality": {},
+  "players": [
+    {
+      "installation_id": "install-0",
+      "assignment_id": "a-0",
+      "variant": "control",
+      "cohort": "new",
+      "mature_r7": true,
+      "mature_d1": true,
+      "mature_d7": true,
+      "known_revenue_usd": "0",
+      "known_impressions": 1,
+      "unknown_impressions": 0,
+      "d1": false,
+      "d7": true,
+      "repeat_runs": 0
+    },
+    {
+      "installation_id": "install-1",
+      "assignment_id": "a-1",
+      "variant": "control",
+      "cohort": "new",
+      "mature_r7": true,
+      "mature_d1": true,
+      "mature_d7": true,
+      "known_revenue_usd": "0",
+      "known_impressions": 0,
+      "unknown_impressions": 0,
+      "d1": false,
+      "d7": false,
+      "repeat_runs": 0
+    },
+    {
+      "installation_id": "install-2",
+      "assignment_id": "a-2",
+      "variant": "candidate",
+      "cohort": "new",
+      "mature_r7": true,
+      "mature_d1": true,
+      "mature_d7": true,
+      "known_revenue_usd": "0.012345678901234567",
+      "known_impressions": 1,
+      "unknown_impressions": 0,
+      "d1": true,
+      "d7": false,
+      "repeat_runs": 0
+    },
+    {
+      "installation_id": "install-3",
+      "assignment_id": "a-3",
+      "variant": "candidate",
+      "cohort": "new",
+      "mature_r7": true,
+      "mature_d1": true,
+      "mature_d7": true,
+      "known_revenue_usd": "0",
+      "known_impressions": 0,
+      "unknown_impressions": 1,
+      "d1": false,
+      "d7": false,
+      "repeat_runs": 0
+    }
+  ]
+}

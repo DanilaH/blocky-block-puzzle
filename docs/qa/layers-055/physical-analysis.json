@@ -1,0 +1,516 @@
+{
+  "sourceVersion": "0.55.0-preview",
+  "sourceCommit": "1ba936c53d082107ba6ec0e630a367c858908553",
+  "inputZipSha256": "7666d8d0451c37225d058e84c2d4b0b7bee9a6982a90a45c589a74b4dbba3766",
+  "elapsedMs": 79929.29999995232,
+  "completed": true,
+  "validEpisodes": 18,
+  "screenAwake": true,
+  "context": {
+    "canvas": [
+      896,
+      896
+    ],
+    "reducedMotion": false,
+    "effectLayers": [
+      {
+        "layer": "ambient-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      },
+      {
+        "layer": "festival-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      }
+    ],
+    "type": "webgl",
+    "renderer": "Mali-G57 MC2",
+    "vendor": "ARM",
+    "maxTextureUnits": 16,
+    "phaserTextureUnits": 1
+  },
+  "nativeTraceBytes": 29812593,
+  "nativeTraceEvents": 171338,
+  "currentCaptureConfirmed": true,
+  "parserAndBufferLossCountersZero": true,
+  "genericMarkDeltasMs": [
+    23.274,
+    2404.628
+  ],
+  "frameWindowMs": 2400,
+  "episodes": [
+    {
+      "kind": "warmup",
+      "phase": "warmup",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 160,
+      "over33": 5,
+      "over50": 1,
+      "maxMs": 58.900001525878906,
+      "p95Ms": 25.299999237060547,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-0-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 209,
+      "over33": 5,
+      "over50": 2,
+      "maxMs": 58.900001525878906,
+      "p95Ms": 25.200000762939453,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-1-no-board-ink",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-board-ink",
+      "intervals": 159,
+      "over33": 10,
+      "over50": 1,
+      "maxMs": 50.5,
+      "p95Ms": 33.599998474121094,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-2-no-board-vfx",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-board-vfx",
+      "intervals": 187,
+      "over33": 6,
+      "over50": 0,
+      "maxMs": 42,
+      "p95Ms": 25.200000762939453,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-3-no-festival",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-festival",
+      "intervals": 210,
+      "over33": 4,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.100000381469727,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 0,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-4-no-atmosphere",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-atmosphere",
+      "intervals": 184,
+      "over33": 4,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-5-no-reward-dom",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-reward-dom",
+      "intervals": 217,
+      "over33": 0,
+      "over50": 0,
+      "maxMs": 25.299999237060547,
+      "p95Ms": 17,
+      "rewardDomCreated": 0,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-6-no-theme",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-theme",
+      "intervals": 247,
+      "over33": 3,
+      "over50": 0,
+      "maxMs": 41.900001525878906,
+      "p95Ms": 16.899999618530273,
+      "rewardDomCreated": 2,
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-1-7-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 161,
+      "over33": 8,
+      "over50": 3,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 25.399999618530273,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-0-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 161,
+      "over33": 6,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.299999237060547,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-1-no-theme",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-theme",
+      "intervals": 244,
+      "over33": 1,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 16.899999618530273,
+      "rewardDomCreated": 2,
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-2-no-reward-dom",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-reward-dom",
+      "intervals": 222,
+      "over33": 1,
+      "over50": 1,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 16.899999618530273,
+      "rewardDomCreated": 0,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-3-no-atmosphere",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-atmosphere",
+      "intervals": 168,
+      "over33": 9,
+      "over50": 2,
+      "maxMs": 92.5,
+      "p95Ms": 33.599998474121094,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-4-no-festival",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-festival",
+      "intervals": 191,
+      "over33": 9,
+      "over50": 2,
+      "maxMs": 50.5,
+      "p95Ms": 25.299999237060547,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 0,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-5-no-board-vfx",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-board-vfx",
+      "intervals": 196,
+      "over33": 5,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-6-no-board-ink",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-board-ink",
+      "intervals": 168,
+      "over33": 7,
+      "over50": 0,
+      "maxMs": 42,
+      "p95Ms": 25.299999237060547,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "layer-2-7-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 163,
+      "over33": 9,
+      "over50": 1,
+      "maxMs": 75.5999984741211,
+      "p95Ms": 33.599998474121094,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    },
+    {
+      "kind": "native-baseline",
+      "phase": "trace",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 174,
+      "over33": 7,
+      "over50": 3,
+      "maxMs": 58.79999923706055,
+      "p95Ms": 25.299999237060547,
+      "rewardDomCreated": 3,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true
+    }
+  ],
+  "nativeWindows": [
+    {
+      "afterCommitMs": [
+        0,
+        320
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 31,
+          "wallMs": 19.254,
+          "maxMs": 5.567
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 5,
+          "wallMs": 0.084,
+          "maxMs": 0.024
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 31,
+          "wallMs": 53.166,
+          "maxMs": 4.467
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 6,
+          "wallMs": 2.976,
+          "maxMs": 0.99
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 31,
+          "wallMs": 6.566,
+          "maxMs": 1.227
+        },
+        "DrawFn_DrawGL": {
+          "count": 30,
+          "wallMs": 218.142,
+          "maxMs": 25.223
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 59,
+          "wallMs": 160.076,
+          "maxMs": 13.018
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        320,
+        1400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 69,
+          "wallMs": 143.285,
+          "maxMs": 4.947
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 8,
+          "wallMs": 10.02,
+          "maxMs": 3.236
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 64,
+          "wallMs": 191.419,
+          "maxMs": 8.324
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 40,
+          "wallMs": 20.954,
+          "maxMs": 2.343
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 66,
+          "wallMs": 64.294,
+          "maxMs": 3.663
+        },
+        "DrawFn_DrawGL": {
+          "count": 63,
+          "wallMs": 851.322,
+          "maxMs": 58.124
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 127,
+          "wallMs": 790.991,
+          "maxMs": 57.452
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        1400,
+        2400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 79,
+          "wallMs": 74.547,
+          "maxMs": 6.253
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 0,
+          "wallMs": 0.0,
+          "maxMs": 0.0
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 80,
+          "wallMs": 218.923,
+          "maxMs": 12.148
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 48,
+          "wallMs": 18.474,
+          "maxMs": 0.926
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 79,
+          "wallMs": 59.65,
+          "maxMs": 2.066
+        },
+        "DrawFn_DrawGL": {
+          "count": 80,
+          "wallMs": 613.996,
+          "maxMs": 19.923
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 159,
+          "wallMs": 554.494,
+          "maxMs": 18.533
+        }
+      }
+    }
+  ],
+  "nominatedLayers": [
+    "no-reward-dom",
+    "no-theme"
+  ],
+  "confounds": [
+    "no-theme also removes theme HUD notice: rewardDomCreated 2 instead of baseline 3; palette and notice costs are not isolated",
+    "Single device capture with two reversed passes; no temperature/frequency/background-load measurements",
+    "RAF intervals are not GPU execution times; nested native draw/wait slices must not be added",
+    "Native tracing active only for the final baseline, excluded from all layer comparisons"
+  ],
+  "parserAndBufferLossCountersChecked": 36
+}

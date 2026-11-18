@@ -1,0 +1,123 @@
+{
+  "environment": "Chromium software renderer, 390x844 DPR2; repetitions/scenarios in results; not Android FPS. placementWallMs includes Playwright action scheduling, not input latency.",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "refill",
+      "placementWallMs": 267,
+      "frames": 94,
+      "median": 16.699999999999818,
+      "p95": 16.800000000000182,
+      "over33": 0,
+      "metrics": {
+        "LayoutCount": 8,
+        "LayoutDuration": 0.001256,
+        "RecalcStyleCount": 95,
+        "RecalcStyleDuration": 0.048998,
+        "ScriptDuration": 0.084011,
+        "TaskDuration": 1.1102940000000001
+      },
+      "audit": {
+        "rectReads": 4,
+        "previewCalls": 50,
+        "draws": 112,
+        "drawCPU": 17.69999998807907,
+        "festivalPeak": 0,
+        "vfxPeak": 9,
+        "long": [],
+        "phases": {
+          "boardDraw": {
+            "count": 112,
+            "totalMs": 18.599999975413084,
+            "maxMs": 1.199999999254942,
+            "meanMs": 0.16607142835190253
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 116.39999999850988,
+            "maxMs": 116.39999999850988,
+            "meanMs": 116.39999999850988
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 1.800000000745058,
+            "maxMs": 1.800000000745058,
+            "meanMs": 1.800000000745058
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 118.30000000074506,
+            "maxMs": 118.30000000074506,
+            "meanMs": 118.30000000074506
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 11.399999998509884,
+            "maxMs": 11.399999998509884,
+            "meanMs": 11.399999998509884
+          }
+        }
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "refill",
+      "placementWallMs": 330,
+      "frames": 93,
+      "median": 16.699999999999818,
+      "p95": 16.800000000000182,
+      "over33": 0,
+      "metrics": {
+        "LayoutCount": 5,
+        "LayoutDuration": 0.000923,
+        "RecalcStyleCount": 94,
+        "RecalcStyleDuration": 0.080405,
+        "ScriptDuration": 0.083461,
+        "TaskDuration": 1.185989
+      },
+      "audit": {
+        "rectReads": 4,
+        "previewCalls": 50,
+        "draws": 115,
+        "drawCPU": 21.100000001490116,
+        "festivalPeak": 0,
+        "vfxPeak": 9,
+        "long": [
+          51
+        ],
+        "phases": {
+          "boardDraw": {
+            "count": 115,
+            "totalMs": 21.600000008940697,
+            "maxMs": 1.699999999254942,
+            "meanMs": 0.18782608703426693
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 116.80000000074506,
+            "maxMs": 116.80000000074506,
+            "meanMs": 116.80000000074506
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 14.100000001490116,
+            "maxMs": 14.100000001490116,
+            "meanMs": 14.100000001490116
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 130.90000000223517,
+            "maxMs": 130.90000000223517,
+            "meanMs": 130.90000000223517
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 9.799999997019768,
+            "maxMs": 9.799999997019768,
+            "meanMs": 9.799999997019768
+          }
+        }
+      }
+    }
+  ]
+}

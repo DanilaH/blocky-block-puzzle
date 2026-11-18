@@ -1,0 +1,13 @@
+{
+  "rapidEvents": 20,
+  "intervalMs": 100,
+  "peak": 0.3388005793094635,
+  "maxVoices": 18,
+  "stopped": {
+    "voices": 0,
+    "delay": null,
+    "state": "suspended"
+  },
+  "resumedSilentPeak": 0,
+  "mutedVoices": 0
+}

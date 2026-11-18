@@ -1,0 +1,13 @@
+{
+  "schema": "blocky-played-rollout-public-check-v1",
+  "resultSha256": "c06c469371df6fbcb41ebd4578c2734975ccdb3504607b424b0dce16c96e2ab6",
+  "verifierSha256": "664198375dde1a0178c7a3d873d2ff166d17406872363f8a362a848b64ec9435",
+  "sourceMoves": 144,
+  "proofMoves": 16689,
+  "forecastMoves": 93207,
+  "actualMoves": 5006,
+  "roots": 958,
+  "selections": 1037,
+  "runs": 189,
+  "sourceGames": 12
+}

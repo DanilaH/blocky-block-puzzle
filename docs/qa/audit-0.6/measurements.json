@@ -1,0 +1,27 @@
+{
+  "errors": [],
+  "cases": [
+    {
+      "name": "rapid-record",
+      "first": "Новый рекорд!  +11",
+      "after": "+1",
+      "elapsedMs": 177,
+      "tier": "place"
+    },
+    {
+      "name": "large-score",
+      "scrollWidth": 320,
+      "score": "100 000 001",
+      "burst": {
+        "x": 56.859375,
+        "y": 57.45522689819336,
+        "width": 206.265625,
+        "height": 27.000003814697266,
+        "top": 57.45522689819336,
+        "right": 263.125,
+        "bottom": 84.45523071289062,
+        "left": 56.859375
+      }
+    }
+  ]
+}

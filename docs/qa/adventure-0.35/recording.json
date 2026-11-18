@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "8a5afb6a7cc839cc49c8e8e13280a299e50d8974",
+  "durationSeconds": 50.22000002861023,
+  "capturedFrames": 2505,
+  "events": [
+    {
+      "level": 1,
+      "status": "won"
+    },
+    {
+      "level": 2,
+      "status": "won"
+    },
+    {
+      "level": 3,
+      "status": "won"
+    },
+    {
+      "level": 4,
+      "status": "won"
+    },
+    {
+      "level": 5,
+      "status": "won"
+    }
+  ],
+  "errors": [],
+  "liveWebAudio": true,
+  "authoredSolutions": true,
+  "humanPlaytest": false,
+  "videoBytes": 3257091,
+  "videoSha256": "c037fe2d8c390f3c338ed5ff413d27b9a9048446d017d2a4e57f74f2803a8e3a"
+}

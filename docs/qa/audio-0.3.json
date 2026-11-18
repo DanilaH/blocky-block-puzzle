@@ -1,0 +1,56 @@
+{
+  "metrics": [
+    {
+      "kind": "pick",
+      "peak": 0.00017797666077967733,
+      "voices": 0
+    },
+    {
+      "kind": "place",
+      "peak": 0.07013797014951706,
+      "voices": 3
+    },
+    {
+      "kind": "place",
+      "peak": 0.09240704774856567,
+      "voices": 2
+    },
+    {
+      "kind": "place",
+      "peak": 0.203179731965065,
+      "voices": 3
+    },
+    {
+      "kind": "cancel",
+      "peak": 0.04379451274871826,
+      "voices": 1
+    },
+    {
+      "kind": "clear",
+      "peak": 0.24058061838150024,
+      "voices": 4
+    },
+    {
+      "kind": "combo",
+      "peak": 0.23640891909599304,
+      "voices": 5
+    },
+    {
+      "kind": "mega",
+      "peak": 0.23640891909599304,
+      "voices": 5
+    },
+    {
+      "kind": "record",
+      "peak": 0.21120348572731018,
+      "voices": 4
+    },
+    {
+      "kind": "allClear",
+      "peak": 0.23640891909599304,
+      "voices": 5
+    }
+  ],
+  "stoppedVoices": 0,
+  "state": "suspended"
+}

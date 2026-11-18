@@ -1,0 +1,16 @@
+{
+  "sha256": "de98d023a17691e6ad0ef5408fb8c616a41157d6cab18253ae40a6a8732a8591",
+  "bytes": 11541709,
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "manifest": {
+    "versionCode": 45,
+    "versionName": "0.45.0-preview",
+    "package": "com.danilah.blocky.dev"
+  },
+  "v2SignatureVerified": true,
+  "productionFilesMatched": 78,
+  "ciRun": 42229806057,
+  "artifact": 13509261236,
+  "matchesVersion44Signer": true,
+  "applicationCommit": "ff6ec18d91df6343b850ddc3f75d8982c4424bd8"
+}

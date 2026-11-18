@@ -1,0 +1,183 @@
+{
+  "sourceCommit": "f08f60ce2e2744ec179815121ba3044efefb163f",
+  "totalReplayedMoves": 457,
+  "oneOwnerUnequalExposure": true,
+  "rawRecordingsIncluded": false,
+  "reports": [
+    {
+      "file": "blocky-play (5)(1).json",
+      "sha256": "62163e803c7d6eca4556ff17ab7dbb9192a8a816e57c11ebe850dc25c692b442",
+      "appVersion": "0.64.0-preview",
+      "replayedMoves": 185,
+      "replay": "PASS: every before/after hash; independent board/lines/all-clear/game-over checks",
+      "games": [
+        {
+          "game": 1,
+          "dealer": "director-v2",
+          "recordedMoves": 185,
+          "statusAtRecordEnd": "over",
+          "finalMove": 185,
+          "finalScore": 74814,
+          "gameOverAtMoves": [
+            185
+          ],
+          "hintedMoves": 0,
+          "allClearAtMoves": [
+            3,
+            7,
+            12,
+            14,
+            27,
+            31,
+            42,
+            46,
+            50,
+            60,
+            64,
+            68,
+            70,
+            72,
+            84,
+            88,
+            92,
+            94,
+            96,
+            98,
+            132,
+            134,
+            138,
+            147,
+            149
+          ],
+          "clearMoves": 75,
+          "totalLines": 112,
+          "maxOccupied": 42,
+          "longestNoClear": 8,
+          "issuedShapes": 186,
+          "smallNonrectangular": 19,
+          "areaAtLeast6": 53,
+          "filledRectangles": 159,
+          "activeMsToLastMove": 291803,
+          "roleCounts": {
+            "prepare": 8,
+            "rest": 23,
+            "load": 12,
+            "payoff": 19
+          },
+          "partialClearMoves": 50
+        }
+      ]
+    },
+    {
+      "file": "blocky-play (6)(1).json",
+      "sha256": "35f58cd1a3dcca2d7e9b92ec27c6e0421091bf0d81be1156d226d4e5af897dba",
+      "appVersion": "0.64.0-preview",
+      "replayedMoves": 272,
+      "replay": "PASS: every before/after hash; independent board/lines/all-clear/game-over checks",
+      "games": [
+        {
+          "game": 1,
+          "dealer": "composition-v1",
+          "recordedMoves": 20,
+          "statusAtRecordEnd": "over",
+          "finalMove": 20,
+          "finalScore": 3497,
+          "gameOverAtMoves": [
+            17,
+            20
+          ],
+          "hintedMoves": 0,
+          "allClearAtMoves": [
+            3,
+            5
+          ],
+          "clearMoves": 7,
+          "totalLines": 7,
+          "maxOccupied": 43,
+          "longestNoClear": 4,
+          "issuedShapes": 21,
+          "smallNonrectangular": 5,
+          "areaAtLeast6": 4,
+          "filledRectangles": 15,
+          "activeMsToLastMove": 52335,
+          "roleCounts": {
+            "prepare": 2,
+            "rest": 2,
+            "payoff": 1,
+            "load": 1,
+            "recovery": 1
+          },
+          "partialClearMoves": 5
+        },
+        {
+          "game": 2,
+          "dealer": "composition-v1",
+          "recordedMoves": 32,
+          "statusAtRecordEnd": "over",
+          "finalMove": 32,
+          "finalScore": 7275,
+          "gameOverAtMoves": [
+            32
+          ],
+          "hintedMoves": 0,
+          "allClearAtMoves": [
+            3
+          ],
+          "clearMoves": 12,
+          "totalLines": 17,
+          "maxOccupied": 42,
+          "longestNoClear": 6,
+          "issuedShapes": 33,
+          "smallNonrectangular": 8,
+          "areaAtLeast6": 14,
+          "filledRectangles": 23,
+          "activeMsToLastMove": 63530,
+          "roleCounts": {
+            "prepare": 3,
+            "rest": 1,
+            "payoff": 5,
+            "load": 2
+          },
+          "partialClearMoves": 11
+        },
+        {
+          "game": 3,
+          "dealer": "composition-v1",
+          "recordedMoves": 220,
+          "statusAtRecordEnd": "over",
+          "finalMove": 220,
+          "finalScore": 139104,
+          "gameOverAtMoves": [
+            152,
+            220
+          ],
+          "hintedMoves": 0,
+          "allClearAtMoves": [
+            3,
+            165,
+            167,
+            182
+          ],
+          "clearMoves": 114,
+          "totalLines": 159,
+          "maxOccupied": 43,
+          "longestNoClear": 7,
+          "issuedShapes": 222,
+          "smallNonrectangular": 40,
+          "areaAtLeast6": 114,
+          "filledRectangles": 164,
+          "activeMsToLastMove": 579234,
+          "roleCounts": {
+            "prepare": 15,
+            "rest": 4,
+            "payoff": 38,
+            "load": 13,
+            "relief": 1,
+            "recovery": 3
+          },
+          "partialClearMoves": 110
+        }
+      ]
+    }
+  ]
+}

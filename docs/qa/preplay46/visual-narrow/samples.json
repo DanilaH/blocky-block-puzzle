@@ -1,0 +1,168 @@
+{
+  "note": "Synthetic states; live UI input. Native ad availability mocked; no actual ad. Screenshot overhead means timestamps are nominal waits, not exact animation timestamps.",
+  "viewport": {
+    "width": 320,
+    "height": 568
+  },
+  "clipped": [],
+  "errors": [],
+  "samples": [
+    {
+      "kind": "cross4",
+      "nominalMs": 120,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 36.1162223815918,
+          "y": 164.40386962890625,
+          "width": 187.76754760742188,
+          "height": 27.023895263671875
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 380,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 41.53956985473633,
+          "y": 169.10198974609375,
+          "width": 176.92086791992188,
+          "height": 21.723663330078125
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 900,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 47.67108154296875,
+          "y": 174.1217041015625,
+          "width": 164.6578369140625,
+          "height": 16.291778564453125
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 1700,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 2600,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 120,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 6! ×15",
+          "x": 41.336849212646484,
+          "y": 168.23684692382812,
+          "width": 177.3262939453125,
+          "height": 23.354019165039062
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 380,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "Чистое поле!",
+          "x": 42.048377990722656,
+          "y": 242.907958984375,
+          "width": 175.90325927734375,
+          "height": 26.3245849609375
+        },
+        {
+          "text": "ПОЛЯРНАЯ НОЧЬ",
+          "x": 72.47000122070312,
+          "y": 132.20797729492188,
+          "width": 115.05999755859375,
+          "height": 17.51068115234375
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 900,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "Чистое поле!",
+          "x": 34.867454528808594,
+          "y": 238.04544067382812,
+          "width": 190.26510620117188,
+          "height": 30.104705810546875
+        },
+        {
+          "text": "ПОЛЯРНАЯ НОЧЬ",
+          "x": 66.9609375,
+          "y": 127,
+          "width": 126.078125,
+          "height": 19.1875
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 1700,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "Чистое поле!",
+          "x": 44.80059051513672,
+          "y": 238.62271118164062,
+          "width": 170.3988037109375,
+          "height": 22.778289794921875
+        },
+        {
+          "text": "ПОЛЯРНАЯ НОЧЬ",
+          "x": 66.9609375,
+          "y": 127,
+          "width": 126.078125,
+          "height": 19.1875
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 2600,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": []
+    }
+  ]
+}

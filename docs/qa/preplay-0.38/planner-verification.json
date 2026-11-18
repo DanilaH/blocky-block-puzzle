@@ -1,0 +1,11 @@
+{
+  "comparisons": 144,
+  "mismatches": 0,
+  "seedRange": [
+    1777,
+    21324
+  ],
+  "movesPerSeed": 12,
+  "reference": "array-based independent depth-three beam, width eight",
+  "optimized": "same heuristic/order, row-mask representation"
+}

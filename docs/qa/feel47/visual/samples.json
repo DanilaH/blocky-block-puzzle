@@ -1,0 +1,304 @@
+{
+  "note": "Synthetic states; live UI input. Native ad availability mocked; no actual ad. Screenshot overhead means timestamps are nominal waits, not exact animation timestamps.",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "clipped": [],
+  "errors": [],
+  "samples": [
+    {
+      "kind": "double",
+      "nominalMs": 120,
+      "score": 16504,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ДВОЙНАЯ! ×15",
+          "x": 39.70099639892578,
+          "y": 209.22869873046875,
+          "width": 310.5980224609375,
+          "height": 57.21502685546875
+        }
+      ]
+    },
+    {
+      "kind": "double",
+      "nominalMs": 380,
+      "score": 16504,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ДВОЙНАЯ! ×15",
+          "x": 47.074729919433594,
+          "y": 214.75833129882812,
+          "width": 295.85052490234375,
+          "height": 49.483734130859375
+        }
+      ]
+    },
+    {
+      "kind": "double",
+      "nominalMs": 900,
+      "score": 16504,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ДВОЙНАЯ! ×15",
+          "x": 57.88669967651367,
+          "y": 222.41043090820312,
+          "width": 274.22662353515625,
+          "height": 39.043609619140625
+        }
+      ]
+    },
+    {
+      "kind": "double",
+      "nominalMs": 1700,
+      "score": 16504,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "double",
+      "nominalMs": 2600,
+      "score": 16504,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "triple",
+      "nominalMs": 120,
+      "score": 21009,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ТРОЙНАЯ! ×15",
+          "x": 119.26231384277344,
+          "y": 241.7620849609375,
+          "width": 151.47535705566406,
+          "height": 30.9439697265625
+        }
+      ]
+    },
+    {
+      "kind": "triple",
+      "nominalMs": 380,
+      "score": 21009,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ТРОЙНАЯ! ×15",
+          "x": 44.24845504760742,
+          "y": 212.84933471679688,
+          "width": 301.50311279296875,
+          "height": 53.521942138671875
+        }
+      ]
+    },
+    {
+      "kind": "triple",
+      "nominalMs": 900,
+      "score": 21009,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ТРОЙНАЯ! ×15",
+          "x": 55.06352996826172,
+          "y": 220.6737060546875,
+          "width": 279.8729248046875,
+          "height": 42.737274169921875
+        }
+      ]
+    },
+    {
+      "kind": "triple",
+      "nominalMs": 1700,
+      "score": 21009,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ТРОЙНАЯ! ×15",
+          "x": 65.87692260742188,
+          "y": 214.7082977294922,
+          "width": 258.24615478515625,
+          "height": 35.51319885253906
+        }
+      ]
+    },
+    {
+      "kind": "triple",
+      "nominalMs": 2600,
+      "score": 21009,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 120,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 59.47373580932617,
+          "y": 217.54078674316406,
+          "width": 271.05255126953125,
+          "height": 31.66497802734375
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 380,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 48.49886703491211,
+          "y": 212.16481018066406,
+          "width": 293.00225830078125,
+          "height": 37.22711181640625
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 900,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 4! ×15",
+          "x": 59.29779052734375,
+          "y": 219.53778076171875,
+          "width": 271.4044189453125,
+          "height": 27.473480224609375
+        }
+      ]
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 1700,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "cross4",
+      "nominalMs": 2600,
+      "score": 27004,
+      "theme": 0,
+      "occupied": 1,
+      "labels": []
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 120,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 6! ×15",
+          "x": 155.3201904296875,
+          "y": 247.758544921875,
+          "width": 79.359619140625,
+          "height": 16.84228515625
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 380,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "ПЕРЕКРЕСТИЕ · 6! ×15",
+          "x": 43.498653411865234,
+          "y": 211.60818481445312,
+          "width": 303.002685546875,
+          "height": 38.084625244140625
+        },
+        {
+          "text": "Чистое поле!",
+          "x": 153.3589324951172,
+          "y": 372.856201171875,
+          "width": 83.28213500976562,
+          "height": 21.02197265625
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 900,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "Чистое поле!",
+          "x": 40.017539978027344,
+          "y": 332.72747802734375,
+          "width": 309.96490478515625,
+          "height": 51.168792724609375
+        },
+        {
+          "text": "ПОЛЯРНАЯ НОЧЬ",
+          "x": 131.9609375,
+          "y": 168,
+          "width": 126.078125,
+          "height": 19.1875
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 1700,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": [
+        {
+          "text": "Чистое поле!",
+          "x": 58.257568359375,
+          "y": 340.92803955078125,
+          "width": 273.48486328125,
+          "height": 36.5867919921875
+        },
+        {
+          "text": "ПОЛЯРНАЯ НОЧЬ",
+          "x": 131.9609375,
+          "y": 168,
+          "width": 126.078125,
+          "height": 19.1875
+        }
+      ]
+    },
+    {
+      "kind": "allclear6",
+      "nominalMs": 2600,
+      "score": 44509,
+      "theme": 5,
+      "occupied": 0,
+      "labels": []
+    }
+  ]
+}

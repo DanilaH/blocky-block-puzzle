@@ -1,0 +1,72 @@
+{
+  "guidanceCommit": "4e826ff378dfd2f4705a31a894400ae6268ca6f9",
+  "reference": "Block Blast10.8.2 actual ShapeInfo; corrected pass4 runtime-shapes.json, IDs1..42",
+  "sourceJSsha256": "8dce6532cafc25d982f2af3659647e0e0017c3902cbc31f872d375804dc3678c",
+  "legacyOrientations": 31,
+  "newOrientations": 10,
+  "totalUniqueOrientations": 41,
+  "mappings": [
+    {
+      "shapeId": "LJ4-0",
+      "blockBlastIds": [
+        42
+      ]
+    },
+    {
+      "shapeId": "LJ4-1",
+      "blockBlastIds": [
+        34
+      ]
+    },
+    {
+      "shapeId": "LJ4-2",
+      "blockBlastIds": [
+        32
+      ]
+    },
+    {
+      "shapeId": "LJ4-3",
+      "blockBlastIds": [
+        33
+      ]
+    },
+    {
+      "shapeId": "LJ4-4",
+      "blockBlastIds": [
+        29
+      ]
+    },
+    {
+      "shapeId": "LJ4-5",
+      "blockBlastIds": [
+        8
+      ]
+    },
+    {
+      "shapeId": "LJ4-6",
+      "blockBlastIds": [
+        31
+      ]
+    },
+    {
+      "shapeId": "LJ4-7",
+      "blockBlastIds": [
+        30
+      ]
+    },
+    {
+      "shapeId": "D2-0",
+      "blockBlastIds": [
+        37
+      ]
+    },
+    {
+      "shapeId": "D2-1",
+      "blockBlastIds": [
+        38
+      ]
+    }
+  ],
+  "independentReference": "1010!71.57.1136 Pieces_2 normalized:8 StubWedge rotations/mirrors match LJ4",
+  "excluded": "Block Blast43..51/101..111/200..203: not established as ordinary Classic pool;1010!4x4 is mode-gated on10x10"
+}

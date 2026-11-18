@@ -1,0 +1,67 @@
+import { applyMove, type GameState, type Move } from "../core/rules";
+import type { ChallengeObservation } from "../core/challenge-director";
+
+type MoveWorker = Pick<
+  Worker,
+  "onmessage" | "onerror" | "onmessageerror" | "postMessage" | "terminate"
+>;
+
+/** Keep a healthy worker warm, but never reuse a failed or timed-out search. */
+export class MoveCalculator {
+  private worker: MoveWorker | null = null;
+  private pending = false;
+  private cancelPending: (() => void) | null = null;
+  cancel() {
+    if (this.cancelPending) this.cancelPending();
+    else { this.worker?.terminate(); this.worker = null; }
+  }
+
+  constructor(private createWorker: () => MoveWorker) {}
+
+  async calculate(state: GameState, move: Move, revision: number, captureDecision = false, observation?:ChallengeObservation) {
+    if (this.pending) throw new Error("Move search already pending");
+    if (
+      !["flow-v1", "flow-v2", "flow-v3", "flow-v4", "director-v1", "director-v2", "director-v3", "director-v4", "director-v5", "director-v6", "composition-v1", "composition-v2", "director-budget-v1", "director-challenge-v1", "director-challenge-v2", "director-challenge-v3", "director-build-v1","director-shapes-v1"].includes(
+        state.dealerVersion,
+      ) ||
+      state.tray.filter((s) => s.used).length !== 2
+    )
+      return applyMove(state, move, revision, captureDecision,observation);
+
+    const worker = (this.worker ??= this.createWorker());
+    this.pending = true;
+    return new Promise<ReturnType<typeof applyMove>>((resolve, reject) => {
+      let settled = false;
+      const finish = (error?: Error, result?: ReturnType<typeof applyMove>) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timeout);
+        worker.onmessage = worker.onerror = worker.onmessageerror = null;
+        this.pending = false;
+        this.cancelPending = null;
+        if (error) {
+          worker.terminate();
+          this.worker = null;
+          reject(error);
+        } else resolve(result!);
+      };
+      const timeout = setTimeout(
+        () => finish(new Error("Move search timed out")),
+        5000,
+      );
+      this.cancelPending = () => finish(new Error("Move search cancelled"));
+      worker.onmessage = (event) =>
+        event.data.error
+          ? finish(new Error("Move search failed"))
+          : finish(undefined, event.data.result);
+      worker.onerror = () => finish(new Error("Move worker failed"));
+      worker.onmessageerror = () =>
+        finish(new Error("Move response could not be read"));
+      try {
+        worker.postMessage({ state, move, revision, ...(captureDecision ? {captureDecision:true} : {}),...(observation?{observation}:{}) });
+      } catch {
+        finish(new Error("Move request could not be sent"));
+      }
+    });
+  }
+}

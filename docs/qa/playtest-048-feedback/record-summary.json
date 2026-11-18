@@ -1,0 +1,150 @@
+{
+  "schema": "blocky-human-playtest-feedback-v1",
+  "appVersion": "0.48.0-preview",
+  "completeGameStart": true,
+  "replayVerifiedMoves": 124,
+  "recordEvents": 133,
+  "sessions": [
+    {
+      "session": 1,
+      "moves": 86,
+      "initialMove": 0,
+      "finalMove": 86,
+      "score": 12928,
+      "status": "over",
+      "recordedActiveMs": 224042,
+      "fullClears": [
+        {
+          "move": 70,
+          "score": 10547,
+          "lines": 1
+        }
+      ],
+      "deals": 29,
+      "uniqueBags": 28,
+      "consecutiveRepeats": 0,
+      "longestSameBagRun": 1,
+      "mostCommon": [
+        [
+          "R6-0,R6-0,R6-0",
+          2
+        ],
+        [
+          "L3-2,L3-3,L3-3",
+          1
+        ],
+        [
+          "I3-0,L3-1,L3-3",
+          1
+        ],
+        [
+          "I3-0,L3-0,S1-0",
+          1
+        ],
+        [
+          "L3-0,L3-1,L3-1",
+          1
+        ],
+        [
+          "D3b,O2-0,S1-0",
+          1
+        ],
+        [
+          "I3-0,L3-0,O2-0",
+          1
+        ],
+        [
+          "I3-0,I3-0,T4-0",
+          1
+        ],
+        [
+          "I2-1,I2-1,I3-1",
+          1
+        ],
+        [
+          "I3-0,S1-0,T4-1",
+          1
+        ]
+      ],
+      "maxStreak": 6,
+      "reviveUsed": true
+    },
+    {
+      "session": 2,
+      "moves": 38,
+      "initialMove": 0,
+      "finalMove": 38,
+      "score": 2676,
+      "status": "over",
+      "recordedActiveMs": 73415,
+      "fullClears": [],
+      "deals": 13,
+      "uniqueBags": 13,
+      "consecutiveRepeats": 0,
+      "longestSameBagRun": 1,
+      "mostCommon": [
+        [
+          "R6-0,R6-0,R6-0",
+          1
+        ],
+        [
+          "L3-1,L3-3,L3-3",
+          1
+        ],
+        [
+          "I3-1,I3-1,L3-3",
+          1
+        ],
+        [
+          "I3-0,I3-1,I3-1",
+          1
+        ],
+        [
+          "I4-1,O2-0,SZ4-1",
+          1
+        ],
+        [
+          "I3-1,I4-1,S1-0",
+          1
+        ],
+        [
+          "I3-1,I4-1,I4-1",
+          1
+        ],
+        [
+          "I3-1,O2-0,T4-0",
+          1
+        ],
+        [
+          "I2-0,S1-0,T4-0",
+          1
+        ],
+        [
+          "I3-1,I4-0,T4-1",
+          1
+        ]
+      ],
+      "maxStreak": 4,
+      "reviveUsed": true
+    }
+  ],
+  "target12801": [
+    {
+      "segment": 4,
+      "move": 81,
+      "score": 12801,
+      "beforeScore": 12496,
+      "lines": 0,
+      "allClear": false,
+      "activeMs": 160313,
+      "wallMs": 196703,
+      "streak": 0,
+      "placement": {
+        "slot": 1,
+        "x": 3,
+        "y": 3
+      }
+    }
+  ],
+  "frameMeasurementsPresent": false
+}

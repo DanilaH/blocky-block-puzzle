@@ -1,0 +1,917 @@
+{
+  "environment": "Linux Chromium/SwiftShader; not a POCO FPS claim",
+  "windowMs": [
+    320,
+    1400
+  ],
+  "allEpisodesCdpTraced": true,
+  "results": [
+    {
+      "index": 0,
+      "condition": "baseline",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 46.309,
+              "threadCpuMs": 48.599000000000004,
+              "maxMs": 1.527
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.579,
+              "threadCpuMs": 6.380000000000001,
+              "maxMs": 4.219
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 16.194,
+              "threadCpuMs": 9.584000000000003,
+              "maxMs": 3.106
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 22.10300000000001,
+              "threadCpuMs": 20.586,
+              "maxMs": 0.819
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 74.34599999999999,
+              "threadCpuMs": 64.64400000000002,
+              "maxMs": 6.508
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 384,
+              "wallMs": 988.0469999999981,
+              "threadCpuMs": 323.3510000000002,
+              "maxMs": 56.493
+            }
+          },
+          "fullRendererTasks": {
+            "count": 836,
+            "wallMs": 1958.1169999999868,
+            "threadCpuMs": 752.5749999999944
+          },
+          "unionRendererTasks": {
+            "rawCount": 836,
+            "outerCount": 836,
+            "wallMs": 1958.1169999999868,
+            "threadCpuMs": 752.5749999999944
+          },
+          "unionEffectTasks": {
+            "rawCount": 384,
+            "outerCount": 384,
+            "wallMs": 988.0469999999981,
+            "threadCpuMs": 323.3510000000002
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 50.736,
+              "threadCpuMs": 49.90999999999998,
+              "maxMs": 4.09
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.491,
+              "threadCpuMs": 2.905,
+              "maxMs": 1.63
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.476999999999999,
+              "threadCpuMs": 8.854000000000001,
+              "maxMs": 1.327
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 99,
+              "wallMs": 23.207,
+              "threadCpuMs": 21.409,
+              "maxMs": 1.069
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 62.39,
+              "threadCpuMs": 58.455,
+              "maxMs": 1.797
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 386,
+              "wallMs": 1003.1749999999985,
+              "threadCpuMs": 323.4809999999997,
+              "maxMs": 43.103
+            }
+          },
+          "fullRendererTasks": {
+            "count": 863,
+            "wallMs": 1972.936999999988,
+            "threadCpuMs": 751.2479999999947
+          },
+          "unionRendererTasks": {
+            "rawCount": 863,
+            "outerCount": 863,
+            "wallMs": 1972.936999999988,
+            "threadCpuMs": 751.2479999999947
+          },
+          "unionEffectTasks": {
+            "rawCount": 386,
+            "outerCount": 386,
+            "wallMs": 1003.1749999999985,
+            "threadCpuMs": 323.4809999999997
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 49.27399999999998,
+              "threadCpuMs": 48.87600000000001,
+              "maxMs": 1.747
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.515,
+              "threadCpuMs": 3.83,
+              "maxMs": 4.059
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 19.095,
+              "threadCpuMs": 11.087,
+              "maxMs": 3.897
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 94,
+              "wallMs": 24.273000000000003,
+              "threadCpuMs": 22.854000000000003,
+              "maxMs": 2.206
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 53.13699999999999,
+              "threadCpuMs": 52.068,
+              "maxMs": 1.678
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 352,
+              "wallMs": 974.2929999999981,
+              "threadCpuMs": 323.98400000000026,
+              "maxMs": 33.102
+            }
+          },
+          "fullRendererTasks": {
+            "count": 842,
+            "wallMs": 1894.0919999999876,
+            "threadCpuMs": 737.7019999999949
+          },
+          "unionRendererTasks": {
+            "rawCount": 842,
+            "outerCount": 842,
+            "wallMs": 1894.0919999999876,
+            "threadCpuMs": 737.7019999999949
+          },
+          "unionEffectTasks": {
+            "rawCount": 352,
+            "outerCount": 352,
+            "wallMs": 974.2929999999981,
+            "threadCpuMs": 323.98400000000026
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 1,
+      "condition": "combined",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 35.98799999999999,
+              "threadCpuMs": 35.67100000000001,
+              "maxMs": 3.186
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 14.985,
+              "threadCpuMs": 9.342999999999998,
+              "maxMs": 7.487
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 20.847999999999995,
+              "threadCpuMs": 12.818000000000001,
+              "maxMs": 6.26
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 80,
+              "wallMs": 19.692,
+              "threadCpuMs": 18.483,
+              "maxMs": 0.978
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 41,
+              "wallMs": 74.716,
+              "threadCpuMs": 68.97799999999998,
+              "maxMs": 4.178
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 312,
+              "wallMs": 1081.5739999999992,
+              "threadCpuMs": 454.85199999999975,
+              "maxMs": 57.161
+            }
+          },
+          "fullRendererTasks": {
+            "count": 758,
+            "wallMs": 2340.201999999997,
+            "threadCpuMs": 1135.6539999999961
+          },
+          "unionRendererTasks": {
+            "rawCount": 758,
+            "outerCount": 758,
+            "wallMs": 2340.201999999997,
+            "threadCpuMs": 1135.6539999999961
+          },
+          "unionEffectTasks": {
+            "rawCount": 312,
+            "outerCount": 312,
+            "wallMs": 1081.5739999999992,
+            "threadCpuMs": 454.85199999999975
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 20.699999999254942,
+            "drawMs": 10.699999995529652,
+            "draws": 90,
+            "peakBytes": 5007240,
+            "active": 2,
+            "bytes": 4296320,
+            "activeBytes": 835396,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 35.071000000000005,
+              "threadCpuMs": 34.471,
+              "maxMs": 1.79
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 15,
+              "wallMs": 6.079000000000001,
+              "threadCpuMs": 4.124,
+              "maxMs": 1.568
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 12.548000000000002,
+              "threadCpuMs": 9.048000000000002,
+              "maxMs": 1.914
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 19.858999999999998,
+              "threadCpuMs": 18.463000000000005,
+              "maxMs": 0.888
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 58.202999999999996,
+              "threadCpuMs": 52.854000000000006,
+              "maxMs": 2.139
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 371,
+              "wallMs": 1064.2549999999978,
+              "threadCpuMs": 431.54399999999947,
+              "maxMs": 34.248
+            }
+          },
+          "fullRendererTasks": {
+            "count": 835,
+            "wallMs": 2325.9289999999937,
+            "threadCpuMs": 1134.460999999995
+          },
+          "unionRendererTasks": {
+            "rawCount": 835,
+            "outerCount": 835,
+            "wallMs": 2325.9289999999937,
+            "threadCpuMs": 1134.460999999995
+          },
+          "unionEffectTasks": {
+            "rawCount": 371,
+            "outerCount": 371,
+            "wallMs": 1064.2549999999978,
+            "threadCpuMs": 431.54399999999947
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 3.900000002235174,
+            "drawMs": 7.799999982118607,
+            "draws": 93,
+            "peakBytes": 5007200,
+            "active": 2,
+            "bytes": 4296280,
+            "activeBytes": 835356,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 35.85999999999999,
+              "threadCpuMs": 35.543000000000006,
+              "maxMs": 1.484
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 6.4940000000000015,
+              "threadCpuMs": 3.961,
+              "maxMs": 2.108
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 15.813999999999998,
+              "threadCpuMs": 8.620000000000001,
+              "maxMs": 4.995
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 17.840000000000003,
+              "threadCpuMs": 16.560000000000006,
+              "maxMs": 0.628
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 44,
+              "wallMs": 54.271,
+              "threadCpuMs": 49.879,
+              "maxMs": 4.788
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 316,
+              "wallMs": 1063.7849999999985,
+              "threadCpuMs": 405.12699999999967,
+              "maxMs": 42.208
+            }
+          },
+          "fullRendererTasks": {
+            "count": 809,
+            "wallMs": 2308.030999999991,
+            "threadCpuMs": 1074.5879999999952
+          },
+          "unionRendererTasks": {
+            "rawCount": 809,
+            "outerCount": 809,
+            "wallMs": 2308.030999999991,
+            "threadCpuMs": 1074.5879999999952
+          },
+          "unionEffectTasks": {
+            "rawCount": 316,
+            "outerCount": 316,
+            "wallMs": 1063.7849999999985,
+            "threadCpuMs": 405.12699999999967
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 9.50000000372529,
+            "drawMs": 6.600000001490116,
+            "draws": 93,
+            "peakBytes": 5007200,
+            "active": 2,
+            "bytes": 4296280,
+            "activeBytes": 835356,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 2,
+      "condition": "combined",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 33.864000000000004,
+              "threadCpuMs": 33.538,
+              "maxMs": 1.386
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 13.278,
+              "threadCpuMs": 4.832000000000001,
+              "maxMs": 6.194
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 19.145,
+              "threadCpuMs": 9.384000000000002,
+              "maxMs": 5.251
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 87,
+              "wallMs": 19.628,
+              "threadCpuMs": 18.278000000000002,
+              "maxMs": 0.837
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 72.80100000000002,
+              "threadCpuMs": 68.26,
+              "maxMs": 4.728
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 329,
+              "wallMs": 1064.3619999999983,
+              "threadCpuMs": 433.43299999999937,
+              "maxMs": 56.496
+            }
+          },
+          "fullRendererTasks": {
+            "count": 822,
+            "wallMs": 2287.691999999988,
+            "threadCpuMs": 1110.6149999999918
+          },
+          "unionRendererTasks": {
+            "rawCount": 822,
+            "outerCount": 822,
+            "wallMs": 2287.691999999988,
+            "threadCpuMs": 1110.6149999999918
+          },
+          "unionEffectTasks": {
+            "rawCount": 329,
+            "outerCount": 329,
+            "wallMs": 1064.3619999999983,
+            "threadCpuMs": 433.43299999999937
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 16.899999998509884,
+            "drawMs": 10.700000014156103,
+            "draws": 97,
+            "peakBytes": 5007240,
+            "active": 2,
+            "bytes": 4296320,
+            "activeBytes": 835396,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 40.09,
+              "threadCpuMs": 37.28699999999999,
+              "maxMs": 4.073
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 5.194,
+              "threadCpuMs": 3.417,
+              "maxMs": 1.49
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 10.318000000000001,
+              "threadCpuMs": 8.461999999999998,
+              "maxMs": 1.327
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 22.597999999999995,
+              "threadCpuMs": 21.263,
+              "maxMs": 2.654
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 66.04799999999997,
+              "threadCpuMs": 59.387,
+              "maxMs": 3.364
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 362,
+              "wallMs": 1064.5669999999989,
+              "threadCpuMs": 439.7399999999994,
+              "maxMs": 42.316
+            }
+          },
+          "fullRendererTasks": {
+            "count": 866,
+            "wallMs": 2287.6389999999947,
+            "threadCpuMs": 1124.2869999999923
+          },
+          "unionRendererTasks": {
+            "rawCount": 866,
+            "outerCount": 866,
+            "wallMs": 2287.6389999999947,
+            "threadCpuMs": 1124.2869999999923
+          },
+          "unionEffectTasks": {
+            "rawCount": 362,
+            "outerCount": 362,
+            "wallMs": 1064.5669999999989,
+            "threadCpuMs": 439.7399999999994
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 3.099999997764826,
+            "drawMs": 6.300000011920929,
+            "draws": 96,
+            "peakBytes": 5007200,
+            "active": 2,
+            "bytes": 4296280,
+            "activeBytes": 835356,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 36.499999999999986,
+              "threadCpuMs": 36.15300000000001,
+              "maxMs": 1.371
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 5.787,
+              "threadCpuMs": 4.188999999999999,
+              "maxMs": 1.322
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 13.818,
+              "threadCpuMs": 9.235999999999997,
+              "maxMs": 3.26
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 20.356999999999996,
+              "threadCpuMs": 18.956000000000003,
+              "maxMs": 0.658
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 56.33300000000001,
+              "threadCpuMs": 51.31500000000002,
+              "maxMs": 2.581
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 366,
+              "wallMs": 1049.820999999998,
+              "threadCpuMs": 419.6809999999993,
+              "maxMs": 42.038
+            }
+          },
+          "fullRendererTasks": {
+            "count": 852,
+            "wallMs": 2251.066999999995,
+            "threadCpuMs": 1076.5899999999936
+          },
+          "unionRendererTasks": {
+            "rawCount": 852,
+            "outerCount": 852,
+            "wallMs": 2251.066999999995,
+            "threadCpuMs": 1076.5899999999936
+          },
+          "unionEffectTasks": {
+            "rawCount": 366,
+            "outerCount": 366,
+            "wallMs": 1049.820999999998,
+            "threadCpuMs": 419.6809999999993
+          },
+          "rasters": {
+            "prepared": 4,
+            "fallbacks": 0,
+            "prepareMs": 3.199999999254942,
+            "drawMs": 6.300000004470348,
+            "draws": 95,
+            "peakBytes": 5007200,
+            "active": 2,
+            "bytes": 4296280,
+            "activeBytes": 835356,
+            "cachedBytes": 3460924,
+            "clockActive": true
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 3,
+      "condition": "baseline",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 54,
+              "wallMs": 49.32699999999999,
+              "threadCpuMs": 49.02600000000001,
+              "maxMs": 2.019
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 10.867999999999999,
+              "threadCpuMs": 3.648,
+              "maxMs": 4.21
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 19.648,
+              "threadCpuMs": 11.077000000000002,
+              "maxMs": 3.285
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 86,
+              "wallMs": 23.970999999999997,
+              "threadCpuMs": 22.632000000000016,
+              "maxMs": 1.224
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 75.17000000000002,
+              "threadCpuMs": 74.71300000000001,
+              "maxMs": 4.622
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 314,
+              "wallMs": 1061.6779999999976,
+              "threadCpuMs": 346.3329999999999,
+              "maxMs": 62.611
+            }
+          },
+          "fullRendererTasks": {
+            "count": 768,
+            "wallMs": 2148.0219999999867,
+            "threadCpuMs": 813.9279999999936
+          },
+          "unionRendererTasks": {
+            "rawCount": 768,
+            "outerCount": 768,
+            "wallMs": 2148.0219999999867,
+            "threadCpuMs": 813.9279999999936
+          },
+          "unionEffectTasks": {
+            "rawCount": 314,
+            "outerCount": 314,
+            "wallMs": 1061.6779999999976,
+            "threadCpuMs": 346.3329999999999
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 49.446,
+              "threadCpuMs": 49.09599999999998,
+              "maxMs": 1.794
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.385,
+              "threadCpuMs": 3.878,
+              "maxMs": 2.453
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 14.710999999999999,
+              "threadCpuMs": 10.053000000000003,
+              "maxMs": 2.006
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 22.632,
+              "threadCpuMs": 21.184,
+              "maxMs": 0.71
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 60.233000000000004,
+              "threadCpuMs": 58.94199999999999,
+              "maxMs": 1.991
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 483,
+              "wallMs": 977.3429999999963,
+              "threadCpuMs": 328.4319999999993,
+              "maxMs": 31.442
+            }
+          },
+          "fullRendererTasks": {
+            "count": 985,
+            "wallMs": 1937.8889999999842,
+            "threadCpuMs": 789.9319999999943
+          },
+          "unionRendererTasks": {
+            "rawCount": 985,
+            "outerCount": 985,
+            "wallMs": 1937.8889999999842,
+            "threadCpuMs": 789.9319999999943
+          },
+          "unionEffectTasks": {
+            "rawCount": 483,
+            "outerCount": 483,
+            "wallMs": 977.3429999999963,
+            "threadCpuMs": 328.4319999999993
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 46.85300000000002,
+              "threadCpuMs": 46.095,
+              "maxMs": 1.392
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.597,
+              "threadCpuMs": 3.451,
+              "maxMs": 1.965
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 13.237000000000002,
+              "threadCpuMs": 8.814000000000002,
+              "maxMs": 1.566
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 22.388000000000005,
+              "threadCpuMs": 20.687000000000005,
+              "maxMs": 0.994
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 56.79500000000001,
+              "threadCpuMs": 50.351,
+              "maxMs": 2.287
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 353,
+              "wallMs": 970.0629999999974,
+              "threadCpuMs": 310.9120000000001,
+              "maxMs": 34.977
+            }
+          },
+          "fullRendererTasks": {
+            "count": 850,
+            "wallMs": 1909.3499999999865,
+            "threadCpuMs": 745.7879999999948
+          },
+          "unionRendererTasks": {
+            "rawCount": 850,
+            "outerCount": 850,
+            "wallMs": 1909.3499999999865,
+            "threadCpuMs": 745.7879999999948
+          },
+          "unionEffectTasks": {
+            "rawCount": 353,
+            "outerCount": 353,
+            "wallMs": 970.0629999999974,
+            "threadCpuMs": 310.9120000000001
+          },
+          "rasters": {
+            "prepared": 0,
+            "fallbacks": 0,
+            "prepareMs": 0,
+            "drawMs": 0,
+            "draws": 0,
+            "peakBytes": 0,
+            "active": 0,
+            "bytes": 0,
+            "activeBytes": 0,
+            "cachedBytes": 0,
+            "clockActive": false
+          }
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "sourceAppCommit": "25d54809dc569ab99af263c99f955e0a28acb53f",
+  "candidate": "per-frame Canvas repaint, rejected",
+  "decision": "Style-only improvement hid a substantial total renderer CPU regression. Not the final application."
+}

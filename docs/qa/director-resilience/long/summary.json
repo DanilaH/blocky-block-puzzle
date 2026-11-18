@@ -1,0 +1,50 @@
+{
+  "policy": "resilience-v6",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 1200,
+  "limit": 600,
+  "openingMatches": 6,
+  "summary": [
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 1,
+      "medianMoves": 600,
+      "moves": 3047,
+      "clears": 95,
+      "rewardRate": 0.461437479488021,
+      "repeat": 16,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 11,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 1,
+      "medianMoves": 600,
+      "moves": 3047,
+      "clears": 95,
+      "rewardRate": 0.461437479488021,
+      "repeat": 16,
+      "maxDry": 7,
+      "p95Selection": 8.384735999999975,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 11,
+          "dead": false
+        }
+      ]
+    }
+  ]
+}

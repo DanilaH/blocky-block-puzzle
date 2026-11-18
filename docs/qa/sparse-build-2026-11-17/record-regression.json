@@ -1,0 +1,18 @@
+{
+  "kind": "same-input regression, not new player trajectories",
+  "exactOriginalMoves": 382,
+  "sourceSha256": "9888c8d828c943140292702c1068022ee98a86f15982638fc0c2b76792af0c22",
+  "refills": 126,
+  "empty": 11,
+  "emptyBefore": 11,
+  "emptyAfter": 0,
+  "low8": 24,
+  "low8Before": 19,
+  "low8After": 0,
+  "unchangedDenseOrRecovery": 71,
+  "technicalPass": true,
+  "guards": {
+    "empty": true,
+    "low8": true
+  }
+}

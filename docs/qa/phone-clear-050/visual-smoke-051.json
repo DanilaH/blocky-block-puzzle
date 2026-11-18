@@ -1,0 +1,27 @@
+{
+  "version": "0.51.0-preview",
+  "productionBundle": true,
+  "sourceTransforms": false,
+  "uiMove": {
+    "slot": 0,
+    "x": 5,
+    "y": 0
+  },
+  "expectedScore": 1574,
+  "allClear": true,
+  "lines": 2,
+  "afterTheme": 1,
+  "canvas": [
+    1024,
+    1024
+  ],
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "performanceExportBytes": 27793,
+  "errors": [],
+  "physicalDevice": false,
+  "measurement": "Visual smoke with screenshot/video overhead; frame timings excluded",
+  "inspectedFrames": [
+    "phase-1 (reveal and label)",
+    "phase-2 (late reveal and field wash)"
+  ]
+}

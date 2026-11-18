@@ -1,0 +1,275 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "cdpTracingActiveAcrossAllEpisodes": true,
+  "scope": "Actual Classic-scoped ink fade versus restored inherited root fade. Child fades retained. Mobile software/CDP study, not a phone FPS claim.",
+  "results": [
+    {
+      "condition": "baseline",
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 6.228000000000001,
+      "forcedStyleLayoutMaxMs": 1.929,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 63,
+          "wallMs": 77.80499999999998,
+          "threadCpuMs": 77.27999999999999
+        },
+        "Document::recalcStyle": {
+          "count": 63,
+          "wallMs": 74.81499999999997,
+          "threadCpuMs": 74.87800000000001
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 43,
+          "wallMs": 11.370000000000005,
+          "threadCpuMs": 9.370000000000003
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 49,
+          "wallMs": 53.26299999999999,
+          "threadCpuMs": 49.09399999999997
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 66.80000305175781
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 15,
+          "maxFrameMs": 83.30000305175781
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "condition": "scoped-ink-fades",
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 13,
+      "forcedStyleLayoutTotalMs": 6.16,
+      "forcedStyleLayoutMaxMs": 1.825,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 62,
+          "wallMs": 47.623999999999995,
+          "threadCpuMs": 50.427000000000014
+        },
+        "Document::recalcStyle": {
+          "count": 62,
+          "wallMs": 45.221000000000004,
+          "threadCpuMs": 48.425999999999995
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 45,
+          "wallMs": 13.961,
+          "threadCpuMs": 9.944999999999999
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 48,
+          "wallMs": 57.01599999999998,
+          "threadCpuMs": 53.033999999999985
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 21,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 19,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "condition": "scoped-ink-fades",
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 5.030000000000001,
+      "forcedStyleLayoutMaxMs": 1.526,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 63,
+          "wallMs": 51.39100000000001,
+          "threadCpuMs": 51.013
+        },
+        "Document::recalcStyle": {
+          "count": 63,
+          "wallMs": 48.395,
+          "threadCpuMs": 48.38100000000001
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 43,
+          "wallMs": 11.588000000000003,
+          "threadCpuMs": 9.636
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 51,
+          "wallMs": 60.69600000000002,
+          "threadCpuMs": 56.179
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 21,
+          "maxFrameMs": 66.5999984741211
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "condition": "baseline",
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 7.289,
+      "forcedStyleLayoutMaxMs": 3.053,
+      "rendererMainMetrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 63,
+          "wallMs": 80.47399999999999,
+          "threadCpuMs": 83.55300000000001
+        },
+        "Document::recalcStyle": {
+          "count": 63,
+          "wallMs": 77.88899999999998,
+          "threadCpuMs": 81.38500000000003
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 42,
+          "wallMs": 14.786999999999999,
+          "threadCpuMs": 9.935000000000004
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 50,
+          "wallMs": 65.583,
+          "threadCpuMs": 59.530999999999985
+        }
+      },
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 22,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 14,
+          "maxFrameMs": 50
+        }
+      ]
+    }
+  ]
+}

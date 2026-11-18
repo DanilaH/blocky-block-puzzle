@@ -1,0 +1,31 @@
+{
+  "inputZipSha256": "1922df7e545311612a5df72f556b552b57934d9d1baf78557e08298ffeeb2182",
+  "inputBytes": 236007,
+  "sourceAppVersion": "0.58.0-preview",
+  "webViewMajor": 156,
+  "episodes": 0,
+  "failure": "preflight:missing-unfiltered-paint-layer-or-native-data",
+  "traceEvents": 9354,
+  "probeBackendNodeId": 181,
+  "probeLayerId": "105",
+  "probePaintEvents": 6,
+  "probeLayerPaintCounts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "layerPaintedEvents": 0,
+  "gpuEvents": 507,
+  "nativeDraws": 6,
+  "flowEndpoints": 376,
+  "metadataError": "",
+  "dataLossKnownClean": true,
+  "oldProbeLink": false,
+  "newNativeProbeLink": true,
+  "newIndependentAnalyzerProbeLink": true,
+  "manifestVerified": true,
+  "scope": "Replay of original phone preflight evidence only; no post-fix physical run and no effect performance measurements."
+}

@@ -1,0 +1,52 @@
+{
+  "after-placement": {
+    "start": 1793094236.078,
+    "end": 1793094237.813,
+    "frames": 107
+  },
+  "after-gameplay": {
+    "start": 1793094247.658,
+    "end": 1793094256.726,
+    "frames": 514
+  },
+  "after-allClear": {
+    "start": 1793094244.82,
+    "end": 1793094246.438,
+    "frames": 101
+  },
+  "before-gameplay": {
+    "start": 1793093840.457,
+    "end": 1793093856.088,
+    "frames": 631
+  },
+  "before-right-line": {
+    "start": 1793093828.377,
+    "end": 1793093830.472,
+    "frames": 128
+  },
+  "before-allClear": {
+    "start": 1793093836.578,
+    "end": 1793093838.689,
+    "frames": 130
+  },
+  "after-right-line": {
+    "start": 1793094239.07,
+    "end": 1793094240.703,
+    "frames": 102
+  },
+  "before-placement": {
+    "start": 1793093824.337,
+    "end": 1793093826.378,
+    "frames": 110
+  },
+  "before-cross": {
+    "start": 1793093832.608,
+    "end": 1793093834.627,
+    "frames": 119
+  },
+  "after-cross": {
+    "start": 1793094241.969,
+    "end": 1793094243.606,
+    "frames": 102
+  }
+}

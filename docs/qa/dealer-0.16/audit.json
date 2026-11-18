@@ -1,0 +1,24 @@
+{
+  "reference": "5fa49edb5f0d23acca6aa6816651a5e5a623a1dd",
+  "comparisons": 4132,
+  "witnesses": 101,
+  "corpus": 1000,
+  "synthetic": 1066,
+  "method": "Same boards and seeds; full output equivalence including RNG, fallback, witness; warmup 2000 per version; alternating version order, 5000 measurements each. Desktop Node, not Android.",
+  "timings": {
+    "before": {
+      "n": 5000,
+      "p50": 0.2464589999999589,
+      "p95": 2.53809899999942,
+      "p99": 4.347794999999678,
+      "max": 9.844790000000103
+    },
+    "after": {
+      "n": 5000,
+      "p50": 0.022594000000026426,
+      "p95": 0.11153699999977107,
+      "p99": 0.23114600000008068,
+      "max": 3.56908999999996
+    }
+  }
+}

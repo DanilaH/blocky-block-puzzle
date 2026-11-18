@@ -1,0 +1,283 @@
+[
+  {
+    "kind": "place",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -58.2,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.7
+      },
+      {
+        "event": "write-end",
+        "t": 21.2
+      },
+      {
+        "event": "audio",
+        "t": 22.1,
+        "kind": "place",
+        "streak": 0
+      },
+      {
+        "event": "impact",
+        "t": 23,
+        "lines": 0,
+        "allClear": false
+      }
+    ],
+    "score": "1",
+    "reward": "+1"
+  },
+  {
+    "kind": "line",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -111.7,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.4
+      },
+      {
+        "event": "write-end",
+        "t": 20
+      },
+      {
+        "event": "audio",
+        "t": 21.4,
+        "kind": "clear",
+        "streak": 1
+      },
+      {
+        "event": "impact",
+        "t": 21.8,
+        "lines": 1,
+        "allClear": false
+      }
+    ],
+    "score": "11",
+    "reward": "+11"
+  },
+  {
+    "kind": "cross",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -76.5,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.5
+      },
+      {
+        "event": "write-end",
+        "t": 15
+      },
+      {
+        "event": "audio",
+        "t": 16,
+        "kind": "combo",
+        "streak": 1
+      },
+      {
+        "event": "impact",
+        "t": 16.1,
+        "lines": 2,
+        "allClear": false
+      }
+    ],
+    "score": "41",
+    "reward": "Комбо ×2  +41"
+  },
+  {
+    "kind": "record",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -64.1,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.4
+      },
+      {
+        "event": "write-end",
+        "t": 16.8
+      },
+      {
+        "event": "audio",
+        "t": 18,
+        "kind": "record",
+        "streak": 1
+      },
+      {
+        "event": "impact",
+        "t": 18.1,
+        "lines": 1,
+        "allClear": false
+      }
+    ],
+    "score": "11",
+    "reward": "Новый рекорд!  +11"
+  },
+  {
+    "kind": "allClear",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -52.7,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.2
+      },
+      {
+        "event": "write-end",
+        "t": 8.7
+      },
+      {
+        "event": "audio",
+        "t": 9.5,
+        "kind": "allClear",
+        "streak": 1
+      },
+      {
+        "event": "impact",
+        "t": 9.6,
+        "lines": 1,
+        "allClear": true
+      }
+    ],
+    "score": "111",
+    "reward": "Чистое поле!  +111"
+  },
+  {
+    "kind": "slow-save",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -65,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.3
+      },
+      {
+        "event": "write-end",
+        "t": 315.4
+      },
+      {
+        "event": "audio",
+        "t": 316.5,
+        "kind": "place",
+        "streak": 0
+      },
+      {
+        "event": "impact",
+        "t": 317.2,
+        "lines": 0,
+        "allClear": false
+      }
+    ],
+    "score": "1",
+    "reward": "+1"
+  },
+  {
+    "kind": "rapid",
+    "trace": [
+      {
+        "event": "audio",
+        "t": -109.9,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 0
+      },
+      {
+        "event": "write-start",
+        "t": 0.3
+      },
+      {
+        "event": "write-end",
+        "t": 15.7
+      },
+      {
+        "event": "audio",
+        "t": 16.9,
+        "kind": "clear",
+        "streak": 1
+      },
+      {
+        "event": "impact",
+        "t": 17.1,
+        "lines": 1,
+        "allClear": false
+      },
+      {
+        "event": "audio",
+        "t": 252.9,
+        "kind": "pick"
+      },
+      {
+        "event": "board-down",
+        "t": 314.6
+      },
+      {
+        "event": "write-start",
+        "t": 314.7
+      },
+      {
+        "event": "write-end",
+        "t": 331.4
+      },
+      {
+        "event": "audio",
+        "t": 332.6,
+        "kind": "place",
+        "streak": 0
+      },
+      {
+        "event": "impact",
+        "t": 333.6,
+        "lines": 0,
+        "allClear": false
+      }
+    ],
+    "score": "12",
+    "reward": "+1"
+  }
+]

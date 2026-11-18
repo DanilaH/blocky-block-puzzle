@@ -1,0 +1,74 @@
+{
+  "source": "Shipped 0.64 policies; fixed 128-seed opening probe, not 128 full games",
+  "policies": [
+    {
+      "policy": "director-v2",
+      "openings": 128,
+      "distinctInputSeeds": 128,
+      "distinctOutputRngStates": 128,
+      "familyBags": {
+        "I5,I5,R6": 109,
+        "I4,L5,R6": 1,
+        "O2,R6,R6": 7,
+        "L3,R6,R6": 5,
+        "I3,I5,L5": 1,
+        "R6,R6,R6": 4,
+        "L5,L5,R6": 1
+      },
+      "orientedShapeBags": {
+        "I5-1,I5-1,R6-1": 59,
+        "I5-0,I5-0,R6-0": 50,
+        "I4-0,L50,R6-0": 1,
+        "O2-0,R6-0,R6-0": 1,
+        "L3-3,R6-0,R6-0": 3,
+        "O2-0,R6-1,R6-1": 6,
+        "I3-1,I5-1,L52": 1,
+        "R6-0,R6-1,R6-1": 1,
+        "R6-0,R6-0,R6-1": 3,
+        "L52,L52,R6-0": 1,
+        "L3-1,R6-1,R6-1": 1,
+        "L3-0,R6-1,R6-1": 1
+      },
+      "reasons": {
+        "goal-beam": 128
+      },
+      "openingsWithAllClearOnExistingWitness": 117
+    },
+    {
+      "policy": "composition-v1",
+      "openings": 128,
+      "distinctInputSeeds": 128,
+      "distinctOutputRngStates": 128,
+      "familyBags": {
+        "I5,I5,R6": 109,
+        "I4,L5,R6": 1,
+        "O2,R6,R6": 7,
+        "L3,R6,R6": 5,
+        "I5,L3,L5": 1,
+        "R6,R6,R6": 4,
+        "L5,L5,R6": 1
+      },
+      "orientedShapeBags": {
+        "I5-1,I5-1,R6-1": 59,
+        "I5-0,I5-0,R6-0": 50,
+        "I4-0,L50,R6-0": 1,
+        "O2-0,R6-0,R6-0": 1,
+        "L3-3,R6-0,R6-0": 3,
+        "O2-0,R6-1,R6-1": 6,
+        "I5-1,L3-0,L52": 1,
+        "R6-0,R6-1,R6-1": 1,
+        "R6-0,R6-0,R6-1": 3,
+        "L52,L52,R6-0": 1,
+        "L3-1,R6-1,R6-1": 1,
+        "L3-0,R6-1,R6-1": 1
+      },
+      "reasons": {
+        "no-equal-area-slot": 114,
+        "budget": 8,
+        "already-diverse": 5,
+        "equal-area-proven": 1
+      },
+      "openingsWithAllClearOnExistingWitness": 116
+    }
+  ]
+}

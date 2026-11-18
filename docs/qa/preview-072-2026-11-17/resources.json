@@ -1,0 +1,12 @@
+{
+  "verifiedWith": "Android build-tools36 aapt2/zipalign",
+  "apkSha256": "8936930dd28307066ca2e3421202dd9a35139d2be5617ba8d6e130ce2f84fc4c",
+  "resources": {
+    "bool/ads_test_mode": true,
+    "string/appmetrica_api_key": "empty",
+    "string/yandex_banner_id": "empty",
+    "string/yandex_interstitial_id": "empty",
+    "string/yandex_rewarded_id": "empty"
+  },
+  "zipalign16KiB": true
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "blocky-exact-reward-public-check-v1",
+  "fixtures": 155,
+  "moves": 465,
+  "rewards": 155,
+  "inputSha256": "4ac1c503c1c0c124524fe71321bcb8744165c17c848b1a84bf66acd5ace74056",
+  "rulesSha256": "5807899c6e2a9e33124906815bd0dad69dd0d6ed679a274ed8a855c558700242",
+  "scriptSha256": "0c05796e438b948e72e89902077a1f95f86c6a5af96a51cbdd249af3d239f1ce"
+}

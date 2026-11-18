@@ -1,0 +1,10 @@
+{
+  "schema": "blocky-branch-preparation-cell-native-check-v1",
+  "resultSha256": "21e76ce7e4f15d032b2a83dccf6c031fd94fa8911a1c819608fbccb5c0c4ceef",
+  "verifierSha256": "34db293bea8e1c6f8751a9f1e3059b252a774f687e404ba2bce84fd3f19ee944",
+  "cellFixtures": 17054,
+  "nativePreparationReplays": 369,
+  "nativeReachReplays": 483,
+  "exactShortPositions": 103,
+  "directLastFitChecks": 18177260214
+}

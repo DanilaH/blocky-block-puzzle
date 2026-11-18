@@ -1,0 +1,12 @@
+{
+  "schema": "blocky-branch-preparation-public-check-v1",
+  "resultSha256": "21e76ce7e4f15d032b2a83dccf6c031fd94fa8911a1c819608fbccb5c0c4ceef",
+  "verifierSha256": "0fb92691ec0cd2e187f52937122a51ef54258797d9907a8b9f5fb8671536e149",
+  "fullTrees": 2952,
+  "fullTreeLeaves": 93809,
+  "completeIndependentScreen": 5456,
+  "sourceGames": 8,
+  "sourceMoves": 180,
+  "actualMoves": 3699,
+  "cellFixtures": 17054
+}

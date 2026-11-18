@@ -1,0 +1,169 @@
+{
+  "before": {
+    "gameId": "diagnostic-game",
+    "revision": 4,
+    "board": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      6,
+      0
+    ],
+    "tray": [
+      {
+        "shapeId": "L3-1",
+        "used": false,
+        "color": 1
+      },
+      {
+        "shapeId": "I3-0",
+        "used": false,
+        "color": 4
+      },
+      {
+        "shapeId": "L3-3",
+        "used": true,
+        "color": 3
+      }
+    ],
+    "score": 121,
+    "streak": 1,
+    "rulesVersion": "grace-v2",
+    "streakMisses": 0,
+    "moves": 4,
+    "rngState": 2797516266,
+    "dealerVersion": "flow-v4",
+    "rhythm": {
+      "pressure": 15,
+      "dryMoves": 0,
+      "recoveryDeals": 0,
+      "reliefMoves": 0,
+      "cycleMoves": 4,
+      "recentBags": [
+        "R6,R6,R6",
+        "I3,L3,L3"
+      ],
+      "encoreDeals": 0
+    },
+    "status": "playing",
+    "reviveUsed": false,
+    "assisted": false,
+    "dealerFallbacks": 0,
+    "scoringVersion": "festival-v4",
+    "seriesBonusVersion": 1
+  },
+  "move": {
+    "slot": 0,
+    "x": 5,
+    "y": 0
+  },
+  "expectedScore": 1574,
+  "rows": [],
+  "columns": [
+    5,
+    6
+  ],
+  "beforeTheme": 0,
+  "afterTheme": 1,
+  "beforeWardrobe": {
+    "selected": 0,
+    "unlocked": [
+      0,
+      1,
+      5,
+      2,
+      8,
+      3,
+      6,
+      4,
+      9,
+      7,
+      10
+    ],
+    "discoveries": 33
+  },
+  "afterWardrobe": {
+    "selected": 1,
+    "unlocked": [
+      0,
+      1,
+      5,
+      2,
+      8,
+      3,
+      6,
+      4,
+      9,
+      7,
+      10
+    ],
+    "discoveries": 34
+  },
+  "revealVariant": 1,
+  "newRecord": false,
+  "settings": {
+    "sound": true,
+    "calm": false,
+    "musicVolume": 0,
+    "effectsVolume": 1
+  }
+}

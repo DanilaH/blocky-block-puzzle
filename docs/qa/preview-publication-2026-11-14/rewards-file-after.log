@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[2m[WebServer] [22m(node:33) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+[2m[WebServer] [22mnpm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[2m[WebServer] [22m(node:46) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[2m[WebServer] [22m(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:81) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:81) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/rewards.spec.ts:84:1 › important reward survives rapid moves with converging score; pause clears it (7.5s)
+  ✓  2 e2e/rewards.spec.ts:124:1 › record stays beside crown without intersecting score throughout animation (11.2s)
+  ✓  3 e2e/rewards.spec.ts:172:1 › depleted and cached hint labels survive focus changes (2.8s)
+  ✓  4 e2e/rewards.spec.ts:190:1 › two important events overlap; background clears presentation (9.4s)
+
+  4 passed (32.8s)

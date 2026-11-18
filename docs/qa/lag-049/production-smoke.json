@@ -1,0 +1,78 @@
+{
+  "schema": "blocky-clear-benchmark-v1",
+  "appVersion": "0.49.0-preview",
+  "startedAt": "2026-11-07T18:35:08.555Z",
+  "completed": true,
+  "interrupted": false,
+  "viewport": {
+    "width": 392,
+    "height": 872,
+    "dpr": 2.75
+  },
+  "renderer": {
+    "type": "webgl",
+    "canvas": [
+      1024,
+      1024
+    ],
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "vendor": "Google Inc. (Google)",
+    "maxTextureUnits": 32,
+    "phaserTextureUnits": 16,
+    "timerQueryAvailable": false
+  },
+  "notes": [
+    "Scripted presentation comparison on the physical device; not a saved game or a balance test.",
+    "Synthetic triple-row full clear, streak 1; not the user's unknown original board/theme.",
+    "Audio and haptics muted. No ads. No game/profile writes.",
+    "Without-layer conditions are deliberately incomplete images for diagnosis, never proposed fixes.",
+    "Cached border is experimental, not enabled in ordinary play.",
+    "Independent rAF intervals; no GPU duration measurement. First warmup is retained separately."
+  ],
+  "settleMs": 2100,
+  "measurementMs": 2400,
+  "profiles": [
+    {
+      "id": "baseline"
+    },
+    {
+      "id": "cached-border",
+      "cachedBorder": true
+    },
+    {
+      "id": "without-ink",
+      "hideInk": true
+    },
+    {
+      "id": "without-vfx",
+      "hideVfx": true
+    },
+    {
+      "id": "without-festival",
+      "noFestival": true
+    },
+    {
+      "id": "without-ambient",
+      "noAmbient": true
+    },
+    {
+      "id": "without-theme",
+      "noTheme": true
+    }
+  ],
+  "exportBytes": 175451,
+  "episodeCount": 14,
+  "warmupCaptured": true,
+  "observedProfileCounts": {
+    "baseline": 2,
+    "cached-border": 2,
+    "without-ink": 2,
+    "without-vfx": 2,
+    "without-festival": 2,
+    "without-ambient": 2,
+    "without-theme": 2
+  },
+  "errors": [],
+  "note": "Production real-duration functional smoke on SwiftShader; not phone results. Subsequent source change is diagnostic text color only."
+}

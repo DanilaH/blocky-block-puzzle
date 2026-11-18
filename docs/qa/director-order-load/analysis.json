@@ -1,0 +1,363 @@
+{
+  "valid": true,
+  "resultsSha256": "e4d2843d0e40d0f22282343fbc0ac64d487441cc1070398c3d31682a0f15b649",
+  "gate": false,
+  "aggregate": [
+    {
+      "mode": "baseline",
+      "games": 48,
+      "moves": 10863,
+      "ended": 26,
+      "censored": 22,
+      "lines": 6731,
+      "clears": 256,
+      "medianMoves": 275,
+      "initialDryP90": 6,
+      "terminalDryP90": 4
+    },
+    {
+      "mode": "risky",
+      "games": 48,
+      "moves": 5348,
+      "ended": 40,
+      "censored": 8,
+      "lines": 2600,
+      "clears": 4,
+      "medianMoves": 46,
+      "initialDryP90": 10,
+      "terminalDryP90": 5
+    },
+    {
+      "mode": "guarded",
+      "games": 48,
+      "moves": 7406,
+      "ended": 32,
+      "censored": 16,
+      "lines": 3710,
+      "clears": 4,
+      "medianMoves": 53,
+      "initialDryP90": 10,
+      "terminalDryP90": 4
+    }
+  ],
+  "rows": [
+    {
+      "split": "development",
+      "style": "all",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "order": false,
+        "load": true
+      },
+      "orderFraction": 0.07930607187112763,
+      "loadFraction": 0.2614622057001239,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 5,
+      "baseMedianMoves": 269,
+      "medianMoves": 46
+    },
+    {
+      "split": "development",
+      "style": "all",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "order": false,
+        "load": true
+      },
+      "orderFraction": 0.07705479452054795,
+      "loadFraction": 0.2525684931506849,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 4,
+      "baseMedianMoves": 269,
+      "medianMoves": 62
+    },
+    {
+      "split": "development",
+      "style": "clear",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.16393442622950818,
+      "loadFraction": 0.28688524590163933,
+      "baseInitialDryP90": 4,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 5,
+      "terminalDryP90": 3,
+      "baseMedianMoves": 269,
+      "medianMoves": 44
+    },
+    {
+      "split": "development",
+      "style": "clear",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.15469613259668508,
+      "loadFraction": 0.27071823204419887,
+      "baseInitialDryP90": 4,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 5,
+      "terminalDryP90": 4,
+      "baseMedianMoves": 269,
+      "medianMoves": 62
+    },
+    {
+      "split": "development",
+      "style": "three",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "finite": true
+      },
+      "orderFraction": 0.05063291139240506,
+      "loadFraction": 0.254746835443038,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 5,
+      "baseTerminalDryP90": 2,
+      "terminalDryP90": 5,
+      "baseMedianMoves": 360,
+      "medianMoves": 302
+    },
+    {
+      "split": "development",
+      "style": "three",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.05387931034482758,
+      "loadFraction": 0.25,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 5,
+      "baseTerminalDryP90": 2,
+      "terminalDryP90": 1,
+      "baseMedianMoves": 360,
+      "medianMoves": 360
+    },
+    {
+      "split": "development",
+      "style": "plausible",
+      "mode": "risky",
+      "gates": {
+        "lines": true,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "finite": true
+      },
+      "orderFraction": 0.22641509433962265,
+      "loadFraction": 0.2830188679245283,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 5,
+      "baseMedianMoves": 44,
+      "medianMoves": 26
+    },
+    {
+      "split": "development",
+      "style": "plausible",
+      "mode": "guarded",
+      "gates": {
+        "lines": true,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.2033898305084746,
+      "loadFraction": 0.23728813559322035,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 5,
+      "baseMedianMoves": 44,
+      "medianMoves": 29
+    },
+    {
+      "split": "confirmation",
+      "style": "all",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "order": false,
+        "load": true
+      },
+      "orderFraction": 0.07625,
+      "loadFraction": 0.2625,
+      "baseInitialDryP90": 6,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 4,
+      "baseMedianMoves": 275,
+      "medianMoves": 38
+    },
+    {
+      "split": "confirmation",
+      "style": "all",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "order": false,
+        "load": true
+      },
+      "orderFraction": 0.07754010695187166,
+      "loadFraction": 0.2540106951871658,
+      "baseInitialDryP90": 6,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 3,
+      "baseMedianMoves": 275,
+      "medianMoves": 50
+    },
+    {
+      "split": "confirmation",
+      "style": "clear",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.14634146341463414,
+      "loadFraction": 0.2926829268292683,
+      "baseInitialDryP90": 4,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 3,
+      "terminalDryP90": 3,
+      "baseMedianMoves": 275,
+      "medianMoves": 38
+    },
+    {
+      "split": "confirmation",
+      "style": "clear",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.16265060240963855,
+      "loadFraction": 0.2710843373493976,
+      "baseInitialDryP90": 4,
+      "initialDryP90": 7,
+      "baseTerminalDryP90": 3,
+      "terminalDryP90": 2,
+      "baseMedianMoves": 275,
+      "medianMoves": 50
+    },
+    {
+      "split": "confirmation",
+      "style": "three",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "finite": true
+      },
+      "orderFraction": 0.053929121725731895,
+      "loadFraction": 0.2542372881355932,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 5,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 1,
+      "baseMedianMoves": 360,
+      "medianMoves": 209
+    },
+    {
+      "split": "confirmation",
+      "style": "three",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.05603448275862069,
+      "loadFraction": 0.24892241379310345,
+      "baseInitialDryP90": 5,
+      "initialDryP90": 5,
+      "baseTerminalDryP90": 4,
+      "terminalDryP90": 1,
+      "baseMedianMoves": 360,
+      "medianMoves": 360
+    },
+    {
+      "split": "confirmation",
+      "style": "plausible",
+      "mode": "risky",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true,
+        "finite": true
+      },
+      "orderFraction": 0.2857142857142857,
+      "loadFraction": 0.32142857142857145,
+      "baseInitialDryP90": 10,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 5,
+      "terminalDryP90": 4,
+      "baseMedianMoves": 62,
+      "medianMoves": 19
+    },
+    {
+      "split": "confirmation",
+      "style": "plausible",
+      "mode": "guarded",
+      "gates": {
+        "lines": false,
+        "rewardGap": true,
+        "early": true,
+        "emergency": true
+      },
+      "orderFraction": 0.2857142857142857,
+      "loadFraction": 0.32142857142857145,
+      "baseInitialDryP90": 10,
+      "initialDryP90": 10,
+      "baseTerminalDryP90": 5,
+      "terminalDryP90": 4,
+      "baseMedianMoves": 62,
+      "medianMoves": 19
+    }
+  ],
+  "duplicateTrajectories": [],
+  "note": "Games capped at360 are censored; medians include caps. Splits/styles remain separate; paired loads are not independent samples."
+}

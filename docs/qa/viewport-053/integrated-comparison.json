@@ -1,0 +1,187 @@
+{
+  "environment": "Linux Chromium, mobile viewport emulation, software graphics; not POCO",
+  "scope": "Actual scoped Atmosphere/Festival cache versus original0.52 modules; no global overrides; not a physical speed claim",
+  "results": [
+    {
+      "candidate": false,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 175,
+      "forcedStyleLayoutTotalMs": 78.24399999999996,
+      "forcedStyleLayoutMaxMs": 2.369,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 19,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 15,
+          "maxFrameMs": 50
+        }
+      ]
+    },
+    {
+      "candidate": true,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 7.994000000000001,
+      "forcedStyleLayoutMaxMs": 2.643,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 50.099998474121094
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    },
+    {
+      "candidate": true,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 11,
+      "forcedStyleLayoutTotalMs": 8.501000000000001,
+      "forcedStyleLayoutMaxMs": 3.862,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 23,
+          "maxFrameMs": 66.69999694824219
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 15,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 50
+        }
+      ]
+    },
+    {
+      "candidate": false,
+      "windowMs": [
+        320,
+        1400
+      ],
+      "forcedStyleLayoutCount": 175,
+      "forcedStyleLayoutTotalMs": 76.63799999999999,
+      "forcedStyleLayoutMaxMs": 2.412,
+      "episodes": [
+        {
+          "kind": "warmup",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 20,
+          "maxFrameMs": 50
+        },
+        {
+          "kind": "untraced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 17,
+          "maxFrameMs": 33.400001525878906
+        },
+        {
+          "kind": "traced",
+          "canvas": [
+            1024,
+            1024
+          ],
+          "score": 1574,
+          "theme": 5,
+          "over25": 16,
+          "maxFrameMs": 33.400001525878906
+        }
+      ]
+    }
+  ],
+  "cdpTracingActiveAcrossAllEpisodes": true
+}

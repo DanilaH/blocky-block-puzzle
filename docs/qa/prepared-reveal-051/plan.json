@@ -1,0 +1,20 @@
+{
+  "control": "Delivered0.51, same full game fixture,theme1->5,reveal2",
+  "candidate": "Pre-render normal wash/contour and additive ring/flash into two atlases,36frames60Hz, active400..1000ms; live chips/gameplay unchanged",
+  "cosmeticSeed": 5357295,
+  "screenResolutions": [
+    256,
+    320
+  ],
+  "gpuRgbaCapMiB": 32,
+  "combinedAtlasBackingAndScratchCapMiB": 64,
+  "prepMsCap": 3000,
+  "qualityGate": {
+    "maeRgbMax": 2,
+    "p99DeltaMax": 16,
+    "channelFractionOver24Max": 0.02,
+    "atSampleAndHalfSampleTimes": true,
+    "manualReviewRequired": true
+  },
+  "performanceGate": "Fresh confirmation 3 contexts x2 repeats reverse order; >=25% lower median >25ms with no worse warm paired count >baseline+2, no max interval regression beyond one16.7ms frame. No phone claims from software."
+}

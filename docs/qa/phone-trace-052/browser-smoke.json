@@ -1,0 +1,42 @@
+{
+  "purpose": "Visual QA only; screenshot overhead excludes these timings from performance conclusions",
+  "viewport": {
+    "width": 392,
+    "height": 872,
+    "dpr": 2.75
+  },
+  "completed": true,
+  "episodes": [
+    {
+      "kind": "warmup",
+      "score": 1574,
+      "theme": 5,
+      "canvas": [
+        1024,
+        1024
+      ],
+      "placements": 1
+    },
+    {
+      "kind": "untraced",
+      "score": 1574,
+      "theme": 5,
+      "canvas": [
+        1024,
+        1024
+      ],
+      "placements": 1
+    },
+    {
+      "kind": "traced",
+      "score": 1574,
+      "theme": 5,
+      "canvas": [
+        1024,
+        1024
+      ],
+      "placements": 1
+    }
+  ],
+  "errors": []
+}

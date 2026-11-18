@@ -1,0 +1,38 @@
+{
+  "policy": "qualified-v5",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 1000,
+  "limit": 600,
+  "openingMatches": 6,
+  "summary": [
+    {
+      "style": "three",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 108,
+      "rewardRate": 0.45222222222222225,
+      "repeat": 12,
+      "maxDry": 7,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three",
+      "variant": "director",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 113,
+      "rewardRate": 0.45555555555555555,
+      "repeat": 13,
+      "maxDry": 7,
+      "p95Selection": 41.44409199999973,
+      "recovery": []
+    }
+  ]
+}

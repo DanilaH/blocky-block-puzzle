@@ -1,0 +1,1181 @@
+{
+  "sourceVersion": "0.57.0-preview",
+  "sourceCommit": "585c4225f8e4355db2b7abb2950da64f6a84dcb4",
+  "sourceCommitBasis": "Delivered APK verification, not embedded in report",
+  "inputZipSha256": "e647fac12c27c0e45c3348cbc96911d09635b6c0dbef2c8aff29223bdde4d944",
+  "memberSha256": {
+    "report.json": "50982509ce01d725d404527ca74906583f47b50634aa4beae059f7f5609e3cf2",
+    "native-status.json": "5468e267875d7d36e108f65207104f06c42d721ef4e9f4e8a9ad6f8db7d66970",
+    "webview-trace.json": "f4659252d06609b90ba40aba0f4a265e5e77c745582343850b7bafcce71490d0"
+  },
+  "completed": true,
+  "interrupted": false,
+  "validEpisodes": 18,
+  "elapsedMs": 80000.19999992847,
+  "screenAwake": true,
+  "context": {
+    "canvas": [
+      896,
+      896
+    ],
+    "reducedMotion": false,
+    "effectLayers": [
+      {
+        "layer": "ambient-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      },
+      {
+        "layer": "festival-canvas",
+        "renderer": "canvas2d",
+        "canvas": [
+          588,
+          1308
+        ]
+      }
+    ],
+    "type": "webgl",
+    "renderer": "Mali-G57 MC2",
+    "vendor": "ARM",
+    "maxTextureUnits": 16,
+    "phaserTextureUnits": 1
+  },
+  "geometry": [
+    [
+      896,
+      896
+    ],
+    [
+      588,
+      1308
+    ],
+    [
+      588,
+      1308
+    ]
+  ],
+  "frameWindowMs": 2400,
+  "metricRule": "Intervals overlapping [placement, placement+2400ms); RAF, not presentation/GPU timing",
+  "episodes": [
+    {
+      "kind": "warmup",
+      "phase": "warmup",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 184,
+      "over33": 10,
+      "over50": 3,
+      "maxMs": 67.19999694824219,
+      "p95Ms": 33.599998474121094,
+      "over33ByEndWindow": [
+        1,
+        9,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-0-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 218,
+      "over33": 6,
+      "over50": 0,
+      "maxMs": 33.70000076293945,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        6,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-1-no-hud-flashes",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-hud-flashes",
+      "intervals": 219,
+      "over33": 1,
+      "over50": 0,
+      "maxMs": 33.599998474121094,
+      "p95Ms": 16.899999618530273,
+      "over33ByEndWindow": [
+        0,
+        1,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 0,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-2-no-reward-decoration",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-reward-decoration",
+      "intervals": 191,
+      "over33": 5,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        5,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 0,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-3-no-dom-palette",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-dom-palette",
+      "intervals": 217,
+      "over33": 8,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        1,
+        7,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#f4f3ee",
+        "ink": "#325376",
+        "accent": "#72a8ec"
+      },
+      "domPaletteTheme": 1
+    },
+    {
+      "kind": "layer-1-4-no-theme-notice",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-theme-notice",
+      "intervals": 199,
+      "over33": 7,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        7,
+        0
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 0,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-5-no-reward-dom",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-reward-dom",
+      "intervals": 222,
+      "over33": 1,
+      "over50": 0,
+      "maxMs": 33.599998474121094,
+      "p95Ms": 16.899999618530273,
+      "over33ByEndWindow": [
+        0,
+        1,
+        0
+      ],
+      "rewardDomCreated": 0,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 0,
+        "visibleEmblems": 0,
+        "pointFlights": 0,
+        "hudFlashes": 0,
+        "themeNotices": 0,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-1-6-no-theme",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "no-theme",
+      "intervals": 259,
+      "over33": 1,
+      "over50": 1,
+      "maxMs": 50.400001525878906,
+      "p95Ms": 16.799999237060547,
+      "over33ByEndWindow": [
+        0,
+        1,
+        0
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": null,
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 0,
+        "themeImpulses": 0
+      },
+      "rendererTheme": 1,
+      "atmosphereTheme": 1,
+      "festivalTheme": 1,
+      "domPalette": {
+        "bg": "#f4f3ee",
+        "ink": "#325376",
+        "accent": "#72a8ec"
+      },
+      "domPaletteTheme": 1
+    },
+    {
+      "kind": "layer-1-7-baseline",
+      "phase": "comparison",
+      "round": 0,
+      "condition": "baseline",
+      "intervals": 174,
+      "over33": 6,
+      "over50": 2,
+      "maxMs": 75.69999694824219,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        0,
+        5,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-0-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 162,
+      "over33": 6,
+      "over50": 2,
+      "maxMs": 75.69999694824219,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        5,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-1-no-theme",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-theme",
+      "intervals": 256,
+      "over33": 2,
+      "over50": 0,
+      "maxMs": 33.70000076293945,
+      "p95Ms": 16.799999237060547,
+      "over33ByEndWindow": [
+        0,
+        2,
+        0
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": null,
+      "renderedTheme": 1,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 0,
+        "themeImpulses": 0
+      },
+      "rendererTheme": 1,
+      "atmosphereTheme": 1,
+      "festivalTheme": 1,
+      "domPalette": {
+        "bg": "#f4f3ee",
+        "ink": "#325376",
+        "accent": "#72a8ec"
+      },
+      "domPaletteTheme": 1
+    },
+    {
+      "kind": "layer-2-2-no-reward-dom",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-reward-dom",
+      "intervals": 227,
+      "over33": 1,
+      "over50": 0,
+      "maxMs": 42,
+      "p95Ms": 16.899999618530273,
+      "over33ByEndWindow": [
+        0,
+        1,
+        0
+      ],
+      "rewardDomCreated": 0,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 0,
+        "visibleEmblems": 0,
+        "pointFlights": 0,
+        "hudFlashes": 0,
+        "themeNotices": 0,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-3-no-theme-notice",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-theme-notice",
+      "intervals": 186,
+      "over33": 7,
+      "over50": 2,
+      "maxMs": 58.900001525878906,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        6,
+        0
+      ],
+      "rewardDomCreated": 2,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 0,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-4-no-dom-palette",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-dom-palette",
+      "intervals": 178,
+      "over33": 5,
+      "over50": 1,
+      "maxMs": 50.5,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        5,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#f4f3ee",
+        "ink": "#325376",
+        "accent": "#72a8ec"
+      },
+      "domPaletteTheme": 1
+    },
+    {
+      "kind": "layer-2-5-no-reward-decoration",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-reward-decoration",
+      "intervals": 186,
+      "over33": 5,
+      "over50": 0,
+      "maxMs": 42.099998474121094,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        0,
+        5,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 0,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-6-no-hud-flashes",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "no-hud-flashes",
+      "intervals": 195,
+      "over33": 6,
+      "over50": 2,
+      "maxMs": 50.5,
+      "p95Ms": 25.200000762939453,
+      "over33ByEndWindow": [
+        1,
+        5,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 0,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "layer-2-7-baseline",
+      "phase": "comparison",
+      "round": 1,
+      "condition": "baseline",
+      "intervals": 165,
+      "over33": 7,
+      "over50": 2,
+      "maxMs": 58.79999923706055,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        6,
+        0
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    },
+    {
+      "kind": "native-baseline",
+      "phase": "trace",
+      "round": null,
+      "condition": "baseline",
+      "intervals": 184,
+      "over33": 7,
+      "over50": 1,
+      "maxMs": 50.29999923706055,
+      "p95Ms": 25.299999237060547,
+      "over33ByEndWindow": [
+        1,
+        5,
+        1
+      ],
+      "rewardDomCreated": 3,
+      "rewardRasters": null,
+      "renderedTheme": 5,
+      "savedTheme": 5,
+      "shownScore": 1574,
+      "pendingPoints": 0,
+      "spawnedFestival": 148,
+      "valid": true,
+      "rewardRenderer": "dom",
+      "rewardEffects": {
+        "captionAnimations": 2,
+        "visibleEmblems": 0,
+        "pointFlights": 2,
+        "hudFlashes": 2,
+        "themeNotices": 1,
+        "themeImpulses": 1
+      },
+      "rendererTheme": 5,
+      "atmosphereTheme": 5,
+      "festivalTheme": 5,
+      "domPalette": {
+        "bg": "#233f57",
+        "ink": "#f2f4f7",
+        "accent": "#a5e8ef"
+      },
+      "domPaletteTheme": 5
+    }
+  ],
+  "comparisons": [
+    {
+      "condition": "no-hud-flashes",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 1,
+          "referenceOver33": 6.0,
+          "reductionOver33": 0.8333333333333334,
+          "baselineStable": true,
+          "meetsTarget": true
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 6,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.07692307692307687,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-reward-decoration",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 5,
+          "referenceOver33": 6.0,
+          "reductionOver33": 0.16666666666666663,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 5,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.23076923076923073,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-dom-palette",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 8,
+          "referenceOver33": 6.0,
+          "reductionOver33": -0.33333333333333326,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 5,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.23076923076923073,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-theme-notice",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 7,
+          "referenceOver33": 6.0,
+          "reductionOver33": -0.16666666666666674,
+          "baselineStable": true,
+          "meetsTarget": false
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 7,
+          "referenceOver33": 6.5,
+          "reductionOver33": -0.07692307692307687,
+          "baselineStable": true,
+          "meetsTarget": false
+        }
+      ],
+      "investigate": false
+    },
+    {
+      "condition": "no-reward-dom",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 1,
+          "referenceOver33": 6.0,
+          "reductionOver33": 0.8333333333333334,
+          "baselineStable": true,
+          "meetsTarget": true
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 1,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.8461538461538461,
+          "baselineStable": true,
+          "meetsTarget": true
+        }
+      ],
+      "investigate": true
+    },
+    {
+      "condition": "no-theme",
+      "rounds": [
+        {
+          "round": 0,
+          "beforeOver33": 6,
+          "afterOver33": 6,
+          "candidateOver33": 1,
+          "referenceOver33": 6.0,
+          "reductionOver33": 0.8333333333333334,
+          "baselineStable": true,
+          "meetsTarget": true
+        },
+        {
+          "round": 1,
+          "beforeOver33": 6,
+          "afterOver33": 7,
+          "candidateOver33": 2,
+          "referenceOver33": 6.5,
+          "reductionOver33": 0.6923076923076923,
+          "baselineStable": true,
+          "meetsTarget": true
+        }
+      ],
+      "investigate": true
+    }
+  ],
+  "nominatedLayers": [
+    "no-reward-dom",
+    "no-theme"
+  ],
+  "hotRasterPreparation": null,
+  "nativeTraceBytes": 30178272,
+  "nativeTraceEvents": 173268,
+  "currentCaptureConfirmed": true,
+  "genericMarkDeltasMs": [
+    24.106,
+    2402.96
+  ],
+  "markMapping": "Inferred start/committed/end from order/duration; names anonymized",
+  "parserAndBufferLossCounters": {
+    "android_br_parse_errors": 0,
+    "android_input_event_parse_errors": 0,
+    "app_wakelock_parse_error": 0,
+    "clock_sync_failure_undeferrable_packet_loss": 0,
+    "compact_sched_has_parse_errors": 0,
+    "deobfuscate_location_parse_error": 0,
+    "extra_parsing_descriptors_error": 0,
+    "frame_timeline_event_parser_errors": 0,
+    "game_intervention_has_parse_errors": 0,
+    "gpu_render_stage_parser_errors": 0,
+    "graphics_frame_event_parser_errors": 0,
+    "hprof_primitive_array_parsing_errors": 0,
+    "metatrace_overruns": 0,
+    "network_trace_parse_errors": 0,
+    "ninja_parse_errors": 0,
+    "packages_list_has_parse_errors": 0,
+    "perf_aux_lost": 0,
+    "perf_samples_skipped_dataloss": 0,
+    "smaps_parser_errors": 0,
+    "stackprofile_parser_error": 0,
+    "traced_buf[0].abi_violations": 0,
+    "traced_buf[0].bytes_overwritten": 0,
+    "traced_buf[0].chunks_discarded": 0,
+    "traced_buf[0].chunks_overwritten": 0,
+    "traced_buf[0].patches_failed": 0,
+    "traced_buf[0].readaheads_failed": 0,
+    "traced_buf[0].trace_writer_packet_loss": 0,
+    "traced_buf[1].abi_violations": 0,
+    "traced_buf[1].bytes_overwritten": 0,
+    "traced_buf[1].chunks_discarded": 0,
+    "traced_buf[1].chunks_overwritten": 0,
+    "traced_buf[1].patches_failed": 0,
+    "traced_buf[1].readaheads_failed": 0,
+    "traced_buf[1].trace_writer_packet_loss": 0,
+    "traced_chunks_discarded": 0,
+    "traced_patches_discarded": 0,
+    "track_event_parser_errors": 0,
+    "winscope_inputmethod_clients_parse_errors": 0,
+    "winscope_inputmethod_manager_service_parse_errors": 0,
+    "winscope_inputmethod_service_parse_errors": 0,
+    "winscope_protolog_invalid_interpolation_parse_errors": 0,
+    "winscope_protolog_missing_interned_arg_parse_errors": 0,
+    "winscope_protolog_missing_interned_stacktrace_parse_errors": 0,
+    "winscope_sf_layers_parse_errors": 0,
+    "winscope_sf_transactions_parse_errors": 0,
+    "winscope_shell_transitions_parse_errors": 0,
+    "winscope_viewcapture_missing_interned_string_parse_errors": 0,
+    "winscope_viewcapture_parse_errors": 0,
+    "winscope_windowmanager_parse_errors": 0
+  },
+  "nativeWindows": [
+    {
+      "afterCommitMs": [
+        0,
+        320
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 30,
+          "wallMs": 20.416,
+          "maxMs": 5.153
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 5,
+          "wallMs": 0.093,
+          "maxMs": 0.029
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 30,
+          "wallMs": 56.725,
+          "maxMs": 4.563
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 6,
+          "wallMs": 2.279,
+          "maxMs": 0.541
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 30,
+          "wallMs": 5.913,
+          "maxMs": 1.177
+        },
+        "DrawFn_DrawGL": {
+          "count": 29,
+          "wallMs": 193.31,
+          "maxMs": 30.071
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 57,
+          "wallMs": 157.214,
+          "maxMs": 26.407
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        320,
+        1400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 78,
+          "wallMs": 133.126,
+          "maxMs": 7.126
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 9,
+          "wallMs": 7.904,
+          "maxMs": 3.178
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 71,
+          "wallMs": 217.28,
+          "maxMs": 9.653
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 45,
+          "wallMs": 18.453,
+          "maxMs": 0.92
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 73,
+          "wallMs": 62.531,
+          "maxMs": 2.628
+        },
+        "DrawFn_DrawGL": {
+          "count": 70,
+          "wallMs": 869.605,
+          "maxMs": 47.719
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 139,
+          "wallMs": 801.331,
+          "maxMs": 46.955
+        }
+      }
+    },
+    {
+      "afterCommitMs": [
+        1400,
+        2400
+      ],
+      "metrics": {
+        "Blink.Style.UpdateTime": {
+          "count": 84,
+          "wallMs": 65.248,
+          "maxMs": 2.298
+        },
+        "Blink.ForcedStyleAndLayout.UpdateTime": {
+          "count": 0,
+          "wallMs": 0,
+          "maxMs": 0
+        },
+        "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+          "count": 84,
+          "wallMs": 206.319,
+          "maxMs": 6.025
+        },
+        "Blink.Layout.UpdateTime": {
+          "count": 50,
+          "wallMs": 17.18,
+          "maxMs": 0.5
+        },
+        "LocalFrameView::RunPaintLifecyclePhase": {
+          "count": 84,
+          "wallMs": 65.818,
+          "maxMs": 7.57
+        },
+        "DrawFn_DrawGL": {
+          "count": 83,
+          "wallMs": 565.117,
+          "maxMs": 30.347
+        },
+        "ScheduleOnVizAndBlock": {
+          "count": 168,
+          "wallMs": 526.665,
+          "maxMs": 29.687
+        }
+      }
+    }
+  ],
+  "conclusion": "None of four narrow ablations meets target in both orders; broad reward/theme effects remain",
+  "limitations": [
+    "One device/capture, two reversed passes; no temperature/frequency telemetry",
+    "Whole reward ablation omits captions, flights, HUD notices and flashes; Classic emblems are already hidden",
+    "No-theme freezes all presentation palettes and omits theme notice and impulse",
+    "Native tracing is final baseline only; category wall spans overlap and cannot be added",
+    "No standalone flight or theme-impulse ablation; interactions are not identified"
+  ]
+}

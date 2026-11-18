@@ -1,0 +1,12 @@
+{
+  "version": "0.64.0-preview",
+  "package": "com.danilah.blocky.dev",
+  "versionCode": 64,
+  "artifact": "app-debug-unsigned.apk",
+  "bytes": 11784816,
+  "sha256": "49eaff0afd7c930ee7b36d4f3b113869b639400430b3ad7cc8510b9eeceb0fd4",
+  "packagedDistFilesMatched": 99,
+  "signed": false,
+  "installablePreviewDelivered": false,
+  "reason": "Original signing key exists only in the previous Actions build path; publication was blocked by automatic review"
+}

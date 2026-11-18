@@ -1,0 +1,510 @@
+{
+  "sourceCommit": "8658504f3082f5233c7ae6204c4bbb1260f79541",
+  "sourceTree": "5f324ef19d9c58066549efac094260e0cdaab0c5",
+  "appVersion": "0.72.0-preview",
+  "package": "com.danilah.blocky.dev",
+  "versionCode": 72,
+  "bytes": 11810301,
+  "apkSha256": "8936930dd28307066ca2e3421202dd9a35139d2be5617ba8d6e130ce2f84fc4c",
+  "v2Verified": true,
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "compatibleWith061": true,
+  "productionFilesMatched": 99,
+  "productionFiles": [
+    {
+      "path": "adventure/cove.webp",
+      "bytes": 233790,
+      "sha256": "1a8ad739fc574ecbfe3da3fa7010c07de51cabcd51a097a96453f215175a1aa9"
+    },
+    {
+      "path": "adventure/gem.webp",
+      "bytes": 5496,
+      "sha256": "c9861befe38ec597a4d7259d280f586188ec3c0b86ff5f20a5d4e603c0982982"
+    },
+    {
+      "path": "adventure/key.webp",
+      "bytes": 6444,
+      "sha256": "b787ee2b0ba033e355d704eada896bbe192ff91cf19f2885a5f200cb8d2a076e"
+    },
+    {
+      "path": "adventure/locked.webp",
+      "bytes": 8326,
+      "sha256": "4aacf0f53160ccdd66a258ad2fc12bed238d760fcc464b567ff6b2b84a23251d"
+    },
+    {
+      "path": "adventure/open.webp",
+      "bytes": 9792,
+      "sha256": "09f75516548fa8887f0e458babc695c7fb1bc96b790529fb45b2da370f7d910c"
+    },
+    {
+      "path": "assets/BoardScene-2fU3TirY.js",
+      "bytes": 37267,
+      "sha256": "89e7863ea63e4d54cf2401f27f42717bc8474710d822bebd5234e4d2bd08fe9c"
+    },
+    {
+      "path": "assets/activity-BXEomnEI.js",
+      "bytes": 25352,
+      "sha256": "1ee010e4b9091440c9ed350808e1712d8487c39b4dd447393f607d3875cb8215"
+    },
+    {
+      "path": "assets/arcade-CRbSORrY.js",
+      "bytes": 7238,
+      "sha256": "52ccb4c0306ebe140103f80bb0d216a7ce7536a700634c383dcf0c25026356ea"
+    },
+    {
+      "path": "assets/arcade-DlrTuYR8.css",
+      "bytes": 57266,
+      "sha256": "3d9ff3fd8614593cd8ef7619141eb7e0ee06f4bc832f931ffb107d4b85104ac9"
+    },
+    {
+      "path": "assets/challenge-openings-jxFMVx-P.js",
+      "bytes": 97271,
+      "sha256": "358eccde315c51e2ac4e62ad075bb43d513fcf07a321b308ff0a725e40eff0d9"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-1.webp",
+      "bytes": 2646,
+      "sha256": "7f79a13d4425c33fbcd3eeb4723af6008b2f93a42b34082e19934f3e1d19dc6b"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-2.webp",
+      "bytes": 2674,
+      "sha256": "7cf6dcde5f9983d17ff87d2222792ddf0cb9b998bbae9281060107d50b7e1647"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-3.webp",
+      "bytes": 2768,
+      "sha256": "041b7335dd9415008604e095c3ba7cce2ad2813a677df2aea8ee4f8138f9a1d1"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-4.webp",
+      "bytes": 2680,
+      "sha256": "9cf3242809ad39c42f9e4ff9a1cdd31280e69dd0934e1ae9e31f5574937153f5"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-5.webp",
+      "bytes": 2720,
+      "sha256": "70768f9d250625d4ba5938cbb3d115019c112fabf5ef9feb52e45306561532fb"
+    },
+    {
+      "path": "assets/classic-tiles/chrome-6.webp",
+      "bytes": 2548,
+      "sha256": "e1b109cae6d68ae44b4782a779394fb385b29e6fd23895d47fee36749c45edd0"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-1.webp",
+      "bytes": 2566,
+      "sha256": "7453d2cf1d7985b7d1eeb6337284815bbe7c9b4e28ad4fef17d76d8cfbee22ec"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-2.webp",
+      "bytes": 2428,
+      "sha256": "014b1064273512ce2c51433616b7926656d4bc0f3723303146db364eea474146"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-3.webp",
+      "bytes": 2360,
+      "sha256": "969587b3a897de782ecbd7a8ffd7fe7af2964428a188625ae263f1294d6cf329"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-4.webp",
+      "bytes": 2396,
+      "sha256": "d4fa55dff5d81894e521733477778f4ddce0437d8eaf4fb104dca08e806ab777"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-5.webp",
+      "bytes": 2528,
+      "sha256": "b8dff0addc1394c633c8ef2f772fb0211efd8c9845f277e739f59ee7b1d2040b"
+    },
+    {
+      "path": "assets/classic-tiles/enamel-6.webp",
+      "bytes": 2626,
+      "sha256": "8ad6ee911c0cf2319bc8d788b0bd660e17df25e2d9543b8aade39db24be45296"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-1.webp",
+      "bytes": 2736,
+      "sha256": "0047742e9e7f2a77347a38c3a932d6046577a7b8428ad6c3adfcd5713cb37d86"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-2.webp",
+      "bytes": 2644,
+      "sha256": "512e0404cd5d5c955b2bbccb3177411dcf0a6821e5579a58ac9a3ca77ca6dd7c"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-3.webp",
+      "bytes": 2686,
+      "sha256": "5ab0d2821f198c1945f875c6fc894567726597d59f6d8cc71d9cd983630968ef"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-4.webp",
+      "bytes": 2618,
+      "sha256": "5612c219e744bb11a890e7df240a58fc0ba47a64777aebbf6fd4b4a8d0d827ed"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-5.webp",
+      "bytes": 2692,
+      "sha256": "e5db31fbd1dc61e4d91acc1fd217ee62b443f2bdd9b31e91dc3dd9b513b27e8d"
+    },
+    {
+      "path": "assets/classic-tiles/plastic-6.webp",
+      "bytes": 2678,
+      "sha256": "3e74aee8ee447272a566f79cfc902bdf9cee9ab53412a3fd9c7d375ca4f265fe"
+    },
+    {
+      "path": "assets/clear-layers-CN0FuEX0.js",
+      "bytes": 4581,
+      "sha256": "0c6558c1b61e167de8d42fab708f81c64e045ec48a5bfa34901e8aff429e659d"
+    },
+    {
+      "path": "assets/clearBenchmark-5WcpcJNC.css",
+      "bytes": 528,
+      "sha256": "0cdb00711f82d15ff7aeb4cc7fc10e5cc3beb6c9f9072d40164f7657640e91c2"
+    },
+    {
+      "path": "assets/clearBenchmark-HMCZKo6S.js",
+      "bytes": 6750,
+      "sha256": "950af49f135214f645caf3dbf9e1cd7fc25675ef485b1b322bdfb1d4f10b4860"
+    },
+    {
+      "path": "assets/dist-CMedSjkm.js",
+      "bytes": 7749,
+      "sha256": "067d9ca66629f984cf538346471032b4b24f9acd1cb914834126e2b88d3250fe"
+    },
+    {
+      "path": "assets/esm-ChX4fBks.js",
+      "bytes": 343,
+      "sha256": "decd4141242d000d746f9af8e7429c7045bc197928807ade7085c9746b2226aa"
+    },
+    {
+      "path": "assets/full-clear-CQlDqHgO.js",
+      "bytes": 11520,
+      "sha256": "be83f01ec14fe7f3fe0ec83a01bb7f1dc4103f98b85b0bdc0a8cd1964e29a435"
+    },
+    {
+      "path": "assets/full-clear-plan-D6GcMWHl.js",
+      "bytes": 2230,
+      "sha256": "f7b5932e594be51d56ffe38f797cb02cd154e2d769fce1cd2786a31cecb3e400"
+    },
+    {
+      "path": "assets/hint.worker-CGeav83i.js",
+      "bytes": 5225,
+      "sha256": "8a00a0bf998a602405bb5d6715b695ba3a303bc6fb726ea993020f7195411a81"
+    },
+    {
+      "path": "assets/hint.worker-CPX2gLFJ.js",
+      "bytes": 9215,
+      "sha256": "5dae66b647223ee7ad2219ebece1d74aa7355400deaedf51eb7a1c70dc2423d5"
+    },
+    {
+      "path": "assets/main-7rO6vJVS.js",
+      "bytes": 86878,
+      "sha256": "2655e52c0b6f1d29bdd44d1369257467eafe10553fa362d3ca57eddf98e64ef1"
+    },
+    {
+      "path": "assets/move.worker-CTVvPfgZ.js",
+      "bytes": 92756,
+      "sha256": "209247afebb8959adcb0c37a8f62f8acceaf34b1a6a4a57a4bf153d80a3c5a76"
+    },
+    {
+      "path": "assets/phaser-B_vcVLyb.js",
+      "bytes": 1367089,
+      "sha256": "17aeb2e52266668277dd74461549e78fcb3de1885196f307d6ddb61fc7135276"
+    },
+    {
+      "path": "assets/phone-clear-BF_-VtKp.js",
+      "bytes": 10268,
+      "sha256": "f894c42527fdab17cde8c224eae476b509b562b186146f2472fba916ec423ee1"
+    },
+    {
+      "path": "assets/praise.worker-BHcpM0J1.js",
+      "bytes": 5169,
+      "sha256": "a917720e1628a49c2d1171d8b3cf9998e3cae6f59f0b21c8550fc98f0983352b"
+    },
+    {
+      "path": "assets/preload-helper-BVDXLKa5.js",
+      "bytes": 7504,
+      "sha256": "d8f616c213e0594dba7695c26ccfdff452fe72b00a317893ea6050988d10b0b6"
+    },
+    {
+      "path": "assets/prepared-surfaces-DoDHNqUv.js",
+      "bytes": 7262,
+      "sha256": "22d8b580c7010c6d8a45c66a7217f84463cab7898283da8fd54bcaaadb51c4f0"
+    },
+    {
+      "path": "assets/profile-CsNRcDJY.js",
+      "bytes": 27280,
+      "sha256": "a4d44186b64c0de7a8b4d9fb2499a943357dc6f8797ae7180c4fbc81bcb82df8"
+    },
+    {
+      "path": "assets/rewards/all-clear.webp",
+      "bytes": 18848,
+      "sha256": "58c157c845e187ad5ba41ce909b4ac0eddad08bdb7c83582440faaf5d770f21d"
+    },
+    {
+      "path": "assets/rewards/series.webp",
+      "bytes": 26546,
+      "sha256": "74e4117986a071aab52e7348a46675607b561f562532103cf6e85c5027110b02"
+    },
+    {
+      "path": "assets/score-glow-BqwUmUai.js",
+      "bytes": 1096,
+      "sha256": "817dee891a17a10430813121f675be402e4e1fa31d66fa60ceafeb582e7ae243"
+    },
+    {
+      "path": "assets/surface-comparison-BsWuEVHF.js",
+      "bytes": 9076,
+      "sha256": "1344c835f61a25e88baa92ffdad43d12e44356164a908e8fb107b3b376db94c3"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-10.webp",
+      "bytes": 2788,
+      "sha256": "d23be245606c36f451a1ff167d92cbe24bae2631a71bae611c8d7164cca1e9b7"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-11.webp",
+      "bytes": 2658,
+      "sha256": "e5a41cdb3ca88f1018f5db3304260b828a451d00bf9adc12f3ff3c7042a371b6"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-12.webp",
+      "bytes": 2556,
+      "sha256": "5765c7b7cd2b9245dc07249c44e8893ef14deafce69c27b972b0ddc59ec55f8a"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-7.webp",
+      "bytes": 2712,
+      "sha256": "6402b757924c9f653cb5df596de9e2ad6b348e329531170ec76cdb4561bb7055"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-8.webp",
+      "bytes": 2640,
+      "sha256": "39856ac6c6dad9150778a0de52fd0fa6dfe1deeaa00f177c54d5175f25419d29"
+    },
+    {
+      "path": "assets/theme-tiles/chrome-9.webp",
+      "bytes": 2640,
+      "sha256": "3e1708f5c9ecbca088c8e2379b2fbc8a49daa1343e8d469663b71c7cec72dff3"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-10.webp",
+      "bytes": 2640,
+      "sha256": "be95e7f26e1dc86da15d48639f17d4ed4cab92af8a7d51e42174df8e14bd4018"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-11.webp",
+      "bytes": 2466,
+      "sha256": "55436974e2ca02296be6e5b7a15440fcebfeef352ca42af90aacdfa6d1c7bcec"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-12.webp",
+      "bytes": 2466,
+      "sha256": "84030bdcc5b6cbba44e41a84a475ce038eb5892bd7bd2e62b8d4ac219a7d74bf"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-7.webp",
+      "bytes": 2558,
+      "sha256": "996b043ed59dadbceb289b58f88271572724d3459cddd5dc3aed35a83b14da24"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-8.webp",
+      "bytes": 2526,
+      "sha256": "ce7bee936a928decbfc844c3ab8864ef21eff9ba99b791e5ef06723dcb7d6542"
+    },
+    {
+      "path": "assets/theme-tiles/enamel-9.webp",
+      "bytes": 2434,
+      "sha256": "0bac0644977edd204adcbdbb8d0d61e7178c9b5b494cd05b155fddf555b19760"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-10.webp",
+      "bytes": 2802,
+      "sha256": "8bb7983859b62943718e88492d8ac1b5199050d22165e9d4463e67476fa66c57"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-11.webp",
+      "bytes": 2588,
+      "sha256": "0ed1ae91dc04f480dda4510b93140ca868d9768ac4de61cba5d1fc7128aa6846"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-12.webp",
+      "bytes": 2522,
+      "sha256": "c05c73f4afbdf0f78c4657502b2dcbe705778162abf1096a5b03527a58f8f055"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-7.webp",
+      "bytes": 2712,
+      "sha256": "95186a70c29c31a3a7433b04b873ac2c71d0c689edabeb9d5054735b55f7482d"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-8.webp",
+      "bytes": 2624,
+      "sha256": "bf374ae70c548ac8a0f2122d7f65c12bfea182518a11b5c3723c9918d8e501f1"
+    },
+    {
+      "path": "assets/theme-tiles/plastic-9.webp",
+      "bytes": 2564,
+      "sha256": "c27a213c5ee192305771b0b37cf2f4b11a376bb5eceb6a83ffca40a5733a127d"
+    },
+    {
+      "path": "assets/themes-CdonDFkZ.js",
+      "bytes": 1874,
+      "sha256": "033d903574d31a4456cfecbd2035f9e51f610fe727df3cb9cf342e17b38743ed"
+    },
+    {
+      "path": "assets/tile-study/chrome-1.webp",
+      "bytes": 6054,
+      "sha256": "78c695052e9c43da0ab34a35a59050c9c0b30818bb181daddf9faba02d9ab230"
+    },
+    {
+      "path": "assets/tile-study/chrome-2.webp",
+      "bytes": 6098,
+      "sha256": "3b8fbdf92a45b2e37941fc7bd9df4b7c25906d523a084b798614e6e54d818346"
+    },
+    {
+      "path": "assets/tile-study/chrome-3.webp",
+      "bytes": 6120,
+      "sha256": "d8d00db10ca4f5dd70f02529e9091ef80aa7792a81c440483548276a1ec050f6"
+    },
+    {
+      "path": "assets/tile-study/chrome-4.webp",
+      "bytes": 6158,
+      "sha256": "25b703923767908daf45388c3217cee7cc720b2b878a4b464845be568eda3c90"
+    },
+    {
+      "path": "assets/tile-study/chrome-5.webp",
+      "bytes": 6288,
+      "sha256": "532a20c6f4ecf4f4497f304482db1568ce36e054f2e2ea0a481c8baa365e866b"
+    },
+    {
+      "path": "assets/tile-study/chrome-6.webp",
+      "bytes": 6450,
+      "sha256": "53cff102247270fd242ce37260649b865a810010fd4c60cd573c2da493a32906"
+    },
+    {
+      "path": "assets/tile-study/enamel-1.webp",
+      "bytes": 4664,
+      "sha256": "b2eae94c857191b91751aa68f5d6b481e3357484453e3d029375bce0e3c1c74a"
+    },
+    {
+      "path": "assets/tile-study/enamel-2.webp",
+      "bytes": 5026,
+      "sha256": "a7308c7015a005062e1c25603aa6ff69750faf8ff16ba28e127e75e64fc51eb4"
+    },
+    {
+      "path": "assets/tile-study/enamel-3.webp",
+      "bytes": 4720,
+      "sha256": "561981bd451cdc3f1eaf7781a83af739072d4c6fbbd54e1af5f8f9aa7ab26b74"
+    },
+    {
+      "path": "assets/tile-study/enamel-4.webp",
+      "bytes": 4818,
+      "sha256": "abb226a96ba1de7e91fc8077dd20c9f2cb52d5b1bd1790262f200363f0d1df86"
+    },
+    {
+      "path": "assets/tile-study/enamel-5.webp",
+      "bytes": 4628,
+      "sha256": "9005120b4821680ff0fbcf14fa72533292dc3873b2842f5346cb8ee96acd0b74"
+    },
+    {
+      "path": "assets/tile-study/enamel-6.webp",
+      "bytes": 4840,
+      "sha256": "a47951840c919b98ecfaa47f7819067818dfa76588a300276d6f4783325fe534"
+    },
+    {
+      "path": "assets/tile-study/plastic-1.webp",
+      "bytes": 3918,
+      "sha256": "e32375fac91905c80066354c61fa213207eb79deebc2ce37353376c803a72b65"
+    },
+    {
+      "path": "assets/tile-study/plastic-2.webp",
+      "bytes": 4248,
+      "sha256": "fc4246ecc4afc80b1f65c012a437f0d9851a53d279875fb8b2ac909b4337d69d"
+    },
+    {
+      "path": "assets/tile-study/plastic-3.webp",
+      "bytes": 4088,
+      "sha256": "7d9b1b6d0b6e68212b900f9680ded1883fa00d931e899ecaa241687d510cf98e"
+    },
+    {
+      "path": "assets/tile-study/plastic-4.webp",
+      "bytes": 4236,
+      "sha256": "9cfff3351216370ebac142f7621c9b39bbe0490942521a2b6d75aa78ae02e67e"
+    },
+    {
+      "path": "assets/tile-study/plastic-5.webp",
+      "bytes": 3952,
+      "sha256": "beb92ab75f93b0cb82371061dafa657ef7c684a47ded412ed78fccd41adaa21b"
+    },
+    {
+      "path": "assets/tile-study/plastic-6.webp",
+      "bytes": 3814,
+      "sha256": "a6797115cb4c682e5457d235b349611214f00a252242fe4b9fb210199568b8a4"
+    },
+    {
+      "path": "assets/vfx/chip.webp",
+      "bytes": 3190,
+      "sha256": "bad557d3746456d14003bebadecbc97eab95606a5d09562bae520acd57477edf"
+    },
+    {
+      "path": "assets/vfx/flash.webp",
+      "bytes": 10782,
+      "sha256": "3111921b44ac8cea6ad7d90ffbaa0f7c1700458cf9329efc6470e33ced43aee0"
+    },
+    {
+      "path": "assets/vfx/ring.webp",
+      "bytes": 65122,
+      "sha256": "426da51c6dadd76fd4905dfd2cf96883877b9df342ba83788b37463e8d239c76"
+    },
+    {
+      "path": "assets/vfx/streak.webp",
+      "bytes": 13420,
+      "sha256": "9a351ace1d1f8d14b245bd9d31d427bd38d4df2f5fe208b98825052656d3fb49"
+    },
+    {
+      "path": "assets/view-CGu0bLvC.js",
+      "bytes": 19115,
+      "sha256": "1acfadef244beb291a9a83b42b1276e72bdb83295a86d75b913deae987ceea44"
+    },
+    {
+      "path": "assets/view-Ct5z5PkK.css",
+      "bytes": 9735,
+      "sha256": "0cfae74f877c0aa0e1b886da5d528e4847fd6cfa67e3011a81a8c4d0e92b10e0"
+    },
+    {
+      "path": "assets/web-BM7xF5pS.js",
+      "bytes": 843,
+      "sha256": "874bbd026b2a3757b6c7bedc1bd163f0c735a3e0a943605c9853f660d828d658"
+    },
+    {
+      "path": "audio/CREDITS.txt",
+      "bytes": 502,
+      "sha256": "4327e48a2f7fa9cdfa88883ebda23acd1550c8e1d4b7b5bd6c316658ec858b54"
+    },
+    {
+      "path": "audio/cozy-puzzle.ogg",
+      "bytes": 1054759,
+      "sha256": "eb16746da57d3d50f3c9dbb0c18def5a0e60ef3841552010a250d100d7a9e504"
+    },
+    {
+      "path": "backgrounds/polar-night-v1.webp",
+      "bytes": 10144,
+      "sha256": "3ce40488e72b69452132444dfa780a04a852fb4f872bbd932c7f3cc6b24e9f60"
+    },
+    {
+      "path": "backgrounds/porcelain-v1.webp",
+      "bytes": 9160,
+      "sha256": "a6bf3ca382b1b4b2c5a28ba116335c1d0751eea4083e8ebd9762c52f50a6fc66"
+    },
+    {
+      "path": "diagnostics/clear.html",
+      "bytes": 2107,
+      "sha256": "6272d7074c8c8dfca5facf7a565f9c6a757b967d9e843ca3b22732765da400b7"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1490,
+      "sha256": "dd452e245b3b81f198b7db234abe4cebfc473626ac6a8ef0c8310d903dab2b72"
+    }
+  ]
+}

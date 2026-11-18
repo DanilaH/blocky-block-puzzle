@@ -1,0 +1,13 @@
+{
+  "version": "0.51.0-preview",
+  "apkSha256": "47953355d8b79f122c8f5715e370b627d616706d0942f06ab64f13f0ae3b709a",
+  "productionFilesMatched": 86,
+  "prototypeAbsentFromNormalBundle": true,
+  "nativeAppAudit": {
+    "debuggable": true,
+    "hardwareAccelerationOverrideInOwnCode": false,
+    "softwareLayerOverrideInOwnOrCapacitorCode": false,
+    "webViewDebugging": "CapConfig defaults to FLAG_DEBUGGABLE; Bridge calls setWebContentsDebuggingEnabled; configuration does not override"
+  },
+  "newApkBuilt": false
+}

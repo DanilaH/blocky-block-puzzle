@@ -1,0 +1,80 @@
+{
+  "environment": "Chromium software renderer; controlled theme-only transitions, no clears; not Android FPS",
+  "results": [
+    {
+      "series": 0,
+      "renderMs": 1.1000000000931323,
+      "p95": 16.700000000000273,
+      "frames": 65
+    },
+    {
+      "series": 0,
+      "renderMs": 1.2999999998137355,
+      "p95": 16.700000000000728,
+      "frames": 65
+    },
+    {
+      "series": 0,
+      "renderMs": 0.8999999999068677,
+      "p95": 16.700000000000728,
+      "frames": 66
+    },
+    {
+      "series": 0,
+      "renderMs": 1,
+      "p95": 16.799999999999272,
+      "frames": 66
+    },
+    {
+      "series": 4,
+      "renderMs": 4,
+      "p95": 50,
+      "frames": 39
+    },
+    {
+      "series": 10,
+      "renderMs": 3.7000000001862645,
+      "p95": 33.399999999999636,
+      "frames": 42
+    },
+    {
+      "series": 4,
+      "renderMs": 3.1999999997206032,
+      "p95": 33.399999999999636,
+      "frames": 43
+    },
+    {
+      "series": 10,
+      "renderMs": 5.7000000001862645,
+      "p95": 33.400000000001455,
+      "frames": 42
+    },
+    {
+      "series": 4,
+      "renderMs": 3.1000000000931323,
+      "p95": 33.400000000001455,
+      "frames": 43
+    },
+    {
+      "series": 10,
+      "renderMs": 3.1000000000931323,
+      "p95": 33.399999999999636,
+      "frames": 42
+    },
+    {
+      "series": 4,
+      "renderMs": 3.2000000001862645,
+      "p95": 33.400000000001455,
+      "frames": 42
+    },
+    {
+      "series": 10,
+      "renderMs": 4.5,
+      "p95": 33.400000000001455,
+      "frames": 43
+    }
+  ],
+  "long": [
+    61
+  ]
+}

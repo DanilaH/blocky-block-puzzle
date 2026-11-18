@@ -1,0 +1,28 @@
+{
+  "file": "blocky-preview-0.21.0.apk",
+  "bytes": 9929375,
+  "sha256": "855cff4edb967445a97cabda59902f4245a50782a4067c097f9741a6b810ec9b",
+  "manifest": {
+    "versionCode": 21,
+    "versionName": "0.21.0-preview",
+    "compileSdkVersion": 36,
+    "compileSdkVersionCodename": "16",
+    "package": "com.danilah.blocky.dev",
+    "platformBuildVersionCode": 36,
+    "platformBuildVersionName": 16
+  },
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "assetsVerified": [
+    "assets/public/assets/hint.worker-BBQAON7F.js",
+    "assets/public/assets/index-BQU62Zbo.css",
+    "assets/public/assets/index-CrxYvY2w.js",
+    "assets/public/assets/phaser-B_vcVLyb.js",
+    "assets/public/assets/praise.worker-keudRoz7.js",
+    "assets/public/assets/vfx/chip.webp",
+    "assets/public/assets/vfx/flash.webp",
+    "assets/public/assets/vfx/ring.webp",
+    "assets/public/assets/vfx/streak.webp",
+    "assets/public/index.html"
+  ],
+  "note": "Certificate identity compared; not independent cryptographic signature verification."
+}

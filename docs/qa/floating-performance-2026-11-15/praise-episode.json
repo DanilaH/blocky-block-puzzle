@@ -1,0 +1,1046 @@
+{
+  "environment": "v24.22.1, Linux/headless Chromium, Vite dev, software renderer; no phone and no present timing",
+  "browser": "141.0.7390.37",
+  "protocol": "docs/qa/floating-performance-2026-11-15/PROTOCOL.md",
+  "results": [
+    {
+      "index": 0,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 435.69999999925494
+        },
+        {
+          "kind": "result",
+          "at": 856.8000000007451,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 140,
+          "totalMs": 31.600000016391277,
+          "maxMs": 1.7999999970197678,
+          "meanMs": 0.22571428583136627
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.5,
+          "maxMs": 0.5,
+          "meanMs": 0.5
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 60.80000000074506,
+          "maxMs": 60.80000000074506,
+          "meanMs": 60.80000000074506
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 61.30000000074506,
+          "maxMs": 61.30000000074506,
+          "meanMs": 61.30000000074506
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.300000000745058,
+          "maxMs": 1.300000000745058,
+          "meanMs": 1.300000000745058
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 421.5999999977648,
+          "maxMs": 421.5999999977648,
+          "meanMs": 421.5999999977648
+        }
+      },
+      "raf": {
+        "samples": 139,
+        "p95": 33.29999923706055,
+        "over33": 4,
+        "over50": 3
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 1,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 140,
+          "totalMs": 34.99999998882413,
+          "maxMs": 1.699999999254942,
+          "meanMs": 0.24999999992017236
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.5999999977648258,
+          "maxMs": 0.5999999977648258,
+          "meanMs": 0.5999999977648258
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 79.10000000149012,
+          "maxMs": 79.10000000149012,
+          "meanMs": 79.10000000149012
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 79.69999999925494,
+          "maxMs": 79.69999999925494,
+          "meanMs": 79.69999999925494
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.6000000014901161,
+          "maxMs": 1.6000000014901161,
+          "meanMs": 1.6000000014901161
+        }
+      },
+      "raf": {
+        "samples": 139,
+        "p95": 33.400001525878906,
+        "over33": 8,
+        "over50": 5
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 2,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 131,
+          "totalMs": 29.700000036507845,
+          "maxMs": 1.699999999254942,
+          "meanMs": 0.22671755753059425
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.30000000074505806,
+          "maxMs": 0.30000000074505806,
+          "meanMs": 0.30000000074505806
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 77,
+          "maxMs": 77,
+          "meanMs": 77
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 77.39999999850988,
+          "maxMs": 77.39999999850988,
+          "meanMs": 77.39999999850988
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.5,
+          "maxMs": 1.5,
+          "meanMs": 1.5
+        }
+      },
+      "raf": {
+        "samples": 130,
+        "p95": 16.799999237060547,
+        "over33": 5,
+        "over50": 3
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 3,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 440.1000000014901
+        },
+        {
+          "kind": "result",
+          "at": 846.1000000014901,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 142,
+          "totalMs": 32.600000001490116,
+          "maxMs": 1.800000000745058,
+          "meanMs": 0.22957746479922617
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.30000000074505806,
+          "maxMs": 0.30000000074505806,
+          "meanMs": 0.30000000074505806
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 80,
+          "maxMs": 80,
+          "meanMs": 80
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 80.30000000074506,
+          "maxMs": 80.30000000074506,
+          "meanMs": 80.30000000074506
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 0.8999999985098839,
+          "maxMs": 0.8999999985098839,
+          "meanMs": 0.8999999985098839
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 406.4000000022352,
+          "maxMs": 406.4000000022352,
+          "meanMs": 406.4000000022352
+        }
+      },
+      "raf": {
+        "samples": 141,
+        "p95": 16.799999237060547,
+        "over33": 6,
+        "over50": 2
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 4,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 138,
+          "totalMs": 34.19999999180436,
+          "maxMs": 1.699999999254942,
+          "meanMs": 0.24782608689713306
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.4000000022351742,
+          "maxMs": 0.4000000022351742,
+          "meanMs": 0.4000000022351742
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 103.40000000223517,
+          "maxMs": 103.40000000223517,
+          "meanMs": 103.40000000223517
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 104,
+          "maxMs": 104,
+          "meanMs": 104
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.1000000014901161,
+          "maxMs": 1.1000000014901161,
+          "meanMs": 1.1000000014901161
+        }
+      },
+      "raf": {
+        "samples": 137,
+        "p95": 16.799999237060547,
+        "over33": 4,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 5,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 441.6000000014901
+        },
+        {
+          "kind": "result",
+          "at": 954,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 146,
+          "totalMs": 64.10000001639128,
+          "maxMs": 18,
+          "meanMs": 0.43904109600268
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.3999999985098839,
+          "maxMs": 0.3999999985098839,
+          "meanMs": 0.3999999985098839
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 96.59999999776483,
+          "maxMs": 96.59999999776483,
+          "meanMs": 96.59999999776483
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 97.09999999776483,
+          "maxMs": 97.09999999776483,
+          "meanMs": 97.09999999776483
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.0999999977648258,
+          "maxMs": 1.0999999977648258,
+          "meanMs": 1.0999999977648258
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 512.8999999985099,
+          "maxMs": 512.8999999985099,
+          "meanMs": 512.8999999985099
+        }
+      },
+      "raf": {
+        "samples": 145,
+        "p95": 33.400001525878906,
+        "over33": 8,
+        "over50": 4
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 6,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 450.19999999925494
+        },
+        {
+          "kind": "result",
+          "at": 859.5999999977648,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 136,
+          "totalMs": 40.19999999925494,
+          "maxMs": 6.199999999254942,
+          "meanMs": 0.29558823528863926
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.6999999992549419,
+          "maxMs": 0.6999999992549419,
+          "meanMs": 0.6999999992549419
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 98,
+          "maxMs": 98,
+          "meanMs": 98
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 98.69999999925494,
+          "maxMs": 98.69999999925494,
+          "meanMs": 98.69999999925494
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 0.8999999985098839,
+          "maxMs": 0.8999999985098839,
+          "meanMs": 0.8999999985098839
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 410.19999999925494,
+          "maxMs": 410.19999999925494,
+          "meanMs": 410.19999999925494
+        }
+      },
+      "raf": {
+        "samples": 135,
+        "p95": 33.29999923706055,
+        "over33": 6,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 7,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 132,
+          "totalMs": 36.00000001117587,
+          "maxMs": 3.399999998509884,
+          "meanMs": 0.2727272728119384
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.3999999985098839,
+          "maxMs": 0.3999999985098839,
+          "meanMs": 0.3999999985098839
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 101.89999999850988,
+          "maxMs": 101.89999999850988,
+          "meanMs": 101.89999999850988
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 102.29999999701977,
+          "maxMs": 102.29999999701977,
+          "meanMs": 102.29999999701977
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.0999999977648258,
+          "maxMs": 1.0999999977648258,
+          "meanMs": 1.0999999977648258
+        }
+      },
+      "raf": {
+        "samples": 132,
+        "p95": 16.799999237060547,
+        "over33": 3,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 8,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 440.19999999925494
+        },
+        {
+          "kind": "result",
+          "at": 852.5,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 136,
+          "totalMs": 39.00000000372529,
+          "maxMs": 9.400000002235174,
+          "meanMs": 0.2867647059097448
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.20000000298023224,
+          "maxMs": 0.20000000298023224,
+          "meanMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 61.5,
+          "maxMs": 61.5,
+          "meanMs": 61.5
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 61.70000000298023,
+          "maxMs": 61.70000000298023,
+          "meanMs": 61.70000000298023
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.1000000014901161,
+          "maxMs": 1.1000000014901161,
+          "meanMs": 1.1000000014901161
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 412.79999999701977,
+          "maxMs": 412.79999999701977,
+          "meanMs": 412.79999999701977
+        }
+      },
+      "raf": {
+        "samples": 135,
+        "p95": 33.29999923706055,
+        "over33": 5,
+        "over50": 2
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 9,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 143,
+          "totalMs": 60.60000001639128,
+          "maxMs": 16.600000001490116,
+          "meanMs": 0.42377622389084807
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.20000000298023224,
+          "maxMs": 0.20000000298023224,
+          "meanMs": 0.20000000298023224
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 68.39999999850988,
+          "maxMs": 68.39999999850988,
+          "meanMs": 68.39999999850988
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 68.60000000149012,
+          "maxMs": 68.60000000149012,
+          "meanMs": 68.60000000149012
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1,
+          "maxMs": 1,
+          "meanMs": 1
+        }
+      },
+      "raf": {
+        "samples": 142,
+        "p95": 16.799999237060547,
+        "over33": 4,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 10,
+      "mode": "B",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 137,
+          "totalMs": 29.200000006705523,
+          "maxMs": 1.199999999254942,
+          "meanMs": 0.21313868618033227
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.5,
+          "maxMs": 0.5,
+          "meanMs": 0.5
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 76.19999999925494,
+          "maxMs": 76.19999999925494,
+          "meanMs": 76.19999999925494
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 76.69999999925494,
+          "maxMs": 76.69999999925494,
+          "meanMs": 76.69999999925494
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.2000000029802322,
+          "maxMs": 1.2000000029802322,
+          "meanMs": 1.2000000029802322
+        }
+      },
+      "raf": {
+        "samples": 136,
+        "p95": 16.799999237060547,
+        "over33": 5,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 11,
+      "mode": "A",
+      "traced": false,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 366.6000000014901
+        },
+        {
+          "kind": "result",
+          "at": 767.6000000014901,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 139,
+          "totalMs": 40.599999997764826,
+          "maxMs": 7.300000000745058,
+          "meanMs": 0.2920863309191714
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.3999999985098839,
+          "maxMs": 0.3999999985098839,
+          "meanMs": 0.3999999985098839
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 63.100000001490116,
+          "maxMs": 63.100000001490116,
+          "meanMs": 63.100000001490116
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 63.5,
+          "maxMs": 63.5,
+          "meanMs": 63.5
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 0.9000000022351742,
+          "maxMs": 0.9000000022351742,
+          "meanMs": 0.9000000022351742
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 401.6000000014901,
+          "maxMs": 401.6000000014901,
+          "meanMs": 401.6000000014901
+        }
+      },
+      "raf": {
+        "samples": 138,
+        "p95": 33.29999923706055,
+        "over33": 5,
+        "over50": 1
+      },
+      "material": "plastic"
+    },
+    {
+      "index": 12,
+      "mode": "A",
+      "traced": true,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [
+        {
+          "kind": "start",
+          "at": 422.20000000298023
+        },
+        {
+          "kind": "result",
+          "at": 847,
+          "depth": 2
+        }
+      ],
+      "phases": {
+        "boardDraw": {
+          "count": 142,
+          "totalMs": 43.900000013411045,
+          "maxMs": 11.600000001490116,
+          "meanMs": 0.3091549296719088
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.5,
+          "maxMs": 0.5,
+          "meanMs": 0.5
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 64.69999999925494,
+          "maxMs": 64.69999999925494,
+          "meanMs": 64.69999999925494
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 65.29999999701977,
+          "maxMs": 65.29999999701977,
+          "meanMs": 65.29999999701977
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.1000000014901161,
+          "maxMs": 1.1000000014901161,
+          "meanMs": 1.1000000014901161
+        },
+        "praiseWorkerStart": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "meanMs": 0
+        },
+        "praiseWorkerResultWallTime": {
+          "count": 1,
+          "totalMs": 425.19999999925494,
+          "maxMs": 425.19999999925494,
+          "meanMs": 425.19999999925494
+        }
+      },
+      "raf": {
+        "samples": 141,
+        "p95": 16.799999237060547,
+        "over33": 5,
+        "over50": 0
+      },
+      "material": "plastic",
+      "trace": {
+        "sha256": "9ccb2031f91975c973a8482a2535675b842fbbe72bb00358e3e0112c09686f8a",
+        "events": 29741,
+        "workerThreads": [
+          {
+            "pid": 302,
+            "tid": 305,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 55,
+            "name": "CompositorTileWorker1"
+          },
+          {
+            "pid": 302,
+            "tid": 307,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 45,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 311,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 49,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 310,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 312,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 313,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 324,
+            "name": "DedicatedWorker thread"
+          },
+          {
+            "pid": 302,
+            "tid": 315,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 302,
+            "tid": 314,
+            "name": "ThreadPoolForegroundWorker"
+          }
+        ],
+        "taskEvents": 13187
+      }
+    },
+    {
+      "index": 13,
+      "mode": "B",
+      "traced": true,
+      "expected": {
+        "hash": "c97addcb",
+        "lines": 1,
+        "score": 13501,
+        "occupied": 28
+      },
+      "hash": "c97addcb",
+      "score": 13501,
+      "occupied": 28,
+      "workerEvents": [],
+      "phases": {
+        "boardDraw": {
+          "count": 144,
+          "totalMs": 36.89999998733401,
+          "maxMs": 1.300000000745058,
+          "meanMs": 0.2562499999120418
+        },
+        "moveCalculationWallTime": {
+          "count": 1,
+          "totalMs": 0.4000000022351742,
+          "maxMs": 0.4000000022351742,
+          "meanMs": 0.4000000022351742
+        },
+        "atomicSaveWallTime": {
+          "count": 1,
+          "totalMs": 76.59999999776483,
+          "maxMs": 76.59999999776483,
+          "meanMs": 76.59999999776483
+        },
+        "commitIncludingSaveWallTime": {
+          "count": 1,
+          "totalMs": 77,
+          "maxMs": 77,
+          "meanMs": 77
+        },
+        "placementRender": {
+          "count": 1,
+          "totalMs": 1.300000000745058,
+          "maxMs": 1.300000000745058,
+          "meanMs": 1.300000000745058
+        }
+      },
+      "raf": {
+        "samples": 143,
+        "p95": 16.799999237060547,
+        "over33": 4,
+        "over50": 1
+      },
+      "material": "plastic",
+      "trace": {
+        "sha256": "2210673a2cd54e5ffeee05c9e961ac3858e361f94c96049a9b98c7a327a6bc14",
+        "events": 25337,
+        "workerThreads": [
+          {
+            "pid": 326,
+            "tid": 329,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 55,
+            "name": "CompositorTileWorker1"
+          },
+          {
+            "pid": 326,
+            "tid": 331,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 326,
+            "tid": 335,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 326,
+            "tid": 334,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 45,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 50,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 39,
+            "tid": 49,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 326,
+            "tid": 336,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 326,
+            "tid": 337,
+            "name": "ThreadPoolForegroundWorker"
+          },
+          {
+            "pid": 326,
+            "tid": 338,
+            "name": "ThreadPoolForegroundWorker"
+          }
+        ],
+        "taskEvents": 11106
+      }
+    }
+  ]
+}

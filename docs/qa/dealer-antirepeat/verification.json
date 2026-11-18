@@ -1,0 +1,8 @@
+{
+  "runs": 128,
+  "moves": 17815,
+  "recomputed": 2957,
+  "exactReplay": true,
+  "evidenceSha256": "a780c09118790640a767634e77fc40a887d8395d6cac80fcae6bd5f7c62c5801",
+  "unitTests": 201
+}

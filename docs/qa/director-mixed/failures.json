@@ -1,0 +1,485 @@
+{
+  "counts": {
+    "ended": 55,
+    "firstAlreadyLost": 13,
+    "secondLost": 42,
+    "unknown": 0,
+    "certifiedFirstThenLost": 30
+  },
+  "phases": {
+    "load": {
+      "ended": 6,
+      "secondLost": 5,
+      "certifiedFirstThenLost": 2
+    },
+    "relief": {
+      "ended": 37,
+      "secondLost": 27,
+      "certifiedFirstThenLost": 21
+    },
+    "build": {
+      "ended": 9,
+      "secondLost": 7,
+      "certifiedFirstThenLost": 5
+    },
+    "gentle": {
+      "ended": 2,
+      "secondLost": 2,
+      "certifiedFirstThenLost": 1
+    },
+    "friendly": {
+      "ended": 1,
+      "secondLost": 1,
+      "certifiedFirstThenLost": 1
+    }
+  },
+  "examples": [
+    {
+      "split": "development",
+      "seed": 1241001,
+      "style": "clear",
+      "phase": "load",
+      "atMove": 192,
+      "board": [
+        159,
+        0,
+        128,
+        32,
+        167,
+        231,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "I4-1",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 1,
+          "x": 4,
+          "y": 1
+        },
+        {
+          "slot": 2,
+          "x": 1,
+          "y": 1
+        }
+      ],
+      "kind": "secondLost",
+      "certifiedFirst": false,
+      "alternativeTail": [
+        {
+          "slot": 0,
+          "x": 0,
+          "y": 1
+        },
+        {
+          "slot": 2,
+          "x": 0,
+          "y": 6
+        }
+      ],
+      "complete": true,
+      "checks": 444
+    },
+    {
+      "split": "development",
+      "seed": 1241001,
+      "style": "plausible",
+      "phase": "relief",
+      "atMove": 12,
+      "board": [
+        48,
+        108,
+        134,
+        135,
+        135,
+        174,
+        190,
+        12
+      ],
+      "tray": [
+        {
+          "shapeId": "I4-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "T4-2",
+          "color": 6,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 2,
+          "x": 3,
+          "y": 1
+        },
+        {
+          "slot": 0,
+          "x": 4,
+          "y": 7
+        }
+      ],
+      "kind": "firstAlreadyLost",
+      "certifiedFirst": false,
+      "alternativeTail": null,
+      "complete": true,
+      "checks": 144
+    },
+    {
+      "split": "development",
+      "seed": 1241001,
+      "style": "bounded",
+      "phase": "load",
+      "atMove": 57,
+      "board": [
+        89,
+        17,
+        25,
+        64,
+        192,
+        216,
+        73,
+        8
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-1",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "O2-0",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 2,
+          "x": 1,
+          "y": 5
+        },
+        {
+          "slot": 0,
+          "x": 1,
+          "y": 2
+        }
+      ],
+      "kind": "firstAlreadyLost",
+      "certifiedFirst": false,
+      "alternativeTail": null,
+      "complete": true,
+      "checks": 108
+    },
+    {
+      "split": "development",
+      "seed": 1241001,
+      "style": "lapse",
+      "phase": "relief",
+      "atMove": 81,
+      "board": [
+        48,
+        96,
+        247,
+        183,
+        228,
+        237,
+        249,
+        8
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 0,
+          "x": 1,
+          "y": 0
+        }
+      ],
+      "kind": "firstAlreadyLost",
+      "certifiedFirst": false,
+      "alternativeTail": null,
+      "complete": true,
+      "checks": 0
+    },
+    {
+      "split": "confirmation",
+      "seed": 1261001,
+      "style": "clear",
+      "phase": "build",
+      "atMove": 162,
+      "board": [
+        0,
+        2,
+        2,
+        51,
+        28,
+        92,
+        6,
+        2
+      ],
+      "tray": [
+        {
+          "shapeId": "I5-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 0,
+          "x": 7,
+          "y": 1
+        },
+        {
+          "slot": 1,
+          "x": 4,
+          "y": 1
+        }
+      ],
+      "kind": "secondLost",
+      "certifiedFirst": true,
+      "alternativeTail": [
+        {
+          "slot": 1,
+          "x": 3,
+          "y": 6
+        },
+        {
+          "slot": 2,
+          "x": 2,
+          "y": 0
+        }
+      ],
+      "complete": true,
+      "checks": 450
+    },
+    {
+      "split": "confirmation",
+      "seed": 1261001,
+      "style": "plausible",
+      "phase": "relief",
+      "atMove": 15,
+      "board": [
+        39,
+        119,
+        0,
+        146,
+        146,
+        254,
+        179,
+        60
+      ],
+      "tray": [
+        {
+          "shapeId": "L52",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "I5-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "L3-3",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 2,
+          "x": 6,
+          "y": 1
+        },
+        {
+          "slot": 0,
+          "x": 1,
+          "y": 2
+        }
+      ],
+      "kind": "secondLost",
+      "certifiedFirst": false,
+      "alternativeTail": [
+        {
+          "slot": 0,
+          "x": 3,
+          "y": 2
+        },
+        {
+          "slot": 1,
+          "x": 3,
+          "y": 0
+        }
+      ],
+      "complete": true,
+      "checks": 168
+    },
+    {
+      "split": "confirmation",
+      "seed": 1261001,
+      "style": "bounded",
+      "phase": "relief",
+      "atMove": 48,
+      "board": [
+        58,
+        48,
+        62,
+        61,
+        0,
+        0,
+        0,
+        3
+      ],
+      "tray": [
+        {
+          "shapeId": "L52",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "I3-0",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 2,
+          "x": 0,
+          "y": 6
+        },
+        {
+          "slot": 0,
+          "x": 3,
+          "y": 4
+        }
+      ],
+      "kind": "secondLost",
+      "certifiedFirst": false,
+      "alternativeTail": [
+        {
+          "slot": 0,
+          "x": 1,
+          "y": 4
+        },
+        {
+          "slot": 1,
+          "x": 4,
+          "y": 4
+        }
+      ],
+      "complete": true,
+      "checks": 576
+    },
+    {
+      "split": "confirmation",
+      "seed": 1261004,
+      "style": "lapse",
+      "phase": "relief",
+      "atMove": 195,
+      "board": [
+        160,
+        8,
+        174,
+        152,
+        224,
+        241,
+        0,
+        57
+      ],
+      "tray": [
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "L50",
+          "color": 4,
+          "used": false
+        },
+        {
+          "shapeId": "L52",
+          "color": 6,
+          "used": false
+        }
+      ],
+      "actual": [
+        {
+          "slot": 1,
+          "x": 2,
+          "y": 4
+        },
+        {
+          "slot": 2,
+          "x": 4,
+          "y": 1
+        }
+      ],
+      "kind": "firstAlreadyLost",
+      "certifiedFirst": false,
+      "alternativeTail": null,
+      "complete": true,
+      "checks": 72
+    }
+  ]
+}

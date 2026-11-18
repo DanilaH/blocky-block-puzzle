@@ -1,0 +1,13 @@
+{
+  "applicationCommit": "42a5d4aadfd316596aa39f0655ad27fcae545b63",
+  "localUnitPassed": 144,
+  "localBrowserPassed": 124,
+  "browserDurationMinutes": 7.9,
+  "build": "passed",
+  "assetBudgets": "passed",
+  "themePreviewsChecked": 11,
+  "ciRun": 41864632331,
+  "ciStatus": "queued",
+  "apkAvailable": false,
+  "physicalAndroidTested": false
+}

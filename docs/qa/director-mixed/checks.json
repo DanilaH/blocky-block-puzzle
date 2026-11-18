@@ -1,0 +1,47 @@
+{
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm test -- --no-file-parallelism",
+    "exitCode": 0,
+    "files": 44,
+    "tests": 288,
+    "durationSeconds": 50.31
+  },
+  "newReplay": {
+    "valid": true,
+    "games": 160,
+    "moves": 27350,
+    "trios": 9204,
+    "roots": 14023,
+    "goals": 233,
+    "negatives": 231,
+    "unknown": 0,
+    "playerChoicesRecomputed": false,
+    "sourceSha256": "4055811c83d3b31038d7fb1f27c664731ae66588e31cd2e73a05ad4d2a3bb2e1"
+  },
+  "legacyReplay": {
+    "valid": true,
+    "games": 96,
+    "moves": 20889,
+    "sourceResultsSha256": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+  },
+  "failureAnalysis": {
+    "ended": 55,
+    "firstAlreadyLost": 13,
+    "secondLost": 42,
+    "unknown": 0,
+    "certifiedFirstThenLost": 30
+  },
+  "defaultDealer": "director-v2",
+  "appVersion": "0.63.0-preview",
+  "lockedInstall": false,
+  "browserRun": false,
+  "androidRun": false,
+  "apkCreated": false,
+  "behaviorAccepted": false,
+  "sourceSnapshot": "78f06e67dcaa1f38f20b2cc4923a84bc7d9bd28d",
+  "note": "No policy/player changes between development and confirmation; replay uses stored actions, not recomputed player choices."
+}

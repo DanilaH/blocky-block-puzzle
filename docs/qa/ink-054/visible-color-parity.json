@@ -1,0 +1,125 @@
+{
+  "scope": "Visible direct text and SVG color/fill/stroke/geometry, fixed ink transition, same app with legacy root fade restored. Not a whole-animation pixel parity claim.",
+  "results": [
+    {
+      "view": "game",
+      "phase": 0,
+      "visibleTextOrSvgNodes": 7,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "phase": 250,
+      "visibleTextOrSvgNodes": 7,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "phase": 500,
+      "visibleTextOrSvgNodes": 7,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "phase": 750,
+      "visibleTextOrSvgNodes": 7,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "game",
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 7,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "phase": 0,
+      "visibleTextOrSvgNodes": 39,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "phase": 250,
+      "visibleTextOrSvgNodes": 39,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "phase": 500,
+      "visibleTextOrSvgNodes": 39,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "phase": 750,
+      "visibleTextOrSvgNodes": 39,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "pause",
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 39,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "phase": 0,
+      "visibleTextOrSvgNodes": 5,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "phase": 250,
+      "visibleTextOrSvgNodes": 5,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "phase": 500,
+      "visibleTextOrSvgNodes": 5,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "phase": 750,
+      "visibleTextOrSvgNodes": 5,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "tutorial",
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 5,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "phase": 0,
+      "visibleTextOrSvgNodes": 11,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "phase": 250,
+      "visibleTextOrSvgNodes": 11,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "phase": 500,
+      "visibleTextOrSvgNodes": 11,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "phase": 750,
+      "visibleTextOrSvgNodes": 11,
+      "exactColorAndGeometry": true
+    },
+    {
+      "view": "result",
+      "phase": 1000,
+      "visibleTextOrSvgNodes": 11,
+      "exactColorAndGeometry": true
+    }
+  ]
+}

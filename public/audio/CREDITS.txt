@@ -1,0 +1,8 @@
+Cozy Puzzle In-Game 1 — MintoDog
+Source: https://opengameart.org/content/cozy-puzzle-in-game-1
+Original download: https://opengameart.org/sites/default/files/cozy_puzzle_in-game_1_bpm118_0.ogg
+License declared by author: CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+Source SHA256: afa440cb8814907b215b285a0503d39b125b6c83d9fca3f686c969107f04c7f7
+Adaptation: stereo 24 kHz Vorbis q3; complete 256-beat loop retained, 118 BPM.
+Selected by the project owner from audition D on 2026-11-02.

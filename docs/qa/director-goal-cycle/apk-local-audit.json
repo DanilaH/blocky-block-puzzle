@@ -1,0 +1,19 @@
+{
+  "valid": true,
+  "ciRun": 42845500290,
+  "head": "5d48018acc56ef5e7c651de880bde9b1cdcf8afc",
+  "mergeCommit": "b2038b52a38fee35434886b438955319e2f596e8",
+  "apkSha256": "b83ab374ed6dff6b7eabf335b6e6e705286f040b465f569d5fb84f54991d4ab9",
+  "apkBytes": 11754952,
+  "appVersion": "0.63.0-preview",
+  "versionCode": 63,
+  "package": "com.danilah.blocky.dev",
+  "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+  "compatibleWith062": true,
+  "productionFilesMatched": 99,
+  "unchangedNativePublicEntries": [
+    "assets/public/cordova.js",
+    "assets/public/cordova_plugins.js"
+  ],
+  "versionAndDirectorMarkers": true
+}

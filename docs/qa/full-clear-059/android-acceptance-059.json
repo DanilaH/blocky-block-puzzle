@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "a291c31bc83c3bde24a3b4e0e4c9928a91220894",
+  "headCommit": "b3672a01109ada5be240831f5dd6c24053b207ce",
+  "ciRun": 42601811894,
+  "completed": true,
+  "episodes": 57,
+  "validEpisodes": 57,
+  "comparisons": 40,
+  "attributionCaptures": 15,
+  "preflightReady": true,
+  "probeLinked": true,
+  "issues": [],
+  "zipBytes": 76439466,
+  "zipSha256": "943df12f5adf23190999f6fbec724d6bcfe9a2f00ff643522a2eceefb041d6e1",
+  "manifestMembers": 49,
+  "elapsedMs": 621023.4,
+  "inspectorMs": {
+    "min": 684.755048,
+    "median": 732.482185,
+    "max": 774.542404
+  },
+  "allGzipFromChromium": true,
+  "allKnownNoDataLoss": true,
+  "nativeAds": {
+    "suspended": true,
+    "bannerPresent": false,
+    "loadingInterstitial": false,
+    "loadingRewarded": false
+  },
+  "scope": "Android emulator transport/output/export acceptance only. No post-fix physical 0.59 run or shipping performance improvement claimed."
+}

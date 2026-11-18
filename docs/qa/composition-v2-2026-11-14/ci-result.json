@@ -1,0 +1,46 @@
+{
+  "runId": 43631030232,
+  "sourceCommit": "0caa45d4f5be48ba9917089e8f4b702a71b5367f",
+  "ciMergeCommit": "3d5efe968d5df66b8a49cb794ee6f4cd6ed45859",
+  "sourceTree": "fb69af8227ee98029c9473e3d33fb8f94a6eb2c3",
+  "jobs": [
+    {
+      "id": 132557449541,
+      "name": "verify",
+      "conclusion": "success",
+      "unit": 339,
+      "browser": 245,
+      "browserMinutes": 22.0
+    },
+    {
+      "id": 132557449218,
+      "name": "focused-effects",
+      "conclusion": "success",
+      "browser": 25
+    },
+    {
+      "id": 132557449527,
+      "name": "android",
+      "conclusion": "success",
+      "checks": [
+        "testDebugUnitTest",
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "original signer",
+        "all99 web files"
+      ]
+    },
+    {
+      "id": 132558138126,
+      "name": "cdp-emulator",
+      "conclusion": "success",
+      "instrumentationTests": 2
+    }
+  ],
+  "limits": [
+    "No physical phone",
+    "No AppMetrica cabinet/delivery",
+    "No human approval for composition-v2",
+    "Long-tail engineering gate remains HOLD"
+  ]
+}

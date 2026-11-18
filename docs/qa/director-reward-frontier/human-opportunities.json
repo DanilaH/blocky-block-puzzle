@@ -1,0 +1,94 @@
+{
+  "schema": "blocky-reward-frontier-human-v1",
+  "recordings": [
+    {
+      "capture": 1,
+      "sha256": "75a7c24867bbc9f38a8fdad9fb5706158cfb8f68e0b429080b6e97a790c72780",
+      "verifiedMoves": 696,
+      "segments": 8,
+      "refills": 231,
+      "repeated": 31,
+      "changed": 6,
+      "baselineFallbacks": 0,
+      "samples": [
+        {
+          "move": 315,
+          "originalBag": "I2,I3,L3",
+          "candidateBag": "I2,I3,I3",
+          "steps": "1:0;1:0;0:0;",
+          "area": 8
+        },
+        {
+          "move": 369,
+          "originalBag": "I3,I3,L3",
+          "candidateBag": "I3,I3,I3",
+          "steps": "0:0;1:0;1:0;",
+          "area": 9
+        },
+        {
+          "move": 387,
+          "originalBag": "I3,I3,I3",
+          "candidateBag": "I3,I3,L3",
+          "steps": "1:0;1:0;0:0;",
+          "area": 9
+        },
+        {
+          "move": 474,
+          "originalBag": "I3,L3,L3",
+          "candidateBag": "L3,L3,L3",
+          "steps": "0:0;2:0;0:0;",
+          "area": 9
+        },
+        {
+          "move": 504,
+          "originalBag": "I3,L3,L3",
+          "candidateBag": "I3,I3,L3",
+          "steps": "1:0;1:0;0:0;",
+          "area": 9
+        },
+        {
+          "move": 513,
+          "originalBag": "I2,I3,L3",
+          "candidateBag": "I2,L3,L3",
+          "steps": "0:0;0:0;2:0;",
+          "area": 8
+        }
+      ]
+    },
+    {
+      "capture": 2,
+      "sha256": "35b68cec33246aa22835d78d762aa989c47055618dba3245f2ad511c9e837220",
+      "verifiedMoves": 124,
+      "segments": 9,
+      "refills": 40,
+      "repeated": 1,
+      "changed": 0,
+      "baselineFallbacks": 0,
+      "samples": []
+    }
+  ],
+  "physical": false,
+  "limitation": "Paired original positions only. A different tray is never followed by the recorded human move. No duration, skill or retention inference.",
+  "verification": {
+    "paired": 271,
+    "proofs": 12,
+    "maxArchive": 153,
+    "capped": 0,
+    "archiveCap": 512,
+    "timings": {
+      "pairs": 271,
+      "order": "alternated",
+      "baseP95": 29.92356800000016,
+      "candidateP95": 46.13205299999936,
+      "p95Ratio": 1.5416628458210302,
+      "cpuGate": false
+    },
+    "node": "v24.22.1",
+    "vite": "8.2.2",
+    "typescript": "7.0.2",
+    "sourceCommit": "d791ce0904f563012e31df4c5f3bd766ed571ac8",
+    "productionFlowSha256": "825c5a10b35f8acb5b5067d4c60a190ddbd3a3d71eda4628347b4851a9e8074e",
+    "selectorSha256": "f1c4ea3675bc3cc49de5b5f6c5f950863ffa215bc0d58f25fed6bb12d46c3254",
+    "instrumentationSha256": "dccfbf54ca0e19ef007b502d2ff6e00ea6a0322d0f8dce7680ae37db27ccdee3"
+  }
+}

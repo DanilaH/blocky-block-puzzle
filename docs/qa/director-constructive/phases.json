@@ -1,0 +1,1758 @@
+{
+  "phases": {
+    "development:clear:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 18,
+      "allClears": 1,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 74,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "development:clear:build": {
+      "deals": 208,
+      "broad": 208,
+      "lines": 338,
+      "allClears": 21,
+      "lateAllClears": 18,
+      "endedWithinTray": 0,
+      "changeInOccupied": -64,
+      "sources": {
+        "branch-built": 208
+      }
+    },
+    "development:clear:rest": {
+      "deals": 87,
+      "broad": 87,
+      "lines": 29,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 656,
+      "sources": {
+        "varied-light": 87
+      }
+    },
+    "development:clear:load": {
+      "deals": 168,
+      "broad": 166,
+      "lines": 167,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 2208,
+      "sources": {
+        "line-and-space": 166,
+        "load-order": 2
+      }
+    },
+    "development:clear:relief": {
+      "deals": 181,
+      "broad": 181,
+      "lines": 580,
+      "allClears": 11,
+      "lateAllClears": 11,
+      "endedWithinTray": 0,
+      "changeInOccupied": -2287,
+      "sources": {
+        "branch-built": 165,
+        "verified-support": 6,
+        "line-and-space": 10
+      }
+    },
+    "development:clear:prepare": {
+      "deals": 196,
+      "broad": 196,
+      "lines": 321,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -105,
+      "sources": {
+        "branch-built": 191,
+        "line-and-space": 5
+      }
+    },
+    "development:clear:gift": {
+      "deals": 63,
+      "broad": 63,
+      "lines": 129,
+      "allClears": 56,
+      "lateAllClears": 55,
+      "endedWithinTray": 0,
+      "changeInOccupied": -364,
+      "sources": {
+        "beam-payoff": 13,
+        "short-payoff": 42,
+        "prepared-payoff": 5,
+        "branch-built": 3
+      }
+    },
+    "development:clear:friendly": {
+      "deals": 42,
+      "broad": 42,
+      "lines": 71,
+      "allClears": 2,
+      "lateAllClears": 2,
+      "endedWithinTray": 0,
+      "changeInOccupied": -19,
+      "sources": {
+        "branch-built": 42
+      }
+    },
+    "development:three:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 18,
+      "allClears": 2,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 58,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "development:three:build": {
+      "deals": 198,
+      "broad": 198,
+      "lines": 338,
+      "allClears": 31,
+      "lateAllClears": 28,
+      "endedWithinTray": 0,
+      "changeInOccupied": -158,
+      "sources": {
+        "branch-built": 197,
+        "line-and-space": 1
+      }
+    },
+    "development:three:rest": {
+      "deals": 114,
+      "broad": 114,
+      "lines": 74,
+      "allClears": 5,
+      "lateAllClears": 5,
+      "endedWithinTray": 0,
+      "changeInOccupied": 543,
+      "sources": {
+        "varied-light": 114
+      }
+    },
+    "development:three:load": {
+      "deals": 164,
+      "broad": 164,
+      "lines": 299,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 1114,
+      "sources": {
+        "line-and-space": 164
+      }
+    },
+    "development:three:relief": {
+      "deals": 168,
+      "broad": 168,
+      "lines": 398,
+      "allClears": 19,
+      "lateAllClears": 19,
+      "endedWithinTray": 0,
+      "changeInOccupied": -1043,
+      "sources": {
+        "branch-built": 162,
+        "verified-support": 6
+      }
+    },
+    "development:three:gift": {
+      "deals": 59,
+      "broad": 59,
+      "lines": 116,
+      "allClears": 59,
+      "lateAllClears": 57,
+      "endedWithinTray": 0,
+      "changeInOccupied": -294,
+      "sources": {
+        "beam-payoff": 18,
+        "short-payoff": 30,
+        "prepared-payoff": 5,
+        "branch-built": 6
+      }
+    },
+    "development:three:friendly": {
+      "deals": 50,
+      "broad": 50,
+      "lines": 73,
+      "allClears": 3,
+      "lateAllClears": 3,
+      "endedWithinTray": 0,
+      "changeInOccupied": -11,
+      "sources": {
+        "branch-built": 50
+      }
+    },
+    "development:three:prepare": {
+      "deals": 192,
+      "broad": 192,
+      "lines": 310,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -121,
+      "sources": {
+        "branch-built": 192
+      }
+    },
+    "development:plausible:gentle": {
+      "deals": 16,
+      "broad": 16,
+      "lines": 7,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 160,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 8
+      }
+    },
+    "development:plausible:build": {
+      "deals": 11,
+      "broad": 11,
+      "lines": 10,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 37,
+      "sources": {
+        "branch-built": 10,
+        "line-and-space": 1
+      }
+    },
+    "development:plausible:prepare": {
+      "deals": 59,
+      "broad": 59,
+      "lines": 95,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 2,
+      "changeInOccupied": -89,
+      "sources": {
+        "branch-built": 51,
+        "line-and-space": 8
+      }
+    },
+    "development:plausible:gift": {
+      "deals": 3,
+      "broad": 3,
+      "lines": 5,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -6,
+      "sources": {
+        "branch-built": 1,
+        "prepared-payoff": 1,
+        "short-payoff": 1
+      }
+    },
+    "development:plausible:load": {
+      "deals": 21,
+      "broad": 19,
+      "lines": 9,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 6,
+      "changeInOccupied": 241,
+      "sources": {
+        "line-and-space": 19,
+        "load-order": 2
+      }
+    },
+    "development:plausible:relief": {
+      "deals": 45,
+      "broad": 45,
+      "lines": 78,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -122,
+      "sources": {
+        "branch-built": 31,
+        "verified-support": 8,
+        "line-and-space": 6
+      }
+    },
+    "development:bounded:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 14,
+      "allClears": 1,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 84,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "development:bounded:build": {
+      "deals": 46,
+      "broad": 46,
+      "lines": 60,
+      "allClears": 1,
+      "lateAllClears": 0,
+      "endedWithinTray": 1,
+      "changeInOccupied": 84,
+      "sources": {
+        "branch-built": 42,
+        "line-and-space": 4
+      }
+    },
+    "development:bounded:rest": {
+      "deals": 2,
+      "broad": 2,
+      "lines": 1,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 11,
+      "sources": {
+        "varied-light": 2
+      }
+    },
+    "development:bounded:load": {
+      "deals": 60,
+      "broad": 60,
+      "lines": 59,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 6,
+      "changeInOccupied": 627,
+      "sources": {
+        "line-and-space": 60
+      }
+    },
+    "development:bounded:relief": {
+      "deals": 79,
+      "broad": 79,
+      "lines": 184,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -544,
+      "sources": {
+        "branch-built": 59,
+        "verified-support": 15,
+        "line-and-space": 5
+      }
+    },
+    "development:bounded:prepare": {
+      "deals": 119,
+      "broad": 119,
+      "lines": 183,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -64,
+      "sources": {
+        "branch-built": 113,
+        "line-and-space": 6
+      }
+    },
+    "development:lapse:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 18,
+      "allClears": 2,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 51,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "development:lapse:build": {
+      "deals": 180,
+      "broad": 180,
+      "lines": 284,
+      "allClears": 14,
+      "lateAllClears": 13,
+      "endedWithinTray": 0,
+      "changeInOccupied": -39,
+      "sources": {
+        "branch-built": 178,
+        "line-and-space": 2
+      }
+    },
+    "development:lapse:gift": {
+      "deals": 57,
+      "broad": 57,
+      "lines": 103,
+      "allClears": 32,
+      "lateAllClears": 30,
+      "endedWithinTray": 0,
+      "changeInOccupied": -269,
+      "sources": {
+        "branch-built": 7,
+        "short-payoff": 40,
+        "beam-payoff": 8,
+        "prepared-payoff": 2
+      }
+    },
+    "development:lapse:rest": {
+      "deals": 58,
+      "broad": 58,
+      "lines": 19,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 432,
+      "sources": {
+        "varied-light": 58
+      }
+    },
+    "development:lapse:load": {
+      "deals": 174,
+      "broad": 167,
+      "lines": 241,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 1733,
+      "sources": {
+        "line-and-space": 167,
+        "load-order": 7
+      }
+    },
+    "development:lapse:relief": {
+      "deals": 181,
+      "broad": 181,
+      "lines": 471,
+      "allClears": 6,
+      "lateAllClears": 6,
+      "endedWithinTray": 0,
+      "changeInOccupied": -1473,
+      "sources": {
+        "branch-built": 168,
+        "verified-support": 7,
+        "line-and-space": 6
+      }
+    },
+    "development:lapse:prepare": {
+      "deals": 246,
+      "broad": 246,
+      "lines": 419,
+      "allClears": 3,
+      "lateAllClears": 3,
+      "endedWithinTray": 0,
+      "changeInOccupied": -320,
+      "sources": {
+        "branch-built": 240,
+        "line-and-space": 6
+      }
+    },
+    "development:lapse:friendly": {
+      "deals": 49,
+      "broad": 49,
+      "lines": 79,
+      "allClears": 3,
+      "lateAllClears": 3,
+      "endedWithinTray": 0,
+      "changeInOccupied": 8,
+      "sources": {
+        "branch-built": 49
+      }
+    },
+    "development:plausible:friendly": {
+      "deals": 5,
+      "broad": 5,
+      "lines": 2,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 40,
+      "sources": {
+        "branch-built": 5
+      }
+    },
+    "development:bounded:friendly": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 19,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 30,
+      "sources": {
+        "branch-built": 14,
+        "varied-light": 1
+      }
+    },
+    "development:bounded:gift": {
+      "deals": 3,
+      "broad": 3,
+      "lines": 3,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -8,
+      "sources": {
+        "short-payoff": 3
+      }
+    },
+    "confirmation:clear:gentle": {
+      "deals": 13,
+      "broad": 13,
+      "lines": 14,
+      "allClears": 4,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 47,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 5
+      }
+    },
+    "confirmation:clear:build": {
+      "deals": 183,
+      "broad": 183,
+      "lines": 306,
+      "allClears": 19,
+      "lateAllClears": 18,
+      "endedWithinTray": 0,
+      "changeInOccupied": -106,
+      "sources": {
+        "branch-built": 180,
+        "line-and-space": 3
+      }
+    },
+    "confirmation:clear:prepare": {
+      "deals": 166,
+      "broad": 166,
+      "lines": 251,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -6,
+      "sources": {
+        "branch-built": 165,
+        "line-and-space": 1
+      }
+    },
+    "confirmation:clear:gift": {
+      "deals": 63,
+      "broad": 63,
+      "lines": 130,
+      "allClears": 51,
+      "lateAllClears": 50,
+      "endedWithinTray": 0,
+      "changeInOccupied": -413,
+      "sources": {
+        "short-payoff": 33,
+        "branch-built": 13,
+        "beam-payoff": 13,
+        "prepared-payoff": 4
+      }
+    },
+    "confirmation:clear:rest": {
+      "deals": 89,
+      "broad": 89,
+      "lines": 22,
+      "allClears": 6,
+      "lateAllClears": 5,
+      "endedWithinTray": 0,
+      "changeInOccupied": 721,
+      "sources": {
+        "varied-light": 89
+      }
+    },
+    "confirmation:clear:load": {
+      "deals": 150,
+      "broad": 148,
+      "lines": 160,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 1,
+      "changeInOccupied": 1849,
+      "sources": {
+        "line-and-space": 148,
+        "load-order": 2
+      }
+    },
+    "confirmation:clear:relief": {
+      "deals": 161,
+      "broad": 161,
+      "lines": 502,
+      "allClears": 10,
+      "lateAllClears": 10,
+      "endedWithinTray": 0,
+      "changeInOccupied": -1962,
+      "sources": {
+        "branch-built": 153,
+        "verified-support": 4,
+        "line-and-space": 4
+      }
+    },
+    "confirmation:clear:friendly": {
+      "deals": 44,
+      "broad": 44,
+      "lines": 69,
+      "allClears": 5,
+      "lateAllClears": 5,
+      "endedWithinTray": 0,
+      "changeInOccupied": -30,
+      "sources": {
+        "branch-built": 43,
+        "varied-light": 1
+      }
+    },
+    "confirmation:three:gentle": {
+      "deals": 12,
+      "broad": 12,
+      "lines": 13,
+      "allClears": 5,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 40,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 4
+      }
+    },
+    "confirmation:three:rest": {
+      "deals": 132,
+      "broad": 132,
+      "lines": 89,
+      "allClears": 6,
+      "lateAllClears": 5,
+      "endedWithinTray": 0,
+      "changeInOccupied": 631,
+      "sources": {
+        "varied-light": 132
+      }
+    },
+    "confirmation:three:build": {
+      "deals": 213,
+      "broad": 213,
+      "lines": 361,
+      "allClears": 26,
+      "lateAllClears": 25,
+      "endedWithinTray": 0,
+      "changeInOccupied": -198,
+      "sources": {
+        "branch-built": 213
+      }
+    },
+    "confirmation:three:prepare": {
+      "deals": 153,
+      "broad": 153,
+      "lines": 246,
+      "allClears": 7,
+      "lateAllClears": 7,
+      "endedWithinTray": 0,
+      "changeInOccupied": -106,
+      "sources": {
+        "branch-built": 153
+      }
+    },
+    "confirmation:three:load": {
+      "deals": 167,
+      "broad": 167,
+      "lines": 281,
+      "allClears": 3,
+      "lateAllClears": 3,
+      "endedWithinTray": 0,
+      "changeInOccupied": 1328,
+      "sources": {
+        "line-and-space": 167
+      }
+    },
+    "confirmation:three:gift": {
+      "deals": 67,
+      "broad": 67,
+      "lines": 137,
+      "allClears": 67,
+      "lateAllClears": 67,
+      "endedWithinTray": 0,
+      "changeInOccupied": -385,
+      "sources": {
+        "short-payoff": 40,
+        "beam-payoff": 19,
+        "branch-built": 5,
+        "prepared-payoff": 3
+      }
+    },
+    "confirmation:three:relief": {
+      "deals": 165,
+      "broad": 165,
+      "lines": 406,
+      "allClears": 17,
+      "lateAllClears": 17,
+      "endedWithinTray": 0,
+      "changeInOccupied": -1219,
+      "sources": {
+        "branch-built": 162,
+        "verified-support": 3
+      }
+    },
+    "confirmation:three:friendly": {
+      "deals": 51,
+      "broad": 51,
+      "lines": 79,
+      "allClears": 5,
+      "lateAllClears": 4,
+      "endedWithinTray": 0,
+      "changeInOccupied": 23,
+      "sources": {
+        "branch-built": 51
+      }
+    },
+    "confirmation:plausible:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 9,
+      "allClears": 1,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 107,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "confirmation:plausible:prepare": {
+      "deals": 90,
+      "broad": 90,
+      "lines": 143,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -68,
+      "sources": {
+        "branch-built": 75,
+        "line-and-space": 15
+      }
+    },
+    "confirmation:plausible:build": {
+      "deals": 14,
+      "broad": 14,
+      "lines": 12,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 1,
+      "changeInOccupied": 54,
+      "sources": {
+        "branch-built": 12,
+        "line-and-space": 2
+      }
+    },
+    "confirmation:plausible:gift": {
+      "deals": 2,
+      "broad": 2,
+      "lines": 1,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 14,
+      "sources": {
+        "prepared-payoff": 1,
+        "short-payoff": 1
+      }
+    },
+    "confirmation:plausible:relief": {
+      "deals": 77,
+      "broad": 77,
+      "lines": 120,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 2,
+      "changeInOccupied": -129,
+      "sources": {
+        "branch-built": 40,
+        "line-and-space": 18,
+        "verified-support": 19
+      }
+    },
+    "confirmation:plausible:load": {
+      "deals": 28,
+      "broad": 25,
+      "lines": 16,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 5,
+      "changeInOccupied": 287,
+      "sources": {
+        "line-and-space": 25,
+        "load-order": 3
+      }
+    },
+    "confirmation:bounded:gentle": {
+      "deals": 14,
+      "broad": 14,
+      "lines": 12,
+      "allClears": 3,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 66,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 6
+      }
+    },
+    "confirmation:bounded:rest": {
+      "deals": 6,
+      "broad": 6,
+      "lines": 1,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 49,
+      "sources": {
+        "varied-light": 6
+      }
+    },
+    "confirmation:bounded:build": {
+      "deals": 26,
+      "broad": 26,
+      "lines": 42,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 1,
+      "changeInOccupied": -27,
+      "sources": {
+        "branch-built": 25,
+        "line-and-space": 1
+      }
+    },
+    "confirmation:bounded:load": {
+      "deals": 26,
+      "broad": 22,
+      "lines": 15,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 7,
+      "changeInOccupied": 273,
+      "sources": {
+        "line-and-space": 22,
+        "load-order": 4
+      }
+    },
+    "confirmation:bounded:relief": {
+      "deals": 35,
+      "broad": 35,
+      "lines": 61,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -107,
+      "sources": {
+        "branch-built": 18,
+        "line-and-space": 6,
+        "verified-support": 11
+      }
+    },
+    "confirmation:bounded:prepare": {
+      "deals": 47,
+      "broad": 47,
+      "lines": 76,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -42,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 39
+      }
+    },
+    "confirmation:lapse:gentle": {
+      "deals": 15,
+      "broad": 15,
+      "lines": 13,
+      "allClears": 3,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 77,
+      "sources": {
+        "line-and-space": 8,
+        "branch-built": 7
+      }
+    },
+    "confirmation:lapse:rest": {
+      "deals": 73,
+      "broad": 73,
+      "lines": 36,
+      "allClears": 4,
+      "lateAllClears": 4,
+      "endedWithinTray": 0,
+      "changeInOccupied": 446,
+      "sources": {
+        "varied-light": 73
+      }
+    },
+    "confirmation:lapse:build": {
+      "deals": 161,
+      "broad": 161,
+      "lines": 249,
+      "allClears": 18,
+      "lateAllClears": 17,
+      "endedWithinTray": 0,
+      "changeInOccupied": -11,
+      "sources": {
+        "branch-built": 161
+      }
+    },
+    "confirmation:lapse:prepare": {
+      "deals": 218,
+      "broad": 218,
+      "lines": 375,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": -280,
+      "sources": {
+        "branch-built": 214,
+        "line-and-space": 4
+      }
+    },
+    "confirmation:lapse:load": {
+      "deals": 155,
+      "broad": 153,
+      "lines": 215,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 1532,
+      "sources": {
+        "line-and-space": 153,
+        "load-order": 2
+      }
+    },
+    "confirmation:lapse:relief": {
+      "deals": 157,
+      "broad": 157,
+      "lines": 404,
+      "allClears": 5,
+      "lateAllClears": 5,
+      "endedWithinTray": 1,
+      "changeInOccupied": -1261,
+      "sources": {
+        "branch-built": 150,
+        "line-and-space": 4,
+        "verified-support": 3
+      }
+    },
+    "confirmation:lapse:gift": {
+      "deals": 60,
+      "broad": 60,
+      "lines": 110,
+      "allClears": 44,
+      "lateAllClears": 43,
+      "endedWithinTray": 0,
+      "changeInOccupied": -278,
+      "sources": {
+        "short-payoff": 31,
+        "beam-payoff": 16,
+        "prepared-payoff": 7,
+        "branch-built": 6
+      }
+    },
+    "confirmation:lapse:friendly": {
+      "deals": 53,
+      "broad": 53,
+      "lines": 90,
+      "allClears": 2,
+      "lateAllClears": 2,
+      "endedWithinTray": 0,
+      "changeInOccupied": -100,
+      "sources": {
+        "branch-built": 53
+      }
+    },
+    "confirmation:plausible:emergency": {
+      "deals": 1,
+      "broad": 0,
+      "lines": 0,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 3,
+      "sources": {
+        "bounded-singletons": 1
+      }
+    },
+    "confirmation:bounded:gift": {
+      "deals": 3,
+      "broad": 3,
+      "lines": 5,
+      "allClears": 1,
+      "lateAllClears": 1,
+      "endedWithinTray": 0,
+      "changeInOccupied": 3,
+      "sources": {
+        "beam-payoff": 1,
+        "short-payoff": 2
+      }
+    },
+    "confirmation:bounded:friendly": {
+      "deals": 4,
+      "broad": 4,
+      "lines": 6,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 1,
+      "sources": {
+        "branch-built": 4
+      }
+    },
+    "confirmation:plausible:rest": {
+      "deals": 1,
+      "broad": 1,
+      "lines": 0,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": 8,
+      "sources": {
+        "varied-light": 1
+      }
+    },
+    "confirmation:plausible:friendly": {
+      "deals": 2,
+      "broad": 2,
+      "lines": 3,
+      "allClears": 0,
+      "lateAllClears": 0,
+      "endedWithinTray": 0,
+      "changeInOccupied": -7,
+      "sources": {
+        "branch-built": 2
+      }
+    }
+  },
+  "plans": {
+    "development:clear": {
+      "deals": 960,
+      "offered": 63,
+      "earnedOnOffer": 56,
+      "goalConstructed": 126,
+      "preparedEndpoints": 404,
+      "pending": 24,
+      "matched": 23,
+      "replanned": 1,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "development:three": {
+      "deals": 960,
+      "offered": 59,
+      "earnedOnOffer": 59,
+      "goalConstructed": 146,
+      "preparedEndpoints": 529,
+      "pending": 23,
+      "matched": 23,
+      "replanned": 0,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "development:plausible": {
+      "deals": 160,
+      "offered": 3,
+      "earnedOnOffer": 0,
+      "goalConstructed": 7,
+      "preparedEndpoints": 30,
+      "pending": 3,
+      "matched": 1,
+      "replanned": 1,
+      "lost": 1,
+      "pendingSupersededByPhase": 0
+    },
+    "development:bounded": {
+      "deals": 339,
+      "offered": 3,
+      "earnedOnOffer": 0,
+      "goalConstructed": 9,
+      "preparedEndpoints": 8,
+      "pending": 0,
+      "matched": 0,
+      "replanned": 0,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "development:lapse": {
+      "deals": 960,
+      "offered": 57,
+      "earnedOnOffer": 32,
+      "goalConstructed": 110,
+      "preparedEndpoints": 228,
+      "pending": 9,
+      "matched": 7,
+      "replanned": 1,
+      "lost": 1,
+      "pendingSupersededByPhase": 0
+    },
+    "confirmation:clear": {
+      "deals": 869,
+      "offered": 63,
+      "earnedOnOffer": 50,
+      "goalConstructed": 128,
+      "preparedEndpoints": 363,
+      "pending": 14,
+      "matched": 14,
+      "replanned": 0,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "confirmation:three": {
+      "deals": 960,
+      "offered": 67,
+      "earnedOnOffer": 67,
+      "goalConstructed": 154,
+      "preparedEndpoints": 567,
+      "pending": 23,
+      "matched": 22,
+      "replanned": 1,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "confirmation:plausible": {
+      "deals": 230,
+      "offered": 2,
+      "earnedOnOffer": 0,
+      "goalConstructed": 3,
+      "preparedEndpoints": 33,
+      "pending": 3,
+      "matched": 1,
+      "replanned": 2,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "confirmation:bounded": {
+      "deals": 161,
+      "offered": 3,
+      "earnedOnOffer": 1,
+      "goalConstructed": 4,
+      "preparedEndpoints": 33,
+      "pending": 1,
+      "matched": 1,
+      "replanned": 0,
+      "lost": 0,
+      "pendingSupersededByPhase": 0
+    },
+    "confirmation:lapse": {
+      "deals": 892,
+      "offered": 60,
+      "earnedOnOffer": 44,
+      "goalConstructed": 114,
+      "preparedEndpoints": 413,
+      "pending": 26,
+      "matched": 21,
+      "replanned": 3,
+      "lost": 2,
+      "pendingSupersededByPhase": 0
+    }
+  },
+  "defeats": {
+    "development:load": {
+      "ended": 12,
+      "afterCertifiedFirst": 4,
+      "afterCertifiedSecond": 0
+    },
+    "development:prepare": {
+      "ended": 2,
+      "afterCertifiedFirst": 1,
+      "afterCertifiedSecond": 0
+    },
+    "development:build": {
+      "ended": 1,
+      "afterCertifiedFirst": 0,
+      "afterCertifiedSecond": 0
+    },
+    "confirmation:build": {
+      "ended": 2,
+      "afterCertifiedFirst": 2,
+      "afterCertifiedSecond": 0
+    },
+    "confirmation:load": {
+      "ended": 13,
+      "afterCertifiedFirst": 4,
+      "afterCertifiedSecond": 0
+    },
+    "confirmation:relief": {
+      "ended": 3,
+      "afterCertifiedFirst": 0,
+      "afterCertifiedSecond": 0
+    }
+  },
+  "examples": [
+    {
+      "seed": 1941001,
+      "style": "plausible",
+      "phase": "load",
+      "move": 33,
+      "board": [
+        243,
+        7,
+        1,
+        0,
+        254,
+        124,
+        60,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "T4-2",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "T4-1",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          6,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941001,
+      "style": "bounded",
+      "phase": "load",
+      "move": 213,
+      "board": [
+        232,
+        204,
+        204,
+        0,
+        64,
+        72,
+        64,
+        72
+      ],
+      "tray": [
+        {
+          "shapeId": "SZ4-1",
+          "color": 3,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          3,
+          3
+        ],
+        [
+          2,
+          0,
+          4
+        ]
+      ],
+      "firstCertified": true,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941002,
+      "style": "plausible",
+      "phase": "load",
+      "move": 63,
+      "board": [
+        0,
+        159,
+        185,
+        33,
+        97,
+        32,
+        113,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "L3-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          0,
+          1,
+          3
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941003,
+      "style": "plausible",
+      "phase": "load",
+      "move": 48,
+      "board": [
+        4,
+        6,
+        234,
+        247,
+        134,
+        6,
+        6,
+        132
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "SZ4-2",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          5,
+          0
+        ],
+        [
+          1,
+          4,
+          4
+        ]
+      ],
+      "firstCertified": true,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941003,
+      "style": "bounded",
+      "phase": "load",
+      "move": 63,
+      "board": [
+        0,
+        29,
+        61,
+        56,
+        15,
+        15,
+        14,
+        24
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "T4-2",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          5,
+          0
+        ],
+        [
+          1,
+          5,
+          6
+        ]
+      ],
+      "firstCertified": true,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941004,
+      "style": "plausible",
+      "phase": "load",
+      "move": 21,
+      "board": [
+        48,
+        176,
+        130,
+        48,
+        51,
+        163,
+        146,
+        128
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "T4-1",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "SZ4-3",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          1,
+          5,
+          5
+        ],
+        [
+          2,
+          2,
+          0
+        ]
+      ],
+      "firstCertified": true,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941004,
+      "style": "bounded",
+      "phase": "load",
+      "move": 33,
+      "board": [
+        60,
+        31,
+        134,
+        0,
+        0,
+        124,
+        124,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "I4-1",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "T4-3",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          1,
+          6,
+          0
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941005,
+      "style": "plausible",
+      "phase": "prepare",
+      "move": 72,
+      "board": [
+        224,
+        222,
+        206,
+        108,
+        223,
+        6,
+        239,
+        239
+      ],
+      "tray": [
+        {
+          "shapeId": "T4-1",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "L51",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941005,
+      "style": "bounded",
+      "phase": "load",
+      "move": 123,
+      "board": [
+        0,
+        0,
+        160,
+        224,
+        240,
+        240,
+        48,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "SZ4-1",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          2,
+          4
+        ],
+        [
+          0,
+          2,
+          0
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941006,
+      "style": "plausible",
+      "phase": "prepare",
+      "move": 39,
+      "board": [
+        240,
+        32,
+        97,
+        220,
+        254,
+        120,
+        120,
+        216
+      ],
+      "tray": [
+        {
+          "shapeId": "L3-2",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "I5-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "O2-0",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          6,
+          1
+        ],
+        [
+          2,
+          2,
+          0
+        ]
+      ],
+      "firstCertified": true,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941006,
+      "style": "bounded",
+      "phase": "load",
+      "move": 129,
+      "board": [
+        6,
+        2,
+        66,
+        198,
+        198,
+        198,
+        195,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "L3-1",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          0,
+          5,
+          1
+        ],
+        [
+          1,
+          3,
+          4
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    },
+    {
+      "seed": 1941007,
+      "style": "plausible",
+      "phase": "load",
+      "move": 63,
+      "board": [
+        126,
+        126,
+        0,
+        25,
+        0,
+        0,
+        114,
+        102
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "O3-0",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "SZ4-2",
+          "color": 4,
+          "used": false
+        }
+      ],
+      "actions": [
+        [
+          2,
+          4,
+          2
+        ],
+        [
+          0,
+          5,
+          4
+        ]
+      ],
+      "firstCertified": false,
+      "secondCertified": false
+    }
+  ]
+}

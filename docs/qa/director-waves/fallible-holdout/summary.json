@@ -1,0 +1,104 @@
+{
+  "policy": "wave-neutral",
+  "schema": 1,
+  "seeds": 6,
+  "offset": 1900,
+  "limit": 600,
+  "openingMatches": 12,
+  "summary": [
+    {
+      "style": "three-slip1",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 0,
+      "medianMoves": 600,
+      "moves": 3600,
+      "clears": 92,
+      "rewardRate": 0.46694444444444444,
+      "repeat": 18,
+      "maxDry": 6,
+      "p95Selection": null,
+      "recovery": []
+    },
+    {
+      "style": "three-slip1",
+      "variant": "director",
+      "n": 6,
+      "deaths": 3,
+      "medianMoves": 586,
+      "moves": 2913,
+      "clears": 32,
+      "rewardRate": 0.4473051836594576,
+      "repeat": 16,
+      "maxDry": 8,
+      "p95Selection": 13.798177000000578,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 10,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 11,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 10,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "three-slip5",
+      "variant": "baseline",
+      "n": 6,
+      "deaths": 2,
+      "medianMoves": 600,
+      "moves": 3090,
+      "clears": 72,
+      "rewardRate": 0.46310679611650485,
+      "repeat": 14,
+      "maxDry": 6,
+      "p95Selection": null,
+      "recovery": [
+        {
+          "moves": 1,
+          "rewardMoves": 0,
+          "dead": true
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 8,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "style": "three-slip5",
+      "variant": "director",
+      "n": 6,
+      "deaths": 2,
+      "medianMoves": 600,
+      "moves": 3106,
+      "clears": 29,
+      "rewardRate": 0.45717965228589824,
+      "repeat": 8,
+      "maxDry": 6,
+      "p95Selection": 12.177001000003656,
+      "recovery": [
+        {
+          "moves": 18,
+          "rewardMoves": 9,
+          "dead": false
+        },
+        {
+          "moves": 18,
+          "rewardMoves": 7,
+          "dead": false
+        }
+      ]
+    }
+  ]
+}

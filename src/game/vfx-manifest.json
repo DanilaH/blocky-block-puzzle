@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assets": {
+    "flash": {
+      "frame": {
+        "logicalWidth": 192,
+        "logicalHeight": 192,
+        "x": 5,
+        "y": 7,
+        "width": 182,
+        "height": 178
+      },
+      "bytes": 10782
+    },
+    "streak": {
+      "frame": {
+        "logicalWidth": 512,
+        "logicalHeight": 512,
+        "x": 5,
+        "y": 227,
+        "width": 502,
+        "height": 59
+      },
+      "bytes": 13420
+    },
+    "chip": {
+      "frame": {
+        "logicalWidth": 96,
+        "logicalHeight": 96,
+        "x": 5,
+        "y": 6,
+        "width": 86,
+        "height": 85
+      },
+      "bytes": 3190
+    },
+    "ring": {
+      "frame": {
+        "logicalWidth": 512,
+        "logicalHeight": 512,
+        "x": 10,
+        "y": 5,
+        "width": 492,
+        "height": 502
+      },
+      "bytes": 65122
+    }
+  },
+  "budget": {
+    "count": 4,
+    "encodedBytes": 92514,
+    "pixels": 316308,
+    "estimatedRgbaBytes": 1265232,
+    "categories": {
+      "session-required": {
+        "count": 4,
+        "encodedBytes": 92514,
+        "pixels": 316308,
+        "estimatedRgbaBytes": 1265232
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "pairs": [
+    {
+      "pair": 1,
+      "order": "AB",
+      "A": {
+        "samples": 139,
+        "p95": 33.29999923706055,
+        "over33": 4,
+        "over50": 3
+      },
+      "B": {
+        "samples": 139,
+        "p95": 33.400001525878906,
+        "over33": 8,
+        "over50": 5
+      },
+      "sameHash": true
+    },
+    {
+      "pair": 2,
+      "order": "BA",
+      "A": {
+        "samples": 141,
+        "p95": 16.799999237060547,
+        "over33": 6,
+        "over50": 2
+      },
+      "B": {
+        "samples": 130,
+        "p95": 16.799999237060547,
+        "over33": 5,
+        "over50": 3
+      },
+      "sameHash": true
+    },
+    {
+      "pair": 3,
+      "order": "BA",
+      "A": {
+        "samples": 145,
+        "p95": 33.400001525878906,
+        "over33": 8,
+        "over50": 4
+      },
+      "B": {
+        "samples": 137,
+        "p95": 16.799999237060547,
+        "over33": 4,
+        "over50": 1
+      },
+      "sameHash": true
+    },
+    {
+      "pair": 4,
+      "order": "AB",
+      "A": {
+        "samples": 135,
+        "p95": 33.29999923706055,
+        "over33": 6,
+        "over50": 1
+      },
+      "B": {
+        "samples": 132,
+        "p95": 16.799999237060547,
+        "over33": 3,
+        "over50": 1
+      },
+      "sameHash": true
+    },
+    {
+      "pair": 5,
+      "order": "AB",
+      "A": {
+        "samples": 135,
+        "p95": 33.29999923706055,
+        "over33": 5,
+        "over50": 2
+      },
+      "B": {
+        "samples": 142,
+        "p95": 16.799999237060547,
+        "over33": 4,
+        "over50": 1
+      },
+      "sameHash": true
+    },
+    {
+      "pair": 6,
+      "order": "BA",
+      "A": {
+        "samples": 138,
+        "p95": 33.29999923706055,
+        "over33": 5,
+        "over50": 1
+      },
+      "B": {
+        "samples": 136,
+        "p95": 16.799999237060547,
+        "over33": 5,
+        "over50": 1
+      },
+      "sameHash": true
+    }
+  ],
+  "workerResultWallMs": [
+    421.1000000014901,
+    406.0,
+    512.3999999985099,
+    409.3999999985099,
+    412.30000000074506,
+    401.0
+  ],
+  "workerCPU": "Not derived from wall time; trace CPU fields not used to claim a device benefit",
+  "decision": "Mixed paired RAF result; retain production praise scheduler and budget. This is no physical phone or actual presentation comparison."
+}

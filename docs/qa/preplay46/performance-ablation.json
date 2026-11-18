@@ -1,0 +1,286 @@
+{
+  "environment": "Chromium software renderer, 390x844 DPR2; repetitions/scenarios in results; not Android FPS. placementWallMs includes Playwright action scheduling, not input latency.",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "all-clear-no-filters",
+      "placementWallMs": 326,
+      "frames": 78,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 7,
+      "metrics": {
+        "LayoutCount": 76,
+        "LayoutDuration": 0.023461000000000003,
+        "RecalcStyleCount": 91,
+        "RecalcStyleDuration": 0.084116,
+        "ScriptDuration": 0.132629,
+        "TaskDuration": 1.451541
+      },
+      "audit": {
+        "rectReads": 9,
+        "previewCalls": 44,
+        "draws": 95,
+        "drawCPU": 35.69999999878928,
+        "festivalPeak": 184,
+        "vfxPeak": 220,
+        "long": [
+          52,
+          51,
+          53
+        ],
+        "gl": {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "calls": {
+            "drawElements": {
+              "count": 148,
+              "totalMs": 0.40000000037252903,
+              "maxMs": 0.10000000009313226
+            }
+          }
+        },
+        "phases": {
+          "boardDraw": {
+            "count": 95,
+            "totalMs": 36.399999998975545,
+            "maxMs": 1.5,
+            "meanMs": 0.3831578947260584
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 0.39999999990686774,
+            "maxMs": 0.39999999990686774,
+            "meanMs": 0.39999999990686774
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 48.60000000009313,
+            "maxMs": 48.60000000009313,
+            "meanMs": 48.60000000009313
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 49,
+            "maxMs": 49,
+            "meanMs": 49
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 0.7999999998137355,
+            "maxMs": 0.7999999998137355,
+            "meanMs": 0.7999999998137355
+          }
+        }
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "all-clear-no-overlays",
+      "placementWallMs": 289,
+      "frames": 76,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 9,
+      "metrics": {
+        "LayoutCount": 74,
+        "LayoutDuration": 0.02231,
+        "RecalcStyleCount": 89,
+        "RecalcStyleDuration": 0.097689,
+        "ScriptDuration": 0.113582,
+        "TaskDuration": 1.297507
+      },
+      "audit": {
+        "rectReads": 9,
+        "previewCalls": 43,
+        "draws": 95,
+        "drawCPU": 43.8000000002794,
+        "festivalPeak": 110,
+        "vfxPeak": 220,
+        "long": [
+          51
+        ],
+        "gl": {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "calls": {
+            "drawElements": {
+              "count": 151,
+              "totalMs": 0.5,
+              "maxMs": 0.10000000009313226
+            }
+          }
+        },
+        "phases": {
+          "boardDraw": {
+            "count": 96,
+            "totalMs": 44.50000000093132,
+            "maxMs": 3,
+            "meanMs": 0.4635416666763679
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 0.2999999998137355,
+            "maxMs": 0.2999999998137355,
+            "meanMs": 0.2999999998137355
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 67.29999999981374,
+            "maxMs": 67.29999999981374,
+            "meanMs": 67.29999999981374
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 67.6999999997206,
+            "maxMs": 67.6999999997206,
+            "meanMs": 67.6999999997206
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 1.3000000002793968,
+            "maxMs": 1.3000000002793968,
+            "meanMs": 1.3000000002793968
+          }
+        }
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "all-clear-no-filters",
+      "placementWallMs": 286,
+      "frames": 78,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 7,
+      "metrics": {
+        "LayoutCount": 74,
+        "LayoutDuration": 0.023673,
+        "RecalcStyleCount": 84,
+        "RecalcStyleDuration": 0.08327,
+        "ScriptDuration": 0.130079,
+        "TaskDuration": 1.4283190000000001
+      },
+      "audit": {
+        "rectReads": 9,
+        "previewCalls": 44,
+        "draws": 97,
+        "drawCPU": 37.700000000186265,
+        "festivalPeak": 184,
+        "vfxPeak": 220,
+        "long": [
+          50,
+          50
+        ],
+        "gl": {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "calls": {
+            "drawElements": {
+              "count": 151,
+              "totalMs": 0.599999999627471,
+              "maxMs": 0.10000000009313226
+            }
+          }
+        },
+        "phases": {
+          "boardDraw": {
+            "count": 97,
+            "totalMs": 38.10000000009313,
+            "maxMs": 1.6000000000931323,
+            "meanMs": 0.3927835051555993
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 0.2999999998137355,
+            "maxMs": 0.2999999998137355,
+            "meanMs": 0.2999999998137355
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 63.3000000002794,
+            "maxMs": 63.3000000002794,
+            "meanMs": 63.3000000002794
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 63.700000000186265,
+            "maxMs": 63.700000000186265,
+            "meanMs": 63.700000000186265
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 0.7999999998137355,
+            "maxMs": 0.7999999998137355,
+            "meanMs": 0.7999999998137355
+          }
+        }
+      }
+    },
+    {
+      "repeat": 1,
+      "mode": "all-clear-no-overlays",
+      "placementWallMs": 288,
+      "frames": 80,
+      "median": 16.699999999999818,
+      "p95": 33.40000000000009,
+      "over33": 5,
+      "metrics": {
+        "LayoutCount": 75,
+        "LayoutDuration": 0.022283,
+        "RecalcStyleCount": 86,
+        "RecalcStyleDuration": 0.105405,
+        "ScriptDuration": 0.085971,
+        "TaskDuration": 1.295193
+      },
+      "audit": {
+        "rectReads": 9,
+        "previewCalls": 44,
+        "draws": 99,
+        "drawCPU": 36.500000001396984,
+        "festivalPeak": 110,
+        "vfxPeak": 220,
+        "long": [],
+        "gl": {
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "calls": {
+            "drawElements": {
+              "count": 155,
+              "totalMs": 0.7000000001862645,
+              "maxMs": 0.10000000009313226
+            }
+          }
+        },
+        "phases": {
+          "boardDraw": {
+            "count": 99,
+            "totalMs": 36.90000000083819,
+            "maxMs": 1.7000000001862645,
+            "meanMs": 0.3727272727357393
+          },
+          "moveCalculationWallTime": {
+            "count": 1,
+            "totalMs": 0.39999999990686774,
+            "maxMs": 0.39999999990686774,
+            "meanMs": 0.39999999990686774
+          },
+          "atomicSaveWallTime": {
+            "count": 1,
+            "totalMs": 60.89999999990687,
+            "maxMs": 60.89999999990687,
+            "meanMs": 60.89999999990687
+          },
+          "commitIncludingSaveWallTime": {
+            "count": 1,
+            "totalMs": 61.299999999813735,
+            "maxMs": 61.299999999813735,
+            "meanMs": 61.299999999813735
+          },
+          "placementRender": {
+            "count": 1,
+            "totalMs": 1,
+            "maxMs": 1,
+            "meanMs": 1
+          }
+        }
+      }
+    }
+  ]
+}

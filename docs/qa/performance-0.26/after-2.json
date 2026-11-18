@@ -1,0 +1,86 @@
+{
+  "environment": "Chromium software WebGL; 390x844 DPR2; one full-combo and one idle-drag scenario per invocation; not Android FPS. Invocation order: after1, before1, before2, after2.",
+  "results": [
+    {
+      "repeat": 0,
+      "mode": "full",
+      "frames": 36,
+      "median": 49.899999999999636,
+      "p95": 66.70000000000073,
+      "over33": 23,
+      "metrics": {
+        "LayoutCount": 8,
+        "LayoutDuration": 0.002196,
+        "RecalcStyleCount": 41,
+        "RecalcStyleDuration": 0.018291,
+        "ScriptDuration": 0.10250699999999999,
+        "TaskDuration": 1.742204
+      },
+      "audit": {
+        "rectReads": 11,
+        "previewCalls": 23,
+        "draws": 50,
+        "drawCPU": 34.400000002235174,
+        "festivalPeak": 194,
+        "vfxPeak": 216,
+        "long": [
+          119,
+          118,
+          183,
+          121,
+          53,
+          68,
+          62,
+          53,
+          67,
+          56,
+          56,
+          64,
+          67,
+          58,
+          113,
+          52,
+          50,
+          52,
+          54,
+          59
+        ]
+      }
+    },
+    {
+      "repeat": 0,
+      "mode": "idle-drag",
+      "frames": 46,
+      "median": 33.30000000000018,
+      "p95": 50,
+      "over33": 17,
+      "metrics": {
+        "LayoutCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleCount": 50,
+        "RecalcStyleDuration": 0.006704,
+        "ScriptDuration": 0.07788900000000001,
+        "TaskDuration": 1.720059
+      },
+      "audit": {
+        "rectReads": 4,
+        "previewCalls": 24,
+        "draws": 38,
+        "drawCPU": 14.100000001490116,
+        "festivalPeak": 0,
+        "vfxPeak": 0,
+        "long": [
+          58,
+          56,
+          54,
+          59,
+          52,
+          51,
+          54,
+          61
+        ]
+      }
+    }
+  ],
+  "sourceCommit": "50589af92dd84f8981cb1c342cec93d5bfa07ffd"
+}

@@ -1,0 +1,29 @@
+{
+  "environment": "Linux Chromium; presentation sanity, not POCO performance",
+  "results": [
+    {
+      "viewport": [
+        392,
+        872
+      ],
+      "text": "Чистое поле!",
+      "letters": 12,
+      "canvases": 0,
+      "emblemDisplay": "none",
+      "score": "904",
+      "errors": []
+    },
+    {
+      "viewport": [
+        872,
+        392
+      ],
+      "text": "Чистое поле!",
+      "letters": 12,
+      "canvases": 0,
+      "emblemDisplay": "none",
+      "score": "574",
+      "errors": []
+    }
+  ]
+}

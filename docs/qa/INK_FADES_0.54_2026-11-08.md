@@ -1,0 +1,34 @@
+# Preview0.54 — локальные переходы цвета Classic
+
+## Реализация
+
+В Classic `#app` больше не анимирует наследуемый `color`. Существующие локальные CSS transitions счёта, рекорда, combo/stock, иконок и кнопок оставлены. Общий root color по-прежнему устанавливается при смене темы, но без распространения покадрового перехода по всем структурным/графическим потомкам. Adventure не попадает под новый selector.
+
+Это небольшая CSS-правка, а не новый renderer/clock. JS-логика игры, выдача/очки/сохранения, частицы/геометрия/разрешение, остальные theme transitions и viewport cache0.53 сохранены.
+
+Native output cap трассы увеличен32→64MiB: последний физический JSON0.53 был30.75MB и уже близок к прежнему лимиту; новый cap оставляет место для изменения числа кадров/events. Это предел файла, а не изменение внутреннего tracing buffer. Watchdog25сек, остановка при фоне, отказ от выдачи повреждённого output и явный share сохранены.
+
+## Проверки перед сборкой
+
+- 221 unit, build, assets:check.
+- 11 существующих browser-сценариев: Classic/Adventure assets,4 короткого теста,3result/lifecycle,3material переходов/пула.
+- [Цвета и геометрия](ink-054/visible-color-parity.json): игра/пауза/обучение/результат, пять фаз0/250/500/750/1000мс. Видимые direct text nodes и SVG color/fill/stroke/rect совпали с восстановленным root fade0.53. В игре7, паузе39, обучении5, результате11узлов;20 сравнений. Это проверка цвета/расположения этих узлов, **не побайтная проверка всей игровой анимации**. [Скрипт](../../scripts/qa-ink-054.mjs).
+- [Интегрированное сравнение](ink-054/integrated-comparison.json): ordinary0.54 против восстановления старого root transition через CSS только в контрольной странице. Mobile emulation392×872/DPR2.75, software graphics/Linux; порядокbaseline/scoped/scoped/baseline, реальный scripted clear1→5/1574. [Скрипт](../../scripts/probe-root-ink-054.mjs).
+
+Во всех стендовых эпизодах активен CDP tracing; названияwarmup/untraced/traced наследуются из APK-сценария и не означают, что CDP выключен. Суммы вложенных events не складываем как независимые затраты. Основной canvas на стенде1024², на POCO был896². Физический FPS/первые очистки/native waits не объявлены исправленными.
+
+В окне320–1400мс Blink.Style.UpdateTime у baseline77.805/80.474мс, у scoped47.624/51.391мс. Количество style events62–63 почти прежнее, снижена их стоимость. Whole-rAF улучшение не подтверждено: untraced интервалы>25мс15/20 у baseline против20/16 у scoped, traced17/14 против19/17. Это software graphics под tracing, результат не выдаётся за FPS POCO. Механизм направлен на оставшийся общий style cost, который в0.53 на телефоне почти не снизился.
+
+## Итоговая сборка
+
+Исходники `9f4c05c005df4620913e74bbb99566970344e719`, PR CI `42472074877`, Android job `128704954967`, artifact `13613951144`. Android unit/build — success. Web CI `42470731688` на `fc69c6fc8e5a4bdc394013b93b5cca1e78a34d9c` прошёл221unit/188browser/assets:check/build; исходники app/native/test идентичны, отличаются только wrapper, подготовка CI и документация. APK versionCode54/versionName0.54.0-preview, package`com.danilah.blocky.dev`; v2-подпись совпадает с выданной0.53. Все89 production-файлов совпали с чистым dist. APK SHA-256`b7909336bb979fba04a89a06477481c622f18c4f47beeb04d84e65d14bc2a76f`. Физическая установка и выигрыш на POCO0.54 ещё не проверены.
+
+[Машиночитаемая проверка APK](ink-054/apk-verification-054.json). Первичная Android-попытка завершилась HTTP504 при скачивании Gradle, до компиляции; результат повторной попытки указан выше.
+
+### Подготовка Gradle
+
+Web CI42470731688 прошёл221unit/188browser. Первичная Android-попытка и один целевой повтор остановились до компиляции на HTTP504 в redirect/cache пути downloads.gradle.org→GitHub. Прямой официальный release URL с`?download=1` скачан полностью:137393837байт, SHA256`bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531`, ZIP integrity пройдена. Wrapper переключён на этот URL с прежней обязательной SHA256; версияGradle8.14.3 и исходники игры/Android не менялись. Прямой URL в Java-wrapper на CI тоже вернул504. Добавлена отдельная подготовка pinned ZIP через Python (официальный release, API asset и distribution host — ограниченные fallback routes), обязательная SHA256, проверка ZIP и кеш; Gradle запускается из заново распакованного проверенного архива. Локально SHA/ZIP/подготовка/Gradle --version проверены. Android-сборка прошла: первые два download routes дали timeout/504, третий официальный distribution host скачался и совпал с pinned SHA256. Итоговая проверка APK приведена выше.
+
+## Следующий замер
+
+Установить поверх0.53, без удаления. Пауза → Ещё настройки → Диагностика → Проверить очистку → Начать проверку. Через~15сек «Отправить результат»: один`blocky-clear-result.zip`. Сравнить общую Blink.Style.UpdateTime, untraced интервалы и оставшиеся native waits с0.53. Не ограничиваться forced style/layout: они уже почти убраны в0.53, но общий style cost остался~327мс в окне320–1400мс.

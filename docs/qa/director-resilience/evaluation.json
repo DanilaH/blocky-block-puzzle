@@ -1,0 +1,933 @@
+{
+  "status": "experimental-not-accepted",
+  "sessions": 120,
+  "moves": 29688,
+  "validation": {
+    "positions": 128,
+    "replayed": 1664,
+    "firstSafeButLaterRisk": 0,
+    "optimisticDisagreements": 4,
+    "modelUnknown": 0
+  },
+  "runs": [
+    {
+      "name": "discovery",
+      "policy": "resilience-v6",
+      "sessions": 24,
+      "moves": 3366,
+      "selections": 594,
+      "qualified": 0,
+      "changed": 0,
+      "summary": [
+        {
+          "style": "clear",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 1,
+          "medianMoves": 180,
+          "moves": 563,
+          "clears": 23,
+          "rewardRate": 0.4103019538188277,
+          "repeat": 1,
+          "maxDry": 7,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "clear",
+          "variant": "director",
+          "n": 4,
+          "deaths": 1,
+          "medianMoves": 180,
+          "moves": 563,
+          "clears": 23,
+          "rewardRate": 0.4103019538188277,
+          "repeat": 1,
+          "maxDry": 7,
+          "p95Selection": 9.027702999999974,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "three",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 180,
+          "moves": 720,
+          "clears": 38,
+          "rewardRate": 0.4388888888888889,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "three",
+          "variant": "director",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 180,
+          "moves": 720,
+          "clears": 38,
+          "rewardRate": 0.4388888888888889,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": 8.982162999998764,
+          "recovery": []
+        },
+        {
+          "style": "plausible",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 96.5,
+          "moves": 400,
+          "clears": 0,
+          "rewardRate": 0.34,
+          "repeat": 0,
+          "maxDry": 8,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 6,
+              "dead": false
+            },
+            {
+              "moves": 1,
+              "rewardMoves": 0,
+              "dead": true
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "plausible",
+          "variant": "director",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 96.5,
+          "moves": 400,
+          "clears": 0,
+          "rewardRate": 0.34,
+          "repeat": 0,
+          "maxDry": 8,
+          "p95Selection": 5.018599000000904,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 6,
+              "dead": false
+            },
+            {
+              "moves": 1,
+              "rewardMoves": 0,
+              "dead": true
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "long",
+      "policy": "resilience-v6",
+      "sessions": 12,
+      "moves": 6094,
+      "selections": 1027,
+      "qualified": 0,
+      "changed": 0,
+      "summary": [
+        {
+          "style": "three",
+          "variant": "baseline",
+          "n": 6,
+          "deaths": 1,
+          "medianMoves": 600,
+          "moves": 3047,
+          "clears": 95,
+          "rewardRate": 0.461437479488021,
+          "repeat": 16,
+          "maxDry": 7,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 11,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "three",
+          "variant": "director",
+          "n": 6,
+          "deaths": 1,
+          "medianMoves": 600,
+          "moves": 3047,
+          "clears": 95,
+          "rewardRate": 0.461437479488021,
+          "repeat": 16,
+          "maxDry": 7,
+          "p95Selection": 8.384735999999975,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 11,
+              "dead": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "observed-discovery",
+      "policy": "observed-v7",
+      "sessions": 24,
+      "moves": 4104,
+      "selections": 725,
+      "qualified": 327,
+      "changed": 8,
+      "summary": [
+        {
+          "style": "clear",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 2,
+          "medianMoves": 185.5,
+          "moves": 676,
+          "clears": 9,
+          "rewardRate": 0.4423076923076923,
+          "repeat": 0,
+          "maxDry": 7,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "clear",
+          "variant": "director",
+          "n": 4,
+          "deaths": 2,
+          "medianMoves": 185.5,
+          "moves": 676,
+          "clears": 10,
+          "rewardRate": 0.4526627218934911,
+          "repeat": 1,
+          "maxDry": 7,
+          "p95Selection": 59.83677500000067,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "three",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 24,
+          "rewardRate": 0.45,
+          "repeat": 6,
+          "maxDry": 6,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "three",
+          "variant": "director",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 29,
+          "rewardRate": 0.45208333333333334,
+          "repeat": 6,
+          "maxDry": 6,
+          "p95Selection": 70.9253830000016,
+          "recovery": []
+        },
+        {
+          "style": "plausible",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 92,
+          "moves": 416,
+          "clears": 0,
+          "rewardRate": 0.32211538461538464,
+          "repeat": 0,
+          "maxDry": 8,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 4,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 9,
+              "rewardMoves": 3,
+              "dead": true
+            }
+          ]
+        },
+        {
+          "style": "plausible",
+          "variant": "director",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 92,
+          "moves": 416,
+          "clears": 0,
+          "rewardRate": 0.32211538461538464,
+          "repeat": 0,
+          "maxDry": 8,
+          "p95Selection": 4.316163999999844,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 4,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 9,
+              "rewardMoves": 3,
+              "dead": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "observed-holdout",
+      "policy": "observed-v7",
+      "sessions": 48,
+      "moves": 8924,
+      "selections": 1639,
+      "qualified": 739,
+      "changed": 22,
+      "summary": [
+        {
+          "style": "clear",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 3,
+          "medianMoves": 96.5,
+          "moves": 450,
+          "clears": 12,
+          "rewardRate": 0.4488888888888889,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "clear",
+          "variant": "director",
+          "n": 4,
+          "deaths": 1,
+          "medianMoves": 240,
+          "moves": 737,
+          "clears": 16,
+          "rewardRate": 0.4396200814111262,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": 60.890417999999954,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "space",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 3,
+          "medianMoves": 96.5,
+          "moves": 450,
+          "clears": 12,
+          "rewardRate": 0.4488888888888889,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 9,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "space",
+          "variant": "director",
+          "n": 4,
+          "deaths": 1,
+          "medianMoves": 240,
+          "moves": 737,
+          "clears": 16,
+          "rewardRate": 0.4396200814111262,
+          "repeat": 0,
+          "maxDry": 5,
+          "p95Selection": 60.09914000000026,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 8,
+              "dead": false
+            }
+          ]
+        },
+        {
+          "style": "combo",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 23,
+          "rewardRate": 0.48541666666666666,
+          "repeat": 1,
+          "maxDry": 6,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "combo",
+          "variant": "director",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 20,
+          "rewardRate": 0.4895833333333333,
+          "repeat": 2,
+          "maxDry": 6,
+          "p95Selection": 78.76392300000225,
+          "recovery": []
+        },
+        {
+          "style": "two",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 23,
+          "rewardRate": 0.4583333333333333,
+          "repeat": 1,
+          "maxDry": 6,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "two",
+          "variant": "director",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 25,
+          "rewardRate": 0.4552083333333333,
+          "repeat": 3,
+          "maxDry": 7,
+          "p95Selection": 61.56550199999765,
+          "recovery": []
+        },
+        {
+          "style": "three",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 32,
+          "rewardRate": 0.459375,
+          "repeat": 5,
+          "maxDry": 5,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "three",
+          "variant": "director",
+          "n": 4,
+          "deaths": 0,
+          "medianMoves": 240,
+          "moves": 960,
+          "clears": 24,
+          "rewardRate": 0.471875,
+          "repeat": 5,
+          "maxDry": 7,
+          "p95Selection": 66.91040200000134,
+          "recovery": []
+        },
+        {
+          "style": "plausible",
+          "variant": "baseline",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 104,
+          "moves": 395,
+          "clears": 0,
+          "rewardRate": 0.34177215189873417,
+          "repeat": 0,
+          "maxDry": 6,
+          "p95Selection": null,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 6,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 5,
+              "dead": true
+            }
+          ]
+        },
+        {
+          "style": "plausible",
+          "variant": "director",
+          "n": 4,
+          "deaths": 4,
+          "medianMoves": 104,
+          "moves": 395,
+          "clears": 0,
+          "rewardRate": 0.34177215189873417,
+          "repeat": 0,
+          "maxDry": 6,
+          "p95Selection": 7.654318000000785,
+          "recovery": [
+            {
+              "moves": 18,
+              "rewardMoves": 6,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 7,
+              "dead": false
+            },
+            {
+              "moves": 18,
+              "rewardMoves": 5,
+              "dead": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "observed-long",
+      "policy": "observed-v7",
+      "sessions": 12,
+      "moves": 7200,
+      "selections": 1206,
+      "qualified": 1025,
+      "changed": 31,
+      "summary": [
+        {
+          "style": "three",
+          "variant": "baseline",
+          "n": 6,
+          "deaths": 0,
+          "medianMoves": 600,
+          "moves": 3600,
+          "clears": 117,
+          "rewardRate": 0.455,
+          "repeat": 23,
+          "maxDry": 8,
+          "p95Selection": null,
+          "recovery": []
+        },
+        {
+          "style": "three",
+          "variant": "director",
+          "n": 6,
+          "deaths": 0,
+          "medianMoves": 600,
+          "moves": 3600,
+          "clears": 99,
+          "rewardRate": 0.4652777777777778,
+          "repeat": 23,
+          "maxDry": 8,
+          "p95Selection": 80.99831899999845,
+          "recovery": []
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "scripts/director/policy.ts": "4df051df788c4193924da3ece0f477ee8ea6977fb6c08d454f254d769d1730d9",
+    "scripts/director/resilience.ts": "df84ab2357bbe6d00977f781960bee3f8b982cf0858cb3546672beeaf1c0f0c1",
+    "scripts/director/benchmark.mjs": "3a43b9b435d0658362bbdfbdc9901bbd1039bddfdf462347e8bf1d45583bf04f",
+    "scripts/director/recipes.ts": "2d9a35701e1c26eadcc21ac246e990a3bb020483165e3d7566035215946d733a",
+    "scripts/director/validate-resilience.mjs": "c02849420404b4139ed9dd00684bbfaf66db672448a453ced170fc4ab9cda237"
+  },
+  "timing": {
+    "environment": "Cloud Node CPU, sequential, warm; not Android frames",
+    "n": 48,
+    "p50": 41.31438600000001,
+    "p95": 72.31564200000003,
+    "max": 76.36705800000027,
+    "samples": [
+      {
+        "ms": 72.31564200000003,
+        "changed": false,
+        "checks": 195393
+      },
+      {
+        "ms": 65.82285899999988,
+        "changed": false,
+        "checks": 228426
+      },
+      {
+        "ms": 25.454793999999993,
+        "changed": false,
+        "checks": 65470
+      },
+      {
+        "ms": 17.891403999999966,
+        "changed": false,
+        "checks": 88866
+      },
+      {
+        "ms": 40.50913199999991,
+        "changed": false,
+        "checks": 111156
+      },
+      {
+        "ms": 5.912751000000071,
+        "changed": true,
+        "checks": 65352
+      },
+      {
+        "ms": 52.653418999999985,
+        "changed": false,
+        "checks": 193223
+      },
+      {
+        "ms": 64.69127000000003,
+        "changed": false,
+        "checks": 187623
+      },
+      {
+        "ms": 17.717251999999917,
+        "changed": true,
+        "checks": 100236
+      },
+      {
+        "ms": 49.29140800000005,
+        "changed": true,
+        "checks": 136726
+      },
+      {
+        "ms": 52.32464400000026,
+        "changed": false,
+        "checks": 145366
+      },
+      {
+        "ms": 40.26791400000002,
+        "changed": false,
+        "checks": 143523
+      },
+      {
+        "ms": 41.31438600000001,
+        "changed": false,
+        "checks": 134271
+      },
+      {
+        "ms": 14.135553000000073,
+        "changed": false,
+        "checks": 87678
+      },
+      {
+        "ms": 19.399795000000267,
+        "changed": true,
+        "checks": 103806
+      },
+      {
+        "ms": 71.23610999999983,
+        "changed": false,
+        "checks": 213646
+      },
+      {
+        "ms": 72.52954399999999,
+        "changed": false,
+        "checks": 195393
+      },
+      {
+        "ms": 64.29337199999964,
+        "changed": false,
+        "checks": 228426
+      },
+      {
+        "ms": 24.17954899999995,
+        "changed": false,
+        "checks": 65470
+      },
+      {
+        "ms": 18.641941999999744,
+        "changed": false,
+        "checks": 88866
+      },
+      {
+        "ms": 41.02412099999992,
+        "changed": false,
+        "checks": 111156
+      },
+      {
+        "ms": 5.113491000000067,
+        "changed": true,
+        "checks": 65352
+      },
+      {
+        "ms": 55.65808599999991,
+        "changed": false,
+        "checks": 193223
+      },
+      {
+        "ms": 76.36705800000027,
+        "changed": false,
+        "checks": 187623
+      },
+      {
+        "ms": 28.120828999999958,
+        "changed": true,
+        "checks": 100236
+      },
+      {
+        "ms": 59.291629999999714,
+        "changed": true,
+        "checks": 136726
+      },
+      {
+        "ms": 69.78592200000003,
+        "changed": false,
+        "checks": 145366
+      },
+      {
+        "ms": 43.94693099999995,
+        "changed": false,
+        "checks": 143523
+      },
+      {
+        "ms": 45.31259199999977,
+        "changed": false,
+        "checks": 134271
+      },
+      {
+        "ms": 13.350652999999966,
+        "changed": false,
+        "checks": 87678
+      },
+      {
+        "ms": 11.955477999999857,
+        "changed": true,
+        "checks": 103806
+      },
+      {
+        "ms": 63.73860800000011,
+        "changed": false,
+        "checks": 213646
+      },
+      {
+        "ms": 58.61852399999998,
+        "changed": false,
+        "checks": 195393
+      },
+      {
+        "ms": 58.09628399999974,
+        "changed": false,
+        "checks": 228426
+      },
+      {
+        "ms": 22.417193000000225,
+        "changed": false,
+        "checks": 65470
+      },
+      {
+        "ms": 16.35470600000008,
+        "changed": false,
+        "checks": 88866
+      },
+      {
+        "ms": 38.7145959999998,
+        "changed": false,
+        "checks": 111156
+      },
+      {
+        "ms": 5.587653000000046,
+        "changed": true,
+        "checks": 65352
+      },
+      {
+        "ms": 52.18277100000023,
+        "changed": false,
+        "checks": 193223
+      },
+      {
+        "ms": 61.21116299999994,
+        "changed": false,
+        "checks": 187623
+      },
+      {
+        "ms": 17.678714000000127,
+        "changed": true,
+        "checks": 100236
+      },
+      {
+        "ms": 43.68622899999991,
+        "changed": true,
+        "checks": 136726
+      },
+      {
+        "ms": 46.66328000000021,
+        "changed": false,
+        "checks": 145366
+      },
+      {
+        "ms": 40.41534599999977,
+        "changed": false,
+        "checks": 143523
+      },
+      {
+        "ms": 38.809443999999985,
+        "changed": false,
+        "checks": 134271
+      },
+      {
+        "ms": 10.443807000000106,
+        "changed": false,
+        "checks": 87678
+      },
+      {
+        "ms": 11.077498999999989,
+        "changed": true,
+        "checks": 103806
+      },
+      {
+        "ms": 70.31687999999986,
+        "changed": false,
+        "checks": 213646
+      }
+    ]
+  }
+}

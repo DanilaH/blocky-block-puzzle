@@ -1,0 +1,153 @@
+{
+  "sourceSha256": "63d9bfd28024355727102a71fb099a5fa929851f2bb0daa305cc6521351a4d0c",
+  "note": "Diagnostic only: same recorded board and RNG, predetermined alternative fillers; no policy acceptance evidence.",
+  "cases": [
+    {
+      "split": "development",
+      "seed": 1941002,
+      "move": 123,
+      "board": [
+        0,
+        247,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "payoffSlots": [
+        1
+      ],
+      "source": "short-payoff",
+      "original": {
+        "earned": false,
+        "lines": 1,
+        "actions": [
+          {
+            "slot": 2,
+            "x": 3,
+            "y": 0
+          },
+          {
+            "slot": 1,
+            "x": 3,
+            "y": 1
+          },
+          {
+            "slot": 0,
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      "variants": [
+        {
+          "filler": "S1-0",
+          "earned": true,
+          "lines": 1,
+          "actions": [
+            {
+              "slot": 1,
+              "x": 3,
+              "y": 1
+            },
+            {
+              "slot": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "slot": 2,
+              "x": 2,
+              "y": 0
+            }
+          ]
+        },
+        {
+          "filler": "O2-0",
+          "earned": true,
+          "lines": 1,
+          "actions": [
+            {
+              "slot": 1,
+              "x": 3,
+              "y": 1
+            },
+            {
+              "slot": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "slot": 2,
+              "x": 6,
+              "y": 0
+            }
+          ]
+        },
+        {
+          "filler": "R6-0",
+          "earned": true,
+          "lines": 1,
+          "actions": [
+            {
+              "slot": 1,
+              "x": 3,
+              "y": 1
+            },
+            {
+              "slot": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "slot": 2,
+              "x": 1,
+              "y": 2
+            }
+          ]
+        },
+        {
+          "filler": "R6-1",
+          "earned": true,
+          "lines": 1,
+          "actions": [
+            {
+              "slot": 1,
+              "x": 3,
+              "y": 1
+            },
+            {
+              "slot": 0,
+              "x": 6,
+              "y": 2
+            },
+            {
+              "slot": 2,
+              "x": 4,
+              "y": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

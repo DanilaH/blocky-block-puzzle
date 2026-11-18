@@ -1,0 +1,20 @@
+{
+  "valid": true,
+  "fatalVerified": 14,
+  "loadWitnesses": 663,
+  "fatalEnds": {
+    "clear": {
+      "ended": 16,
+      "fatalLast": 4
+    },
+    "three": {
+      "ended": 8,
+      "fatalLast": 8
+    },
+    "plausible": {
+      "ended": 16,
+      "fatalLast": 2
+    }
+  },
+  "loadRiskSha256": "e364c0aad2a5dc2a425716a689d7cb31432ebff30c98703cca898c270269cd07"
+}

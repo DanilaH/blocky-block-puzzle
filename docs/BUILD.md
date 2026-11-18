@@ -1,0 +1,158 @@
+# Сборка и границы preview
+
+Node 24, зависимости зафиксированы package-lock.json. После клонирования:
+
+```sh
+npm ci
+npm test
+npm run build
+npm run dev
+```
+
+Браузерные проверки:
+
+```sh
+npx playwright install chromium
+npm run test:e2e
+```
+
+Android: JDK 21, Android SDK 36, build-tools 36.0.0. На Linux/macOS:
+
+```sh
+npm run android:sync
+cd android
+./gradlew assembleDebug
+```
+
+APK: android/app/build/outputs/apk/debug/app-debug.apk. Workflow `Preview checks and APK` параллельно проверяет web/unit и собирает debug APK и сохраняет artifact на 14 дней. Это debug-подпись CI, не ключ выпуска. В 0.6 путь debug-keystore явно согласован между генерацией, Gradle и кешем CI. В прежних запусках кешируемый путь отсутствовал, ключи менялись. Новая 0.6 не обновляет выданную 0.5 из-за другой подписи; удаление старой версии удаляет её данные. Кеш не заменяет долговечный секрет: до широкой раздачи нужен постоянный ключ в защищённом хранилище.
+
+Временный собственный package: com.danilah.blocky.dev. Production package и ключ подписи не выбирались. Встроен Capacitor App для Back/appStateChange. Сохранение пока через IndexedDB WebView; атомарность транзакций проверяется отдельно от сохранности на физических Android. Android backup выключен, облачного восстановления не обещаем.
+
+В preview работают правила Classic, перенос, подсказка worker, локальное сохранение, пауза, правила, новая партия, результат, трёхшаговое обучение, SFX и спокойные эффекты. Это не законченный первый APK из M1: нет нативной рекламы, reward/revive, аудиофокуса, второй темы, музыки, аналитики и проверки на реальном телефоне. Пустая нижняя область — резерв под баннер, не загруженное объявление. Бесплатные подсказки — 3 в день; после исчерпания честное сообщение, без фиктивного rewarded.
+
+Основной прототип использует initial-v1. Экспериментальная solvable-v1 и доказательство тройки доступны в модуле core для дальнейшего сравнения; UI выбора алгоритма не нужен обычному игроку. Длительность сессий и релизная выдача не утверждены.
+
+Проверены первичные справки при подготовке: https://capacitorjs.com/docs/getting-started/environment-setup, https://capacitorjs.com/docs/updating/8-0, https://docs.phaser.io/phaser/concepts/input. Конкретные зависимости проверены через npm registry и закреплены lockfile.
+
+Preview 0.7: сертификат финального APK совпадает с выданной 0.6 (`e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`), applicationId прежний, versionCode 7. Сборка рассчитана на обновление поверх 0.6; установка на физический Android не проверена. [Протокол 0.7](qa/FEEL_0.7_2026-10-25.md).
+
+Preview 0.8: versionCode 8, тот же applicationId и сертификат, что у выданной 0.7. [Проверки, подпись и APK-хеш](qa/FEEL_0.8_2026-10-25.md). Фактическая установка обновления на телефон остаётся непроверенной.
+
+Preview 0.9: versionCode 9, прежний applicationId и сертификат 0.8; 47 автотестов и Android CI прошли. [Протокол, симуляции и APK-хеш](qa/FEEL_0.9_2026-10-26.md). Установка обновления на физический телефон ещё не проверена.
+
+Preview 0.10: versionCode 10, прежний applicationId и сертификат 0.9; 59 автотестов и Android CI прошли. [Протокол, сравнение со звуком и APK-хеш](qa/FEEL_0.10_2026-10-26.md). Физическая установка обновления остаётся непроверенной.
+
+Preview 0.11: versionCode 11, прежний applicationId и сертификат 0.10; 69 автотестов и Android CI прошли. [Новое оформление, исправления восстановления и APK-хеш](qa/FEEL_0.11_2026-10-26.md). Фактическая установка обновления и ощущения на телефоне остаются непроверенными.
+
+Preview 0.12: versionCode 12, прежний applicationId и сертификат 0.11; 73 автотеста и Android CI прошли. [Читаемость, материал очистки и APK-хеш](qa/FEEL_0.12_2026-10-26.md). Фактическая установка обновления на телефон остаётся непроверенной.
+
+Preview 0.13: versionCode 13, прежний applicationId и сертификат 0.12; 78 автотестов и Android CI прошли. [Исправления usability и APK-хеш](qa/USABILITY_FIXES_0.13_2026-10-27.md). Физическая установка обновления остаётся непроверенной.
+
+Preview 0.14: versionCode 14, тот же applicationId и сертификат 0.13. 81 автотест и Android CI прошли. [Новая подача, запись сравнения и APK-хеш](qa/FEEL_0.14_2026-10-27.md). Аппаратная и эстетическая приёмка остаются открытыми.
+
+
+## Preview 0.15
+`versionCode=15`, `versionName=0.15.0-preview`. Та же тестовая package/signing configuration. Чтобы проверить серию с двумя подготовительными ходами, начать новую партию. Незавершённые сохранения 0.14 и старше не меняют правила посреди игры. Выдача фигур не изменена. Детали и фактические проверки: [FEEL_0.15_2026-10-27.md](qa/FEEL_0.15_2026-10-27.md).
+
+## Preview 0.16
+Выбор для сравнения: «Пауза → Новая партия → Выдача в новой партии». Варианты: обычная и с умеренной помощью; отмена сохраняет текущую партию. «Ещё раз» сохраняет предыдущий вариант. Первый запуск остаётся обычным. Рекорд общий. [Проверки и ограничения](qa/DEALER_0.16_2026-10-27.md).
+
+## Preview 0.17
+Добавлен Yandex Mobile Ads SDK 8.6.0: native banner/interstitial/rewarded и сохраняемые награды. Debug использует demo IDs. В браузере без native SDK реклама недоступна, игра работает. Для release нужны три собственных переменных окружения `YANDEX_BANNER_AD_UNIT_ID`, `YANDEX_INTERSTITIAL_AD_UNIT_ID`, `YANDEX_REWARDED_AD_UNIT_ID`; отсутствие корректных значений блокирует release build. Не подменять demo IDs production-значениями в debug. Ранее приведённое описание «нет нативной рекламы/reward/revive» относится к 0.16 и старше. [Проверки 0.17](qa/ADS_0.17_2026-10-28.md). Реальные показы на устройстве не подтверждены.
+
+### Preview signing continuity (0.22)
+GitHub Actions signing caches are ref-scoped. User APK 0.21 and compatible 0.22 come from PR #1 / feat/classic-preview. An experimental branch may generate a different debug key despite using the same cache key. Always verify the final signer fingerprint against the previously delivered APK before handing out an update. Expected preview fingerprint: e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13. Do not ask users to uninstall to hide a signing mismatch. A durable signing secret remains a release requirement.
+
+## Preview 0.23
+VersionCode 23, versionName 0.23.0-preview; APK из PR #1 / CI 41116476674. 174 автопроверки и Android CI прошли. Сертификат e96d961e…fdbe13 совпадает с 0.22; 16 production-файлов проверены побайтово. Физическая установка остаётся непроверенной. [Протокол](qa/ENAMEL_0.23_2026-10-31.md).
+
+
+## Аналитика с preview 0.31
+
+Debug использует только `APPMETRICA_TEST_API_KEY` (отдельное приложение/ключ AppMetrica). Без него собственная remote-отправка отключена, последние 128 продуктовых событий доступны в добровольной выгрузке диагностики. Preview CI читает одноимённый GitHub Actions secret; production key в preview не передаётся.
+
+Release требует `APPMETRICA_API_KEY` в формате UUID, а также три `YANDEX_*_AD_UNIT_ID`. Проверка формата не доказывает принадлежность ключа/блоков или доставку событий. Android SDK analytics 8.6.0 закреплён явно; location и advertising identifiers tracking собственного контура выключены. Декларация данных должна учитывать и рекламный SDK.
+
+Обновление 0.30→0.31 читает прежний журнал, а следующая принятая запись уплотняет завершённые операции. Обратный откат к старому APK после миграции не поддерживается; не удаляйте приложение ради обновления. [Протокол](qa/REWARDS_ANALYTICS_0.31_2026-11-02.md).
+
+
+### Preview 0.40: совместимость обновления
+Выданный APK собран PR-run `41811031499`, artifact `13312588228`, versionCode 40. Подпись соответствует 0.39: SHA-256 сертификата `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Push-run с тем же production-кодом дал иной сертификат и был отклонён: брать произвольный artifact по названию недостаточно. Перед каждой выдачей проверять сертификат и байты production-файлов; не предлагать удаление установленной игры для обхода несовместимой подписи. Подробности: [QA 0.40](qa/FEEL_0.40_2026-11-04.md).
+
+
+### Preview 0.47: восстановленная объединённая сборка
+
+Исходники `561e8c7`, PR CI `42380128190`, artifact `13576739624`. VersionCode 47, versionName `0.47.0-preview`, applicationId `com.danilah.blocky.dev`. Проверены 220 unit, 146 browser, production build, assets:check и Android unit/build. APK v2-подпись совместима с выданной 0.46; все 78 production-файлов совпали с dist. SHA-256 APK `422fdb0db4a1337885d3dca4e9e4f0f8d4d1a30c6d29dc16722f190d7e2b62e9`. Физическая установка/ощущения/реальный SDK по-прежнему требуют устройства. [Итоговый протокол](qa/RECOVERED_0.47_2026-11-07.md).
+
+
+### Preview 0.48: исправления по реальному плейтесту
+
+Исходники `ca2e9e1`, PR CI `42392425206`, artifact `13581533873`. VersionCode 48, versionName `0.48.0-preview`. 220 unit, 148 browser, Android unit/build — success. Проверены v2-подпись и 78 production-файлов; сертификат совпадает с выданной 0.47. APK SHA-256 `f7d079918cd345e6eb3a926db44b283f5c1814ac833f0f19d04678f728fb1de5`. В preview доступна ручная запись плавности в «Пауза → Ещё настройки → Диагностика». [Протокол и оставшиеся задачи](qa/PLAYTEST_0.47_AND_FIXES_0.48_2026-11-07.md).
+
+Preview 0.49: отдельная страница автозамера очистки, около 70 секунд; 7 условий × 2 прохода плюс warmup, JSON через существующий native share. Исходная партия не записывается/не заменяется. Экспериментальная подсветка доступна только в автозамере; обычный рендер и flow-v4 прежние. Усиленный финальный отклик включён. CI 42402230905: 220 unit, 170 browser, Android unit/build — success. APK versionCode 49, прежний signer 0.48; все 86 production-файлов совпали. Лаг не объявлен исправленным. [Протокол](qa/LAG_DIAGNOSTICS_0.49_2026-11-07.md).
+
+
+### Preview 0.50: точные позиции реальной очистки
+
+Исходники `59bce5c`, PR CI `42406979366`, artifact `13587927671`. VersionCode 50, versionName 0.50.0-preview. 221 unit, 172 browser, Android unit/build — success. V2-подпись совместима с выданной 0.49; все 86 production-файлов совпали. APK SHA-256 `7b7812eca4376e51b25d6a644ac42545748fee59fed149d7026e227b346c38ba`. Исправлена смена фоновой темы в автозамере; обычная диагностика schema 4 включает позицию, ход и оформление полной очистки. Обычный рендер и flow-v4 сохранены, лаг не объявлен исправленным. Физическая установка и новый реальный замер остаются открытыми. [Разбор и инструкция](qa/PHONE_BENCHMARK_0.49_2026-11-08.md).
+
+
+### Preview 0.51: частичная оптимизация полной очистки
+
+Исходники `d78ac8c`, PR CI `42451698323`, artifact `13606321935`. VersionCode 51, versionName 0.51.0-preview. 221 unit, 181 browser, Android unit/build — success. V2-подпись совместима с выданной 0.50; все 86 production-файлов совпали. APK SHA-256 `47953355d8b79f122c8f5715e370b627d616706d0942f06ab64f13f0ae3b709a`. Classic/WebGL использует кеш рамки и flat-color заливку; игровые правила/разрешение/эффекты сохранены. Стендовые gates пройдены, ускорение на POCO ещё не подтверждено. [Протокол и данные](qa/PHONE_CLEAR_0.50_2026-11-08.md).
+
+
+### Preview0.52: диагностика без USB
+
+Исходники `362f9531c244a41cd14d7f8d09bfa8c12aa8cf70`, PR CI `42460033472`, artifact `13609328963`. VersionCode52, versionName0.52.0-preview, debug APK, прежний package. 221unit/186browser/Androidunit+build — success. V2-подпись совпадает с выданной0.51; все89 production-файлов совпали с чистым dist. APK SHA-256 `99e657f24d653b7190b480c537ae74e7849eb8c3e2c5a6a283f09502f4036896`. Обновлять поверх установленной игры. Пауза → Ещё настройки → Диагностика → Проверить очистку: короткий реальный игровой прогон и ZIP с WebView-трассой, без USB. Android tracing API28+/debug. Физический запуск и причина лага ещё не проверены. [Протокол](qa/PHONE_TRACE_0.52_2026-11-08.md).
+
+
+### Preview0.53: viewport cache и загрузка Gradle
+
+APK из`bc549c32ee8d703ba9f35c92bad6313802bdb439`, PR Android CI42464938628/job128682140016, artifact13611178067. VersionCode53/versionName0.53.0-preview. V2-подпись прежней0.52 и все89 production-файлов проверены. SHA-256 APK`e992249437feab308ff3da667a61fae623eb7ed770af90e6903f53a0806e6ff2`. Исходники игры прошли221unit/188browser в42463633024 на528b5cc; последующая правка только wrapper/CI/diagnostics/docs, app/native/test sources идентичны. Повторный web-job нового run ещё выполнялся при проверке APK. Три Android-попытки до build-repair падали на загрузкеGradle-all504/timeout; binary-only8.14.3 с официальной SHA256/timeout120сек успешно собрался. Android и web CI идут параллельно. Не считать наличие артефакта само по себе достаточным подтверждением новых игровых изменений: сверять соответствующие исходники и прошедшие проверки. [Протокол](qa/VIEWPORT_CACHE_0.53_2026-11-08.md).
+
+
+Android CI подготавливает точную версиюGradle из wrapper properties через`scripts/prepare_gradle.py`: SHA256 обязательна, ZIP кешируется, executable заново извлекается из проверенного архива. Это обходит повторяющиеся HTTP504 в Java-wrapper download path; сторонние mirrors и смена версии сборщика не используются.
+
+
+### Preview0.54: локальные цветовые переходы
+
+Исходники `9f4c05c005df4620913e74bbb99566970344e719`, PR CI `42472074877`, Android job `128704954967`, artifact `13613951144`. Android unit/build — success. Web CI `42470731688` на `fc69c6fc8e5a4bdc394013b93b5cca1e78a34d9c` прошёл221unit/188browser/assets:check/build; исходники app/native/test идентичны, отличаются только wrapper, подготовка CI и документация. APK versionCode54/versionName0.54.0-preview, package`com.danilah.blocky.dev`; v2-подпись совпадает с выданной0.53. Все89 production-файлов совпали с чистым dist. APK SHA-256`b7909336bb979fba04a89a06477481c622f18c4f47beeb04d84e65d14bc2a76f`. Физическая установка и выигрыш на POCO0.54 ещё не проверены. [Протокол](qa/INK_FADES_0.54_2026-11-08.md).
+
+
+### Preview 0.55: автоматическая проверка слоёв
+
+Source `1ba936c53d082107ba6ec0e630a367c858908553`; PR #1 run `42480304579`, artifact `13616968745`. 225 unit / 197 browser / Android unit+build прошли. APK versionCode 55 / versionName `0.55.0-preview`, package `com.danilah.blocky.dev`, debug. Подпись apksig v2 проверена и совпадает с 0.54: сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Все 89 production-файлов чистой сборки совпали побайтово.
+
+APK SHA-256: `2b930d150df0ca567a921e5c0fc78a7e14f775db30f342d16ad4e68630fc756e`. Устанавливать поверх 0.54 без удаления приложения. Проверка: Пауза → Ещё настройки → Диагностика → Проверить слои → Начать проверку; около 90 секунд, один `blocky-layer-result.zip`. Удержание экрана снимается при завершении, отмене и уходе в фон. Физический прогон 0.55 получен: все 18 эпизодов valid, reward DOM и смена оформления номинированы для дальнейшей работы. Устранение лагов пока не подтверждено. [Разбор](qa/PHONE_LAYER_FINDINGS_0.55_2026-11-08.md). [Протокол и хеши](qa/LAYER_DIAGNOSTICS_0.55_2026-11-08.md).
+
+
+### Preview 0.56: подготовленные награды
+
+Source `561b6efd846d728c53397f74171d1af495c12c0e`, PR-run `42489309707`, artifact `13621316250`. CI: 226 unit, 201 browser, Android unit/build — success. APK versionCode 56 / versionName `0.56.0-preview`, package `com.danilah.blocky.dev`. Подпись apksig v2 проверена, сертификат совпадает с 0.55: `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`. Все 89 production-файлов совпали с чистой сборкой. APK SHA-256: `1868b11a231f535bf22db1671ef6ef8a205c0b68bd688b8ce99691d6d0bc0c84`.
+
+Обновлять поверх 0.55 без удаления приложения. Пауза → Ещё настройки → Диагностика → Проверить слои: schema v2, 20 эпизодов, около 90 секунд, прямое сравнение прежнего и нового reward renderer. Физический результат 0.56 получен: подготовленные награды не дали устойчивого выигрыша; оптимизация не принята. [Протокол и ограничения](qa/REWARD_RASTERS_0.56_2026-11-08.md).
+
+
+### Preview 0.57: раздельные reward/palette условия
+
+Source `585c4225f8e4355db2b7abb2950da64f6a84dcb4`, PR-run `42496962267`, artifact `13623512980`. 227 unit / 198 browser / Android unit+build / build/assets — success. APK versionCode 57 / versionName `0.57.0-preview`, package `com.danilah.blocky.dev`. Полная apksig v2 проверка пройдена, сертификат совпадает с выданной 0.56 (`e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`). Все 89 production-файлов совпали с чистым dist. APK SHA-256 `df098f60cb061800f2332e19798e61fc60513a455f92a15bad9a96e00d01e131`.
+
+Кеширование текста/idle prewarm удалены, обычные DOM-награды восстановлены. Пауза → Ещё настройки → Диагностика → Проверить слои → Начать проверку. Schema v3: 18 эпизодов около 80 секунд, один ZIP результата. Отдельно сравниваются вспышки счёта, подпись, DOM-палитра и плашка новой темы; палитры поля, фона и частиц сохраняются в соответствующих условиях. Устанавливать поверх 0.56 без удаления игры. Физический результат 0.57 получен: 18/18 valid, четыре узких условия порог в обоих порядках не прошли. Устранение рывков остаётся открытым. [Разбор](qa/PHONE_LAYER_FINDINGS_0.57_2026-11-08.md). [Протокол и доказательства](qa/REWARD_ISOLATION_0.57_2026-11-08.md).
+
+
+## Preview0.61 — сокращённый Classic,10.11.2026
+
+APK source `80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53` (PR merge, tree равен head `89f48bde81b714526cf9eb83a408379d7e4ccb91`), PR-run `42685305455`, artifact `13704491712`. После этого renderer не менялся: следуют только тестовые поправки, capture helper и документы. Локально236 unit /215 browser / build/assets /8+4 analyzer прошли, Android unit/build success. Серверная проверка финальных тестов и CDP smoke имеет отдельный статус.
+
+VersionCode61 / versionName `0.61.0-preview`, package `com.danilah.blocky.dev`, debug. APK11715444байт, SHA-256 `1327275fc0ecf35dfa54ea2bd058adf07a8289ed556cffa1635bc33da410f4e5`. Apksig v2 verified, сертификат SHA-256 `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13` совпал с выданной0.60. Все93 production-файла совпали побайтово с чистым dist при `VITE_SOURCE_COMMIT=80cedb4c4d43b1d11ef4d7a0b4867678db7a4c53`.
+
+Ставить поверх0.60 без удаления приложения. Сокращённая подача включена в обычной игре автоматически, отдельный диагностический запуск не требуется. Физическое улучшение POCO не объявляется. [Изменения и полный протокол](qa/COMPACT_EFFECTS_0.61_2026-11-10.md), [проверка APK](qa/compact-effects/apk-verification.json).
+
+
+## Preview0.62 — complete celebration and prepared surfaces
+Source `ea78628dd9ca0ed36b4ba2a5b1c8c803428c35ce`, PR build `2d37098b507c7d49d1565300be0061af8d7e5bcf`. Full celebration is restored by default; prepared board/page opacity surfaces and two predecoded generated backgrounds are enabled in ordinary play with bounded original-renderer fallback.
+
+244 unit,25 focused browser scenarios, build/assets,7 independent surface-analyzer cases, Android unit/build and2 native WebView tests passed. Native run completed all10 episodes, protected ordinary saves, exported JSON below900KB and passed independent metric recomputation. Full232 browser regression remains in progress at delivery. The emulator supplied no speedup evidence; physical POCO performance and human acceptance remain open.
+
+APK62 /0.62.0-preview, `com.danilah.blocky.dev`,11,743,560 bytes, SHA-256 `e3416ccd39c59b5b9d8b2bdfc7a4802e8fb9f59238b1fc2702f69f715a6627c7`. V2 signer matches0.61: `e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13`; all99 packaged production files byte-match dist. GitHub artifact13757287496 is the11,042,834-byte ZIP containing `app-debug.apk`. Extract before installation. [Protocol and exact evidence](qa/PREPARED_BACKGROUNDS_0.62_2026-11-10.md).

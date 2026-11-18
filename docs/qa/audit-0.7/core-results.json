@@ -1,0 +1,223 @@
+{
+  "games": 200,
+  "moves": 2994,
+  "ends": 200,
+  "checks": 412352,
+  "failures": [],
+  "applyMoveMs": {
+    "p95": 0.10000000055879354,
+    "max": 3.900000000372529
+  },
+  "hints": [
+    {
+      "nodes": 62,
+      "checks": 29728,
+      "cacheHits": 25,
+      "elapsedMs": 5.7999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 1,
+      "checks": 1241,
+      "cacheHits": 0,
+      "elapsedMs": 0.40000000037252903,
+      "cutoff": false
+    },
+    {
+      "nodes": 1,
+      "checks": 1231,
+      "cacheHits": 0,
+      "elapsedMs": 0.09999999962747097,
+      "cutoff": false
+    },
+    {
+      "nodes": 25,
+      "checks": 11576,
+      "cacheHits": 9,
+      "elapsedMs": 1.2000000001862645,
+      "cutoff": false
+    },
+    {
+      "nodes": 36,
+      "checks": 16170,
+      "cacheHits": 13,
+      "elapsedMs": 0.900000000372529,
+      "cutoff": false
+    },
+    {
+      "nodes": 7,
+      "checks": 8124,
+      "cacheHits": 0,
+      "elapsedMs": 0.2999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 344,
+      "checks": 189224,
+      "cacheHits": 148,
+      "elapsedMs": 8.899999999441206,
+      "cutoff": false
+    },
+    {
+      "nodes": 65,
+      "checks": 29786,
+      "cacheHits": 25,
+      "elapsedMs": 1.400000000372529,
+      "cutoff": false
+    },
+    {
+      "nodes": 40,
+      "checks": 20639,
+      "cacheHits": 14,
+      "elapsedMs": 1,
+      "cutoff": false
+    },
+    {
+      "nodes": 30,
+      "checks": 16090,
+      "cacheHits": 8,
+      "elapsedMs": 0.7000000001862645,
+      "cutoff": false
+    },
+    {
+      "nodes": 104,
+      "checks": 70038,
+      "cacheHits": 29,
+      "elapsedMs": 2.7000000001862645,
+      "cutoff": false
+    },
+    {
+      "nodes": 38,
+      "checks": 12777,
+      "cacheHits": 20,
+      "elapsedMs": 0.7999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 230,
+      "checks": 117430,
+      "cacheHits": 103,
+      "elapsedMs": 6.2000000001862645,
+      "cutoff": false
+    },
+    {
+      "nodes": 81,
+      "checks": 38712,
+      "cacheHits": 33,
+      "elapsedMs": 1.7999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 91,
+      "checks": 51094,
+      "cacheHits": 32,
+      "elapsedMs": 2.2000000001862645,
+      "cutoff": false
+    },
+    {
+      "nodes": 17,
+      "checks": 7056,
+      "cacheHits": 4,
+      "elapsedMs": 0.39999999944120646,
+      "cutoff": false
+    },
+    {
+      "nodes": 8,
+      "checks": 4636,
+      "cacheHits": 3,
+      "elapsedMs": 0.20000000018626451,
+      "cutoff": false
+    },
+    {
+      "nodes": 8,
+      "checks": 3577,
+      "cacheHits": 2,
+      "elapsedMs": 0.20000000018626451,
+      "cutoff": false
+    },
+    {
+      "nodes": 31,
+      "checks": 20453,
+      "cacheHits": 8,
+      "elapsedMs": 0.7999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 20,
+      "checks": 8260,
+      "cacheHits": 6,
+      "elapsedMs": 0.40000000037252903,
+      "cutoff": false
+    },
+    {
+      "nodes": 114,
+      "checks": 55533,
+      "cacheHits": 48,
+      "elapsedMs": 2.7999999998137355,
+      "cutoff": false
+    },
+    {
+      "nodes": 7,
+      "checks": 5893,
+      "cacheHits": 1,
+      "elapsedMs": 0.20000000018626451,
+      "cutoff": false
+    },
+    {
+      "nodes": 18,
+      "checks": 16106,
+      "cacheHits": 0,
+      "elapsedMs": 0.599999999627471,
+      "cutoff": false
+    },
+    {
+      "nodes": 69,
+      "checks": 34226,
+      "cacheHits": 25,
+      "elapsedMs": 2.099999999627471,
+      "cutoff": false
+    },
+    {
+      "nodes": 45,
+      "checks": 29742,
+      "cacheHits": 8,
+      "elapsedMs": 1,
+      "cutoff": false
+    },
+    {
+      "nodes": 500,
+      "checks": 296656,
+      "cacheHits": 204,
+      "elapsedMs": 12.200000000186265,
+      "cutoff": false
+    },
+    {
+      "nodes": 25,
+      "checks": 9466,
+      "cacheHits": 6,
+      "elapsedMs": 0.6000000005587935,
+      "cutoff": false
+    },
+    {
+      "nodes": 24,
+      "checks": 13716,
+      "cacheHits": 6,
+      "elapsedMs": 0.39999999944120646,
+      "cutoff": false
+    },
+    {
+      "nodes": 123,
+      "checks": 64691,
+      "cacheHits": 46,
+      "elapsedMs": 2.400000000372529,
+      "cutoff": false
+    },
+    {
+      "nodes": 49,
+      "checks": 21871,
+      "cacheHits": 18,
+      "elapsedMs": 0.8999999994412065,
+      "cutoff": false
+    }
+  ]
+}

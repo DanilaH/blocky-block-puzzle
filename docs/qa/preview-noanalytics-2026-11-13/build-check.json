@@ -1,0 +1,9 @@
+{
+  "version": "0.64.0-preview",
+  "ads": "Yandex demo units only",
+  "analytics": "off",
+  "blockers": [
+    "Original preview signing key is not present locally; use original Actions cache signer"
+  ],
+  "requiredCertificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13"
+}

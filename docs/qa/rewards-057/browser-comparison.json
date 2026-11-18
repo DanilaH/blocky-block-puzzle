@@ -1,0 +1,5115 @@
+{
+  "environment": "Linux Chromium/SwiftShader; not a POCO FPS claim",
+  "windowMs": [
+    320,
+    1400
+  ],
+  "allEpisodesCdpTraced": true,
+  "results": [
+    {
+      "index": 0,
+      "condition": "baseline",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 59,
+              "wallMs": 41.994,
+              "threadCpuMs": 41.62700000000002,
+              "maxMs": 2.536
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 13,
+              "wallMs": 9.393999999999998,
+              "threadCpuMs": 3.5759999999999996,
+              "maxMs": 3.758
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 19.616000000000003,
+              "threadCpuMs": 10.85,
+              "maxMs": 3.245
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 85,
+              "wallMs": 21.92,
+              "threadCpuMs": 20.634,
+              "maxMs": 0.923
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 44,
+              "wallMs": 73.862,
+              "threadCpuMs": 62.68900000000001,
+              "maxMs": 5.943
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 320,
+              "wallMs": 998.0979999999978,
+              "threadCpuMs": 315.7369999999999,
+              "maxMs": 64.099
+            }
+          },
+          "fullRendererTasks": {
+            "count": 749,
+            "wallMs": 1978.3559999999875,
+            "threadCpuMs": 764.4579999999941
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 759,
+            "outerCount": 759,
+            "wallMs": 2007.547999999987,
+            "threadCpuMs": 779.3129999999935,
+            "durationMs": 2437.219
+          },
+          "unionRendererTasks": {
+            "rawCount": 749,
+            "outerCount": 749,
+            "wallMs": 1978.3559999999875,
+            "threadCpuMs": 764.4579999999941
+          },
+          "unionEffectTasks": {
+            "rawCount": 320,
+            "outerCount": 320,
+            "wallMs": 998.0979999999978,
+            "threadCpuMs": 315.7369999999999
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 112,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 69,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 112,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 148,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 44.519,
+              "threadCpuMs": 44.15600000000001,
+              "maxMs": 1.833
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.484999999999999,
+              "threadCpuMs": 3.541,
+              "maxMs": 1.725
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 15.332,
+              "threadCpuMs": 10.926999999999996,
+              "maxMs": 1.701
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 24.246999999999996,
+              "threadCpuMs": 22.77299999999999,
+              "maxMs": 1.394
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 63.823000000000015,
+              "threadCpuMs": 62.04900000000002,
+              "maxMs": 3.364
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 351,
+              "wallMs": 1030.2119999999984,
+              "threadCpuMs": 346.371,
+              "maxMs": 35.475
+            }
+          },
+          "fullRendererTasks": {
+            "count": 829,
+            "wallMs": 2025.8719999999873,
+            "threadCpuMs": 824.1009999999934
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 838,
+            "outerCount": 838,
+            "wallMs": 2032.5999999999874,
+            "threadCpuMs": 830.5729999999933,
+            "durationMs": 2413.107
+          },
+          "unionRendererTasks": {
+            "rawCount": 829,
+            "outerCount": 829,
+            "wallMs": 2025.8719999999873,
+            "threadCpuMs": 824.1009999999934
+          },
+          "unionEffectTasks": {
+            "rawCount": 351,
+            "outerCount": 351,
+            "wallMs": 1030.2119999999984,
+            "threadCpuMs": 346.371
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 39.522,
+              "threadCpuMs": 39.16700000000001,
+              "maxMs": 1.343
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.817000000000001,
+              "threadCpuMs": 3.216,
+              "maxMs": 2.428
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 14.586000000000004,
+              "threadCpuMs": 9.577,
+              "maxMs": 2.349
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 23.456000000000014,
+              "threadCpuMs": 22.011000000000003,
+              "maxMs": 1.364
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 53.607,
+              "threadCpuMs": 49.145999999999994,
+              "maxMs": 1.405
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 354,
+              "wallMs": 989.6869999999983,
+              "threadCpuMs": 319.8239999999999,
+              "maxMs": 34.919
+            }
+          },
+          "fullRendererTasks": {
+            "count": 871,
+            "wallMs": 1961.551999999988,
+            "threadCpuMs": 773.1689999999934
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 877,
+            "outerCount": 877,
+            "wallMs": 1968.2689999999882,
+            "threadCpuMs": 779.6419999999933,
+            "durationMs": 2405.63
+          },
+          "unionRendererTasks": {
+            "rawCount": 871,
+            "outerCount": 871,
+            "wallMs": 1961.551999999988,
+            "threadCpuMs": 773.1689999999934
+          },
+          "unionEffectTasks": {
+            "rawCount": 354,
+            "outerCount": 354,
+            "wallMs": 989.6869999999983,
+            "threadCpuMs": 319.8239999999999
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 81,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 1,
+      "condition": "no-hud-flashes",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 37.589000000000006,
+              "threadCpuMs": 37.19099999999999,
+              "maxMs": 1.33
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.424,
+              "threadCpuMs": 3.668,
+              "maxMs": 3.339
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 17.463,
+              "threadCpuMs": 10.852999999999998,
+              "maxMs": 2.257
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 89,
+              "wallMs": 22.608000000000008,
+              "threadCpuMs": 21.044,
+              "maxMs": 1.463
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 76.39299999999999,
+              "threadCpuMs": 67.919,
+              "maxMs": 4.524
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 330,
+              "wallMs": 999.593999999997,
+              "threadCpuMs": 324.8009999999998,
+              "maxMs": 64.905
+            }
+          },
+          "fullRendererTasks": {
+            "count": 887,
+            "wallMs": 2084.3269999999848,
+            "threadCpuMs": 833.8749999999937
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 899,
+            "outerCount": 899,
+            "wallMs": 2096.628999999996,
+            "threadCpuMs": 843.6309999999934,
+            "durationMs": 2421.214
+          },
+          "unionRendererTasks": {
+            "rawCount": 887,
+            "outerCount": 887,
+            "wallMs": 2084.3269999999848,
+            "threadCpuMs": 833.8749999999937
+          },
+          "unionEffectTasks": {
+            "rawCount": 330,
+            "outerCount": 330,
+            "wallMs": 999.593999999997,
+            "threadCpuMs": 324.8009999999998
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 119,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 70,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 119,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 65,
+              "wallMs": 42.04500000000001,
+              "threadCpuMs": 41.074,
+              "maxMs": 1.576
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.385999999999999,
+              "threadCpuMs": 2.815,
+              "maxMs": 1.357
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 10.707999999999998,
+              "threadCpuMs": 8.996999999999998,
+              "maxMs": 1.14
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 98,
+              "wallMs": 23.096000000000007,
+              "threadCpuMs": 21.573000000000004,
+              "maxMs": 0.819
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 67.27399999999999,
+              "threadCpuMs": 59.943,
+              "maxMs": 2.108
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 388,
+              "wallMs": 995.1239999999972,
+              "threadCpuMs": 328.2260000000005,
+              "maxMs": 32.416
+            }
+          },
+          "fullRendererTasks": {
+            "count": 873,
+            "wallMs": 1952.559999999987,
+            "threadCpuMs": 780.0879999999935
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 882,
+            "outerCount": 882,
+            "wallMs": 1960.2699999999866,
+            "threadCpuMs": 786.3609999999932,
+            "durationMs": 2412.425
+          },
+          "unionRendererTasks": {
+            "rawCount": 873,
+            "outerCount": 873,
+            "wallMs": 1952.559999999987,
+            "threadCpuMs": 780.0879999999935
+          },
+          "unionEffectTasks": {
+            "rawCount": 388,
+            "outerCount": 388,
+            "wallMs": 995.1239999999972,
+            "threadCpuMs": 328.2260000000005
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 130,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 130,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 41.556999999999995,
+              "threadCpuMs": 41.21899999999999,
+              "maxMs": 1.663
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.087,
+              "threadCpuMs": 3.6310000000000002,
+              "maxMs": 1.88
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.377999999999997,
+              "threadCpuMs": 9.949000000000003,
+              "maxMs": 1.756
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 23.75,
+              "threadCpuMs": 22.291000000000004,
+              "maxMs": 1.956
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 58.74200000000001,
+              "threadCpuMs": 54.609999999999985,
+              "maxMs": 2.054
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 354,
+              "wallMs": 996.8289999999974,
+              "threadCpuMs": 339.5769999999998,
+              "maxMs": 30.741
+            }
+          },
+          "fullRendererTasks": {
+            "count": 845,
+            "wallMs": 1968.1309999999871,
+            "threadCpuMs": 793.1119999999942
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 850,
+            "outerCount": 850,
+            "wallMs": 1975.119999999987,
+            "threadCpuMs": 799.0729999999943,
+            "durationMs": 2405.811
+          },
+          "unionRendererTasks": {
+            "rawCount": 845,
+            "outerCount": 845,
+            "wallMs": 1968.1309999999871,
+            "threadCpuMs": 793.1119999999942
+          },
+          "unionEffectTasks": {
+            "rawCount": 354,
+            "outerCount": 354,
+            "wallMs": 996.8289999999974,
+            "threadCpuMs": 339.5769999999998
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 2,
+      "condition": "no-reward-decoration",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 37.135999999999996,
+              "threadCpuMs": 36.78099999999999,
+              "maxMs": 1.412
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 10.074,
+              "threadCpuMs": 3.3979999999999997,
+              "maxMs": 5.169
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 18.633000000000003,
+              "threadCpuMs": 10.517000000000003,
+              "maxMs": 4.488
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 21.714000000000002,
+              "threadCpuMs": 20.081999999999997,
+              "maxMs": 0.941
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 77.51400000000001,
+              "threadCpuMs": 71.97500000000001,
+              "maxMs": 3.389
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 339,
+              "wallMs": 1002.4479999999985,
+              "threadCpuMs": 328.13000000000005,
+              "maxMs": 53.974
+            }
+          },
+          "fullRendererTasks": {
+            "count": 788,
+            "wallMs": 1957.4149999999872,
+            "threadCpuMs": 738.9079999999934
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 801,
+            "outerCount": 801,
+            "wallMs": 1969.117999999987,
+            "threadCpuMs": 748.0619999999931,
+            "durationMs": 2417.239
+          },
+          "unionRendererTasks": {
+            "rawCount": 788,
+            "outerCount": 788,
+            "wallMs": 1957.4149999999872,
+            "threadCpuMs": 738.9079999999934
+          },
+          "unionEffectTasks": {
+            "rawCount": 339,
+            "outerCount": 339,
+            "wallMs": 1002.4479999999985,
+            "threadCpuMs": 328.13000000000005
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 120,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 120,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 38.44699999999998,
+              "threadCpuMs": 38.093,
+              "maxMs": 1.563
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.517,
+              "threadCpuMs": 2.693,
+              "maxMs": 1.721
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 14.432000000000002,
+              "threadCpuMs": 9.854000000000001,
+              "maxMs": 2.029
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 21.464999999999996,
+              "threadCpuMs": 19.875000000000007,
+              "maxMs": 0.699
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 65.65899999999998,
+              "threadCpuMs": 61.385000000000026,
+              "maxMs": 6.504
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 346,
+              "wallMs": 1001.1699999999979,
+              "threadCpuMs": 326.85500000000025,
+              "maxMs": 34.047
+            }
+          },
+          "fullRendererTasks": {
+            "count": 863,
+            "wallMs": 2014.5829999999878,
+            "threadCpuMs": 787.2449999999938
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 872,
+            "outerCount": 872,
+            "wallMs": 2023.1519999999878,
+            "threadCpuMs": 793.9619999999936,
+            "durationMs": 2416.749
+          },
+          "unionRendererTasks": {
+            "rawCount": 863,
+            "outerCount": 863,
+            "wallMs": 2014.5829999999878,
+            "threadCpuMs": 787.2449999999938
+          },
+          "unionEffectTasks": {
+            "rawCount": 346,
+            "outerCount": 346,
+            "wallMs": 1001.1699999999979,
+            "threadCpuMs": 326.85500000000025
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 129,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 37.22699999999998,
+              "threadCpuMs": 36.778000000000006,
+              "maxMs": 1.543
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.412999999999999,
+              "threadCpuMs": 2.6930000000000005,
+              "maxMs": 1.996
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.815999999999999,
+              "threadCpuMs": 9.383000000000003,
+              "maxMs": 2.203
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 22.180000000000003,
+              "threadCpuMs": 20.684000000000005,
+              "maxMs": 0.903
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 57.89400000000002,
+              "threadCpuMs": 52.94700000000001,
+              "maxMs": 1.499
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 353,
+              "wallMs": 988.0999999999981,
+              "threadCpuMs": 315.22299999999984,
+              "maxMs": 31.889
+            }
+          },
+          "fullRendererTasks": {
+            "count": 991,
+            "wallMs": 1904.494999999987,
+            "threadCpuMs": 731.3529999999943
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 1001,
+            "outerCount": 1001,
+            "wallMs": 1911.224999999987,
+            "threadCpuMs": 736.9469999999942,
+            "durationMs": 2405.845
+          },
+          "unionRendererTasks": {
+            "rawCount": 991,
+            "outerCount": 991,
+            "wallMs": 1904.494999999987,
+            "threadCpuMs": 731.3529999999943
+          },
+          "unionEffectTasks": {
+            "rawCount": 353,
+            "outerCount": 353,
+            "wallMs": 988.0999999999981,
+            "threadCpuMs": 315.22299999999984
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 127,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 3,
+      "condition": "no-dom-palette",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 57,
+              "wallMs": 29.512,
+              "threadCpuMs": 28.251,
+              "maxMs": 1.829
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 8,
+              "wallMs": 9.144,
+              "threadCpuMs": 3.2840000000000003,
+              "maxMs": 3.642
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 17.423000000000002,
+              "threadCpuMs": 10.361999999999998,
+              "maxMs": 2.801
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 88,
+              "wallMs": 19.470000000000006,
+              "threadCpuMs": 18.256999999999998,
+              "maxMs": 0.701
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 45,
+              "wallMs": 74.44600000000001,
+              "threadCpuMs": 69.08500000000001,
+              "maxMs": 4.493
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 314,
+              "wallMs": 993.7729999999979,
+              "threadCpuMs": 300.80199999999996,
+              "maxMs": 59.127
+            }
+          },
+          "fullRendererTasks": {
+            "count": 780,
+            "wallMs": 2020.646999999987,
+            "threadCpuMs": 764.7969999999942
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 791,
+            "outerCount": 791,
+            "wallMs": 2032.4169999999867,
+            "threadCpuMs": 773.931999999994,
+            "durationMs": 2417.884
+          },
+          "unionRendererTasks": {
+            "rawCount": 780,
+            "outerCount": 780,
+            "wallMs": 2020.646999999987,
+            "threadCpuMs": 764.7969999999942
+          },
+          "unionEffectTasks": {
+            "rawCount": 314,
+            "outerCount": 314,
+            "wallMs": 993.7729999999979,
+            "threadCpuMs": 300.80199999999996
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 117,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 117,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 31.232999999999986,
+              "threadCpuMs": 30.88,
+              "maxMs": 5.362
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.327,
+              "threadCpuMs": 2.8129999999999997,
+              "maxMs": 1.794
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 21.643000000000008,
+              "threadCpuMs": 16.791999999999998,
+              "maxMs": 8.247
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 19.532000000000004,
+              "threadCpuMs": 18.182000000000002,
+              "maxMs": 1.896
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 55.516000000000005,
+              "threadCpuMs": 51.12500000000001,
+              "maxMs": 1.628
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 336,
+              "wallMs": 956.3099999999981,
+              "threadCpuMs": 292.3690000000001,
+              "maxMs": 43.831
+            }
+          },
+          "fullRendererTasks": {
+            "count": 988,
+            "wallMs": 1931.9059999999843,
+            "threadCpuMs": 736.3169999999943
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 997,
+            "outerCount": 997,
+            "wallMs": 1939.9429999999843,
+            "threadCpuMs": 743.0659999999941,
+            "durationMs": 2406.214
+          },
+          "unionRendererTasks": {
+            "rawCount": 988,
+            "outerCount": 988,
+            "wallMs": 1931.9059999999843,
+            "threadCpuMs": 736.3169999999943
+          },
+          "unionEffectTasks": {
+            "rawCount": 336,
+            "outerCount": 336,
+            "wallMs": 956.3099999999981,
+            "threadCpuMs": 292.3690000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 127,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 127,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 28.716000000000005,
+              "threadCpuMs": 28.386999999999993,
+              "maxMs": 1.103
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.780000000000002,
+              "threadCpuMs": 2.5669999999999997,
+              "maxMs": 1.848
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 11.933000000000003,
+              "threadCpuMs": 8.695,
+              "maxMs": 1.694
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 28.086000000000006,
+              "threadCpuMs": 26.78,
+              "maxMs": 7.628
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 63.11900000000001,
+              "threadCpuMs": 58.614000000000004,
+              "maxMs": 6.038
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 335,
+              "wallMs": 992.1829999999976,
+              "threadCpuMs": 327.70699999999994,
+              "maxMs": 49.314
+            }
+          },
+          "fullRendererTasks": {
+            "count": 856,
+            "wallMs": 1957.8209999999876,
+            "threadCpuMs": 783.3789999999941
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 866,
+            "outerCount": 866,
+            "wallMs": 1965.8839999999873,
+            "threadCpuMs": 789.5039999999939,
+            "durationMs": 2414.112
+          },
+          "unionRendererTasks": {
+            "rawCount": 856,
+            "outerCount": 856,
+            "wallMs": 1957.8209999999876,
+            "threadCpuMs": 783.3789999999941
+          },
+          "unionEffectTasks": {
+            "rawCount": 335,
+            "outerCount": 335,
+            "wallMs": 992.1829999999976,
+            "threadCpuMs": 327.70699999999994
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 125,
+              "inkPeak": 45,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 125,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 4,
+      "condition": "no-theme-notice",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 38.13600000000001,
+              "threadCpuMs": 37.77400000000001,
+              "maxMs": 1.518
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.405,
+              "threadCpuMs": 3.348,
+              "maxMs": 3.255
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 13.036000000000001,
+              "threadCpuMs": 8.875000000000002,
+              "maxMs": 2.228
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 22.08800000000001,
+              "threadCpuMs": 20.624000000000002,
+              "maxMs": 0.87
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 71.01000000000002,
+              "threadCpuMs": 65.67499999999998,
+              "maxMs": 3.32
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 346,
+              "wallMs": 981.1989999999979,
+              "threadCpuMs": 316.64399999999995,
+              "maxMs": 52.001
+            }
+          },
+          "fullRendererTasks": {
+            "count": 795,
+            "wallMs": 1950.0269999999887,
+            "threadCpuMs": 757.6509999999954
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 804,
+            "outerCount": 804,
+            "wallMs": 1961.9739999999883,
+            "threadCpuMs": 766.3359999999954,
+            "durationMs": 2417.871
+          },
+          "unionRendererTasks": {
+            "rawCount": 795,
+            "outerCount": 795,
+            "wallMs": 1950.0269999999887,
+            "threadCpuMs": 757.6509999999954
+          },
+          "unionEffectTasks": {
+            "rawCount": 346,
+            "outerCount": 346,
+            "wallMs": 981.1989999999979,
+            "threadCpuMs": 316.64399999999995
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 121,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 121,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 38.38200000000001,
+              "threadCpuMs": 37.824,
+              "maxMs": 1.289
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.939,
+              "threadCpuMs": 2.683,
+              "maxMs": 1.484
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 10.590000000000002,
+              "threadCpuMs": 8.237,
+              "maxMs": 1.332
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 94,
+              "wallMs": 23.70200000000001,
+              "threadCpuMs": 22.27200000000001,
+              "maxMs": 1.484
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 58.18900000000001,
+              "threadCpuMs": 49.906,
+              "maxMs": 2.009
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 344,
+              "wallMs": 967.4279999999982,
+              "threadCpuMs": 299.18199999999973,
+              "maxMs": 38.171
+            }
+          },
+          "fullRendererTasks": {
+            "count": 1139,
+            "wallMs": 1909.0129999999765,
+            "threadCpuMs": 719.1679999999891
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 1144,
+            "outerCount": 1144,
+            "wallMs": 1916.9199999999762,
+            "threadCpuMs": 725.620999999989,
+            "durationMs": 2406.522
+          },
+          "unionRendererTasks": {
+            "rawCount": 1139,
+            "outerCount": 1139,
+            "wallMs": 1909.0129999999765,
+            "threadCpuMs": 719.1679999999891
+          },
+          "unionEffectTasks": {
+            "rawCount": 344,
+            "outerCount": 344,
+            "wallMs": 967.4279999999982,
+            "threadCpuMs": 299.18199999999973
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 127,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 127,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 40.663000000000004,
+              "threadCpuMs": 40.28699999999999,
+              "maxMs": 1.338
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.552999999999999,
+              "threadCpuMs": 4.338,
+              "maxMs": 4.942
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 15.988000000000007,
+              "threadCpuMs": 11.686000000000003,
+              "maxMs": 3.99
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 23.480999999999998,
+              "threadCpuMs": 21.971000000000004,
+              "maxMs": 0.732
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 61.288,
+              "threadCpuMs": 55.723,
+              "maxMs": 4.666
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 351,
+              "wallMs": 999.8139999999985,
+              "threadCpuMs": 331.7219999999998,
+              "maxMs": 34.026
+            }
+          },
+          "fullRendererTasks": {
+            "count": 829,
+            "wallMs": 2022.9009999999857,
+            "threadCpuMs": 784.9669999999948
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 834,
+            "outerCount": 834,
+            "wallMs": 2030.6289999999856,
+            "threadCpuMs": 791.6869999999947,
+            "durationMs": 2406.46
+          },
+          "unionRendererTasks": {
+            "rawCount": 829,
+            "outerCount": 829,
+            "wallMs": 2022.9009999999857,
+            "threadCpuMs": 784.9669999999948
+          },
+          "unionEffectTasks": {
+            "rawCount": 351,
+            "outerCount": 351,
+            "wallMs": 999.8139999999985,
+            "threadCpuMs": 331.7219999999998
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 5,
+      "condition": "no-reward-dom",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 54,
+              "wallMs": 30.101999999999997,
+              "threadCpuMs": 29.819999999999997,
+              "maxMs": 1.295
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 6,
+              "wallMs": 0.758,
+              "threadCpuMs": 0.7,
+              "maxMs": 0.708
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 36,
+              "wallMs": 7.524000000000001,
+              "threadCpuMs": 7.340999999999999,
+              "maxMs": 0.307
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 17.926000000000002,
+              "threadCpuMs": 16.549000000000007,
+              "maxMs": 0.606
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 72.04899999999999,
+              "threadCpuMs": 66.803,
+              "maxMs": 3.549
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 337,
+              "wallMs": 987.8289999999969,
+              "threadCpuMs": 294.0120000000001,
+              "maxMs": 52.955
+            }
+          },
+          "fullRendererTasks": {
+            "count": 766,
+            "wallMs": 1951.3599999999874,
+            "threadCpuMs": 703.3869999999954
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 775,
+            "outerCount": 775,
+            "wallMs": 1958.545999999987,
+            "threadCpuMs": 710.3949999999954,
+            "durationMs": 2416.631
+          },
+          "unionRendererTasks": {
+            "rawCount": 766,
+            "outerCount": 766,
+            "wallMs": 1951.3599999999874,
+            "threadCpuMs": 703.3869999999954
+          },
+          "unionEffectTasks": {
+            "rawCount": 337,
+            "outerCount": 337,
+            "wallMs": 987.8289999999969,
+            "threadCpuMs": 294.0120000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 117,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 117,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 55,
+              "wallMs": 33.787000000000006,
+              "threadCpuMs": 33.48800000000001,
+              "maxMs": 1.346
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 6,
+              "wallMs": 0.526,
+              "threadCpuMs": 0.504,
+              "maxMs": 0.509
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 36,
+              "wallMs": 8.361000000000002,
+              "threadCpuMs": 8.187000000000001,
+              "maxMs": 0.431
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 94,
+              "wallMs": 21.574,
+              "threadCpuMs": 20.168000000000003,
+              "maxMs": 1.25
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 67.034,
+              "threadCpuMs": 62.788,
+              "maxMs": 7.376
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 338,
+              "wallMs": 1003.6959999999972,
+              "threadCpuMs": 305.2580000000001,
+              "maxMs": 47.6
+            }
+          },
+          "fullRendererTasks": {
+            "count": 835,
+            "wallMs": 2007.2569999999878,
+            "threadCpuMs": 733.073999999996
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 840,
+            "outerCount": 840,
+            "wallMs": 2012.5629999999878,
+            "threadCpuMs": 738.199999999996,
+            "durationMs": 2404.428
+          },
+          "unionRendererTasks": {
+            "rawCount": 835,
+            "outerCount": 835,
+            "wallMs": 2007.2569999999878,
+            "threadCpuMs": 733.073999999996
+          },
+          "unionEffectTasks": {
+            "rawCount": 338,
+            "outerCount": 338,
+            "wallMs": 1003.6959999999972,
+            "threadCpuMs": 305.2580000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 124,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 124,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 54,
+              "wallMs": 32.742999999999995,
+              "threadCpuMs": 32.05,
+              "maxMs": 1.299
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 6,
+              "wallMs": 0.596,
+              "threadCpuMs": 0.5690000000000001,
+              "maxMs": 0.581
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 34,
+              "wallMs": 7.731000000000001,
+              "threadCpuMs": 7.4799999999999995,
+              "maxMs": 0.398
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 20.792,
+              "threadCpuMs": 19.361,
+              "maxMs": 1.167
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 59.40599999999999,
+              "threadCpuMs": 53.730000000000004,
+              "maxMs": 3.41
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 340,
+              "wallMs": 978.9999999999981,
+              "threadCpuMs": 297.3660000000004,
+              "maxMs": 39.998
+            }
+          },
+          "fullRendererTasks": {
+            "count": 879,
+            "wallMs": 1921.645999999986,
+            "threadCpuMs": 704.5219999999952
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 885,
+            "outerCount": 885,
+            "wallMs": 1926.1099999999863,
+            "threadCpuMs": 708.7459999999952,
+            "durationMs": 2404.219
+          },
+          "unionRendererTasks": {
+            "rawCount": 879,
+            "outerCount": 879,
+            "wallMs": 1921.645999999986,
+            "threadCpuMs": 704.5219999999952
+          },
+          "unionEffectTasks": {
+            "rawCount": 340,
+            "outerCount": 340,
+            "wallMs": 978.9999999999981,
+            "threadCpuMs": 297.3660000000004
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 125,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 125,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 6,
+      "condition": "no-theme",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 21.787,
+              "threadCpuMs": 21.463,
+              "maxMs": 0.683
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 12.453,
+              "threadCpuMs": 3.2720000000000002,
+              "maxMs": 5.356
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 19.508999999999997,
+              "threadCpuMs": 10.198000000000002,
+              "maxMs": 5.19
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 50,
+              "wallMs": 14.399,
+              "threadCpuMs": 13.910999999999996,
+              "maxMs": 0.647
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 71.32700000000003,
+              "threadCpuMs": 66.591,
+              "maxMs": 2.605
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 342,
+              "wallMs": 957.8829999999973,
+              "threadCpuMs": 286.8960000000001,
+              "maxMs": 53.489
+            }
+          },
+          "fullRendererTasks": {
+            "count": 810,
+            "wallMs": 1932.036999999986,
+            "threadCpuMs": 706.8939999999959
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 822,
+            "outerCount": 822,
+            "wallMs": 1943.7679999999857,
+            "threadCpuMs": 715.9509999999958,
+            "durationMs": 2418.387
+          },
+          "unionRendererTasks": {
+            "rawCount": 810,
+            "outerCount": 810,
+            "wallMs": 1932.036999999986,
+            "threadCpuMs": 706.8939999999959
+          },
+          "unionEffectTasks": {
+            "rawCount": 342,
+            "outerCount": 342,
+            "wallMs": 957.8829999999973,
+            "threadCpuMs": 286.8960000000001
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 125,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 125,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 20.825999999999997,
+              "threadCpuMs": 20.482000000000003,
+              "maxMs": 0.725
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.516000000000001,
+              "threadCpuMs": 2.6180000000000003,
+              "maxMs": 1.73
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 10.418000000000001,
+              "threadCpuMs": 8.395000000000001,
+              "maxMs": 1.576
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 51,
+              "wallMs": 14.126999999999999,
+              "threadCpuMs": 13.642999999999999,
+              "maxMs": 0.685
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 63.647000000000006,
+              "threadCpuMs": 56.74400000000002,
+              "maxMs": 3.271
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 355,
+              "wallMs": 950.5379999999976,
+              "threadCpuMs": 272.34400000000005,
+              "maxMs": 30.726
+            }
+          },
+          "fullRendererTasks": {
+            "count": 881,
+            "wallMs": 1902.1129999999903,
+            "threadCpuMs": 711.4589999999955
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 886,
+            "outerCount": 886,
+            "wallMs": 1909.4439999999904,
+            "threadCpuMs": 717.7439999999954,
+            "durationMs": 2406.046
+          },
+          "unionRendererTasks": {
+            "rawCount": 881,
+            "outerCount": 881,
+            "wallMs": 1902.1129999999903,
+            "threadCpuMs": 711.4589999999955
+          },
+          "unionEffectTasks": {
+            "rawCount": 355,
+            "outerCount": 355,
+            "wallMs": 950.5379999999976,
+            "threadCpuMs": 272.34400000000005
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 130,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 130,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 20.952,
+              "threadCpuMs": 20.618999999999996,
+              "maxMs": 0.738
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 3.951,
+              "threadCpuMs": 2.512,
+              "maxMs": 1.248
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 10.065999999999999,
+              "threadCpuMs": 8.508999999999999,
+              "maxMs": 1.092
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 52,
+              "wallMs": 14.883,
+              "threadCpuMs": 14.404000000000003,
+              "maxMs": 1.266
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 52,
+              "wallMs": 56.8,
+              "threadCpuMs": 50.822,
+              "maxMs": 1.819
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 376,
+              "wallMs": 975.4339999999975,
+              "threadCpuMs": 277.2010000000003,
+              "maxMs": 33.523
+            }
+          },
+          "fullRendererTasks": {
+            "count": 887,
+            "wallMs": 1930.7169999999876,
+            "threadCpuMs": 694.9519999999958
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 892,
+            "outerCount": 892,
+            "wallMs": 1937.1579999999874,
+            "threadCpuMs": 700.544999999996,
+            "durationMs": 2405.684
+          },
+          "unionRendererTasks": {
+            "rawCount": 887,
+            "outerCount": 887,
+            "wallMs": 1930.7169999999876,
+            "threadCpuMs": 694.9519999999958
+          },
+          "unionEffectTasks": {
+            "rawCount": 376,
+            "outerCount": 376,
+            "wallMs": 975.4339999999975,
+            "threadCpuMs": 277.2010000000003
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 130,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 130,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 7,
+      "condition": "no-theme",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 22.136,
+              "threadCpuMs": 21.815,
+              "maxMs": 0.855
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.213000000000001,
+              "threadCpuMs": 3.5399999999999996,
+              "maxMs": 3.94
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 15.687,
+              "threadCpuMs": 9.894999999999996,
+              "maxMs": 3.127
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 51,
+              "wallMs": 15.538999999999996,
+              "threadCpuMs": 15.049,
+              "maxMs": 1.251
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 69.70100000000001,
+              "threadCpuMs": 64.46199999999999,
+              "maxMs": 3.693
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 341,
+              "wallMs": 983.8189999999981,
+              "threadCpuMs": 288.6110000000001,
+              "maxMs": 54.686
+            }
+          },
+          "fullRendererTasks": {
+            "count": 808,
+            "wallMs": 2006.4499999999866,
+            "threadCpuMs": 745.5419999999954
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 818,
+            "outerCount": 818,
+            "wallMs": 2020.4959999999867,
+            "threadCpuMs": 754.7439999999951,
+            "durationMs": 2421.695
+          },
+          "unionRendererTasks": {
+            "rawCount": 808,
+            "outerCount": 808,
+            "wallMs": 2006.4499999999866,
+            "threadCpuMs": 745.5419999999954
+          },
+          "unionEffectTasks": {
+            "rawCount": 341,
+            "outerCount": 341,
+            "wallMs": 983.8189999999981,
+            "threadCpuMs": 288.6110000000001
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 125,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 125,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 144,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 60,
+              "wallMs": 21.483999999999998,
+              "threadCpuMs": 21.107000000000003,
+              "maxMs": 0.768
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 3.717,
+              "threadCpuMs": 2.5609999999999995,
+              "maxMs": 0.992
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 40,
+              "wallMs": 9.942000000000002,
+              "threadCpuMs": 8.672,
+              "maxMs": 0.734
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 50,
+              "wallMs": 13.692,
+              "threadCpuMs": 13.125000000000002,
+              "maxMs": 0.774
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 61.559999999999995,
+              "threadCpuMs": 55.88800000000001,
+              "maxMs": 1.901
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 376,
+              "wallMs": 973.8759999999974,
+              "threadCpuMs": 281.5219999999998,
+              "maxMs": 33.436
+            }
+          },
+          "fullRendererTasks": {
+            "count": 889,
+            "wallMs": 1975.8269999999898,
+            "threadCpuMs": 722.9849999999955
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 896,
+            "outerCount": 896,
+            "wallMs": 1983.8459999999895,
+            "threadCpuMs": 730.0569999999955,
+            "durationMs": 2405.664
+          },
+          "unionRendererTasks": {
+            "rawCount": 889,
+            "outerCount": 889,
+            "wallMs": 1975.8269999999898,
+            "threadCpuMs": 722.9849999999955
+          },
+          "unionEffectTasks": {
+            "rawCount": 376,
+            "outerCount": 376,
+            "wallMs": 973.8759999999974,
+            "threadCpuMs": 281.5219999999998
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 22.391999999999992,
+              "threadCpuMs": 22.069000000000003,
+              "maxMs": 1.91
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 3.671,
+              "threadCpuMs": 2.311,
+              "maxMs": 1.108
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 10.168000000000003,
+              "threadCpuMs": 8.686,
+              "maxMs": 0.963
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 52,
+              "wallMs": 13.741,
+              "threadCpuMs": 13.246000000000004,
+              "maxMs": 0.699
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 52,
+              "wallMs": 51.663000000000004,
+              "threadCpuMs": 47.28800000000001,
+              "maxMs": 1.454
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 387,
+              "wallMs": 974.4649999999972,
+              "threadCpuMs": 278.1560000000002,
+              "maxMs": 27.912
+            }
+          },
+          "fullRendererTasks": {
+            "count": 903,
+            "wallMs": 1970.0329999999867,
+            "threadCpuMs": 715.7429999999957
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 911,
+            "outerCount": 911,
+            "wallMs": 1976.8089999999868,
+            "threadCpuMs": 721.2769999999956,
+            "durationMs": 2420.112
+          },
+          "unionRendererTasks": {
+            "rawCount": 903,
+            "outerCount": 903,
+            "wallMs": 1970.0329999999867,
+            "threadCpuMs": 715.7429999999957
+          },
+          "unionEffectTasks": {
+            "rawCount": 387,
+            "outerCount": 387,
+            "wallMs": 974.4649999999972,
+            "threadCpuMs": 278.1560000000002
+          },
+          "proof": {
+            "renderedTheme": 1,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 0
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 131,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 1
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 1,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 131,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 1,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 8,
+      "condition": "no-reward-dom",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 52,
+              "wallMs": 31.802000000000003,
+              "threadCpuMs": 31.457,
+              "maxMs": 1.234
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 3,
+              "wallMs": 0.009000000000000001,
+              "threadCpuMs": 0.004,
+              "maxMs": 0.005
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 33,
+              "wallMs": 7.720000000000001,
+              "threadCpuMs": 7.545,
+              "maxMs": 0.735
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 92,
+              "wallMs": 19.745000000000008,
+              "threadCpuMs": 18.453999999999997,
+              "maxMs": 0.836
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 74.24500000000002,
+              "threadCpuMs": 66.96900000000001,
+              "maxMs": 3.321
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 369,
+              "wallMs": 986.6139999999973,
+              "threadCpuMs": 296.3279999999998,
+              "maxMs": 56.966
+            }
+          },
+          "fullRendererTasks": {
+            "count": 820,
+            "wallMs": 2078.732999999989,
+            "threadCpuMs": 766.2159999999968
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 826,
+            "outerCount": 826,
+            "wallMs": 2086.4489999999887,
+            "threadCpuMs": 773.4999999999968,
+            "durationMs": 2407.713
+          },
+          "unionRendererTasks": {
+            "rawCount": 820,
+            "outerCount": 820,
+            "wallMs": 2078.732999999989,
+            "threadCpuMs": 766.2159999999968
+          },
+          "unionEffectTasks": {
+            "rawCount": 369,
+            "outerCount": 369,
+            "wallMs": 986.6139999999973,
+            "threadCpuMs": 296.3279999999998
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 118,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 71,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 118,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 54,
+              "wallMs": 33.912,
+              "threadCpuMs": 33.62500000000001,
+              "maxMs": 1.814
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 6,
+              "wallMs": 0.641,
+              "threadCpuMs": 0.621,
+              "maxMs": 0.621
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 35,
+              "wallMs": 7.763,
+              "threadCpuMs": 7.5820000000000025,
+              "maxMs": 0.501
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 19.517999999999997,
+              "threadCpuMs": 18.127000000000002,
+              "maxMs": 0.723
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 57.757000000000005,
+              "threadCpuMs": 53.581,
+              "maxMs": 1.557
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 334,
+              "wallMs": 995.4499999999981,
+              "threadCpuMs": 298.8950000000002,
+              "maxMs": 43.107
+            }
+          },
+          "fullRendererTasks": {
+            "count": 920,
+            "wallMs": 2045.2359999999883,
+            "threadCpuMs": 751.2189999999953
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 930,
+            "outerCount": 930,
+            "wallMs": 2059.8209999999885,
+            "threadCpuMs": 760.9409999999951,
+            "durationMs": 2417.602
+          },
+          "unionRendererTasks": {
+            "rawCount": 920,
+            "outerCount": 920,
+            "wallMs": 2045.2359999999883,
+            "threadCpuMs": 751.2189999999953
+          },
+          "unionEffectTasks": {
+            "rawCount": 334,
+            "outerCount": 334,
+            "wallMs": 995.4499999999981,
+            "threadCpuMs": 298.8950000000002
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 127,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 127,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 55,
+              "wallMs": 33.372000000000014,
+              "threadCpuMs": 32.984999999999985,
+              "maxMs": 1.4
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 6,
+              "wallMs": 0.498,
+              "threadCpuMs": 0.47500000000000003,
+              "maxMs": 0.483
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 35,
+              "wallMs": 7.51,
+              "threadCpuMs": 7.327000000000002,
+              "maxMs": 0.378
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 20.635000000000012,
+              "threadCpuMs": 19.236000000000008,
+              "maxMs": 1.642
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 53.855999999999995,
+              "threadCpuMs": 49.615000000000016,
+              "maxMs": 1.826
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 393,
+              "wallMs": 980.1469999999973,
+              "threadCpuMs": 306.61000000000024,
+              "maxMs": 37.588
+            }
+          },
+          "fullRendererTasks": {
+            "count": 905,
+            "wallMs": 2010.047999999987,
+            "threadCpuMs": 767.8969999999953
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 910,
+            "outerCount": 910,
+            "wallMs": 2014.465999999987,
+            "threadCpuMs": 772.1489999999951,
+            "durationMs": 2404.034
+          },
+          "unionRendererTasks": {
+            "rawCount": 905,
+            "outerCount": 905,
+            "wallMs": 2010.047999999987,
+            "threadCpuMs": 767.8969999999953
+          },
+          "unionEffectTasks": {
+            "rawCount": 393,
+            "outerCount": 393,
+            "wallMs": 980.1469999999973,
+            "threadCpuMs": 306.61000000000024
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 0,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 0,
+              "hudFlashes": 0,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 126,
+              "inkPeak": 47,
+              "vfxPeak": 81,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 126,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 9,
+      "condition": "no-theme-notice",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 56,
+              "wallMs": 35.568999999999996,
+              "threadCpuMs": 35.26599999999999,
+              "maxMs": 1.262
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 13.208,
+              "threadCpuMs": 4.288,
+              "maxMs": 6.552
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 39,
+              "wallMs": 19.217,
+              "threadCpuMs": 10.194000000000003,
+              "maxMs": 5.528
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 81,
+              "wallMs": 21.355999999999998,
+              "threadCpuMs": 20.097,
+              "maxMs": 1.06
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 43,
+              "wallMs": 71.13999999999997,
+              "threadCpuMs": 65.06400000000001,
+              "maxMs": 5.948
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 308,
+              "wallMs": 989.5969999999979,
+              "threadCpuMs": 298.1750000000001,
+              "maxMs": 65.156
+            }
+          },
+          "fullRendererTasks": {
+            "count": 805,
+            "wallMs": 1996.8689999999865,
+            "threadCpuMs": 748.445999999995
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 817,
+            "outerCount": 817,
+            "wallMs": 2008.5619999999863,
+            "threadCpuMs": 757.1389999999949,
+            "durationMs": 2418.596
+          },
+          "unionRendererTasks": {
+            "rawCount": 805,
+            "outerCount": 805,
+            "wallMs": 1996.8689999999865,
+            "threadCpuMs": 748.445999999995
+          },
+          "unionEffectTasks": {
+            "rawCount": 308,
+            "outerCount": 308,
+            "wallMs": 989.5969999999979,
+            "threadCpuMs": 298.1750000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 113,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 69,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 113,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 148,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 40.51500000000001,
+              "threadCpuMs": 40.11,
+              "maxMs": 1.597
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.250000000000002,
+              "threadCpuMs": 2.4899999999999998,
+              "maxMs": 1.338
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 11.206000000000003,
+              "threadCpuMs": 9.321000000000002,
+              "maxMs": 1.186
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 96,
+              "wallMs": 24.626999999999992,
+              "threadCpuMs": 23.18000000000001,
+              "maxMs": 0.833
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 65.15800000000002,
+              "threadCpuMs": 63.089999999999996,
+              "maxMs": 1.93
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 434,
+              "wallMs": 996.2259999999967,
+              "threadCpuMs": 329.38599999999997,
+              "maxMs": 32.531
+            }
+          },
+          "fullRendererTasks": {
+            "count": 917,
+            "wallMs": 1960.3729999999891,
+            "threadCpuMs": 772.3419999999936
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 927,
+            "outerCount": 927,
+            "wallMs": 1968.2869999999891,
+            "threadCpuMs": 779.0509999999935,
+            "durationMs": 2413.044
+          },
+          "unionRendererTasks": {
+            "rawCount": 917,
+            "outerCount": 917,
+            "wallMs": 1960.3729999999891,
+            "threadCpuMs": 772.3419999999936
+          },
+          "unionEffectTasks": {
+            "rawCount": 434,
+            "outerCount": 434,
+            "wallMs": 996.2259999999967,
+            "threadCpuMs": 329.38599999999997
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 129,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 39.126999999999995,
+              "threadCpuMs": 38.785000000000004,
+              "maxMs": 1.266
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.032000000000001,
+              "threadCpuMs": 2.65,
+              "maxMs": 1.807
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 41,
+              "wallMs": 12.065999999999999,
+              "threadCpuMs": 8.573,
+              "maxMs": 1.654
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 96,
+              "wallMs": 21.405,
+              "threadCpuMs": 19.96400000000001,
+              "maxMs": 0.945
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 57.259000000000015,
+              "threadCpuMs": 52.897,
+              "maxMs": 1.572
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 356,
+              "wallMs": 985.5609999999975,
+              "threadCpuMs": 315.10700000000026,
+              "maxMs": 29.932
+            }
+          },
+          "fullRendererTasks": {
+            "count": 874,
+            "wallMs": 1944.5529999999897,
+            "threadCpuMs": 747.9179999999947
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 883,
+            "outerCount": 883,
+            "wallMs": 1951.5079999999894,
+            "threadCpuMs": 753.4979999999945,
+            "durationMs": 2414.767
+          },
+          "unionRendererTasks": {
+            "rawCount": 874,
+            "outerCount": 874,
+            "wallMs": 1944.5529999999897,
+            "threadCpuMs": 747.9179999999947
+          },
+          "unionEffectTasks": {
+            "rawCount": 356,
+            "outerCount": 356,
+            "wallMs": 985.5609999999975,
+            "threadCpuMs": 315.10700000000026
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 2,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 0,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 129,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 10,
+      "condition": "no-dom-palette",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 63,
+              "wallMs": 30.816000000000003,
+              "threadCpuMs": 30.474,
+              "maxMs": 1.845
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 8.629999999999999,
+              "threadCpuMs": 3.5290000000000004,
+              "maxMs": 3.383
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 44,
+              "wallMs": 17.041,
+              "threadCpuMs": 10.597000000000001,
+              "maxMs": 2.294
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 20.267000000000003,
+              "threadCpuMs": 18.942000000000007,
+              "maxMs": 0.963
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 74.40200000000002,
+              "threadCpuMs": 68.39399999999999,
+              "maxMs": 3.553
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 338,
+              "wallMs": 995.1479999999978,
+              "threadCpuMs": 312.7690000000001,
+              "maxMs": 55.437
+            }
+          },
+          "fullRendererTasks": {
+            "count": 796,
+            "wallMs": 1981.2599999999875,
+            "threadCpuMs": 758.8689999999937
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 805,
+            "outerCount": 805,
+            "wallMs": 1993.7159999999874,
+            "threadCpuMs": 768.6589999999935,
+            "durationMs": 2420.239
+          },
+          "unionRendererTasks": {
+            "rawCount": 796,
+            "outerCount": 796,
+            "wallMs": 1981.2599999999875,
+            "threadCpuMs": 758.8689999999937
+          },
+          "unionEffectTasks": {
+            "rawCount": 338,
+            "outerCount": 338,
+            "wallMs": 995.1479999999978,
+            "threadCpuMs": 312.7690000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 121,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 121,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 31.223999999999997,
+              "threadCpuMs": 30.872,
+              "maxMs": 1.783
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.091000000000001,
+              "threadCpuMs": 2.75,
+              "maxMs": 1.428
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 12.374,
+              "threadCpuMs": 8.709000000000003,
+              "maxMs": 1.59
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 96,
+              "wallMs": 19.330000000000002,
+              "threadCpuMs": 18.009999999999998,
+              "maxMs": 0.711
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 59.41300000000001,
+              "threadCpuMs": 55.36999999999999,
+              "maxMs": 2.168
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 348,
+              "wallMs": 977.2469999999971,
+              "threadCpuMs": 295.60500000000013,
+              "maxMs": 36.986
+            }
+          },
+          "fullRendererTasks": {
+            "count": 876,
+            "wallMs": 1944.8999999999871,
+            "threadCpuMs": 735.3189999999967
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 881,
+            "outerCount": 881,
+            "wallMs": 1953.3759999999872,
+            "threadCpuMs": 742.5219999999966,
+            "durationMs": 2406.684
+          },
+          "unionRendererTasks": {
+            "rawCount": 876,
+            "outerCount": 876,
+            "wallMs": 1944.8999999999871,
+            "threadCpuMs": 735.3189999999967
+          },
+          "unionEffectTasks": {
+            "rawCount": 348,
+            "outerCount": 348,
+            "wallMs": 977.2469999999971,
+            "threadCpuMs": 295.60500000000013
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 32.346,
+              "threadCpuMs": 31.317000000000004,
+              "maxMs": 1.267
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 6.2010000000000005,
+              "threadCpuMs": 3.256,
+              "maxMs": 1.684
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.6,
+              "threadCpuMs": 10.669999999999996,
+              "maxMs": 1.607
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 96,
+              "wallMs": 23.772999999999996,
+              "threadCpuMs": 22.290000000000006,
+              "maxMs": 2.64
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 61.763999999999996,
+              "threadCpuMs": 56.38300000000001,
+              "maxMs": 3.548
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 376,
+              "wallMs": 1011.6809999999978,
+              "threadCpuMs": 329.0069999999999,
+              "maxMs": 35.877
+            }
+          },
+          "fullRendererTasks": {
+            "count": 1025,
+            "wallMs": 2019.7039999999834,
+            "threadCpuMs": 779.1459999999942
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 1034,
+            "outerCount": 1034,
+            "wallMs": 2030.3509999999833,
+            "threadCpuMs": 784.777999999994,
+            "durationMs": 2414.631
+          },
+          "unionRendererTasks": {
+            "rawCount": 1025,
+            "outerCount": 1025,
+            "wallMs": 2019.7039999999834,
+            "threadCpuMs": 779.1459999999942
+          },
+          "unionEffectTasks": {
+            "rawCount": 376,
+            "outerCount": 376,
+            "wallMs": 1011.6809999999978,
+            "threadCpuMs": 329.0069999999999
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 129,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 1,
+              "domPalette": {
+                "bg": "#f4f3ee",
+                "ink": "#325376",
+                "accent": "#72a8ec"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 11,
+      "condition": "no-reward-decoration",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 37.086,
+              "threadCpuMs": 36.70100000000001,
+              "maxMs": 1.327
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.604999999999999,
+              "threadCpuMs": 3.431,
+              "maxMs": 3.736
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 45,
+              "wallMs": 17.420000000000005,
+              "threadCpuMs": 10.257,
+              "maxMs": 3.134
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 93,
+              "wallMs": 21.07000000000001,
+              "threadCpuMs": 19.447000000000006,
+              "maxMs": 1.027
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 49,
+              "wallMs": 80.53700000000002,
+              "threadCpuMs": 72.15700000000001,
+              "maxMs": 3.759
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 340,
+              "wallMs": 993.2579999999978,
+              "threadCpuMs": 315.547,
+              "maxMs": 50.424
+            }
+          },
+          "fullRendererTasks": {
+            "count": 804,
+            "wallMs": 1974.0129999999888,
+            "threadCpuMs": 744.008999999994
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 817,
+            "outerCount": 817,
+            "wallMs": 1986.1779999999887,
+            "threadCpuMs": 753.4339999999938,
+            "durationMs": 2419.319
+          },
+          "unionRendererTasks": {
+            "rawCount": 804,
+            "outerCount": 804,
+            "wallMs": 1974.0129999999888,
+            "threadCpuMs": 744.008999999994
+          },
+          "unionEffectTasks": {
+            "rawCount": 340,
+            "outerCount": 340,
+            "wallMs": 993.2579999999978,
+            "threadCpuMs": 315.547
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 122,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 70,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 122,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 148,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 36.552,
+              "threadCpuMs": 36.13899999999998,
+              "maxMs": 2.154
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.761000000000001,
+              "threadCpuMs": 4.093999999999999,
+              "maxMs": 1.65
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 14.398000000000003,
+              "threadCpuMs": 10.053,
+              "maxMs": 3.41
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 20.184000000000005,
+              "threadCpuMs": 18.828000000000003,
+              "maxMs": 0.675
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 70.059,
+              "threadCpuMs": 62.394999999999996,
+              "maxMs": 6.844
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 331,
+              "wallMs": 1002.8379999999986,
+              "threadCpuMs": 305.3050000000001,
+              "maxMs": 40.191
+            }
+          },
+          "fullRendererTasks": {
+            "count": 786,
+            "wallMs": 1968.289999999988,
+            "threadCpuMs": 714.5529999999952
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 808,
+            "outerCount": 808,
+            "wallMs": 2006.8679999999874,
+            "threadCpuMs": 727.8589999999947,
+            "durationMs": 2442.489
+          },
+          "unionRendererTasks": {
+            "rawCount": 786,
+            "outerCount": 786,
+            "wallMs": 1968.289999999988,
+            "threadCpuMs": 714.5529999999952
+          },
+          "unionEffectTasks": {
+            "rawCount": 331,
+            "outerCount": 331,
+            "wallMs": 1002.8379999999986,
+            "threadCpuMs": 305.3050000000001
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 121,
+              "inkPeak": 46,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 120,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 65,
+              "wallMs": 36.98500000000001,
+              "threadCpuMs": 36.642,
+              "maxMs": 1.425
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.754000000000001,
+              "threadCpuMs": 2.337,
+              "maxMs": 4.453
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 15.656,
+              "threadCpuMs": 9.22,
+              "maxMs": 4.35
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 98,
+              "wallMs": 20.922000000000008,
+              "threadCpuMs": 19.329,
+              "maxMs": 0.581
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 57.969,
+              "threadCpuMs": 53.808,
+              "maxMs": 2.039
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 396,
+              "wallMs": 970.9209999999974,
+              "threadCpuMs": 315.195,
+              "maxMs": 36.076
+            }
+          },
+          "fullRendererTasks": {
+            "count": 871,
+            "wallMs": 1881.392999999988,
+            "threadCpuMs": 724.532999999995
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 876,
+            "outerCount": 876,
+            "wallMs": 1888.666999999988,
+            "threadCpuMs": 730.6079999999948,
+            "durationMs": 2406.574
+          },
+          "unionRendererTasks": {
+            "rawCount": 871,
+            "outerCount": 871,
+            "wallMs": 1881.392999999988,
+            "threadCpuMs": 724.532999999995
+          },
+          "unionEffectTasks": {
+            "rawCount": 396,
+            "outerCount": 396,
+            "wallMs": 970.9209999999974,
+            "threadCpuMs": 315.195
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 0,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 129,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 12,
+      "condition": "no-hud-flashes",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 61,
+              "wallMs": 37.8,
+              "threadCpuMs": 37.472,
+              "maxMs": 1.299
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 9.937,
+              "threadCpuMs": 3.725,
+              "maxMs": 3.458
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 17.954000000000004,
+              "threadCpuMs": 10.370999999999999,
+              "maxMs": 3.076
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 90,
+              "wallMs": 21.493000000000002,
+              "threadCpuMs": 19.89200000000001,
+              "maxMs": 0.978
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 47,
+              "wallMs": 68.55600000000001,
+              "threadCpuMs": 68.60300000000001,
+              "maxMs": 2.828
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 328,
+              "wallMs": 963.645999999998,
+              "threadCpuMs": 310.39399999999983,
+              "maxMs": 53.957
+            }
+          },
+          "fullRendererTasks": {
+            "count": 833,
+            "wallMs": 1960.1889999999876,
+            "threadCpuMs": 737.8589999999942
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 846,
+            "outerCount": 846,
+            "wallMs": 1971.8199999999874,
+            "threadCpuMs": 746.8669999999939,
+            "durationMs": 2419.126
+          },
+          "unionRendererTasks": {
+            "rawCount": 833,
+            "outerCount": 833,
+            "wallMs": 1960.1889999999876,
+            "threadCpuMs": 737.8589999999942
+          },
+          "unionEffectTasks": {
+            "rawCount": 328,
+            "outerCount": 328,
+            "wallMs": 963.645999999998,
+            "threadCpuMs": 310.39399999999983
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 121,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 121,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 65,
+              "wallMs": 40.9,
+              "threadCpuMs": 40.47499999999999,
+              "maxMs": 2.029
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.408000000000001,
+              "threadCpuMs": 2.5869999999999997,
+              "maxMs": 1.522
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 10.401000000000003,
+              "threadCpuMs": 8.462,
+              "maxMs": 1.344
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 99,
+              "wallMs": 22.21700000000001,
+              "threadCpuMs": 20.698,
+              "maxMs": 0.742
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 51,
+              "wallMs": 57.791,
+              "threadCpuMs": 51.32000000000001,
+              "maxMs": 1.901
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 390,
+              "wallMs": 1003.603999999998,
+              "threadCpuMs": 309.49400000000014,
+              "maxMs": 32.349
+            }
+          },
+          "fullRendererTasks": {
+            "count": 864,
+            "wallMs": 1946.5609999999863,
+            "threadCpuMs": 753.1649999999943
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 869,
+            "outerCount": 869,
+            "wallMs": 1954.6859999999863,
+            "threadCpuMs": 759.9949999999941,
+            "durationMs": 2406.442
+          },
+          "unionRendererTasks": {
+            "rawCount": 864,
+            "outerCount": 864,
+            "wallMs": 1946.5609999999863,
+            "threadCpuMs": 753.1649999999943
+          },
+          "unionEffectTasks": {
+            "rawCount": 390,
+            "outerCount": 390,
+            "wallMs": 1003.603999999998,
+            "threadCpuMs": 309.49400000000014
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 39.753,
+              "threadCpuMs": 39.42,
+              "maxMs": 1.224
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.43,
+              "threadCpuMs": 2.731,
+              "maxMs": 3.346
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 15.065,
+              "threadCpuMs": 9.152000000000001,
+              "maxMs": 3.17
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 95,
+              "wallMs": 22.115,
+              "threadCpuMs": 20.66200000000001,
+              "maxMs": 0.909
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 61.687,
+              "threadCpuMs": 52.38700000000001,
+              "maxMs": 5.918
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 350,
+              "wallMs": 1003.404999999998,
+              "threadCpuMs": 319.80600000000004,
+              "maxMs": 37.065
+            }
+          },
+          "fullRendererTasks": {
+            "count": 1003,
+            "wallMs": 1939.5669999999857,
+            "threadCpuMs": 730.1239999999934
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 1012,
+            "outerCount": 1012,
+            "wallMs": 1946.3879999999856,
+            "threadCpuMs": 736.0899999999933,
+            "durationMs": 2414.652
+          },
+          "unionRendererTasks": {
+            "rawCount": 1003,
+            "outerCount": 1003,
+            "wallMs": 1939.5669999999857,
+            "threadCpuMs": 730.1239999999934
+          },
+          "unionEffectTasks": {
+            "rawCount": 350,
+            "outerCount": 350,
+            "wallMs": 1003.404999999998,
+            "threadCpuMs": 319.80600000000004
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 0,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 146,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "index": 13,
+      "condition": "baseline",
+      "episodes": [
+        {
+          "kind": "warmup",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 62,
+              "wallMs": 40.598,
+              "threadCpuMs": 38.97700000000001,
+              "maxMs": 1.689
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 7.782,
+              "threadCpuMs": 3.797,
+              "maxMs": 3.315
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 42,
+              "wallMs": 15.994999999999994,
+              "threadCpuMs": 10.294000000000004,
+              "maxMs": 2.32
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 91,
+              "wallMs": 23.229000000000003,
+              "threadCpuMs": 21.651999999999994,
+              "maxMs": 2.2
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 48,
+              "wallMs": 73.17499999999998,
+              "threadCpuMs": 71.14699999999999,
+              "maxMs": 2.808
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 371,
+              "wallMs": 992.9409999999971,
+              "threadCpuMs": 324.64000000000004,
+              "maxMs": 48.547
+            }
+          },
+          "fullRendererTasks": {
+            "count": 817,
+            "wallMs": 1962.0919999999874,
+            "threadCpuMs": 769.6289999999948
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 830,
+            "outerCount": 830,
+            "wallMs": 1974.112999999987,
+            "threadCpuMs": 779.7719999999945,
+            "durationMs": 2423.183
+          },
+          "unionRendererTasks": {
+            "rawCount": 817,
+            "outerCount": 817,
+            "wallMs": 1962.0919999999874,
+            "threadCpuMs": 769.6289999999948
+          },
+          "unionEffectTasks": {
+            "rawCount": 371,
+            "outerCount": 371,
+            "wallMs": 992.9409999999971,
+            "threadCpuMs": 324.64000000000004
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 121,
+              "inkPeak": 46,
+              "vfxPeak": 78,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 71,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 121,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 147,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "untraced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 38.19399999999998,
+              "threadCpuMs": 43.55399999999999,
+              "maxMs": 1.211
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 4.73,
+              "threadCpuMs": 2.5020000000000002,
+              "maxMs": 1.42
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 12.051000000000002,
+              "threadCpuMs": 8.743999999999998,
+              "maxMs": 1.365
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 21.602000000000004,
+              "threadCpuMs": 20.183000000000003,
+              "maxMs": 0.92
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 59.12800000000001,
+              "threadCpuMs": 54.969,
+              "maxMs": 2.043
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 387,
+              "wallMs": 969.9149999999973,
+              "threadCpuMs": 318.94600000000014,
+              "maxMs": 30.437
+            }
+          },
+          "fullRendererTasks": {
+            "count": 871,
+            "wallMs": 1950.9919999999884,
+            "threadCpuMs": 769.5649999999952
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 882,
+            "outerCount": 882,
+            "wallMs": 1974.7699999999882,
+            "threadCpuMs": 785.4949999999951,
+            "durationMs": 2416.333
+          },
+          "unionRendererTasks": {
+            "rawCount": 871,
+            "outerCount": 871,
+            "wallMs": 1950.9919999999884,
+            "threadCpuMs": 769.5649999999952
+          },
+          "unionEffectTasks": {
+            "rawCount": 387,
+            "outerCount": 387,
+            "wallMs": 969.9149999999973,
+            "threadCpuMs": 318.94600000000014
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 130,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 73,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 129,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 143,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        },
+        {
+          "kind": "traced",
+          "score": 1574,
+          "theme": 5,
+          "metrics": {
+            "Blink.Style.UpdateTime": {
+              "count": 64,
+              "wallMs": 43.463,
+              "threadCpuMs": 43.121,
+              "maxMs": 2.892
+            },
+            "Blink.ForcedStyleAndLayout.UpdateTime": {
+              "count": 11,
+              "wallMs": 5.3180000000000005,
+              "threadCpuMs": 2.6919999999999997,
+              "maxMs": 1.463
+            },
+            "Blink.Layout.UpdateTime": {
+              "count": 43,
+              "wallMs": 12.543000000000001,
+              "threadCpuMs": 8.841,
+              "maxMs": 1.389
+            },
+            "LocalFrameView::RunPaintLifecyclePhase": {
+              "count": 97,
+              "wallMs": 22.075000000000014,
+              "threadCpuMs": 20.607000000000006,
+              "maxMs": 0.748
+            },
+            "FrameRequestCallbackCollection::ExecuteFrameCallbacks": {
+              "count": 50,
+              "wallMs": 55.82000000000002,
+              "threadCpuMs": 54.375,
+              "maxMs": 2.226
+            },
+            "ThreadControllerImpl::RunTask": {
+              "count": 351,
+              "wallMs": 988.7459999999979,
+              "threadCpuMs": 320.24599999999975,
+              "maxMs": 29.725
+            }
+          },
+          "fullRendererTasks": {
+            "count": 837,
+            "wallMs": 1951.919999999986,
+            "threadCpuMs": 764.9659999999947
+          },
+          "wholeEpisodeTasks": {
+            "rawCount": 842,
+            "outerCount": 842,
+            "wallMs": 1959.828999999986,
+            "threadCpuMs": 771.8199999999946,
+            "durationMs": 2406.46
+          },
+          "unionRendererTasks": {
+            "rawCount": 837,
+            "outerCount": 837,
+            "wallMs": 1951.919999999986,
+            "threadCpuMs": 764.9659999999947
+          },
+          "unionEffectTasks": {
+            "rawCount": 351,
+            "outerCount": 351,
+            "wallMs": 988.7459999999979,
+            "threadCpuMs": 320.24599999999975
+          },
+          "proof": {
+            "renderedTheme": 5,
+            "savedTheme": 5,
+            "score": 1574,
+            "boardEmpty": true,
+            "rewardDomCreated": 3,
+            "rewardEffects": {
+              "captionAnimations": 2,
+              "visibleEmblems": 0,
+              "pointFlights": 2,
+              "hudFlashes": 2,
+              "themeNotices": 1,
+              "themeImpulses": 1
+            },
+            "rewardRenderer": "dom",
+            "shownScore": 1574,
+            "pendingPoints": 0,
+            "scene": {
+              "draws": 128,
+              "inkPeak": 47,
+              "vfxPeak": 79,
+              "theme": 5
+            },
+            "atmosphere": {
+              "disabled": false,
+              "theme": 5,
+              "domPaletteTheme": 5,
+              "domPalette": {
+                "bg": "#233f57",
+                "ink": "#f2f4f7",
+                "accent": "#a5e8ef"
+              },
+              "draws": 72,
+              "canvas": [
+                588,
+                1308
+              ]
+            },
+            "festival": {
+              "draws": 128,
+              "bursts": 2,
+              "spawned": 148,
+              "peakParticles": 145,
+              "disabled": false,
+              "theme": 5,
+              "canvas": [
+                588,
+                1308
+              ]
+            }
+          }
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "medians": {
+    "baseline": {
+      "measuredEpisodes": 4,
+      "styleMs": 41.4925,
+      "paintMs": 22.765500000000014,
+      "rafMs": 57.47400000000002,
+      "wholeEpisodeCpuMs": 782.5684999999942
+    },
+    "no-hud-flashes": {
+      "measuredEpisodes": 4,
+      "styleMs": 41.2285,
+      "paintMs": 22.65650000000001,
+      "rafMs": 60.2145,
+      "wholeEpisodeCpuMs": 773.1779999999936
+    },
+    "no-reward-decoration": {
+      "measuredEpisodes": 4,
+      "styleMs": 37.105999999999995,
+      "paintMs": 21.1935,
+      "rafMs": 61.81399999999999,
+      "wholeEpisodeCpuMs": 733.7774999999945
+    },
+    "no-dom-palette": {
+      "measuredEpisodes": 4,
+      "styleMs": 31.22849999999999,
+      "paintMs": 21.6525,
+      "rafMs": 60.5885,
+      "wholeEpisodeCpuMs": 763.9219999999941
+    },
+    "no-theme-notice": {
+      "measuredEpisodes": 4,
+      "styleMs": 39.821,
+      "paintMs": 23.591500000000003,
+      "rafMs": 59.7385,
+      "wholeEpisodeCpuMs": 766.274499999994
+    },
+    "no-reward-dom": {
+      "measuredEpisodes": 4,
+      "styleMs": 33.57950000000001,
+      "paintMs": 20.713500000000007,
+      "rafMs": 58.5815,
+      "wholeEpisodeCpuMs": 749.5704999999955
+    },
+    "no-theme": {
+      "measuredEpisodes": 4,
+      "styleMs": 21.218,
+      "paintMs": 13.934,
+      "rafMs": 59.17999999999999,
+      "wholeEpisodeCpuMs": 719.5104999999955
+    }
+  }
+}

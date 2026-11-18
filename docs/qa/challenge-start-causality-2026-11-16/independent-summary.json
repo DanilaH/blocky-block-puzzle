@@ -1,0 +1,803 @@
+{
+  "provenance": "Synthetic only; independent-future diagnostic replication, not acceptance/people/phone",
+  "runs": 512,
+  "nCases": 16,
+  "streamsPerCase": 4,
+  "byCell": {
+    "clear": {
+      "g0_r0_t0": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 166,
+        "censored": 2,
+        "rewardRate": 0.07153614457831325,
+        "ordinaryRate": 0.40775602409638556
+      },
+      "g0_r0_t1": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 185.1875,
+        "censored": 6,
+        "rewardRate": 0.07087411407357408,
+        "ordinaryRate": 0.4090448869389133
+      },
+      "g0_r1_t0": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 185.75,
+        "censored": 6,
+        "rewardRate": 0.06965006729475101,
+        "ordinaryRate": 0.3967025572005384
+      },
+      "g0_r1_t1": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 182.5,
+        "censored": 5,
+        "rewardRate": 0.06952054794520549,
+        "ordinaryRate": 0.40034246575342464
+      },
+      "g0_r2_t0": {
+        "geometry": 0,
+        "stream": 2,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 220.8125,
+        "censored": 9,
+        "rewardRate": 0.07642230399094255,
+        "ordinaryRate": 0.36909142371921877
+      },
+      "g0_r2_t1": {
+        "geometry": 0,
+        "stream": 2,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 195.6875,
+        "censored": 7,
+        "rewardRate": 0.08240178856595337,
+        "ordinaryRate": 0.3570744171191313
+      },
+      "g0_r3_t0": {
+        "geometry": 0,
+        "stream": 3,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 217.125,
+        "censored": 8,
+        "rewardRate": 0.07081174438687392,
+        "ordinaryRate": 0.38687392055267705
+      },
+      "g0_r3_t1": {
+        "geometry": 0,
+        "stream": 3,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 183.375,
+        "censored": 5,
+        "rewardRate": 0.06987048398091343,
+        "ordinaryRate": 0.3967280163599182
+      },
+      "g1_r0_t0": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 230.4375,
+        "censored": 7,
+        "rewardRate": 0.05478708977488473,
+        "ordinaryRate": 0.4195823162462707
+      },
+      "g1_r0_t1": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 233.4375,
+        "censored": 7,
+        "rewardRate": 0.05515394912985275,
+        "ordinaryRate": 0.4214190093708166
+      },
+      "g1_r1_t0": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 179.75,
+        "censored": 6,
+        "rewardRate": 0.04659248956884562,
+        "ordinaryRate": 0.4398470097357441
+      },
+      "g1_r1_t1": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 144.875,
+        "censored": 3,
+        "rewardRate": 0.04357204486626402,
+        "ordinaryRate": 0.44823123382226054
+      },
+      "g1_r2_t0": {
+        "geometry": 1,
+        "stream": 2,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 192.5625,
+        "censored": 5,
+        "rewardRate": 0.05647517039922103,
+        "ordinaryRate": 0.41025641025641024
+      },
+      "g1_r2_t1": {
+        "geometry": 1,
+        "stream": 2,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 190.0625,
+        "censored": 5,
+        "rewardRate": 0.055244985202236106,
+        "ordinaryRate": 0.4057875698783295
+      },
+      "g1_r3_t0": {
+        "geometry": 1,
+        "stream": 3,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 213.3125,
+        "censored": 6,
+        "rewardRate": 0.04717257544682098,
+        "ordinaryRate": 0.4216232053911515
+      },
+      "g1_r3_t1": {
+        "geometry": 1,
+        "stream": 3,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 206.8125,
+        "censored": 7,
+        "rewardRate": 0.04835297673012995,
+        "ordinaryRate": 0.42127530976125716
+      }
+    },
+    "lapse": {
+      "g0_r0_t0": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 129.625,
+        "censored": 2,
+        "rewardRate": 0.06943105110896818,
+        "ordinaryRate": 0.43683702989392476
+      },
+      "g0_r0_t1": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 127.9375,
+        "censored": 2,
+        "rewardRate": 0.07474352711284807,
+        "ordinaryRate": 0.41719589643380556
+      },
+      "g0_r1_t0": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 169.5,
+        "censored": 3,
+        "rewardRate": 0.05457227138643068,
+        "ordinaryRate": 0.4664454277286136
+      },
+      "g0_r1_t1": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 164.5,
+        "censored": 4,
+        "rewardRate": 0.05357142857142857,
+        "ordinaryRate": 0.46656534954407297
+      },
+      "g0_r2_t0": {
+        "geometry": 0,
+        "stream": 2,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 167.9375,
+        "censored": 5,
+        "rewardRate": 0.053963528098250835,
+        "ordinaryRate": 0.4681801265351693
+      },
+      "g0_r2_t1": {
+        "geometry": 0,
+        "stream": 2,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 150,
+        "censored": 3,
+        "rewardRate": 0.05625,
+        "ordinaryRate": 0.4583333333333333
+      },
+      "g0_r3_t0": {
+        "geometry": 0,
+        "stream": 3,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 170.9375,
+        "censored": 3,
+        "rewardRate": 0.07093235831809871,
+        "ordinaryRate": 0.4402193784277879
+      },
+      "g0_r3_t1": {
+        "geometry": 0,
+        "stream": 3,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 157.875,
+        "censored": 0,
+        "rewardRate": 0.06730007917656373,
+        "ordinaryRate": 0.43824228028503565
+      },
+      "g1_r0_t0": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 156.3125,
+        "censored": 2,
+        "rewardRate": 0.059976009596161534,
+        "ordinaryRate": 0.44422231107556975
+      },
+      "g1_r0_t1": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 173.8125,
+        "censored": 2,
+        "rewardRate": 0.05717367853290183,
+        "ordinaryRate": 0.44660194174757284
+      },
+      "g1_r1_t0": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 189.5,
+        "censored": 3,
+        "rewardRate": 0.057717678100263854,
+        "ordinaryRate": 0.45844327176781
+      },
+      "g1_r1_t1": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 173.25,
+        "censored": 3,
+        "rewardRate": 0.05808080808080808,
+        "ordinaryRate": 0.4624819624819625
+      },
+      "g1_r2_t0": {
+        "geometry": 1,
+        "stream": 2,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 162.625,
+        "censored": 3,
+        "rewardRate": 0.048039969254419675,
+        "ordinaryRate": 0.4684857801691007
+      },
+      "g1_r2_t1": {
+        "geometry": 1,
+        "stream": 2,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 173.8125,
+        "censored": 4,
+        "rewardRate": 0.042790363178712695,
+        "ordinaryRate": 0.47572815533980584
+      },
+      "g1_r3_t0": {
+        "geometry": 1,
+        "stream": 3,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 170.375,
+        "censored": 4,
+        "rewardRate": 0.05135730007336757,
+        "ordinaryRate": 0.46625091709464417
+      },
+      "g1_r3_t1": {
+        "geometry": 1,
+        "stream": 3,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 174.5625,
+        "censored": 3,
+        "rewardRate": 0.04117436448263516,
+        "ordinaryRate": 0.48120300751879697
+      }
+    }
+  },
+  "effects": [
+    {
+      "style": "clear",
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": 19.1875,
+        "median": 0,
+        "shorter": 1,
+        "same": 10,
+        "longer": 5,
+        "caseBootstrap95": [
+          0.8125,
+          40.9375
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 3,
+        "median": 0,
+        "shorter": 4,
+        "same": 8,
+        "longer": 4,
+        "caseBootstrap95": [
+          -13.5,
+          22.125
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -16.1875,
+        "median": -0.5,
+        "shorter": 8,
+        "same": 5,
+        "longer": 3,
+        "caseBootstrap95": [
+          -36,
+          1.125
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -3.25,
+        "median": 0,
+        "shorter": 2,
+        "same": 13,
+        "longer": 1,
+        "caseBootstrap95": [
+          -41.125,
+          36.875
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -34.875,
+        "median": 0,
+        "shorter": 4,
+        "same": 10,
+        "longer": 2,
+        "caseBootstrap95": [
+          -81.5,
+          8.75
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -31.625,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -93.375,
+          36.375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "stream": 2,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -25.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 13,
+        "longer": 0,
+        "caseBootstrap95": [
+          -62.8125,
+          0
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -2.5,
+        "median": 0,
+        "shorter": 2,
+        "same": 12,
+        "longer": 2,
+        "caseBootstrap95": [
+          -26.3125,
+          21.6875
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 22.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 11,
+        "longer": 3,
+        "caseBootstrap95": [
+          -4,
+          60.9375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "stream": 3,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -33.75,
+        "median": 0,
+        "shorter": 4,
+        "same": 12,
+        "longer": 0,
+        "caseBootstrap95": [
+          -74.3125,
+          -4.375
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -6.5,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          -44.5,
+          27.375
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 27.25,
+        "median": 0,
+        "shorter": 1,
+        "same": 10,
+        "longer": 5,
+        "caseBootstrap95": [
+          -7.4375,
+          67.4375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -1.6875,
+        "median": 0,
+        "shorter": 2,
+        "same": 13,
+        "longer": 1,
+        "caseBootstrap95": [
+          -32.125,
+          33.875
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 17.5,
+        "median": 0,
+        "shorter": 3,
+        "same": 8,
+        "longer": 5,
+        "caseBootstrap95": [
+          -20.5625,
+          58.875
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 19.1875,
+        "median": 0,
+        "shorter": 2,
+        "same": 9,
+        "longer": 5,
+        "caseBootstrap95": [
+          -10.25,
+          51.4375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -5,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -26.5625,
+          18.1875
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -16.25,
+        "median": 0,
+        "shorter": 4,
+        "same": 10,
+        "longer": 2,
+        "caseBootstrap95": [
+          -36.75,
+          -1.25
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -11.25,
+        "median": 0,
+        "shorter": 4,
+        "same": 9,
+        "longer": 3,
+        "caseBootstrap95": [
+          -39.625,
+          13.75
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "stream": 2,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -17.9375,
+        "median": 0,
+        "shorter": 4,
+        "same": 11,
+        "longer": 1,
+        "caseBootstrap95": [
+          -42.5625,
+          0.8125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 11.1875,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -18.9375,
+          46.625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 29.125,
+        "median": 0,
+        "shorter": 2,
+        "same": 9,
+        "longer": 5,
+        "caseBootstrap95": [
+          -3.0625,
+          66.875
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "stream": 3,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -13.0625,
+        "median": 0,
+        "shorter": 4,
+        "same": 8,
+        "longer": 4,
+        "caseBootstrap95": [
+          -51.125,
+          21.9375
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 4.1875,
+        "median": 0,
+        "shorter": 2,
+        "same": 11,
+        "longer": 3,
+        "caseBootstrap95": [
+          -36.9375,
+          45.625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 17.25,
+        "median": 0,
+        "shorter": 3,
+        "same": 8,
+        "longer": 5,
+        "caseBootstrap95": [
+          -19.125,
+          61.875
+        ],
+        "iterations": 10000
+      }
+    }
+  ],
+  "pooled": [
+    {
+      "style": "clear",
+      "nCaseClusters": 16,
+      "streamsPerCase": 4,
+      "pairedGames": 64,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -10.734375,
+        "median": -4.75,
+        "shorter": 9,
+        "same": 4,
+        "longer": 3,
+        "caseBootstrap95": [
+          -25.140625,
+          4.3125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -10.21875,
+        "median": 0,
+        "shorter": 7,
+        "same": 2,
+        "longer": 7,
+        "caseBootstrap95": [
+          -24.25,
+          2.9375
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 0.515625,
+        "median": 5.125,
+        "shorter": 6,
+        "same": 1,
+        "longer": 9,
+        "caseBootstrap95": [
+          -15.90625,
+          17.59375
+        ],
+        "iterations": 10000
+      },
+      "diagnosticTailExcess": {
+        "n": 16,
+        "mean": -30.62031250000001,
+        "median": -19.712500000000006,
+        "shorter": 14,
+        "same": 0,
+        "longer": 2,
+        "caseBootstrap95": [
+          -45.02031250000001,
+          -16.76406250000001
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "nCaseClusters": 16,
+      "streamsPerCase": 4,
+      "pairedGames": 64,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -9.421875,
+        "median": 0,
+        "shorter": 7,
+        "same": 4,
+        "longer": 5,
+        "caseBootstrap95": [
+          -20.9375,
+          1.203125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 4.15625,
+        "median": 0.5,
+        "shorter": 5,
+        "same": 2,
+        "longer": 9,
+        "caseBootstrap95": [
+          -7.421875,
+          16.140625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 13.578125,
+        "median": 6.75,
+        "shorter": 5,
+        "same": 2,
+        "longer": 9,
+        "caseBootstrap95": [
+          1.625,
+          27.15625
+        ],
+        "iterations": 10000
+      },
+      "diagnosticTailExcess": {
+        "n": 16,
+        "mean": -12.81406250000001,
+        "median": -17.36250000000001,
+        "shorter": 12,
+        "same": 0,
+        "longer": 4,
+        "caseBootstrap95": [
+          -25.000000000000014,
+          -0.10468750000001092
+        ],
+        "iterations": 10000
+      }
+    }
+  ],
+  "maxWork": 23488,
+  "notes": [
+    "No new runtime policy or APK",
+    "Average within case before resampling; 64 games are not 64 independent starting packages",
+    "Do not reinterpret this diagnostic as D97 acceptance or select a winning stream",
+    "Closed holdouts remain unopened"
+  ]
+}

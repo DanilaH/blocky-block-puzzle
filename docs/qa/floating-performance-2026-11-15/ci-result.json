@@ -1,0 +1,47 @@
+{
+  "runId": 43738640302,
+  "sourceCommit": "477e691e1fb971c89a78b8e97466a5b72a4d1577",
+  "ciMergeCommit": "44095e928591efde227573a6ac1036913152a4d8",
+  "sourceTree": "7fd626d1396079214fcdc3878f33593f7d0fedc8",
+  "jobs": [
+    {
+      "id": 132886725143,
+      "name": "verify",
+      "conclusion": "success",
+      "unit": 339,
+      "browser": 255,
+      "browserMinutes": 24.6
+    },
+    {
+      "id": 132886725355,
+      "name": "focused-effects",
+      "conclusion": "success",
+      "browser": 25
+    },
+    {
+      "id": 132886725395,
+      "name": "android",
+      "conclusion": "success",
+      "checks": [
+        "testDebugUnitTest",
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "original signer",
+        "all99 independently rebuilt web files"
+      ]
+    },
+    {
+      "id": 132887524937,
+      "name": "cdp-emulator",
+      "conclusion": "success",
+      "instrumentationTests": 2
+    }
+  ],
+  "limits": [
+    "No physical phone performance claim",
+    "One mixed synthetic praise comparison, scheduler unchanged",
+    "No raw private play records in Git",
+    "Human balance D91 remains HOLD/default v2/rollout off",
+    "AppMetrica cabinet deferred"
+  ]
+}

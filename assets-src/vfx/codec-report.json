@@ -1,0 +1,30 @@
+[
+  {
+    "id": "flash",
+    "webp": 10782,
+    "avif": 4811,
+    "avifProvenance": "WebP candidate; comparison only, not shipped",
+    "sourceBytes": 771956
+  },
+  {
+    "id": "streak",
+    "webp": 13420,
+    "avif": 5191,
+    "avifProvenance": "WebP candidate; comparison only, not shipped",
+    "sourceBytes": 625034
+  },
+  {
+    "id": "chip",
+    "webp": 3190,
+    "avif": 2141,
+    "avifProvenance": "WebP candidate; comparison only, not shipped",
+    "sourceBytes": 751660
+  },
+  {
+    "id": "ring",
+    "webp": 65122,
+    "avif": 25276,
+    "avifProvenance": "WebP candidate; comparison only, not shipped",
+    "sourceBytes": 704657
+  }
+]

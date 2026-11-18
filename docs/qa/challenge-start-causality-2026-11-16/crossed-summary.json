@@ -1,0 +1,3347 @@
+{
+  "provenance": "Synthetic only; seen diagnostic counterfactuals, not acceptance/people/phone",
+  "runs": 512,
+  "nCases": 16,
+  "nativeOutcomesExact": 128,
+  "initial": {
+    "ordinarySinceLoad": 1,
+    "authoredSinceLoad": 0,
+    "payoffBoth": 1,
+    "ordinaryRngDraws": [
+      35
+    ],
+    "authoredRngDraws": [
+      5
+    ]
+  },
+  "byCell": {
+    "clear": {
+      "g0_c0_s0_t0": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 206.5,
+        "censored": 6,
+        "early": 1,
+        "allClears": 195,
+        "rewardRate": 0.059019370460048425,
+        "ordinaryRate": 0.41858353510895885,
+        "changedHands": 0,
+        "maxWork": 23373
+      },
+      "g0_c0_s0_t1": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 186.9375,
+        "censored": 5,
+        "early": 1,
+        "allClears": 170,
+        "rewardRate": 0.05683717820127048,
+        "ordinaryRate": 0.42995653627549313,
+        "changedHands": 13,
+        "maxWork": 23488
+      },
+      "g0_c0_s1_t0": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 211.125,
+        "censored": 5,
+        "early": 1,
+        "allClears": 227,
+        "rewardRate": 0.06719952634695085,
+        "ordinaryRate": 0.4049733570159858,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g0_c0_s1_t1": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 199,
+        "censored": 6,
+        "early": 1,
+        "allClears": 201,
+        "rewardRate": 0.06312814070351759,
+        "ordinaryRate": 0.4117462311557789,
+        "changedHands": 16,
+        "maxWork": 23488
+      },
+      "g0_c1_s0_t0": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 206.5,
+        "censored": 6,
+        "early": 1,
+        "allClears": 195,
+        "rewardRate": 0.059019370460048425,
+        "ordinaryRate": 0.41858353510895885,
+        "changedHands": 0,
+        "maxWork": 23373
+      },
+      "g0_c1_s0_t1": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 186.9375,
+        "censored": 5,
+        "early": 1,
+        "allClears": 170,
+        "rewardRate": 0.05683717820127048,
+        "ordinaryRate": 0.42995653627549313,
+        "changedHands": 13,
+        "maxWork": 23488
+      },
+      "g0_c1_s1_t0": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 211.125,
+        "censored": 5,
+        "early": 1,
+        "allClears": 227,
+        "rewardRate": 0.06719952634695085,
+        "ordinaryRate": 0.4049733570159858,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g0_c1_s1_t1": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 199,
+        "censored": 6,
+        "early": 1,
+        "allClears": 201,
+        "rewardRate": 0.06312814070351759,
+        "ordinaryRate": 0.4117462311557789,
+        "changedHands": 16,
+        "maxWork": 23488
+      },
+      "g1_c0_s0_t0": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 220.9375,
+        "censored": 8,
+        "early": 1,
+        "allClears": 182,
+        "rewardRate": 0.05148514851485148,
+        "ordinaryRate": 0.43055162659123053,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g1_c0_s0_t1": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 245.5625,
+        "censored": 10,
+        "early": 1,
+        "allClears": 192,
+        "rewardRate": 0.04886739628404174,
+        "ordinaryRate": 0.43318910664291166,
+        "changedHands": 24,
+        "maxWork": 23488
+      },
+      "g1_c0_s1_t0": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 204.625,
+        "censored": 5,
+        "early": 1,
+        "allClears": 180,
+        "rewardRate": 0.05497861942577886,
+        "ordinaryRate": 0.41539401343921806,
+        "changedHands": 0,
+        "maxWork": 23253
+      },
+      "g1_c0_s1_t1": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 184.6875,
+        "censored": 4,
+        "early": 1,
+        "allClears": 174,
+        "rewardRate": 0.05888324873096447,
+        "ordinaryRate": 0.40609137055837563,
+        "changedHands": 18,
+        "maxWork": 23488
+      },
+      "g1_c1_s0_t0": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 220.9375,
+        "censored": 8,
+        "early": 1,
+        "allClears": 182,
+        "rewardRate": 0.05148514851485148,
+        "ordinaryRate": 0.43055162659123053,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g1_c1_s0_t1": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 245.5625,
+        "censored": 10,
+        "early": 1,
+        "allClears": 192,
+        "rewardRate": 0.04886739628404174,
+        "ordinaryRate": 0.43318910664291166,
+        "changedHands": 24,
+        "maxWork": 23488
+      },
+      "g1_c1_s1_t0": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 204.625,
+        "censored": 5,
+        "early": 1,
+        "allClears": 180,
+        "rewardRate": 0.05497861942577886,
+        "ordinaryRate": 0.41539401343921806,
+        "changedHands": 0,
+        "maxWork": 23253
+      },
+      "g1_c1_s1_t1": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 184.6875,
+        "censored": 4,
+        "early": 1,
+        "allClears": 174,
+        "rewardRate": 0.05888324873096447,
+        "ordinaryRate": 0.40609137055837563,
+        "changedHands": 18,
+        "maxWork": 23488
+      }
+    },
+    "lapse": {
+      "g0_c0_s0_t0": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 211.625,
+        "censored": 6,
+        "early": 0,
+        "allClears": 189,
+        "rewardRate": 0.05581807442409923,
+        "ordinaryRate": 0.4689899586532782,
+        "changedHands": 0,
+        "maxWork": 23142
+      },
+      "g0_c0_s0_t1": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 174.5,
+        "censored": 3,
+        "early": 0,
+        "allClears": 166,
+        "rewardRate": 0.05945558739255014,
+        "ordinaryRate": 0.46310888252148996,
+        "changedHands": 14,
+        "maxWork": 23488
+      },
+      "g0_c0_s1_t0": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 129.1875,
+        "censored": 1,
+        "early": 4,
+        "allClears": 138,
+        "rewardRate": 0.06676342525399129,
+        "ordinaryRate": 0.4320270924044509,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g0_c0_s1_t1": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 139.8125,
+        "censored": 2,
+        "early": 4,
+        "allClears": 165,
+        "rewardRate": 0.07375949932945909,
+        "ordinaryRate": 0.42378185069289226,
+        "changedHands": 11,
+        "maxWork": 23488
+      },
+      "g0_c1_s0_t0": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 211.625,
+        "censored": 6,
+        "early": 0,
+        "allClears": 189,
+        "rewardRate": 0.05581807442409923,
+        "ordinaryRate": 0.4689899586532782,
+        "changedHands": 0,
+        "maxWork": 23142
+      },
+      "g0_c1_s0_t1": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 174.5,
+        "censored": 3,
+        "early": 0,
+        "allClears": 166,
+        "rewardRate": 0.05945558739255014,
+        "ordinaryRate": 0.46310888252148996,
+        "changedHands": 14,
+        "maxWork": 23488
+      },
+      "g0_c1_s1_t0": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 129.1875,
+        "censored": 1,
+        "early": 4,
+        "allClears": 138,
+        "rewardRate": 0.06676342525399129,
+        "ordinaryRate": 0.4320270924044509,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g0_c1_s1_t1": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 139.8125,
+        "censored": 2,
+        "early": 4,
+        "allClears": 165,
+        "rewardRate": 0.07375949932945909,
+        "ordinaryRate": 0.42378185069289226,
+        "changedHands": 11,
+        "maxWork": 23488
+      },
+      "g1_c0_s0_t0": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 190.375,
+        "censored": 5,
+        "early": 1,
+        "allClears": 173,
+        "rewardRate": 0.05679579776756402,
+        "ordinaryRate": 0.4576493762311228,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g1_c0_s0_t1": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 175.5,
+        "censored": 4,
+        "early": 1,
+        "allClears": 164,
+        "rewardRate": 0.0584045584045584,
+        "ordinaryRate": 0.4547720797720798,
+        "changedHands": 10,
+        "maxWork": 23488
+      },
+      "g1_c0_s1_t0": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 108.6875,
+        "censored": 1,
+        "early": 4,
+        "allClears": 90,
+        "rewardRate": 0.051753881541115584,
+        "ordinaryRate": 0.4519838987924094,
+        "changedHands": 0,
+        "maxWork": 23035
+      },
+      "g1_c0_s1_t1": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 96.125,
+        "censored": 1,
+        "early": 4,
+        "allClears": 79,
+        "rewardRate": 0.05136540962288687,
+        "ordinaryRate": 0.4486345903771131,
+        "changedHands": 7,
+        "maxWork": 23488
+      },
+      "g1_c1_s0_t0": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 190.375,
+        "censored": 5,
+        "early": 1,
+        "allClears": 173,
+        "rewardRate": 0.05679579776756402,
+        "ordinaryRate": 0.4576493762311228,
+        "changedHands": 0,
+        "maxWork": 23488
+      },
+      "g1_c1_s0_t1": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 175.5,
+        "censored": 4,
+        "early": 1,
+        "allClears": 164,
+        "rewardRate": 0.0584045584045584,
+        "ordinaryRate": 0.4547720797720798,
+        "changedHands": 10,
+        "maxWork": 23488
+      },
+      "g1_c1_s1_t0": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0,
+        "runs": 16,
+        "cappedMean": 108.6875,
+        "censored": 1,
+        "early": 4,
+        "allClears": 90,
+        "rewardRate": 0.051753881541115584,
+        "ordinaryRate": 0.4519838987924094,
+        "changedHands": 0,
+        "maxWork": 23035
+      },
+      "g1_c1_s1_t1": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1,
+        "runs": 16,
+        "cappedMean": 96.125,
+        "censored": 1,
+        "early": 4,
+        "allClears": 79,
+        "rewardRate": 0.05136540962288687,
+        "ordinaryRate": 0.4486345903771131,
+        "changedHands": 7,
+        "maxWork": 23488
+      }
+    }
+  },
+  "paired": [
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 14.4375,
+        "median": 14,
+        "shorter": 6,
+        "same": 2,
+        "longer": 8,
+        "caseBootstrap95": [
+          -64.875,
+          94.375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.8125,
+        "median": 1,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -8.0625,
+          5.5625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 14.4375,
+        "median": 14,
+        "shorter": 6,
+        "same": 2,
+        "longer": 8,
+        "caseBootstrap95": [
+          -63.8125,
+          93.4375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.8125,
+        "median": 1,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -8.375,
+          5.75
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -6.5,
+        "median": 0,
+        "shorter": 5,
+        "same": 5,
+        "longer": 6,
+        "caseBootstrap95": [
+          -55.4375,
+          34
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -2.9375,
+        "median": -2,
+        "shorter": 9,
+        "same": 0,
+        "longer": 7,
+        "caseBootstrap95": [
+          -9,
+          1.625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -6.5,
+        "median": 0,
+        "shorter": 5,
+        "same": 5,
+        "longer": 6,
+        "caseBootstrap95": [
+          -55.3125,
+          34.1875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -2.9375,
+        "median": -2,
+        "shorter": 9,
+        "same": 0,
+        "longer": 7,
+        "caseBootstrap95": [
+          -8.875,
+          1.625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 58.625,
+        "median": 72.5,
+        "shorter": 4,
+        "same": 3,
+        "longer": 9,
+        "caseBootstrap95": [
+          -30.1875,
+          140.625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.375,
+        "median": 1.5,
+        "shorter": 6,
+        "same": 0,
+        "longer": 10,
+        "caseBootstrap95": [
+          -3.125,
+          5.4375
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 58.625,
+        "median": 72.5,
+        "shorter": 4,
+        "same": 3,
+        "longer": 9,
+        "caseBootstrap95": [
+          -25.1875,
+          140.3125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.375,
+        "median": 1.5,
+        "shorter": 6,
+        "same": 0,
+        "longer": 10,
+        "caseBootstrap95": [
+          -3.125,
+          5.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -14.3125,
+        "median": 0,
+        "shorter": 7,
+        "same": 5,
+        "longer": 4,
+        "caseBootstrap95": [
+          -74.8125,
+          49.625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.6875,
+        "median": -2,
+        "shorter": 10,
+        "same": 1,
+        "longer": 5,
+        "caseBootstrap95": [
+          -7.1875,
+          4.6875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -14.3125,
+        "median": 0,
+        "shorter": 7,
+        "same": 5,
+        "longer": 4,
+        "caseBootstrap95": [
+          -74.625,
+          49.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.6875,
+        "median": -2,
+        "shorter": 10,
+        "same": 1,
+        "longer": 5,
+        "caseBootstrap95": [
+          -7.125,
+          4.625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 4.625,
+        "median": -12,
+        "shorter": 8,
+        "same": 1,
+        "longer": 7,
+        "caseBootstrap95": [
+          -64.4375,
+          73.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 2,
+        "median": 3,
+        "shorter": 7,
+        "same": 0,
+        "longer": 9,
+        "caseBootstrap95": [
+          -3.1875,
+          7.75
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -16.3125,
+        "median": -16.5,
+        "shorter": 8,
+        "same": 3,
+        "longer": 5,
+        "caseBootstrap95": [
+          -88.375,
+          55.75
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.125,
+        "median": -1.5,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -5.8125,
+          5.75
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 4.625,
+        "median": -12,
+        "shorter": 8,
+        "same": 1,
+        "longer": 7,
+        "caseBootstrap95": [
+          -65.1875,
+          73.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 2,
+        "median": 3,
+        "shorter": 7,
+        "same": 0,
+        "longer": 9,
+        "caseBootstrap95": [
+          -3.25,
+          7.875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -16.3125,
+        "median": -16.5,
+        "shorter": 8,
+        "same": 3,
+        "longer": 5,
+        "caseBootstrap95": [
+          -89.3125,
+          55.75
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.125,
+        "median": -1.5,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -5.75,
+          5.6875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 12.0625,
+        "median": 12,
+        "shorter": 6,
+        "same": 2,
+        "longer": 8,
+        "caseBootstrap95": [
+          -64.5625,
+          91.625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.9375,
+        "median": 3.5,
+        "shorter": 6,
+        "same": 0,
+        "longer": 10,
+        "caseBootstrap95": [
+          -4.125,
+          7.4375
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -60.875,
+        "median": -115,
+        "shorter": 10,
+        "same": 1,
+        "longer": 5,
+        "caseBootstrap95": [
+          -133.9375,
+          14.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.125,
+        "median": 0.5,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -6.8125,
+          4.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 12.0625,
+        "median": 12,
+        "shorter": 6,
+        "same": 2,
+        "longer": 8,
+        "caseBootstrap95": [
+          -68.125,
+          91.375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.9375,
+        "median": 3.5,
+        "shorter": 6,
+        "same": 0,
+        "longer": 10,
+        "caseBootstrap95": [
+          -4.0625,
+          7.5625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -60.875,
+        "median": -115,
+        "shorter": 10,
+        "same": 1,
+        "longer": 5,
+        "caseBootstrap95": [
+          -130.25,
+          14.75
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.125,
+        "median": 0.5,
+        "shorter": 8,
+        "same": 0,
+        "longer": 8,
+        "caseBootstrap95": [
+          -6.75,
+          4.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -19.5625,
+        "median": 0,
+        "shorter": 4,
+        "same": 11,
+        "longer": 1,
+        "caseBootstrap95": [
+          -45.5625,
+          -0.25
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -7,
+          2.875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 72
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 24.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          5.25,
+          48
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0.625,
+        "median": 0,
+        "shorter": 5,
+        "same": 7,
+        "longer": 4,
+        "caseBootstrap95": [
+          -1.5625,
+          3.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 11,
+      "firstChangedHandMedian": 117
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -19.5625,
+        "median": 0,
+        "shorter": 4,
+        "same": 11,
+        "longer": 1,
+        "caseBootstrap95": [
+          -45.5625,
+          -0.25
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -6.9375,
+          2.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 72
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 24.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          5,
+          47.8125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0.625,
+        "median": 0,
+        "shorter": 5,
+        "same": 7,
+        "longer": 4,
+        "caseBootstrap95": [
+          -1.625,
+          3.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 11,
+      "firstChangedHandMedian": 117
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -12.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -49.8125,
+          17.4375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.625,
+        "median": 0,
+        "shorter": 4,
+        "same": 8,
+        "longer": 4,
+        "caseBootstrap95": [
+          -4.4375,
+          0.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 111
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -19.9375,
+        "median": 0,
+        "shorter": 6,
+        "same": 6,
+        "longer": 4,
+        "caseBootstrap95": [
+          -52.875,
+          16.625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.375,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -4.5,
+          4.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 11,
+      "firstChangedHandMedian": 117
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -12.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -49.8125,
+          16.5
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.625,
+        "median": 0,
+        "shorter": 4,
+        "same": 8,
+        "longer": 4,
+        "caseBootstrap95": [
+          -4.5625,
+          0.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 111
+    },
+    {
+      "style": "clear",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -19.9375,
+        "median": 0,
+        "shorter": 6,
+        "same": 6,
+        "longer": 4,
+        "caseBootstrap95": [
+          -52.9375,
+          16.125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.375,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -4.4375,
+          4.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 11,
+      "firstChangedHandMedian": 117
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -21.25,
+        "median": 0,
+        "shorter": 7,
+        "same": 4,
+        "longer": 5,
+        "caseBootstrap95": [
+          -70.9375,
+          24.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1,
+        "median": -1,
+        "shorter": 8,
+        "same": 3,
+        "longer": 5,
+        "caseBootstrap95": [
+          -4.25,
+          2.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -21.25,
+        "median": 0,
+        "shorter": 7,
+        "same": 4,
+        "longer": 5,
+        "caseBootstrap95": [
+          -68.875,
+          24.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1,
+        "median": -1,
+        "shorter": 8,
+        "same": 3,
+        "longer": 5,
+        "caseBootstrap95": [
+          -4.25,
+          2.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -20.5,
+        "median": 0,
+        "shorter": 6,
+        "same": 5,
+        "longer": 5,
+        "caseBootstrap95": [
+          -71.8125,
+          22.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -3,
+        "median": -1.5,
+        "shorter": 9,
+        "same": 2,
+        "longer": 5,
+        "caseBootstrap95": [
+          -7.0625,
+          0.5625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -20.5,
+        "median": 0,
+        "shorter": 6,
+        "same": 5,
+        "longer": 5,
+        "caseBootstrap95": [
+          -70.4375,
+          23.75
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -3,
+        "median": -1.5,
+        "shorter": 9,
+        "same": 2,
+        "longer": 5,
+        "caseBootstrap95": [
+          -7,
+          0.5
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 1,
+        "median": 0,
+        "shorter": 6,
+        "same": 5,
+        "longer": 5,
+        "caseBootstrap95": [
+          -47.6875,
+          50.9375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.125,
+        "median": -1,
+        "shorter": 8,
+        "same": 1,
+        "longer": 7,
+        "caseBootstrap95": [
+          -3.5,
+          3.1875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 1,
+        "median": 0,
+        "shorter": 6,
+        "same": 5,
+        "longer": 5,
+        "caseBootstrap95": [
+          -47.25,
+          50.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.125,
+        "median": -1,
+        "shorter": 8,
+        "same": 1,
+        "longer": 7,
+        "caseBootstrap95": [
+          -3.4375,
+          3.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 0,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -43.6875,
+        "median": 0,
+        "shorter": 7,
+        "same": 5,
+        "longer": 4,
+        "caseBootstrap95": [
+          -102,
+          16.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.375,
+        "median": -2.5,
+        "shorter": 11,
+        "same": 2,
+        "longer": 3,
+        "caseBootstrap95": [
+          -9.5,
+          -1.5625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "geometry",
+      "fixed": {
+        "counter": 1,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -43.6875,
+        "median": 0,
+        "shorter": 7,
+        "same": 5,
+        "longer": 4,
+        "caseBootstrap95": [
+          -103,
+          15.5
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.375,
+        "median": -2.5,
+        "shorter": 11,
+        "same": 2,
+        "longer": 3,
+        "caseBootstrap95": [
+          -9.5,
+          -1.5
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 0,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "counter",
+      "fixed": {
+        "geometry": 1,
+        "stream": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 0,
+        "median": 0,
+        "shorter": 0,
+        "same": 16,
+        "longer": 0,
+        "caseBootstrap95": [
+          0,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 0,
+      "firstChangedHandMedian": null
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -82.4375,
+        "median": -42.5,
+        "shorter": 13,
+        "same": 0,
+        "longer": 3,
+        "caseBootstrap95": [
+          -141.5625,
+          -22.25
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -3.1875,
+        "median": -4,
+        "shorter": 10,
+        "same": 2,
+        "longer": 4,
+        "caseBootstrap95": [
+          -7.375,
+          1.1875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -81.6875,
+        "median": -91.5,
+        "shorter": 15,
+        "same": 0,
+        "longer": 1,
+        "caseBootstrap95": [
+          -121.125,
+          -40.5
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.1875,
+        "median": -4.5,
+        "shorter": 12,
+        "same": 2,
+        "longer": 2,
+        "caseBootstrap95": [
+          -8.375,
+          -2.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 4.5
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -82.4375,
+        "median": -42.5,
+        "shorter": 13,
+        "same": 0,
+        "longer": 3,
+        "caseBootstrap95": [
+          -140.875,
+          -21.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -3.1875,
+        "median": -4,
+        "shorter": 10,
+        "same": 2,
+        "longer": 4,
+        "caseBootstrap95": [
+          -7.1875,
+          1.1875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "tasks": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -81.6875,
+        "median": -91.5,
+        "shorter": 15,
+        "same": 0,
+        "longer": 1,
+        "caseBootstrap95": [
+          -121.25,
+          -40.125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.1875,
+        "median": -4.5,
+        "shorter": 12,
+        "same": 2,
+        "longer": 2,
+        "caseBootstrap95": [
+          -8.4375,
+          -2.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 4.5
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -34.6875,
+        "median": -38,
+        "shorter": 10,
+        "same": 0,
+        "longer": 6,
+        "caseBootstrap95": [
+          -94.3125,
+          26.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.0625,
+        "median": -1,
+        "shorter": 9,
+        "same": 1,
+        "longer": 6,
+        "caseBootstrap95": [
+          -4.4375,
+          4.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -79.375,
+        "median": -69,
+        "shorter": 14,
+        "same": 0,
+        "longer": 2,
+        "caseBootstrap95": [
+          -122.75,
+          -39.9375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.3125,
+        "median": -4.5,
+        "shorter": 11,
+        "same": 2,
+        "longer": 3,
+        "caseBootstrap95": [
+          -9,
+          -1.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 4.5
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -34.6875,
+        "median": -38,
+        "shorter": 10,
+        "same": 0,
+        "longer": 6,
+        "caseBootstrap95": [
+          -94.0625,
+          26.1875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.0625,
+        "median": -1,
+        "shorter": 9,
+        "same": 1,
+        "longer": 6,
+        "caseBootstrap95": [
+          -4.4375,
+          4.8125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 3
+    },
+    {
+      "style": "lapse",
+      "factor": "stream",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "tasks": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -79.375,
+        "median": -69,
+        "shorter": 14,
+        "same": 0,
+        "longer": 2,
+        "caseBootstrap95": [
+          -121.0625,
+          -39.625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -5.3125,
+        "median": -4.5,
+        "shorter": 11,
+        "same": 2,
+        "longer": 3,
+        "caseBootstrap95": [
+          -9.125,
+          -1.75
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 16,
+      "firstChangedHandMedian": 4.5
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -37.125,
+        "median": 0,
+        "shorter": 7,
+        "same": 9,
+        "longer": 0,
+        "caseBootstrap95": [
+          -69.3125,
+          -10.375
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.4375,
+        "median": 0,
+        "shorter": 5,
+        "same": 10,
+        "longer": 1,
+        "caseBootstrap95": [
+          -3.25,
+          -0.0625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 105
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -14.875,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -48.0625,
+          14.875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -2.4375,
+          1.25
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 114
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -37.125,
+        "median": 0,
+        "shorter": 7,
+        "same": 9,
+        "longer": 0,
+        "caseBootstrap95": [
+          -69,
+          -10.1875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -1.4375,
+        "median": 0,
+        "shorter": 5,
+        "same": 10,
+        "longer": 1,
+        "caseBootstrap95": [
+          -3.3125,
+          -0.0625
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 105
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 0
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -14.875,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -46.6875,
+          15.5625
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -2.4375,
+          1.1875
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 9,
+      "firstChangedHandMedian": 114
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 0,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 10.625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -20.5625,
+          51.3125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.6875,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -0.8125,
+          5.3125
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 7,
+      "firstChangedHandMedian": 93
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 0,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -12.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -40.25,
+          15.125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.6875,
+        "median": 0,
+        "shorter": 3,
+        "same": 13,
+        "longer": 0,
+        "caseBootstrap95": [
+          -1.4375,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 5,
+      "firstChangedHandMedian": 150
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 0,
+        "counter": 1,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": 10.625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -20.375,
+          50.6875
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": 1.6875,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -0.8125,
+          5.375
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 7,
+      "firstChangedHandMedian": 93
+    },
+    {
+      "style": "lapse",
+      "factor": "tasks",
+      "fixed": {
+        "geometry": 1,
+        "counter": 1,
+        "stream": 1
+      },
+      "deltaCappedMoves": {
+        "n": 16,
+        "mean": -12.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -40.25,
+          15.125
+        ],
+        "iterations": 10000
+      },
+      "deltaAllClears": {
+        "n": 16,
+        "mean": -0.6875,
+        "median": 0,
+        "shorter": 3,
+        "same": 13,
+        "longer": 0,
+        "caseBootstrap95": [
+          -1.4375,
+          0
+        ],
+        "iterations": 10000
+      },
+      "traceDifferent": 5,
+      "firstChangedHandMedian": 150
+    }
+  ],
+  "interactions": [
+    {
+      "style": "clear",
+      "counter": 0,
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -19.5625,
+        "median": 0,
+        "shorter": 4,
+        "same": 11,
+        "longer": 1,
+        "caseBootstrap95": [
+          -45.5625,
+          -0.25
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 24.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          4.5625,
+          47.5625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 44.1875,
+        "median": 0,
+        "shorter": 2,
+        "same": 7,
+        "longer": 7,
+        "caseBootstrap95": [
+          12.8125,
+          84.375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "counter": 0,
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -12.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -50.625,
+          17.4375
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -19.9375,
+        "median": 0,
+        "shorter": 6,
+        "same": 6,
+        "longer": 4,
+        "caseBootstrap95": [
+          -53.375,
+          14.5
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -7.8125,
+        "median": 0,
+        "shorter": 7,
+        "same": 6,
+        "longer": 3,
+        "caseBootstrap95": [
+          -48.8125,
+          37.25
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "counter": 1,
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -19.5625,
+        "median": 0,
+        "shorter": 4,
+        "same": 11,
+        "longer": 1,
+        "caseBootstrap95": [
+          -46.75,
+          -0.25
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": 24.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          5.25,
+          47.8125
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 44.1875,
+        "median": 0,
+        "shorter": 2,
+        "same": 7,
+        "longer": 7,
+        "caseBootstrap95": [
+          13.0625,
+          84.25
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "clear",
+      "counter": 1,
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -12.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -50.9375,
+          17.3125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -19.9375,
+        "median": 0,
+        "shorter": 6,
+        "same": 6,
+        "longer": 4,
+        "caseBootstrap95": [
+          -54,
+          15.5625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -7.8125,
+        "median": 0,
+        "shorter": 7,
+        "same": 6,
+        "longer": 3,
+        "caseBootstrap95": [
+          -47.8125,
+          36.0625
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "counter": 0,
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -37.125,
+        "median": 0,
+        "shorter": 7,
+        "same": 9,
+        "longer": 0,
+        "caseBootstrap95": [
+          -69.6875,
+          -10.5625
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -14.875,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -47.0625,
+          15.375
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 22.25,
+        "median": 0,
+        "shorter": 3,
+        "same": 7,
+        "longer": 6,
+        "caseBootstrap95": [
+          -8,
+          56.25
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "counter": 0,
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": 10.625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -20.0625,
+          50.8125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -12.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -41.25,
+          14.625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -23.1875,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -75.125,
+          18.6875
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "counter": 1,
+      "stream": 0,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": -37.125,
+        "median": 0,
+        "shorter": 7,
+        "same": 9,
+        "longer": 0,
+        "caseBootstrap95": [
+          -69.5625,
+          -10.1875
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -14.875,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -46.8125,
+          15
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 22.25,
+        "median": 0,
+        "shorter": 3,
+        "same": 7,
+        "longer": 6,
+        "caseBootstrap95": [
+          -7.75,
+          56.5
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "counter": 1,
+      "stream": 1,
+      "plainTaskEffect": {
+        "n": 16,
+        "mean": 10.625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -20.5625,
+          51.3125
+        ],
+        "iterations": 10000
+      },
+      "authoredTaskEffect": {
+        "n": 16,
+        "mean": -12.5625,
+        "median": 0,
+        "shorter": 3,
+        "same": 12,
+        "longer": 1,
+        "caseBootstrap95": [
+          -40.3125,
+          14.625
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -23.1875,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -74.75,
+          20.4375
+        ],
+        "iterations": 10000
+      }
+    }
+  ],
+  "native": [
+    {
+      "style": "clear",
+      "fullMinusStarts": {
+        "n": 16,
+        "mean": 24.625,
+        "median": 0,
+        "shorter": 2,
+        "same": 10,
+        "longer": 4,
+        "caseBootstrap95": [
+          5.25,
+          48.1875
+        ],
+        "iterations": 10000
+      },
+      "tasksMinusControl": {
+        "n": 16,
+        "mean": -12.125,
+        "median": 0,
+        "shorter": 3,
+        "same": 10,
+        "longer": 3,
+        "caseBootstrap95": [
+          -50.625,
+          16.5
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": 36.75,
+        "median": 0,
+        "shorter": 2,
+        "same": 7,
+        "longer": 7,
+        "caseBootstrap95": [
+          -0.0625,
+          76.875
+        ],
+        "iterations": 10000
+      },
+      "tailGuardExcess": {
+        "n": 16,
+        "mean": 2.531249999999993,
+        "median": -24.250000000000014,
+        "shorter": 12,
+        "same": 0,
+        "longer": 4,
+        "caseBootstrap95": [
+          -18.818750000000005,
+          27.49375
+        ],
+        "iterations": 10000
+      }
+    },
+    {
+      "style": "lapse",
+      "fullMinusStarts": {
+        "n": 16,
+        "mean": -14.875,
+        "median": 0,
+        "shorter": 5,
+        "same": 8,
+        "longer": 3,
+        "caseBootstrap95": [
+          -46.5625,
+          15.4375
+        ],
+        "iterations": 10000
+      },
+      "tasksMinusControl": {
+        "n": 16,
+        "mean": 10.625,
+        "median": 0,
+        "shorter": 3,
+        "same": 11,
+        "longer": 2,
+        "caseBootstrap95": [
+          -20.75,
+          50.5
+        ],
+        "iterations": 10000
+      },
+      "differenceInEffects": {
+        "n": 16,
+        "mean": -25.5,
+        "median": 0,
+        "shorter": 6,
+        "same": 6,
+        "longer": 4,
+        "caseBootstrap95": [
+          -73.6875,
+          18.25
+        ],
+        "iterations": 10000
+      },
+      "tailGuardExcess": {
+        "n": 16,
+        "mean": -33.91250000000001,
+        "median": -15.950000000000017,
+        "shorter": 15,
+        "same": 0,
+        "longer": 1,
+        "caseBootstrap95": [
+          -69.06875000000001,
+          -1.5125000000000037
+        ],
+        "iterations": 10000
+      }
+    }
+  ],
+  "maxWork": 23488,
+  "notes": [
+    "Capped at300; censored is not a loss",
+    "Case bootstrap is exploratory at16 preselected conditions, not a population significance test",
+    "Trace hash includes chosen slots; it is not a content diversity score",
+    "Certificates are not independent plausible content; no content acceptance evaluated",
+    "No production policy or owner save modified"
+  ]
+}

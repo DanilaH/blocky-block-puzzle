@@ -1,0 +1,20 @@
+{
+  "baselineSource": "f02a8c6d670f0bcbcccc4debd3e710ca823b347d",
+  "test": "released tap owns no hidden material transitions, including interrupted changes",
+  "intervention": "release ended floating owner and guard return callbacks by generation; same two material changes and final zero-duration reset",
+  "baseline": {
+    "retainedChildren": 1,
+    "hidden": true,
+    "hiddenMaterialStarts": 36,
+    "outsideMaterialStarts": 44,
+    "activeFloatingAnimationsAfterReset": 1
+  },
+  "candidate": {
+    "retainedChildren": 0,
+    "hidden": true,
+    "hiddenMaterialStarts": 0,
+    "outsideMaterialStarts": 44,
+    "activeFloatingAnimationsAfterReset": 0
+  },
+  "limits": "Animation creation count, not FPS or CPU savings. Before and after game remains identical; actual all-clear/tap/drag are separate exact-GameState tests."
+}

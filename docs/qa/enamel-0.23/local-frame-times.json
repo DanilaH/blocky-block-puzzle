@@ -1,0 +1,21 @@
+{
+  "environment": "Headless Chromium, software rendering; one sequential sample per implementation; not phone FPS",
+  "results": [
+    {
+      "name": "layered",
+      "frames": 27,
+      "elapsedMs": 3045.2000000029802,
+      "medianMs": 116.59999999999991,
+      "p95Ms": 149.9000000000001,
+      "framesOver33ms": 27
+    },
+    {
+      "name": "shared-texture",
+      "frames": 160,
+      "elapsedMs": 3004.60000000149,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 33.30000000000018,
+      "framesOver33ms": 4
+    }
+  ]
+}

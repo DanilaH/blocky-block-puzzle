@@ -1,0 +1,19 @@
+{
+  "valid": true,
+  "games": 256,
+  "moves": 48239,
+  "results": [
+    {
+      "path": "docs/qa/director-goal-cycle/results.json.gz",
+      "games": 96,
+      "moves": 20889,
+      "sourceSha256": "8cc3fe2aaea83cba47604e2084d06106042ba0a8f86278241fa625e8d1bfa683"
+    },
+    {
+      "path": "docs/qa/director-mixed/results.json.gz",
+      "games": 160,
+      "moves": 27350,
+      "sourceSha256": "4055811c83d3b31038d7fb1f27c664731ae66588e31cd2e73a05ad4d2a3bb2e1"
+    }
+  ]
+}

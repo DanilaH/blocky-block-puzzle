@@ -1,0 +1,51 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "capture": "Chromium CDP + live Web Audio",
+  "fps": 30,
+  "finalStill": "result.png, 2 seconds, silence",
+  "scenarios": [
+    {
+      "scenario": "after-allClear",
+      "frames": 110,
+      "durationSeconds": 1.766
+    },
+    {
+      "scenario": "after-cross",
+      "frames": 126,
+      "durationSeconds": 2.105
+    },
+    {
+      "scenario": "after-placement",
+      "frames": 107,
+      "durationSeconds": 1.766
+    },
+    {
+      "scenario": "after-right-line",
+      "frames": 107,
+      "durationSeconds": 1.718
+    },
+    {
+      "scenario": "before-allClear",
+      "frames": 102,
+      "durationSeconds": 1.676
+    },
+    {
+      "scenario": "before-cross",
+      "frames": 106,
+      "durationSeconds": 1.693
+    },
+    {
+      "scenario": "before-placement",
+      "frames": 107,
+      "durationSeconds": 1.778
+    },
+    {
+      "scenario": "before-right-line",
+      "frames": 103,
+      "durationSeconds": 1.654
+    }
+  ]
+}

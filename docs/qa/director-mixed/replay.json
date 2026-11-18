@@ -1,0 +1,12 @@
+{
+  "valid": true,
+  "games": 160,
+  "moves": 27350,
+  "trios": 9204,
+  "roots": 14023,
+  "goals": 233,
+  "negatives": 231,
+  "unknown": 0,
+  "playerChoicesRecomputed": false,
+  "sourceSha256": "4055811c83d3b31038d7fb1f27c664731ae66588e31cd2e73a05ad4d2a3bb2e1"
+}

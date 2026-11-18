@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-10",
+  "sourceHead": "ea78628dd9ca0ed36b4ba2a5b1c8c803428c35ce",
+  "sourceTree": "01bcfe1e77f9d26a7856a6ae6cb458fce44e43e3",
+  "buildSourceCommit": "2d37098b507c7d49d1565300be0061af8d7e5bcf",
+  "workflowRun": 42802898179,
+  "workflowUrl": "https://github.com/DanilaH/blocky-block-puzzle/actions/runs/42802898179",
+  "checks": {
+    "unit": {
+      "count": 244,
+      "status": "passed"
+    },
+    "build": "passed",
+    "assets": "passed",
+    "surfaceAnalyzerUnit": {
+      "count": 7,
+      "status": "passed"
+    },
+    "focusedBrowser": {
+      "count": 25,
+      "status": "passed",
+      "job": 129784802265
+    },
+    "androidBuild": "passed",
+    "nativeWebView": {
+      "tests": 2,
+      "episodes": 10,
+      "status": "passed",
+      "job": 129786050253,
+      "saveAndBackupUnchanged": true,
+      "exportBytesLessThan": 900000,
+      "independentAnalysis": {
+        "valid": true,
+        "errors": [],
+        "physical": false,
+        "completed": true,
+        "summary": {
+          "orders": [
+            {
+              "direction": "original-first",
+              "comparable": false,
+              "baselineStable": true,
+              "beforeMean": 89,
+              "candidateMean": 96.5,
+              "meetsTarget": false
+            },
+            {
+              "direction": "generated-first",
+              "comparable": false,
+              "baselineStable": true,
+              "beforeMean": 101.5,
+              "candidateMean": 104,
+              "meetsTarget": false
+            }
+          ],
+          "improved": false
+        }
+      }
+    },
+    "fullBrowser": {
+      "planned": 232,
+      "status": "in_progress",
+      "job": 129784802634
+    }
+  },
+  "apk": {
+    "sourceCommit": "2d37098b507c7d49d1565300be0061af8d7e5bcf",
+    "sourceTree": "01bcfe1e77f9d26a7856a6ae6cb458fce44e43e3",
+    "appVersion": "0.62.0-preview",
+    "package": "com.danilah.blocky.dev",
+    "versionCode": 62,
+    "bytes": 11743560,
+    "apkSha256": "e3416ccd39c59b5b9d8b2bdfc7a4802e8fb9f59238b1fc2702f69f715a6627c7",
+    "v2Verified": true,
+    "certificateSha256": "e96d961e605c768113f398ccca8bf3e93aaed52ddb48c5d0c9b3f259f5fdbe13",
+    "compatibleWith061": true,
+    "productionFilesMatched": 99
+  },
+  "artifact": {
+    "id": 13757287496,
+    "bytes": 11042834,
+    "digest": "sha256:3b6cff3e0ac801d475677284c360725d75226c9cf0322bd70addd313d82b69ca",
+    "fileName": "blocky-0.62-preview.zip"
+  },
+  "delivery": {
+    "libraryFileId": "libfile_389fe51a053c819194d25ce48000eba9",
+    "version": 4,
+    "archiveContains": "app-debug.apk"
+  },
+  "physicalPocoAcceptance": "open",
+  "humanVisualAcceptance": "open",
+  "previousNativeFailure": {
+    "source": "1bf318531241fe0fc6e9eb5dae1c6fcb6fb8d431",
+    "run": 42801510028,
+    "job": 129781218073,
+    "error": "measurement-window",
+    "lastCapturedWindowMs": 7866.600082397461,
+    "proofAfterCommitMs": 8007.3,
+    "allEffectsAndSurfacesValid": true
+  }
+}

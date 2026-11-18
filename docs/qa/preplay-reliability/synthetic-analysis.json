@@ -1,0 +1,590 @@
+{
+  "schema": "blocky-calibration-v1",
+  "source": "input recording; provenance not independently authenticated",
+  "limitations": [
+    "Active intervals include interaction, calculation and saving; not pure thinking time.",
+    "Different moves from a bot are not automatically mistakes.",
+    "Unknown search outcomes are not failures.",
+    "Checkpoints are segment boundaries; unrecorded transitions are not replay-verified.",
+    "No retuning of dealer or invented target duration is performed."
+  ],
+  "summary": {
+    "moves": 12,
+    "segments": 2,
+    "scoreGain": 173,
+    "fullClears": 0,
+    "rewardMoves": 6,
+    "hintedMoves": 0,
+    "unhintedAvoidableDeadEnds": 0,
+    "unknownChoices": 3,
+    "medianActiveIntervalMs": 1000
+  },
+  "segments": [
+    {
+      "index": 1,
+      "reason": "start",
+      "initialMoves": 1,
+      "gameId": "midgame-integrity"
+    },
+    {
+      "index": 2,
+      "reason": "resumed",
+      "initialMoves": 8,
+      "gameId": "midgame-integrity"
+    }
+  ],
+  "rows": [
+    {
+      "segment": 1,
+      "move": 2,
+      "score": 12,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 12,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 52,
+        "squares": 37,
+        "largestRectangle": 40
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 1,
+        "x": 4,
+        "y": 0
+      },
+      "bots": {
+        "clear": {
+          "slot": 1,
+          "x": 4,
+          "y": 0
+        },
+        "space": {
+          "slot": 1,
+          "x": 4,
+          "y": 0
+        },
+        "two": {
+          "slot": 2,
+          "x": 3,
+          "y": 0
+        },
+        "three": {
+          "slot": 2,
+          "x": 3,
+          "y": 0
+        }
+      }
+    },
+    {
+      "segment": 1,
+      "move": 3,
+      "score": 17,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 17,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 47,
+        "squares": 30,
+        "largestRectangle": 32
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 2,
+        "x": 5,
+        "y": 3
+      },
+      "bots": {
+        "clear": {
+          "slot": 2,
+          "x": 5,
+          "y": 3
+        },
+        "space": {
+          "slot": 2,
+          "x": 5,
+          "y": 3
+        },
+        "two": {
+          "slot": 2,
+          "x": 5,
+          "y": 3
+        },
+        "three": {
+          "slot": 2,
+          "x": 5,
+          "y": 3
+        }
+      }
+    },
+    {
+      "segment": 1,
+      "move": 4,
+      "score": 30,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 1,
+      "allClear": false,
+      "geometry": {
+        "occupied": 12,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 52,
+        "squares": 33,
+        "largestRectangle": 32
+      },
+      "choice": "unknown",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 0,
+        "x": 5,
+        "y": 6
+      },
+      "bots": {
+        "clear": {
+          "slot": 0,
+          "x": 5,
+          "y": 6
+        },
+        "space": {
+          "slot": 0,
+          "x": 5,
+          "y": 6
+        },
+        "two": {
+          "slot": 0,
+          "x": 5,
+          "y": 6
+        },
+        "three": {
+          "slot": 2,
+          "x": 4,
+          "y": 3
+        }
+      }
+    },
+    {
+      "segment": 1,
+      "move": 5,
+      "score": 48,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 1,
+      "allClear": false,
+      "geometry": {
+        "occupied": 7,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 57,
+        "squares": 39,
+        "largestRectangle": 35
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 2,
+        "x": 6,
+        "y": 4
+      },
+      "bots": {
+        "clear": {
+          "slot": 2,
+          "x": 6,
+          "y": 4
+        },
+        "space": {
+          "slot": 2,
+          "x": 6,
+          "y": 4
+        },
+        "two": {
+          "slot": 2,
+          "x": 6,
+          "y": 4
+        },
+        "three": {
+          "slot": 2,
+          "x": 6,
+          "y": 4
+        }
+      }
+    },
+    {
+      "segment": 1,
+      "move": 6,
+      "score": 51,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 10,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 54,
+        "squares": 36,
+        "largestRectangle": 35
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 1,
+        "x": 1,
+        "y": 0
+      },
+      "bots": {
+        "clear": {
+          "slot": 1,
+          "x": 1,
+          "y": 0
+        },
+        "space": {
+          "slot": 1,
+          "x": 1,
+          "y": 0
+        },
+        "two": {
+          "slot": 1,
+          "x": 1,
+          "y": 0
+        },
+        "three": {
+          "slot": 1,
+          "x": 1,
+          "y": 0
+        }
+      }
+    },
+    {
+      "segment": 1,
+      "move": 7,
+      "score": 57,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 16,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 48,
+        "squares": 33,
+        "largestRectangle": 35
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 0,
+        "x": 5,
+        "y": 0
+      },
+      "bots": {
+        "clear": {
+          "slot": 0,
+          "x": 5,
+          "y": 0
+        },
+        "space": {
+          "slot": 0,
+          "x": 5,
+          "y": 0
+        },
+        "two": {
+          "slot": 1,
+          "x": 4,
+          "y": 3
+        },
+        "three": {
+          "slot": 0,
+          "x": 3,
+          "y": 3
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 9,
+      "score": 69,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 28,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 36,
+        "squares": 20,
+        "largestRectangle": 24
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 2,
+        "x": 4,
+        "y": 3
+      },
+      "bots": {
+        "clear": {
+          "slot": 2,
+          "x": 4,
+          "y": 3
+        },
+        "space": {
+          "slot": 2,
+          "x": 4,
+          "y": 3
+        },
+        "two": {
+          "slot": 2,
+          "x": 4,
+          "y": 3
+        },
+        "three": {
+          "slot": 2,
+          "x": 4,
+          "y": 3
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 10,
+      "score": 111,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 2,
+      "allClear": false,
+      "geometry": {
+        "occupied": 14,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 50,
+        "squares": 27,
+        "largestRectangle": 24
+      },
+      "choice": "unknown",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 2,
+        "x": 0,
+        "y": 0
+      },
+      "bots": {
+        "clear": {
+          "slot": 2,
+          "x": 0,
+          "y": 0
+        },
+        "space": {
+          "slot": 2,
+          "x": 0,
+          "y": 0
+        },
+        "two": {
+          "slot": 2,
+          "x": 0,
+          "y": 0
+        },
+        "three": {
+          "slot": 2,
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 11,
+      "score": 129,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 1,
+      "allClear": false,
+      "geometry": {
+        "occupied": 9,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 55,
+        "squares": 33,
+        "largestRectangle": 24
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 0,
+        "x": 0,
+        "y": 2
+      },
+      "bots": {
+        "clear": {
+          "slot": 0,
+          "x": 0,
+          "y": 2
+        },
+        "space": {
+          "slot": 0,
+          "x": 0,
+          "y": 2
+        },
+        "two": {
+          "slot": 0,
+          "x": 0,
+          "y": 2
+        },
+        "three": {
+          "slot": 0,
+          "x": 0,
+          "y": 2
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 12,
+      "score": 152,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 1,
+      "allClear": false,
+      "geometry": {
+        "occupied": 4,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 60,
+        "squares": 37,
+        "largestRectangle": 24
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 1,
+        "x": 2,
+        "y": 2
+      },
+      "bots": {
+        "clear": {
+          "slot": 1,
+          "x": 2,
+          "y": 2
+        },
+        "space": {
+          "slot": 1,
+          "x": 2,
+          "y": 2
+        },
+        "two": {
+          "slot": 1,
+          "x": 2,
+          "y": 2
+        },
+        "three": {
+          "slot": 1,
+          "x": 2,
+          "y": 2
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 13,
+      "score": 156,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 0,
+      "allClear": false,
+      "geometry": {
+        "occupied": 8,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 56,
+        "squares": 33,
+        "largestRectangle": 24
+      },
+      "choice": "unknown",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 1,
+        "x": 4,
+        "y": 3
+      },
+      "bots": {
+        "clear": {
+          "slot": 1,
+          "x": 4,
+          "y": 3
+        },
+        "space": {
+          "slot": 1,
+          "x": 4,
+          "y": 3
+        },
+        "two": {
+          "slot": 1,
+          "x": 4,
+          "y": 3
+        },
+        "three": {
+          "slot": 1,
+          "x": 4,
+          "y": 3
+        }
+      }
+    },
+    {
+      "segment": 2,
+      "move": 14,
+      "score": 185,
+      "activeIntervalMs": 1000,
+      "hinted": false,
+      "lines": 1,
+      "allClear": false,
+      "geometry": {
+        "occupied": 4,
+        "regions": 1,
+        "isolated": 0,
+        "largestRegion": 60,
+        "squares": 37,
+        "largestRectangle": 24
+      },
+      "choice": "solvable",
+      "avoidableDeadEnd": false,
+      "actual": {
+        "slot": 2,
+        "x": 0,
+        "y": 3
+      },
+      "bots": {
+        "clear": {
+          "slot": 2,
+          "x": 0,
+          "y": 3
+        },
+        "space": {
+          "slot": 2,
+          "x": 0,
+          "y": 3
+        },
+        "two": {
+          "slot": 2,
+          "x": 0,
+          "y": 3
+        },
+        "three": {
+          "slot": 2,
+          "x": 0,
+          "y": 3
+        }
+      }
+    }
+  ]
+}

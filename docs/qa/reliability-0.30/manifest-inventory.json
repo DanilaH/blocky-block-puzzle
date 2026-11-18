@@ -1,0 +1,32 @@
+{
+  "version": "0.30.0-preview",
+  "permissions": [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.INTERNET",
+    "android.permission.VIBRATE",
+    "com.danilah.blocky.dev.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+    "com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE",
+    "com.google.android.gms.permission.AD_ID"
+  ],
+  "samePermissionsAs029": true,
+  "allowBackup": "false",
+  "debuggable": "true",
+  "exportedComponents": [
+    {
+      "kind": "activity",
+      "name": "com.danilah.blocky.dev.MainActivity",
+      "permission": null
+    },
+    {
+      "kind": "receiver",
+      "name": "androidx.profileinstaller.ProfileInstallReceiver",
+      "permission": "android.permission.DUMP"
+    },
+    {
+      "kind": "provider",
+      "name": "io.appmetrica.analytics.internal.PreloadInfoContentProvider",
+      "permission": null
+    }
+  ],
+  "networkCollectionMeasured": false
+}

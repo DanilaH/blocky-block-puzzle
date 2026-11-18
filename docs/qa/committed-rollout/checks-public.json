@@ -1,0 +1,21 @@
+{
+  "schema": "blocky-committed-rollout-public-check-v1",
+  "resultSha256": "17cede610ef8afa783f07471c25326af20f45c87753efff3b4f57fff411042d1",
+  "counts": {
+    "roots": 1058,
+    "decisions": 1101,
+    "proofMoves": 42783,
+    "forecastMoves": 111265,
+    "sourceMoves": 96,
+    "regressionMoves": 471,
+    "actualMoves": 6077,
+    "forkMoves": 22996,
+    "scheduledIssues": 9931
+  },
+  "exactKnownRegressions": 55,
+  "exactConsistencyForks": 2616,
+  "strongWindows": 104,
+  "strongMismatches": 0,
+  "verifierSha256": "82fa5822694940e903b7b05bb4b3c2fc905a98c045a9abe483408b783f33a6e7",
+  "auditCoreSha256": "6955b5ac5dbd02bec1e2ff72f64fa0eed492cc3aa8241c18b08d43e604f5fd75"
+}

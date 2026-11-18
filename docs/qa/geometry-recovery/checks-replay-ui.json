@@ -1,0 +1,24 @@
+{
+  "positions": 31,
+  "positivePositions": 29,
+  "stepsPerPositive": [
+    0,
+    3,
+    6,
+    9
+  ],
+  "boardsPerPositive": 3,
+  "traysPerPositive": 3,
+  "alignedBoards": true,
+  "playback": true,
+  "desktop": [
+    1280,
+    1100
+  ],
+  "mobile": [
+    390,
+    844
+  ],
+  "horizontalOverflow": false,
+  "errors": []
+}

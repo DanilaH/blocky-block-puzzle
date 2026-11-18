@@ -1,0 +1,758 @@
+{
+  "note": "Post-hoc diagnosis, not a tuned classifier. Rows are dependent synthetic episodes; no human accuracy claim.",
+  "rows": [
+    {
+      "split": "development",
+      "style": "clear",
+      "steps": 164,
+      "failures": 1,
+      "truePositive": 0,
+      "falseNegative": 1,
+      "falsePositive": 6,
+      "trueNegative": 157,
+      "recall": 0
+    },
+    {
+      "split": "development",
+      "style": "space",
+      "steps": 164,
+      "failures": 1,
+      "truePositive": 0,
+      "falseNegative": 1,
+      "falsePositive": 6,
+      "trueNegative": 157,
+      "recall": 0
+    },
+    {
+      "split": "development",
+      "style": "three",
+      "steps": 168,
+      "failures": 0,
+      "truePositive": 0,
+      "falseNegative": 0,
+      "falsePositive": 6,
+      "trueNegative": 162,
+      "recall": null
+    },
+    {
+      "split": "development",
+      "style": "plausible",
+      "steps": 100,
+      "failures": 21,
+      "truePositive": 9,
+      "falseNegative": 12,
+      "falsePositive": 2,
+      "trueNegative": 77,
+      "recall": 0.42857142857142855
+    },
+    {
+      "split": "confirmation",
+      "style": "clear",
+      "steps": 163,
+      "failures": 4,
+      "truePositive": 0,
+      "falseNegative": 4,
+      "falsePositive": 3,
+      "trueNegative": 156,
+      "recall": 0
+    },
+    {
+      "split": "confirmation",
+      "style": "space",
+      "steps": 155,
+      "failures": 6,
+      "truePositive": 1,
+      "falseNegative": 5,
+      "falsePositive": 2,
+      "trueNegative": 147,
+      "recall": 0.16666666666666666
+    },
+    {
+      "split": "confirmation",
+      "style": "three",
+      "steps": 180,
+      "failures": 0,
+      "truePositive": 0,
+      "falseNegative": 0,
+      "falsePositive": 5,
+      "trueNegative": 175,
+      "recall": null
+    },
+    {
+      "split": "confirmation",
+      "style": "plausible",
+      "steps": 154,
+      "failures": 6,
+      "truePositive": 1,
+      "falseNegative": 5,
+      "falsePositive": 2,
+      "trueNegative": 146,
+      "recall": 0.16666666666666666
+    }
+  ],
+  "failures": [
+    {
+      "id": "development-111001-plausible-ordinary",
+      "split": "development",
+      "style": "clear",
+      "step": 1,
+      "modelRisk": 1.0000000000000002,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.5609756097560976,
+      "safeRatioBounds": [
+        0.5609756097560976,
+        0.5609756097560976
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111001-plausible-ordinary",
+      "split": "development",
+      "style": "space",
+      "step": 1,
+      "modelRisk": 1.0000000000000002,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.5609756097560976,
+      "safeRatioBounds": [
+        0.5609756097560976,
+        0.5609756097560976
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111001-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 3,
+      "modelRisk": 0.4800000000000002,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6190476190476191,
+      "safeRatioBounds": [
+        0.6190476190476191,
+        0.6190476190476191
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111001-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.4800000000000002,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6190476190476191,
+      "safeRatioBounds": [
+        0.6190476190476191,
+        0.6190476190476191
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111002-clear-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.9712000000000005,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.9166666666666666,
+      "safeRatioBounds": [
+        0.9166666666666666,
+        0.9166666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111002-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.5672727272727275,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.3333333333333333,
+      "safeRatioBounds": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111003-clear-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 1.0000000000000007,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.9487179487179487,
+      "safeRatioBounds": [
+        0.9487179487179487,
+        0.9487179487179487
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111003-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.6981818181818183,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6666666666666666,
+      "safeRatioBounds": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111004-clear-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 5,
+      "modelRisk": 0.8896000000000005,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 1,
+      "safeRatioBounds": [
+        1,
+        1
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111004-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 4,
+      "modelRisk": 0.6528000000000002,
+      "triggered": true,
+      "actualPlaced": 1,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.3333333333333333,
+      "safeRatioBounds": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111004-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.6528000000000002,
+      "triggered": true,
+      "actualPlaced": 1,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.3333333333333333,
+      "safeRatioBounds": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111005-clear-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 4,
+      "modelRisk": 1.0000000000000009,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 1,
+      "safeRatioBounds": [
+        1,
+        1
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111005-clear-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 3,
+      "modelRisk": 0.9232000000000008,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 1,
+      "safeRatioBounds": [
+        1,
+        1
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111005-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 1.0000000000000007,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8571428571428571,
+      "safeRatioBounds": [
+        0.8571428571428571,
+        0.8571428571428571
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111006-clear-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 5,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.875,
+      "safeRatioBounds": [
+        0.875,
+        0.875
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111006-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 2,
+      "modelRisk": 0.8800000000000006,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8,
+      "safeRatioBounds": [
+        0.8,
+        0.8
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111006-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.8800000000000006,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8,
+      "safeRatioBounds": [
+        0.8,
+        0.8
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111007-clear-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 5,
+      "modelRisk": 1.0000000000000002,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.9,
+      "safeRatioBounds": [
+        0.9,
+        0.9
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111007-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.9168000000000006,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8571428571428571,
+      "safeRatioBounds": [
+        0.8571428571428571,
+        0.8571428571428571
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111008-clear-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 2,
+      "modelRisk": 0.9781818181818188,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6666666666666666,
+      "safeRatioBounds": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "development-111008-clear-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8333333333333334,
+      "safeRatioBounds": [
+        0.8333333333333334,
+        0.8333333333333334
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111008-plausible-ordinary",
+      "split": "development",
+      "style": "plausible",
+      "step": 4,
+      "modelRisk": 0.9520000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6363636363636364,
+      "safeRatioBounds": [
+        0.6363636363636364,
+        0.6363636363636364
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "development-111008-plausible-risk",
+      "split": "development",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.9520000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6363636363636364,
+      "safeRatioBounds": [
+        0.6363636363636364,
+        0.6363636363636364
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121003-plausible-risk",
+      "split": "confirmation",
+      "style": "clear",
+      "step": 1,
+      "modelRisk": 0.9232000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8378378378378378,
+      "safeRatioBounds": [
+        0.8378378378378378,
+        0.8378378378378378
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-clear-ordinary",
+      "split": "confirmation",
+      "style": "clear",
+      "step": 2,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.4722222222222222,
+      "safeRatioBounds": [
+        0.4722222222222222,
+        0.4722222222222222
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-clear-risk",
+      "split": "confirmation",
+      "style": "clear",
+      "step": 0,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.4722222222222222,
+      "safeRatioBounds": [
+        0.4722222222222222,
+        0.4722222222222222
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121008-plausible-risk",
+      "split": "confirmation",
+      "style": "clear",
+      "step": 0,
+      "modelRisk": 1,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6666666666666666,
+      "safeRatioBounds": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121003-plausible-risk",
+      "split": "confirmation",
+      "style": "space",
+      "step": 1,
+      "modelRisk": 0.9232000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8378378378378378,
+      "safeRatioBounds": [
+        0.8378378378378378,
+        0.8378378378378378
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-clear-ordinary",
+      "split": "confirmation",
+      "style": "space",
+      "step": 2,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.4722222222222222,
+      "safeRatioBounds": [
+        0.4722222222222222,
+        0.4722222222222222
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-clear-risk",
+      "split": "confirmation",
+      "style": "space",
+      "step": 0,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.4722222222222222,
+      "safeRatioBounds": [
+        0.4722222222222222,
+        0.4722222222222222
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121006-plausible-risk",
+      "split": "confirmation",
+      "style": "space",
+      "step": 2,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8,
+      "safeRatioBounds": [
+        0.8,
+        0.8
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121007-clear-risk",
+      "split": "confirmation",
+      "style": "space",
+      "step": 0,
+      "modelRisk": 0.5952000000000003,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.42105263157894735,
+      "safeRatioBounds": [
+        0.42105263157894735,
+        0.42105263157894735
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121008-plausible-risk",
+      "split": "confirmation",
+      "style": "space",
+      "step": 0,
+      "modelRisk": 1,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6666666666666666,
+      "safeRatioBounds": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-clear-risk",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 1.0000000000000004,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.4722222222222222,
+      "safeRatioBounds": [
+        0.4722222222222222,
+        0.4722222222222222
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121004-plausible-ordinary",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 3,
+      "modelRisk": 1.0000000000000002,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.9090909090909091,
+      "safeRatioBounds": [
+        0.9090909090909091,
+        0.9090909090909091
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121004-plausible-risk",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 1,
+      "modelRisk": 1.0000000000000002,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.9090909090909091,
+      "safeRatioBounds": [
+        0.9090909090909091,
+        0.9090909090909091
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121005-clear-risk",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.9664000000000008,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.8260869565217391,
+      "safeRatioBounds": [
+        0.8260869565217391,
+        0.8260869565217391
+      ],
+      "firstChosenStatus": "unsolvable"
+    },
+    {
+      "id": "confirmation-121007-clear-risk",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 0.5952000000000003,
+      "triggered": true,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.42105263157894735,
+      "safeRatioBounds": [
+        0.42105263157894735,
+        0.42105263157894735
+      ],
+      "firstChosenStatus": "solvable"
+    },
+    {
+      "id": "confirmation-121008-plausible-risk",
+      "split": "confirmation",
+      "style": "plausible",
+      "step": 0,
+      "modelRisk": 1,
+      "triggered": false,
+      "actualPlaced": 2,
+      "initialStatus": "solvable",
+      "analysisComplete": true,
+      "safeRatio": 0.6666666666666666,
+      "safeRatioBounds": [
+        0.6666666666666666,
+        0.6666666666666666
+      ],
+      "firstChosenStatus": "solvable"
+    }
+  ]
+}

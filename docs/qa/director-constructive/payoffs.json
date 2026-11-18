@@ -1,0 +1,399 @@
+{
+  "sourceSha256": "63d9bfd28024355727102a71fb099a5fa929851f2bb0daa305cc6521351a4d0c",
+  "groups": {
+    "development:clear": {
+      "offers": 63,
+      "completed": 63,
+      "earned": 56,
+      "firstCertified": 58,
+      "firstRewardCertified": 53,
+      "secondCertified": 52,
+      "preparedOffers": 7
+    },
+    "development:three": {
+      "offers": 59,
+      "completed": 59,
+      "earned": 59,
+      "firstCertified": 48,
+      "firstRewardCertified": 48,
+      "secondCertified": 40,
+      "preparedOffers": 12
+    },
+    "development:plausible": {
+      "offers": 3,
+      "completed": 3,
+      "earned": 0,
+      "firstCertified": 1,
+      "firstRewardCertified": 1,
+      "secondCertified": 1,
+      "preparedOffers": 1
+    },
+    "development:bounded": {
+      "offers": 3,
+      "completed": 3,
+      "earned": 0,
+      "firstCertified": 2,
+      "firstRewardCertified": 1,
+      "secondCertified": 0,
+      "preparedOffers": 0
+    },
+    "development:lapse": {
+      "offers": 57,
+      "completed": 57,
+      "earned": 32,
+      "firstCertified": 41,
+      "firstRewardCertified": 34,
+      "secondCertified": 32,
+      "preparedOffers": 7
+    },
+    "confirmation:clear": {
+      "offers": 63,
+      "completed": 63,
+      "earned": 50,
+      "firstCertified": 57,
+      "firstRewardCertified": 49,
+      "secondCertified": 51,
+      "preparedOffers": 11
+    },
+    "confirmation:three": {
+      "offers": 67,
+      "completed": 67,
+      "earned": 67,
+      "firstCertified": 57,
+      "firstRewardCertified": 57,
+      "secondCertified": 51,
+      "preparedOffers": 9
+    },
+    "confirmation:plausible": {
+      "offers": 2,
+      "completed": 2,
+      "earned": 0,
+      "firstCertified": 2,
+      "firstRewardCertified": 1,
+      "secondCertified": 1,
+      "preparedOffers": 2
+    },
+    "confirmation:bounded": {
+      "offers": 3,
+      "completed": 3,
+      "earned": 1,
+      "firstCertified": 3,
+      "firstRewardCertified": 2,
+      "secondCertified": 1,
+      "preparedOffers": 1
+    },
+    "confirmation:lapse": {
+      "offers": 60,
+      "completed": 60,
+      "earned": 44,
+      "firstCertified": 43,
+      "firstRewardCertified": 40,
+      "secondCertified": 35,
+      "preparedOffers": 17
+    }
+  },
+  "examples": [
+    {
+      "split": "development",
+      "seed": 1941002,
+      "move": 123,
+      "board": [
+        0,
+        247,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "I2-0",
+          "color": 2,
+          "used": false
+        },
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "I2-1",
+          "color": 3,
+          "used": false
+        }
+      ],
+      "source": "short-payoff",
+      "actions": [
+        [
+          2,
+          3,
+          0
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          0,
+          4,
+          0
+        ]
+      ],
+      "firstCertified": true,
+      "firstRewardCertified": false,
+      "secondCertified": false,
+      "goalWitness": null
+    },
+    {
+      "split": "development",
+      "seed": 1941006,
+      "move": 27,
+      "board": [
+        18,
+        16,
+        18,
+        18,
+        18,
+        18,
+        18,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "source": "short-payoff",
+      "actions": [
+        [
+          1,
+          4,
+          7
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      "firstCertified": true,
+      "firstRewardCertified": true,
+      "secondCertified": false,
+      "goalWitness": [
+        {
+          "slot": 1,
+          "x": 4,
+          "y": 7
+        },
+        {
+          "slot": 2,
+          "x": 1,
+          "y": 1
+        },
+        {
+          "slot": 0,
+          "x": 1,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "split": "development",
+      "seed": 1941008,
+      "move": 33,
+      "board": [
+        227,
+        227,
+        119,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "T4-0",
+          "color": 4,
+          "used": false
+        },
+        {
+          "shapeId": "I3-0",
+          "color": 4,
+          "used": false
+        },
+        {
+          "shapeId": "S1-0",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "source": "short-payoff",
+      "actions": [
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ]
+      ],
+      "firstCertified": false,
+      "firstRewardCertified": false,
+      "secondCertified": false,
+      "goalWitness": null
+    },
+    {
+      "split": "confirmation",
+      "seed": 1961002,
+      "move": 12,
+      "board": [
+        0,
+        194,
+        223,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "R6-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "L51",
+          "color": 5,
+          "used": false
+        },
+        {
+          "shapeId": "L3-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "source": "beam-payoff",
+      "actions": [
+        [
+          1,
+          5,
+          0
+        ],
+        [
+          2,
+          5,
+          2
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "firstCertified": true,
+      "firstRewardCertified": true,
+      "secondCertified": false,
+      "goalWitness": [
+        {
+          "slot": 1,
+          "x": 5,
+          "y": 0
+        },
+        {
+          "slot": 2,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "slot": 0,
+          "x": 2,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "split": "confirmation",
+      "seed": 1961007,
+      "move": 12,
+      "board": [
+        127,
+        31,
+        1,
+        31,
+        0,
+        0,
+        0,
+        0
+      ],
+      "tray": [
+        {
+          "shapeId": "I4-0",
+          "color": 6,
+          "used": false
+        },
+        {
+          "shapeId": "I4-1",
+          "color": 1,
+          "used": false
+        },
+        {
+          "shapeId": "R6-1",
+          "color": 1,
+          "used": false
+        }
+      ],
+      "source": "short-payoff",
+      "actions": [
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          2,
+          1,
+          4
+        ]
+      ],
+      "firstCertified": true,
+      "firstRewardCertified": false,
+      "secondCertified": false,
+      "goalWitness": null
+    }
+  ]
+}

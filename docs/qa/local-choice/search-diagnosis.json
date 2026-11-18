@@ -1,0 +1,370 @@
+{
+  "schema": "blocky-local-search-postmortem-v1",
+  "engineeringSha256": "200c225a8b3dd2a7263ff634b94735cf6478210b49f497a781a591031b6f0ebd",
+  "scriptSha256": "2dff9cd4b046de54f9798c2f7be3b8852113f555f211409c33848126b59d2956",
+  "note": "Engineering diagnostic only. Min cover>4 excludes the old static target class, not every dynamic all-clear route. Expanded misses remain unknown. C1 and all holdout data are unchanged.",
+  "latePositions": 31,
+  "classExcluded": 28,
+  "cases": [
+    {
+      "seed": 2441001,
+      "move": 24,
+      "board": [
+        88,
+        0,
+        215,
+        220,
+        222,
+        22,
+        19,
+        1
+      ],
+      "cover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 223
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 1922,
+        "status": "unknown",
+        "enumeratedTargets": 52
+      }
+    },
+    {
+      "seed": 2441001,
+      "move": 54,
+      "board": [
+        200,
+        254,
+        167,
+        240,
+        0,
+        135,
+        231,
+        201
+      ],
+      "cover": {
+        "lines": 7,
+        "rowMask": 239,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 8890,
+        "status": "unknown",
+        "enumeratedTargets": 322
+      }
+    },
+    {
+      "seed": 2441002,
+      "move": 18,
+      "board": [
+        3,
+        5,
+        200,
+        0,
+        0,
+        224,
+        240,
+        48
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 231,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 0,
+        "status": "unknown",
+        "enumeratedTargets": 0
+      }
+    },
+    {
+      "seed": 2441001,
+      "move": 33,
+      "board": [
+        78,
+        126,
+        6,
+        204,
+        0,
+        0,
+        7,
+        201
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 207,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 912,
+        "status": "unknown",
+        "enumeratedTargets": 29
+      }
+    },
+    {
+      "seed": 2441003,
+      "move": 15,
+      "board": [
+        28,
+        24,
+        131,
+        0,
+        128,
+        184,
+        160,
+        166
+      ],
+      "cover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 191
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 105,
+        "status": "unknown",
+        "enumeratedTargets": 3
+      }
+    },
+    {
+      "seed": 2441003,
+      "move": 21,
+      "board": [
+        252,
+        0,
+        231,
+        7,
+        0,
+        24,
+        124,
+        6
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 237,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 1360,
+        "status": "unknown",
+        "enumeratedTargets": 34
+      }
+    },
+    {
+      "seed": 2441001,
+      "move": 15,
+      "board": [
+        24,
+        56,
+        216,
+        200,
+        192,
+        224,
+        225,
+        225
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 0,
+        "colMask": 249
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 4198,
+        "status": "unknown",
+        "enumeratedTargets": 84
+      }
+    },
+    {
+      "seed": 2441004,
+      "move": 15,
+      "board": [
+        32,
+        238,
+        254,
+        242,
+        32,
+        128,
+        128,
+        128
+      ],
+      "cover": {
+        "lines": 5,
+        "rowMask": 14,
+        "colMask": 160
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 15878,
+        "status": "unknown",
+        "enumeratedTargets": 254
+      }
+    },
+    {
+      "seed": 2441003,
+      "move": 24,
+      "board": [
+        252,
+        0,
+        224,
+        7,
+        0,
+        31,
+        124,
+        6
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 237,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 1910,
+        "status": "unknown",
+        "enumeratedTargets": 27
+      }
+    },
+    {
+      "seed": 2441003,
+      "move": 30,
+      "board": [
+        252,
+        0,
+        244,
+        12,
+        0,
+        179,
+        16,
+        230
+      ],
+      "cover": {
+        "lines": 6,
+        "rowMask": 173,
+        "colMask": 16
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 1698,
+        "status": "unknown",
+        "enumeratedTargets": 55
+      }
+    },
+    {
+      "seed": 2441001,
+      "move": 36,
+      "board": [
+        78,
+        126,
+        6,
+        204,
+        0,
+        0,
+        0,
+        201
+      ],
+      "cover": {
+        "lines": 5,
+        "rowMask": 143,
+        "colMask": 0
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 1524,
+        "status": "unknown",
+        "enumeratedTargets": 49
+      }
+    },
+    {
+      "seed": 2441004,
+      "move": 18,
+      "board": [
+        0,
+        238,
+        254,
+        242,
+        32,
+        242,
+        212,
+        216
+      ],
+      "cover": {
+        "lines": 7,
+        "rowMask": 0,
+        "colMask": 254
+      },
+      "native": {
+        "status": "unknown",
+        "checks": 2516,
+        "targetClassExcluded": true
+      },
+      "expanded": {
+        "target": null,
+        "checks": 16316,
+        "status": "unknown",
+        "enumeratedTargets": 389
+      }
+    }
+  ]
+}

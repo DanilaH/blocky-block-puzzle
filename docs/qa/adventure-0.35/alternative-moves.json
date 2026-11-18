@@ -1,0 +1,154 @@
+{
+  "method": "All legal one-step alternatives at authored replay states; no proof of future solvability or human difficulty. Software server, no device performance claim.",
+  "results": [
+    {
+      "level": "cove-1",
+      "solutionMoves": 3,
+      "alternatives": [
+        {
+          "revision": 0,
+          "legal": 109,
+          "immediateLoss": 0,
+          "targetProgress": 5
+        },
+        {
+          "revision": 1,
+          "legal": 82,
+          "immediateLoss": 0,
+          "targetProgress": 2
+        },
+        {
+          "revision": 2,
+          "legal": 50,
+          "immediateLoss": 49,
+          "targetProgress": 1
+        }
+      ],
+      "stepP95ms": 0.2595019999999977
+    },
+    {
+      "level": "cove-2",
+      "solutionMoves": 4,
+      "alternatives": [
+        {
+          "revision": 0,
+          "legal": 105,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        },
+        {
+          "revision": 1,
+          "legal": 70,
+          "immediateLoss": 0,
+          "targetProgress": 0
+        },
+        {
+          "revision": 2,
+          "legal": 31,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        },
+        {
+          "revision": 3,
+          "legal": 153,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        }
+      ],
+      "stepP95ms": 0.16791399999999612
+    },
+    {
+      "level": "cove-3",
+      "solutionMoves": 2,
+      "alternatives": [
+        {
+          "revision": 0,
+          "legal": 110,
+          "immediateLoss": 0,
+          "targetProgress": 2
+        },
+        {
+          "revision": 1,
+          "legal": 83,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        }
+      ],
+      "stepP95ms": 0.1613039999999728
+    },
+    {
+      "level": "cove-4",
+      "solutionMoves": 5,
+      "alternatives": [
+        {
+          "revision": 0,
+          "legal": 89,
+          "immediateLoss": 0,
+          "targetProgress": 2
+        },
+        {
+          "revision": 1,
+          "legal": 60,
+          "immediateLoss": 0,
+          "targetProgress": 0
+        },
+        {
+          "revision": 2,
+          "legal": 26,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        },
+        {
+          "revision": 3,
+          "legal": 110,
+          "immediateLoss": 0,
+          "targetProgress": 3
+        },
+        {
+          "revision": 4,
+          "legal": 87,
+          "immediateLoss": 0,
+          "targetProgress": 2
+        }
+      ],
+      "stepP95ms": 0.11320100000000366
+    },
+    {
+      "level": "cove-5",
+      "solutionMoves": 5,
+      "alternatives": [
+        {
+          "revision": 0,
+          "legal": 65,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        },
+        {
+          "revision": 1,
+          "legal": 50,
+          "immediateLoss": 0,
+          "targetProgress": 0
+        },
+        {
+          "revision": 2,
+          "legal": 21,
+          "immediateLoss": 0,
+          "targetProgress": 1
+        },
+        {
+          "revision": 3,
+          "legal": 78,
+          "immediateLoss": 0,
+          "targetProgress": 4
+        },
+        {
+          "revision": 4,
+          "legal": 63,
+          "immediateLoss": 0,
+          "targetProgress": 5
+        }
+      ],
+      "stepP95ms": 0.12428799999997864
+    }
+  ]
+}

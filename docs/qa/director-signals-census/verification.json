@@ -1,0 +1,11 @@
+{
+  "positions": 849,
+  "replays": 3396,
+  "moves": 10154,
+  "statuses": 227586,
+  "witnesses": 7630,
+  "evidenceSha256": "ae5c0e9dcfabe1e86868bbb2e9380a44136f7bae0fdeabb998bb6dbb470a5030",
+  "verifiedFirstEvidenceSha256": "d2b6ad8fb483e4228cb1752f8b2708c8d4fe342b9fe11b60f97570e1bb8b1b73",
+  "exactRepeatExcludingTimings": true,
+  "unitTests": 201
+}

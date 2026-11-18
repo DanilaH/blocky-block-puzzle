@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "93504f152577998e17ad9fc2f6e001745b4dd535",
+  "localUnitTests": 93,
+  "localTargetedBrowserTests": 7,
+  "productionBuild": "passed",
+  "assetBudgets": "passed",
+  "fullBrowserTestsOnParent": 99,
+  "parentCommit": "dff4d09bdd4ddb03d54ad6ebbd5f958dd12de648",
+  "parentCiRun": 41301099195,
+  "parentAndroidBuild": "failed downloading Maven Central dependencies: HTTP 403",
+  "currentCiRun": 41301342060,
+  "currentCiStatus": "success",
+  "syntheticStressCycles": 60,
+  "physicalDeviceTested": false,
+  "phoneFpsImprovementClaimed": false,
+  "fullBrowserTests": 99,
+  "currentVerifyStatus": "success",
+  "androidJob": 124834503054,
+  "verifyJob": 124832706122,
+  "apkVerified": true
+}
