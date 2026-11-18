@@ -184,7 +184,7 @@ export class PlayCapture {
           before: from,
           after: to,
           hinted: this.hinted,
-          ...(["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(after.dealerVersion)&&(after.challengeBuildState??after.challengeV3State??after.challengeV2State??after.challengeState)?.clockKnown?{observation:{activeMs:(after.challengeBuildState??after.challengeV3State??after.challengeV2State??after.challengeState)!.activeMs}}:{}),
+          ...(["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"].includes(after.dealerVersion)&&(after.challengeBuildState??after.challengeV3State??after.challengeV2State??after.challengeState)?.clockKnown?{observation:{activeMs:(after.challengeBuildState??after.challengeV3State??after.challengeV2State??after.challengeState)!.activeMs}}:{}),
           ...(decision ? {decision: structuredClone(decision)} : {}),
         })
       )

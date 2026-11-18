@@ -1,6 +1,6 @@
 /** Offline diagnostics only. No production import and no access to dealer witnesses. */
 import {
-  SHAPES,
+  ALL_SHAPES,
   shapeById,
   type Board,
   type Slot,
@@ -13,7 +13,7 @@ const pop = Array.from({ length: 256 }, (_, n) => {
 });
 type Op = Move & { masks: number[] };
 const catalog = new Map(
-  SHAPES.map((s) => [
+  ALL_SHAPES.map((s) => [
     s.id,
     Array.from({ length: 9 - s.height }, (_, y) =>
       Array.from({ length: 9 - s.width }, (_, x) => ({

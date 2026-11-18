@@ -1340,3 +1340,14 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [ ] Короткий phone/manual playtest: наполненность/темп/чрезмерная жёсткость; default не менять по автотестам.
 
 [Разбор](qa/SPARSE_BUILD_0.73_2026-11-17.md).
+
+
+## D102 — базовые формы,18.11.2026
+
+- [x]31→41registry:missing8L/J4+2D2,correctedruntime+1010!crosscheck;legacygeneration/default/saves/RNGнеизменны.
+- [x]Oneequalareareplacement,exactrewards/endoccupancy/twoothers/RNG/controller,starts/certificates/3recoveryprotected;boundedproof<=24000.
+- [x]Fresh128runs/15942moves,10newIDsobserved/20proxyguardsPASS;426unit/1414originalexact+cellsPASS.
+- [ ] Browser/long-session/fullCI/signed0.74/payloadproof.
+- [ ] Ручнойphoneплейтестновогопункта;defaultнепереключатьавтоматически.
+
+[Результат](qa/REFERENCE_SHAPES_0.74_2026-11-18.md).

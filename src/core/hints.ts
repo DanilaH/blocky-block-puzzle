@@ -1,5 +1,5 @@
 import {
-  SHAPES,
+  SHAPES, ALL_SHAPES,
   fits,
   place,
   shapeById,
@@ -51,7 +51,7 @@ export function findHint(
     }
     let mobility = 0,
       isolated = 0;
-    for (const shape of SHAPES)
+    for (const shape of game.dealerVersion==="director-shapes-v1"?ALL_SHAPES:SHAPES)
       for (let y = 0; y <= 8 - shape.height; y++)
         for (let x = 0; x <= 8 - shape.width; x++) {
           if ((checks++ & 127) === 0 && expired()) {

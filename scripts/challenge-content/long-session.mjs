@@ -12,7 +12,9 @@ try {
     F = await server.ssrLoadModule("/src/core/profile.ts");
   const V = await server.ssrLoadModule("/scripts/calibration/replay.ts");
   const results = [];
-  for (const policy of process.argv.includes("--sparse-build")
+  for (const policy of process.argv.includes("--reference-shapes")
+    ? ["director-shapes-v1"]
+    : process.argv.includes("--sparse-build")
     ? ["director-build-v1"]
     : process.argv.includes("--verified")
     ? ["director-challenge-v2"]
@@ -138,7 +140,9 @@ try {
       console.log(JSON.stringify(row));
     }
   await fs.writeFile(
-    process.argv.includes("--sparse-build")
+    process.argv.includes("--reference-shapes")
+      ? "artifacts/reference-shapes/long-session.json"
+      : process.argv.includes("--sparse-build")
       ? "artifacts/sparse-build/long-session.json"
       : process.argv.includes("--verified")
       ? "artifacts/challenge-balance/long-session.json"

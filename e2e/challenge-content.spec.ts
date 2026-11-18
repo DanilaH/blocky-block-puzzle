@@ -17,6 +17,7 @@ for (const version of [
   "director-challenge-v1",
   "director-challenge-v2",
   "director-build-v1",
+  "director-shapes-v1",
 ] as const) {
   for (const width of [320, 390])
     test(`${version}: original starting decisions persist and avoid repetition under constant seed at ${width}`, async ({

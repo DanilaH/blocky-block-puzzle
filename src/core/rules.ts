@@ -52,6 +52,8 @@ import {mixedDirectorDeal,initialMixedDirector,observeMixedDirector,type MixedDi
 import {rewardDirectorDeal,initialRewardDirector,observeRewardDirector,type RewardDirectorState} from "./reward-director";
 import {forgivingDirectorDeal,initialForgivingDirector,observeForgivingDirector,type ForgivingDirectorState} from './forgiving-director';
 import catalog from "./shapes.json";
+import referenceShapes from "./reference-shapes.json";
+import {referenceShapeDeal,type ShapeCatalogDecision} from "./reference-shape-dealer";
 export type Cell = readonly [number, number];
 export interface Shape {
   id: string;
@@ -62,7 +64,10 @@ export interface Shape {
   height: number;
 }
 export const SHAPES = catalog as unknown as readonly Shape[];
-const shapesById = new Map(SHAPES.map((s) => [s.id, s]));
+/** Legacy generation order/weights are frozen. The registry also resolves new trays. */
+export const REFERENCE_SHAPES = referenceShapes as unknown as readonly Shape[];
+export const ALL_SHAPES: readonly Shape[] = [...SHAPES, ...REFERENCE_SHAPES];
+const shapesById = new Map(ALL_SHAPES.map((s) => [s.id, s]));
 export const shapeById = (id: string): Shape => {
   const shape = shapesById.get(id);
   if (!shape) throw new Error("Unknown shape");
@@ -99,8 +104,9 @@ export type DealerVersion =
   | "director-challenge-v1"
   | "director-challenge-v2"
   | "director-challenge-v3"
-  | "director-build-v1";
-export const isGoalDealer=(version:DealerVersion)=>["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(version);
+  | "director-build-v1"
+  | "director-shapes-v1";
+export const isGoalDealer=(version:DealerVersion)=>["director-v2","composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"].includes(version);
 export interface GameState {
   gameId: string;
   comparisonMode?: "default" | "manual" | "audience";
@@ -294,8 +300,13 @@ export function deal(
   challengeV3State?: ChallengeStateV3;
   challengeBuildState?: ChallengeBuildState;
   challengeDecision?: ChallengeDecision|ChallengeDecisionV2|ChallengeDecisionV3|ChallengeBuildDecision;
+  shapeDecision?: ShapeCatalogDecision;
   diagnostic?: DecisionOutput["diagnostic"];
 } {
+  if(version==='director-shapes-v1'){
+    const {director:next,...rest}=referenceShapeDeal(board,rngState,moves,rhythm,goalDirector,challengeBuildState);
+    return{...rest,goalDirector:next};
+  }
   if(version==='director-build-v1'){
     const {director:next,...rest}=challengeBuildDeal(board,rngState,moves,rhythm,goalDirector,challengeBuildState);
     return{...rest,goalDirector:next};
@@ -493,7 +504,7 @@ export function newGame(
   const challengeState=dealerVersion==="director-challenge-v1"?initialChallengeState(challengeVariant):undefined;
   const challengeV2State=dealerVersion==="director-challenge-v2"?initialChallengeStateV2(challengeVariant):undefined;
   const challengeV3State=dealerVersion==="director-challenge-v3"?initialChallengeStateV3(challengeVariant):undefined;
-  const challengeBuildState=dealerVersion==="director-build-v1"?initialChallengeBuildState(challengeVariant):undefined;
+  const challengeBuildState=["director-build-v1","director-shapes-v1"].includes(dealerVersion)?initialChallengeBuildState(challengeVariant):undefined;
   const starterState=challengeState??challengeV2State??challengeV3State??challengeBuildState;
   const board = starterState&&hasChallengeStarts(starterState)?challengeOpening(seed).board:emptyBoard(),
     d = deal(board, seed >>> 0 || 1, dealerVersion,0,"",undefined,undefined,undefined,undefined,undefined,undefined,undefined,challengeState,challengeV2State,challengeV3State,challengeBuildState);
@@ -616,7 +627,7 @@ export function applyMove(
   let challengeState=state.dealerVersion==="director-challenge-v1"?observeChallenge(state.challengeState??initialChallengeState(),observation,allClear,state.goalDirector?.deals??0):undefined;
   let challengeV2State=state.dealerVersion==="director-challenge-v2"?observeChallengeV2(state.challengeV2State??initialChallengeStateV2(),observation,allClear,state.goalDirector?.deals??0):undefined;
   let challengeV3State=state.dealerVersion==="director-challenge-v3"?observeChallengeV3(state.challengeV3State??initialChallengeStateV3(),observation,allClear,state.goalDirector?.deals??0):undefined;
-  let challengeBuildState=state.dealerVersion==="director-build-v1"?observeChallengeBuild(state.challengeBuildState??initialChallengeBuildState(),observation,allClear,state.goalDirector?.deals??0):undefined;
+  let challengeBuildState=["director-build-v1","director-shapes-v1"].includes(state.dealerVersion)?observeChallengeBuild(state.challengeBuildState??initialChallengeBuildState(),observation,allClear,state.goalDirector?.deals??0):undefined;
   let decision: DecisionTrace | undefined;
   let goalDirector=isGoalDealer(state.dealerVersion)?observeGoalDirector(state.goalDirector??initialGoalDirector(),allClear):undefined;
   let mixedDirector=state.dealerVersion==='director-v3'?observeMixedDirector(state.mixedDirector??initialMixedDirector(),allClear):undefined;
@@ -671,7 +682,7 @@ export function applyMove(
     if(state.dealerVersion === "director-challenge-v1")challengeState=d.challengeState;
     if(state.dealerVersion === "director-challenge-v2")challengeV2State=d.challengeV2State;
     if(state.dealerVersion === "director-challenge-v3")challengeV3State=d.challengeV3State;
-    if(state.dealerVersion === "director-build-v1")challengeBuildState=d.challengeBuildState;
+    if(["director-build-v1","director-shapes-v1"].includes(state.dealerVersion))challengeBuildState=d.challengeBuildState;
     if(state.dealerVersion==='director-v1')director=d.director;
     if(isGoalDealer(state.dealerVersion))goalDirector=d.goalDirector;
     if(['composition-v1','composition-v2'].includes(state.dealerVersion)) dealerDiagnostic=d.composition;

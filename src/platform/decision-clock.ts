@@ -22,11 +22,11 @@ export class DecisionPlayClock {
       this.gameId = game.gameId;
       this.elapsed = base;
     } else this.elapsed = Math.max(this.elapsed, base);
-    this.active = enabled && ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(game.dealerVersion);
+    this.active = enabled && ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"].includes(game.dealerVersion);
   }
   observation(game: GameState): ChallengeObservation | undefined {
     this.accumulate();
-    return ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"].includes(game.dealerVersion)
+    return ["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"].includes(game.dealerVersion)
       ? { activeMs: Math.floor(this.elapsed) }
       : undefined;
   }

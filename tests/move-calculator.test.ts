@@ -32,7 +32,7 @@ function harness() {
 }
 afterEach(() => vi.useRealTimers());
 
-it.each(["composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"] as const)("terminates cancelled %s work and ignores its stale response", async(version)=>{
+it.each(["composition-v1","composition-v2","director-budget-v1","director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"] as const)("terminates cancelled %s work and ignores its stale response", async(version)=>{
   const h=harness(),g=state();g.dealerVersion=version;
   const pending=h.calculator.calculate(g,move,g.revision,true);
   expect(h.workers[0]!.postMessage.mock.calls[0]![0].captureDecision).toBe(true);
@@ -45,7 +45,7 @@ it.each(["composition-v1","composition-v2","director-budget-v1","director-challe
   h.workers[1]!.reply(null);expect(await next).toBeNull();
 });
 
-it.each(["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1"] as const)("carries the observed %s clock through a worker refill without changing the request on retry",async(version)=>{
+it.each(["director-challenge-v1","director-challenge-v2","director-challenge-v3","director-build-v1","director-shapes-v1"] as const)("carries the observed %s clock through a worker refill without changing the request on retry",async(version)=>{
   const h=harness(),g=newGame(42,"challenge-worker",version,undefined,"tasks");
   g.tray[0]!.used=g.tray[1]!.used=true;
   const observation={activeMs:4200},expected=applyMove(g,move,g.revision,true,observation);

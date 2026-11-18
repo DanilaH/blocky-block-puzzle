@@ -1,8 +1,8 @@
 import { isGoalDealer } from "./rules";
 import { recoveryRhythm } from "./rhythm";
-import { SHAPES, hasMove, type Move, type GameState } from "./rules";
+import { SHAPES, ALL_SHAPES, hasMove, type Move, type GameState } from "./rules";
 import type { Profile } from "./profile";
-import { WorkBudget, catalog, canPlace, proveIds, toRows } from "./director-search";
+import { WorkBudget, catalog, fullCatalog, canPlace, proveIds, toRows } from "./director-search";
 export interface ReviveSelection {
   version: 2;
   x: number;
@@ -81,6 +81,7 @@ export function revivePlan(g: GameState, proofBudget = 16000): RevivePlan | null
   if (!reviveAllowed(g)) return null;
   const frozen = g.reviveOffer?.selection;
   if (frozen) return reviveEffect(g, frozen.x, frozen.y, frozen);
+  const registry=g.dealerVersion==="director-shapes-v1"?ALL_SHAPES:SHAPES,operations=g.dealerVersion==="director-shapes-v1"?fullCatalog():catalog();
   const meter = new WorkBudget(24000);
   meter.ceiling = meter.limit;
   const zones: (RevivePlan & { moves: number })[] = [];
@@ -89,8 +90,8 @@ export function revivePlan(g: GameState, proofBudget = 16000): RevivePlan | null
     meter.spend(); // bounded board-copy/clear/ranking operation
     let moves = 0;
     for (const slot of g.tray) if (!slot.used) {
-      const id = SHAPES.findIndex((s) => s.id === slot.shapeId);
-      for (const op of catalog()[id]!) if (canPlace(rows, op, meter)) moves++;
+      const id = registry.findIndex((s) => s.id === slot.shapeId);
+      for (const op of operations[id]!) if (canPlace(rows, op, meter)) moves++;
     }
     if (moves) zones.push({ ...plan, moves });
   }
@@ -99,15 +100,15 @@ export function revivePlan(g: GameState, proofBudget = 16000): RevivePlan | null
   if (!baseline) return null;
   meter.ceiling = Math.min(meter.limit, meter.used + (Number.isFinite(proofBudget) ? Math.floor(Math.max(0, Math.min(16000, proofBudget))) : 0));
   const remaining = g.tray.map((s, slot) => ({ s, slot })).filter(({ s }) => !s.used);
-  const ids = remaining.map(({ s }) => SHAPES.findIndex((piece) => piece.id === s.shapeId));
+  const ids = remaining.map(({ s }) => registry.findIndex((piece) => piece.id === s.shapeId));
   let unknown = false;
   for (let index = 0; index < zones.length; index++) {
-    const zone = zones[index]!, proof = proveIds(toRows(zone.game.board), ids, meter);
+    const zone = zones[index]!, proof = proveIds(toRows(zone.game.board), ids, meter,operations);
     unknown ||= proof.status === "unknown";
     if (proof.path) {
       const unused = [...remaining];
       const witness = proof.path.map((op) => {
-        const at = unused.findIndex(({ s }) => s.shapeId === SHAPES[op.shape]!.id);
+        const at = unused.findIndex(({ s }) => s.shapeId === registry[op.shape]!.id);
         const { slot } = unused.splice(at, 1)[0]!;
         return { slot: slot!, x: op.x, y: op.y };
       });

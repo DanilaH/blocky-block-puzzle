@@ -49,3 +49,8 @@ assert.deepEqual((await fs.readdir(buildDir)).filter(p=>p.endsWith(".json")).sor
 for(const file of (await fs.readdir(buildDir)).filter(p=>p.endsWith(".json"))){const data=JSON.parse(await fs.readFile(`${buildDir}/${file}`,"utf8"));walk(data);assert(!/gameId|installationId|blocky-play|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(JSON.stringify(data)));}
 const build=JSON.parse(await fs.readFile(`${buildDir}/development-summary.json`,"utf8"));assert.equal(build.runs,128);assert.equal(build.guards.filter(g=>!g.lengthLower).length,2);assert(build.guards.every(g=>g.ordinary&&g.lengthUpper&&g.p90&&g.earlyLoss&&g.content));
 console.log("Sparse-build QA preserves two negative length guards and contains no private states");
+
+const referenceDir="docs/qa/reference-shapes-2026-11-18";
+for(const file of (await fs.readdir(referenceDir)).filter(p=>p.endsWith(".json"))){const d=JSON.parse(await fs.readFile(`${referenceDir}/${file}`,"utf8"));walk(d);assert(!/gameId|installationId|blocky-play|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(JSON.stringify(d)));}
+const reference=JSON.parse(await fs.readFile(`${referenceDir}/development-summary.json`,"utf8"));assert.equal(reference.runs,128);assert.equal(reference.observedNewIds.length,10);assert(reference.technicalPass&&reference.allNewIdsObserved);assert(reference.guards.every(g=>g.exposure&&g.ordinary&&g.lengthUpper&&g.lengthLower&&g.earlyLoss));
+console.log("Reference-shape QA has all10newIDs and aggregates only, without owner states");

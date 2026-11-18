@@ -1,4 +1,5 @@
 import type { Board, DealerVersion, GameState, Move, Slot } from "./rules";
+import type { ShapeCatalogDecision } from "./reference-shape-dealer";
 import type { AssistDecision } from "./assist-budget";
 import type { ChallengeDecision } from "./challenge-director";
 import type {ChallengeDecisionV2} from './challenge-director-v2';
@@ -19,6 +20,7 @@ export type DecisionOutput = {
   diagnostic?: { requested: string; actual: string; source: string; checks: number; limit: number; certificate?: { kind: string } | null };
   composition?: { reason: string; checks: number; limit: number; from?: string; to?: string; slot?: number };
   assistDecision?: AssistDecision;
+  shapeDecision?: ShapeCatalogDecision;
   challengeDecision?: ChallengeDecision|ChallengeDecisionV2|ChallengeDecisionV3|ChallengeBuildDecision;
 };
 export type DecisionTrace = {
@@ -34,6 +36,7 @@ export type DecisionTrace = {
   fallback: boolean;
   certificate: string | null;
   assistance?: AssistDecision;
+  catalog?: ShapeCatalogDecision;
   challenge?: ChallengeDecision|ChallengeDecisionV2|ChallengeDecisionV3|ChallengeBuildDecision;
 };
 export type DecisionSink = (trace: DecisionTrace) => void;
@@ -64,6 +67,7 @@ export function finalDecision(gameId: string, revision: number, input: DealInput
       initialPieceIds[c.slot] = c.from;
     overrides.push({ stage: "composition", reason: c.reason, accepted: c.reason === "equal-area-proven", from: [...initialPieceIds], to: [...finalPieceIds] });
   }
+  if(d.shapeDecision?.changed)overrides.push({stage:"shape-catalog",reason:d.shapeDecision.reason,accepted:true,from:[...initialPieceIds],to:[...finalPieceIds]});
   if (d.fallback)
     overrides.push({ stage: "technical-fallback", reason: q?.source ?? "bounded-fallback", accepted: true, from: [q?.requested ?? input.policy], to: [...finalPieceIds] });
   return {
@@ -77,6 +81,7 @@ export function finalDecision(gameId: string, revision: number, input: DealInput
     validation: { kind: d.witness ? "SOLVABLE" : "NOT_CHECKED", witness: structuredClone(d.witness ?? []), work: (q?.checks ?? 0) + (c?.checks ?? 0), limit: (q?.limit ?? 0) + (c?.limit ?? 0) },
     fallback: d.fallback, certificate: q?.certificate?.kind ?? null,
     ...(d.assistDecision ? {assistance:structuredClone(d.assistDecision)} : {}),
+    ...(d.shapeDecision ? {catalog:structuredClone(d.shapeDecision)} : {}),
     ...(d.challengeDecision ? {challenge:structuredClone(d.challengeDecision)} : {}),
   };
 }

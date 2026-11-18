@@ -14,7 +14,7 @@ import {validMixedDirector} from './mixed-director';
 import { validCampaign } from "../adventure/save";
 import type { Campaign } from "../adventure/core";
 import { type AdsState, validRevivePlan, validReviveSelection } from "./monetization";
-import { fits, hasMove, shapeById, type GameState, type Move } from "./rules";
+import { SHAPES, fits, hasMove, shapeById, type GameState, type Move } from "./rules";
 export interface HintReceipt {
   gameId: string;
   revision: number;
@@ -179,7 +179,7 @@ export function validProfile(value: unknown): value is Profile {
       (g.dealerVersion === "director-challenge-v1" ? !validChallengeState(g.challengeState) : g.challengeState !== undefined) ||
       (g.dealerVersion === "director-challenge-v2" ? !validChallengeStateV2(g.challengeV2State) : g.challengeV2State !== undefined) ||
       (g.dealerVersion === "director-challenge-v3" ? !validChallengeStateV3(g.challengeV3State) : g.challengeV3State !== undefined) ||
-      (g.dealerVersion === "director-build-v1" ? !validChallengeBuildState(g.challengeBuildState) : g.challengeBuildState !== undefined) ||
+      (["director-build-v1","director-shapes-v1"].includes(g.dealerVersion) ? !validChallengeBuildState(g.challengeBuildState) : g.challengeBuildState !== undefined) ||
       !integer(g.dealerFallbacks) ||
       !integer(g.rngState) ||
       g.rngState < 1 ||
@@ -205,6 +205,7 @@ export function validProfile(value: unknown): value is Profile {
         "director-challenge-v2",
         "director-challenge-v3",
         "director-build-v1",
+        "director-shapes-v1",
       ].includes(g.dealerVersion) ||
       (g.dealerVersion === "flow-v3" && !validRhythm(g.rhythm)) ||
       (g.dealerVersion === "flow-v4" && !validRhythmV4(g.rhythm)) ||
@@ -240,6 +241,7 @@ export function validProfile(value: unknown): value is Profile {
     if (
       !g.tray.every((s) => {
         shapeById(s.shapeId);
+        if(g.dealerVersion!=="director-shapes-v1"&&!SHAPES.some(p=>p.id===s.shapeId))return false;
         return (
           typeof s.used === "boolean" &&
           integer(s.color) &&

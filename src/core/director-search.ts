@@ -1,4 +1,4 @@
-import {SHAPES,type Board,type Move,type Slot} from './rules';
+import {SHAPES,ALL_SHAPES,type Shape,type Board,type Move,type Slot} from './rules';
 
 export const DIRECTOR_WORK_LIMIT=24000;
 export class WorkBudget {
@@ -13,8 +13,8 @@ export class WorkBudget {
 export type Rows=number[];
 export type Operation={shape:number;x:number;y:number;rows:Rows};
 export const POP=Array.from({length:256},(_,n)=>{let c=0;for(;n;n&=n-1)c++;return c;});
-let cachedCatalog:Operation[][]|undefined;
-export const catalog=()=>cachedCatalog??=SHAPES.map((shape,index)=>{
+let cachedCatalog:Operation[][]|undefined, cachedFullCatalog:Operation[][]|undefined;
+const makeCatalog=(shapes:readonly Shape[])=>shapes.map((shape,index)=>{
   const list:Operation[]=[];
   for(let y=0;y<=8-shape.height;y++)for(let x=0;x<=8-shape.width;x++){
     const rows=Array<number>(8).fill(0);
@@ -23,6 +23,8 @@ export const catalog=()=>cachedCatalog??=SHAPES.map((shape,index)=>{
   }
   return list;
 });
+export const catalog=()=>cachedCatalog??=makeCatalog(SHAPES);
+export const fullCatalog=()=>cachedFullCatalog??=makeCatalog(ALL_SHAPES);
 export const toRows=(b:Board)=>Array.from({length:8},(_,y)=>b.slice(y*8,y*8+8).reduce((n,v,x)=>n|(v?1<<x:0),0));
 export const occupied=(r:Rows)=>r.reduce((n,x)=>n+POP[x]!,0);
 export function canPlace(rows:Rows,op:Operation,meter:WorkBudget):boolean|null {
@@ -44,11 +46,11 @@ export function legalOperations(rows:Rows,meter:WorkBudget){
   }
   return {complete:true,ops:result};
 }
-export function proveIds(rows:Rows,ids:number[],meter:WorkBudget){
+export function proveIds(rows:Rows,ids:number[],meter:WorkBudget,operations=catalog()){
   let exhausted=false;
   function visit(board:Rows,left:number[],path:Operation[]):Operation[]|null {
     if(!left.length)return path;
-    for(let i=0;i<left.length;i++)for(const op of catalog()[left[i]!]!){
+    for(let i=0;i<left.length;i++)for(const op of operations[left[i]!]!){
       const fits=canPlace(board,op,meter);if(fits===null){exhausted=true;return null;}if(!fits)continue;
       const next=transition(board,op,meter);if(!next){exhausted=true;return null;}
       const found=visit(next.rows,left.filter((_,j)=>i!==j),[...path,op]);if(found)return found;
