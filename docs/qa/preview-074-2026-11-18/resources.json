@@ -1,0 +1,19 @@
+{
+  "verifiedWith": "Android build-tools36 aapt2/zipalign",
+  "apkSha256": "ae9ced2192c7336cf791a5151af6d2a9a6fa428fcdbe71a284757a0ef40b710f",
+  "resources": {
+    "verifiedWith": "Android official aapt2 and zipalign36.0.0",
+    "adsTestMode": true,
+    "appMetricaKeyEmpty": true,
+    "productionAdIdsEmpty": true,
+    "zipalign16KiB": true,
+    "resourceValues": {
+      "ads_test_mode": "true",
+      "appmetrica_api_key": "\"\"",
+      "yandex_banner_id": "\"\"",
+      "yandex_interstitial_id": "\"\"",
+      "yandex_rewarded_id": "\"\""
+    }
+  },
+  "zipalign16KiB": true
+}

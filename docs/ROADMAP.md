@@ -1347,7 +1347,7 @@ Evidence: [0.29 investigation](qa/PERFORMANCE_0.29_2026-11-01.md).
 - [x]31→41registry:missing8L/J4+2D2,correctedruntime+1010!crosscheck;legacygeneration/default/saves/RNGнеизменны.
 - [x]Oneequalareareplacement,exactrewards/endoccupancy/twoothers/RNG/controller,starts/certificates/3recoveryprotected;boundedproof<=24000.
 - [x]Fresh128runs/15942moves,10newIDsobserved/20proxyguardsPASS;426unit/1414originalexact+cellsPASS.
-- [ ] Browser/long-session/fullCI/signed0.74/payloadproof.
+- [x] Local24browser/3600desktopstress; полныйPRCI44287354763 attempt1 success:426unit/290browser/60focused/Android/2emulator. Signed0.74/11814105bytes,прежнийsigner/99productionfiles/demo-off/fullCI-localproof/zipalign16KiB PASS. APK/ZIP/инструкция сохранены владельцу отдельно. [Точная поставка](qa/PREVIEW_0.74_PUBLICATION_2026-11-18.md).
 - [ ] Ручнойphoneплейтестновогопункта;defaultнепереключатьавтоматически.
 
 [Результат](qa/REFERENCE_SHAPES_0.74_2026-11-18.md).

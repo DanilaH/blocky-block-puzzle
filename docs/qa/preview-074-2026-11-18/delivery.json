@@ -1,0 +1,14 @@
+{
+  "Blocky-0.74.0-preview.apk": {
+    "bytes": 11814105,
+    "sha256": "ae9ced2192c7336cf791a5151af6d2a9a6fa428fcdbe71a284757a0ef40b710f"
+  },
+  "Blocky-0.74.0-preview.zip": {
+    "bytes": 11101611,
+    "sha256": "d9835fef1e8a0ff45c563bee864514ba7ff787097682c94d752cac71aa3a1d3e"
+  },
+  "Blocky-0.74-playtest.txt": {
+    "bytes": 2630,
+    "sha256": "73372adb11f8479987e6ccd0472518263c3796049d44efd065279a5f6a6eff66"
+  }
+}

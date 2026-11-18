@@ -1,0 +1,85 @@
+{
+  "runId": 44287354763,
+  "attempt": 1,
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "success",
+  "sourceCommit": "58fffe1a2dc49d89f8bcdc287e2c33f4ed7426bf",
+  "checkoutCommit": "31553758bc578d65579addc09274df7c1c3e4c51",
+  "sourceTree": "88052bf1a01875e30abde7ed46c90e077269dfa7",
+  "unit": {
+    "passed": 426,
+    "files": 63
+  },
+  "python": [
+    5,
+    8,
+    4,
+    7
+  ],
+  "browser": {
+    "passed": 290,
+    "shards": [
+      105,
+      93,
+      92
+    ]
+  },
+  "focused": 60,
+  "android": "unit/build/signature PASS",
+  "emulatorTests": 2,
+  "jobs": [
+    {
+      "id": 134743333397,
+      "name": "focused-effects",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134743333940,
+      "name": "core",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134743333980,
+      "name": "android",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134743695063,
+      "name": "browser (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134743695070,
+      "name": "browser (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134743695077,
+      "name": "browser (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134744609795,
+      "name": "cdp-emulator",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 134751374256,
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "separatePush": {
+    "runId": 44287344403,
+    "android": "refused mismatching branch-cache signer; no APK delivered from this run"
+  }
+}
